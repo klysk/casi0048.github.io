@@ -230,6 +230,32 @@
           document.getElementById("contenuto-dinamico").innerHTML = "<p>Errore nel caricamento del contenuto.</p>";
         });
     }
+    <script>
+  function caricaContenuto(file) {
+    fetch(file)
+      .then(response => {
+        if (!response.ok) throw new Error("Errore nel caricamento.");
+        return response.text();
+      })
+      .then(html => {
+        document.getElementById("contenuto-dinamico").innerHTML = html;
+      })
+      .catch(error => {
+        document.getElementById("contenuto-dinamico").innerHTML = "<p>Errore nel caricamento del contenuto.</p>";
+      });
+  }
+
+  // Abilita sottomenù se presenti
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.submenu-toggle').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        btn.parentElement.classList.toggle('expanded');
+      });
+    });
+  });
+</script>
+
   </script>
 </body>
 </html>
