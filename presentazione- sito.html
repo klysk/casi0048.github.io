@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Siamo - Echi di Sofia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Playfair+Display:wght@700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --colore-sfondo-pagina: #f9f7f3;
+            --colore-testo-principale: #333;
+            --colore-titolo-sezione: #3d352a;
+            --colore-accento: #a0865b;
+            --colore-accento-chiaro: #d4b483;
+            --colore-bordo: #e0d8cc;
+            --font-serif: 'Crimson Pro', serif;
+            --font-display: 'Playfair Display', serif;
+            --font-sans: 'Montserrat', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-serif);
+            line-height: 1.8;
+            color: var(--colore-testo-principale);
+            background-color: var(--colore-sfondo-pagina);
+            margin: 0;
+            padding: 0;
+            background-image: url('https://images.unsplash.com/photo-1505506874110-6a7a69069a08?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 80px auto;
+            padding: 0 30px;
+            box-sizing: border-box;
+        }
+
+        .presentazione-sito {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+            padding: 50px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .presentazione-sito:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .presentazione-sito h1 {
+            font-family: var(--font-display);
+            font-size: 3em;
+            color: var(--colore-titolo-sezione);
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .presentazione-sito h1::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--colore-accento), var(--colore-accento-chiaro));
+            border-radius: 4px;
+        }
+
+        .presentazione-sito p {
+            font-size: 1.15em;
+            margin-bottom: 1.8em;
+            line-height: 1.9;
+            max-width: 750px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: justify;
+            text-align-last: center;
+        }
+
+        .presentazione-sito strong {
+            color: var(--colore-titolo-sezione);
+            font-weight: 700;
+            position: relative;
+        }
+
+        .presentazione-sito strong::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--colore-accento-chiaro);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .presentazione-sito strong:hover::after {
+            transform: scaleX(1);
+        }
+
+        .presentazione-sito em {
+            color: var(--colore-accento);
+            font-style: italic;
+            font-weight: 600;
+        }
+
+        .tagline-section {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid var(--colore-bordo);
+            text-align: center;
+            font-style: italic;
+            color: #555;
+            font-size: 1.3em;
+            position: relative;
+        }
+
+        .tagline-section::before {
+            content: '"';
+            font-size: 4em;
+            color: var(--colore-accento-chiaro);
+            opacity: 0.3;
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            line-height: 1;
+        }
+
+        .tagline-section p {
+            margin: 0;
+            position: relative;
+            z-index: 1;
+            font-family: var(--font-display);
+            letter-spacing: 0.5px;
+        }
+
+        .tagline-section span {
+            display: block;
+            margin-top: 15px;
+            font-size: 0.95em;
+            color: #777;
+            font-family: var(--font-sans);
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .mission-section {
+            margin-top: 70px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .mission-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            flex: 1;
+            min-width: 250px;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border-top: 4px solid var(--colore-accento);
+        }
+
+        .mission-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .mission-card i {
+            font-size: 2.5em;
+            color: var(--colore-accento);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .mission-card h3 {
+            font-family: var(--font-display);
+            color: var(--colore-titolo-sezione);
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .mission-card p {
+            font-size: 1em;
+            line-height: 1.7;
+            color: #555;
+            margin-bottom: 0;
+        }
+
+        .quote-section {
+            margin-top: 80px;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(160, 134, 91, 0.1) 0%, rgba(255,255,255,0.1) 100%);
+            border-radius: 10px;
+            border-left: 4px solid var(--colore-accento);
+            position: relative;
+        }
+
+        .quote-section::before {
+            content: '\201C';
+            font-family: Georgia, serif;
+            font-size: 6em;
+            color: var(--colore-accento-chiaro);
+            opacity: 0.2;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            line-height: 1;
+        }
+
+        .quote-section p {
+            font-size: 1.3em;
+            line-height: 1.8;
+            color: var(--colore-titolo-sezione);
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 20px;
+        }
+
+        .quote-author {
+            font-family: var(--font-sans);
+            font-weight: 500;
+            color: var(--colore-accento);
+            text-align: right;
+            font-size: 1.1em;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 40px auto;
+                padding: 0 20px;
+            }
+            
+            .presentazione-sito {
+                padding: 30px;
+            }
+            
+            .presentazione-sito h1 {
+                font-size: 2.3em;
+                padding-bottom: 15px;
+            }
+            
+            .presentazione-sito p {
+                font-size: 1.05em;
+                text-align: left;
+                text-align-last: left;
+            }
+            
+            .mission-section {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .mission-card {
+                min-width: 100%;
+            }
+            
+            .quote-section {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <section class="presentazione-sito">
+            <h1>Benvenuti su Echi di Sofia</h1>
+            <p>
+                In un mondo in costante mutamento, dove il rumore spesso sovrasta la riflessione, <strong>Echi di Sofia</strong> nasce come un'oasi di pensiero. Qui, la filosofia non è un mero studio accademico, ma un'esperienza viva, un dialogo senza tempo tra le grandi menti del passato e le domande eterne del presente.
+            </p>
+            <p>
+                Il nostro sito è un invito a esplorare i sentieri della conoscenza, a interrogarsi sul significato dell'esistenza, sulla natura dell'essere e sulla ricerca della felicità. Attraverso le voci dei maestri antichi e le intuizioni dei pensatori contemporanei, desideriamo ispirare una profonda introspezione e un continuo desiderio di sapere.
+            </p>
+            <p>
+                Crediamo che la vera saggezza non sia imposta, ma <em>risuoni</em> nel profondo di ciascuno. "Echi di Sofia" è il luogo dove il silenzio incontra il pensiero, e ogni domanda trova la sua dimora nel vasto giardino della conoscenza, offrendo una luce nell'ombra dell'ignoto.
+            </p>
+        </section>
+
+        <section class="tagline-section">
+            <p>L'infinito dialogo tra l'anima e l'universo</p>
+            <span>— Echi di Sofia</span>
+        </section>
+
+        <section class="mission-section">
+            <div class="mission-card">
+                <i class="fas fa-book-open"></i>
+                <h3>La Nostra Missione</h3>
+                <p>Rendere la filosofia accessibile a tutti, trasformando concetti complessi in riflessioni quotidiane. Vogliamo essere un ponte tra il pensiero antico e le sfide moderne, dimostrando come la saggezza dei secoli possa illuminare il nostro presente.</p>
+            </div>
+            
+            <div class="mission-card">
+                <i class="fas fa-users"></i>
+                <h3>La Nostra Comunità</h3>
+                <p>Un gruppo eterogeneo di pensatori, curiosi e ricercatori uniti dalla passione per la conoscenza. Crediamo nel potere del dialogo e nella ricchezza che nasce dal confronto tra prospettive diverse.</p>
+            </div>
+            
+            <div class="mission-card">
+                <i class="fas fa-lightbulb"></i>
+                <h3>Il Nostro Metodo</h3>
+                <p>Approccio interdisciplinare che combina filosofia, arte, scienza e spiritualità. Privilegiamo l'esperienza diretta dei testi originali e l'applicazione pratica degli insegnamenti filosofici nella vita quotidiana.</p>
+            </div>
+        </section>
+
+        <section class="quote-section">
+            <p>"La filosofia non è una teoria ma un'attività: un lavoro su noi stessi attraverso il pensiero. A Echi di Sofia troviamo gli strumenti per questo lavoro interiore, gli echi che ci guidano verso la nostra verità."</p>
+            <div class="quote-author">— Prof. Elena Monti, Membro Fondatore</div>
+        </section>
+    </div>
+
+</body>
+</html>
