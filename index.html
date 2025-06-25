@@ -84,7 +84,6 @@
       z-index: 20;
     }
 
-    .has-submenu:hover .submenu,
     .has-submenu.expanded .submenu {
       display: flex;
     }
@@ -161,7 +160,8 @@
   <header class="intestazione-sito">
     <nav class="menu" role="navigation">
       <ul class="menu-links" id="menu-links">
-        <li><a href="benvenuto.html" class="menu-link">Incipit</a></li>
+        <li><a href="benvenuto.html">Incipit</a></li>
+
         <li class="has-submenu">
           <button class="submenu-toggle">Filosofia antica</button>
           <ul class="submenu">
@@ -170,6 +170,7 @@
             <li><a href="#">Anassimene</a></li>
           </ul>
         </li>
+
         <li><a href="#">Filosofia medievale</a></li>
         <li><a href="#">Patristica</a></li>
         <li><a href="#">Filosofia moderna</a></li>
@@ -186,29 +187,21 @@
     <div class="overlay">
       <div class="contenuto">
         <h1 class="titolo-sito">Echi di Sofia</h1>
-        <p class="sottotitolo">L'infinito dialogo tra l'anima e l'universo.</p>
+        <p class="sottotitolo">L’infinito dialogo tra l’anima e l’universo.</p>
       </div>
     </div>
   </header>
 
   <main id="contenuto-dinamico" class="homepage-intro" aria-label="Contenuto principale">
-    <!-- Contenuto dinamico o statico verrà qui -->
+    <!-- Se vuoi, qui possiamo caricare contenuto dinamico -->
   </main>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Gestione dei sottomenu
       document.querySelectorAll('.submenu-toggle').forEach(btn => {
         btn.addEventListener('click', e => {
           e.preventDefault();
           btn.parentElement.classList.toggle('expanded');
-        });
-      });
-
-      // Assicura che i link normali non attivino il comportamento dei sottomenu
-      document.querySelectorAll('.menu-links a:not(.submenu-toggle)').forEach(link => {
-        link.addEventListener('click', e => {
-          // Comportamento normale del link
         });
       });
     });
