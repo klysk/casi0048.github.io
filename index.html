@@ -162,9 +162,28 @@
       padding: 0 20px;
       color: #333;
     }
+    main section {
+  display: none;
+}
+main section.active {
+  display: block;
+}
+
   </style>
 </head>
 <body>
+  <main class="homepage-intro">
+  <section id="benvenuto" class="active">
+    <h2>Benvenuto</h2>
+    <p>Questo è il contenuto di benvenuto che prima era in benvenuto.html</p>
+  </section>
+
+  <section id="altro">
+    <h2>Altri contenuti</h2>
+    <p>Puoi aggiungere qui i contenuti delle altre voci di menu se vuoi.</p>
+  </section>
+</main>
+
   <header class="intestazione-sito">
     <nav class="menu" role="navigation">
       <ul class="menu-links" id="menu-links">
@@ -231,5 +250,26 @@
       });
     });
   </script>
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Mostra sottomenu
+    document.querySelectorAll('.submenu-toggle').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        btn.parentElement.classList.toggle('expanded');
+      });
+    });
+
+    // Quando clicchi su "Home", mostra solo la sezione #benvenuto
+    document.getElementById('btn-home').addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelectorAll('main section').forEach(section => {
+        section.classList.remove('active');
+      });
+      document.getElementById('benvenuto').classList.add('active');
+    });
+  });
+</script>
+
 </body>
 </html>
