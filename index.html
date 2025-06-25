@@ -16,7 +16,7 @@
     .intestazione-sito {
       position: relative;
       height: 200px;
-      background-image: url('/home/casimiro/Immagini/Background-git.png');
+      background-image: url('Background-git.png');
       background-size: cover;
       background-position: center;
       color: #fff;
@@ -84,7 +84,8 @@
       z-index: 20;
     }
 
-    .has-submenu:hover .submenu {
+    .has-submenu:hover .submenu,
+    .has-submenu.expanded .submenu {
       display: flex;
     }
 
@@ -154,24 +155,6 @@
       padding: 0 20px;
       color: #333;
     }
-
-    .homepage-intro h2 {
-      font-size: 2.2em;
-      color: #5a4a2a;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .homepage-intro p {
-      font-size: 1.2em;
-      line-height: 1.6;
-      text-align: justify;
-    }
-
-    .homepage-intro em {
-      font-style: italic;
-      color: #6a5a3e;
-    }
   </style>
 </head>
 <body>
@@ -196,11 +179,9 @@
       </ul>
     </nav>
 
-   <div class="logo-container">
-  <img src="Logo2a.png" alt="Logo del sito" />
-</div>
-
-
+    <div class="logo-container">
+      <img src="Logo2a.png" alt="Logo del sito" />
+    </div>
 
     <div class="overlay">
       <div class="contenuto">
@@ -211,50 +192,18 @@
   </header>
 
   <main id="contenuto-dinamico" class="homepage-intro" aria-label="Contenuto principale">
-    <!-- Contenuto dinamico verrà caricato qui cliccando su "Incipit" -->
+    <!-- Contenuto dinamico o statico verrà qui -->
   </main>
 
   <script>
-    function caricaContenuto(file) {
-      fetch(file)
-        .then(response => {
-          if (!response.ok) throw new Error("Errore nel caricamento del contenuto.");
-          return response.text();
-        })
-        .then(html => {
-          document.getElementById("contenuto-dinamico").innerHTML = html;
-        })
-        .catch(error => {
-          document.getElementById("contenuto-dinamico").innerHTML = "<p>Errore nel caricamento del contenuto.</p>";
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.submenu-toggle').forEach(btn => {
+        btn.addEventListener('click', e => {
+          e.preventDefault();
+          btn.parentElement.classList.toggle('expanded');
         });
-    }
-    <script>
-  function caricaContenuto(file) {
-    fetch(file)
-      .then(response => {
-        if (!response.ok) throw new Error("Errore nel caricamento.");
-        return response.text();
-      })
-      .then(html => {
-        document.getElementById("contenuto-dinamico").innerHTML = html;
-      })
-      .catch(error => {
-        document.getElementById("contenuto-dinamico").innerHTML = "<p>Errore nel caricamento del contenuto.</p>";
-      });
-  }
-
-  // Abilita sottomenù se presenti
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.submenu-toggle').forEach(btn => {
-      btn.addEventListener('click', e => {
-        e.preventDefault();
-        btn.parentElement.classList.toggle('expanded');
       });
     });
-  });
-</script>
-
   </script>
 </body>
 </html>
-
