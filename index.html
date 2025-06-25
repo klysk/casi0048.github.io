@@ -148,6 +148,14 @@
       text-shadow: 1px 1px 2px #000;
     }
 
+    .homepage-intro {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+      color: #333;
+    }
+
+    /* Mostra solo la sezione attiva */
     main section {
       display: none;
     }
@@ -155,34 +163,9 @@
     main section.active {
       display: block;
     }
-
-    .homepage-intro {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 0 20px;
-      color: #333;
-    }
-    main section {
-  display: none;
-}
-main section.active {
-  display: block;
-}
-
   </style>
 </head>
 <body>
-  <main class="homepage-intro">
-  <section id="benvenuto" class="active">
-    <h2>Benvenuto</h2>
-    <p>Questo è il contenuto di benvenuto che prima era in benvenuto.html</p>
-  </section>
-
-  <section id="altro">
-    <h2>Altri contenuti</h2>
-    <p>Puoi aggiungere qui i contenuti delle altre voci di menu se vuoi.</p>
-  </section>
-</main>
 
   <header class="intestazione-sito">
     <nav class="menu" role="navigation">
@@ -224,6 +207,7 @@ main section.active {
       <h2>Benvenuto</h2>
       <p>Questo è il cuore del sito: l’introduzione a Echi di Sofia.</p>
     </section>
+
     <section id="altro">
       <h2>Altro contenuto</h2>
       <p>Questa è un’altra sezione, eventualmente attivabile da un altro pulsante.</p>
@@ -240,7 +224,7 @@ main section.active {
         });
       });
 
-      // Pulsante Home per mostrare la sezione Benvenuto
+      // Mostra sezione Benvenuto
       document.getElementById('btn-home').addEventListener('click', e => {
         e.preventDefault();
         document.querySelectorAll('main section').forEach(section => {
@@ -250,26 +234,6 @@ main section.active {
       });
     });
   </script>
-  <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // Mostra sottomenu
-    document.querySelectorAll('.submenu-toggle').forEach(btn => {
-      btn.addEventListener('click', e => {
-        e.preventDefault();
-        btn.parentElement.classList.toggle('expanded');
-      });
-    });
-
-    // Quando clicchi su "Home", mostra solo la sezione #benvenuto
-    document.getElementById('btn-home').addEventListener('click', e => {
-      e.preventDefault();
-      document.querySelectorAll('main section').forEach(section => {
-        section.classList.remove('active');
-      });
-      document.getElementById('benvenuto').classList.add('active');
-    });
-  });
-</script>
 
 </body>
 </html>
