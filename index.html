@@ -230,47 +230,114 @@
     }
   </style>
 </head>
+  
 <body>
   <header class="intestazione-sito">
-    <nav class="menu" role="navigation">
+    <nav class="menu" role="navigation" aria-label="Menu principale">
       <ul class="menu-links" id="menu-links">
         <li>
-          <button class="incipit-button" onclick="toggleIncipit()">
-            Incipit <i id="toggle-symbol" class="fas fa-chevron-down"></i>
+          <button class="incipit-button" onclick="toggleIncipit()" aria-expanded="false" aria-controls="incipit">
+            Incipit <i id="toggle-symbol" class="fas fa-chevron-down" aria-hidden="true"></i>
           </button>
         </li>
-        <li class="has-submenu">
-          <button class="submenu-toggle">Filosofia antica</button>
-          <ul class="submenu">
+
+        <!-- Filosofia antica -->
+        <li class="has-submenu" tabindex="0">
+          <button class="submenu-toggle" aria-haspopup="true" aria-expanded="false">
+            Filosofia antica
+          </button>
+          <ul class="submenu" role="menu" aria-label="Filosofia antica">
             <li class="submenu-header">Presocratici</li>
+
             <li class="group-header">Scuola ionica</li>
-            <li><a href="https://casi0048.github.io/talete.html">Talete</a></li>
-            <li><a href="https://casi0048.github.io/Presocratici/anassimandro.html">Anassimandro</a></li>
-            <li><a href="https://casi0048.github.io/Presocratici/anassimene.html">Anassimene</a></li>
+            <li><a href="https://casi0048.github.io/talete.html" role="menuitem">Talete</a></li>
+            <li><a href="https://casi0048.github.io/Presocratici/anassimandro.html" role="menuitem">Anassimandro</a></li>
+            <li><a href="https://casi0048.github.io/Presocratici/anassimene.html" role="menuitem">Anassimene</a></li>
+
             <li class="separator"></li>
+
             <li class="group-header">Pitagorici</li>
-            <li><a href="#">Pitagora</a></li>
-            <li><a href="#">Filolao</a></li>
+            <li><a href="#" role="menuitem">Pitagora</a></li>
+            <li><a href="#" role="menuitem">Filolao</a></li>
+
             <li class="separator"></li>
+
             <li class="group-header">Eraclito</li>
-            <li><a href="#">Eraclito</a></li>
+            <li><a href="#" role="menuitem">Eraclito</a></li>
+
             <li class="separator"></li>
+
             <li class="group-header">Eleatismo</li>
-            <li><a href="https://casi0048.github.io/Presocratici/senofane.html">Senofane</a></li>
-            <li><a href="https://casi0048.github.io/Presocratici/parmenide.html">Parmenide</a></li>
-            <li><a href="#">Zenone</a></li>
+            <li><a href="https://casi0048.github.io/Presocratici/senofane.html" role="menuitem">Senofane</a></li>
+            <li><a href="https://casi0048.github.io/Presocratici/parmenide.html" role="menuitem">Parmenide</a></li>
+            <li><a href="#" role="menuitem">Zenone</a></li>
+
             <li class="separator"></li>
+
             <li class="group-header">Pluralisti & Atomisti</li>
-            <li><a href="#">Empedocle</a></li>
-            <li><a href="#">Anassagora</a></li>
-            <li><a href="#">Leucippo</a></li>
-            <li><a href="#">Democrito</a></li>
+            <li><a href="#" role="menuitem">Empedocle</a></li>
+            <li><a href="#" role="menuitem">Anassagora</a></li>
+            <li><a href="#" role="menuitem">Leucippo</a></li>
+            <li><a href="#" role="menuitem">Democrito</a></li>
+
+            <li class="separator"></li>
+
+            <li class="submenu-header">Filosofi classici</li>
+            <li><a href="https://casi0048.github.io/classici/socrate.html" role="menuitem">Socrate</a></li>
+            <li><a href="https://casi0048.github.io/classici/platone.html" role="menuitem">Platone</a></li>
+            <li><a href="https://casi0048.github.io/classici/aristotele.html" role="menuitem">Aristotele</a></li>
+            
+            <li class="separator"></li>
+
+            <li class="submenu-header">Filosofia ellenistica</li>
+            <li><a href="#" role="menuitem">Epicuro</a></li>
+            <li><a href="#" role="menuitem">Zeno di Cizio</a></li>
+            <li><a href="#" role="menuitem">Pirro</a></li>
           </ul>
         </li>
-        <li><a href="#">Filosofia medievale</a></li>
-        <li><a href="#">Filosofia moderna</a></li>
-        <li><a href="#">Filosofia contemporanea</a></li>
-        <li><a href="#">Mappa del sito</a></li>
+
+        <!-- Filosofia medievale -->
+        <li class="has-submenu" tabindex="0">
+          <button class="submenu-toggle" aria-haspopup="true" aria-expanded="false">
+            Filosofia medievale
+          </button>
+          <ul class="submenu" role="menu" aria-label="Filosofia medievale">
+            <li><a href="https://casi0048.github.io/medievali/agostino.html" role="menuitem">Agostino d'Ippona</a></li>
+            <li><a href="https://casi0048.github.io/medievali/tommaso.html" role="menuitem">Tommaso d'Aquino</a></li>
+            <li><a href="https://casi0048.github.io/medievali/duns_scoto.html" role="menuitem">Duns Scoto</a></li>
+            <li><a href="https://casi0048.github.io/medievali/ockham.html" role="menuitem">Guglielmo di Ockham</a></li>
+          </ul>
+        </li>
+
+        <!-- Filosofia moderna -->
+        <li class="has-submenu" tabindex="0">
+          <button class="submenu-toggle" aria-haspopup="true" aria-expanded="false">
+            Filosofia moderna
+          </button>
+          <ul class="submenu" role="menu" aria-label="Filosofia moderna">
+            <li><a href="https://casi0048.github.io/moderna/cartesio.html" role="menuitem">Cartesio</a></li>
+            <li><a href="https://casi0048.github.io/moderna/spinoza.html" role="menuitem">Spinoza</a></li>
+            <li><a href="https://casi0048.github.io/moderna/leibniz.html" role="menuitem">Leibniz</a></li>
+            <li><a href="https://casi0048.github.io/moderna/locke.html" role="menuitem">Locke</a></li>
+            <li><a href="https://casi0048.github.io/moderna/kant.html" role="menuitem">Kant</a></li>
+          </ul>
+        </li>
+
+        <!-- Filosofia contemporanea -->
+        <li class="has-submenu" tabindex="0">
+          <button class="submenu-toggle" aria-haspopup="true" aria-expanded="false">
+            Filosofia contemporanea
+          </button>
+          <ul class="submenu" role="menu" aria-label="Filosofia contemporanea">
+            <li><a href="https://casi0048.github.io/contemporanea/hegel.html" role="menuitem">Hegel</a></li>
+            <li><a href="https://casi0048.github.io/contemporanea/marx.html" role="menuitem">Marx</a></li>
+            <li><a href="https://casi0048.github.io/contemporanea/heidegger.html" role="menuitem">Heidegger</a></li>
+            <li><a href="https://casi0048.github.io/contemporanea/sartre.html" role="menuitem">Sartre</a></li>
+            <li><a href="https://casi0048.github.io/contemporanea/wittgenstein.html" role="menuitem">Wittgenstein</a></li>
+          </ul>
+        </li>
+
+        <li><a href="https://casi0048.github.io/mappa_sito.html" class="incipit-button">Mappa del sito</a></li>
       </ul>
     </nav>
 
@@ -287,7 +354,7 @@
   </header>
 
   <main class="homepage-intro" aria-label="Contenuto principale">
-    <div id="incipit" class="incipit-content">
+    <div id="incipit" class="incipit-content" aria-hidden="true">
       <h2>Benvenuti su Echi di Sofia</h2>
       <p>
         In un mondo in costante mutamento, dove il rumore spesso sovrasta la riflessione,
@@ -305,13 +372,18 @@
     </div>
   </main>
 
-  <script>
+ <script>
+    // Toggle incipit visibilità e aria-expanded
     function toggleIncipit() {
       const incipit = document.getElementById("incipit");
       const icon = document.getElementById("toggle-symbol");
+      const button = document.querySelector(".incipit-button");
       const isVisible = incipit.style.display === "block";
+
       incipit.style.display = isVisible ? "none" : "block";
+      incipit.setAttribute("aria-hidden", isVisible ? "true" : "false");
       icon.className = isVisible ? "fas fa-chevron-down" : "fas fa-chevron-up";
+      button.setAttribute("aria-expanded", !isVisible);
     }
   </script>
 </body>
