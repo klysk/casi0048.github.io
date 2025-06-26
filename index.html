@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Echi di Sofia</title>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Crimson Pro', serif;
+      background: #fff;
+      color: #333;
+    }
+
+    .intestazione-sito {
+      position: relative;
+      height: 300px;
+      background-image: url('https://casi0048.github.io/background.png');
+      background-size: cover;
+      background-position: center;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: visible;
+      z-index: 1;
+    }
+
+    .menu {
+      position: absolute;
+      top: 15px;
+      left: 40px;
+      right: 40px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      z-index: 10;
+    }
+
+    .menu-links {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .menu-links a,
+    .submenu-toggle,
+    .incipit-button {
+      color: #eee;
+      text-decoration: none;
+      font-size: 22px;
+      font-weight: 600;
+      transition: color 0.3s ease;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 4px;
+      user-select: none;
+    }
+
+    .menu-links a:hover,
+    .submenu-toggle:hover,
+    .incipit-button:hover {
+      color: #ffd28c;
+      background: rgba(255, 210, 140, 0.15);
+    }
+
+    .has-submenu {
+      position: relative;
+    }
+
+    .submenu-toggle::after {
+      content: " \25BE";
+      display: inline-block;
+      margin-left: 6px;
+      transition: transform 0.3s ease;
+    }
+
+    .has-submenu:hover .submenu-toggle::after {
+      transform: rotate(180deg);
+    }
+
+    .submenu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: rgba(10, 10, 10, 0.95);
+      padding: 8px 0;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+      max-height: 60vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      z-index: 1000;
+      width: 240px;
+      flex-direction: column;
+    }
+
+    .has-submenu:hover .submenu {
+      display: flex;
+    }
+
+    .submenu li {
+      padding: 0;
+    }
+
+    .submenu li a {
+      display: block;
+      padding: 8px 16px;
+      color: #eee;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .submenu li a:hover {
+      background: #ffd28c;
+      color: #222;
+    }
+
+    .submenu-header {
+      font-weight: bold;
+      padding: 8px 16px;
+      color: #ffd28c;
+      border-bottom: 1px solid rgba(255,210,140,0.3);
+    }
+
+    .group-header {
+      font-weight: 600;
+      padding: 6px 16px;
+      color: #eee;
+      margin-top: 4px;
+    }
+
+    .separator {
+      height: 1px;
+      background: rgba(255,210,140,0.3);
+      margin: 4px 0;
+    }
+
+    .submenu::-webkit-scrollbar {
+      width: 6px;
+    }
+    .submenu::-webkit-scrollbar-thumb {
+      background: rgba(255,210,140,0.5);
+      border-radius: 3px;
+    }
+    .submenu::-webkit-scrollbar-thumb:hover {
+      background: rgba(255,210,140,0.8);
+    }
+    .submenu {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,210,140,0.5) transparent;
+    }
+
+    .logo-container {
+      position: absolute;
+      top: 100px;
+      left: 40px;
+      z-index: 9;
+    }
+
+    .logo-container img {
+      height: 120px;
+      border-radius: 5px;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .overlay {
+      background: rgba(10, 10, 10, 0.55);
+      text-align: center;
+      padding: 0 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .contenuto {
+      max-width: 900px;
+      margin: 40px auto 0 auto;
+    }
+
+    .titolo-sito {
+      font-size: 3em;
+      color: #fbeec8;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 0 #000, 4px 4px 10px rgba(0, 0, 0, 0.7);
+    }
+
+    .sottotitolo {
+      font-size: 1.4em;
+      font-style: italic;
+      color: #ddd;
+      text-shadow: 1px 1px 2px #000;
+    }
+
+    .incipit-content {
+      max-width: 800px;
+      margin: 40px auto;
+      background: #fff7e6;
+      border: 2px solid #d4b483;
+      padding: 30px;
+      border-radius: 12px;
+      font-size: 1.1em;
+      line-height: 1.7;
+      display: none;
+    }
+
+    .incipit-content p {
+      text-align: justify;
+    }
+
+    .incipit-content h2 {
+      color: #a0865b;
+      text-align: center;
+    }
+
+    .homepage-intro {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <header class="intestazione-sito">
+    <nav class="menu" role="navigation">
+      <ul class="menu-links" id="menu-links">
+        <li>
+          <button class="incipit-button" onclick="toggleIncipit()">
+            Incipit <i id="toggle-symbol" class="fas fa-chevron-down"></i>
+          </button>
+        </li>
+        <li class="has-submenu">
+          <button class="submenu-toggle">Filosofia antica</button>
+          <ul class="submenu">
+            <li class="submenu-header">Presocratici</li>
+            <li class="group-header">Scuola ionica</li>
+            <li><a href="https://casi0048.github.io/talete.html">Talete</a></li>
+            <li><a href="https://casi0048.github.io/Presocratici/anassimandro.html">Anassimandro</a></li>
+            <li><a href="https://casi0048.github.io/Presocratici/anassimene.html">Anassimene</a></li>
+            <li class="separator"></li>
+            <li class="group-header">Pitagorici</li>
+            <li><a href="#">Pitagora</a></li>
+            <li><a href="#">Filolao</a></li>
+            <li class="separator"></li>
+            <li class="group-header">Eraclito</li>
+            <li><a href="#">Eraclito</a></li>
+            <li class="separator"></li>
+            <li class="group-header">Eleatismo</li>
+            <li><a href="https://casi0048.github.io/Presocratici/senofane.html">Senofane</a></li>
+            <li><a href="https://casi0048.github.io/Presocratici/parmenide.html">Parmenide</a></li>
+            <li><a href="#">Zenone</a></li>
+            <li class="separator"></li>
+            <li class="group-header">Pluralisti & Atomisti</li>
+            <li><a href="#">Empedocle</a></li>
+            <li><a href="#">Anassagora</a></li>
+            <li><a href="#">Leucippo</a></li>
+            <li><a href="#">Democrito</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Filosofia medievale</a></li>
+        <li><a href="#">Filosofia moderna</a></li>
+        <li><a href="#">Filosofia contemporanea</a></li>
+        <li><a href="#">Mappa del sito</a></li>
+      </ul>
+    </nav>
+
+    <div class="logo-container">
+      <img src="https://casi0048.github.io/Logo2a.png" alt="Logo" />
+    </div>
+
+    <div class="overlay">
+      <div class="contenuto">
+        <h1 class="titolo-sito">Echi di Sofia</h1>
+        <p class="sottotitolo">L’infinito dialogo tra l’anima e l’universo.</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="homepage-intro" aria-label="Contenuto principale">
+    <div id="incipit" class="incipit-content">
+      <h2>Benvenuti su Echi di Sofia</h2>
+      <p>
+        In un mondo in costante mutamento, dove il rumore spesso sovrasta la riflessione,
+        <strong>Echi di Sofia</strong> nasce come un'oasi di pensiero. Qui, la filosofia non è un mero studio
+        accademico, ma un'esperienza viva, un dialogo senza tempo tra le grandi menti del passato e le domande eterne del presente.
+      </p>
+      <p>
+        Il nostro sito è un invito a esplorare i sentieri della conoscenza, a interrogarsi sul significato
+        dell'esistenza, sulla natura dell'essere e sulla ricerca della felicità.
+      </p>
+      <p>
+        Crediamo che la vera saggezza non sia imposta, ma <em>risuoni</em> nel profondo di ciascuno.
+        "Echi di Sofia" è il luogo dove il silenzio incontra il pensiero, e ogni domanda trova la sua dimora nel vasto giardino della conoscenza.
+      </p>
+    </div>
+  </main>
+
+  <script>
+    function toggleIncipit() {
+      const incipit = document.getElementById("incipit");
+      const icon = document.getElementById("toggle-symbol");
+      const isVisible = incipit.style.display === "block";
+      incipit.style.display = isVisible ? "none" : "block";
+      icon.className = isVisible ? "fas fa-chevron-down" : "fas fa-chevron-up";
+    }
+  </script>
+</body>
+</html>
+
