@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Test Accordion - Echi di Sofia</title>
+  <style>
+    body {
+      font-family: 'Crimson Pro', serif;
+      margin: 20px;
+      background: #fff;
+      color: #333;
+    }
+    .accordion {
+      background-color: #eee;
+      cursor: pointer;
+      padding: 15px 20px;
+      margin-bottom: 5px;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 18px;
+      transition: background-color 0.3s ease;
+      border-radius: 5px;
+    }
+    .accordion:hover {
+      background-color: #ddd;
+    }
+    .accordion.active {
+      background-color: #ccc;
+    }
+    .panel {
+      padding: 0 20px 15px 20px;
+      background-color: white;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      border-radius: 0 0 5px 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Prova Bottoni Apri/Chiudi (Accordion)</h2>
+
+<button class="accordion">Sezione 1: Introduzione</button>
+<div class="panel">
+  <p>Qui puoi inserire il contenuto della prima sezione, che si apre e si chiude al click.</p>
+</div>
+
+<button class="accordion">Sezione 2: Filosofia antica</button>
+<div class="panel">
+  <p>Contenuti della sezione 2, ad esempio informazioni su filosofi antichi.</p>
+</div>
+
+<button class="accordion">Sezione 3: Neoplatonismo</button>
+<div class="panel">
+  <p>Testo e dettagli per la terza sezione con toggle.</p>
+</div>
+
+<script>
+  const acc = document.querySelectorAll('.accordion');
+  acc.forEach(button => {
+    button.addEventListener('click', () => {
+      // Chiudo tutte le sezioni aperte tranne quella cliccata
+      acc.forEach(btn => {
+        if(btn !== button){
+          btn.classList.remove('active');
+          btn.nextElementSibling.style.maxHeight = null;
+        }
+      });
+      // Toggle sulla sezione cliccata
+      button.classList.toggle('active');
+      const panel = button.nextElementSibling;
+      if (panel.style.maxHeight) {
+        panel.style.maxHeight = null;
+      } else {
+        panel.style.maxHeight = panel.scrollHeight + "px";
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
+
