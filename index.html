@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Echi di Sofia</title>
-  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
+  <title>Echi di Sofia - con ricerca</title>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     body {
       margin: 0;
@@ -13,17 +13,17 @@
       color: #333;
     }
 
-    /* === NAVBAR STILE STRIPE === */
     .navbar {
       position: sticky;
       top: 0;
       z-index: 999;
-      background-color: #ffffff;
+      background-color: #fff;
       border-bottom: 1px solid #eaeaea;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 12px 24px;
+      flex-wrap: wrap;
     }
 
     .logo {
@@ -31,6 +31,16 @@
       font-weight: 600;
       color: #222;
       text-decoration: none;
+      margin-right: auto;
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: center;
+      flex-grow: 1;
+      align-items: center;
+      gap: 28px;
+      position: relative;
     }
 
     .nav-links {
@@ -39,25 +49,168 @@
       gap: 28px;
       margin: 0;
       padding: 0;
+      align-items: center;
     }
 
-    .nav-links li a {
+    .nav-links li {
+      position: relative;
+    }
+
+    .nav-links li > a {
       text-decoration: none;
       color: #444;
       font-size: 16px;
+      font-weight: bold;
       padding: 6px 8px;
       transition: color 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      user-select: none;
     }
 
-    .nav-links li a:hover {
+    .nav-links li > a:hover {
       color: #000;
     }
 
-    /* === HAMBURGER === */
+    /* Freccia ▼ / ▲ */
+    .arrow {
+      font-size: 10px;
+      transition: transform 0.3s ease;
+      display: inline-block;
+      user-select: none;
+    }
+
+    /* Rotazione freccia quando aperto */
+    .nav-links li.open > a .arrow {
+      transform: rotate(180deg);
+    }
+
+    /* Dropdown */
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: #fff;
+      min-width: 200px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      z-index: 1000;
+      border-radius: 6px;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    /* Dropdown visibile su hover desktop */
+    @media (hover: hover) and (pointer: fine) {
+      .nav-links li:hover > .dropdown-content {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .nav-links li:hover > a .arrow {
+        transform: rotate(180deg);
+      }
+    }
+
+    /* Dropdown visibile se classe .open (mobile) */
+    .nav-links li.open > .dropdown-content {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .dropdown-content a {
+      display: block;
+      padding: 12px 16px;
+      color: #333;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: normal;
+      transition: background 0.2s ease;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f0f0f0;
+    }
+
+    /* Barra ricerca */
+    .search-wrapper {
+      position: relative;
+      max-width: 220px;
+      width: 100%;
+    }
+
+    .search-wrapper input[type="search"] {
+      width: 100%;
+      padding: 8px 8px 8px 34px;
+      border: 1.5px solid #ccc;
+      border-radius: 9999px;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .search-wrapper input[type="search"]:focus {
+      border-color: #555;
+    }
+
+    .search-wrapper svg {
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      fill: #777;
+      pointer-events: none;
+    }
+
+    /* Box risultati ricerca */
+    .search-results {
+      position: absolute;
+      top: 38px;
+      left: 0;
+      right: 0;
+      max-height: 250px;
+      overflow-y: auto;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      z-index: 1100;
+      font-size: 15px;
+      display: none;
+    }
+
+    .search-results a {
+      display: block;
+      padding: 8px 12px;
+      color: #333;
+      text-decoration: none;
+      border-bottom: 1px solid #eee;
+      transition: background 0.2s ease;
+    }
+
+    .search-results a:hover {
+      background-color: #f0f0f0;
+    }
+
+    .search-results .no-results {
+      padding: 8px 12px;
+      color: #999;
+      cursor: default;
+    }
+
+    /* Hamburger menu */
     .menu-toggle {
       display: none;
       flex-direction: column;
       cursor: pointer;
+      margin-left: auto;
     }
 
     .menu-toggle span {
@@ -66,23 +219,52 @@
       background: #444;
       margin: 4px 0;
       border-radius: 2px;
+      transition: 0.3s;
     }
 
     @media (max-width: 768px) {
-      .nav-links {
+      .nav-container {
         display: none;
-        flex-direction: column;
-        background: #fff;
-        position: absolute;
-        top: 60px;
-        left: 0;
         width: 100%;
-        border-top: 1px solid #eee;
-        padding: 10px 0;
+        flex-direction: column;
+        gap: 0;
+      }
+      .nav-container.open {
+        display: flex;
       }
 
-      .nav-links.open {
-        display: flex;
+      .nav-links {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .nav-links li {
+        width: 100%;
+      }
+
+      .nav-links li > a {
+        padding: 12px 16px;
+        justify-content: space-between;
+      }
+
+      /* Disabilita hover dropdown su mobile */
+      .nav-links li:hover > .dropdown-content {
+        display: none;
+      }
+
+      /* Mostra dropdown se classe .open */
+      .nav-links li.open > .dropdown-content {
+        display: block;
+        opacity: 1;
+        transform: none;
+        box-shadow: none;
+        border-top: 1px solid #eee;
+      }
+
+      /* Barra ricerca */
+      .search-wrapper {
+        max-width: 100%;
+        padding: 12px 16px;
       }
 
       .menu-toggle {
@@ -90,7 +272,6 @@
       }
     }
 
-    /* === HEADER === */
     header {
       text-align: center;
       padding: 60px 20px 30px;
@@ -106,7 +287,6 @@
       color: #777;
     }
 
-    /* === MAIN === */
     main {
       max-width: 800px;
       margin: 0 auto;
@@ -116,44 +296,167 @@
 </head>
 <body>
 
-<!-- MENU STRIPE -->
 <nav class="navbar">
   <a href="#" class="logo">Echi di Sofia</a>
-  <div class="menu-toggle" id="mobile-menu">
+  <div class="menu-toggle" id="mobile-menu" aria-label="Toggle menu" role="button" tabindex="0">
     <span></span>
     <span></span>
     <span></span>
   </div>
-  <ul class="nav-links" id="nav">
-    <li><a href="#">Incipit</a></li>
-    <li><a href="#">Filosofia antica</a></li>
-    <li><a href="#">Filosofia classica</a></li>
-    <li><a href="#">Medioevo / Patristica</a></li>
-    <li><a href="#">Filosofia moderna</a></li>
-    <li><a href="#">Filosofia contemporanea</a></li>
-    <li><a href="#">Contatti</a></li>
-  </ul>
+  <div class="nav-container" id="nav-container">
+    <ul class="nav-links" id="nav">
+      <li>
+        <a href="#">Incipit</a>
+      </li>
+
+      <li>
+        <a href="#">Filosofia antica <span class="arrow">▼</span></a>
+        <div class="dropdown-content">
+          <a href="filosofi/talete.html">Talete</a>
+          <a href="#">Anassimandro</a>
+          <a href="#">Parmenide</a>
+        </div>
+      </li>
+
+      <li>
+        <a href="#">Filosofia classica <span class="arrow">▼</span></a>
+        <div class="dropdown-content">
+          <a href="#">Socrate</a>
+          <a href="#">Platone</a>
+          <a href="#">Aristotele</a>
+        </div>
+      </li>
+
+      <li><a href="#">Medioevo / Patristica</a></li>
+
+      <li>
+        <a href="#">Filosofia moderna <span class="arrow">▼</span></a>
+        <div class="dropdown-content">
+          <a href="#">Cartesio</a>
+          <a href="#">Spinoza</a>
+          <a href="#">Kant</a>
+        </div>
+      </li>
+
+      <li>
+        <a href="#">Filosofia contemporanea <span class="arrow">▼</span></a>
+        <div class="dropdown-content">
+          <a href="#">Nietzsche</a>
+          <a href="#">Heidegger</a>
+          <a href="#">Foucault</a>
+        </div>
+      </li>
+
+      <li>
+        <a href="#">Contatti</a>
+      </li>
+    </ul>
+
+    <!-- Barra ricerca -->
+    <div class="search-wrapper" role="search">
+      <input type="search" id="search-input" placeholder="Cerca..." aria-label="Cerca nel sito" autocomplete="off" />
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16a6.471 6.471 0 004.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM10 14a4 4 0 110-8 4 4 0 010 8z"/>
+      </svg>
+      <div class="search-results" id="search-results" role="listbox" aria-live="polite"></div>
+    </div>
+  </div>
 </nav>
 
-<!-- HEADER -->
 <header>
   <h1>Benvenuto in Echi di Sofia</h1>
-  <p>Un sito dedicato ai maestri del pensiero</p>
+  <p>Il pensiero che attraversa i secoli</p>
 </header>
 
-<!-- CONTENUTO -->
 <main>
-  <p>Questa è una pagina dimostrativa con menu ispirato a <strong>Stripe</strong>. Puoi cliccare sulle voci per navigare o personalizzarle con link reali.</p>
-
-  <p>Vuoi che le voci aprano dropdown con filosofi? Posso aggiungerli subito.</p>
+  <p>Menu con ricerca reale che filtra i filosofi e le sezioni.</p>
 </main>
 
-<!-- SCRIPT RESPONSIVE -->
 <script>
+  // Mobile menu toggle
   const toggle = document.getElementById('mobile-menu');
-  const nav = document.getElementById('nav');
+  const navContainer = document.getElementById('nav-container');
+  const navItems = document.querySelectorAll('.nav-links > li');
+
   toggle.addEventListener('click', () => {
-    nav.classList.toggle('open');
+    navContainer.classList.toggle('open');
+  });
+
+  navItems.forEach(item => {
+    item.addEventListener('click', e => {
+      if (window.innerWidth <= 768) {
+        if (item.querySelector('.dropdown-content')) {
+          e.preventDefault();
+          item.classList.toggle('open');
+        }
+      }
+    });
+  });
+
+  // Ricerca reale
+  const searchInput = document.getElementById('search-input');
+  const resultsBox = document.getElementById('search-results');
+
+  // Lista dati da cercare: testo e link
+  const items = [
+    {name: "Incipit", href: "#"},
+    {name: "Filosofia antica", href: "#"},
+    {name: "Talete", href: "filosofi/talete.html"},
+    {name: "Anassimandro", href: "#"},
+    {name: "Parmenide", href: "#"},
+    {name: "Filosofia classica", href: "#"},
+    {name: "Socrate", href: "#"},
+    {name: "Platone", href: "#"},
+    {name: "Aristotele", href: "#"},
+    {name: "Medioevo / Patristica", href: "#"},
+    {name: "Filosofia moderna", href: "#"},
+    {name: "Cartesio", href: "#"},
+    {name: "Spinoza", href: "#"},
+    {name: "Kant", href: "#"},
+    {name: "Filosofia contemporanea", href: "#"},
+    {name: "Nietzsche", href: "#"},
+    {name: "Heidegger", href: "#"},
+    {name: "Foucault", href: "#"},
+    {name: "Contatti", href: "#"}
+  ];
+
+  function filterItems(query) {
+    if (!query) {
+      resultsBox.style.display = 'none';
+      resultsBox.innerHTML = '';
+      return;
+    }
+    const filtered = items.filter(item =>
+      item.name.toLowerCase().includes(query.toLowerCase())
+    );
+    if (filtered.length === 0) {
+      resultsBox.innerHTML = '<div class="no-results">Nessun risultato</div>';
+      resultsBox.style.display = 'block';
+      return;
+    }
+    resultsBox.innerHTML = filtered.map(item => 
+      `<a href="${item.href}" role="option" tabindex="0">${item.name}</a>`
+    ).join('');
+    resultsBox.style.display = 'block';
+  }
+
+  searchInput.addEventListener('input', e => {
+    filterItems(e.target.value);
+  });
+
+  // Chiudi risultati se clicco fuori
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.search-wrapper')) {
+      resultsBox.style.display = 'none';
+    }
+  });
+
+  // Supporto tastiera per selezione risultati (opzionale)
+  resultsBox.addEventListener('keydown', e => {
+    if (e.key === "Escape") {
+      resultsBox.style.display = 'none';
+      searchInput.focus();
+    }
   });
 </script>
 
