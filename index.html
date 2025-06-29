@@ -4,20 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Echi di Sofia</title>
-
-  <!-- Font e icone -->
-  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="stile.css" />
-  <link rel="icon" type="image/png" href="https://casi0048.github.io/favicon_io/favicon-16x16.png">
-
-
-
-   
-<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-  <!-- Stili personalizzati -->
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    /* STILI GENERALI */
     body {
       margin: 0;
       font-family: 'Crimson Pro', serif;
@@ -25,500 +13,149 @@
       color: #333;
     }
 
-    /* HEADER */
-    header.intestazione-sito {
-      position: relative;
-      height: 300px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-
-    .overlay {
-      position: absolute;
+    /* === NAVBAR STILE STRIPE === */
+    .navbar {
+      position: sticky;
       top: 0;
-      left: 0;
-      width: 100%;
-      height: 300px;
-      background-image: url('https://casi0048.github.io/header.jpg');
-      background-size: cover;
-      background-position: center;
-      z-index: -1;
+      z-index: 999;
+      background-color: #ffffff;
+      border-bottom: 1px solid #eaeaea;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
+      padding: 12px 24px;
     }
 
-    .logo-container {
-      display: flex;
-      justify-content: center;
-      margin-top: 0px;
-    }
-
-    .logo-container img {
-      height: 100px;
-      animation: fadeIn 2s ease-in-out;
-    }
-
-    .contenuto {
-      color: #fff;
-      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
-      margin: 0;
-      padding: 0 10px;
-    }
-
-    .titolo-sito {
-      font-size: 3.2rem;
-      margin: 0;
-      animation: pulseTitle 4s ease-in-out infinite alternate;
-    }
-
-    .sottotitolo {
-      font-size: 1.4rem;
-      margin-top: 10px;
-      opacity: 0;
-      animation: slideFade 3s ease forwards;
-      animation-delay: 1s;
-    }
-
-    /* MENU */
-    .menu-links {
-      display: flex;
-      flex-wrap: wrap;
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .submenu {
-      max-height: 300px;
-      overflow-y: auto;
-    }
-
-    /* SEZIONE PULSANTE FILOSOFI */
-    .filosofi-section {
-      text-align: center;
-      margin: 60px 0 40px;
-    }
-.filosofi-section button {
-  /* POSIZIONAMENTO (CORRETTO) */
-  display: block; /* Importante per margin: auto */
-  margin: 20px auto 0; /* Centratura orizzontale automatica */
-  position: relative; /* Rimuovi se non serve per altri effetti */
-  left: auto; /* Rimuovi il left: 50% */
-  transform: none; /* Rimuovi transform: translateX(-50%) */
-
-    
-      background: linear-gradient(135deg, #4a6fa5, #3a5a80);
-      color: white;
-      border: none;
-      padding: 14px 32px;
-      font-size: 1.1rem;
-      border-radius: 30px;
-      cursor: pointer;
-      font-family: 'Crimson Pro', serif;
+    .logo {
+      font-size: 22px;
       font-weight: 600;
-      letter-spacing: 0.5px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      transition: all 0.3s ease;
-      text-transform: uppercase;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+      color: #222;
+      text-decoration: none;
     }
 
-    .filosofi-section button:hover {
-      background: linear-gradient(135deg, #3a5a80, #2a4a70);
-      transform: translateX(-50%) scale(1.05);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
-    }
-
-    .filosofi-section button:active {
-      transform: translateX(-50%) scale(0.98);
-    }
-
-    /* IMMAGINI ROTANTI */
-    .rotating-images-container {
+    .nav-links {
+      list-style: none;
       display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 30px;
-      margin: 40px auto;
-      max-width: 1200px;
-      padding: 0 20px;
+      gap: 28px;
+      margin: 0;
+      padding: 0;
     }
 
-    .image-card {
-      width: 300px;
-      perspective: 1000px;
+    .nav-links li a {
+      text-decoration: none;
+      color: #444;
+      font-size: 16px;
+      padding: 6px 8px;
+      transition: color 0.3s ease;
     }
 
-    .image-container {
-      position: relative;
-      width: 100%;
-      height: 300px;
-      transform-style: preserve-3d;
-      animation: rotate 20s infinite linear;
+    .nav-links li a:hover {
+      color: #000;
     }
 
-    .image-container:hover {
-      animation-play-state: paused;
-    }
-
-    .image-front, .image-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      border-radius: 8px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      overflow: hidden;
-      display: flex;
+    /* === HAMBURGER === */
+    .menu-toggle {
+      display: none;
       flex-direction: column;
-      justify-content: flex-end;
+      cursor: pointer;
     }
 
-    .image-front {
-      background-size: cover;
-      background-position: center;
-      transform: rotateY(0deg);
+    .menu-toggle span {
+      height: 3px;
+      width: 25px;
+      background: #444;
+      margin: 4px 0;
+      border-radius: 2px;
     }
 
-    .image-back {
-      background-size: cover;
-      background-position: center;
-      transform: rotateY(180deg);
-    }
-
-    .caption {
-      background: rgba(0,0,0,0.7);
-      color: white;
-      padding: 15px;
-      text-align: center;
-      font-size: 1rem;
-    }
-
-    /* ANIMAZIONI */
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes pulseTitle {
-      0% { transform: scale(1) rotate(0deg); opacity: 0.85; }
-      50% { transform: scale(1.1) rotate(3deg); opacity: 1; }
-      100% { transform: scale(1) rotate(0deg); opacity: 0.85; }
-    }
-
-    @keyframes slideFade {
-      0% { transform: translateY(25px); opacity: 0; }
-      100% { transform: translateY(0); opacity: 1; }
-    }
-
-    @keyframes rotate {
-      0% { transform: rotateY(0deg); }
-      25% { transform: rotateY(180deg); }
-      50% { transform: rotateY(180deg); }
-      75% { transform: rotateY(360deg); }
-      100% { transform: rotateY(360deg); }
-    }
-
-    /* RESPONSIVE */
     @media (max-width: 768px) {
-      .rotating-images-container {
+      .nav-links {
+        display: none;
         flex-direction: column;
-        align-items: center;
+        background: #fff;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        border-top: 1px solid #eee;
+        padding: 10px 0;
       }
-      .image-card {
-        width: 90%;
-        margin-bottom: 30px;
+
+      .nav-links.open {
+        display: flex;
       }
-      .filosofi-section button {
-        padding: 12px 24px;
-        font-size: 1rem;
-        width: 90%;
-        max-width: 300px;
+
+      .menu-toggle {
+        display: flex;
       }
+    }
+
+    /* === HEADER === */
+    header {
+      text-align: center;
+      padding: 60px 20px 30px;
+    }
+
+    header h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 18px;
+      color: #777;
+    }
+
+    /* === MAIN === */
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px 20px;
     }
   </style>
 </head>
-
 <body>
-  <header class="intestazione-sito">
-    <div class="overlay"></div>
 
-    <nav class="menu" role="navigation" aria-label="Menu principale">
-      <ul class="menu-links" id="menu-links">
-        <li>
-          <button class="incipit-button" onclick="toggleIncipit()" aria-expanded="false" aria-controls="incipit">
-            Incipit <i id="toggle-symbol" class="fas fa-chevron-down" aria-hidden="true"></i>
-          </button>
-        </li>
-        <!-- Qui il resto del menu, come già configurato -->
-<!-- Filosofia antica -->
-   <!-- Filosofia antica -->
-<li class="has-submenu" tabindex="0">
-  <button class="submenu-toggle" aria-haspopup="true" aria-expanded="false">Filosofia antica</button>
-  <ul class="submenu" role="menu" aria-label="Filosofia antica">
-
-    <li class="submenu-header">Presocratici</li>
-    <li class="group-header">Scuola ionica</li>
-    <li><a href="https://casi0048.github.io/talete.html" role="menuitem">Talete</a></li>
-    <li><a href="https://casi0048.github.io/Presocratici/anassimandro.html" role="menuitem">Anassimandro</a></li>
-    <li><a href="https://casi0048.github.io/Presocratici/anassimene.html" role="menuitem">Anassimene</a></li>
-
-    <li class="separator"></li>
-    <li class="group-header">Pitagorici</li>
-    <li><a href="#" role="menuitem">Pitagora</a></li>
-    <li><a href="#" role="menuitem">Filolao</a></li>
-
-    <li class="separator"></li>
-    <li class="group-header">Eraclito</li>
-    <li><a href="#" role="menuitem">Eraclito</a></li>
-
-    <li class="separator"></li>
-    <li class="group-header">Eleatismo</li>
-    <li><a href="https://casi0048.github.io/Presocratici/senofane.html" role="menuitem">Senofane</a></li>
-    <li><a href="https://casi0048.github.io/Presocratici/parmenide.html" role="menuitem">Parmenide</a></li>
-    <li><a href="#" role="menuitem">Zenone</a></li>
-
-    <li class="separator"></li>
-    <li class="group-header">Pluralisti & Atomisti</li>
-    <li><a href="#" role="menuitem">Empedocle</a></li>
-    <li><a href="#" role="menuitem">Anassagora</a></li>
-    <li><a href="#" role="menuitem">Leucippo</a></li>
-    <li><a href="#" role="menuitem">Democrito</a></li>
-
-    <li class="separator"></li>
-    <li class="submenu-header">Sofisti</li>
-    <li><a href="https://casi0048.github.io/sofisti/protagora.html" role="menuitem">Protagora</a></li>
-    <li><a href="https://casi0048.github.io/sofisti/gorgia.html" role="menuitem">Gorgia</a></li>
-
-    <li class="separator"></li>
-    <li class="submenu-header">Filosofi classici</li>
-    <li><a href="#" role="menuitem">Socrate</a></li>
-    <li><a href="#" role="menuitem">Platone</a></li>
-    <li><a href="#" role="menuitem">Aristotele</a></li>
-    <!-- Carica le immagini su GitHub e sostituisci i # con URL validi -->
-
-    <li class="separator"></li>
-    <li class="submenu-header">Filosofia ellenistica</li>
-    <li><a href="#" role="menuitem">Epicuro</a></li>
-    <li><a href="#" role="menuitem">Zeno di Cizio</a></li>
-    <li><a href="#" role="menuitem">Pirrone</a></li>
-
+<!-- MENU STRIPE -->
+<nav class="navbar">
+  <a href="#" class="logo">Echi di Sofia</a>
+  <div class="menu-toggle" id="mobile-menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <ul class="nav-links" id="nav">
+    <li><a href="#">Incipit</a></li>
+    <li><a href="#">Filosofia antica</a></li>
+    <li><a href="#">Filosofia classica</a></li>
+    <li><a href="#">Medioevo / Patristica</a></li>
+    <li><a href="#">Filosofia moderna</a></li>
+    <li><a href="#">Filosofia contemporanea</a></li>
+    <li><a href="#">Contatti</a></li>
   </ul>
-</li>
+</nav>
 
-        <!-- Filosofia medievale -->
-        <li class="has-submenu" tabindex="0">
-          <button class="submenu-toggle" aria-haspopup="true" aria-expanded="false">Filosofia medievale</button>
-          <ul class="submenu" role="menu" aria-label="Filosofia medievale">
-            <li><a href="https://casi0048.github.io/medievali/agostino.html" role="menuitem">Agostino d'Ippona</a></li>
-            <li><a href="https://casi0048.github.io/medievali/tommaso.html" role="menuitem">Tommaso d'Aquino</a></li>
-            <li><a href="https://casi0048.github.io/medievali/duns_scoto.html" role="menuitem">Duns Scoto</a></li>
-            <li><a href="https://casi0048.github.io/medievali/ockham.html" role="menuitem">Guglielmo di Ockham</a></li>
-          </ul>
-        </li>
+<!-- HEADER -->
+<header>
+  <h1>Benvenuto in Echi di Sofia</h1>
+  <p>Un sito dedicato ai maestri del pensiero</p>
+</header>
 
-        <!-- Filosofia patristica -->
-        <li class="has-submenu" tabindex="0">
-          <button class="submenu-toggle" aria-haspopup="true" aria-expanded="false">Filosofia patristica</button>
-          <ul class="submenu" role="menu" aria-label="Filosofia patristica">
-            <li><a href="#" role="menuitem">Origene</a></li>
-            <li><a href="#" role="menuitem">Tertulliano</a></li>
-            <li><a href="#" role="menuitem">Clemente di Alessandria</a></li>
-            <li><a href="#" role="menuitem">Gregorio di Nissa</a></li>
-          </ul>
-        </li>
+<!-- CONTENUTO -->
+<main>
+  <p>Questa è una pagina dimostrativa con menu ispirato a <strong>Stripe</strong>. Puoi cliccare sulle voci per navigare o personalizzarle con link reali.</p>
 
-        <!-- Filosofia moderna -->
-        <li class="has-submenu" tabindex="0">
-          <button class="submenu-toggle" aria-haspopup="true" aria-expanded="false">Filosofia moderna</button>
-          <ul class="submenu" role="menu" aria-label="Filosofia moderna">
-            <li><a href="https://casi0048.github.io/moderna/cartesio.html" role="menuitem">Cartesio</a></li>
-            <li><a href="https://casi0048.github.io/moderna/spinoza.html" role="menuitem">Spinoza</a></li>
-            <li><a href="https://casi0048.github.io/moderna/leibniz.html" role="menuitem">Leibniz</a></li>
-            <li><a href="https://casi0048.github.io/moderna/locke.html" role="menuitem">Locke</a></li>
-            <li><a href="https://casi0048.github.io/moderna/kant.html" role="menuitem">Kant</a></li>
-          </ul>
-        </li>
+  <p>Vuoi che le voci aprano dropdown con filosofi? Posso aggiungerli subito.</p>
+</main>
 
-        <!-- Filosofia contemporanea -->
-        <li class="has-submenu" tabindex="0">
-          <button class="submenu-toggle" aria-haspopup="true" aria-expanded="false">Filosofia contemporanea</button>
-          <ul class="submenu" role="menu" aria-label="Filosofia contemporanea">
-            <li><a href="https://casi0048.github.io/contemporanea/hegel.html" role="menuitem">Hegel</a></li>
-            <li><a href="https://casi0048.github.io/contemporanea/marx.html" role="menuitem">Marx</a></li>
-            <li><a href="https://casi0048.github.io/contemporanea/heidegger.html" role="menuitem">Heidegger</a></li>
-            <li><a href="https://casi0048.github.io/contemporanea/sartre.html" role="menuitem">Sartre</a></li>
-            <li><a href="https://casi0048.github.io/contemporanea/wittgenstein.html" role="menuitem">Wittgenstein</a></li>
-          </ul>
-        </li>
-      </ul>
-    </nav>
-   
-    <div class="logo-container">
-      <img src="https://casi0048.github.io/Logo2a.png" alt="Logo" />
-    </div>
-
-    <div class="contenuto">
-      <h1 class="titolo-sito">Echi di Sofia</h1>
-      <p class="sottotitolo">L'infinito dialogo tra l'anima e l'universo.</p>
-    </div>
-  </header>
-
-  <!-- Sezione con pulsante popover e immagini rotanti -->
-  <section class="filosofi-section">
-    <button popovertarget="mypopover">Hanno forgiato le fondamenta del pensiero e della civiltà occidentale.</button>
-
-    <div popover="auto" id="mypopover">
-      <h2>I Grandi Filosofi Greci</h2>
-      
-      <div class="filosofi-container">
-        <div class="filosofo-card">
-          <img src="/home/casimiro/Immagini/immagini per sito/Socrates_Louvre.jpg" alt="Socrate">
-          <p>Socrate</p>
-          <div class="filosofo-quote">«Conosci te stesso»</div>
-        </div>
-        
-        <div class="filosofo-card">
-          <img src="/home/casimiro/Immagine JPEG (image/jpeg)/platone.jpg" alt="Platone">
-          <p>Platone</p>
-          <div class="filosofo-quote">«Solo le idee sono eterne»</div>
-        </div>
-        
-        <div class="filosofo-card">
-          <img src="mmagine JPEG (image/jpeg)/aristotele.jpg" alt="Aristotele">
-          <p>Aristotele</p>
-          <div class="filosofo-quote">«L'anima è ciò che rende vivo un corpo»</div>
-        </div>
-      </div>
-      
-      <button class="close-btn" popovertarget="mypopover" popovertargetaction="hide">Chiudi</button>
-    </div>
-
-    <!-- Sezione immagini rotanti -->
-<div class="rotating-images-container">
-  <!-- Socrate -->
-  <div class="image-card">
-    <div class="image-container">
-      <div class="image-front" style="background-image: url('immagini/Socrates_Louvre_copia.jpg');">
-        <div class="caption">«Conosci te stesso» - Socrate</div>
-      </div>
-      <div class="image-back" style="background-image: url('immagini/Socrates_Louvre2.jpg');">
-        <div class="caption">Socrate insegna ai discepoli</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Platone -->
-  <div class="image-card">
-    <div class="image-container">
-      <div class="image-front" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/2d/Plato_Pio-Clemetino_Inv305.jpg');">
-        <div class="caption">«Solo le idee sono eterne» - Platone</div>
-      </div>
-      <div class="image-back" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/4/49/Plato_Silanion_Musei_Capitolini_MC1377.jpg');">
-        <div class="caption">Platone e l'Accademia</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Aristotele -->
-  <div class="image-card">
-    <div class="image-container">
-      <div class="image-front" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/5d/Aristotle_Altemps_Inv8575.jpg');">
-        <div class="caption">«L'anima è ciò che rende vivo un corpo» - Aristotele</div>
-      </div>
-      <div class="image-back" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ef/Aristotle_Altemps_Inv8575_2.jpg');">
-        <div class="caption">Aristotele e il Liceo</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-  
-  </section>
-
-  <main class="homepage-intro" aria-label="Contenuto principale">
-    <div id="incipit" class="incipit-content" aria-hidden="true">
-      <h2>Benvenuti su Echi di Sofia</h2>
-      <p>
-        In un mondo in costante mutamento, dove il rumore spesso sovrasta la riflessione,
-        <strong>Echi di Sofia</strong> nasce come un'oasi di pensiero. Qui, la filosofia non è un mero studio
-        accademico, ma un'esperienza viva, un dialogo senza tempo tra le grandi menti del passato e le domande eterne del presente.
-      </p>
-      <p>
-        Il nostro sito è un invito a esplorare i sentieri della conoscenza, a interrogarsi sul significato
-        dell'esistenza, sulla natura dell'essere e sulla ricerca della felicità.
-      </p>
-      <p>
-        Crediamo che la vera saggezza non sia imposta, ma <em>risuoni</em> nel profondo di ciascuno.
-        "Echi di Sofia" è il luogo dove il silenzio incontra il pensiero, e ogni domanda trova la sua dimora nel vasto giardino della conoscenza.
-      </p>
-    </div>
-  </main>
-
-  <script>
-    // Funzione per il pulsante Incipit (funzionante)
-    function toggleIncipit() {
-      const incipit = document.getElementById("incipit");
-      const icon = document.getElementById("toggle-symbol");
-      const button = document.querySelector(".incipit-button");
-      const isVisible = incipit.style.display === "block";
-
-      incipit.style.display = isVisible ? "none" : "block";
-      incipit.setAttribute("aria-hidden", isVisible ? "true" : "false");
-      icon.className = isVisible ? "fas fa-chevron-down" : "fas fa-chevron-up";
-      button.setAttribute("aria-expanded", !isVisible);
-    }
-
-    // Funzione per il popover (se necessario)
-    document.addEventListener('DOMContentLoaded', function() {
-      const popoverBtn = document.querySelector('[popovertarget="mypopover"]');
-      const popover = document.getElementById("mypopover");
-      
-      // Aggiungi gestori eventi se necessario
-      popoverBtn.addEventListener('click', function() {
-        // Logica aggiuntiva se serve
-      });
-    });
-  </script>
- 
-  <!----------------------------------------------->
-<footer style="position: relative; height: 180px; margin-top: 50px; overflow: hidden;">
-  <img src="immagini per sito/Socrates_Louvre.jpg"
-       alt="Socrate oscillante"
-       class="socrate-oscillante" />
-</footer>
-
-<style>
-.socrate-oscillante {
-  position: absolute;
-  bottom: 0;
-  width: 120px;
-  height: 150px;
-  animation: oscilla-larga 6s ease-in-out infinite;
-}
-
-@keyframes oscilla-larga {
-  0%   { left: 0; }
-  50%  { left: calc(100% - 120px); }
-  100% { left: 0; }
-}
-</style>
-
+<!-- SCRIPT RESPONSIVE -->
+<script>
+  const toggle = document.getElementById('mobile-menu');
+  const nav = document.getElementById('nav');
+  toggle.addEventListener('click', () => {
+    nav.classList.toggle('open');
+  });
+</script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
