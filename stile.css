@@ -5,6 +5,7 @@ body {
   color: #333;
 }
 
+/* Navbar */
 .navbar {
   position: sticky;
   top: 0;
@@ -54,12 +55,10 @@ body {
   font-size: 16px;
   font-weight: bold;
   padding: 6px 8px;
-  transition: color 0.3s ease;
-  cursor: pointer;
   display: flex;
   align-items: center;
   gap: 6px;
-  user-select: none;
+  transition: color 0.3s ease;
 }
 
 .nav-links li > a:hover {
@@ -69,42 +68,30 @@ body {
 .arrow {
   font-size: 10px;
   transition: transform 0.3s ease;
-  display: inline-block;
-  user-select: none;
 }
 
 .nav-links li.open > a .arrow {
   transform: rotate(180deg);
 }
 
+/* Dropdown base */
 .dropdown-content {
   display: none;
   position: absolute;
   top: 100%;
   left: 0;
-  background-color: #fff;
+  background: #fff;
   min-width: 200px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-  z-index: 1000;
   border-radius: 6px;
-  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
   opacity: 0;
   transform: translateY(-10px);
   transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 1000;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .nav-links li:hover > .dropdown-content {
-    display: block;
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .nav-links li:hover > a .arrow {
-    transform: rotate(180deg);
-  }
-}
-
-.nav-links li.open > .dropdown-content {
+.nav-links li.open > .dropdown-content,
+.nav-links li:hover > .dropdown-content {
   display: block;
   opacity: 1;
   transform: translateY(0);
@@ -113,311 +100,91 @@ body {
 .dropdown-content a {
   display: block;
   padding: 12px 16px;
+  font-size: 15px;
   color: #333;
   text-decoration: none;
-  font-size: 15px;
-  font-weight: normal;
-  transition: background 0.2s ease;
 }
 
 .dropdown-content a:hover {
   background-color: #f0f0f0;
 }
 
-.dropdown-content.two-column {
-  display: flex !important;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 32px;
-  padding: 16px;
-  min-width: 440px;
-  background-color: #fff;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  border-radius: 6px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  z-index: 1000;
-}
-
-.nav-links li.open > .dropdown-content.two-column,
-.nav-links li:hover > .dropdown-content.two-column {
-  display: flex;
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.dropdown-content.two-column .column {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.dropdown-content.two-column .separator {
-  padding-left: 24px;
-  border-left: 1px solid #eaeaea;
-}
-
-.dropdown-content .column-title {
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: #444;
-}
-
-@media (max-width: 768px) {
-  .dropdown-content.two-column {
-    flex-direction: column;
-  }
-  .dropdown-content.two-column .separator {
-    border-left: none;
-    padding-left: 0;
-    margin-top: 16px;
-  }
-}
-
-.search-wrapper {
-  position: relative;
-  max-width: 220px;
-  width: 100%;
-}
-
-.search-wrapper input[type="search"] {
-  width: 100%;
-  padding: 8px 8px 8px 34px;
-  border: 1.5px solid #ccc;
-  border-radius: 9999px;
-  font-size: 15px;
-  outline: none;
-  transition: border-color 0.3s ease;
-}
-
-.search-wrapper input[type="search"]:focus {
-  border-color: #555;
-}
-
-.search-wrapper svg {
-  position: absolute;
-  top: 50%;
-  left: 10px;
-  transform: translateY(-50%);
-  width: 16px;
-  height: 16px;
-  fill: #777;
-  pointer-events: none;
-}
-
-.search-results {
-  position: absolute;
-  top: 38px;
-  left: 0;
-  right: 0;
-  max-height: 250px;
-  overflow-y: auto;
-  background: white;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-  z-index: 1100;
-  font-size: 15px;
-  display: none;
-}
-
-.search-results a {
-  display: block;
-  padding: 8px 12px;
-  color: #333;
-  text-decoration: none;
-  border-bottom: 1px solid #eee;
-  transition: background 0.2s ease;
-}
-
-.search-results a:hover {
-  background-color: #f0f0f0;
-}
-
-.search-results .no-results {
-  padding: 8px 12px;
-  color: #999;
-  cursor: default;
-}
-
-.menu-toggle {
-  display: none;
-  flex-direction: column;
-  cursor: pointer;
-  margin-left: auto;
-}
-
-.menu-toggle span {
-  height: 3px;
-  width: 25px;
-  background: #444;
-  margin: 4px 0;
-  border-radius: 2px;
-  transition: 0.3s;
-}
-
+/* Responsive menu */
 @media (max-width: 768px) {
   .nav-container {
     display: none;
     width: 100%;
     flex-direction: column;
-    gap: 0;
   }
   .nav-container.open {
     display: flex;
   }
-
   .nav-links {
     flex-direction: column;
-    gap: 0;
   }
-
-  .nav-links li {
-    width: 100%;
-  }
-
-  .nav-links li > a {
-    padding: 12px 16px;
-    justify-content: space-between;
-  }
-
-  .nav-links li:hover > .dropdown-content {
-    display: none;
-  }
-
-  .nav-links li.open > .dropdown-content {
-    display: block;
-    opacity: 1;
-    transform: none;
-    box-shadow: none;
-    border-top: 1px solid #eee;
-  }
-
-  .search-wrapper {
-    max-width: 100%;
-    padding: 12px 16px;
-  }
-
   .menu-toggle {
     display: flex;
+    flex-direction: column;
+    cursor: pointer;
+  }
+  .menu-toggle span {
+    height: 3px;
+    width: 25px;
+    background: #444;
+    margin: 4px 0;
+    border-radius: 2px;
   }
 }
-<header>
-  <div class="intestazione-riga">
-    <img src="immagini/logo-filosofia.svg" alt="Simbolo filosofico" class="logo-header" />
-    <div class="testo-header">
-      <h1>Benvenuto in <strong>Echi di Sofia</strong></h1>
-      <p>Il pensiero che attraversa i secoli</p>
-    </div>
-  </div>
 
-  <blockquote class="citazione">
-    “L’anima ragiona, ama, contempla – e da questo nasce la civiltà.”
-  </blockquote>
-
-  <a href="#filosofi" class="cta-btn">Loro hanno creato la civiltà del pensiero</a>
-</header>
-
+/* Header compatto */
 header {
-  padding: 12px 16px;
+  padding: 8px 16px;
   background: linear-gradient(to bottom, #f9f9f9, #ffffff);
-  text-align: center;
 }
 
-.intestazione-compatta {
+.intestazione-riga {
   display: flex;
   align-items: center;
+  gap: 12px;
   justify-content: center;
-  gap: 16px;
   flex-wrap: wrap;
   text-align: left;
 }
 
-.intestazione-compatta img {
-  width: 60px;
+.logo-header {
+  width: 50px;
   height: auto;
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
-.testo-intestazione h1 {
-  font-size: 26px;
+.testo-header h1 {
+  font-size: 22px;
   margin: 0;
   color: #111;
 }
 
-.testo-intestazione p {
-  font-size: 15px;
+.testo-header p {
+  font-size: 14px;
   color: #666;
   margin: 2px 0 0;
 }
 
 .citazione {
   font-style: italic;
-  font-size: 14px;
+  font-size: 13px;
   color: #555;
-  margin: 8px auto 12px;
+  margin: 6px auto 10px;
   max-width: 500px;
-  opacity: 0;
-  animation: fadeIn 1.5s ease-in-out forwards;
-  animation-delay: 0.3s;
-}
-
-.cta-btn {
-  display: inline-block;
-  margin-top: 6px;
-  padding: 8px 18px;
-  font-size: 14px;
-  font-weight: 600;
-  color: white;
-  background: #222;
-  border-radius: 9999px;
-  text-decoration: none;
-  transition: background 0.3s ease, box-shadow 0.3s ease;
-}
-
-.cta-btn:hover {
-  background: #000;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
-}
-
-header {
   text-align: center;
-  padding: 12px 10px 16px;
-  background: linear-gradient(to bottom, #f9f9f9, #ffffff);
-}
-
-header h1 {
-  font-size: 28px;
-  margin-bottom: 4px;
-  color: #111;
-}
-
-header p {
-  font-size: 15px;
-  color: #666;
-  margin-bottom: 8px;
-}
-
-header img {
-  max-width: 90px;
-  margin: 8px auto;
-  display: block;
-  opacity: 0.85;
-}
-
-.citazione {
-  font-style: italic;
-  font-size: 14px;
-  color: #555;
-  margin: 6px auto 12px;
-  max-width: 500px;
   opacity: 0;
   animation: fadeIn 1.5s ease-in-out forwards;
   animation-delay: 0.3s;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
 }
 
 .cta-btn {
@@ -437,18 +204,9 @@ header img {
   background: #000;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
 }
-
 
 main {
   max-width: 800px;
   margin: 0 auto;
   padding: 30px 20px;
-}
-
-.icon {
-  width: 16px;
-  height: 16px;
-  fill: #888;
-  margin-right: 8px;
-  vertical-align: middle;
 }
