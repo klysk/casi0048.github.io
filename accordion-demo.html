@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Echi di Sofia – Sezioni Apribili</title>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Crimson Pro', serif;
+      background-color: #ffffff;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #f9f9f9;
+      padding: 30px 20px;
+      text-align: center;
+      border-bottom: 1px solid #ccc;
+    }
+
+    header h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 18px;
+      color: #666;
+    }
+
+    main {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .accordion {
+      background-color: #f0f0f0;
+      cursor: pointer;
+      padding: 14px 20px;
+      margin-bottom: 6px;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 18px;
+      transition: background-color 0.3s ease;
+      border-radius: 8px;
+      font-weight: bold;
+      color: #444;
+    }
+
+    .accordion:hover {
+      background-color: #e0e0e0;
+    }
+
+    .accordion.active {
+      background-color: #d0d0d0;
+      color: #222;
+    }
+
+    .panel {
+      padding: 0 20px 15px 20px;
+      background-color: #fff;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      margin-bottom: 12px;
+      font-size: 17px;
+      line-height: 1.5;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Echi di Sofia</h1>
+  <p>Pagina di prova con sezioni espandibili</p>
+</header>
+
+<main>
+
+  <button class="accordion">🟢 Introduzione al pensiero filosofico</button>
+  <div class="panel">
+    <p>La filosofia nasce dal desiderio di comprendere il senso dell’esistenza e il funzionamento dell’universo. Fin dall’antichità, i filosofi hanno cercato risposte alle grandi domande della vita.</p>
+  </div>
+
+  <button class="accordion">🟡 Filosofia antica: dai Presocratici a Platone</button>
+  <div class="panel">
+    <p>I Presocratici, come Talete e Anassimandro, cercavano il principio primo dell’universo. Con Socrate e Platone, la riflessione si sposta sull’anima, sull’etica e sulla giustizia.</p>
+  </div>
+
+  <button class="accordion">🔵 Neoplatonismo e visione spirituale</button>
+  <div class="panel">
+    <p>Il Neoplatonismo, con Plotino e Proclo, interpreta il mondo come emanazione dell’Uno. La realtà sensibile è solo un riflesso della verità eterna, e l’anima aspira a tornare alla sua origine divina.</p>
+  </div>
+
+</main>
+
+<script>
+  const acc = document.querySelectorAll('.accordion');
+  acc.forEach(button => {
+    button.addEventListener('click', () => {
+      acc.forEach(btn => {
+        if(btn !== button){
+          btn.classList.remove('active');
+          btn.nextElementSibling.style.maxHeight = null;
+        }
+      });
+      button.classList.toggle('active');
+      const panel = button.nextElementSibling;
+      if (panel.style.maxHeight) {
+        panel.style.maxHeight = null;
+      } else {
+        panel.style.maxHeight = panel.scrollHeight + "px";
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
+
