@@ -1,4 +1,4 @@
-/* RESET BASE */
+/* Reset base */
 body {
   margin: 0;
   font-family: 'Crimson Pro', serif;
@@ -6,167 +6,7 @@ body {
   color: #333;
 }
 
-/* NAVBAR */
-.navbar {
-  position: sticky;
-  top: 0;
-  z-index: 999;
-  background-color: #fff;
-  border-bottom: 1px solid #eaeaea;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 24px;
-  flex-wrap: wrap;
-}
-.navbar i,
-.dropdown-content i,
-.nav-links i,
-.icon svg,
-.icon i,
-.icon img {
-  font-size: 13px;
-  width: 13px;
-  height: 13px;
-  max-width: 13px;
-  max-height: 13px;
-  fill: #666;
-  color: #666;
-  margin-right: 6px;
-  vertical-align: middle;
-  flex-shrink: 0;
-}
-
-.logo {
-  font-size: 22px;
-  font-weight: 600;
-  color: #222;
-  text-decoration: none;
-  margin-right: auto;
-}
-
-.nav-container {
-  display: flex;
-  justify-content: center;
-  flex-grow: 1;
-  align-items: center;
-  gap: 28px;
-  position: relative;
-}
-
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 28px;
-  margin: 0;
-  padding: 0;
-  align-items: center;
-}
-
-.nav-links li {
-  position: relative;
-}
-
-.nav-links li > a {
-  text-decoration: none;
-  color: #444;
-  font-size: 16px;
-  font-weight: bold;
-  padding: 6px 8px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transition: color 0.3s ease;
-}
-
-.nav-links li > a:hover {
-  color: #000;
-}
-
-.arrow {
-  font-size: 10px;
-  transition: transform 0.3s ease;
-}
-
-.nav-links li.open > a .arrow {
-  transform: rotate(180deg);
-}
-
-/* DROPDOWN */
-.dropdown-content {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: #fff;
-  min-width: 200px;
-  border-radius: 6px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  z-index: 1000;
-}
-
-.nav-links li.open > .dropdown-content,
-.nav-links li:hover > .dropdown-content {
-  display: block;
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.dropdown-content a {
-  display: block;
-  padding: 12px 16px;
-  font-size: 15px;
-  color: #333;
-  text-decoration: none;
-}
-
-.dropdown-content a:hover {
-  background-color: #f0f0f0;
-}
-
-/* DROPDOWN DUE COLONNE */
-.dropdown-content.two-column {
-  display: flex !important;
-  gap: 32px;
-  padding: 16px;
-  min-width: 440px;
-  background-color: #fff;
-  border-radius: 6px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  z-index: 1000;
-}
-
-.nav-links li.open > .dropdown-content.two-column,
-.nav-links li:hover > .dropdown-content.two-column {
-  display: flex;
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.dropdown-content.two-column .column {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.dropdown-content.two-column .separator {
-  padding-left: 24px;
-  border-left: 1px solid #eaeaea;
-}
-
-.dropdown-content .column-title {
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: #444;
-}
-
-/* HEADER */
+/* Header */
 header {
   padding: 8px 16px;
   background: linear-gradient(to bottom, #f9f9f9, #ffffff);
@@ -179,7 +19,6 @@ header {
   gap: 12px;
   justify-content: center;
   flex-wrap: wrap;
-  text-align: left;
 }
 
 .logo-header {
@@ -218,65 +57,62 @@ header {
   }
 }
 
-/* PULSANTI */
-
-
-/* Centro perfetto e sfondo pagina */
+/* Pulsante Incipit */
 .incipit-bottone-wrapper {
   display: flex;
   justify-content: center;
+  background: #fff;
   padding: 20px 0;
-  background: #fff; /* stesso colore del body */
-  border: none;
 }
 
-/* Pulsante Incipit minimalista */
 .incipit-bottone {
-  background: #fff !important;      /* Sfondo bianco */
-  color: #222 !important;           /* Testo scuro */
-  border: none !important;          /* Niente bordi */
-  border-radius: 9999px;
+  background: transparent;
+  color: #222;
+  border: none;
   padding: 12px 28px;
-  font-size: 16px;
+  border-radius: 9999px;
   font-weight: 600;
+  font-size: 16px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
   cursor: pointer;
   user-select: none;
   transition: background-color 0.3s ease, color 0.3s ease;
+  position: relative;
 }
 
-/* Effetto al passaggio */
 .incipit-bottone:hover {
-  background: #f0f0f0 !important;   /* Grigio chiarissimo */
-  color: #000 !important;
+  background: #f0f0f0;
+  color: #000;
 }
 
-/* Freccia */
 .incipit-bottone .freccia {
+  display: inline-block;
   transition: transform 0.3s ease;
 }
+
 .incipit-bottone.attivo .freccia {
   transform: rotate(180deg);
 }
 
-/* Contenuto che si espande */
 .incipit-contenuto-nascosto {
   max-height: 0;
-  opacity: 0;
   overflow: hidden;
-  margin-top: 0;
+  opacity: 0;
   transition: max-height 0.5s ease, opacity 0.5s ease;
+  padding: 0 12px;
+  margin-top: 0;
+  background: #fff;
+  border-radius: 8px;
+  text-align: left;
 }
 
-/* Mostra contenuto */
 .incipit-bottone.attivo .incipit-contenuto-nascosto {
   max-height: 500px;
   opacity: 1;
   margin-top: 16px;
 }
-
 
 .frase-chiave {
   font-style: italic;
@@ -291,179 +127,36 @@ header {
   line-height: 1.5;
 }
 
-/* FRECCIA */
-.incipit-bottone .freccia {
-  display: inline-block;
-  transition: transform 0.3s ease;
-}
-
-.incipit-bottone.attivo .freccia {
-  transform: rotate(180deg);
-}
-.search-wrapper .search-icon,
-.search-wrapper .search-icon svg,
-.search-btn .icon,
-.search-btn i {
-  width: 14px !important;
-  height: 14px !important;
-  font-size: 14px !important;
-  fill: #666 !important;
-  color: #666 !important;
+/* Icone SVG */
+.icon,
+.icon svg,
+.icon i,
+.icon img {
+  width: 16px;
+  height: 16px;
+  fill: #888;
+  color: #888;
   vertical-align: middle;
-  line-height: 1;
   flex-shrink: 0;
 }
-/* Icone nei sottomenu (dropdown) */
-.nav-links svg.icon,
-.dropdown-content svg.icon,
-.navbar svg.icon {
-  width: 14px !important;
-  height: 14px !important;
-  margin-right: 4px;
-  vertical-align: middle;
-  fill: #666 !important;
+
+.search-icon,
+.search-btn i {
+  width: 16px !important;
+  height: 16px !important;
+  font-size: 16px !important;
+  fill: #666;
+  color: #666;
 }
 
-/* Icona lente nella ricerca */
-.search-wrapper .search-icon {
-  width: 14px !important;
-  height: 14px !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  right: 10px !important;
-  fill: #666 !important;
-}
-/* Riduce dimensioni icone SVG nei sottomenu */
-.nav-links .icon,
-.dropdown-content .icon,
-.navbar .icon {
-  width: 14px !important;
-  height: 14px !important;
-  margin-right: 6px;
-  vertical-align: middle;
-  fill: #444 !important;
-}
+/* Responsive se serve */
+@media (max-width: 768px) {
+  .incipit-bottone {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
 
-/* Riduce lente della barra di ricerca */
-.search-wrapper .search-icon {
-  width: 14px !important;
-  height: 14px !important;
-  fill: #444 !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  right: 10px !important;
-}
-/* Wrapper centrato */
-.incipit-bottone-wrapper {
-  display: flex;
-  justify-content: center;
-  padding: 12px 0;
-  background: #fff;
-}
-
-/* Pulsante Incipit */
-.incipit-bottone {
-  background: #fff !important;      /* Sfondo bianco */
-  color: #222 !important;           /* Testo scuro */
-  border: 2px solid #222 !important;
-  border-radius: 9999px;
-  padding: 12px 28px;
-  font-size: 16px;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  user-select: none;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  position: relative;
-}
-
-/* Hover: leggera variazione */
-.incipit-bottone:hover {
-  background: #f0f0f0 !important;
-  color: #000 !important;
-  border-color: #000 !important;
-}
-
-/* Freccia animata */
-.incipit-bottone .freccia {
-  display: inline-block;
-  transition: transform 0.3s ease;
-}
-.incipit-bottone.attivo .freccia {
-  transform: rotate(180deg);
-}
-
-/* Contenuto nascosto sotto il pulsante */
-.incipit-contenuto-nascosto {
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height 0.5s ease, opacity 0.5s ease;
-  padding: 0 12px;
-  margin-top: 0;
-}
-
-/* Quando attivo */
-.incipit-bottone.attivo .incipit-contenuto-nascosto {
-  max-height: 500px;
-  opacity: 1;
-  margin-top: 16px;
-}
-/* Wrapper centrato */
-.incipit-bottone-wrapper {
-  display: flex;
-  justify-content: center;
-  background-color: #fff;
-  padding: 24px 0;
-}
-
-/* Pulsante Incipit */
-.incipit-bottone {
-  background: #fff;
-  color: #222;
-  border: none;
-  font-size: 16px;
-  font-weight: 600;
-  padding: 12px 24px;
-  border-radius: 9999px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  position: relative;
-}
-
-/* Effetto hover */
-.incipit-bottone:hover {
-  background-color: #f0f0f0;
-  color: #000;
-}
-
-/* Freccia che ruota */
-.incipit-bottone .freccia {
-  transition: transform 0.3s ease;
-}
-
-.incipit-bottone:hover .freccia {
-  transform: rotate(180deg);
-}
-
-/* Contenuto nascosto */
-.incipit-contenuto-nascosto {
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition: max-height 0.5s ease, opacity 0.5s ease;
-  padding: 0 12px;
-  margin-top: 0;
-}
-
-/* Mostra contenuto al passaggio del mouse */
-.incipit-bottone:hover .incipit-contenuto-nascosto {
-  max-height: 500px;
-  opacity: 1;
-  margin-top: 16px;
-}
+  .frase-chiave, .testo {
+    font-size: 15px;
+  }
+} 
