@@ -200,7 +200,70 @@ body {
   margin-bottom: 8px;
   color: #444;
 }
+<!------------------------------------------------->
+.incipit-bottone-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 40px auto;
+  padding: 20px;
+}
 
+.incipit-bottone {
+  position: relative;
+  padding: 20px 40px;
+  background: #f4f4f4;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: background 0.4s ease;
+  text-align: center;
+  overflow: hidden;
+  max-width: 600px;
+}
+
+.incipit-bottone:hover {
+  background: linear-gradient(to bottom, #ffffff, #eee);
+}
+
+.incipit-bottone .titolo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #222;
+  transition: color 0.4s ease;
+}
+
+.incipit-bottone:hover .titolo {
+  color: #000;
+}
+
+.incipit-contenuto-nascosto {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.8s ease, max-height 0.8s ease;
+  margin-top: 0;
+}
+
+.incipit-bottone:hover .incipit-contenuto-nascosto {
+  opacity: 1;
+  max-height: 300px;
+  margin-top: 20px;
+}
+
+.incipit-contenuto-nascosto .frase-chiave {
+  font-style: italic;
+  font-size: 16px;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+.incipit-contenuto-nascosto .testo {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.6;
+}
+
+<!------------------------------------------------>
 @media (max-width: 768px) {
   .dropdown-content.two-column {
     flex-direction: column;
@@ -503,6 +566,81 @@ main {
 
 .ultimi-articoli a:hover {
   color: #000;
+}
+.incipit-bottone-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.incipit-bottone {
+  position: relative;
+  padding: 20px 40px;
+  background: #f4f4f4;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: background 0.4s ease;
+  text-align: center;
+  overflow: hidden;
+  max-width: 600px;
+}
+
+.incipit-bottone:hover {
+  background: linear-gradient(to bottom, #ffffff, #eee);
+}
+
+.titolo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #222;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.4s ease;
+}
+
+.incipit-bottone:hover .titolo {
+  color: #000;
+}
+
+.freccia {
+  font-size: 14px;
+  transition: transform 0.4s ease;
+  display: inline-block;
+}
+
+.incipit-bottone:hover .freccia {
+  transform: rotate(180deg);
+}
+
+/* Contenuto nascosto inizialmente */
+.incipit-contenuto-nascosto {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.8s ease, max-height 0.8s ease;
+  margin-top: 0;
+}
+
+.incipit-bottone:hover .incipit-contenuto-nascosto {
+  opacity: 1;
+  max-height: 300px;
+  margin-top: 20px;
+}
+
+.frase-chiave {
+  font-style: italic;
+  font-size: 16px;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+.testo {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.6;
 }
 
 <!------------------------>
