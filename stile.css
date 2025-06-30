@@ -1,4 +1,4 @@
-/* --- Base pagina --- */
+/* RESET BASE */
 body {
   margin: 0;
   font-family: 'Crimson Pro', serif;
@@ -6,152 +6,163 @@ body {
   color: #333;
 }
 
-/* --- Header compatto, centrato --- */
+/* NAVBAR */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background-color: #fff;
+  border-bottom: 1px solid #eaeaea;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 24px;
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 600;
+  color: #222;
+  text-decoration: none;
+  margin-right: auto;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+  align-items: center;
+  gap: 28px;
+  position: relative;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 28px;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.nav-links li {
+  position: relative;
+}
+
+.nav-links li > a {
+  text-decoration: none;
+  color: #444;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 6px 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.3s ease;
+}
+
+.nav-links li > a:hover {
+  color: #000;
+}
+
+.arrow {
+  font-size: 10px;
+  transition: transform 0.3s ease;
+}
+
+.nav-links li.open > a .arrow {
+  transform: rotate(180deg);
+}
+
+/* DROPDOWN */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #fff;
+  min-width: 200px;
+  border-radius: 6px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 1000;
+}
+
+.nav-links li.open > .dropdown-content,
+.nav-links li:hover > .dropdown-content {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 12px 16px;
+  font-size: 15px;
+  color: #333;
+  text-decoration: none;
+}
+
+.dropdown-content a:hover {
+  background-color: #f0f0f0;
+}
+
+/* DROPDOWN DUE COLONNE */
+.dropdown-content.two-column {
+  display: flex !important;
+  gap: 32px;
+  padding: 16px;
+  min-width: 440px;
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 1000;
+}
+
+.nav-links li.open > .dropdown-content.two-column,
+.nav-links li:hover > .dropdown-content.two-column {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dropdown-content.two-column .column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-content.two-column .separator {
+  padding-left: 24px;
+  border-left: 1px solid #eaeaea;
+}
+
+.dropdown-content .column-title {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #444;
+}
+
+/* HEADER */
 header {
-  padding: 16px 20px;
+  padding: 8px 16px;
   background: linear-gradient(to bottom, #f9f9f9, #ffffff);
   text-align: center;
 }
 
-/* --- Wrapper centrale per il pulsante Incipit --- */
-.incipit-bottone-wrapper {
-  display: flex;
-  justify-content: center;
-  background: #fff;       /* sfondo bianco pagina */
-  padding: 16px 0;
-  margin: 24px 0;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-  position: relative;     /* per posizionamento contenuto */
-  max-width: 320px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* --- Pulsante Incipit --- */
-.incipit-bottone {
-  cursor: pointer;
-  background: #fff;          /* sfondo bianco come pagina */
-  color: #222;               /* testo scuro */
-  border: 2px solid #222;    /* bordo scuro */
-  padding: 12px 28px;
-  border-radius: 9999px;
-  font-weight: 600;
-  font-size: 16px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  user-select: none;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-  position: relative;
-  width: 100%;
-  justify-content: center;
-  box-sizing: border-box;
-}
-
-/* Hover pulsante Incipit */
-.incipit-bottone:hover {
-  background: #f0f0f0;
-  color: #000;
-  border-color: #000;
-}
-
-/* Freccia rotante */
-.incipit-bottone .freccia {
-  display: inline-block;
-  transition: transform 0.3s ease;
-}
-
-/* Ruota freccia quando attivo o hover */
-.incipit-bottone.attivo .freccia,
-.incipit-bottone:hover .freccia {
-  transform: rotate(180deg);
-}
-
-/* --- Contenuto nascosto Incipit --- */
-.incipit-contenuto-nascosto {
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height 0.5s ease, opacity 0.5s ease;
-  padding: 0 16px;
-  margin-top: 0;
-  position: absolute;
-  top: calc(100% + 10px);  /* sotto il bottone con margine */
-  left: 50%;
-  transform: translateX(-50%);
-  background: #fff;
-  width: 300px;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-  border-radius: 8px;
-  z-index: 10;
-  pointer-events: none;  /* no interazione se nascosto */
-  box-sizing: border-box;
-  font-size: 15px;
-  color: #444;
-  line-height: 1.4;
-}
-
-/* Contenuto visibile al passaggio mouse o stato attivo */
-.incipit-bottone:hover .incipit-contenuto-nascosto,
-.incipit-bottone.attivo .incipit-contenuto-nascosto {
-  max-height: 500px;       /* sufficiente per il testo */
-  opacity: 1;
-  margin-top: 12px;
-  pointer-events: auto;
-}
-
-/* Stile testo interno Incipit */
-.frase-chiave {
-  font-style: italic;
-  font-size: 18px;
-  color: #444;
-  margin-bottom: 10px;
-}
-
-.testo {
-  font-size: 16px;
-  color: #333;
-  line-height: 1.5;
-  margin-bottom: 12px;
-}
-
-/* --- Pulsante "Loro hanno creato la civiltà del pensiero" --- */
-.cta-btn {
-  display: inline-block;
-  margin: 24px auto 0 auto;
-  padding: 10px 24px;
-  font-size: 16px;
-  font-weight: 600;
-  color: #222;
-  background: #fff;          /* sfondo bianco */
-  border: 2px solid #222;   /* bordo scuro */
-  border-radius: 9999px;
-  text-decoration: none;
-  text-align: center;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-  cursor: pointer;
-  box-sizing: border-box;
-  max-width: 320px;
-  width: 100%;
-}
-
-/* Hover su .cta-btn */
-.cta-btn:hover {
-  background: #f0f0f0;
-  color: #000;
-  border-color: #000;
-}
-
-/* --- Assicurati che i container e header non creino problemi di layout --- */
 .intestazione-riga {
   display: flex;
-  justify-content: center;
   align-items: center;
   gap: 12px;
+  justify-content: center;
   flex-wrap: wrap;
-  text-align: center;
-  margin-bottom: 12px;
+  text-align: left;
 }
 
 .logo-header {
@@ -160,7 +171,18 @@ header {
   opacity: 0.9;
 }
 
-/* Citazione */
+.testo-header h1 {
+  font-size: 22px;
+  margin: 0;
+  color: #111;
+}
+
+.testo-header p {
+  font-size: 16px;
+  color: #666;
+  margin: 2px 0 0;
+}
+
 .citazione {
   font-style: italic;
   font-size: 16px;
@@ -177,4 +199,73 @@ header {
   to {
     opacity: 1;
   }
+}
+
+/* PULSANTI */
+.cta-btn,
+.incipit-bottone {
+  background: #222;
+  color: #fff;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+}
+
+.cta-btn:hover,
+.incipit-bottone:hover {
+  background: #000;
+}
+
+/* INCIPIT */
+.incipit-bottone-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 12px 0;
+}
+
+.incipit-contenuto-nascosto {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.5s ease, opacity 0.5s ease;
+  padding: 0 12px;
+  margin-top: 0;
+}
+
+.incipit-bottone.attivo .incipit-contenuto-nascosto {
+  max-height: 500px;
+  opacity: 1;
+  margin-top: 16px;
+}
+
+.frase-chiave {
+  font-style: italic;
+  font-size: 18px;
+  color: #444;
+  margin-bottom: 8px;
+}
+
+.testo {
+  font-size: 16px;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* FRECCIA */
+.incipit-bottone .freccia {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.incipit-bottone.attivo .freccia {
+  transform: rotate(180deg);
 }
