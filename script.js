@@ -91,3 +91,14 @@ function toggleIncipit(element) {
 document.querySelectorAll('*').forEach(el => {
   if(el.scrollWidth > window.innerWidth) console.log(el);
 });
+
+  const bottone = document.getElementById('toggleIncipit');
+  const contenuto = document.getElementById('incipitContenuto');
+  const freccia = bottone.querySelector('.freccia');
+
+  bottone.addEventListener('click', () => {
+    contenuto.classList.toggle('open');
+    freccia.classList.toggle('ruotata');
+  });
+
+
