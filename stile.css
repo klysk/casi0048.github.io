@@ -444,4 +444,74 @@ main {
   line-height: 1;
   vertical-align: middle;
 }
+/* Wrapper centrato */
+.incipit-bottone-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 32px 0;
+  background: #fff;
+}
+
+/* Pulsante Incipit */
+.incipit-bottone {
+  background: none;
+  border: none;
+  color: #222;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 12px 28px;
+  border-radius: 9999px;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
+/* Freccia decorativa */
+.incipit-bottone .freccia {
+  transition: transform 0.3s ease;
+  font-size: 14px;
+}
+
+/* Contenuto nascosto */
+.incipit-contenuto-nascosto {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  background: #fff;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  border-radius: 8px;
+  padding: 16px;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transition: opacity 0.4s ease, max-height 0.4s ease;
+  z-index: 1000;
+  text-align: left;
+}
+
+/* Mostra contenuto al passaggio del mouse */
+.incipit-bottone:hover .incipit-contenuto-nascosto {
+  opacity: 1;
+  max-height: 600px;
+  pointer-events: auto;
+}
+
+/* Testi interni */
+.frase-chiave {
+  font-style: italic;
+  font-size: 17px;
+  color: #444;
+  margin-bottom: 8px;
+}
+
+.testo {
+  font-size: 15px;
+  color: #333;
+  line-height: 1.5;
+}
 
