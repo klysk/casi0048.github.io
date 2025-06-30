@@ -50,6 +50,55 @@ header {
   animation: fadeIn 1.5s ease-in-out forwards;
   animation-delay: 0.3s;
 }
+.incipit-bottone-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 20px auto;
+}
+
+.incipit-bottone {
+  background: transparent;
+  border: none;
+  color: #222;
+  font-weight: 600;
+  font-size: 18px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border-radius: 9999px;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  position: relative;
+}
+
+.incipit-bottone:hover {
+  background-color: #f8f8f8;
+  color: #000;
+}
+
+/* Freccia che ruota */
+.incipit-bottone.attivo .freccia {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}
+
+/* Contenuto nascosto */
+.incipit-contenuto-nascosto {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.5s ease, opacity 0.5s ease;
+  margin-top: 0;
+  padding: 0 12px;
+}
+
+/* Quando attivo */
+.incipit-bottone.attivo .incipit-contenuto-nascosto {
+  max-height: 400px;
+  opacity: 1;
+  margin-top: 12px;
+}
 
 @keyframes fadeIn {
   to {
