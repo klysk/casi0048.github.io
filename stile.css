@@ -339,3 +339,61 @@ header {
   transform: translateY(-50%) !important;
   right: 10px !important;
 }
+/* Wrapper centrato */
+.incipit-bottone-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 12px 0;
+  background: #fff;
+}
+
+/* Pulsante Incipit */
+.incipit-bottone {
+  background: #fff !important;      /* Sfondo bianco */
+  color: #222 !important;           /* Testo scuro */
+  border: 2px solid #222 !important;
+  border-radius: 9999px;
+  padding: 12px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  position: relative;
+}
+
+/* Hover: leggera variazione */
+.incipit-bottone:hover {
+  background: #f0f0f0 !important;
+  color: #000 !important;
+  border-color: #000 !important;
+}
+
+/* Freccia animata */
+.incipit-bottone .freccia {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+.incipit-bottone.attivo .freccia {
+  transform: rotate(180deg);
+}
+
+/* Contenuto nascosto sotto il pulsante */
+.incipit-contenuto-nascosto {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.5s ease, opacity 0.5s ease;
+  padding: 0 12px;
+  margin-top: 0;
+}
+
+/* Quando attivo */
+.incipit-bottone.attivo .incipit-contenuto-nascosto {
+  max-height: 500px;
+  opacity: 1;
+  margin-top: 16px;
+}
