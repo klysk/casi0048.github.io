@@ -1,4 +1,4 @@
-/* Reset e stile base */
+/* --- Base pagina --- */
 body {
   margin: 0;
   font-family: 'Crimson Pro', serif;
@@ -6,259 +6,152 @@ body {
   color: #333;
 }
 
-/* Navbar */
-.navbar {
-  position: sticky;
-  top: 0;
-  z-index: 999;
-  background-color: #fff;
-  border-bottom: 1px solid #eaeaea;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 24px;
-  flex-wrap: wrap;
-}
-
-.logo {
-  font-size: 22px;
-  font-weight: 600;
-  color: #222;
-  text-decoration: none;
-  margin-right: auto;
-}
-
-.nav-container {
-  display: flex;
-  justify-content: center;
-  flex-grow: 1;
-  align-items: center;
-  gap: 28px;
-  position: relative;
-}
-
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 28px;
-  margin: 0;
-  padding: 0;
-  align-items: center;
-}
-
-.nav-links li {
-  position: relative;
-}
-
-.nav-links li > a {
-  text-decoration: none;
-  color: #444;
-  font-size: 16px;
-  font-weight: bold;
-  padding: 6px 8px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transition: color 0.3s ease;
-}
-
-.nav-links li > a:hover {
-  color: #000;
-}
-
-.arrow {
-  font-size: 10px;
-  transition: transform 0.3s ease;
-}
-
-.nav-links li.open > a .arrow {
-  transform: rotate(180deg);
-}
-.search-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.search-wrapper input[type="search"] {
-  padding: 6px 10px;
-  font-size: 15px;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  flex: 1;
-}
-.search-wrapper {
-  position: relative;
-  max-width: 300px;
-  margin-left: auto;
-}
-
-.search-wrapper input[type="search"] {
-  width: 100%;
-  padding: 6px 34px 6px 12px; /* padding destro maggiore per lasciare spazio alla lente */
-  font-size: 15px;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  outline: none;
-  box-sizing: border-box;
-}
-
-.search-wrapper .search-icon {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 16px;
-  height: 16px;
-  fill: #666;
-  pointer-events: none; /* così il clic passa attraverso */
-}
-
-.search-wrapper svg {
-  width: 16px;
-  height: 16px;
-  fill: #666;
-  flex-shrink: 0;
-}
-
-/* Dropdown */
-.dropdown-content {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: #fff;
-  min-width: 200px;
-  border-radius: 6px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  z-index: 1000;
-}
-
-.nav-links li.open > .dropdown-content,
-.nav-links li:hover > .dropdown-content {
-  display: block;
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.dropdown-content a {
-  display: block;
-  padding: 12px 16px;
-  font-size: 15px;
-  color: #333;
-  text-decoration: none;
-}
-
-.dropdown-content a:hover {
-  background-color: #f0f0f0;
-}
-
-/* Dropdown a due colonne */
-.dropdown-content.two-column {
-  display: flex !important;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 32px;
-  padding: 16px;
-  min-width: 440px;
-  background-color: #fff;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  border-radius: 6px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  z-index: 1000;
-}
-
-.nav-links li.open > .dropdown-content.two-column,
-.nav-links li:hover > .dropdown-content.two-column {
-  display: flex;
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.dropdown-content.two-column .column {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.dropdown-content.two-column .separator {
-  padding-left: 24px;
-  border-left: 1px solid #eaeaea;
-}
-
-.dropdown-content .column-title {
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: #444;
-}
-
-@media (max-width: 768px) {
-  .dropdown-content.two-column {
-    flex-direction: column;
-  }
-  .dropdown-content.two-column .separator {
-    border-left: none;
-    padding-left: 0;
-    margin-top: 16px;
-  }
-.navbar i,
-.dropdown-content i {
-  font-size: 14px;
-  width: 16px;
-  height: 16px;
-  line-height: 1;
-}
-
-  .nav-container {
-    display: none;
-    width: 100%;
-    flex-direction: column;
-  }
-  .nav-container.open {
-    display: flex;
-  }
-
-  .nav-links {
-    flex-direction: column;
-  }
-
-  .menu-toggle {
-    display: flex;
-    flex-direction: column;
-    cursor: pointer;
-  }
-  .menu-toggle span {
-    height: 3px;
-    width: 25px;
-    background: #444;
-    margin: 4px 0;
-    border-radius: 2px;
-  }
-}
-
-/* Header compatto */
+/* --- Header compatto, centrato --- */
 header {
-  padding: 8px 16px;
+  padding: 16px 20px;
   background: linear-gradient(to bottom, #f9f9f9, #ffffff);
   text-align: center;
 }
 
+/* --- Wrapper centrale per il pulsante Incipit --- */
+.incipit-bottone-wrapper {
+  display: flex;
+  justify-content: center;
+  background: #fff;       /* sfondo bianco pagina */
+  padding: 16px 0;
+  margin: 24px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  position: relative;     /* per posizionamento contenuto */
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* --- Pulsante Incipit --- */
+.incipit-bottone {
+  cursor: pointer;
+  background: #fff;          /* sfondo bianco come pagina */
+  color: #222;               /* testo scuro */
+  border: 2px solid #222;    /* bordo scuro */
+  padding: 12px 28px;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  user-select: none;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  position: relative;
+  width: 100%;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/* Hover pulsante Incipit */
+.incipit-bottone:hover {
+  background: #f0f0f0;
+  color: #000;
+  border-color: #000;
+}
+
+/* Freccia rotante */
+.incipit-bottone .freccia {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+/* Ruota freccia quando attivo o hover */
+.incipit-bottone.attivo .freccia,
+.incipit-bottone:hover .freccia {
+  transform: rotate(180deg);
+}
+
+/* --- Contenuto nascosto Incipit --- */
+.incipit-contenuto-nascosto {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.5s ease, opacity 0.5s ease;
+  padding: 0 16px;
+  margin-top: 0;
+  position: absolute;
+  top: calc(100% + 10px);  /* sotto il bottone con margine */
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  width: 300px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  border-radius: 8px;
+  z-index: 10;
+  pointer-events: none;  /* no interazione se nascosto */
+  box-sizing: border-box;
+  font-size: 15px;
+  color: #444;
+  line-height: 1.4;
+}
+
+/* Contenuto visibile al passaggio mouse o stato attivo */
+.incipit-bottone:hover .incipit-contenuto-nascosto,
+.incipit-bottone.attivo .incipit-contenuto-nascosto {
+  max-height: 500px;       /* sufficiente per il testo */
+  opacity: 1;
+  margin-top: 12px;
+  pointer-events: auto;
+}
+
+/* Stile testo interno Incipit */
+.frase-chiave {
+  font-style: italic;
+  font-size: 18px;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+.testo {
+  font-size: 16px;
+  color: #333;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+/* --- Pulsante "Loro hanno creato la civiltà del pensiero" --- */
+.cta-btn {
+  display: inline-block;
+  margin: 24px auto 0 auto;
+  padding: 10px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #222;
+  background: #fff;          /* sfondo bianco */
+  border: 2px solid #222;   /* bordo scuro */
+  border-radius: 9999px;
+  text-decoration: none;
+  text-align: center;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
+  box-sizing: border-box;
+  max-width: 320px;
+  width: 100%;
+}
+
+/* Hover su .cta-btn */
+.cta-btn:hover {
+  background: #f0f0f0;
+  color: #000;
+  border-color: #000;
+}
+
+/* --- Assicurati che i container e header non creino problemi di layout --- */
 .intestazione-riga {
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 12px;
-  justify-content: center;
   flex-wrap: wrap;
-  text-align: left;
+  text-align: center;
+  margin-bottom: 12px;
 }
 
 .logo-header {
@@ -267,18 +160,7 @@ header {
   opacity: 0.9;
 }
 
-.testo-header h1 {
-  font-size: 22px;
-  margin: 0;
-  color: #111;
-}
-
-.testo-header p {
-  font-size: 16px;
-  color: #666;
-  margin: 2px 0 0;
-}
-
+/* Citazione */
 .citazione {
   font-style: italic;
   font-size: 16px;
@@ -296,362 +178,3 @@ header {
     opacity: 1;
   }
 }
-.incipit-bottone-wrapper {
-  display: flex;
-  justify-content: center;
-  background: #fff; /* sfondo bianco */
-  padding: 10px 0;
-}
-.cta-btn {
-  background: transparent !important;
-  color: #222 !important;
-  border: none !important;   /* elimina il bordo */
-  padding: 8px 18px !important;
-  border-radius: 9999px !important;
-  text-decoration: none !important;
-  font-weight: 600 !important;
-  transition: background-color 0.3s ease, color 0.3s ease !important;
-}
-
-.cta-btn:hover {
-  background: #f0f0f0 !important;
-  color: #000 !important;
-  border: none !important;   /* mantiene senza bordo anche al passaggio */
-}
-
-.incipit-bottone {
-  background: transparent !important;
-  color: #222 !important;
-  border: none !important;   /* elimina il bordo */
-  padding: 12px 28px !important;
-  border-radius: 9999px !important;
-  font-weight: 600 !important;
-  font-size: 16px !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 8px !important;
-  cursor: pointer !important;
-  user-select: none !important;
-  transition: background-color 0.3s ease, color 0.3s ease !important;
-  position: relative !important;
-}
-
-.incipit-bottone:hover {
-  background: #f0f0f0 !important;
-  color: #000 !important;
-  border: none !important;
-}
-
-.cta-btn {
-  display: inline-block;
-  margin-top: 6px;
-  padding: 8px 18px;
-  font-size: 14px;
-  font-weight: 600;
-  color: white;
-  background: #222;
-  border-radius: 9999px;
-  text-decoration: none;
-  transition: background 0.3s ease, box-shadow 0.3s ease;
-}
-
-.cta-btn:hover {
-  background: #000;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
-}
-/* Pulsante "Loro hanno creato la civiltà del pensiero" */
-.cta-btn {
-  background: transparent !important; /* togli sfondo nero */
-  color: #222 !important;             /* testo scuro */
-  border: 2px solid #222;             /* bordo scuro per evidenziare */
-  padding: 8px 18px;
-  border-radius: 9999px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.cta-btn:hover {
-  background: #f0f0f0;  /* leggero sfondo grigio chiaro al passaggio */
-  color: #000;
-  border-color: #000;
-}
-
-/* Pulsante Incipit */
-.incipit-bottone {
-  background: transparent !important; /* togli sfondo nero */
-  color: #222 !important;
-  border: 2px solid #222;
-  padding: 12px 28px;
-  border-radius: 9999px;
-  font-weight: 600;
-  font-size: 16px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  user-select: none;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  position: relative;
-}
-
-.incipit-bottone:hover {
-  background: #f0f0f0 !important;
-  color: #000 !important;
-  border-color: #000 !important;
-}
-
-main {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 30px 20px;
-}
-
-.icon,
-.icon svg,
-.icon i,
-.icon img {
-  width: 16px;
-  height: 16px;
-  max-width: 16px;
-  max-height: 16px;
-  fill: #888;
-  color: #888;
-  margin-right: 6px;
-  vertical-align: middle;
-  flex-shrink: 0;
-}
-.search-btn .icon {
-  font-size: 14px;
-  width: 14px;
-  height: 14px;
-}
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-.search-icon,
-.search-btn i {
-  font-size: 16px !important;
-  width: 16px;
-  height: 16px;
-  line-height: 1;
-  color: #666;
-}
-<button class="search-btn">
-  <svg class="icon" ...>...</svg>
-</button>
-.search-btn .icon,
-.search-icon svg {
-  width: 16px;
-  height: 16px;
-  fill: #666;
-}
-/* Ridimensiona icona della lente */
-.search-btn .icon,
-.search-icon,
-.search-btn i,
-.search-icon svg {
-  width: 16px !important;
-  height: 16px !important;
-  font-size: 16px !important;
-  fill: #666;
-  color: #666;
-  line-height: 1;
-  vertical-align: middle;
-}
-
-<a/* Wrapper centrale per il pulsante Incipit */
-.incipit-bottone-wrapper {
-  display: flex;
-  justify-content: center;
-  margin: 24px 0; /* Spazio sopra e sotto */
-  background: #fff; /* Sfondo bianco */
-  padding: 12px 0;
-  border-radius: 8px; /* Angoli arrotondati */
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* Leggera ombra */
-}
-
-/* Pulsante Incipit */
-.incipit-bottone {
-  cursor: pointer;
-  background: #222; /* Colore di sfondo scuro per contrasto */
-  color: #fff;
-  padding: 12px 28px;
-  border-radius: 9999px;
-  font-weight: 600;
-  font-size: 16px;
-  user-select: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: background-color 0.3s ease;
-}
-.incipit-bottone:hover .incipit-contenuto-nascosto,
-.incipit-bottone .incipit-contenuto-nascosto:hover {
-  max-height: 400px;
-  opacity: 1;
-  margin-top: 12px;
-  pointer-events: auto;
-}
-
-.incipit-bottone:hover {
-  background: #000;
-}
-.incipit-bottone-wrapper {
-  display: flex;
-  justify-content: center; /* centro orizzontale */
-  background: #fff;        /* sfondo bianco */
-  padding: 10px 0;
-}
-
-/* Limita la larghezza del bottone al contenuto e evita che si estenda */
-.incipit-bottone {
-  display: inline-block; /* cambia da block a inline-block */
-  margin: 0 auto;        /* margine orizzontale automatico */
-  width: auto;           /* larghezza adattiva */
-}
-.incipit-bottone {
-  background: #fff !important;
-  color: #222 !important;
-  border: 2px solid #222 !important;
-}
-
-.incipit-bottone {
-  cursor: pointer;
-  background: #fff;         /* sfondo bianco come pagina */
-  color: #222;              /* testo scuro per contrasto */
-  border: 2px solid #222;   /* bordo scuro per definire il bottone */
-  padding: 12px 28px;
-  border-radius: 9999px;
-  font-weight: 600;
-  font-size: 16px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  user-select: none;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  position: relative;
-}
-
-.incipit-bottone:hover {
-  background: #f0f0f0;  /* leggera variazione di sfondo al passaggio */
-  color: #000;
-  border-color: #000;
-}
-
-/* Freccia nel pulsante */
-.incipit-bottone .freccia {
-  display: inline-block;
-  transition: transform 0.3s ease;
-}
-
-/* Stato attivo: ruota freccia */
-.incipit-bottone.attivo .freccia {
-  transform: rotate(180deg);
-}
-
-/* Contenuto nascosto Incipit */
-.incipit-contenuto-nascosto {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.5s ease, opacity 0.5s ease;
-  opacity: 0;
-  padding: 0 12px;
-  margin-top: 0;
-}
-
-/* Quando attivo: contenuto visibile */
-.incipit-bottone.attivo .incipit-contenuto-nascosto {
-  max-height: 500px; /* sufficiente per il contenuto */
-  opacity: 1;
-  margin-top: 16px;
-}
-
-/* Stile testo Incipit */
-.frase-chiave {
-  font-style: italic;
-  font-size: 18px;
-  color: #444;
-  margin-bottom: 8px;
-}
-
-.testo {
-  font-size: 16px;
-  color: #333;
-  line-height: 1.5;
-}
-/* Wrapper che centra il pulsante */
-.incipit-bottone-wrapper {
-  display: flex;
-  justify-content: center;
-  background: #fff; /* sfondo bianco */
-  padding: 12px 0;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-/* Pulsante Incipit */
-.incipit-bottone {
-  cursor: pointer;
-  background: #222;
-  color: #fff;
-  padding: 12px 28px;
-  border-radius: 9999px;
-  font-weight: 600;
-  font-size: 16px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  user-select: none;
-  transition: background-color 0.3s ease;
-  position: relative;
-}
-
-/* Cambio colore al passaggio del mouse */
-.incipit-bottone:hover {
-  background: #000;
-}
-
-/* Freccia nel pulsante */
-.incipit-bottone .freccia {
-  display: inline-block;
-  transition: transform 0.3s ease;
-}
-
-/* Ruota freccia quando il contenuto è visibile */
-.incipit-bottone:hover .freccia {
-  transform: rotate(180deg);
-}
-
-/* Contenuto nascosto - default */
-.incipit-contenuto-nascosto {
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height 0.5s ease, opacity 0.5s ease;
-  padding: 0 12px;
-  margin-top: 0;
-  position: absolute;
-  top: 100%;  /* posizionato subito sotto il bottone */
-  left: 50%;
-  transform: translateX(-50%);
-  background: #fff;
-  width: 280px;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-  border-radius: 6px;
-  z-index: 10;
-  pointer-events: none; /* disabilita interazione quando nascosto */
-}
-
-/* Contenuto visibile al passaggio del mouse sul bottone */
-.incipit-bottone:hover .incipit-contenuto-nascosto {
-  max-height: 400px; /* abbastanza per il testo */
-  opacity: 1;
-  margin-top: 12px;
-  pointer-events: auto;
-}
-
- <href="#" class="logo">Echi di Sofia</a>
