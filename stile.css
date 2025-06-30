@@ -523,4 +523,310 @@ main {
   line-height: 1;
   vertical-align: middle;
 }
+<!------------------------------------------------>
+/* ------------------------- */
+/*  ECHI DI SOFIA - STILE    */
+/* ------------------------- */
+
+/* Reset e corpo pagina */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f9f8f6;
+  color: #222;
+  font-family: 'Crimson Pro', serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0 20px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Header */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px 0 20px 0;
+  border-bottom: 1px solid #ddd;
+  flex-wrap: wrap;
+}
+
+.logo-header {
+  max-height: 80px;
+  width: auto;
+}
+
+.testo-header {
+  flex: 1;
+  margin-left: 20px;
+  min-width: 280px;
+}
+
+.testo-header h1 {
+  font-size: 3rem;
+  margin: 0;
+  color: #2f5d62;
+  line-height: 1.1;
+}
+
+.testo-header p {
+  font-size: 1.25rem;
+  color: #555;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* Citazione */
+.citazione {
+  margin: 30px 0;
+  font-style: italic;
+  font-size: 1.3rem;
+  color: #666;
+  border-left: 5px solid #d4af37;
+  padding-left: 16px;
+  max-width: 700px;
+  line-height: 1.4;
+  font-family: Georgia, serif;
+}
+
+/* Navbar */
+.navbar {
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 12px 0;
+  margin-bottom: 30px;
+}
+
+.navbar .nav-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.nav-links li {
+  position: relative;
+}
+
+.nav-links a {
+  color: #2f5d62;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  padding: 8px 12px;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover,
+.nav-links a:focus {
+  color: #d4af37;
+  border-bottom: 2px solid #d4af37;
+}
+
+/* Dropdown */
+.dropdown-content {
+  position: absolute;
+  top: 130%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  padding: 15px 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  min-width: 220px;
+  z-index: 1000;
+}
+
+.nav-links li:hover > .dropdown-content,
+.nav-links li:focus-within > .dropdown-content {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Dropdown link style */
+.dropdown-content a {
+  display: block;
+  padding: 6px 0;
+  color: #2f5d62;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.dropdown-content a:hover,
+.dropdown-content a:focus {
+  color: #d4af37;
+  text-decoration: underline;
+}
+
+/* Pulsante Incipit */
+.incipit-bottone-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 1010; /* sopra navbar */
+}
+
+.incipit-bottone {
+  background: none;
+  border: none;
+  color: #2f5d62;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 14px 36px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: box-shadow 0.3s ease, color 0.3s ease;
+  position: relative;
+}
+
+.incipit-bottone:hover,
+.incipit-bottone:focus {
+  box-shadow: 0 4px 12px rgba(212,175,55,0.4);
+  color: #b29600;
+  outline: none;
+}
+
+/* Freccia ▼ */
+.incipit-bottone .freccia {
+  font-size: 16px;
+  transition: transform 0.3s ease;
+  user-select: none;
+}
+
+/* Contenuto nascosto */
+.incipit-contenuto-nascosto {
+  position: absolute;
+  top: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 350px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+  padding: 20px;
+  margin-top: 10px;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transition: opacity 0.4s ease, max-height 0.4s ease;
+  text-align: center;
+  font-family: 'Georgia', serif;
+  font-size: 1rem;
+  color: #333;
+  z-index: 1020;
+}
+
+/* Mostra contenuto al passaggio del mouse */
+.incipit-bottone:hover .incipit-contenuto-nascosto,
+.incipit-bottone:focus-within .incipit-contenuto-nascosto {
+  opacity: 1;
+  max-height: 500px;
+  pointer-events: auto;
+}
+
+/* Testi nel contenuto incipit */
+.frase-chiave {
+  font-style: italic;
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 12px;
+}
+
+.testo {
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* Footer */
+footer.footer-site {
+  background-color: #2f5d62;
+  color: #fff;
+  padding: 30px 20px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+footer.footer-site a {
+  color: #d4af37;
+  text-decoration: none;
+  transition: text-decoration 0.3s ease;
+}
+
+footer.footer-site a:hover,
+footer.footer-site a:focus {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .testo-header h1 {
+    font-size: 2.2rem;
+  }
+  .testo-header p {
+    font-size: 1.1rem;
+  }
+
+  .incipit-contenuto-nascosto {
+    width: 280px;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .testo-header {
+    margin-left: 0;
+    margin-top: 16px;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .incipit-bottone {
+    font-size: 1.1rem;
+    padding: 12px 24px;
+  }
+
+  .incipit-contenuto-nascosto {
+    width: 90vw;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
 
