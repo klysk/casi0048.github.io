@@ -845,3 +845,31 @@ footer.footer-site a:focus {
   line-height: 1.6;
   color: #333;
 }
+.incipit-bottone-wrapper {
+  position: relative;
+  display: inline-block; /* o block, come preferisci */
+}
+
+.incipit-contenuto {
+  display: none;
+  position: absolute;
+  top: 100%; /* subito sotto il bottone */
+  left: 0;
+  width: 300px; /* o la larghezza che preferisci */
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  z-index: 100;
+}
+
+.incipit-bottone-wrapper:hover .incipit-contenuto {
+  display: block;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+/* Animazione fade-in */
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
