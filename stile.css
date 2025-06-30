@@ -468,4 +468,75 @@ main {
   color: #333;
   line-height: 1.5;
 }
- href="#" class="logo">Echi di Sofia</a>
+/* Wrapper che centra il pulsante */
+.incipit-bottone-wrapper {
+  display: flex;
+  justify-content: center;
+  background: #fff; /* sfondo bianco */
+  padding: 12px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Pulsante Incipit */
+.incipit-bottone {
+  cursor: pointer;
+  background: #222;
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  user-select: none;
+  transition: background-color 0.3s ease;
+  position: relative;
+}
+
+/* Cambio colore al passaggio del mouse */
+.incipit-bottone:hover {
+  background: #000;
+}
+
+/* Freccia nel pulsante */
+.incipit-bottone .freccia {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+/* Ruota freccia quando il contenuto è visibile */
+.incipit-bottone:hover .freccia {
+  transform: rotate(180deg);
+}
+
+/* Contenuto nascosto - default */
+.incipit-contenuto-nascosto {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.5s ease, opacity 0.5s ease;
+  padding: 0 12px;
+  margin-top: 0;
+  position: absolute;
+  top: 100%;  /* posizionato subito sotto il bottone */
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  width: 280px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  border-radius: 6px;
+  z-index: 10;
+  pointer-events: none; /* disabilita interazione quando nascosto */
+}
+
+/* Contenuto visibile al passaggio del mouse sul bottone */
+.incipit-bottone:hover .incipit-contenuto-nascosto {
+  max-height: 400px; /* abbastanza per il testo */
+  opacity: 1;
+  margin-top: 12px;
+  pointer-events: auto;
+}
+
+ <href="#" class="logo">Echi di Sofia</a>
