@@ -442,26 +442,31 @@ main {
 }
 .layout-principale {
   display: flex;
-  flex-direction: column;
-  align-items: stretch;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
   max-width: 1000px;
   margin: 0 auto;
   padding: 40px 20px 20px;
   gap: 40px;
 }
 
+/* Contenuto principale: larghezza flessibile */
 .contenuto-centrale {
-  font-size: 16px;
-  line-height: 1.6;
+  flex: 1 1 60%;
+  min-width: 280px;
 }
 
+/* Box "Ultimi articoli" a destra */
 .ultimi-articoli {
+  flex: 1 1 280px;
   background: #f9f9f9;
   padding: 16px 20px;
   border: 1px solid #e0e0e0;
   border-radius: 12px;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
 }
+
 
 .ultimi-articoli h2 {
   font-size: 18px;
