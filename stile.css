@@ -377,4 +377,76 @@ main {
   vertical-align: middle;
 }
 
-<a href="#" class="logo">Echi di Sofia</a>
+<a/* Wrapper centrale per il pulsante Incipit */
+.incipit-bottone-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 24px 0; /* Spazio sopra e sotto */
+  background: #fff; /* Sfondo bianco */
+  padding: 12px 0;
+  border-radius: 8px; /* Angoli arrotondati */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* Leggera ombra */
+}
+
+/* Pulsante Incipit */
+.incipit-bottone {
+  cursor: pointer;
+  background: #222; /* Colore di sfondo scuro per contrasto */
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 16px;
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.incipit-bottone:hover {
+  background: #000;
+}
+
+/* Freccia nel pulsante */
+.incipit-bottone .freccia {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+/* Stato attivo: ruota freccia */
+.incipit-bottone.attivo .freccia {
+  transform: rotate(180deg);
+}
+
+/* Contenuto nascosto Incipit */
+.incipit-contenuto-nascosto {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, opacity 0.5s ease;
+  opacity: 0;
+  padding: 0 12px;
+  margin-top: 0;
+}
+
+/* Quando attivo: contenuto visibile */
+.incipit-bottone.attivo .incipit-contenuto-nascosto {
+  max-height: 500px; /* sufficiente per il contenuto */
+  opacity: 1;
+  margin-top: 16px;
+}
+
+/* Stile testo Incipit */
+.frase-chiave {
+  font-style: italic;
+  font-size: 18px;
+  color: #444;
+  margin-bottom: 8px;
+}
+
+.testo {
+  font-size: 16px;
+  color: #333;
+  line-height: 1.5;
+}
+ href="#" class="logo">Echi di Sofia</a>
