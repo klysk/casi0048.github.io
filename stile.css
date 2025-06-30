@@ -837,4 +837,75 @@ footer.footer-site a:focus {
 }
 <!------------------------------------------->
 /* Contenitore che centra il bottone incipit */
-.
+/* Contenitore che centra il bottone incipit */
+.incipit-bottone-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  position: relative;
+  z-index: 1010;
+}
+
+/* Bottone incipit */
+.incipit-bottone {
+  background: none;
+  border: none;
+  color: #2f5d62;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 14px 36px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: box-shadow 0.3s ease, color 0.3s ease;
+  position: relative;
+}
+
+.incipit-bottone:hover,
+.incipit-bottone:focus {
+  box-shadow: 0 4px 12px rgba(212,175,55,0.4);
+  color: #b29600;
+  outline: none;
+}
+
+/* Freccia ▼ */
+.incipit-bottone .freccia {
+  font-size: 16px;
+  transition: transform 0.3s ease;
+  user-select: none;
+}
+
+/* Contenuto nascosto */
+.incipit-contenuto-nascosto {
+  position: absolute;
+  top: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 350px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+  padding: 20px;
+  margin-top: 10px;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transition: opacity 0.4s ease, max-height 0.4s ease;
+  text-align: center;
+  font-family: 'Georgia', serif;
+  font-size: 1rem;
+  color: #333;
+  z-index: 1020;
+}
+
+/* Mostra contenuto al passaggio del mouse o focus */
+.incipit-bottone:hover .incipit-contenuto-nascosto,
+.incipit-bottone:focus-within .incipit-contenuto-nascosto {
+  opacity: 1;
+  max-height: 500px;
+  pointer-events: auto;
+}
+
