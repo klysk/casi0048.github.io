@@ -1,11 +1,4 @@
-
-/* Reset e base */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
+/* Reset e stile base */
 body {
   margin: 0;
   font-family: 'Crimson Pro', serif;
@@ -25,7 +18,6 @@ body {
   align-items: center;
   padding: 8px 24px;
   flex-wrap: wrap;
-  margin-bottom: -10px;
 }
 
 .logo {
@@ -34,9 +26,6 @@ body {
   color: #222;
   text-decoration: none;
   margin-right: auto;
-}
-.incipit-bottone-wrapper {
-   margin-top: 0 !important;
 }
 
 .nav-container {
@@ -85,19 +74,29 @@ body {
 .nav-links li.open > a .arrow {
   transform: rotate(180deg);
 }
-
-/* Search */
 .search-wrapper {
   position: relative;
   display: flex;
   align-items: center;
+  gap: 8px;
+}
+
+.search-wrapper input[type="search"] {
+  padding: 6px 10px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  flex: 1;
+}
+.search-wrapper {
+  position: relative;
   max-width: 300px;
   margin-left: auto;
 }
 
 .search-wrapper input[type="search"] {
   width: 100%;
-  padding: 6px 34px 6px 12px;
+  padding: 6px 34px 6px 12px; /* padding destro maggiore per lasciare spazio alla lente */
   font-size: 15px;
   border: 1px solid #ccc;
   border-radius: 20px;
@@ -105,7 +104,7 @@ body {
   box-sizing: border-box;
 }
 
-.search-wrapper svg {
+.search-wrapper .search-icon {
   position: absolute;
   right: 10px;
   top: 50%;
@@ -113,27 +112,69 @@ body {
   width: 16px;
   height: 16px;
   fill: #666;
-  pointer-events: none;
+  pointer-events: none; /* così il clic passa attraverso */
 }
 
-/* Dropdown a due colonne */
-.dropdown-content.two-column {
+.search-wrapper svg {
+  width: 16px;
+  height: 16px;
+  fill: #666;
+  flex-shrink: 0;
+}
+
+/* Dropdown */
+.dropdown-content {
   display: none;
   position: absolute;
   top: 100%;
   left: 0;
   background: #fff;
-  min-width: 440px;
+  min-width: 200px;
   border-radius: 6px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
   opacity: 0;
   transform: translateY(-10px);
   transition: opacity 0.3s ease, transform 0.3s ease;
   z-index: 1000;
+}
+
+.nav-links li.open > .dropdown-content,
+.nav-links li:hover > .dropdown-content {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 12px 16px;
+  font-size: 15px;
+  color: #333;
+  text-decoration: none;
+}
+
+.dropdown-content a:hover {
+  background-color: #f0f0f0;
+}
+
+/* Dropdown a due colonne */
+.dropdown-content.two-column {
+  display: flex !important;
   flex-direction: row;
   justify-content: space-between;
   gap: 32px;
   padding: 16px;
+  min-width: 440px;
+  background-color: #fff;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  border-radius: 6px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 1000;
 }
 
 .nav-links li.open > .dropdown-content.two-column,
@@ -154,21 +195,59 @@ body {
   border-left: 1px solid #eaeaea;
 }
 
-/* Icone coerenti nel menu */
-.nav-links i,
-.dropdown-content i,
-.nav-links svg,
-.dropdown-content svg {
-  width: 16px !important;
-  height: 16px !important;
-  font-size: 16px !important;
-  color: #666;
-  vertical-align: middle;
+.dropdown-content .column-title {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #444;
 }
 
-/* Header */
+@media (max-width: 768px) {
+  .dropdown-content.two-column {
+    flex-direction: column;
+  }
+  .dropdown-content.two-column .separator {
+    border-left: none;
+    padding-left: 0;
+    margin-top: 16px;
+  }
+.navbar i,
+.dropdown-content i {
+  font-size: 14px;
+  width: 16px;
+  height: 16px;
+  line-height: 1;
+}
+
+  .nav-container {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+  }
+  .nav-container.open {
+    display: flex;
+  }
+
+  .nav-links {
+    flex-direction: column;
+  }
+
+  .menu-toggle {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+  }
+  .menu-toggle span {
+    height: 3px;
+    width: 25px;
+    background: #444;
+    margin: 4px 0;
+    border-radius: 2px;
+  }
+}
+
+/* Header compatto */
 header {
-  padding: 20px 20px 10px;
+  padding: 8px 16px;
   background: linear-gradient(to bottom, #f9f9f9, #ffffff);
   text-align: center;
 }
@@ -176,7 +255,7 @@ header {
 .intestazione-riga {
   display: flex;
   align-items: center;
-  gap: 22px;
+  gap: 12px;
   justify-content: center;
   flex-wrap: wrap;
   text-align: left;
@@ -189,183 +268,27 @@ header {
 }
 
 .testo-header h1 {
-  font-size: 26px;
-  margin: 0 0 10px;
+  font-size: 22px;
+  margin: 0;
   color: #111;
-  line-height: 1.4;
 }
 
 .testo-header p {
   font-size: 16px;
   color: #666;
-  margin: 0 0 12px;
-  line-height: 1.6;
+  margin: 2px 0 0;
 }
 
 .citazione {
   font-style: italic;
-  font-size: 17px;
+  font-size: 16px;
   color: #555;
-  margin: 14px auto 18px;
-  line-height: 1.8;
-  max-width: 600px;
+  margin: 6px auto 10px;
+  max-width: 500px;
   text-align: center;
   opacity: 0;
   animation: fadeIn 1.5s ease-in-out forwards;
-  animation-delay: 0.5s;
-}
-
-/* Incipit */
-.incipit-bottone-wrapper {
-  display: flex;
-  justify-content: center;
-  margin: 10px auto 10px;
-  padding: 0;
-}
-
-.incipit-bottone {
-  cursor: default;
-  text-align: center;
-  max-width: 700px;
-  background: transparent;
-  box-shadow: none;
-  padding: 0;
-  transition: color 0.4s ease;
-  position: relative;
-}
-
-.titolo {
-  font-size: 24px;
-  font-weight: bold;
-  color: #444;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.4s ease, color 0.4s ease;
-}
-
-.incipit-bottone:hover .titolo {
-  color: #000;
-  border-color: #888;
-}
-
-.freccia {
-  font-size: 14px;
-  transition: transform 0.4s ease;
-  display: inline-block;
-}
-
-.incipit-bottone:hover .freccia {
-  transform: rotate(180deg);
-}
-
-.incipit-contenuto-nascosto {
-  opacity: 0;
-  max-height: 0;
-  overflow: hidden;
-  transition:
-    opacity 0.8s ease,
-    max-height 0.8s ease,
-    margin 0.4s ease;
-  margin-top: 0;
-  background-color: #fff;
-  pointer-events: none;
-}
-
-.incipit-bottone:hover .incipit-contenuto-nascosto {
-  opacity: 1;
-  max-height: 500px;
-  margin-top: 20px;
-  pointer-events: auto;
-  animation: fadeInText 0.8s ease forwards;
-}
-
-.frase-chiave {
-  font-style: italic;
-  font-size: 16px;
-  color: #444;
-  margin-bottom: 10px;
-}
-
-.testo {
-  font-size: 15px;
-  color: #555;
-  line-height: 1.6;
-}
-
-@keyframes fadeInText {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Ultimi articoli */
-.ultimi-articoli {
-  flex: 1 1 280px;
-  background: #f9f9f9;
-  padding: 16px 20px;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
-}
-
-.ultimi-articoli h2 {
-  font-size: 18px;
-  margin-bottom: 12px;
-  color: #444;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 6px;
-}
-
-.ultimi-articoli ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.ultimi-articoli li {
-  margin-bottom: 8px;
-}
-
-.ultimi-articoli a {
-  text-decoration: none;
-  color: #444;
-  font-size: 15px;
-  transition: color 0.2s ease;
-}
-
-.ultimi-articoli a:hover {
-  color: #000;
-}
-/* —— OVERRIDE MIRATO —— */
-
-/* Mostra dropdown due colonne */
-.nav-links li:hover > .dropdown-content.two-column,
-.nav-links li.open > .dropdown-content.two-column {
-  display: flex !important;
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-}
-
-/* Icona lente (15–17px garantiti) */
-.search-wrapper svg,
-.nav-links svg,
-.dropdown-content svg {
-  width: 16px !important;
-  height: 16px !important;
-}
-
-/* Avvicina Incipit al menu */
-.incipit-bottone-wrapper {
-  margin-top: 0 !important;
-  margin-bottom: 10px !important;
-  padding: 0 !important;
+  animation-delay: 0.3s;
 }
 
 @keyframes fadeIn {
@@ -373,103 +296,85 @@ header {
     opacity: 1;
   }
 }
-/* 1. Dropdown a due colonne — forziamo con precisione */
-.nav-links li:hover > .dropdown-content.two-column,
-.nav-links li.open > .dropdown-content.two-column {
-  display: flex !important;
-  flex-direction: row !important;
-  opacity: 1 !important;
-  transform: translateY(0) !important;
+
+.cta-btn {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 8px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  background: #222;
+  border-radius: 9999px;
+  text-decoration: none;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Assicuriamoci che ogni colonna utilizzi l'intero spazio disponibile */
-.dropdown-content.two-column .column,
-.dropdown-content.two-column .separator {
-  display: block !important;
+.cta-btn:hover {
+  background: #000;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
 }
 
-/* 2. Icona lente e icone menu — dimensione esatta */
-.search-wrapper svg,
-.navbar svg,
-.nav-links svg,
-.dropdown-content svg {
-  width: 16px !important;
-  height: 16px !important;
+main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px 20px;
 }
 
-/* 3. Riduciamo lo spazio sopra Incipit */
-.incipit-bottone-wrapper {
-  margin-top: 0 !important;
-  margin-bottom: 10px !important;
-  padding: 0 !important;
+.icon,
+.icon svg,
+.icon i,
+.icon img {
+  width: 16px;
+  height: 16px;
+  max-width: 16px;
+  max-height: 16px;
+  fill: #888;
+  color: #888;
+  margin-right: 6px;
+  vertical-align: middle;
+  flex-shrink: 0;
 }
-
-/* 4. Pulizia margini sotto header/menu */
-header,
-.navbar {
-  margin-bottom: 0 !important;
+.search-btn .icon {
+  font-size: 14px;
+  width: 14px;
+  height: 14px;
 }
-
-/* 5. Rimozione eventuali padding/margini globali che interferiscono */
-body > * + .incipit-bottone-wrapper {
-  margin-top: 0 !important;
-}
-/* — OVERRIDE MIRATO — */
-
-/* 1. Dropdown a due colonne: colonne divise */
-.dropdown-content.two-column {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: wrap;
-  width: auto !important;
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-  padding: 16px !important;
-}
-
-/* 2. Ogni link affiancato */
-.dropdown-content.two-column a {
-  width: calc(50% - 16px);
-  display: block;
-  margin-bottom: 8px;
-}
-
-/* 3. Icona lente e icone menu — dimensioni precise */
-.search-wrapper svg,
-.nav-links svg {
-  width: 16px !important;
-  height: 16px !important;
-}
-
-/* 4. Avvicina Incipit al menu */
-.incipit-bottone-wrapper {
-  margin-top: 0 !important;
-  margin-bottom: 8px !important;
-}
-/* — OVERRIDE ULTIMO — Echi di Sofia */
-
-.incipit-bottone-wrapper {
-  margin-top: 0 !important;
-  margin-bottom: 8px !important;
-  padding: 0 !important;
-}
-
-.search-wrapper svg,
-.nav-links svg,
-.dropdown-content svg {
-  width: 16px !important;
-  height: 16px !important;
-}
-
-.dropdown-content.two-column {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: wrap;
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-}
-
-.dropdown-content.two-column .column {
-  width: 50% !important;
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
+
+.search-icon,
+.search-btn i {
+  font-size: 16px !important;
+  width: 16px;
+  height: 16px;
+  line-height: 1;
+  color: #666;
+}
+<button class="search-btn">
+  <svg class="icon" ...>...</svg>
+</button>
+.search-btn .icon,
+.search-icon svg {
+  width: 16px;
+  height: 16px;
+  fill: #666;
+}
+/* Ridimensiona icona della lente */
+.search-btn .icon,
+.search-icon,
+.search-btn i,
+.search-icon svg {
+  width: 16px !important;
+  height: 16px !important;
+  font-size: 16px !important;
+  fill: #666;
+  color: #666;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+<a href="#" class="logo">Echi di Sofia</a>
