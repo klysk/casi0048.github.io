@@ -1,3 +1,71 @@
+/* Pulsante Incipit centrato, senza sfondo né bordo */
+.incipit-bottone-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 24px auto;
+  padding: 12px 0;
+  background: #fff;
+}
+
+.incipit-bottone {
+  background: none;
+  border: none;
+  color: #222;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 12px 28px;
+  border-radius: 9999px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.incipit-bottone:hover {
+  background-color: #f5f5f5;
+}
+
+.freccia {
+  transition: transform 0.3s ease;
+  font-size: 14px;
+}
+
+.incipit-bottone.attivo .freccia {
+  transform: rotate(180deg);
+}
+
+/* Contenuto nascosto di Incipit */
+.incipit-contenuto-nascosto {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.4s ease;
+  padding: 0 16px;
+  margin-top: 0;
+  text-align: center;
+}
+
+.incipit-bottone.attivo .incipit-contenuto-nascosto {
+  max-height: 600px;
+  opacity: 1;
+  margin-top: 16px;
+}
+
+/* Testi all'interno */
+.frase-chiave {
+  font-style: italic;
+  font-size: 18px;
+  color: #444;
+  margin-bottom: 8px;
+}
+
+.testo {
+  font-size: 16px;
+  color: #333;
+  line-height: 1.5;
+}
+
 /* Reset e stile base */
 body {
   margin: 0;
