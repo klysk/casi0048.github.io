@@ -75,7 +75,6 @@ body {
   transform: rotate(180deg);
 }
 
-/* Barra ricerca */
 .search-wrapper {
   position: relative;
   max-width: 300px;
@@ -87,7 +86,7 @@ body {
 
 .search-wrapper input[type="search"] {
   width: 100%;
-  padding: 6px 34px 6px 12px; /* spazio a destra per icona */
+  padding: 6px 34px 6px 12px; /* padding destro maggiore per lasciare spazio alla lente */
   font-size: 15px;
   border: 1px solid #ccc;
   border-radius: 20px;
@@ -103,7 +102,7 @@ body {
   width: 16px;
   height: 16px;
   fill: #666;
-  pointer-events: none;
+  pointer-events: none; /* così il clic passa attraverso */
 }
 
 /* Dropdown */
@@ -185,7 +184,92 @@ body {
   color: #444;
 }
 
-/* Responsive */
+/* Bottone incipit modificato */
+.incipit-bottone {
+  position: relative;
+  padding: 20px 40px;
+  background: #fff;       /* sfondo uguale alla pagina */
+  border-radius: 12px;
+  box-shadow: none;       /* elimina ombra */
+  cursor: pointer;
+  text-align: center;
+  overflow: hidden;
+  max-width: 600px;
+  transition: background 0.4s ease;
+}
+
+.incipit-bottone:hover {
+  background: linear-gradient(to bottom, #ffffff, #eee);
+}
+
+.titolo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #222;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.4s ease;
+}
+
+.incipit-bottone:hover .titolo {
+  color: #000;
+}
+
+.freccia {
+  font-size: 14px;
+  transition: transform 0.4s ease;
+  display: inline-block;
+}
+
+.incipit-bottone:hover .freccia {
+  transform: rotate(180deg);
+}
+
+/* Contenuto nascosto inizialmente */
+.incipit-contenuto-nascosto {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.8s ease, max-height 0.8s ease;
+  margin-top: 0;
+}
+
+.incipit-bottone:hover .incipit-contenuto-nascosto {
+  opacity: 1;
+  max-height: 300px;
+  margin-top: 20px;
+}
+
+.frase-chiave {
+  font-style: italic;
+  font-size: 16px;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+.testo {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* Stile per la scritta "Loro hanno creato la civiltà del pensiero" senza bottone e senza sfondo */
+.loro-hanno-creato {
+  font-weight: 600;
+  font-size: 16px;
+  color: #222;
+  margin-top: 20px;
+  text-align: center;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  border: none;
+  cursor: default;
+  user-select: none;
+}
+
+/* Mobile e responsività */
 @media (max-width: 768px) {
   .dropdown-content.two-column {
     flex-direction: column;
@@ -195,7 +279,6 @@ body {
     padding-left: 0;
     margin-top: 16px;
   }
-
   .navbar i,
   .dropdown-content i {
     font-size: 14px;
@@ -257,14 +340,14 @@ header {
   font-size: 26px;
   margin: 0 0 10px;
   color: #111;
-  line-height: 1.4; /* più spazio tra righe */
+  line-height: 1.4; /* aumenta la spaziatura tra le righe del titolo */
 }
 
 .testo-header p {
   font-size: 16px;
   color: #666;
   margin: 0 0 12px;
-  line-height: 1.6;
+  line-height: 1.6; /* più spazio tra righe del sottotitolo */
 }
 
 .citazione {
@@ -272,7 +355,7 @@ header {
   font-size: 17px;
   color: #555;
   margin: 14px auto 18px;
-  line-height: 1.8;
+  line-height: 1.8; /* aumenta spaziatura nella citazione */
   max-width: 600px;
   text-align: center;
   opacity: 0;
@@ -286,31 +369,12 @@ header {
   }
 }
 
+/* Pulsante Call To Action */
 .cta-btn {
-  display: inline-block;
-  margin-top: 6px;
-  padding: 8px 18px;
-  font-size: 14px;
-  font-weight: 600;
-  color: white;
-  background: #222;
-  border-radius: 9999px;
-  text-decoration: none;
-  transition: background 0.3s ease, box-shadow 0.3s ease;
+  display: none; /* Nascondo bottone per eliminare sfondo nero */
 }
 
-.cta-btn:hover {
-  background: #000;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
-}
-
-main {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 30px 20px;
-}
-
-/* Icone generiche */
+/* Icone */
 .icon,
 .icon svg,
 .icon i,
@@ -326,27 +390,6 @@ main {
   flex-shrink: 0;
 }
 
-.search-btn .icon {
-  font-size: 14px;
-  width: 14px;
-  height: 14px;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-.search-icon,
-.search-btn i {
-  font-size: 16px !important;
-  width: 16px;
-  height: 16px;
-  line-height: 1;
-  color: #666;
-}
-
 .search-btn .icon,
 .search-icon svg {
   width: 16px;
@@ -354,7 +397,6 @@ main {
   fill: #666;
 }
 
-/* Ridimensiona icona lente */
 .search-btn .icon,
 .search-icon,
 .search-btn i,
@@ -368,283 +410,4 @@ main {
   vertical-align: middle;
 }
 
-/* Layout con sidebar */
-.contenuto-con-sidebar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 40px;
-  align-items: flex-start;
-  margin-top: 30px;
-  padding: 0 20px;
-}
-
-.contenuto-principale {
-  flex: 1 1 60%;
-  min-width: 280px;
-}
-
-.sidebar-articoli {
-  flex: 1 1 240px;
-  background: #f9f9f9;
-  padding: 16px 20px;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
-}
-
-.sidebar-articoli h2 {
-  font-size: 18px;
-  margin-bottom: 12px;
-  color: #333;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 6px;
-}
-
-.sidebar-articoli ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.sidebar-articoli li {
-  margin-bottom: 8px;
-}
-
-.sidebar-articoli a {
-  text-decoration: none;
-  color: #444;
-  font-size: 15px;
-  transition: color 0.2s ease;
-}
-
-.sidebar-articoli a:hover {
-  color: #000;
-}
-
-/* Mobile: sidebar sotto */
-@media (max-width: 768px) {
-  .contenuto-con-sidebar {
-    flex-direction: column;
-  }
-  .sidebar-articoli {
-    order: 2;
-    margin-top: 20px;
-  }
-}
-
-/* Layout principale */
-.layout-principale {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: flex-start;
-  max-width: 1100px;
-  margin: 40px auto 20px;
-  padding: 0 20px;
-  gap: 40px;
-  box-sizing: border-box;
-}
-
-.contenuto-centrale {
-  flex: 1 1 60%;
-  min-width: 300px;
-}
-
-.ultimi-articoli {
-  flex: 1 1 280px;
-  background: #f9f9f9;
-  padding: 16px 20px;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
-}
-
-.ultimi-articoli h2 {
-  font-size: 18px;
-  margin-bottom: 12px;
-  color: #333;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 6px;
-}
-
-.ultimi-articoli ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.ultimi-articoli li {
-  margin-bottom: 8px;
-}
-
-.ultimi-articoli a {
-  text-decoration: none;
-  color: #444;
-  font-size: 15px;
-  transition: color 0.2s ease;
-}
-
-.ultimi-articoli a:hover {
-  color: #000;
-}
-
-/* Mobile: colonna unica */
-@media (max-width: 768px) {
-  .layout-principale {
-    flex-direction: column;
-  }
-
-  .ultimi-articoli {
-    margin-top: 20px;
-  }
-}
-
-/* Footer */
-.footer-site {
-  background-color: #f7f7f7;
-  border-top: 1px solid #ddd;
-  padding: 30px 20px;
-  font-size: 14px;
-  color: #444;
-}
-
-.footer-contenitore {
-  max-width: 1000px;
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 40px;
-}
-
-.footer-col {
-  flex: 1 1 300px;
-}
-
-.footer-col h2 {
-  font-size: 16px;
-  margin-bottom: 12px;
-  color: #222;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 6px;
-}
-
-.footer-col ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.footer-col li {
-  margin-bottom: 8px;
-}
-
-.footer-col a {
-  color: #444;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.footer-col a:hover {
-  color: #000;
-}
-
-/* Mobile footer */
-@media (max-width: 768px) {
-  .footer-contenitore {
-    flex-direction: column;
-  }
-}
-
-/* Bottone Incipit */
-.incipit-bottone-wrapper {
-  display: flex;
-  justify-content: center;
-  margin: 40px auto;
-  padding: 20px;
-}
-
-.incipit-bottone {
-  position: relative;
-  padding: 20px 40px;
-  background: #f4f4f4;
-  border-radius: 12px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.08);
-  cursor: pointer;
-  text-align: center;
-  overflow: hidden;
-  max-width: 600px;
-  transition: background 0.4s ease;
-}
-
-.incipit-bottone.attivo {
-  background: linear-gradient(to bottom, #ffffff, #eee);
-}
-
-.titolo {
-  font-size: 24px;
-  font-weight: bold;
-  color: #222;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: color 0.4s ease;
-}
-
-.incipit-bottone.attivo .titolo {
-  color: #000;
-}
-
-.freccia {
-  font-size: 14px;
-  transition: transform 0.4s ease;
-  display: inline-block;
-}
-
-.incipit-bottone.attivo .freccia {
-  transform: rotate(180deg);
-}
-
-.incipit-contenuto-nascosto {
-  opacity: 0;
-  max-height: 0;
-  overflow: hidden;
-  transition:
-    opacity 0.8s ease,
-    max-height 0.8s ease,
-    margin 0.4s ease;
-  margin-top: 0;
-  background-color: #fff;
-  animation-fill-mode: forwards;
-}
-
-.incipit-bottone.attivo .incipit-contenuto-nascosto {
-  opacity: 1;
-  max-height: 500px;
-  margin-top: 20px;
-  animation: fadeInText 0.8s ease forwards;
-}
-
-@keyframes fadeInText {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.frase-chiave {
-  font-style: italic;
-  font-size: 16px;
-  color: #444;
-  margin-bottom: 10px;
-}
-
-.testo {
-  font-size: 15px;
-  color: #555;
-  line-height: 1.6;
-}
+/* Fine CSS */
