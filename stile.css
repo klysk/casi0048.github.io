@@ -885,22 +885,33 @@ main {
   opacity: 0;
   max-height: 0;
   overflow: hidden;
-  transition: opacity 0.8s ease, max-height 0.8s ease, margin 0.4s ease;
+  transition:
+    opacity 0.8s ease,
+    max-height 0.8s ease,
+    margin 0.4s ease;
   margin-top: 0;
+  background-color: #fff;
+  animation-fill-mode: forwards;
 }
 
 .incipit-bottone.attivo .incipit-contenuto-nascosto {
   opacity: 1;
   max-height: 500px;
   margin-top: 20px;
+  animation: fadeInText 0.8s ease forwards;
 }
 
-.frase-chiave {
-  font-style: italic;
-  font-size: 16px;
-  color: #444;
-  margin-bottom: 10px;
+@keyframes fadeInText {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
+
 
 .testo {
   font-size: 15px;
