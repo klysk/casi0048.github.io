@@ -370,3 +370,44 @@ header {
     opacity: 1;
   }
 }
+/* 1. Dropdown a due colonne — forziamo con precisione */
+.nav-links li:hover > .dropdown-content.two-column,
+.nav-links li.open > .dropdown-content.two-column {
+  display: flex !important;
+  flex-direction: row !important;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* Assicuriamoci che ogni colonna utilizzi l'intero spazio disponibile */
+.dropdown-content.two-column .column,
+.dropdown-content.two-column .separator {
+  display: block !important;
+}
+
+/* 2. Icona lente e icone menu — dimensione esatta */
+.search-wrapper svg,
+.navbar svg,
+.nav-links svg,
+.dropdown-content svg {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+/* 3. Riduciamo lo spazio sopra Incipit */
+.incipit-bottone-wrapper {
+  margin-top: 0 !important;
+  margin-bottom: 10px !important;
+  padding: 0 !important;
+}
+
+/* 4. Pulizia margini sotto header/menu */
+header,
+.navbar {
+  margin-bottom: 0 !important;
+}
+
+/* 5. Rimozione eventuali padding/margini globali che interferiscono */
+body > * + .incipit-bottone-wrapper {
+  margin-top: 0 !important;
+}
