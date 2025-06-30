@@ -52,7 +52,7 @@ body {
 
 .nav-links li > a {
   text-decoration: none;
-  color: #444;
+  color: #444; /* colore menu */
   font-size: 16px;
   font-weight: bold;
   padding: 6px 8px;
@@ -75,6 +75,7 @@ body {
   transform: rotate(180deg);
 }
 
+/* Search wrapper */
 .search-wrapper {
   position: relative;
   max-width: 300px;
@@ -86,7 +87,7 @@ body {
 
 .search-wrapper input[type="search"] {
   width: 100%;
-  padding: 6px 34px 6px 12px; /* padding destro maggiore per lasciare spazio alla lente */
+  padding: 6px 34px 6px 12px;
   font-size: 15px;
   border: 1px solid #ccc;
   border-radius: 20px;
@@ -102,7 +103,7 @@ body {
   width: 16px;
   height: 16px;
   fill: #666;
-  pointer-events: none; /* così il clic passa attraverso */
+  pointer-events: none;
 }
 
 /* Dropdown */
@@ -184,36 +185,40 @@ body {
   color: #444;
 }
 
-/* Bottone incipit modificato */
-.incipit-bottone {
-  position: relative;
-  padding: 20px 40px;
-  background: #fff;       /* sfondo uguale alla pagina */
-  border-radius: 12px;
-  box-shadow: none;       /* elimina ombra */
-  cursor: pointer;
-  text-align: center;
-  overflow: hidden;
-  max-width: 600px;
-  transition: background 0.4s ease;
+/* Incipit centrato e senza sfondo */
+.incipit-bottone-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 40px auto;
+  padding: 20px;
+  max-width: 700px;
 }
 
-.incipit-bottone:hover {
-  background: linear-gradient(to bottom, #ffffff, #eee);
+.incipit-bottone {
+  cursor: pointer;
+  text-align: center;
+  max-width: 700px;
+  background: transparent; /* nessuno sfondo */
+  box-shadow: none;
+  padding: 0;
+  transition: color 0.4s ease;
 }
 
 .titolo {
   font-size: 24px;
   font-weight: bold;
-  color: #222;
+  color: #444; /* stesso colore di menu/benvenuto */
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  transition: color 0.4s ease;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.4s ease, color 0.4s ease;
 }
 
-.incipit-bottone:hover .titolo {
+.incipit-bottone:hover .titolo,
+.incipit-bottone.attivo .titolo {
   color: #000;
+  border-color: #888;
 }
 
 .freccia {
@@ -222,96 +227,45 @@ body {
   display: inline-block;
 }
 
-.incipit-bottone:hover .freccia {
+.incipit-bottone:hover .freccia,
+.incipit-bottone.attivo .freccia {
   transform: rotate(180deg);
 }
 
-/* Contenuto nascosto inizialmente */
 .incipit-contenuto-nascosto {
   opacity: 0;
   max-height: 0;
   overflow: hidden;
-  transition: opacity 0.8s ease, max-height 0.8s ease;
+  transition:
+    opacity 0.8s ease,
+    max-height 0.8s ease,
+    margin 0.4s ease;
   margin-top: 0;
+  background-color: #fff;
 }
 
-.incipit-bottone:hover .incipit-contenuto-nascosto {
+.incipit-bottone.attivo .incipit-contenuto-nascosto {
   opacity: 1;
-  max-height: 300px;
+  max-height: 500px;
   margin-top: 20px;
+  animation: fadeInText 0.8s ease forwards;
 }
 
-.frase-chiave {
-  font-style: italic;
-  font-size: 16px;
-  color: #444;
-  margin-bottom: 10px;
+@keyframes fadeInText {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .testo {
   font-size: 15px;
   color: #555;
   line-height: 1.6;
-}
-
-/* Stile per la scritta "Loro hanno creato la civiltà del pensiero" senza bottone e senza sfondo */
-.loro-hanno-creato {
-  font-weight: 600;
-  font-size: 16px;
-  color: #222;
-  margin-top: 20px;
-  text-align: center;
-  background: transparent;
-  box-shadow: none;
-  padding: 0;
-  border: none;
-  cursor: default;
-  user-select: none;
-}
-
-/* Mobile e responsività */
-@media (max-width: 768px) {
-  .dropdown-content.two-column {
-    flex-direction: column;
-  }
-  .dropdown-content.two-column .separator {
-    border-left: none;
-    padding-left: 0;
-    margin-top: 16px;
-  }
-  .navbar i,
-  .dropdown-content i {
-    font-size: 14px;
-    width: 16px;
-    height: 16px;
-    line-height: 1;
-  }
-
-  .nav-container {
-    display: none;
-    width: 100%;
-    flex-direction: column;
-  }
-  .nav-container.open {
-    display: flex;
-  }
-
-  .nav-links {
-    flex-direction: column;
-  }
-
-  .menu-toggle {
-    display: flex;
-    flex-direction: column;
-    cursor: pointer;
-  }
-  .menu-toggle span {
-    height: 3px;
-    width: 25px;
-    background: #444;
-    margin: 4px 0;
-    border-radius: 2px;
-  }
 }
 
 /* Header compatto */
@@ -340,22 +294,22 @@ header {
   font-size: 26px;
   margin: 0 0 10px;
   color: #111;
-  line-height: 1.4; /* aumenta la spaziatura tra le righe del titolo */
+  line-height: 1.4;
 }
 
 .testo-header p {
   font-size: 16px;
-  color: #666;
+  color: #444; /* colore uguale a menu/ultimi articoli */
   margin: 0 0 12px;
-  line-height: 1.6; /* più spazio tra righe del sottotitolo */
+  line-height: 1.6;
 }
 
 .citazione {
   font-style: italic;
   font-size: 17px;
-  color: #555;
+  color: #444; /* colore uniforme */
   margin: 14px auto 18px;
-  line-height: 1.8; /* aumenta spaziatura nella citazione */
+  line-height: 1.8;
   max-width: 600px;
   text-align: center;
   opacity: 0;
@@ -369,45 +323,53 @@ header {
   }
 }
 
-/* Pulsante Call To Action */
-.cta-btn {
-  display: none; /* Nascondo bottone per eliminare sfondo nero */
+/* Box ultimi articoli a destra */
+.ultimi-articoli {
+  flex: 1 1 280px;
+  background: #f9f9f9;
+  padding: 16px 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+  color: #444; /* stesso colore di menu/benvenuto */
 }
 
-/* Icone */
-.icon,
-.icon svg,
-.icon i,
-.icon img {
-  width: 16px;
-  height: 16px;
-  max-width: 16px;
-  max-height: 16px;
-  fill: #888;
-  color: #888;
-  margin-right: 6px;
-  vertical-align: middle;
-  flex-shrink: 0;
+.ultimi-articoli h2 {
+  font-size: 18px;
+  margin-bottom: 12px;
+  color: #444; /* uniforme */
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 6px;
 }
 
-.search-btn .icon,
-.search-icon svg {
-  width: 16px;
-  height: 16px;
-  fill: #666;
+.ultimi-articoli ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.search-btn .icon,
-.search-icon,
-.search-btn i,
-.search-icon svg {
-  width: 16px !important;
-  height: 16px !important;
-  font-size: 16px !important;
-  fill: #666;
-  color: #666;
-  line-height: 1;
-  vertical-align: middle;
+.ultimi-articoli li {
+  margin-bottom: 8px;
 }
 
-/* Fine CSS */
+.ultimi-articoli a {
+  text-decoration: none;
+  color: #444; /* stesso colore */
+  font-size: 15px;
+  transition: color 0.2s ease;
+}
+
+.ultimi-articoli a:hover {
+  color: #000;
+}
+
+/* Mobile: colonna unica */
+@media (max-width: 768px) {
+  .layout-principale {
+    flex-direction: column;
+  }
+
+  .ultimi-articoli {
+    margin-top: 20px;
+  }
+}
