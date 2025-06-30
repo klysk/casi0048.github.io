@@ -505,3 +505,69 @@ main {
 .ultimi-articoli a:hover {
   color: #000;
 }
+<!------------------------>
+.layout-principale {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1100px;
+  margin: 40px auto 20px;
+  padding: 0 20px;
+  gap: 40px;
+  box-sizing: border-box;
+}
+
+.contenuto-centrale {
+  flex: 1 1 60%;
+  min-width: 300px;
+}
+
+.ultimi-articoli {
+  flex: 1 1 280px;
+  background: #f9f9f9;
+  padding: 16px 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+}
+
+.ultimi-articoli h2 {
+  font-size: 18px;
+  margin-bottom: 12px;
+  color: #333;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 6px;
+}
+
+.ultimi-articoli ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ultimi-articoli li {
+  margin-bottom: 8px;
+}
+
+.ultimi-articoli a {
+  text-decoration: none;
+  color: #444;
+  font-size: 15px;
+  transition: color 0.2s ease;
+}
+
+.ultimi-articoli a:hover {
+  color: #000;
+}
+
+/* Mobile: colonna unica */
+@media (max-width: 768px) {
+  .layout-principale {
+    flex-direction: column;
+  }
+
+  .ultimi-articoli {
+    margin-top: 20px;
+  }
+}
