@@ -1,11 +1,14 @@
-/* INCIPIT BUTTON STYLES */
-.incipit-container {
+/* === INCIPIT BUTTON STYLES === */
+
+/* Contenitore centrato */
+.incipit-bottone-wrapper {
   display: flex;
   justify-content: center;
-  margin: 32px 0;
+  margin: 40px 0;
   padding: 12px 0;
 }
 
+/* Pulsante Incipit */
 .incipit-bottone {
   background: none;
   border: none;
@@ -14,7 +17,7 @@
   font-weight: 600;
   padding: 12px 28px;
   border-radius: 9999px;
-  cursor: pointer;
+  cursor: default;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -22,37 +25,52 @@
   transition: background-color 0.3s ease;
 }
 
+/* Al passaggio del mouse: leggero sfondo chiaro */
 .incipit-bottone:hover {
   background-color: #f5f5f5;
 }
 
+/* Freccia ▼ accanto al testo */
+.incipit-bottone .freccia {
+  font-size: 14px;
+  transition: transform 0.3s ease;
+}
+
+/* Contenuto da mostrare al passaggio del mouse */
 .incipit-contenuto {
   position: absolute;
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
-  width: 300px;
+  width: 320px;
   background: #fff;
   border: 1px solid #eee;
   border-radius: 8px;
   padding: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   opacity: 0;
   visibility: hidden;
-  transition: all 0.3s ease;
-  z-index: 10;
+  max-height: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transition: all 0.4s ease;
+  z-index: 1000;
   text-align: center;
 }
 
+/* Mostra al passaggio del mouse */
 .incipit-bottone:hover .incipit-contenuto {
   opacity: 1;
   visibility: visible;
+  max-height: 500px;
+  pointer-events: auto;
   margin-top: 10px;
 }
 
+/* Testi */
 .frase-chiave {
   font-style: italic;
-  font-size: 18px;
+  font-size: 17px;
   color: #444;
   margin-bottom: 12px;
 }
@@ -64,92 +82,23 @@
   margin-bottom: 8px;
 }
 
-/* Responsive adjustments */
+/* === Responsive === */
 @media (max-width: 768px) {
   .incipit-bottone {
     font-size: 16px;
     padding: 10px 24px;
   }
-  
+
   .incipit-contenuto {
     width: 280px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  
-  .frase-chiave {
-    font-size: 17px;
-  }
-  
-  .testo {
     font-size: 15px;
   }
 
-/* Centra il pulsante */
-.incipit-bottone-wrapper {
-  display: flex;
-  justify-content: center;
-  margin: 40px 0;
-}
+  .frase-chiave {
+    font-size: 16px;
+  }
 
-/* Pulsante Incipit: nessuno sfondo né bordo */
-.incipit-bottone {
-  background: none;
-  border: none;
-  color: #222;
-  font-size: 18px;
-  font-weight: 600;
-  cursor: default;
-  position: relative;
-  padding: 12px 24px;
-  border-radius: 9999px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* Freccia ▼ */
-.incipit-bottone .freccia {
-  font-size: 14px;
-  transition: transform 0.3s ease;
-}
-
-/* Contenuto nascosto */
-.incipit-contenuto-nascosto {
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 320px;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-  padding: 16px;
-  margin-top: 10px;
-  opacity: 0;
-  max-height: 0;
-  overflow: hidden;
-  pointer-events: none;
-  transition: opacity 0.4s ease, max-height 0.4s ease;
-  z-index: 1000;
-}
-
-/* Mostra contenuto al passaggio del mouse */
-.incipit-bottone:hover .incipit-contenuto-nascosto {
-  opacity: 1;
-  max-height: 500px;
-  pointer-events: auto;
-}
-
-/* Testi */
-.frase-chiave {
-  font-style: italic;
-  font-size: 16px;
-  color: #555;
-  margin-bottom: 8px;
-}
-.testo {
-  font-size: 15px;
-  color: #333;
-  line-height: 1.5;
+  .testo {
+    font-size: 14.5px;
+  }
 }
