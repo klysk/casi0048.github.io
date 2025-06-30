@@ -219,50 +219,64 @@ header {
 }
 
 /* PULSANTI */
-.cta-btn,
-.incipit-bottone {
-  background: #222;
-  color: #fff;
+
+
+/* Centro perfetto e sfondo pagina */
+.incipit-bottone-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+  background: #fff; /* stesso colore del body */
   border: none;
-  padding: 12px 28px;
+}
+
+/* Pulsante Incipit minimalista */
+.incipit-bottone {
+  background: #fff !important;      /* Sfondo bianco */
+  color: #222 !important;           /* Testo scuro */
+  border: none !important;          /* Niente bordi */
   border-radius: 9999px;
-  font-weight: 600;
+  padding: 12px 28px;
   font-size: 16px;
+  font-weight: 600;
   display: inline-flex;
   align-items: center;
   gap: 8px;
   cursor: pointer;
   user-select: none;
-  transition: background-color 0.3s ease;
-  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.cta-btn:hover,
+/* Effetto al passaggio */
 .incipit-bottone:hover {
-  background: #000;
+  background: #f0f0f0 !important;   /* Grigio chiarissimo */
+  color: #000 !important;
 }
 
-/* INCIPIT */
-.incipit-bottone-wrapper {
-  display: flex;
-  justify-content: center;
-  padding: 12px 0;
+/* Freccia */
+.incipit-bottone .freccia {
+  transition: transform 0.3s ease;
+}
+.incipit-bottone.attivo .freccia {
+  transform: rotate(180deg);
 }
 
+/* Contenuto che si espande */
 .incipit-contenuto-nascosto {
   max-height: 0;
-  overflow: hidden;
   opacity: 0;
-  transition: max-height 0.5s ease, opacity 0.5s ease;
-  padding: 0 12px;
+  overflow: hidden;
   margin-top: 0;
+  transition: max-height 0.5s ease, opacity 0.5s ease;
 }
 
+/* Mostra contenuto */
 .incipit-bottone.attivo .incipit-contenuto-nascosto {
   max-height: 500px;
   opacity: 1;
   margin-top: 16px;
 }
+
 
 .frase-chiave {
   font-style: italic;
