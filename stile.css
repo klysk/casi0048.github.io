@@ -1,211 +1,137 @@
-/* Reset base */
-body {
-  margin: 0;
-  font-family: 'Crimson Pro', serif;
-  background: #fff;
-  color: #333;
-}
 
-/* Header */
-header {
-  padding: 8px 16px;
-  background: linear-gradient(to bottom, #f9f9f9, #ffffff);
-  text-align: center;
-}
+    /* Reset base */
+    body {
+      margin: 0;
+      font-family: 'Crimson Pro', serif;
+      background: #fff;
+      color: #333;
+    }
 
-.intestazione-riga {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
+    /* Header */
+    header {
+      padding: 8px 16px;
+      background: linear-gradient(to bottom, #f9f9f9, #ffffff);
+      text-align: center;
+    }
 
-.logo-header {
-  width: 50px;
-  height: auto;
-  opacity: 0.9;
-}
+    .intestazione-riga {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
 
-.testo-header h1 {
-  font-size: 22px;
-  margin: 0;
-  color: #111;
-}
+    .logo-header {
+      width: 50px;
+      height: auto;
+      opacity: 0.9;
+    }
 
-.testo-header p {
-  font-size: 16px;
-  color: #666;
-  margin: 2px 0 0;
-}
+    .testo-header h1 {
+      font-size: 22px;
+      margin: 0;
+      color: #111;
+    }
 
-.citazione {
-  font-style: italic;
-  font-size: 16px;
-  color: #555;
-  margin: 6px auto 10px;
-  max-width: 500px;
-  text-align: center;
-  opacity: 0;
-  animation: fadeIn 1.5s ease-in-out forwards;
-  animation-delay: 0.3s;
-}
-.incipit-bottone-wrapper {
-  display: flex;
-  justify-content: center;
-  margin: 20px auto;
-}
+    .testo-header p {
+      font-size: 16px;
+      color: #666;
+      margin: 2px 0 0;
+    }
 
-.incipit-bottone {
-  background: transparent;
-  border: none;
-  color: #222;
-  font-weight: 600;
-  font-size: 18px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 24px;
-  border-radius: 9999px;
-  transition: color 0.3s ease, background-color 0.3s ease;
-  position: relative;
-}
+    .citazione {
+      font-style: italic;
+      font-size: 16px;
+      color: #555;
+      margin: 6px auto 10px;
+      max-width: 500px;
+      text-align: center;
+      opacity: 0;
+      animation: fadeIn 1.5s ease-in-out forwards;
+      animation-delay: 0.3s;
+    }
 
-.incipit-bottone:hover {
-  background-color: #f8f8f8;
-  color: #000;
-}
+    /* Pulsante Incipit */
+    .incipit-container {
+      display: flex;
+      justify-content: center;
+      padding: 20px 0;
+      width: 100%;
+    }
 
-/* Freccia che ruota */
-.incipit-bottone.attivo .freccia {
-  transform: rotate(180deg);
-  transition: transform 0.3s ease;
-}
+    .incipit-bottone {
+      background: #fff;
+      color: #222;
+      border: 1px solid #ddd;
+      padding: 12px 28px;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.3s ease;
+      position: relative;
+      margin: 0 auto;
+    }
 
-/* Contenuto nascosto */
-.incipit-contenuto-nascosto {
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height 0.5s ease, opacity 0.5s ease;
-  margin-top: 0;
-  padding: 0 12px;
-}
+    .incipit-bottone:hover {
+      background: #f5f5f5;
+      color: #000;
+    }
 
-/* Quando attivo */
-.incipit-bottone.attivo .incipit-contenuto-nascosto {
-  max-height: 400px;
-  opacity: 1;
-  margin-top: 12px;
-}
+    .incipit-contenuto {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
 
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-  }
-}
+    .incipit-bottone:hover .incipit-contenuto {
+      opacity: 1;
+      visibility: visible;
+      margin-top: 10px;
+    }
 
-/* Pulsante Incipit */
-.incipit-bottone-wrapper {
-  display: flex;
-  justify-content: center;
-  background: #fff;
-  padding: 20px 0;
-}
+    .frase-chiave {
+      font-style: italic;
+      font-size: 18px;
+      color: #444;
+      margin-bottom: 8px;
+    }
 
-.incipit-bottone {
-  background: transparent;
-  color: #222;
-  border: none;
-  padding: 12px 28px;
-  border-radius: 9999px;
-  font-weight: 600;
-  font-size: 16px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  user-select: none;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  position: relative;
-}
+    .testo {
+      font-size: 16px;
+      color: #333;
+      line-height: 1.5;
+    }
 
-.incipit-bottone:hover {
-  background: #f0f0f0;
-  color: #000;
-}
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
 
-.incipit-bottone .freccia {
-  display: inline-block;
-  transition: transform 0.3s ease;
-}
-
-.incipit-bottone.attivo .freccia {
-  transform: rotate(180deg);
-}
-
-.incipit-contenuto-nascosto {
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height 0.5s ease, opacity 0.5s ease;
-  padding: 0 12px;
-  margin-top: 0;
-  background: #fff;
-  border-radius: 8px;
-  text-align: left;
-}
-
-.incipit-bottone.attivo .incipit-contenuto-nascosto {
-  max-height: 500px;
-  opacity: 1;
-  margin-top: 16px;
-}
-
-.frase-chiave {
-  font-style: italic;
-  font-size: 18px;
-  color: #444;
-  margin-bottom: 8px;
-}
-
-.testo {
-  font-size: 16px;
-  color: #333;
-  line-height: 1.5;
-}
-
-/* Icone SVG */
-.icon,
-.icon svg,
-.icon i,
-.icon img {
-  width: 16px;
-  height: 16px;
-  fill: #888;
-  color: #888;
-  vertical-align: middle;
-  flex-shrink: 0;
-}
-
-.search-icon,
-.search-btn i {
-  width: 16px !important;
-  height: 16px !important;
-  font-size: 16px !important;
-  fill: #666;
-  color: #666;
-}
-
-/* Responsive se serve */
-@media (max-width: 768px) {
-  .incipit-bottone {
-    font-size: 14px;
-    padding: 10px 20px;
-  }
-
-  .frase-chiave, .testo {
-    font-size: 15px;
-  }
-} 
+    @media (max-width: 768px) {
+      .incipit-bottone {
+        font-size: 14px;
+        padding: 10px 20px;
+      }
+      .incipit-contenuto {
+        width: 250px;
+      }
+    }
+  
