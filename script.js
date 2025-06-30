@@ -85,3 +85,6 @@
     }
   });
 
+function toggleIncipit(element) {
+  element.classList.toggle("attivo");
+}
