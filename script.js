@@ -88,3 +88,6 @@
 function toggleIncipit(element) {
   element.classList.toggle("attivo");
 }
+document.querySelectorAll('*').forEach(el => {
+  if(el.scrollWidth > window.innerWidth) console.log(el);
+});
