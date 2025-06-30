@@ -6,237 +6,200 @@
   <title>Echi di Sofia</title>
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="stile.css" />
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </head>
-
-
- 
-<header>
-  <div class="intestazione-riga">
-    <img src="immagini/logo-filosofia.svg" alt="Simbolo filosofico" class="logo-header" />
-    <div class="testo-header">
-      <h1>Benvenuto in <strong>Echi di Sofia</strong></h1>
-      <p>Il pensiero che attraversa i secoli</p>
-    </div>
-  </div>
-  <blockquote class="citazione">
-    “L’anima ragiona, ama, contempla – e da questo nasce la civiltà.”
-  </blockquote>
- <div class="incipit-bottone-wrapper">
-  <div class="incipit-bottone-wrapper">
-  <div class="incipit-bottone">
-    <span class="titolo">
-      Incipit <span class="freccia">&#9660;</span>
-    </span>
-    <div class="incipit-contenuto">
-      <p class="frase-chiave">«Dall'oscurità del non-sapere, una scintilla: il primo perché che illuminò la coscienza umana.»</p>
-
-<p class="testo">
-Prima delle parole, prima degli dei, esisteva quel momento sospeso in cui l'uomo si fermò a contemplare il cielo notturno. Fu allora che il pensiero prese forma - non come risposta, ma come vibrazione pura di meraviglia.
-</p>
-
-<p class="testo">
-Questo spazio non è una collezione di concetti. È un campo magnetico dove le domande dei nostri antenati filosofi continuano a risuonare, invitandoci a ripercorrere quel primo, rivoluzionario atto di curiosità.
-</p>
-
-<p class="testo">
-Varcando questa soglia, ti unisci alla più antica cerchia: quella di chi sceglie di sostare nell'incanto del mistero, trasformando lo stupore in dialogo eterno tra l'umano e l'infinito.
-</p>
-    </div>
-  </div>
-</div>
-
- </header>
-
 <body>
+
+  <header>
+    <div class="intestazione-riga">
+      <img src="immagini/logo-filosofia.svg" alt="Simbolo filosofico" class="logo-header" />
+      <div class="testo-header">
+        <h1>Benvenuto in <strong>Echi di Sofia</strong></h1>
+        <p>Il pensiero che attraversa i secoli</p>
+      </div>
+    </div>
+    <blockquote class="citazione">
+      “L’anima ragiona, ama, contempla – e da questo nasce la civiltà.”
+    </blockquote>
+    <div class="incipit-bottone-wrapper">
+      <div class="incipit-bottone" onclick="toggleIncipit(this)" role="button" tabindex="0" aria-expanded="false" aria-controls="incipit-contenuto">
+        <span class="titolo">
+          Incipit <span class="freccia">&#9660;</span>
+        </span>
+      </div>
+      <div class="incipit-contenuto" id="incipit-contenuto" hidden>
+        <p class="frase-chiave">«Dall'oscurità del non-sapere, una scintilla: il primo perché che illuminò la coscienza umana.»</p>
+        <p class="testo">
+          Prima delle parole, prima degli dei, esisteva quel momento sospeso in cui l'uomo si fermò a contemplare il cielo notturno. Fu allora che il pensiero prese forma - non come risposta, ma come vibrazione pura di meraviglia.
+        </p>
+        <p class="testo">
+          Questo spazio non è una collezione di concetti. È un campo magnetico dove le domande dei nostri antenati filosofi continuano a risuonare, invitandoci a ripercorrere quel primo, rivoluzionario atto di curiosità.
+        </p>
+        <p class="testo">
+          Varcando questa soglia, ti unisci alla più antica cerchia: quella di chi sceglie di sostare nell'incanto del mistero, trasformando lo stupore in dialogo eterno tra l'umano e l'infinito.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Simboli SVG definiti una volta sola -->
   <svg style="display: none;">
-  <!-- Icona Filosofia Greca -->
-  <symbol id="icon-greco" viewBox="0 0 24 24">
-    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
-    <path d="M8 12h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-  </symbol>
+    <symbol id="icon-greco" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+      <path d="M8 12h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
 
-  <!-- Icona Filosofia Romana -->
-  <symbol id="icon-romano" viewBox="0 0 24 24">
-    <rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="2" fill="none"/>
-    <path d="M8 8h8v8H8z" fill="currentColor"/>
-  </symbol>
+    <symbol id="icon-romano" viewBox="0 0 24 24">
+      <rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="2" fill="none"/>
+      <path d="M8 8h8v8H8z" fill="currentColor"/>
+    </symbol>
 
-  <!-- Icona Filosofia Medievale -->
-  <symbol id="icon-medievale" viewBox="0 0 24 24">
-    <path d="M12 2L15 8h6l-5 4 2 6-5-3-5 3 2-6-5-4h6z" stroke="currentColor" fill="none" stroke-width="2"/>
-  </symbol>
+    <symbol id="icon-medievale" viewBox="0 0 24 24">
+      <path d="M12 2L15 8h6l-5 4 2 6-5-3-5 3 2-6-5-4h6z" stroke="currentColor" fill="none" stroke-width="2"/>
+    </symbol>
 
-  <!-- Icona Patristica -->
-  <symbol id="icon-patristica" viewBox="0 0 24 24">
-    <circle cx="12" cy="8" r="4" stroke="currentColor" fill="none" stroke-width="2"/>
-    <path d="M6 22v-2c0-2 4-4 6-4s6 2 6 4v2" stroke="currentColor" fill="none" stroke-width="2"/>
-  </symbol>
-</svg>
-
-<symbol id="icon-medievale" viewBox="0 0 24 24">
-  <path d="M12 2L15 8h6l-5 4 2 6-5-3-5 3 2-6-5-4h6z" stroke="currentColor" fill="none" stroke-width="2"/>
-</symbol>
-
-<symbol id="icon-patristica" viewBox="0 0 24 24">
-  <circle cx="12" cy="8" r="4" stroke="currentColor" fill="none" stroke-width="2"/>
-  <path d="M6 22v-2c0-2 4-4 6-4s6 2 6 4v2" stroke="currentColor" fill="none" stroke-width="2"/>
-</symbol>
-
-  <!---------------------------------------------------------->
-<svg style="display: none;">
-  <symbol id="icon-greco" viewBox="0 0 24 24">
-    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
-    <path d="M8 12h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-  </symbol>
-
-  <symbol id="icon-romano" viewBox="0 0 24 24">
-    <rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="2" fill="none"/>
-    <path d="M8 8h8v8H8z" fill="currentColor"/>
-  </symbol>
-</svg>
-<!---------------------------------------------------------------->
-
-    </div>
-  </div>
-</div>
-
-
-   
-    
-<nav class="navbar">
-  
-  <div class="menu-toggle" id="mobile-menu" aria-label="Toggle menu" role="button" tabindex="0">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-  <div class="nav-container" id="nav-container">
-    <ul class="nav-links" id="nav">
-      
-<li>
-  <a href="#">Filosofia antica <span class="arrow">▼</span></a>
-  <div class="dropdown-content two-column">
-    <div class="column">
-      <strong class="column-title">Filosofia greca</strong>
-      <a href="filosofi/talete.html"><svg class="icon"><use href="#icon-greco" /></svg> Talete</a>
-      <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Anassimandro</a>
-      <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Anassimene</a>
-      <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Senofane</a>
-      <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Parmenide</a>
-      <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Zenone</a>
-      <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Eraclito</a>
-      <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Empedocle</a>
-      <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Pitagora</a>
-      <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Democrito</a>
-      <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Protagora</a>
-      <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Gorgia</a>
-    </div>
-    <div class="column separator">
-      <strong class="column-title">Filosofia romana</strong>
-      <a href="#"><svg class="icon"><use href="#icon-romano" /></svg> Seneca</a>
-      <a href="#"><svg class="icon"><use href="#icon-romano" /></svg> Cicerone</a>
-      <a href="#"><svg class="icon"><use href="#icon-romano" /></svg> Marco Aurelio</a>
-      <a href="#"><svg class="icon"><use href="#icon-romano" /></svg> Epitteto</a>
-      <a href="#"><svg class="icon"><use href="#icon-romano" /></svg> Plotino</a>
-    </div>
-  </div>
-</li>
-
-
-<li>
-  <a href="#">Filosofia classica <span class="arrow">▼</span></a>
-  <div class="dropdown-content">
-    <a href="#">Socrate</a>
-    <a href="#">Platone</a>
-    <a href="#">Aristotele</a>
-    <a href="#">Senofonte</a>
-    <a href="#">Antistene</a>
-    <a href="#">Epicuro</a>
-    <a href="#">Zenone</a>
-  </div>
-</li>
-
-      <li>
-  <a href="#">Medioevo / Patristica <span class="arrow">▼</span></a>
-  <div class="dropdown-content two-column">
-    <div class="column">
-      <strong class="column-title">Filosofia medievale</strong>
-      <a href="#"><svg class="icon"><use href="#icon-medievale" /></svg> Anselmo d'Aosta</a>
-      <a href="#"><svg class="icon"><use href="#icon-medievale" /></svg> Pietro Abelardo</a>
-      <a href="#"><svg class="icon"><use href="#icon-medievale" /></svg> Tommaso d’Aquino</a>
-      <a href="#"><svg class="icon"><use href="#icon-medievale" /></svg> Guglielmo di Ockham</a>
-      <a href="#"><svg class="icon"><use href="#icon-medievale" /></svg> Giovanni Duns Scoto</a>
-    </div>
-    <div class="column separator">
-      <strong class="column-title">Patristica</strong>
-      <a href="#"><svg class="icon"><use href="#icon-patristica" /></svg> Origene</a>
-      <a href="#"><svg class="icon"><use href="#icon-patristica" /></svg> Tertulliano</a>
-      <a href="#"><svg class="icon"><use href="#icon-patristica" /></svg> Basilio di Cesarea</a>
-      <a href="#"><svg class="icon"><use href="#icon-patristica" /></svg> Agostino d’Ippona</a>
-      <a href="#"><svg class="icon"><use href="#icon-patristica" /></svg> Gregorio di Nissa</a>
-    </div>
-  </div>
-</li>
-
-
-      <li>
-        <a href="#">Filosofia moderna <span class="arrow">▼</span></a>
-        <div class="dropdown-content">
-          <a href="#">Cartesio</a>
-          <a href="#">Spinoza</a>
-          <a href="#">Kant</a>
-        </div>
-      </li>
-
-      <li>
-        <a href="#">Filosofia contemporanea <span class="arrow">▼</span></a>
-        <div class="dropdown-content">
-          <a href="#">Nietzsche</a>
-          <a href="#">Heidegger</a>
-          <a href="#">Foucault</a>
-        </div>
-      </li>
-
-     
-    </ul>
-
-    <!-- Barra ricerca -->
- <div class="search-wrapper" role="search">
-  <input type="search" id="search-input" placeholder="Cerca..." aria-label="Cerca nel sito" autocomplete="off" />
-  <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-    <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16a6.471 6.471 0 004.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM10 14a4 4 0 110-8 4 4 0 010 8z"/>
+    <symbol id="icon-patristica" viewBox="0 0 24 24">
+      <circle cx="12" cy="8" r="4" stroke="currentColor" fill="none" stroke-width="2"/>
+      <path d="M6 22v-2c0-2 4-4 6-4s6 2 6 4v2" stroke="currentColor" fill="none" stroke-width="2"/>
+    </symbol>
   </svg>
-  <div class="search-results" id="search-results" role="listbox" aria-live="polite"></div>
-</div>
-  </div>
-<!---------------------------------------------------------->
-<!--
-<footer class="footer-site">
-  <div class="footer-contenitore">
-    <div class="footer-col">
-      <h2>Ultimi articoli</h2>
-      <ul>
-        <li><a href="#">Il pensiero di Senofane</a></li>
-        <li><a href="#">Pitagora e l’anima</a></li>
-        <li><a href="#">Eraclito: il divenire</a></li>
-        <li><a href="#">Anassimandro e l’apeiron</a></li>
+
+  <nav class="navbar">
+    <div class="menu-toggle" id="mobile-menu" aria-label="Toggle menu" role="button" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="nav-container" id="nav-container">
+      <ul class="nav-links" id="nav">
+        <li>
+          <a href="#">Filosofia antica <span class="arrow">▼</span></a>
+          <div class="dropdown-content two-column">
+            <div class="column">
+              <strong class="column-title">Filosofia greca</strong>
+              <a href="filosofi/talete.html"><svg class="icon"><use href="#icon-greco" /></svg> Talete</a>
+              <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Anassimandro</a>
+              <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Anassimene</a>
+              <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Senofane</a>
+              <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Parmenide</a>
+              <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Zenone</a>
+              <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Eraclito</a>
+              <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Empedocle</a>
+              <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Pitagora</a>
+              <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Democrito</a>
+              <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Protagora</a>
+              <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Gorgia</a>
+            </div>
+            <div class="column separator">
+              <strong class="column-title">Filosofia romana</strong>
+              <a href="#"><svg class="icon"><use href="#icon-romano" /></svg> Seneca</a>
+              <a href="#"><svg class="icon"><use href="#icon-romano" /></svg> Cicerone</a>
+              <a href="#"><svg class="icon"><use href="#icon-romano" /></svg> Marco Aurelio</a>
+              <a href="#"><svg class="icon"><use href="#icon-romano" /></svg> Epitteto</a>
+              <a href="#"><svg class="icon"><use href="#icon-romano" /></svg> Plotino</a>
+            </div>
+          </div>
+        </li>
+        <li>
+          <a href="#">Filosofia classica <span class="arrow">▼</span></a>
+          <div class="dropdown-content">
+            <a href="#">Socrate</a>
+            <a href="#">Platone</a>
+            <a href="#">Aristotele</a>
+            <a href="#">Senofonte</a>
+            <a href="#">Antistene</a>
+            <a href="#">Epicuro</a>
+            <a href="#">Zenone</a>
+          </div>
+        </li>
+        <li>
+          <a href="#">Medioevo / Patristica <span class="arrow">▼</span></a>
+          <div class="dropdown-content two-column">
+            <div class="column">
+              <strong class="column-title">Filosofia medievale</strong>
+              <a href="#"><svg class="icon"><use href="#icon-medievale" /></svg> Anselmo d'Aosta</a>
+              <a href="#"><svg class="icon"><use href="#icon-medievale" /></svg> Pietro Abelardo</a>
+              <a href="#"><svg class="icon"><use href="#icon-medievale" /></svg> Tommaso d’Aquino</a>
+              <a href="#"><svg class="icon"><use href="#icon-medievale" /></svg> Guglielmo di Ockham</a>
+              <a href="#"><svg class="icon"><use href="#icon-medievale" /></svg> Giovanni Duns Scoto</a>
+            </div>
+            <div class="column separator">
+              <strong class="column-title">Patristica</strong>
+              <a href="#"><svg class="icon"><use href="#icon-patristica" /></svg> Origene</a>
+              <a href="#"><svg class="icon"><use href="#icon-patristica" /></svg> Tertulliano</a>
+              <a href="#"><svg class="icon"><use href="#icon-patristica" /></svg> Basilio di Cesarea</a>
+              <a href="#"><svg class="icon"><use href="#icon-patristica" /></svg> Agostino d’Ippona</a>
+              <a href="#"><svg class="icon"><use href="#icon-patristica" /></svg> Gregorio di Nissa</a>
+            </div>
+          </div>
+        </li>
+        <li>
+          <a href="#">Filosofia moderna <span class="arrow">▼</span></a>
+          <div class="dropdown-content">
+            <a href="#">Cartesio</a>
+            <a href="#">Spinoza</a>
+            <a href="#">Kant</a>
+          </div>
+        </li>
+        <li>
+          <a href="#">Filosofia contemporanea <span class="arrow">▼</span></a>
+          <div class="dropdown-content">
+            <a href="#">Nietzsche</a>
+            <a href="#">Heidegger</a>
+            <a href="#">Foucault</a>
+          </div>
+        </li>
       </ul>
+
+      <!-- Barra ricerca -->
+      <div class="search-wrapper" role="search">
+        <input type="search" id="search-input" placeholder="Cerca..." aria-label="Cerca nel sito" autocomplete="off" />
+        <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16a6.471 6.471 0 004.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM10 14a4 4 0 110-8 4 4 0 010 8z"/>
+        </svg>
+        <div class="search-results" id="search-results" role="listbox" aria-live="polite"></div>
+      </div>
+
     </div>
-    <div class="footer-col">
-      <p></p>
+  </nav>
+
+  <!-- Footer commentato, puoi riattivarlo se vuoi -->
+  <!--
+  <footer class="footer-site">
+    <div class="footer-contenitore">
+      <div class="footer-col">
+        <h2>Ultimi articoli</h2>
+        <ul>
+          <li><a href="#">Il pensiero di Senofane</a></li>
+          <li><a href="#">Pitagora e l’anima</a></li>
+          <li><a href="#">Eraclito: il divenire</a></li>
+          <li><a href="#">Anassimandro e l’apeiron</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p></p>
+      </div>
     </div>
-  </div>
-</footer>
--->
+  </footer>
+  -->
 
-
-
-<script>
-  function toggleIncipit(element) {
-    element.classList.toggle('attivo');
-  }
-</script>
+  <script>
+    // Funzione per toggle incipit
+    function toggleIncipit(element) {
+      const contenuto = document.getElementById('incipit-contenuto');
+      const freccia = element.querySelector('.freccia');
+      const isHidden = contenuto.hasAttribute('hidden');
+      if (isHidden) {
+        contenuto.removeAttribute('hidden');
+        element.setAttribute('aria-expanded', 'true');
+        freccia.innerHTML = '&#9650;'; // freccia su
+      } else {
+        contenuto.setAttribute('hidden', '');
+        element.setAttribute('aria-expanded', 'false');
+        freccia.innerHTML = '&#9660;'; // freccia giù
+      }
+    }
+  </script>
 
 </body>
-
+</html>
