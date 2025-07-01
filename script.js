@@ -1,104 +1,64 @@
+document.addEventListener('DOMContentLoaded', function () {
+  const dropdowns = document.querySelectorAll('.dropdown');
 
-  // Mobile menu toggle
-  const toggle = document.getElementById('mobile-menu');
-  const navContainer = document.getElementById('nav-container');
-  const navItems = document.querySelectorAll('.nav-links > li');
+  dropdowns.forEach(dropdown => {
+    dropdown.addEventListener('mouseenter', function () {
+      const menu = this.querySelector('.submenu, .mega-menu');
+      menu.style.opacity = '1';
+      menu.style.visibility = 'visible';
+      menu.style.transform = 'translateY(5px)';
+      menu.style.pointerEvents = 'auto';
+    });
 
-  toggle.addEventListener('click', () => {
-    navContainer.classList.toggle('open');
-  });
-
-  navItems.forEach(item => {
-    item.addEventListener('click', e => {
-      if (window.innerWidth <= 768) {
-        if (item.querySelector('.dropdown-content')) {
-          e.preventDefault();
-          item.classList.toggle('open');
+    dropdown.addEventListener('mouseleave', function () {
+      const menu = this.querySelector('.submenu, .mega-menu');
+      setTimeout(() => {
+        if (!this.matches(':hover') && !menu.matches(':hover')) {
+          menu.style.opacity = '0';
+          menu.style.visibility = 'hidden';
+          menu.style.transform = 'translateY(0)';
+          menu.style.pointerEvents = 'none';
         }
-      }
+      }, 100);
+    });
+
+    const submenus = dropdown.querySelectorAll('.submenu, .mega-menu');
+    submenus.forEach(menu => {
+      menu.addEventListener('mouseenter', function () {
+        this.style.opacity = '1';
+        this.style.visibility = 'visible';
+        this.style.transform = 'translateY(5px)';
+      });
+
+      menu.addEventListener('mouseleave', function () {
+        this.style.opacity = '0';
+        this.style.visibility = 'hidden';
+        this.style.transform = 'translateY(0)';
+      });
     });
   });
 
-  // Ricerca reale
-  const searchInput = document.getElementById('search-input');
-  const resultsBox = document.getElementById('search-results');
-
-  // Lista dati da cercare: testo e link
-  const items = [
-    {name: "Incipit", href: "#"},
-    {name: "Filosofia antica", href: "#"},
-    {name: "Talete", href: "filosofi/talete.html"},
-    {name: "Anassimandro", href: "#"},
-    {name: "Parmenide", href: "#"},
-    {name: "Filosofia classica", href: "#"},
-    {name: "Socrate", href: "#"},
-    {name: "Platone", href: "#"},
-    {name: "Aristotele", href: "#"},
-    {name: "Medioevo / Patristica", href: "#"},
-    {name: "Filosofia moderna", href: "#"},
-    {name: "Cartesio", href: "#"},
-    {name: "Spinoza", href: "#"},
-    {name: "Kant", href: "#"},
-    {name: "Filosofia contemporanea", href: "#"},
-    {name: "Nietzsche", href: "#"},
-    {name: "Heidegger", href: "#"},
-    {name: "Foucault", href: "#"},
-    {name: "Contatti", href: "#"}
-  ];
-
-  function filterItems(query) {
-    if (!query) {
-      resultsBox.style.display = 'none';
-      resultsBox.innerHTML = '';
-      return;
-    }
-    const filtered = items.filter(item =>
-      item.name.toLowerCase().includes(query.toLowerCase())
-    );
-    if (filtered.length === 0) {
-      resultsBox.innerHTML = '<div class="no-results">Nessun risultato</div>';
-      resultsBox.style.display = 'block';
-      return;
-    }
-    resultsBox.innerHTML = filtered.map(item => 
-      `<a href="${item.href}" role="option" tabindex="0">${item.name}</a>`
-    ).join('');
-    resultsBox.style.display = 'block';
-  }
-
-  searchInput.addEventListener('input', e => {
-    filterItems(e.target.value);
-  });
-
-  // Chiudi risultati se clicco fuori
-  document.addEventListener('click', e => {
-    if (!e.target.closest('.search-wrapper')) {
-      resultsBox.style.display = 'none';
+  document.querySelector('.search-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const query = this.querySelector('input').value.trim();
+    if (query) {
+      alert(`Ricerca implementata: "${query}"\n\nQuesta è una demo. Nella pratica, collegheresti un sistema di ricerca reale.`);
     }
   });
 
-  // Supporto tastiera per selezione risultati (opzionale)
-  resultsBox.addEventListener('keydown', e => {
-    if (e.key === "Escape") {
-      resultsBox.style.display = 'none';
-      searchInput.focus();
-    }
+  const title = document.querySelector('.saluto');
+  title.addEventListener('mouseover', () => {
+    title.style.animation = 'echoEffect 1s ease-out';
   });
-
-function toggleIncipit(element) {
-  element.classList.toggle("attivo");
-}
-document.querySelectorAll('*').forEach(el => {
-  if(el.scrollWidth > window.innerWidth) console.log(el);
+  title.addEventListener('mouseout', () => {
+    title.style.animation = '';
+  });
 });
 
-  const bottone = document.getElementById('toggleIncipit');
-  const contenuto = document.getElementById('incipitContenuto');
-  const freccia = bottone.querySelector('.freccia');
+window.addEventListener('load', () => {
+  document.body.classList.add('loaded');
+});
 
-  bottone.addEventListener('click', () => {
-    contenuto.classList.toggle('open');
-    freccia.classList.toggle('ruotata');
-  });
-
-
+window.addEventListener('scroll', () => {
+  document.body.classList.toggle('scrolled', window.scrollY > 50);
+});
