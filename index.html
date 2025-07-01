@@ -1,324 +1,611 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Echi di Sofia</title>
-  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="stile.css" />
-  <script src="script.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Echi di Sofia - Filosofia attraverso i secoli</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="js/script.js"></script>
+
+    <style>
+        /* RESET & VARIABILI */
+        :root {
+            --primary: #2a2a72;
+            --primary-light: #3a3a8a;
+            --accent: #c0392b;
+            --text: #1a1a1a;
+            --text-light: #666;
+            --bg: #ffffff;
+            --border: #eaeaea;
+            --hover-bg: #f8f8f8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Crimson Pro', serif;
+            color: var(--text);
+            background: var(--bg);
+            padding-top: 80px;
+            line-height: 1.6;
+        }
+        
+        /* NAVBAR PRINCIPALE */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            z-index: 1000;
+            padding: 0 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .menu {
+            display: flex;
+            list-style: none;
+            height: 100%;
+            align-items: center;
+        }
+        
+        /* VOCI MENU */
+        .dropdown {
+            position: relative;
+            height: 100%;
+        }
+        
+        .menu-btn {
+            background: none;
+            border: none;
+            height: 100%;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            font-family: 'Playfair Display', serif;
+            font-weight: 500;
+            font-size: 1rem;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .menu-btn:hover {
+            color: var(--accent);
+        }
+        
+        .menu-btn .arrow {
+            margin-left: 8px;
+            font-size: 0.8rem;
+            transition: transform 0.3s;
+        }
+        
+        /* SOTTOMENU */
+        .submenu, .mega-menu {
+            position: absolute;
+            left: 0;
+            top: 100%;
+            background: var(--bg);
+            border-radius: 8px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            z-index: 100;
+            pointer-events: none;
+        }
+        
+        .dropdown:hover .submenu,
+        .dropdown:hover .mega-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(5px);
+            pointer-events: auto;
+        }
+        
+        /* ZONA DI ATTIVAZIONE */
+        .dropdown::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: transparent;
+        }
+        
+        /* STILE INCIPIT */
+        .submenu {
+            width: 350px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #f8f9fa 100%);
+            border-left: 4px solid var(--accent);
+        }
+        
+        .frase-chiave {
+            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        /* MEGA MENU A COLONNE */
+        .mega-menu {
+            padding: 30px;
+            display: flex;
+            gap: 30px;
+        }
+        
+        .columns-4 { width: 900px; }
+        .columns-3 { width: 700px; }
+        .columns-2 { width: 600px; }
+        .columns-1 { width: 300px; }
+        
+        .mega-menu > div {
+            flex: 1;
+        }
+        
+        .mega-menu h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--accent);
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+            font-size: 1.1rem;
+        }
+        
+        .mega-menu a {
+            display: block;
+            padding: 8px 0;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            padding-left: 15px;
+        }
+        
+        .mega-menu a:hover {
+            color: var(--accent);
+            padding-left: 25px;
+        }
+        
+        .mega-menu a::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            opacity: 0;
+            transition: all 0.3s;
+        }
+        
+        .mega-menu a:hover::before {
+            opacity: 1;
+            left: 5px;
+        }
+
+        /* FORM DI RICERCA */
+        .search-container {
+            margin-left: auto;
+            padding-left: 20px;
+        }
+
+        .search-form {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            width: 180px;
+            padding: 8px 15px;
+            padding-right: 35px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-family: 'Crimson Pro', serif;
+            font-size: 0.9rem;
+            color: var(--text);
+            background: rgba(255,255,255,0.8);
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            width: 220px;
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(192, 57, 43, 0.2);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 10px;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .search-btn:hover {
+            color: var(--accent);
+            transform: scale(1.1);
+        }
+
+        /* SEZIONE EROICA */
+        .hero {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        
+        /* ANIMAZIONE DEL TITOLO */
+        .saluto {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-weight: 600;
+            position: relative;
+            display: inline-block;
+            animation: titleEntrance 1.5s ease-out forwards;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transform-style: preserve-3d;
+        }
+
+        .saluto::before,
+        .saluto::after {
+            content: 'Echi di Sofia';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.3;
+        }
+
+        .saluto::before {
+            color: var(--accent);
+            z-index: -1;
+            animation: echoEffect 4s infinite ease-in-out 1s;
+        }
+
+        .saluto::after {
+            color: var(--primary-light);
+            z-index: -2;
+            animation: echoEffect 4s infinite ease-in-out 2s;
+        }
+
+        @keyframes titleEntrance {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) rotateX(60deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+
+        @keyframes echoEffect {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+                opacity: 0.2;
+            }
+            50% {
+                transform: translateY(-10px) scale(1.03);
+                opacity: 0.4;
+            }
+        }
+
+        /* Animazione per il sottotitolo */
+        .sottotitolo {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease-out 0.5s both;
+            position: relative;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Animazione per la citazione */
+        .citazione {
+            font-style: italic;
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeIn 1.5s ease-out 1s both;
+            border-left: 3px solid var(--accent);
+            padding-left: 20px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 1024px) {
+            .search-container {
+                padding-left: 10px;
+            }
+            .search-input {
+                width: 150px;
+            }
+            .search-input:focus {
+                width: 180px;
+            }
+        }
+    </style>
 </head>
 <body>
+    <nav class="navbar" role="navigation" aria-label="Menu principale">
+        <ul class="menu" role="menubar">
+            <!-- Incipit -->
+            <li role="none" class="dropdown">
+                <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-book-open"></i> Incipit <span class="arrow">▼</span>
+                </button>
+                <div class="submenu" role="menu" aria-label="Sottomenu Incipit">
+                    <p class="frase-chiave">«Dall'oscurità del non-sapere, una scintilla: il primo perché che illuminò la coscienza umana.»</p>
+                    <p>Prima delle parole, prima degli dei, esisteva quel momento sospeso in cui l'uomo si fermò a contemplare il cielo notturno. Fu allora che il pensiero prese forma - non come risposta, ma come vibrazione pura di meraviglia.</p>
+                    <p>Questo spazio non è una collezione di concetti. È un campo magnetico dove le domande dei nostri antenati filosofi continuano a risuonare, invitandoci a ripercorrere quel primo, rivoluzionario atto di curiosità.</p>
+                </div>
+            </li>
 
-  <header>
-    <div class="intestazione-riga">
-      <img src="immagini/logo-filosofia.svg" alt="Simbolo filosofico" class="logo-header" />
-      <div class="testo-header">
-        <h1>Benvenuto in <strong>Echi di Sofia</strong></h1>
-        <p>Il pensiero che attraversa i secoli</p>
-      </div>
-    </div>
-    <blockquote class="citazione">
-      “L’anima ragiona, ama, contempla – e da questo nasce la civiltà.”
-    </blockquote>
-   
-      <!----------------------------------------->
-<div class="incipit-bottone-wrapper">
-  <button class="incipit-bottone">
-    Incipit <span class="freccia">▼</span>
-  </button>
-  <div class="incipit-contenuto">
-    <p class="frase-chiave">“L’anima ragiona, ama, contempla – e da questo nasce la civiltà.”</p>
-    <p class="testo">Benvenuto in <strong>Echi di Sofia</strong>, un luogo dove il pensiero attraversa i secoli, intrecciando la sapienza degli antichi con la riflessione dei moderni.</p>
-    <p class="frase-chiave">«Dall'oscurità del non-sapere, una scintilla: il primo perché che illuminò la coscienza umana.»</p>
-    <p class="testo">Prima delle parole, prima degli dei, esisteva quel momento sospeso in cui l'uomo si fermò a contemplare il cielo notturno. Fu allora che il pensiero prese forma - non come risposta, ma come vibrazione pura di meraviglia.</p>
-    <p class="testo">Questo spazio non è una collezione di concetti. È un campo magnetico dove le domande dei nostri antenati filosofi continuano a risuonare, invitandoci a ripercorrere quel primo, rivoluzionario atto di curiosità.</p>
-    <p class="testo">Varcando questa soglia, ti unisci alla più antica cerchia: quella di chi sceglie di sostare nell'incanto del mistero, trasformando lo stupore in dialogo eterno tra l'umano e l'infinito.</p>
-  </div>
-</div>
+            <!-- Filosofia antica -->
+            <li role="none" class="dropdown">
+                <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                    Filosofia antica <span class="arrow">▼</span>
+                </button>
+                <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia antica">
+                    <div>
+                        <h4>Scuola ionica</h4>
+                        <a href="#" role="menuitem">Talete</a>
+                        <a href="#" role="menuitem">Anassimandro</a>
+                        <a href="#" role="menuitem">Anassimene</a>
+                    </div>
+                    <div>
+                        <h4>Scuola eleatica</h4>
+                        <a href="#" role="menuitem">Senofane</a>
+                        <a href="#" role="menuitem">Parmenide</a>
+                        <a href="#" role="menuitem">Zenone</a>
+                    </div>
+                    <div>
+                        <h4>Altri</h4>
+                        <a href="#" role="menuitem">Eraclito</a>
+                        <a href="#" role="menuitem">Anassagora</a>
+                        <a href="#" role="menuitem">Empedocle</a>
+                    </div>
+                    <div>
+                        <h4>Pitagorici</h4>
+                        <a href="#" role="menuitem">Pitagora</a>
+                        <a href="#" role="menuitem">Filolao</a>
+                    </div>
+                </div>
+            </li>
 
+            <!-- Filosofia classica -->
+            <li role="none" class="dropdown">
+                <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                    Filosofia classica <span class="arrow">▼</span>
+                </button>
+                <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia classica">
+                    <div>
+                        <h4>Classici</h4>
+                        <a href="#" role="menuitem">Socrate</a>
+                        <a href="#" role="menuitem">Platone</a>
+                        <a href="#" role="menuitem">Aristotele</a>
+                    </div>
+                    <div>
+                        <h4>Platonici</h4>
+                        <a href="#" role="menuitem">Senofonte</a>
+                        <a href="#" role="menuitem">Antistene</a>
+                        <a href="#" role="menuitem">Aristippo</a>
+                    </div>
+                    <div>
+                        <h4>Stoici</h4>
+                        <a href="#" role="menuitem">Zenone</a>
+                        <a href="#" role="menuitem">Epitteto</a>
+                        <a href="#" role="menuitem">Seneca</a>
+                    </div>
+                    <div>
+                        <h4>Epicurei</h4>
+                        <a href="#" role="menuitem">Epicuro</a>
+                        <a href="#" role="menuitem">Lucrezio</a>
+                        <a href="#" role="menuitem">Cicerone</a>
+                    </div>
+                </div>
+            </li>
 
-<!-- STILI CSS -->
-<style>
-.incipit-bottone-wrapper {
-  display: flex;
-  justify-content: center;
-  margin: 20px 0;
-  position: relative;
-  z-index: 1010;
-}
+            <!-- Filosofia medievale -->
+            <li role="none" class="dropdown">
+                <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                    Medievale/Patristica <span class="arrow">▼</span>
+                </button>
+                <div class="mega-menu columns-2" role="menu" aria-label="Sottomenu Filosofia medievale">
+                    <div>
+                        <h4>Medievale</h4>
+                        <a href="#" role="menuitem">Tommaso d'Aquino</a>
+                        <a href="#" role="menuitem">Anselmo</a>
+                        <a href="#" role="menuitem">Guglielmo di Ockham</a>
+                        <a href="#" role="menuitem">Duns Scoto</a>
+                    </div>
+                    <div>
+                        <h4>Patristica</h4>
+                        <a href="#" role="menuitem">Agostino</a>
+                        <a href="#" role="menuitem">Origene</a>
+                        <a href="#" role="menuitem">Gregorio di Nissa</a>
+                        <a href="#" role="menuitem">Tertulliano</a>
+                    </div>
+                </div>
+            </li>
 
-.incipit-bottone {
-  background: none;
-  border: none;
-  color: #2f5d62;
-  font-size: 1.3rem;
-  font-weight: 700;
-  cursor: pointer;
-  padding: 14px 36px;
-  border-radius: 50px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transition: box-shadow 0.3s ease, color 0.3s ease;
-  position: relative;
-}
+            <!-- Filosofia moderna -->
+            <li role="none" class="dropdown">
+                <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                    Filosofia moderna <span class="arrow">▼</span>
+                </button>
+                <div class="mega-menu columns-3" role="menu" aria-label="Sottomenu Filosofia moderna">
+                    <div>
+                        <h4>Razionalisti</h4>
+                        <a href="#" role="menuitem">Cartesio</a>
+                        <a href="#" role="menuitem">Spinoza</a>
+                        <a href="#" role="menuitem">Leibniz</a>
+                    </div>
+                    <div>
+                        <h4>Empiristi</h4>
+                        <a href="#" role="menuitem">Locke</a>
+                        <a href="#" role="menuitem">Hume</a>
+                        <a href="#" role="menuitem">Berkeley</a>
+                    </div>
+                    <div>
+                        <h4>Kant e oltre</h4>
+                        <a href="#" role="menuitem">Kant</a>
+                        <a href="#" role="menuitem">Fichte</a>
+                        <a href="#" role="menuitem">Schelling</a>
+                    </div>
+                </div>
+            </li>
 
-.incipit-bottone:hover,
-.incipit-bottone:focus {
-  box-shadow: 0 4px 12px rgba(212,175,55,0.4);
-  color: #b29600;
-  outline: none;
-}
-
-.incipit-bottone .freccia {
-  font-size: 16px;
-  transition: transform 0.3s ease;
-  user-select: none;
-}
-
-/* Contenuto nascosto inizialmente */
-.incipit-contenuto-nascosto {
-  position: absolute;
-  top: 120%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 350px;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
-  padding: 20px;
-  margin-top: 10px;
-  opacity: 0;
-  max-height: 0;
-  overflow: hidden;
-  pointer-events: none;
-  transition: opacity 0.4s ease, max-height 0.4s ease;
-  text-align: center;
-  font-family: 'Georgia', serif;
-  font-size: 1rem;
-  color: #333;
-  z-index: 1020;
-}
-
-/* Quando è attivo (classe active su bottone) */
-.incipit-bottone.active {
-  color: #b29600;
-  box-shadow: 0 4px 12px rgba(212,175,55,0.4);
-}
-
-.incipit-bottone.active .freccia {
-  transform: rotate(180deg);
-}
-
-.incipit-bottone.active + .incipit-contenuto-nascosto {
-  opacity: 1;
-  max-height: 500px;
-  pointer-events: auto;
-}
-
-/* Testi */
-.frase-chiave {
-  font-style: italic;
-  font-size: 1.1rem;
-  color: #555;
-  margin-bottom: 12px;
-}
-
-.testo {
-  font-size: 1rem;
-  color: #333;
-  line-height: 1.5;
-}
-
-/* Responsive */
-@media (max-width: 480px) {
-  .incipit-contenuto-nascosto {
-    width: 90vw;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-}
-</style>
-
-<!-- SCRIPT JS -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const btn = document.querySelector('.incipit-bottone');
-  const contenuto = document.querySelector('.incipit-contenuto-nascosto');
-
-  btn.addEventListener('click', function() {
-    const isActive = btn.classList.toggle('active');
-
-    // Aggiorna attributi aria per accessibilità
-    btn.setAttribute('aria-expanded', isActive);
-    contenuto.setAttribute('aria-hidden', !isActive);
-  });
-});
-</script>
-
-      <!------====================================------------->
-     
-  </header>
-
-  <!-- Simboli SVG definiti una volta sola -->
-  <svg style="display: none;">
-    <symbol id="icon-greco" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
-      <path d="M8 12h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-    </symbol>
-
-    <symbol id="icon-romano" viewBox="0 0 24 24">
-      <rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="2" fill="none"/>
-      <path d="M8 8h8v8H8z" fill="currentColor"/>
-    </symbol>
-
-    <symbol id="icon-medievale" viewBox="0 0 24 24">
-      <path d="M12 2L15 8h6l-5 4 2 6-5-3-5 3 2-6-5-4h6z" stroke="currentColor" fill="none" stroke-width="2"/>
-    </symbol>
-
-    <symbol id="icon-patristica" viewBox="0 0 24 24">
-      <circle cx="12" cy="8" r="4" stroke="currentColor" fill="none" stroke-width="2"/>
-      <path d="M6 22v-2c0-2 4-4 6-4s6 2 6 4v2" stroke="currentColor" fill="none" stroke-width="2"/>
-    </symbol>
-  </svg>
-
-  <nav class="navbar">
-    <div class="menu-toggle" id="mobile-menu" aria-label="Toggle menu" role="button" tabindex="0">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-    <div class="nav-container" id="nav-container">
-      <ul class="nav-links" id="nav">
-        <li>
-          <a href="#">Filosofia antica <span class="arrow">▼</span></a>
-          <div class="dropdown-content two-column">
-            <div class="column">
-              <strong class="column-title">Filosofia greca</strong>
-              <a href="filosofi/talete.html"><svg class="icon"><use href="#icon-greco" /></svg> Talete</a>
-              <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Anassimandro</a>
-              <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Anassimene</a>
-              <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Senofane</a>
-              <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Parmenide</a>
-              <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Zenone</a>
-              <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Eraclito</a>
-              <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Empedocle</a>
-              <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Pitagora</a>
-              <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Democrito</a>
-              <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Protagora</a>
-              <a href="#"><svg class="icon"><use href="#icon-greco" /></svg> Gorgia</a>
-            </div>
-            <div class="column separator">
-              <strong class="column-title">Filosofia romana</strong>
-              <a href="#"><svg class="icon"><use href="#icon-romano" /></svg> Seneca</a>
-              <a href="#"><svg class="icon"><use href="#icon-romano" /></svg> Cicerone</a>
-              <a href="#"><svg class="icon"><use href="#icon-romano" /></svg> Marco Aurelio</a>
-              <a href="#"><svg class="icon"><use href="#icon-romano" /></svg> Epitteto</a>
-              <a href="#"><svg class="icon"><use href="#icon-romano" /></svg> Plotino</a>
-            </div>
-          </div>
-        </li>
-        <li>
-          <a href="#">Filosofia classica <span class="arrow">▼</span></a>
-          <div class="dropdown-content">
-            <a href="#">Socrate</a>
-            <a href="#">Platone</a>
-            <a href="#">Aristotele</a>
-            <a href="#">Senofonte</a>
-            <a href="#">Antistene</a>
-            <a href="#">Epicuro</a>
-            <a href="#">Zenone</a>
-          </div>
-        </li>
-        <li>
-          <a href="#">Medioevo / Patristica <span class="arrow">▼</span></a>
-          <div class="dropdown-content two-column">
-            <div class="column">
-              <strong class="column-title">Filosofia medievale</strong>
-              <a href="#"><svg class="icon"><use href="#icon-medievale" /></svg> Anselmo d'Aosta</a>
-              <a href="#"><svg class="icon"><use href="#icon-medievale" /></svg> Pietro Abelardo</a>
-              <a href="#"><svg class="icon"><use href="#icon-medievale" /></svg> Tommaso d’Aquino</a>
-              <a href="#"><svg class="icon"><use href="#icon-medievale" /></svg> Guglielmo di Ockham</a>
-              <a href="#"><svg class="icon"><use href="#icon-medievale" /></svg> Giovanni Duns Scoto</a>
-            </div>
-            <div class="column separator">
-              <strong class="column-title">Patristica</strong>
-              <a href="#"><svg class="icon"><use href="#icon-patristica" /></svg> Origene</a>
-              <a href="#"><svg class="icon"><use href="#icon-patristica" /></svg> Tertulliano</a>
-              <a href="#"><svg class="icon"><use href="#icon-patristica" /></svg> Basilio di Cesarea</a>
-              <a href="#"><svg class="icon"><use href="#icon-patristica" /></svg> Agostino d’Ippona</a>
-              <a href="#"><svg class="icon"><use href="#icon-patristica" /></svg> Gregorio di Nissa</a>
-            </div>
-          </div>
-        </li>
-        <li>
-          <a href="#">Filosofia moderna <span class="arrow">▼</span></a>
-          <div class="dropdown-content">
-            <a href="#">Cartesio</a>
-            <a href="#">Spinoza</a>
-            <a href="#">Kant</a>
-          </div>
-        </li>
-        <li>
-          <a href="#">Filosofia contemporanea <span class="arrow">▼</span></a>
-          <div class="dropdown-content">
-            <a href="#">Nietzsche</a>
-            <a href="#">Heidegger</a>
-            <a href="#">Foucault</a>
-          </div>
-        </li>
-      </ul>
-
-      <!-- Barra ricerca -->
-      <div class="search-wrapper" role="search">
-        <input type="search" id="search-input" placeholder="Cerca..." aria-label="Cerca nel sito" autocomplete="off" />
-        <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16a6.471 6.471 0 004.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM10 14a4 4 0 110-8 4 4 0 010 8z"/>
-        </svg>
-        <div class="search-results" id="search-results" role="listbox" aria-live="polite"></div>
-      </div>
-
-    </div>
-  </nav>
-
-  <!-- Footer commentato, puoi riattivarlo se vuoi -->
-  <!--
-  <footer class="footer-site">
-    <div class="footer-contenitore">
-      <div class="footer-col">
-        <h2>Ultimi articoli</h2>
-        <ul>
-          <li><a href="#">Il pensiero di Senofane</a></li>
-          <li><a href="#">Pitagora e l’anima</a></li>
-          <li><a href="#">Eraclito: il divenire</a></li>
-          <li><a href="#">Anassimandro e l’apeiron</a></li>
+            <!-- Filosofia contemporanea -->
+            <li role="none" class="dropdown">
+                <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                    Contemporanea <span class="arrow">▼</span>
+                </button>
+                <div class="mega-menu columns-3" role="menu" aria-label="Sottomenu Filosofia contemporanea">
+                    <div>
+                        <h4>Ottocento</h4>
+                        <a href="#" role="menuitem">Hegel</a>
+                        <a href="#" role="menuitem">Schopenhauer</a>
+                        <a href="#" role="menuitem">Nietzsche</a>
+                    </div>
+                    <div>
+                        <h4>Fenomenologia</h4>
+                        <a href="#" role="menuitem">Husserl</a>
+                        <a href="#" role="menuitem">Heidegger</a>
+                        <a href="#" role="menuitem">Merleau-Ponty</a>
+                    </div>
+                    <div>
+                        <h4>Postmoderni</h4>
+                        <a href="#" role="menuitem">Sartre</a>
+                        <a href="#" role="menuitem">Foucault</a>
+                        <a href="#" role="menuitem">Derrida</a>
+                    </div>
+                </div>
+            </li>
         </ul>
-      </div>
-      <div class="footer-col">
-        <p></p>
-      </div>
-    </div>
-  </footer>
-  -->
 
-  <script>
-    // Funzione per toggle incipit
-    function toggleIncipit(element) {
-      const contenuto = document.getElementById('incipit-contenuto');
-      const freccia = element.querySelector('.freccia');
-      const isHidden = contenuto.hasAttribute('hidden');
-      if (isHidden) {
-        contenuto.removeAttribute('hidden');
-        element.setAttribute('aria-expanded', 'true');
-        freccia.innerHTML = '&#9650;'; // freccia su
-      } else {
-        contenuto.setAttribute('hidden', '');
-        element.setAttribute('aria-expanded', 'false');
-        freccia.innerHTML = '&#9660;'; // freccia giù
-      }
-    }
-  </script>
+        <!-- FORM DI RICERCA -->
+        <div class="search-container">
+            <form role="search" class="search-form">
+                <input type="search" 
+                       aria-label="Cerca filosofi o correnti" 
+                       placeholder="Cerca..." 
+                       class="search-input">
+                <button type="submit" 
+                        aria-label="Avvia ricerca" 
+                        class="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </div>
+    </nav>
 
+    <section class="hero" aria-label="Saluto di benvenuto">
+        <h1 class="saluto">Benvenuti in Echi di Sofia</h1>
+        <p class="sottotitolo">Dove il pensiero antico risuona nel presente</p>
+        <p class="citazione">"Non è possedendo la verità, ma cercandola, che l'uomo si espande"</p>
+    </section>
+
+    <script>
+    // GESTIONE HOVER AVANZATA
+    document.addEventListener('DOMContentLoaded', function() {
+        const dropdowns = document.querySelectorAll('.dropdown');
+        
+        dropdowns.forEach(dropdown => {
+            // Apertura menu
+            dropdown.addEventListener('mouseenter', function() {
+                const menu = this.querySelector('.submenu, .mega-menu');
+                menu.style.opacity = '1';
+                menu.style.visibility = 'visible';
+                menu.style.transform = 'translateY(5px)';
+                menu.style.pointerEvents = 'auto';
+            });
+            
+            // Chiusura controllata
+            dropdown.addEventListener('mouseleave', function(e) {
+                const menu = this.querySelector('.submenu, .mega-menu');
+                
+                // Timer per evitare chiusura accidentale
+                setTimeout(() => {
+                    if (!this.matches(':hover') && !menu.matches(':hover')) {
+                        menu.style.opacity = '0';
+                        menu.style.visibility = 'hidden';
+                        menu.style.transform = 'translateY(0)';
+                        menu.style.pointerEvents = 'none';
+                    }
+                }, 100);
+            });
+            
+            // Gestione hover sui sottomenu
+            const submenus = dropdown.querySelectorAll('.submenu, .mega-menu');
+            submenus.forEach(menu => {
+                menu.addEventListener('mouseenter', function() {
+                    this.style.opacity = '1';
+                    this.style.visibility = 'visible';
+                    this.style.transform = 'translateY(5px)';
+                });
+                
+                menu.addEventListener('mouseleave', function() {
+                    this.style.opacity = '0';
+                    this.style.visibility = 'hidden';
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+
+        // Funzionalità di ricerca
+        document.querySelector('.search-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const query = this.querySelector('input').value.trim();
+            if(query) {
+                alert(`Ricerca implementata: "${query}"\n\nQuesta è una demo. Nella pratica, collegheresti un sistema di ricerca reale.`);
+                // Sostituire con: window.location.href = `/search?q=${encodeURIComponent(query)}`;
+            }
+        });
+
+        // Interattività aggiuntiva per il titolo
+        const title = document.querySelector('.saluto');
+        title.addEventListener('mouseover', () => {
+            title.style.animation = 'echoEffect 1s ease-out';
+        });
+        title.addEventListener('mouseout', () => {
+            title.style.animation = '';
+        });
+    });
+    </script>
 </body>
 </html>
