@@ -6,10 +6,26 @@
     <title>Echi di Sofia - Filosofia attraverso i secoli</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css" />
-  <script src="js/script.js"></script>
+    <button id="darkModeToggle">
+    <i class="fas fa-moon"></i>
 
-    <style>
+</style>
+<style>
+.parallax-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://images.unsplash.com/photo-1505506874110-6a7a69069a08?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat fixed;
+    opacity: 0.03;
+    z-index: -1;
+}
+</style>
+</button>
+
+<style>
+
         /* RESET & VARIABILI */
         :root {
             --primary: #2a2a72;
@@ -21,7 +37,14 @@
             --border: #eaeaea;
             --hover-bg: #f8f8f8;
         }
-        
+        .dark-mode {
+    --primary: #8e8eff;
+    --accent: #ff6b6b;
+    --text: #f0f0f0;
+    --bg: #1a1a2e;
+    --border: #2d2d4d;
+}
+
         * {
             margin: 0;
             padding: 0;
@@ -54,14 +77,35 @@
             justify-content: space-between;
             align-items: center;
         }
-        
+        .navbar {
+    transition: box-shadow 0.5s ease;
+}
+body.scrolled .navbar {
+    box-shadow: 0 5px 30px rgba(0,0,0,0.15);
+}
         .menu {
             display: flex;
             list-style: none;
             height: 100%;
             align-items: center;
         }
-        
+        body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(42,42,114,0.05) 0%, transparent 30%),
+        radial-gradient(circle at 80% 70%, rgba(192,57,43,0.05) 0%, transparent 30%);
+    z-index: -2;
+    animation: bgPulse 20s infinite alternate;
+}
+@keyframes bgPulse {
+    0% { opacity: 0.3; }
+    100% { opacity: 0.7; }
+}
         /* VOCI MENU */
         .dropdown {
             position: relative;
@@ -107,7 +151,45 @@
             z-index: 100;
             pointer-events: none;
         }
-        
+        .submenu {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    transform: rotateY(-5deg);
+    transition: transform 0.5s ease;
+}
+
+
+.submenu {
+    background: url('/home/casimiro/Immagini/immagini per sito/rice-paper.png'), linear-gradient(to bottom, #f9f3e9 0%, #f5e8d0 100%);
+    border: none;
+    border-radius: 0 8px 8px 8px;
+    box-shadow: 
+        0 10px 20px rgba(0,0,0,0.1),
+        inset 0 0 0 1px rgba(255,255,255,0.5),
+        inset 0 0 30px rgba(210,180,140,0.4);
+    transform-origin: top left;
+    transform: scaleY(0.9) perspective(500px) rotateX(10deg);
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.dropdown:hover .submenu {
+    transform: scaleY(1) rotateX(0);
+}
+
+.dropdown:hover .submenu {
+    transform: rotateY(0);
+}
+.submenu::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -10px;
+    width: 10px;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0,0,0,0.1), transparent);
+    transform-origin: right;
+    transform: rotateY(60deg);
+}
         .dropdown:hover .submenu,
         .dropdown:hover .mega-menu {
             opacity: 1;
@@ -115,7 +197,24 @@
             transform: translateY(5px);
             pointer-events: auto;
         }
-        
+        .mega-menu a {
+    position: relative;
+    z-index: 1;
+}
+.mega-menu a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: linear-gradient(to right, rgba(192,57,43,0.1), transparent);
+    z-index: -1;
+    transition: width 0.4s ease;
+}
+.mega-menu a:hover::before {
+    width: 100%;
+}
         /* ZONA DI ATTIVAZIONE */
         .dropdown::after {
             content: '';
@@ -167,6 +266,25 @@
             border-bottom: 1px solid var(--border);
             font-size: 1.1rem;
         }
+.mega-menu a {
+    position: relative;
+    overflow: hidden;
+}
+
+.mega-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+}
+
+.mega-menu a:hover::after {
+    width: 100%;
+}
         
         .mega-menu a {
             display: block;
@@ -195,7 +313,46 @@
             opacity: 1;
             left: 5px;
         }
+:root {
+    --primary-gradient: linear-gradient(135deg, #2a2a72 0%, #3a3a8a 100%);
+    --accent-gradient: linear-gradient(to right, #c0392b, #e74c3c);
+}
 
+.menu-btn {
+    background: transparent;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.menu-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 15px;
+    left: 20px;
+    width: calc(100% - 40px);
+    height: 2px;
+    background: var(--accent-gradient);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+}
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.citazione {
+    animation: float 6s ease-in-out infinite;
+    transition: all 0.3s;
+}
+
+.citazione:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.menu-btn:hover::after {
+    transform: scaleX(1);
+}
         /* FORM DI RICERCA */
         .search-container {
             margin-left: auto;
@@ -242,7 +399,16 @@
             color: var(--accent);
             transform: scale(1.1);
         }
+.search-input {
+    backdrop-filter: blur(5px);
+    background: rgba(255,255,255,0.7) !important;
+    border: none !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
 
+.search-input:focus {
+    box-shadow: 0 0 0 3px rgba(192,57,43,0.2), 0 5px 20px rgba(0,0,0,0.1);
+}
         /* SEZIONE EROICA */
         .hero {
             max-width: 800px;
@@ -250,7 +416,47 @@
             padding: 0 20px;
             text-align: center;
         }
-        
+        .hero {
+    max-width: 800px;
+    margin: 100px auto;
+    padding: 40px;
+    text-align: center;
+    background: rgba(255,255,255,0.9);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(42,42,114,0.05) 0%, rgba(192,57,43,0.03) 100%);
+    z-index: -1;
+    animation: rotate 30s linear infinite;
+}
+.submenu, .mega-menu {
+    will-change: transform, opacity;
+    transform-origin: top center;
+    transform: translateY(10px) scale(0.95);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.dropdown:hover .submenu,
+.dropdown:hover .mega-menu {
+    transform: translateY(5px) scale(1);
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
         /* ANIMAZIONE DEL TITOLO */
         .saluto {
             font-family: 'Playfair Display', serif;
@@ -264,7 +470,39 @@
             text-shadow: 0 2px 4px rgba(0,0,0,0.1);
             transform-style: preserve-3d;
         }
+.saluto {
+    text-shadow: 0 2px 10px rgba(42,42,114,0.3);
+    position: relative;
+    display: inline-block;
+}
+.saluto {
+    position: relative;
+}
+.saluto::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent);
+    transition: width 2s ease-out;
+}
+body.loaded .saluto::after {
+    width: 100%;
+}
 
+.saluto::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.8) 0%, transparent 70%);
+    z-index: -1;
+    opacity: 0.5;
+}
         .saluto::before,
         .saluto::after {
             content: 'Echi di Sofia';
@@ -358,9 +596,107 @@
                 width: 180px;
             }
         }
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 15px;
+    }
+    
+    .menu {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .dropdown {
+        width: 100%;
+    }
+    
+    .mega-menu {
+        position: relative;
+        width: 100% !important;
+        box-shadow: none;
+    }
+    
+    .hero {
+        margin-top: 30px;
+        padding: 20px;
+    }
+    
+    .saluto {
+        font-size: 2rem;
+    }
+}
+.quote-carousel {
+    position: relative;
+    height: 100px;
+    margin: 30px 0;
+}
+.quote-carousel blockquote {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 1s ease, transform 1s ease;
+    font-size: 1.3rem;
+    font-style: italic;
+}
+.quote-carousel blockquote:nth-child(1) {
+    animation: quoteFade 12s infinite;
+}
+.quote-carousel blockquote:nth-child(2) {
+    animation: quoteFade 12s infinite 4s;
+}
+@keyframes quoteFade {
+    0%, 100% { opacity: 0; transform: translateY(20px); }
+    10%, 30% { opacity: 1; transform: translateY(0); }
+}
+.philosopher-avatar {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    filter: sepia(80%) brightness(90%);
+    transition: all 0.5s;
+}
+
+.hover-portrait {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('plato-detail.png') center/cover;
+    opacity: 0;
+    mix-blend-mode: multiply;
+    transition: opacity 0.5s;
+}
+
+.philosopher-avatar:hover {
+    filter: none;
+    transform: scale(1.1);
+}
+
+.philosopher-avatar:hover .hover-portrait {
+    opacity: 1;
+}
     </style>
 </head>
 <body>
+<!------------------------------------------------------------->
+<div class="parallax-bg"></div>
+
+<style>
+.parallax-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('/home/casimiro/Immagini/immagini per sito/cielo.avif') center/cover no-repeat fixed;
+    opacity: 0.03;
+    z-index: -1;
+}
+</style>
+
+<!-------------------------------------------------------------->
     <nav class="navbar" role="navigation" aria-label="Menu principale">
         <ul class="menu" role="menubar">
             <!-- Incipit -->
@@ -373,6 +709,31 @@
                     <p>Prima delle parole, prima degli dei, esisteva quel momento sospeso in cui l'uomo si fermò a contemplare il cielo notturno. Fu allora che il pensiero prese forma - non come risposta, ma come vibrazione pura di meraviglia.</p>
                     <p>Questo spazio non è una collezione di concetti. È un campo magnetico dove le domande dei nostri antenati filosofi continuano a risuonare, invitandoci a ripercorrere quel primo, rivoluzionario atto di curiosità.</p>
                 </div>
+
+<div class="parallax-bg"></div>
+<div class="quote-carousel">
+    <blockquote>"Conosci te stesso" <footer>- Socrate</footer></blockquote>
+<blockquote>"Non bisogna curarsi troppo della vita, ma della vita buona" <footer>- Platone</footer></blockquote>
+<blockquote>"L'uomo è la misura di tutte le cose" <footer>- Protagora</footer></blockquote>
+    <!-- Altre citazioni nascoste -->
+</div>
+<div class="philosopher-avatar" data-philosopher="plato">
+    <img src="/home/casimiro/Immagini/immagini per sito/platone.jpg" alt="Platone">
+    <div class="hover-portrait"></div>
+</div>
+
+<style>
+.parallax-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://images.unsplash.com/photo-1505506874110-6a7a69069a08?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat fixed;
+    opacity: 0.03;
+    z-index: -1;
+}
+</style>
             </li>
 
             <!-- Filosofia antica -->
@@ -593,7 +954,7 @@
             const query = this.querySelector('input').value.trim();
             if(query) {
                 alert(`Ricerca implementata: "${query}"\n\nQuesta è una demo. Nella pratica, collegheresti un sistema di ricerca reale.`);
-                // Sostituire con: window.location.href = `/search?q=${encodeURIComponent(query)}`;
+               // Sostituire con: window.location.href = `/search?q=${encodeURIComponent(query)}`;
             }
         });
 
@@ -606,6 +967,12 @@
             title.style.animation = '';
         });
     });
+window.addEventListener('load', () => {
+    document.body.classList.add('loaded');
+});
+window.addEventListener('scroll', () => {
+    document.body.classList.toggle('scrolled', window.scrollY > 50);
+});
     </script>
 </body>
 </html>
