@@ -62,3 +62,18 @@ window.addEventListener('load', () => {
 window.addEventListener('scroll', () => {
   document.body.classList.toggle('scrolled', window.scrollY > 50);
 });
+document.querySelectorAll('.philosopher-link').forEach(item => {
+    item.addEventListener('mouseenter', (e) => {
+        const quote = e.target.dataset.quote;
+        const tooltip = document.createElement('div');
+        tooltip.className = 'platonic-dialog';
+        tooltip.innerHTML = `
+            <div class="speaker">${e.target.textContent}:</div>
+            <div class="quote">"${quote}"</div>
+        `;
+        document.body.appendChild(tooltip);
+        
+        // Posiziona il tooltip logicamente
+        // Anima con movimento "a scomparsa"
+    });
+});
