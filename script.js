@@ -95,3 +95,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+// Trasforma la ricerca in un'intervista guidata
+function socraticSearch() {
+    const questions = [
+        "Cosa cerchi esattamente?",
+        "Perché pensi che questo concetto sia importante?",
+        "Quale filosofo potrebbe aiutarti?"
+    ];
+    // Mostra le domande sequenzialmente
+}
