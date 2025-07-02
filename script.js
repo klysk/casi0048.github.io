@@ -119,3 +119,21 @@ document.getElementById('generate-quote').addEventListener('click', function() {
     document.getElementById('quote-display').innerHTML = 
         `<p>"${random.text}"</p><small>— ${random.author}</small>`;
 });
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const banner = document.getElementById('cookie-banner');
+    const acceptBtn = document.getElementById('accept-cookies');
+
+    if (!localStorage.getItem('cookiesAccepted')) {
+      setTimeout(() => {
+        banner.classList.add('show');
+      }, 1000);
+    }
+
+    acceptBtn.addEventListener('click', () => {
+      localStorage.setItem('cookiesAccepted', 'true');
+      banner.classList.remove('show');
+    });
+  });
+</script>
+
