@@ -751,7 +751,33 @@ body.loaded .saluto::after {
 <blockquote>"L'uomo è la misura di tutte le cose" <footer>- Protagora</footer></blockquote>
     <!-- Altre citazioni nascoste -->
 </div>
+<!--------------------iniziobscripe banner cooki------------------->
+<!-- Cookie Banner -->
+<script>
+    if(!localStorage.getItem('cookiePrefs')) {
+        const banner = document.createElement('div');
+        banner.innerHTML = `
+            <div id="cookie-banner" style="position:fixed;bottom:0;left:0;right:0;background:#2a2a72;color:white;padding:15px;z-index:1000;font-family:Arial,sans-serif;">
+                <p>Usiamo cookie per migliorare la tua esperienza. <a href="https://drive.google.com/file/d/16duY9J-L4s03gJeG_CeO7XZ-poLvXrhk/view?usp=drive_link" target="_blank" style="color:lightblue;">Leggi la policy</a></p>
+                <button id="accept-cookies" style="padding:8px 15px;margin:0 5px;background:#c0392b;color:white;border:none;cursor:pointer;">Accetta</button>
+                <button id="reject-cookies" style="padding:8px 15px;margin:0 5px;background:#eee;border:none;cursor:pointer;">Rifiuta</button>
+            </div>
+        `;
+        document.body.appendChild(banner);
 
+        // Aggiungi gestori di eventi
+        document.getElementById('accept-cookies').addEventListener('click', function() {
+            localStorage.setItem('cookiePrefs', 'accepted');
+            document.getElementById('cookie-banner').style.display = 'none';
+        });
+
+        document.getElementById('reject-cookies').addEventListener('click', function() {
+            localStorage.setItem('cookiePrefs', 'rejected');
+            document.getElementById('cookie-banner').style.display = 'none';
+        });
+    }
+</script>
+<!-----------------fine script babbar coocki------------------------>
 
 <style>
 .parallax-bg {
