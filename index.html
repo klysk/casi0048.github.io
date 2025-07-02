@@ -23,123 +23,152 @@
   <button id="darkModeToggle" aria-label="Toggle Dark Mode">🌓</button>
 
 <!...................inizio bannar cooki------------>
-<!-- Cookie Banner Avanzato -->
-<div id="cookie-banner" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: linear-gradient(135deg, #2a2a72 0%, #1a1a3a 100%); color: white; padding: 20px; z-index: 1000; font-family: 'Crimson Pro'; box-shadow: 0 -5px 25px rgba(0,0,0,0.3); animation: fadeInUp 0.6s;">
-  <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 20px; align-items: center;">
-    <div style="flex: 1; min-width: 300px;">
-      <p style="margin: 0; line-height: 1.6; font-size: 1.1rem;">
-        Echi di Sofia utilizza cookie essenziali e analitici. 
-        <a href="https://drive.google.com/file/d/16duY9J-L4s03gJeG_CeO7XZ-poLvXrhk/view" target="_blank" style="color: #8e8eff; text-decoration: underline;">Leggi l'informativa</a>
+<!-- Nuovo Cookie Banner con Personalizzazione - Da inserire PRIMA di </body> -->
+<div id="cookie-consent-banner" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: linear-gradient(135deg, #2a2a72 0%, #1a1a3a 100%); color: white; padding: 20px; z-index: 1000; font-family: 'Crimson Pro'; box-shadow: 0 -5px 25px rgba(0,0,0,0.3);">
+  <div style="max-width: 1200px; margin: 0 auto;">
+    <!-- Messaggio Principale -->
+    <div id="cookie-main-message">
+      <p style="margin: 0 0 15px 0; line-height: 1.6;">
+        Utilizziamo cookie per migliorare la tua esperienza. 
+        <a href="https://drive.google.com/file/d/16duY9J-L4s03gJeG_CeO7XZ-poLvXrhk/view" target="_blank" style="color: #8e8eff; text-decoration: underline;">Maggiori informazioni</a>
       </p>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+        <button id="cookie-accept-all" style="padding: 10px 20px; background: #c0392b; color: white; border: none; border-radius: 4px; cursor: pointer; transition: all 0.3s;">
+          Accetta tutti
+        </button>
+        <button id="cookie-customize" style="padding: 10px 20px; background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; cursor: pointer; transition: all 0.3s;">
+          Personalizza
+        </button>
+        <button id="cookie-reject-all" style="padding: 10px 20px; background: transparent; color: #ff6b6b; border: 1px solid #ff6b6b; border-radius: 4px; cursor: pointer; transition: all 0.3s;">
+          Rifiuta tutti
+        </button>
+      </div>
     </div>
-    
-    <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-end;">
-      <button id="customize-cookies" style="padding: 10px 18px; background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; cursor: pointer; transition: all 0.3s;">
-        <i class="fas fa-sliders-h" style="margin-right: 8px;"></i> Personalizza
-      </button>
-      <button id="reject-all" style="padding: 10px 18px; background: linear-gradient(135deg, #ff3a3a 0%, #a41616 100%); color: white; border: none; border-radius: 4px; cursor: pointer; transition: all 0.3s;">
-        Rifiuta tutto
-      </button>
-      <button id="accept-all" style="padding: 10px 18px; background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%); color: white; border: none; border-radius: 4px; cursor: pointer; transition: all 0.3s;">
-        Accetta tutto
-      </button>
-    </div>
-  </div>
 
-  <!-- Pannello Personalizzazione (nascosto inizialmente) -->
-  <div id="cookie-settings" style="display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
-    <h4 style="margin-bottom: 15px; font-family: 'Playfair Display';">Preferenze Cookie</h4>
-    
-    <div style="display: flex; flex-direction: column; gap: 15px;">
-      <label style="display: flex; align-items: center; cursor: pointer;">
-        <input type="checkbox" name="essential" checked disabled style="margin-right: 10px;">
-        <span>Cookie Essenziali <small>(sempre attivi)</small></span>
-      </label>
+    <!-- Pannello Personalizzazione (nascosto inizialmente) -->
+    <div id="cookie-settings-panel" style="display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
+      <h4 style="margin-bottom: 15px; font-family: 'Playfair Display';">Preferenze Cookie</h4>
       
-      <label style="display: flex; align-items: center; cursor: pointer;">
-        <input type="checkbox" name="analytics" checked style="margin-right: 10px; accent-color: #c0392b;">
-        <span>Cookie Analitici</span>
-      </label>
+      <div style="margin-bottom: 15px;">
+        <label style="display: flex; align-items: center; padding: 8px 0; cursor: pointer;">
+          <input type="checkbox" id="cookie-essential" checked disabled style="margin-right: 10px;">
+          <span><strong>Cookie Necessari</strong><br><small style="opacity: 0.8;">Sempre attivi - Servono per il funzionamento base del sito</small></span>
+        </label>
+        
+        <label style="display: flex; align-items: center; padding: 8px 0; cursor: pointer;">
+          <input type="checkbox" id="cookie-analytics" style="margin-right: 10px;">
+          <span><strong>Cookie Statistici</strong><br><small style="opacity: 0.8;">Ci aiutano a migliorare il sito analizzando l'utilizzo</small></span>
+        </label>
+        
+        <label style="display: flex; align-items: center; padding: 8px 0; cursor: pointer;">
+          <input type="checkbox" id="cookie-marketing" style="margin-right: 10px;">
+          <span><strong>Cookie Marketing</strong><br><small style="opacity: 0.8;">Per mostrarti contenuti personalizzati</small></span>
+        </label>
+      </div>
       
-      <label style="display: flex; align-items: center; cursor: pointer;">
-        <input type="checkbox" name="marketing" style="margin-right: 10px; accent-color: #c0392b;">
-        <span>Cookie Marketing</span>
-      </label>
-    </div>
-    
-    <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
-      <button id="save-settings" style="padding: 8px 20px; background: #2a2a72; color: white; border: 1px solid #8e8eff; border-radius: 4px; cursor: pointer;">
-        Salva Preferenze
-      </button>
+      <div style="display: flex; justify-content: space-between;">
+        <button id="cookie-settings-back" style="padding: 8px 16px; background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; cursor: pointer;">
+          Indietro
+        </button>
+        <button id="cookie-save-settings" style="padding: 8px 20px; background: #8e8eff; color: #1a1a3a; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">
+          Salva Preferenze
+        </button>
+      </div>
     </div>
   </div>
 </div>
 
-<style>
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
-  #customize-cookies:hover {
-    background: rgba(255,255,255,0.1) !important;
-  }
-  
-  #reject-all:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(164,22,22,0.3);
-  }
-  
-  #accept-all:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(46,125,50,0.3);
-  }
-</style>
-
 <script>
+// Gestione completa del Cookie Banner
 document.addEventListener('DOMContentLoaded', function() {
-  const banner = document.getElementById('cookie-banner');
-  const settingsPanel = document.getElementById('cookie-settings');
+  const banner = document.getElementById('cookie-consent-banner');
+  const mainMessage = document.getElementById('cookie-main-message');
+  const settingsPanel = document.getElementById('cookie-settings-panel');
   
-  // Mostra banner solo se non c'è preferenza salvata
-  if(!localStorage.getItem('cookiePreferences')) {
+  // Mostra il banner solo se non ci sono preferenze salvate
+  if(!getCookiePreferences()) {
     banner.style.display = 'block';
+    banner.style.animation = 'fadeInUp 0.5s forwards';
+    
+    // Aggiungi stili dinamici
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      #cookie-customize:hover {
+        background: rgba(255,255,255,0.1) !important;
+      }
+      #cookie-reject-all:hover {
+        background: rgba(255,107,107,0.1) !important;
+      }
+      #cookie-accept-all:hover {
+        background: #a41616 !important;
+        transform: translateY(-1px);
+      }
+    `;
+    document.head.appendChild(style);
   }
 
-  // Gestione pulsanti
-  document.getElementById('customize-cookies').addEventListener('click', function() {
-    settingsPanel.style.display = settingsPanel.style.display === 'block' ? 'none' : 'block';
+  // Gestione click sui pulsanti principali
+  document.getElementById('cookie-accept-all').addEventListener('click', function() {
+    saveCookiePreferences({
+      essential: true,
+      analytics: true,
+      marketing: true,
+      timestamp: new Date().getTime()
+    });
+    hideBanner();
   });
-  
-  document.getElementById('accept-all').addEventListener('click', function() {
-    savePreferences({ essential: true, analytics: true, marketing: true });
+
+  document.getElementById('cookie-reject-all').addEventListener('click', function() {
+    saveCookiePreferences({
+      essential: true,
+      analytics: false,
+      marketing: false,
+      timestamp: new Date().getTime()
+    });
+    hideBanner();
   });
-  
-  document.getElementById('reject-all').addEventListener('click', function() {
-    savePreferences({ essential: true, analytics: false, marketing: false });
+
+  document.getElementById('cookie-customize').addEventListener('click', function() {
+    mainMessage.style.display = 'none';
+    settingsPanel.style.display = 'block';
   });
-  
-  document.getElementById('save-settings').addEventListener('click', function() {
+
+  // Gestione pannello personalizzazione
+  document.getElementById('cookie-settings-back').addEventListener('click', function() {
+    settingsPanel.style.display = 'none';
+    mainMessage.style.display = 'block';
+  });
+
+  document.getElementById('cookie-save-settings').addEventListener('click', function() {
     const preferences = {
       essential: true,
-      analytics: document.querySelector('input[name="analytics"]').checked,
-      marketing: document.querySelector('input[name="marketing"]').checked
+      analytics: document.getElementById('cookie-analytics').checked,
+      marketing: document.getElementById('cookie-marketing').checked,
+      timestamp: new Date().getTime()
     };
-    savePreferences(preferences);
+    saveCookiePreferences(preferences);
+    hideBanner();
   });
-  
-  function savePreferences(prefs) {
+
+  // Funzioni di supporto
+  function getCookiePreferences() {
+    const prefs = localStorage.getItem('cookiePreferences');
+    return prefs ? JSON.parse(prefs) : null;
+  }
+
+  function saveCookiePreferences(prefs) {
     localStorage.setItem('cookiePreferences', JSON.stringify(prefs));
-    banner.style.animation = 'fadeInUp 0.6s reverse';
-    setTimeout(() => banner.remove(), 600);
-    
-    // Applica le preferenze (esempio)
-    if(prefs.analytics) {
-      console.log('Caricamento Google Analytics...');
-    }
-    if(prefs.marketing) {
-      console.log('Caricamento Facebook Pixel...');
-    }
+    console.log('Preferenze salvate:', prefs);
+    // Qui puoi caricare gli script in base alle preferenze
+  }
+
+  function hideBanner() {
+    banner.style.animation = 'fadeInUp 0.5s reverse forwards';
+    setTimeout(() => banner.style.display = 'none', 500);
   }
 });
 </script>
