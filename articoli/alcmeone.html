@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alcmeone di Crotone: Padre della Medicina Scientifica e della Teoria dei Contrari</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Stili Generali e Reset */
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 3.2em;
+            text-align: center;
+            border-bottom: 2px solid #28a745; /* Verde scuro per medicina/natura */
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 2.4em;
+            color: #28a745; /* Verde scuro per medicina/natura */
+            margin-top: 30px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: #555;
+            margin-top: 25px;
+        }
+
+        h4 {
+            font-size: 1.3em;
+            color: #444;
+            margin-top: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #fd7e14; /* Arancione brillante per evidenziazioni */
+        }
+
+        .quote {
+            font-style: italic;
+            background-color: #e6f7e9; /* Sfondo chiaro per le citazioni */
+            padding: 18px 25px;
+            border-left: 5px solid #28a745; /* Verde scuro per le citazioni */
+            margin: 25px 0;
+            border-radius: 4px;
+            line-height: 1.5;
+        }
+
+        .quote footer {
+            text-align: right;
+            margin-top: 12px;
+            font-size: 0.95em;
+            color: #7f8c8d;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+        }
+
+        .image-container figcaption {
+            font-size: 0.9em;
+            color: #777;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Stili per l'Accordion (Sezioni Espandibili) */
+        .accordion-section {
+            max-width: 900px;
+            margin: 25px auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .accordion-button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 20px 30px;
+            background-color: #28a745; /* Verde scuro per il bottone */
+            color: white;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s ease;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .accordion-button:hover {
+            background-color: #218838;
+        }
+
+        .accordion-button h2 {
+            color: white;
+            margin: 0;
+            font-size: 1em;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .accordion-button i {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-button.active i {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 0 30px;
+            background-color: #ffffff;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            box-sizing: border-box;
+        }
+
+        .accordion-content.show {
+            max-height: 4500px; /* Valore grande per accomodare il contenuto esteso */
+            padding: 30px;
+        }
+
+        .accordion-content ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .accordion-content ul li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .accordion-content ul li::before {
+            content: '🧠'; /* Simbolo del cervello per Alcmeone */
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                margin: 20px auto;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2.5em;
+            }
+            h2 {
+                font-size: 2em;
+            }
+            .accordion-button {
+                padding: 15px 20px;
+                font-size: 1.5em;
+            }
+            .accordion-content {
+                padding: 0 20px;
+            }
+            .accordion-content.show {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Alcmeone di Crotone: Padre della Medicina Scientifica e della Teoria dei Contrari</h1>
+
+        <div class="image-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Alcmaeon.jpg/640px-Alcmaeon.jpg" alt="Illustrazione di Alcmeone di Crotone">
+            <figcaption>Illustrazione di Alcmeone di Crotone, filosofo e medico presocratico.</figcaption>
+        </div>
+
+        <p>
+            Nella fiorente Magna Grecia del V secolo a.C., la città di Crotone era un centro di eccellenza medica e filosofica, fortemente influenzata dalla scuola pitagorica. In questo contesto emerse la figura di **Alcmeone di Crotone** (circa 500-450 a.C.), un medico e filosofo presocratico spesso considerato il **padre della medicina scientifica**. A differenza di molti suoi predecessori, che si basavano su interpretazioni mistiche o religiose delle malattie, Alcmeone introdusse un approccio più razionale e osservativo, ponendo le basi per una comprensione fisiologica del corpo umano.
+        </p>
+        <p>
+            La sua importanza non si limita alla medicina; Alcmeone fu anche un pensatore originale nel campo della filosofia della natura e della gnoseologia, sviluppando una teoria dei contrari per spiegare l'equilibrio del cosmo e della salute, e localizzando nel cervello la sede della mente e delle sensazioni. Le sue scoperte e le sue teorie, sebbene frammentarie, hanno avuto un'influenza duratura sul pensiero medico e filosofico successivo.
+        </p>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>Vita e Contesto Storico-Filosofico</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Alcmeone operò in un periodo di grande fermento culturale e scientifico nella Magna Grecia.
+            </p>
+            <ul>
+                <li>
+                    <h4>Crotone e la Scuola Pitagorica:</h4>
+                    <p>
+                        Crotone era una delle città più influenti della Magna Grecia, nota per la sua scuola medica e per essere stata il centro della comunità fondata da **Pitagora**. Si ritiene che Alcmeone fosse un allievo di Pitagora o, quantomeno, fortemente influenzato dal pitagorismo, in particolare dall'idea che l'armonia e l'equilibrio (i rapporti numerici) fossero alla base della realtà. Tuttavia, Alcmeone si distinse dai pitagorici ortodossi per il suo approccio più empirico e meno mistico.
+                    </p>
+                </li>
+                <li>
+                    <h4>Opere e Fonti:</h4>
+                    <p>
+                        Come molti presocratici, l'opera di Alcmeone è andata perduta, ad eccezione di alcuni frammenti e testimonianze riportate da autori successivi come Aristotele, Teofrasto, Macrobio e Diogene Laerzio. La sua opera principale era probabilmente intitolata "Sulla Natura" (Περὶ Φύσεως - *Perì Phýseos*), un titolo comune per i trattati filosofici di quel periodo.
+                    </p>
+                </li>
+                <li>
+                    <h4>Indipendenza di Pensiero:</h4>
+                    <p>
+                        Nonostante i legami con il pitagorismo, Alcmeone sviluppò un pensiero originale, particolarmente nel campo della medicina e della fisiologia, dove si avvalse dell'osservazione e della ragione piuttosto che di spiegazioni magiche o religiose.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>La Teoria Medica: Isomia, Crazia e Contrari</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Il contributo più significativo di Alcmeone è la sua innovativa concezione della salute e della malattia, basata sull'equilibrio.
+            </p>
+            <ul>
+                <li>
+                    <h4>La Salute come Isomia (Equilibrio):</h4>
+                    <p>
+                        Alcmeone fu il primo a formulare esplicitamente la teoria che la **salute (ὑγίεια - *hygieia*) è uno stato di equilibrio** (ἰσονομία - *isonomia*) tra le forze opposte che costituiscono il corpo. Queste forze opposte includevano qualità come il caldo e il freddo, l'umido e il secco, l'amaro e il dolce. La salute è il predominio di queste qualità in armonia.
+                    </p>
+                </li>
+                <li>
+                    <h4>La Malattia come Monarhia (Predominio):</h4>
+                    <p>
+                        La **malattia (νόσος - *nosos*)** è invece la rottura di questo equilibrio, il **predominio** (μοναρχία - *monarchia*) di uno dei contrari sull'altro. Ad esempio, un eccesso di caldo o di freddo, di umido o di secco, può causare la malattia.
+                    </p>
+                    <div class="quote">
+                        <p>«Alcmeone sostiene che la salute si mantiene con l'isomia delle potenze (umido e secco, freddo e caldo, amaro e dolce e il resto), mentre il dominio di una su un'altra provoca la malattia.»</p>
+                        <footer>— Alcmeone (frammento B 4 da Aezio)</footer>
+                    </div>
+                    <p>
+                        Questa concezione razionale della malattia segna un distacco fondamentale dalle spiegazioni teurgiche (attribuite agli dei) o demonologiche, e pone le basi per la medicina ippocratica e la teoria degli umori.
+                    </p>
+                </li>
+                <li>
+                    <h4>Fisiologia e Anatomia:</h4>
+                    <p>
+                        Alcmeone è celebre per aver praticato **dissezioni animali** (e forse anche umane, sebbene sia dibattuto e meno probabile per l'epoca). Queste osservazioni gli permisero di fare importanti scoperte anatomiche:
+                        <ul>
+                            <li>Fu il primo a identificare i **nervi ottici** e a comprendere che i canali auditivi portavano al cervello.</li>
+                            <li>Sostenne che il **cervello è la sede principale della sensazione, della percezione e del pensiero** (ἡγεμονικόν - *hegemonikon*), contrapponendosi alla visione cardiocentrica predominante. Questa intuizione fu rivoluzionaria.</li>
+                            <li>Identificò il percorso che unisce gli organi di senso al cervello.</li>
+                        </ul>
+                    </p>
+                </li>
+                <li>
+                    <h4>La Natura dei Sensi:</h4>
+                    <p>
+                        Secondo Alcmeone, le sensazioni avvengono attraverso i pori e i canali che conducono al cervello. Ad esempio, il gusto si percepisce perché la lingua, attraverso i suoi pori, percepisce il dolce o l'amaro.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>Contributi Filosofici: Gnoseologia e Cosmologia</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Oltre alla medicina, Alcmeone estese la sua teoria dei contrari e le sue intuizioni fisiologiche ad ambiti più ampi della filosofia.
+            </p>
+            <ul>
+                <li>
+                    <h4>Il Cervello come Sede della Mente:</h4>
+                    <p>
+                        La sua tesi che il cervello sia il centro delle funzioni mentali e sensoriali fu un'idea pionieristica. Prima di lui, molti credevano che il cuore fosse la sede della coscienza e del pensiero. Alcmeone argomentò che gli animali percepiscono, ma non "comprendono" o "conoscono" nel senso umano, perché solo gli uomini possiedono la capacità di **pensare e comprendere (συνίημι - *syniemi*)**, un'attività che associava al cervello.
+                    </p>
+                </li>
+                <li>
+                    <h4>L'Immortalità dell'Anima e il Moto Circolare:</h4>
+                    <p>
+                        Alcmeone, influenzato dai pitagorici, sosteneva l'immortalità dell'anima, collegandola alla sua capacità di muoversi continuamente, analogamente ai moti circolari degli astri. Questa associazione tra moto circolare e immortalità era un tema comune nel pitagorismo.
+                    </p>
+                </li>
+                <li>
+                    <h4>La Teoria dei Contrari applicata al Cosmo:</h4>
+                    <p>
+                        La sua idea dell'equilibrio tra contrari non era limitata al corpo umano, ma era un principio cosmologico più ampio. L'ordine del mondo (κόσμος - *kosmos*) stesso era visto come il risultato di un'armonia tra elementi opposti. Questa visione influenzò pensatori successivi, inclusi alcuni dei pluralisti come Empedocle.
+                    </p>
+                </li>
+                <li>
+                    <h4>Il Concetto di "Archè" (Principio):</h4>
+                    <p>
+                        Sebbene non avesse un unico *archè* materiale come i Milesi, la sua concezione dell'equilibrio tra contrari come principio ordinatore della realtà lo colloca nel filone della ricerca presocratica sul principio fondamentale dell'universo.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>L'Eredità e l'Influenza di Alcmeone</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Nonostante la relativa scarsità di frammenti diretti, l'impatto di Alcmeone fu notevole.
+            </p>
+            <ul>
+                <li>
+                    <h4>Padre della Medicina Razionale:</h4>
+                    <p>
+                        Il suo approccio sistematico e la sua enfasi sull'equilibrio come chiave della salute e della malattia sono stati fondamentali per lo sviluppo della medicina ippocratica. Il "Corpus Hippocraticum" riprende e sviluppa la teoria degli umori, che è una diretta evoluzione della concezione alcmeonidea dei contrari.
+                    </p>
+                </li>
+                <li>
+                    <h4>Pioniere della Neurofisiologia:</h4>
+                    <p>
+                        La sua intuizione sulla centralità del cervello per le sensazioni e il pensiero è stata una delle più importanti anticipazioni scientifiche dell'antichità. Ha spianato la strada a future ricerche anatomiche e fisiologiche.
+                    </p>
+                </li>
+                <li>
+                    <h4>Influenza sulla Filosofia Successiva:</h4>
+                    <p>
+                        La sua teoria dell'equilibrio dei contrari ha influenzato anche filosofi successivi che cercarono di spiegare l'armonia cosmica e umana, come Empedocle con la sua dottrina di Amore e Odio, o Platone con la sua concezione dell'anima e della salute.
+                    </p>
+                </li>
+                <li>
+                    <h4>Il Metodo Scientifico:</h4>
+                    <p>
+                        Alcmeone è un esempio precoce di applicazione di un metodo che potremmo definire scientifico: basato sull'osservazione (dissezione), sulla formulazione di ipotesi (la teoria dell'equilibrio) e sulla ricerca di cause naturali piuttosto che soprannaturali per i fenomeni.
+                    </p>
+                </li>
+            </ul>
+            <p>
+                Alcmeone di Crotone, con le sue intuizioni rivoluzionarie sul cervello, la sua teoria della salute come armonia di contrari e il suo approccio razionale alla malattia, si erge come una figura pionieristica. Ha gettato le basi per la medicina occidentale e ha contribuito in modo significativo al dibattito filosofico presocratico sulla natura della realtà e della conoscenza, meritando a pieno titolo il riconoscimento di precursore della scienza e della filosofia occidentali.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const content = this.nextElementSibling; // Seleziona il div con il contenuto
+                    
+                    // Opzionale: Chiudi tutti gli altri pannelli aperti
+                    accordionButtons.forEach(otherButton => {
+                        if (otherButton !== this && otherButton.classList.contains('active')) {
+                            otherButton.classList.remove('active');
+                            otherButton.nextElementSibling.classList.remove('show');
+                        }
+                    });
+
+                    // Apri/chiudi il pannello cliccato
+                    this.classList.toggle('active');
+                    content.classList.toggle('show');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

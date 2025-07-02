@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Melisso di Samo: L'Essere Infinito e Immutabile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Stili Generali e Reset */
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 3.2em;
+            text-align: center;
+            border-bottom: 2px solid #3498db; /* Blu per Melisso (razionalità, universo) */
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 2.4em;
+            color: #3498db; /* Blu per Melisso */
+            margin-top: 30px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: #555;
+            margin-top: 25px;
+        }
+
+        h4 {
+            font-size: 1.3em;
+            color: #444;
+            margin-top: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #e67e22; /* Arancione per evidenziazioni */
+        }
+
+        .quote {
+            font-style: italic;
+            background-color: #ebf5fb; /* Sfondo chiaro per le citazioni */
+            padding: 18px 25px;
+            border-left: 5px solid #3498db; /* Blu per le citazioni */
+            margin: 25px 0;
+            border-radius: 4px;
+            line-height: 1.5;
+        }
+
+        .quote footer {
+            text-align: right;
+            margin-top: 12px;
+            font-size: 0.95em;
+            color: #7f8c8d;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+        }
+
+        .image-container figcaption {
+            font-size: 0.9em;
+            color: #777;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Stili per l'Accordion (Sezioni Espandibili) */
+        .accordion-section {
+            max-width: 900px;
+            margin: 25px auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .accordion-button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 20px 30px;
+            background-color: #3498db; /* Blu per il bottone */
+            color: white;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s ease;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .accordion-button:hover {
+            background-color: #2980b9;
+        }
+
+        .accordion-button h2 {
+            color: white;
+            margin: 0;
+            font-size: 1em;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .accordion-button i {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-button.active i {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 0 30px;
+            background-color: #ffffff;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            box-sizing: border-box;
+        }
+
+        .accordion-content.show {
+            max-height: 4000px; /* Valore grande per accomodare il contenuto esteso */
+            padding: 30px;
+        }
+
+        .accordion-content ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .accordion-content ul li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .accordion-content ul li::before {
+            content: '♾️'; /* Simbolo di infinito per Melisso */
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                margin: 20px auto;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2.5em;
+            }
+            h2 {
+                font-size: 2em;
+            }
+            .accordion-button {
+                padding: 15px 20px;
+                font-size: 1.5em;
+            }
+            .accordion-content {
+                padding: 0 20px;
+            }
+            .accordion-content.show {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Melisso di Samo: L'Essere Infinito e Immutabile</h1>
+
+        <div class="image-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Presocratic_philosophers_-_Melissus_of_Samos.png/640px-Presocratic_philosophers_-_Melissus_of_Samos.png" alt="Illustrazione di Melisso di Samo">
+            <figcaption>Illustrazione di Melisso di Samo.</figcaption>
+        </div>
+
+        <p>
+            Nel VI-V secolo a.C., la scuola eleatica, fondata da Parmenide, rivoluzionò il pensiero greco con la sua audace affermazione dell'esistenza di un unico, eterno e immutabile **Essere**. Tra i suoi successori, **Melisso di Samo** (V secolo a.C.), oltre a essere un filosofo, fu anche un ammiraglio e politico della sua città. Pur rimanendo fedele ai principi fondamentali di Parmenide, Melisso portò la dottrina eleatica a conclusioni ancora più estreme e logicamente stringenti, introducendo concetti innovativi come l'**infinità** e l'**incorporeità** dell'Essere.
+        </p>
+        <p>
+            Le sue idee, sebbene giunte a noi solo tramite frammenti e testimonianze indirette (soprattutto da Simplicio e Aristotele), rappresentano un passaggio cruciale nello sviluppo del pensiero eleatico e della metafisica pre-socratica. Melisso difese l'unità e l'eternità dell'Essere con argomenti rigorosi, rendendo ancora più evidente la distanza tra la verità della ragione e l'ingannevolezza dei sensi.
+        </p>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>Il Contesto Eleatico e la Vita di Melisso</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Per comprendere Melisso, è fondamentale collocarlo nel solco della tradizione eleatica.
+            </p>
+            <ul>
+                <li>
+                    <h4>La Scuola Eleatica:</h4>
+                    <p>
+                        Fondata da **Parmenide** ad Elea, in Magna Grecia, la scuola eleatica si contrapponeva radicalmente ai filosofi della natura (Ioni) e ai sostenitori del divenire (come Eraclito). Il principio fondamentale era che <span class="highlight">"l'Essere è e non può non essere; il Non-Essere non è e non può in alcun modo essere"</span>. Questo portava alla negazione del movimento, del mutamento e della pluralità. Zenone di Elea, altro allievo di Parmenide, difese questa dottrina con i suoi celebri paradossi.
+                    </p>
+                </li>
+                <li>
+                    <h4>Melisso: Filosofo e Ammiraglio:</h4>
+                    <p>
+                        Melisso non fu solo un filosofo, ma anche una figura di spicco nella vita politica e militare di Samo, un'importante isola dell'Egeo. Si distinse come ammiraglio, sconfiggendo la flotta ateniese di Pericle nel 441 a.C. Questa sua duplice attività (speculazione filosofica e azione pratica) lo rende un personaggio interessante, che dimostra come il pensiero astratto potesse convivere con un ruolo attivo nella *polis*. La sua opera più nota è "Intorno alla natura o all'essere".
+                    </p>
+                </li>
+                <li>
+                    <h4>Il Ritorno all'Unità:</h4>
+                    <p>
+                        Melisso riprende la tesi parmenidea dell'unità dell'Essere, ma la rafforza con argomentazioni che intendono superare alcune "lacune" o ambiguità percepite nella formulazione di Parmenide (ad esempio, l'Essere parmenideo era paragonato a una sfera finita, mentre Melisso ne affermerà l'infinità).
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>Le Caratteristiche dell'Essere secondo Melisso</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Melisso argomenta con rigore logico le proprietà dell'Essere, partendo dalle premesse parmenidee.
+            </p>
+            <ul>
+                <li>
+                    <h4>L'Essere è Eterno (Ingenerato e Imperituro):</h4>
+                    <p>
+                        Se l'Essere fosse nato, sarebbe nato dal Non-Essere, ma il Non-Essere non esiste. Se dovesse perire, perirebbe nel Non-Essere. Dunque, l'Essere è **ingenerato e imperituro**, cioè **eterno**. Non ha principio né fine.
+                    </p>
+                    <div class="quote">
+                        <p>«Se non nacque, allora è e sempre sarà. Poiché se fosse nato, necessariamente sarebbe nato dal nulla, e se qualcosa non è, allora non si può pensare che nasca qualcosa da ciò.»</p>
+                        <footer>— Melisso (frammento B 1)</footer>
+                    </div>
+                </li>
+                <li>
+                    <h4>L'Essere è Infinito (Άπειρον - *Apeiron*):</h4>
+                    <p>
+                        Questo è uno dei punti di distinzione più significativi da Parmenide. Parmenide descriveva l'Essere come una sfera compiuta, finita e omogenea. Melisso argomenta che se l'Essere fosse finito, avrebbe un limite, e al di là di questo limite dovrebbe esserci il Non-Essere. Ma il Non-Essere non può esistere. Dunque, l'Essere deve essere **infinito** in estensione, illimitato.
+                    </p>
+                    <p>
+                        Questo concetto di "infinito" è un'innovazione importante, anticipando futuri sviluppi filosofici.
+                    </p>
+                </li>
+                <li>
+                    <h4>L'Essere è Uno e Immutabile:</h4>
+                    <p>
+                        Come Parmenide, Melisso sostiene che l'Essere è **uno** e **immutabile**.
+                        <ul>
+                            <li><span class="highlight">Unità:</span> Se ci fossero due esseri, essi sarebbero separati da qualcosa, che dovrebbe essere Non-Essere. Ma il Non-Essere non esiste. Dunque, esiste un solo Essere.</li>
+                            <li><span class="highlight">Immutabilità:</span> Se l'Essere mutasse, diventerebbe Non-Essere, o cesserebbe di essere ciò che è. Ma l'Essere è e non può non essere. Dunque, non può cambiare, non può muoversi.</li>
+                        </ul>
+                    </p>
+                </li>
+                <li>
+                    <h4>L'Essere è Incorporeo e Impassibile:</h4>
+                    <p>
+                        Se l'Essere fosse corporeo, avrebbe parti e sarebbe divisibile, perdendo la sua unità. Inoltre, se fosse corporeo, potrebbe essere toccato e quindi subire mutamenti. Pertanto, l'Essere è **incorporeo** e **impassibile** (non può subire alcuna azione o passione). Questo è un ulteriore passo radicale rispetto a Parmenide, la cui visione sferica dell'Essere suggeriva ancora una sorta di spazialità. L'Essere di Melisso è puramente logico-metafisico.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>La Critica al Mondo Sensibile e le Obiezioni</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Le conclusioni di Melisso, come quelle di Parmenide, portano a un netto rifiuto della validità della conoscenza sensibile.
+            </p>
+            <ul>
+                <li>
+                    <h4>L'Ingannevolezza dei Sensi:</h4>
+                    <p>
+                        Se l'Essere è uno, immutabile, eterno e infinito, allora tutto ciò che i nostri sensi ci mostrano (pluralità, movimento, cambiamento, nascita e morte) è un'illusione. La vera conoscenza deriva solo dal **ragionamento logico**, non dall'esperienza sensibile.
+                    </p>
+                    <div class="quote">
+                        <p>«Se l'Essere è uno e immutabile, allora non può accadere nessuna delle cose che noi pensiamo vere, ossia né che nasca né che perisca né che muti né che si alteri luogo né che divenga più denso o più raro, e nessuna altra delle cose che comunemente si ritengono derivare dal mutamento.»</p>
+                        <footer>— Melisso (frammento B 7)</footer>
+                    </div>
+                </li>
+                <li>
+                    <h4>Le Obiezioni di Aristotele:</h4>
+                    <p>
+                        Aristotele criticò Melisso, in particolare per la sua inferenza dell'infinità dell'Essere. Secondo Aristotele, l'errore di Melisso stava nel confondere l'Essere in senso assoluto (astratto) con l'Essere in senso corporeo (concreto). Un Essere incorporeo non ha bisogno di essere spazialmente infinito per non avere limiti, perché non occupa spazio. Inoltre, Aristotele gli rimproverò di non aver distinto tra l'unità dell'Essere per definizione e l'unità di un corpo esteso.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>L'Eredità e l'Importanza di Melisso</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Nonostante la sua posizione radicale e le critiche ricevute, Melisso ha lasciato un'impronta significativa nella storia del pensiero.
+            </p>
+            <ul>
+                <li>
+                    <h4>Il Culmine dell'Eleatismo:</h4>
+                    <p>
+                        Melisso è spesso visto come colui che portò la logica parmenidea alle sue estreme conseguenze. Rendendo l'Essere **infinito** e **incorporeo**, eliminò ogni residuo di sensibilità o finitudine che Parmenide poteva aver mantenuto (nella sua descrizione sferica).
+                    </p>
+                </li>
+                <li>
+                    <h4>Influenza sui Pluralisti:</h4>
+                    <p>
+                        La sua logica stringente e le difficoltà che essa poneva al concetto di mutamento spinsero i filosofi successivi, come **Empedocle**, **Anassagora** e i **Democritei (atomisti)**, a formulare le loro teorie pluralistiche. Essi cercarono di salvare la molteplicità e il divenire senza cadere nel non-essere, postulando elementi immutabili (come i semi o gli atomi) che si combinano e si separano. Questi pluralisti accettarono l'immutabilità degli "elementi", ma negarono l'unità monistica di Parmenide e Melisso.
+                    </p>
+                </li>
+                <li>
+                    <h4>Anticipazione di Concetti Futuri:</h4>
+                    <p>
+                        L'idea di un Essere infinito e incorporeo anticipa concetti che saranno sviluppati molto più tardi nella storia della filosofia e della teologia, come l'infinità di Dio o la nozione di sostanza incorporea.
+                    </p>
+                </li>
+                <li>
+                    <h4>Il Valore del Rigore Logico:</h4>
+                    <p>
+                        Melisso, come Zenone, dimostrò la forza del ragionamento deduttivo, evidenziando come, a partire da certe premesse, si possano raggiungere conclusioni contro-intuitive ma logicamente necessarie. Questo approccio ha contribuito a forgiare il rigore della filosofia greca.
+                    </p>
+                </li>
+            </ul>
+            <p>
+                Melisso di Samo, con la sua dottrina dell'Essere uno, eterno, infinito e incorporeo, rappresenta un capitolo fondamentale nella filosofia presocratica. Le sue sfide logiche al senso comune e alla percezione sensibile hanno costretto i pensatori successivi a ripensare la natura della realtà e della conoscenza, contribuendo in modo significativo allo sviluppo del pensiero occidentale.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const content = this.nextElementSibling; // Seleziona il div con il contenuto
+                    
+                    // Opzionale: Chiudi tutti gli altri pannelli aperti
+                    accordionButtons.forEach(otherButton => {
+                        if (otherButton !== this && otherButton.classList.contains('active')) {
+                            otherButton.classList.remove('active');
+                            otherButton.nextElementSibling.classList.remove('show');
+                        }
+                    });
+
+                    // Apri/chiudi il pannello cliccato
+                    this.classList.toggle('active');
+                    content.classList.toggle('show');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
