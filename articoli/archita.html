@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archita di Taranto: Il Genio Pitagorico tra Matematica, Musica e Politica</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Stili Generali e Reset */
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 3.2em;
+            text-align: center;
+            border-bottom: 2px solid #9b59b6; /* Viola per Pitagorismo/Armonia */
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 2.4em;
+            color: #9b59b6; /* Viola per Pitagorismo/Armonia */
+            margin-top: 30px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: #555;
+            margin-top: 25px;
+        }
+
+        h4 {
+            font-size: 1.3em;
+            color: #444;
+            margin-top: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #d35400; /* Arancione per evidenziazioni */
+        }
+
+        .quote {
+            font-style: italic;
+            background-color: #f2eefa; /* Sfondo chiaro per le citazioni */
+            padding: 18px 25px;
+            border-left: 5px solid #9b59b6; /* Viola per le citazioni */
+            margin: 25px 0;
+            border-radius: 4px;
+            line-height: 1.5;
+        }
+
+        .quote footer {
+            text-align: right;
+            margin-top: 12px;
+            font-size: 0.95em;
+            color: #7f8c8d;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+        }
+
+        .image-container figcaption {
+            font-size: 0.9em;
+            color: #777;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Stili per l'Accordion (Sezioni Espandibili) */
+        .accordion-section {
+            max-width: 900px;
+            margin: 25px auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .accordion-button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 20px 30px;
+            background-color: #9b59b6; /* Viola per il bottone */
+            color: white;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s ease;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .accordion-button:hover {
+            background-color: #8e44ad;
+        }
+
+        .accordion-button h2 {
+            color: white;
+            margin: 0;
+            font-size: 1em;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .accordion-button i {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-button.active i {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 0 30px;
+            background-color: #ffffff;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            box-sizing: border-box;
+        }
+
+        .accordion-content.show {
+            max-height: 4500px; /* Valore grande per accomodare il contenuto esteso */
+            padding: 30px;
+        }
+
+        .accordion-content ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .accordion-content ul li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .accordion-content ul li::before {
+            content: '🎶'; /* Simbolo della musica/armonia per Archita */
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                margin: 20px auto;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2.5em;
+            }
+            h2 {
+                font-size: 2em;
+            }
+            .accordion-button {
+                padding: 15px 20px;
+                font-size: 1.5em;
+            }
+            .accordion-content {
+                padding: 0 20px;
+            }
+            .accordion-content.show {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Archita di Taranto: Il Genio Pitagorico tra Matematica, Musica e Politica</h1>
+
+        <div class="image-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Presocratic_philosophers_-_Archytas_of_Tarentum.png/640px-Presocratic_philosophers_-_Archytas_of_Tarentum.png" alt="Illustrazione di Archita di Taranto">
+            <figcaption>Illustrazione di Archita di Taranto, filosofo, matematico e statista.</figcaption>
+        </div>
+
+        <p>
+            Nel IV secolo a.C., la città di Taranto, in Magna Grecia, fu un fiorente centro culturale e scientifico, e la sua prosperità è indissolubilmente legata alla figura di **Archita di Taranto** (circa 428 – 347 a.C.). Matematico, filosofo, teorico della musica, astronomo, stratego e statista, Archita fu una delle menti più brillanti e complete del suo tempo, rappresentando l'apice del **pitagorismo** nella sua fase più matura e la sua sintesi con le altre correnti di pensiero contemporanee.
+        </p>
+        <p>
+            Considerato un amico e discepolo di Platone (o almeno un suo corrispondente intellettuale), Archita incarnò l'ideale del "filosofo re" e del saggio che applica la teoria alla pratica, guidando Taranto con saggezza e promuovendo la scienza e le arti. La sua influenza si estese dalla geometria alla meccanica, dalla teoria musicale alla filosofia morale e politica, lasciando un'eredità che perdurò per secoli.
+        </p>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>Vita e Contesto Storico-Pitagorico</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                La vita di Archita è un esempio di come la filosofia potesse tradursi in azione concreta e governo illuminato.
+            </p>
+            <ul>
+                <li>
+                    <h4>La Taranto del IV Secolo a.C.:</h4>
+                    <p>
+                        Taranto, colonia spartana, divenne sotto la guida di Archita una potenza egemone nella Magna Grecia. Il suo governo fu caratterizzato da prosperità economica, stabilità politica e grande fioritura culturale. Si racconta che fu eletto per sette volte di seguito stratego, in deroga alle leggi che vietavano la rielezione.
+                    </p>
+                </li>
+                <li>
+                    <h4>Il Pitagorismo:</h4>
+                    <p>
+                        Archita fu un esponente di spicco del **pitagorismo**, la scuola filosofica che vedeva nel **numero** l'essenza di tutte le cose e la chiave per comprendere l'armonia del cosmo, della musica e dell'anima. Sebbene il pitagorismo originario avesse un forte carattere mistico e religioso, Archita contribuì a dargli una veste più scientifica e razionale, applicando i principi matematici allo studio della realtà.
+                    </p>
+                </li>
+                <li>
+                    <h4>L'Amicizia con Platone:</h4>
+                    <p>
+                        Le fonti antiche attestano un rapporto di amicizia e stima reciproca tra Archita e Platone. Si narra che Archita abbia salvato Platone dalle grinfie del tiranno Dionigi II di Siracusa. Il dialogo platonico "Repubblica" e la sua visione del filosofo come governante potrebbero aver risentito dell'influenza del modello politico di Taranto sotto Archita. Platone stesso cita Archita nelle sue opere.
+                    </p>
+                </li>
+                <li>
+                    <h4>Opere e Frammenti:</h4>
+                    <p>
+                        Come molti pensatori antichi, gran parte delle opere di Archita è andata perduta. Le sue principali opere conosciute includevano trattati su matematica, musica, filosofia e etica. I frammenti giunti a noi sono stati preservati principalmente da autori successivi come Aristotele, Euclide, Boezio e Porfirio.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>Contributi alla Matematica e alla Geometria</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Archita è considerato uno dei più grandi matematici dell'antichità, precursore di Euclide e innovatore in diversi campi.
+            </p>
+            <ul>
+                <li>
+                    <h4>La Soluzione del Problema della Duplicazione del Cubo:</h4>
+                    <p>
+                        Uno dei problemi geometrici più famosi dell'antichità era la **duplicazione del cubo** (o "problema delio"): costruire un cubo di volume doppio rispetto a un cubo dato. Archita fu il primo a offrire una soluzione geometrica meccanica, usando l'intersezione di tre superfici tridimensionali (un cilindro, un toro e un cono) in un ingegnoso sistema spaziale. Questa fu una delle prime dimostrazioni che un problema non risolvibile con riga e compasso poteva essere risolto con altri strumenti geometrici.
+                    </p>
+                </li>
+                <li>
+                    <h4>La Teoria delle Medie:</h4>
+                    <p>
+                        Archita studiò a fondo le **medie matematiche**, non solo quelle aritmetiche e geometriche, ma anche quella **armonica** (che è stata attribuita a lui o a Ippaso di Metaponto).
+                        <ul>
+                            <li><span class="highlight">Media Aritmetica:</span> $(a+b)/2$</li>
+                            <li><span class="highlight">Media Geometrica:</span> $\sqrt{ab}$</li>
+                            <li><span class="highlight">Media Armonica:</span> $2ab / (a+b)$</li>
+                        </ul>
+                        Queste medie erano fondamentali per la comprensione delle relazioni numeriche nel cosmo e nella musica.
+                    </p>
+                </li>
+                <li>
+                    <h4>Applicazione del Numero alla Filosofia:</h4>
+                    <p>
+                        Per Archita, come per i pitagorici, il **numero** non era solo uno strumento di calcolo, ma il principio fondamentale che governa l'intero universo. L'ordine, la proporzione e l'armonia del cosmo e delle arti derivano dai rapporti numerici. La conoscenza del numero era quindi essenziale per la vera sapienza.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>La Teoria della Musica e l'Acustica</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Archita fu un pioniere nello studio scientifico della musica, legando i fenomeni acustici a principi matematici.
+            </p>
+            <ul>
+                <li>
+                    <h4>La Musica come Branca della Matematica:</h4>
+                    <p>
+                        Per i pitagorici, la musica era una delle quattro discipline del **quadrivio** (aritmetica, geometria, musica, astronomia), tutte basate sui numeri. Archita, in particolare, si dedicò alla **armonica**, la teoria matematica dei rapporti musicali.
+                    </p>
+                </li>
+                <li>
+                    <h4>La Teoria dei Toni e degli Intervalli:</h4>
+                    <p>
+                        Archita fu il primo a dare una formulazione matematica precisa ai principali intervalli musicali (ottava, quinta, quarta) e a definire il tono in termini di rapporti numerici precisi. A lui è attribuita la divisione del tono in due semitoni disuguali, un passo importante nello sviluppo della teoria musicale.
+                    </p>
+                </li>
+                <li>
+                    <h4>L'Acustica Sperimentale:</h4>
+                    <p>
+                        La sua ricerca non fu solo teorica. Archita è celebre per aver teorizzato che il **suono è prodotto dal movimento dell'aria** (o dalla collisione di corpi), e che l'altezza del suono è determinata dalla velocità di questo movimento. Un movimento più veloce produce un suono più acuto, un movimento più lento un suono più grave. Questa intuizione, ben prima di Galileo, è un esempio notevole di approccio scientifico ai fenomeni naturali.
+                    </p>
+                    <div class="quote">
+                        <p>«Il suono si produce quando due corpi si urtano; e la forza dell'urto è tanto maggiore, quanto maggiore è la forza con cui si urtano: così le frecce tirate con più forza, producono un suono più forte.»</p>
+                        <footer>— Archita (frammento B 1 da Porfirio)</footer>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>Contributi alla Meccanica e all'Etica Politica</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Archita non fu solo un teorico, ma un pratico, che applicò il sapere alla tecnologia e al governo.
+            </p>
+            <ul>
+                <li>
+                    <h4>La Meccanica e l'Uccello di Legno:</h4>
+                    <p>
+                        A Archita è attribuita l'invenzione di diversi dispositivi meccanici. Il più famoso è la leggenda dell'**uccello di legno** o "colomba" meccanica, capace di volare, probabilmente azionata da vapore o contrappesi. Sebbene la sua funzionalità esatta sia oggetto di dibattito, questa invenzione testimonia il suo interesse per l'applicazione delle leggi fisiche alla costruzione di automi.
+                    </p>
+                    <p>
+                        È considerato anche il padre della meccanica, che per lui era una branca della geometria applicata.
+                    </p>
+                </li>
+                <li>
+                    <h4>Il Filosofo Governatore:</h4>
+                    <p>
+                        Come statista, Archita fu un esempio di come la filosofia pitagorica potesse informare la condotta politica. Il suo governo a Taranto fu saggio e giusto, basato sui principi di **armonia, equilibrio e misura**, che lui vedeva riflessi nei rapporti numerici.
+                    </p>
+                    <div class="quote">
+                        <p>«La filosofia è per Archita ciò che dà vita alla buona politica, ciò che rende possibile la buona legislazione e l'ordine civile.»</p>
+                        <footer>— Testimonianza indiretta</footer>
+                    </div>
+                </li>
+                <li>
+                    <h4>L'Etica della Giustizia e della Ragione:</h4>
+                    <p>
+                        Archita sosteneva che la giustizia sociale e l'ordine politico derivassero dall'applicazione dei principi matematici e dell'equità. La ragione e il calcolo (logistiké) erano visti come gli strumenti per raggiungere l'equilibrio nella vita della polis e per evitare la "pleonexia" (l'eccesso, l'avidità), causa di discordia.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>L'Eredità e l'Influenza di Archita</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                L'impatto di Archita sul pensiero antico e sulle discipline successive è stato profondo e duraturo.
+            </p>
+            <ul>
+                <li>
+                    <h4>Influenza su Platone e Euclide:</h4>
+                    <p>
+                        La sua influenza su Platone è innegabile, soprattutto per quanto riguarda la matematica come base della filosofia e l'ideale del filosofo come guida della città. Le sue ricerche matematiche gettarono le basi per i "Principi" di Euclide, e la sua soluzione alla duplicazione del cubo è un capitolo fondamentale della storia della geometria.
+                    </p>
+                </li>
+                <li>
+                    <h4>Precursore della Scienza Sperimentale:</h4>
+                    <p>
+                        Il suo approccio allo studio del suono e delle medie dimostra una mentalità che, per quanto ancora legata alla speculazione filosofica, anticipa elementi del metodo scientifico moderno, basato sull'osservazione e sulla ricerca di relazioni quantitative.
+                    </p>
+                </li>
+                <li>
+                    <h4>La Scienza della Musica:</h4>
+                    <p>
+                        Archita fu uno dei primi a elevare la teoria musicale a disciplina scientifica rigorosa, separandola dalle tradizioni puramente empiriche o religiose, e ponendo le basi per la musicologia.
+                    </p>
+                </li>
+                <li>
+                    <h4>Simbolo del Sapere Integrato:</h4>
+                    <p>
+                        La figura di Archita rimane un simbolo dell'ideale di sapere integrato, dove matematica, fisica, etica e politica non sono discipline separate, ma aspetti interconnessi di un'unica ricerca dell'armonia e dell'ordine, sia nel cosmo che nella società umana.
+                    </p>
+                </li>
+            </ul>
+            <p>
+                Archita di Taranto non fu solo un genio poliedrico, ma anche un ponte tra il pitagorismo classico e le filosofie più tarde, dimostrando la capacità della ragione umana di comprendere e ordinare il mondo in tutte le sue manifestazioni, dalla sottile vibrazione del suono alla complessa organizzazione di una città-stato. La sua eredità continua a ispirare chi cerca la bellezza e la verità nell'intersezione tra numeri, armonia e saggezza pratica.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const content = this.nextElementSibling; // Seleziona il div con il contenuto
+                    
+                    // Opzionale: Chiudi tutti gli altri pannelli aperti
+                    accordionButtons.forEach(otherButton => {
+                        if (otherButton !== this && otherButton.classList.contains('active')) {
+                            otherButton.classList.remove('active');
+                            otherButton.nextElementSibling.classList.remove('show');
+                        }
+                    });
+
+                    // Apri/chiudi il pannello cliccato
+                    this.classList.toggle('active');
+                    content.classList.toggle('show');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
