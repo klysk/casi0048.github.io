@@ -15,7 +15,58 @@
  <button id="darkModeToggle" aria-label="Attiva/Disattiva modalità scura">
     <i class="fas fa-moon"></i>
   </button>
+<!...................inizio bannar cooki------------>
+<!-- Cookie Banner Integrato -->
+<div id="cookie-banner" style="display:none; position:fixed; bottom:0; left:0; right:0; background:#2a2a72; color:white; padding:15px; z-index:1000; font-family:'Crimson Pro', serif;">
+  <div style="max-width:800px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px;">
+    <p style="margin:0; flex:1; min-width:250px;">
+      Echi di Sofia utilizza cookie essenziali. 
+      <a href="https://drive.google.com/file/d/16duY9J-L4s03gJeG_CeO7XZ-poLvXrhk/view?usp=drive_link" 
+         target="_blank" 
+         style="color:#8e8eff; text-decoration:underline;">
+        Leggi l'informativa
+      </a>
+    </p>
+    <div style="display:flex; gap:10px;">
+      <button id="accept-cookies" style="padding:8px 16px; background:#c0392b; color:white; border:none; border-radius:4px; cursor:pointer;">
+        Accetta
+      </button>
+      <button id="reject-cookies" style="padding:8px 16px; background:transparent; color:white; border:1px solid rgba(255,255,255,0.3); border-radius:4px; cursor:pointer;">
+        Rifiuta
+      </button>
+    </div>
+  </div>
+</div>
 
+<script>
+// Controlla se l'utente ha già scelto
+if(!localStorage.getItem('cookiePrefs')) {
+  document.getElementById('cookie-banner').style.display = 'block';
+}
+
+// Gestione click
+document.getElementById('accept-cookies').addEventListener('click', function() {
+  localStorage.setItem('cookiePrefs', 'accepted');
+  document.getElementById('cookie-banner').style.animation = 'fadeOut 0.5s forwards';
+  setTimeout(() => document.getElementById('cookie-banner').remove(), 500);
+});
+
+document.getElementById('reject-cookies').addEventListener('click', function() {
+  localStorage.setItem('cookiePrefs', 'rejected');
+  document.getElementById('cookie-banner').style.animation = 'fadeOut 0.5s forwards';
+  setTimeout(() => document.getElementById('cookie-banner').remove(), 500);
+});
+
+// Aggiungi questo stile se vuoi l'animazione
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes fadeOut {
+    to { opacity: 0; transform: translateY(20px); }
+  }
+`;
+document.head.appendChild(style);
+</script>
+    <!----------------fine banner cooki-------->
 
 
 </style>
