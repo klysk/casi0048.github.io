@@ -1,725 +1,158 @@
+<!-- Aggiungi questo CSS nell'<head> -->
+<style>
+/* NUOVA PALETTE COLORI */
 :root {
-  --primary: #2a2a72;
-  --primary-light: #3a3a8a;
-  --accent: #c0392b;
-  --text: #1a1a1a;
-  --text-light: #666;
-  --bg: #ffffff;
-  --border: #eaeaea;
-  --hover-bg: #f8f8f8;
+  --primary: #2a2a72;       /* Blu filosofico */
+  --primary-light: #8e8eff; /* Blu chiaro */
+  --accent: #c0392b;        /* Rosso acceso */
+  --text: #333;             /* Testo principale */
+  --bg: #f9f5f0;            /* Sfondo carta antica */
+  --paper: #fffcf8;         /* Superficie elementi */
 }
 
+/* RESET BASICO */
 body {
-  margin: 0;
   font-family: 'Crimson Pro', serif;
   background-color: var(--bg);
   color: var(--text);
-  transition: background-color 0.3s, color 0.3s;
+  line-height: 1.7;
+  background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
 }
 
-.navbar {
-  position: sticky;
-  top: 0;
-  z-index: 999;
-  background-color: var(--bg);
-  border-bottom: 1px solid var(--border);
-  padding: 0.8rem 1.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
-
-.menu {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-}
-
-.menu li {
-  position: relative;
-}
-
-.menu-btn {
-  background: none;
-  border: none;
-  font: inherit;
-  color: var(--primary);
-  cursor: pointer;
-  padding: 0.4rem 0.6rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-}
-
-.menu-btn:hover,
-.menu-btn:focus {
-  color: var(--primary-light);
-  outline: none;
-}
-
-.arrow {
-  font-size: 0.8rem;
-  transition: transform 0.3s ease;
-}
-
-.dropdown:hover .arrow {
-  transform: rotate(180deg);
-}
-
-.submenu,
-.mega-menu {
-  display: block;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  min-width: 300px;
-  padding: 1.2rem;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(0);
-  transition: all 0.3s ease;
-  pointer-events: none;
-  border-radius: 0.5rem;
-  z-index: 1000;
-}
-
-.dropdown:hover .submenu,
-.dropdown:hover .mega-menu {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(5px);
-  pointer-events: auto;
-}
-
-.mega-menu {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 1rem;
-}
-
-.column {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-}
-
-.column h3 {
-  margin: 0;
-  font-size: 1.1rem;
-  color: var(--primary);
-  font-weight: 600;
-}
-
-.column a {
-  color: var(--text);
-  text-decoration: none;
-  padding: 0.2rem 0;
-  transition: color 0.2s;
-}
-
-.column a:hover {
-  color: var(--primary-light);
-  text-decoration: underline;
-}
-
-.search-container {
-  display: flex;
-  align-items: center;
-  margin-left: auto;
-}
-
-.search-form {
-  display: flex;
-  align-items: center;
-  background-color: var(--hover-bg);
-  border-radius: 0.5rem;
-  padding: 0.3rem 0.6rem;
-  border: 1px solid var(--border);
-}
-
-.search-input {
-  border: none;
-  outline: none;
-  background: transparent;
-  font-size: 1rem;
-  padding: 0.4rem;
-}
-
-.search-btn {
-  background: none;
-  border: none;
-  color: var(--primary);
-  font-size: 1.1rem;
-  cursor: pointer;
-  padding: 0.4rem;
-}
-
+/* HEADER RINNOVATO */
 .hero {
+  background: linear-gradient(135deg, var(--primary) 0%, #1a1a3a 100%);
+  padding: 4rem 1rem;
   text-align: center;
-  padding: 4rem 2rem;
-  background: linear-gradient(to bottom, #fdfcfb 0%, #e2d1c3 100%);
-  color: #2e2e2e;
-  border-bottom: 2px solid var(--border);
-}
-.search-form {
-  display: flex;
-  justify-content: center;
-  margin: 30px auto;
-  max-width: 480px;
-  font-family: inherit;
-}
-
-.search-form input[type="text"] {
-  flex: 1;
-  padding: 10px 14px;
-  border: 1px solid #ccc;
-  border-radius: 6px 0 0 6px;
-  font-size: 16px;
-  outline: none;
-}
-
-.search-form button {
-  padding: 10px 16px;
-  border: 1px solid #ccc;
-  border-left: none;
-  background-color: #333;
-  color: #fff;
-  font-size: 16px;
-  border-radius: 0 6px 6px 0;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.search-form button:hover {
-  background-color: #555;
+  border-bottom: 5px solid var(--accent);
 }
 
 .saluto {
   font-family: 'Playfair Display', serif;
-  font-size: 3rem;
-  margin: 0;
-  animation: echoEffect 2s ease-in-out;
+  font-size: 3.2rem;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  margin-bottom: 0.5rem;
 }
 
 .sottotitolo {
+  color: rgba(255,255,255,0.9);
   font-size: 1.5rem;
-  color: var(--text-light);
-}
-
-.citazione {
-  margin-top: 1rem;
   font-style: italic;
-  color: var(--accent);
-  font-size: 1.2rem;
 }
 
-.quote-carousel {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  padding: 2rem;
-  background-color: #f9f9f9;
-  border-bottom: 1px solid var(--border);
+/* NAVBAR MIGLIORATA */
+.navbar {
+  background: var(--paper);
+  box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+  padding: 1rem 0;
 }
 
-.quote-carousel blockquote {
-  max-width: 300px;
-  font-style: italic;
-  font-size: 1.1rem;
-  position: relative;
-  padding-left: 1rem;
-  color: var(--text-light);
-}
-
-.quote-carousel footer {
-  text-align: right;
-  font-weight: bold;
-  margin-top: 0.5rem;
+.menu-btn {
   color: var(--primary);
-}
-
-.philosopher-avatar {
-  position: relative;
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin: 2rem auto;
-  border: 3px solid var(--primary);
-}
-
-.philosopher-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s ease;
-}
-
-.philosopher-avatar:hover img {
-  transform: scale(1.1);
-}
-
-.hover-portrait {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(42, 42, 114, 0.7);
-  color: #fff;
-  text-align: center;
-  padding: 0.3rem;
-  font-size: 0.9rem;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.philosopher-avatar:hover .hover-portrait {
-  opacity: 1;
-}
-.featured-posts {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
-}
-
-.post-card {
-    transition: transform 0.5s, box-shadow 0.5s;
-}
-
-.post-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-}
-/* Incipit */
-.frase-chiave {
-  font-style: italic;
-  color: var(--accent);
-  font-size: 1.1rem;
-  margin-bottom: 1rem;
-}
-
-/* Animazioni */
-@keyframes echoEffect {
-  0% {
-    transform: scale(1);
-    text-shadow: none;
-  }
-  50% {
-    transform: scale(1.05);
-    text-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
-  }
-  100% {
-    transform: scale(1);
-    text-shadow: none;
-  }
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .menu {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .mega-menu {
-    grid-template-columns: 1fr;
-  }
-
-  .search-container {
-    margin-top: 1rem;
-  }
-
-  .saluto {
-    font-size: 2.2rem;
-  }
-
-  .sottotitolo {
-    font-size: 1.2rem;
-  }
-}
-.hero-section {
-  background: linear-gradient(to bottom, #fefcf9, #f7f2e8);
-  background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
-  padding: 100px 20px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  border-bottom: 1px solid #e0dacc;
-}
-
-.hero-content {
-  max-width: 800px;
-  margin: 0 auto;
-  animation: fadeInUp 1.5s ease-out both;
-}
-
-.hero-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 3.2rem;
-  color: #2a2a72;
-  margin-bottom: 20px;
-  animation: fadeInUp 1.5s ease-out both;
-}
-
-.hero-subtitle {
-  font-size: 1.4rem;
-  color: #555;
-  margin-bottom: 30px;
-  animation: fadeInUp 2s ease-out both;
-}
-
-.hero-cta {
-  display: inline-block;
-  padding: 12px 28px;
-  background: #c0392b;
-  color: white;
   font-weight: 600;
-  border-radius: 30px;
-  text-decoration: none;
-  font-family: 'Crimson Pro', serif;
-  transition: background 0.3s ease, transform 0.3s ease;
-  animation: fadeInUp 2.5s ease-out both;
-}
-
-.hero-cta:hover {
-  background: #a32d21;
-  transform: scale(1.05);
-}
-.main-title .word {
-    display: inline-block;
-    animation: floatWord 3s ease-in-out infinite;
-    animation-delay: calc(var(--word-index) * 0.3s);
-}
-@keyframes floatWord {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
-}
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-.citazione {
-    position: relative;
-}
-
-.citazione::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 30%;
-    height: 1.2em;
-    background: linear-gradient(to right, 
-        rgba(255,255,255,0) 0%, 
-        var(--bg) 80%);
-    pointer-events: none;
-}
-body.dark-mode {
-  background-color: #1a1a2e;
-  color: #f0f0f0;
-  /* Altri stili per la modalità scura */
-}
-/* Stile base chiaro */
-body {
-  font-family: 'Crimson Pro', serif;
-  background-color: #fff;
-  color: #333;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  margin: 2rem;
-}
-
-/* Bottone toggle */
-#darkModeToggle {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #2a2a72;
-  transition: color 0.3s ease;
-}
-
-/* Icona cambia colore in hover */
-#darkModeToggle:hover {
-  color: #c0392b;
-}
-
-/* Modalità scura */
-body.dark-mode {
-  background-color: #1a1a2e;
-  color: #f0f0f0;
-}
-
-/* Cambia icona e colore bottone in dark mode */
-body.dark-mode #darkModeToggle {
-  color: #ff6b6b;
-}
-.article {
-    background: url('paper-texture.jpg');
-    padding: 2rem;
-    box-shadow: 
-        0 2px 5px rgba(0,0,0,0.1),
-        inset 0 0 30px rgba(0,0,0,0.05);
-    position: relative;
-}
-
-.article::before {
-    content: "";
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 60px;
-    height: 80px;
-    background: url('ink-stain.png') no-repeat;
-    opacity: 0.1;
-}
-a {
-    background-image: linear-gradient(var(--accent), var(--accent));
-    background-size: 0% 2px;
-    background-repeat: no-repeat;
-    background-position: left bottom;
-    transition: background-size 0.5s;
-}
-
-a:hover {
-    background-size: 100% 2px;
-}
-.dark-mode {
-    --bg: #0f0f1a;
-    --text: #e0e0e0;
-    background-image: 
-        radial-gradient(circle at 20% 30%, rgba(42,42,114,0.1) 0%, transparent 25%),
-        url('stars-pattern.png');
-}
-
-.dark-mode .article {
-    background: #1a1a2e;
-    box-shadow: 0 0 10px rgba(255,255,255,0.05);
-}
-/* ANIMAZIONE SICURA PER IL TITOLO */
-#echi-titolo-principale {
-    position: relative;
-    display: inline-block;
-    animation: echi-float 3s ease-in-out infinite;
-}
-
-@keyframes echi-float {
-    0%, 100% { transform: translateY(0) rotate(0.5deg); }
-    50% { transform: translateY(-8px) rotate(-0.5deg); }
-}
-
-/* Effetto "echo" solo per il testo */
-#echi-titolo-principale::after {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.3;
-    animation: echi-echo 3s ease-out infinite;
-}
-
-@keyframes echi-echo {
-    to { 
-        transform: scale(1.05); 
-        opacity: 0;
-        filter: blur(1px);
-    }
-}
-.site-footer {
-  background-color: #f5f5f5;
-  padding: 30px 10px;
-  text-align: center;
-  font-size: 14px;
-  color: #555;
-  border-top: 1px solid #ddd;
-  font-family: 'Crimson Pro', serif;
-}
-
-.site-footer a {
-  color: #333;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.site-footer a:hover {
-  color: #000;
-  text-decoration: underline;
-}
-.cookie-banner {
-  position: fixed;
-  bottom: -100px;
-  left: 0;
-  right: 0;
-  background-color: #fdf6ec;
-  color: #333;
-  font-family: 'Crimson Pro', serif;
-  padding: 20px;
-  text-align: center;
-  border-top: 1px solid #ddd;
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
-  z-index: 9999;
-  transition: bottom 0.6s ease;
-}
-
-.cookie-banner p {
-  margin: 0;
-  font-size: 15px;
-  line-height: 1.5;
-}
-
-.cookie-banner a {
-  color: #222;
-  text-decoration: underline;
-}
-
-.cookie-banner button {
-  margin-top: 10px;
-  padding: 8px 16px;
-  font-size: 14px;
-  border: none;
-  background-color: #333;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.cookie-banner button:hover {
-  background-color: #111;
-}
-
-.cookie-banner.show {
-  bottom: 0;
-}
-.contatti-section {
-  padding: 60px 20px;
-  background-color: #f9f9f9;
-  font-family: 'Crimson Pro', serif;
-  color: #333;
-  text-align: center;
-}
-
-.contatti-section h2 {
-  font-size: 2em;
-  margin-bottom: 20px;
-}
-
-.contatto-form {
-  max-width: 600px;
-  margin: auto;
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.contatto-form label {
-  font-weight: bold;
-  font-size: 1rem;
-}
-
-.contatto-form input,
-.contatto-form textarea {
-  padding: 10px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-family: 'Crimson Pro', serif;
-}
-
-.contatto-form button {
-  align-self: flex-start;
-  background-color: #333;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.contatto-form button:hover {
-  background-color: #000;
-}
-.contatti {
-  max-width: 600px;
-  margin: 50px auto;
-  padding: 2rem;
-  background-color: #f9f9f9;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  font-family: 'Crimson Pro', serif;
-}
-
-.contatti h2 {
-  text-align: center;
-  margin-bottom: 1rem;
-  font-size: 1.8rem;
-}
-
-.contatti label {
-  display: block;
-  margin: 1rem 0 0.3rem;
-  font-weight: 600;
-}
-
-.contatti input,
-.contatti textarea {
-  width: 100%;
-  padding: 0.8rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-sizing: border-box;
-}
-
-.contatti button {
-  margin-top: 1.5rem;
   padding: 0.8rem 1.5rem;
-  background-color: #222;
-  color: #fff;
-  border: none;
+  transition: all 0.3s;
+}
+
+.menu-btn:hover {
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+/* CARD PER ARTICOLI */
+.article-card {
+  background: var(--paper);
   border-radius: 8px;
-  font-size: 1rem;
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 800px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  border-left: 3px solid var(--accent);
+  transition: transform 0.3s;
+}
+
+.article-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* CITAZIONI ELEGANTI */
+.citazione {
+  font-style: italic;
+  font-size: 1.3rem;
+  color: var(--primary);
+  padding: 1.5rem;
+  border-left: 3px solid var(--accent);
+  background: rgba(42,42,114,0.05);
+  position: relative;
+}
+
+.citazione::before {
+  content: "“";
+  font-size: 4rem;
+  position: absolute;
+  left: 10px;
+  top: 0;
+  color: rgba(192,57,43,0.1);
+}
+
+/* FOOTER AFFINATO */
+.site-footer {
+  background: var(--primary);
+  color: white;
+  text-align: center;
+  padding: 2rem;
+  margin-top: 4rem;
+}
+
+/* BOTTONE DARK MODE MIGLIORATO */
+#darkModeToggle {
+  background: var(--primary);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+  transition: all 0.3s;
 }
 
-.contatti button:hover {
-  background-color: #444;
-}
-/* Regole base modalità chiara (default) */
-body {
-  background-color: #ffffff;
-  color: #222222;
-  transition: background-color 0.3s ease, color 0.3s ease;
+#darkModeToggle:hover {
+  transform: scale(1.1);
+  background: var(--accent);
 }
 
-/* Classe da aggiungere al <body> per attivare la modalità scura */
-body.dark-mode {
-  background-color: #121212;
-  color: #eeeeee;
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .saluto { font-size: 2.5rem; }
+  .article-card { padding: 1.5rem; }
 }
+</style>
 
-/* Esempio: modifica colore link in dark mode */
-body.dark-mode a {
-  color: #80cbc4;
-}
+<!-- ESEMPIO APPLICAZIONE ALLA TUA STRUCTURA -->
+<header class="hero">
+  <h1 class="saluto">Benvenuti in Echi di Sofia</h1>
+  <p class="sottotitolo">Dove il pensiero antico risuona nel presente</p>
+  <p class="citazione">"Non è possedendo la verità, ma cercandola, che l'uomo si espande"</p>
+</header>
+
+<nav class="navbar">
+  <!-- Il tuo menu esistente qui -->
+</nav>
+
+<main>
+  <article class="article-card">
+    <!-- Il tuo contenuto articolo qui -->
+  </article>
+</main>
+
+<footer class="site-footer">
+  <p>&copy; 2025 K. Klys – Tutti i diritti riservati.</p>
+  <p><a href="mailto:info@echidisofia.org" style="color: var(--primary-light);">info@echidisofia.org</a></p>
+</footer>
