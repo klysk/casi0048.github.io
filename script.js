@@ -110,3 +110,12 @@ document.addEventListener('DOMContentLoaded', function() {
         titolo.setAttribute('data-text', titolo.textContent);
     }
 });
+document.getElementById('generate-quote').addEventListener('click', function() {
+    const quotes = [
+        { text: "Conosci te stesso", author: "Socrate" },
+        { text: "Penso, dunque sono", author: "Cartesio" }
+    ];
+    const random = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById('quote-display').innerHTML = 
+        `<p>"${random.text}"</p><small>— ${random.author}</small>`;
+});
