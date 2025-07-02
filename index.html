@@ -765,6 +765,102 @@ body {
     hideBanner();
   });
 </script>
+                <!--inizio popover-->
+<!-- SEZIONE FILOSOFI POPUP -->
+<section id="filosofi-popover-wrapper" style="position: relative; max-width: 1000px; margin: 80px auto 60px; padding: 0 20px;">
 
+  <!-- Contenuto che appare sopra il pulsante -->
+  <div id="popover-filosofi" style="
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    background: #fdfdfd;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    padding: 30px;
+    margin-bottom: 20px;
+    z-index: 10;
+    animation: fadeSlideDown 0.5s ease-out;
+  ">
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">
+
+      <!-- Aristotele -->
+      <article style="flex: 1 1 260px; text-align: center; font-family: 'Crimson Pro', serif;">
+        <img src="immagini per sito/aristotele.webp" alt="Aristotele" style="width: 160px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+        <h3 style="margin-top: 12px; color: #c0392b;">Aristotele</h3>
+        <p style="font-size: 1rem; color: #444;">Padre della logica e della metafisica sistematica. Ha segnato la filosofia per secoli.</p>
+      </article>
+
+      <!-- Ipazia -->
+      <article style="flex: 1 1 260px; text-align: center; font-family: 'Crimson Pro', serif;">
+        <img src="immagini per sito/ipazia.webp" alt="Ipazia" style="width: 160px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+        <h3 style="margin-top: 12px; color: #c0392b;">Ipazia</h3>
+        <p style="font-size: 1rem; color: #444;">Simbolo del sapere femminile, grande matematica e filosofa neoplatonica.</p>
+      </article>
+
+      <!-- Socrate -->
+      <article style="flex: 1 1 260px; text-align: center; font-family: 'Crimson Pro', serif;">
+        <img src="immagini per sito/socrate.webp" alt="Socrate" style="width: 160px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+        <h3 style="margin-top: 12px; color: #c0392b;">Socrate</h3>
+        <p style="font-size: 1rem; color: #444;">Il dialogo, la maieutica e il coraggio di pensare controcorrente.</p>
+      </article>
+
+    </div>
+  </div>
+
+  <!-- PULSANTE -->
+  <div style="text-align: center;">
+    <button id="btn-filosofi" aria-haspopup="true" aria-expanded="false" aria-controls="popover-filosofi" style="
+      background: #c0392b;
+      border: none;
+      color: white;
+      font-weight: bold;
+      font-size: 1.25rem;
+      padding: 14px 28px;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(192,57,43,0.4);
+      transition: background-color 0.3s ease;
+    ">
+      Loro hanno cambiato la civiltà del pensiero
+    </button>
+  </div>
+</section>
+
+<!-- ANIMAZIONE -->
+<style>
+@keyframes fadeSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+
+<!-- SCRIPT -->
+<script>
+  const btnFilosofi = document.getElementById('btn-filosofi');
+  const popover = document.getElementById('popover-filosofi');
+
+  btnFilosofi.addEventListener('click', () => {
+    const isVisible = popover.style.display === 'block';
+    if (isVisible) {
+      popover.style.display = 'none';
+      btnFilosofi.setAttribute('aria-expanded', 'false');
+    } else {
+      popover.style.display = 'block';
+      popover.style.animation = 'fadeSlideDown 0.5s ease-out';
+      btnFilosofi.setAttribute('aria-expanded', 'true');
+    }
+  });
+</script>
+
+               <!--fine popover-->
 </body>
 </html>
