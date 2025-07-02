@@ -1,826 +1,250 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Echi di Sofia - Filosofia attraverso i secoli</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-<!-- favicon -->
-  <link rel="icon" type="image/png" href="favicon_io/favicon-16x16.png" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Echi di Sofia</title>
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="css/styles.css" />
-  <link rel="stylesheet" href="darkmode.css" />
+<!-- Font -->
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet" />
 
-  <!-- JS -->
-  <script src="darkmode.js" defer></script>
-</head>
-<body>
-  <!-- bottone dark mode -->
-  <button id="darkModeToggle" aria-label="Toggle Dark Mode">🌓</button>
-
-<!...................inizio bannar cooki------------>
-<!-- Nuovo Cookie Banner con Personalizzazione - Da inserire PRIMA di </body> -->
-<div id="cookie-consent-banner" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: linear-gradient(135deg, #2a2a72 0%, #1a1a3a 100%); color: white; padding: 20px; z-index: 1000; font-family: 'Crimson Pro'; box-shadow: 0 -5px 25px rgba(0,0,0,0.3);">
-  <div style="max-width: 1200px; margin: 0 auto;">
-    <!-- Messaggio Principale -->
-    <div id="cookie-main-message">
-      <p style="margin: 0 0 15px 0; line-height: 1.6;">
-        Utilizziamo cookie per migliorare la tua esperienza. 
-        <a href="https://drive.google.com/file/d/16duY9J-L4s03gJeG_CeO7XZ-poLvXrhk/view" target="_blank" style="color: #8e8eff; text-decoration: underline;">Maggiori informazioni</a>
-      </p>
-      <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-        <button id="cookie-accept-all" style="padding: 10px 20px; background: #c0392b; color: white; border: none; border-radius: 4px; cursor: pointer; transition: all 0.3s;">
-          Accetta tutti
-        </button>
-        <button id="cookie-customize" style="padding: 10px 20px; background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; cursor: pointer; transition: all 0.3s;">
-          Personalizza
-        </button>
-        <button id="cookie-reject-all" style="padding: 10px 20px; background: transparent; color: #ff6b6b; border: 1px solid #ff6b6b; border-radius: 4px; cursor: pointer; transition: all 0.3s;">
-          Rifiuta tutti
-        </button>
-      </div>
-    </div>
-
-    <!-- Pannello Personalizzazione (nascosto inizialmente) -->
-    <div id="cookie-settings-panel" style="display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
-      <h4 style="margin-bottom: 15px; font-family: 'Playfair Display';">Preferenze Cookie</h4>
-      
-      <div style="margin-bottom: 15px;">
-        <label style="display: flex; align-items: center; padding: 8px 0; cursor: pointer;">
-          <input type="checkbox" id="cookie-essential" checked disabled style="margin-right: 10px;">
-          <span><strong>Cookie Necessari</strong><br><small style="opacity: 0.8;">Sempre attivi - Servono per il funzionamento base del sito</small></span>
-        </label>
-        
-        <label style="display: flex; align-items: center; padding: 8px 0; cursor: pointer;">
-          <input type="checkbox" id="cookie-analytics" style="margin-right: 10px;">
-          <span><strong>Cookie Statistici</strong><br><small style="opacity: 0.8;">Ci aiutano a migliorare il sito analizzando l'utilizzo</small></span>
-        </label>
-        
-        <label style="display: flex; align-items: center; padding: 8px 0; cursor: pointer;">
-          <input type="checkbox" id="cookie-marketing" style="margin-right: 10px;">
-          <span><strong>Cookie Marketing</strong><br><small style="opacity: 0.8;">Per mostrarti contenuti personalizzati</small></span>
-        </label>
-      </div>
-      
-      <div style="display: flex; justify-content: space-between;">
-        <button id="cookie-settings-back" style="padding: 8px 16px; background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; cursor: pointer;">
-          Indietro
-        </button>
-        <button id="cookie-save-settings" style="padding: 8px 20px; background: #8e8eff; color: #1a1a3a; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">
-          Salva Preferenze
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-// Gestione completa del Cookie Banner
-document.addEventListener('DOMContentLoaded', function() {
-  const banner = document.getElementById('cookie-consent-banner');
-  const mainMessage = document.getElementById('cookie-main-message');
-  const settingsPanel = document.getElementById('cookie-settings-panel');
-  
-  // Mostra il banner solo se non ci sono preferenze salvate
-  if(!getCookiePreferences()) {
-    banner.style.display = 'block';
-    banner.style.animation = 'fadeInUp 0.5s forwards';
-    
-    // Aggiungi stili dinamici
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-      #cookie-customize:hover {
-        background: rgba(255,255,255,0.1) !important;
-      }
-      #cookie-reject-all:hover {
-        background: rgba(255,107,107,0.1) !important;
-      }
-      #cookie-accept-all:hover {
-        background: #a41616 !important;
-        transform: translateY(-1px);
-      }
-    `;
-    document.head.appendChild(style);
-  }
-
-  // Gestione click sui pulsanti principali
-  document.getElementById('cookie-accept-all').addEventListener('click', function() {
-    saveCookiePreferences({
-      essential: true,
-      analytics: true,
-      marketing: true,
-      timestamp: new Date().getTime()
-    });
-    hideBanner();
-  });
-
-  document.getElementById('cookie-reject-all').addEventListener('click', function() {
-    saveCookiePreferences({
-      essential: true,
-      analytics: false,
-      marketing: false,
-      timestamp: new Date().getTime()
-    });
-    hideBanner();
-  });
-
-  document.getElementById('cookie-customize').addEventListener('click', function() {
-    mainMessage.style.display = 'none';
-    settingsPanel.style.display = 'block';
-  });
-
-  // Gestione pannello personalizzazione
-  document.getElementById('cookie-settings-back').addEventListener('click', function() {
-    settingsPanel.style.display = 'none';
-    mainMessage.style.display = 'block';
-  });
-
-  document.getElementById('cookie-save-settings').addEventListener('click', function() {
-    const preferences = {
-      essential: true,
-      analytics: document.getElementById('cookie-analytics').checked,
-      marketing: document.getElementById('cookie-marketing').checked,
-      timestamp: new Date().getTime()
-    };
-    saveCookiePreferences(preferences);
-    hideBanner();
-  });
-
-  // Funzioni di supporto
-  function getCookiePreferences() {
-    const prefs = localStorage.getItem('cookiePreferences');
-    return prefs ? JSON.parse(prefs) : null;
-  }
-
-  function saveCookiePreferences(prefs) {
-    localStorage.setItem('cookiePreferences', JSON.stringify(prefs));
-    console.log('Preferenze salvate:', prefs);
-    // Qui puoi caricare gli script in base alle preferenze
-  }
-
-  function hideBanner() {
-    banner.style.animation = 'fadeInUp 0.5s reverse forwards';
-    setTimeout(() => banner.style.display = 'none', 500);
-  }
-});
-</script>
-    <!----------------fine banner cooki-------->
-
-
-</style>
-<style>
-.parallax-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('immagini per sito/cielo.jpg') center/cover no-repeat fixed;
-    opacity: 0.03;
-    z-index: -1;
-}
-</style>
-</button>
+<!-- Icone FontAwesome -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
 <style>
-
-        /* RESET & VARIABILI */
-        :root {
-            --primary: #2a2a72;
-            --primary-light: #3a3a8a;
-            --accent: #c0392b;
-            --text: #1a1a1a;
-            --text-light: #666;
-            --bg: #ffffff;
-            --border: #eaeaea;
-            --hover-bg: #f8f8f8;
-        }
-        .dark-mode {
-    --primary: #8e8eff;
-    --accent: #ff6b6b;
-    --text: #f0f0f0;
-    --bg: #1a1a2e;
-    --border: #2d2d4d;
-}
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Crimson Pro', serif;
-            color: var(--text);
-            background: var(--bg);
-            padding-top: 80px;
-            line-height: 1.6;
-        }
-        
-        /* NAVBAR PRINCIPALE */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 80px;
-            background: rgba(255,255,255,0.98);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-bottom: 1px solid rgba(0,0,0,0.1);
-            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
-            z-index: 1000;
-            padding: 0 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .navbar {
-    transition: box-shadow 0.5s ease;
-}
-body.scrolled .navbar {
-    box-shadow: 0 5px 30px rgba(0,0,0,0.15);
-}
-        .menu {
-            display: flex;
-            list-style: none;
-            height: 100%;
-            align-items: center;
-        }
-        body::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: 
-        radial-gradient(circle at 20% 30%, rgba(42,42,114,0.05) 0%, transparent 30%),
-        radial-gradient(circle at 80% 70%, rgba(192,57,43,0.05) 0%, transparent 30%);
-    z-index: -2;
-    animation: bgPulse 20s infinite alternate;
-}
-@keyframes bgPulse {
-    0% { opacity: 0.3; }
-    100% { opacity: 0.7; }
-}
-        /* VOCI MENU */
-        .dropdown {
-            position: relative;
-            height: 100%;
-        }
-        
-        .menu-btn {
-            background: none;
-            border: none;
-            height: 100%;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            font-family: 'Playfair Display', serif;
-            font-weight: 500;
-            font-size: 1rem;
-            color: var(--text);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .menu-btn:hover {
-            color: var(--accent);
-        }
-        
-        .menu-btn .arrow {
-            margin-left: 8px;
-            font-size: 0.8rem;
-            transition: transform 0.3s;
-        }
-        
-        /* SOTTOMENU */
-        .submenu, .mega-menu {
-            position: absolute;
-            left: 0;
-            top: 100%;
-            background: var(--bg);
-            border-radius: 8px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-            z-index: 100;
-            pointer-events: none;
-        }
-        .submenu {
-    perspective: 1000px;
-    transform-style: preserve-3d;
-    transform: rotateY(-5deg);
-    transition: transform 0.5s ease;
-}
-
-
-.submenu {
-    background: url('immagini per sito/cielo.jpg'), linear-gradient(to bottom, #f9f3e9 0%, #f5e8d0 100%);
-    border: none;
-    border-radius: 0 8px 8px 8px;
-    box-shadow: 
-        0 10px 20px rgba(0,0,0,0.1),
-        inset 0 0 0 1px rgba(255,255,255,0.5),
-        inset 0 0 30px rgba(210,180,140,0.4);
-    transform-origin: top left;
-    transform: scaleY(0.9) perspective(500px) rotateX(10deg);
-    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.dropdown:hover .submenu {
-    transform: scaleY(1) rotateX(0);
-}
-
-.dropdown:hover .submenu {
-    transform: rotateY(0);
-}
-.submenu::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -10px;
-    width: 10px;
-    height: 100%;
-    background: linear-gradient(to right, rgba(0,0,0,0.1), transparent);
-    transform-origin: right;
-    transform: rotateY(60deg);
-}
-        .dropdown:hover .submenu,
-        .dropdown:hover .mega-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(5px);
-            pointer-events: auto;
-        }
-        .mega-menu a {
-    position: relative;
-    z-index: 1;
-}
-.mega-menu a::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 100%;
-    background: linear-gradient(to right, rgba(192,57,43,0.1), transparent);
-    z-index: -1;
-    transition: width 0.4s ease;
-}
-.mega-menu a:hover::before {
-    width: 100%;
-}
-        /* ZONA DI ATTIVAZIONE */
-        .dropdown::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 100%;
-            height: 20px;
-            background: transparent;
-        }
-        
-        /* STILE INCIPIT */
-        .submenu {
-            width: 350px;
-            padding: 25px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #f8f9fa 100%);
-            border-left: 4px solid var(--accent);
-        }
-        
-        .frase-chiave {
-            font-style: italic;
-            font-size: 1.1rem;
-            color: var(--primary);
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-        
-        /* MEGA MENU A COLONNE */
-        .mega-menu {
-            padding: 30px;
-            display: flex;
-            gap: 30px;
-        }
-        
-        .columns-4 { width: 900px; }
-        .columns-3 { width: 700px; }
-        .columns-2 { width: 600px; }
-        .columns-1 { width: 300px; }
-        
-        .mega-menu > div {
-            flex: 1;
-        }
-        
-        .mega-menu h4 {
-            font-family: 'Playfair Display', serif;
-            color: var(--accent);
-            margin-bottom: 15px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid var(--border);
-            font-size: 1.1rem;
-        }
-.mega-menu a {
-    position: relative;
-    overflow: hidden;
-}
-
-.mega-menu a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background: var(--accent);
-    transition: width 0.3s ease;
-}
-
-.mega-menu a:hover::after {
-    width: 100%;
-}
-        
-        .mega-menu a {
-            display: block;
-            padding: 8px 0;
-            color: var(--text-light);
-            text-decoration: none;
-            transition: all 0.3s;
-            position: relative;
-            padding-left: 15px;
-        }
-        
-        .mega-menu a:hover {
-            color: var(--accent);
-            padding-left: 25px;
-        }
-        
-        .mega-menu a::before {
-            content: '→';
-            position: absolute;
-            left: 0;
-            opacity: 0;
-            transition: all 0.3s;
-        }
-        
-        .mega-menu a:hover::before {
-            opacity: 1;
-            left: 5px;
-        }
 :root {
-    --primary-gradient: linear-gradient(135deg, #2a2a72 0%, #3a3a8a 100%);
-    --accent-gradient: linear-gradient(to right, #c0392b, #e74c3c);
+    --text-light: #555;
+    --accent: #c0392b;
+    --background-gradient-start: #2a2a72;
+    --background-gradient-end: #1a1a3a;
+    --cookie-btn-accept-bg: #c0392b;
+    --cookie-btn-reject-bg: linear-gradient(135deg, #ff3a3a 0%, #c0392b 50%, #a41616 100%);
+}
+
+/* Reset base */
+body {
+    margin: 0;
+    font-family: 'Crimson Pro', serif;
+    background: #fff;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Navbar */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.menu > li {
+    position: relative;
 }
 
 .menu-btn {
-    background: transparent;
-    transition: all 0.3s;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 15px 12px;
+    color: #333;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    user-select: none;
+}
+
+.menu-btn .arrow {
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+}
+
+/* Freccia ruotata quando menu aperto */
+.menu-btn[aria-expanded="true"] .arrow {
+    transform: rotate(180deg);
+}
+
+/* Sottomenu */
+.submenu, .mega-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(0);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    padding: 15px;
+    border-radius: 0 0 6px 6px;
+    z-index: 10;
+    min-width: 220px;
+}
+
+/* Mostra menu */
+.menu > li:hover > .submenu,
+.menu > li:hover > .mega-menu,
+.menu-btn[aria-expanded="true"] + .submenu,
+.menu-btn[aria-expanded="true"] + .mega-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(5px);
+    pointer-events: auto;
+}
+
+/* Stile submenu semplice */
+.submenu p {
+    margin: 0 0 10px;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    max-width: 320px;
+}
+
+/* Mega menu colonne */
+.mega-menu.columns-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    min-width: 440px;
+}
+
+.mega-menu.columns-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    min-width: 660px;
+}
+
+.mega-menu.columns-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    min-width: 880px;
+}
+
+.mega-menu h4 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--accent);
+}
+
+.mega-menu a {
+    display: block;
+    color: #333;
+    text-decoration: none;
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+}
+
+.mega-menu a:hover,
+.submenu a:hover {
+    text-decoration: underline;
+    color: var(--accent);
+}
+
+/* Animazioni */
+@keyframes echoEffect {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+        opacity: 0.2;
+    }
+    50% {
+        transform: translateY(-10px) scale(1.03);
+        opacity: 0.4;
+    }
+}
+
+.sottotitolo {
+    font-size: 1.5rem;
+    color: var(--text-light);
+    margin-bottom: 30px;
+    animation: fadeInUp 1s ease-out 0.5s both;
     position: relative;
 }
 
-.menu-btn::after {
-    content: '';
-    position: absolute;
-    bottom: 15px;
-    left: 20px;
-    width: calc(100% - 40px);
-    height: 2px;
-    background: var(--accent-gradient);
-    transform: scaleX(0);
-    transition: transform 0.3s;
-}
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .citazione {
-    animation: float 6s ease-in-out infinite;
-    transition: all 0.3s;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--text-light);
+    max-width: 600px;
+    margin: 0 auto;
+    animation: fadeIn 1.5s ease-out 1s both;
+    border-left: 3px solid var(--accent);
+    padding-left: 20px;
 }
 
-.citazione:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-.menu-btn:hover::after {
-    transform: scaleX(1);
-}
-        /* FORM DI RICERCA */
-        .search-container {
-            margin-left: auto;
-            padding-left: 20px;
-        }
-
-        .search-form {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .search-input {
-            width: 180px;
-            padding: 8px 15px;
-            padding-right: 35px;
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            font-family: 'Crimson Pro', serif;
-            font-size: 0.9rem;
-            color: var(--text);
-            background: rgba(255,255,255,0.8);
-            transition: all 0.3s;
-        }
-
-        .search-input:focus {
-            width: 220px;
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 2px rgba(192, 57, 43, 0.2);
-        }
-
-        .search-btn {
-            position: absolute;
-            right: 10px;
-            background: none;
-            border: none;
-            color: var(--text-light);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .search-btn:hover {
-            color: var(--accent);
-            transform: scale(1.1);
-        }
-.search-input {
-    backdrop-filter: blur(5px);
-    background: rgba(255,255,255,0.7) !important;
-    border: none !important;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-}
-
-.search-input:focus {
-    box-shadow: 0 0 0 3px rgba(192,57,43,0.2), 0 5px 20px rgba(0,0,0,0.1);
-}
-        /* SEZIONE EROICA */
-        .hero {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 0 20px;
-            text-align: center;
-        }
-        .hero {
-    max-width: 800px;
-    margin: 100px auto;
-    padding: 40px;
-    text-align: center;
-    background: rgba(255,255,255,0.9);
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255,255,255,0.3);
-    position: relative;
-    overflow: hidden;
-}
-
-.hero::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(42,42,114,0.05) 0%, rgba(192,57,43,0.03) 100%);
-    z-index: -1;
-    animation: rotate 30s linear infinite;
-}
-.submenu, .mega-menu {
-    will-change: transform, opacity;
-    transform-origin: top center;
-    transform: translateY(10px) scale(0.95);
-    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-.dropdown:hover .submenu,
-.dropdown:hover .mega-menu {
-    transform: translateY(5px) scale(1);
-}
-
-@keyframes rotate {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-        /* ANIMAZIONE DEL TITOLO */
-        .saluto {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            color: var(--primary);
-            margin-bottom: 20px;
-            font-weight: 600;
-            position: relative;
-            display: inline-block;
-            animation: titleEntrance 1.5s ease-out forwards;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transform-style: preserve-3d;
-        }
-.saluto {
-    text-shadow: 0 2px 10px rgba(42,42,114,0.3);
-    position: relative;
-    display: inline-block;
-}
-.saluto {
-    position: relative;
-}
-.saluto::after {
-    content: "";
-    position: absolute;
-    bottom: -10px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--accent);
-    transition: width 2s ease-out;
-}
-body.loaded .saluto::after {
-    width: 100%;
-}
-
-.saluto::before {
-    content: '';
-    position: absolute;
-    top: -10px;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at center, rgba(255,255,255,0.8) 0%, transparent 70%);
-    z-index: -1;
-    opacity: 0.5;
-}
-        .saluto::before,
-        .saluto::after {
-            content: 'Echi di Sofia';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.3;
-        }
-
-        .saluto::before {
-            color: var(--accent);
-            z-index: -1;
-            animation: echoEffect 4s infinite ease-in-out 1s;
-        }
-
-        .saluto::after {
-            color: var(--primary-light);
-            z-index: -2;
-            animation: echoEffect 4s infinite ease-in-out 2s;
-        }
-
-        @keyframes titleEntrance {
-            0% {
-                opacity: 0;
-                transform: translateY(30px) rotateX(60deg);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) rotateX(0);
-            }
-        }
-
-        @keyframes echoEffect {
-            0%, 100% {
-                transform: translateY(0) scale(1);
-                opacity: 0.2;
-            }
-            50% {
-                transform: translateY(-10px) scale(1.03);
-                opacity: 0.4;
-            }
-        }
-
-        /* Animazione per il sottotitolo */
-        .sottotitolo {
-            font-size: 1.5rem;
-            color: var(--text-light);
-            margin-bottom: 30px;
-            animation: fadeInUp 1s ease-out 0.5s both;
-            position: relative;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Animazione per la citazione */
-        .citazione {
-            font-style: italic;
-            font-size: 1.2rem;
-            color: var(--text-light);
-            max-width: 600px;
-            margin: 0 auto;
-            animation: fadeIn 1.5s ease-out 1s both;
-            border-left: 3px solid var(--accent);
-            padding-left: 20px;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @media (max-width: 1024px) {
-            .search-container {
-                padding-left: 10px;
-            }
-            .search-input {
-                width: 150px;
-            }
-            .search-input:focus {
-                width: 180px;
-            }
-        }
-@media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-        height: auto;
-        padding: 15px;
-    }
-    
-    .menu {
-        flex-direction: column;
-        width: 100%;
-    }
-    
-    .dropdown {
-        width: 100%;
-    }
-    
-    .mega-menu {
-        position: relative;
-        width: 100% !important;
-        box-shadow: none;
-    }
-    
-    .hero {
-        margin-top: 30px;
-        padding: 20px;
-    }
-    
-    .saluto {
-        font-size: 2rem;
-    }
-}
+/* Quote carousel */
 .quote-carousel {
     position: relative;
     height: 100px;
     margin: 30px 0;
 }
+
 .quote-carousel blockquote {
     position: absolute;
     opacity: 0;
     transition: opacity 1s ease, transform 1s ease;
     font-size: 1.3rem;
     font-style: italic;
+    margin: 0;
+    width: 100%;
 }
+
 .quote-carousel blockquote:nth-child(1) {
     animation: quoteFade 12s infinite;
 }
+
 .quote-carousel blockquote:nth-child(2) {
     animation: quoteFade 12s infinite 4s;
 }
+
 @keyframes quoteFade {
     0%, 100% { opacity: 0; transform: translateY(20px); }
     10%, 30% { opacity: 1; transform: translateY(0); }
 }
+
+/* Philosopher avatar */
 .philosopher-avatar {
     position: relative;
     width: 80px;
     height: 80px;
     filter: sepia(80%) brightness(90%);
     transition: all 0.5s;
+    cursor: pointer;
+    margin: 15px 0;
 }
 
 .hover-portrait {
@@ -829,7 +253,7 @@ body.loaded .saluto::after {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('immagini per sito/Socrates_Louvre.jpg') center/cover;
+    background: url('immagini per sito/Socrates_Louvre.jpg') center/cover no-repeat;
     opacity: 0;
     mix-blend-mode: multiply;
     transition: opacity 0.5s;
@@ -843,13 +267,8 @@ body.loaded .saluto::after {
 .philosopher-avatar:hover .hover-portrait {
     opacity: 1;
 }
-    </style>
-   
-<body>
-<!------------------------------------------------------------->
-<div class="parallax-bg"></div>
 
-<style>
+/* Parallax background */
 .parallax-bg {
     position: fixed;
     top: 0;
@@ -860,54 +279,288 @@ body.loaded .saluto::after {
     opacity: 0.03;
     z-index: -1;
 }
-</style>
 
-<!-------------------------------------------------------------->
+/* Search */
+.search-container {
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+}
+
+.search-input {
+    padding: 6px 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+    width: 180px;
+    transition: width 0.3s ease;
+}
+
+.search-input:focus {
+    width: 220px;
+    outline: none;
+    border-color: var(--accent);
+}
+
+.search-btn {
+    background: var(--accent);
+    border: none;
+    color: white;
+    padding: 7px 12px;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.search-btn:hover {
+    background: #a83229;
+}
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    margin: 60px 20px 60px;
+}
+
+.saluto {
+    font-size: 2.8rem;
+    margin-bottom: 0.3em;
+    font-weight: 700;
+    color: var(--accent);
+    cursor: default;
+    user-select: none;
+}
+
+/* Footer */
+.site-footer {
+    background: #222;
+    color: #ddd;
+    text-align: center;
+    padding: 20px 10px;
+    font-size: 0.9rem;
+}
+
+.site-footer a {
+    color: #8e8eff;
+    text-decoration: none;
+}
+
+.site-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Contatti form */
+.contatti {
+    max-width: 480px;
+    margin: 0 auto 60px;
+    padding: 0 15px;
+}
+
+.contatti h4 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--accent);
+}
+
+.contatti label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.contatti input[type="text"],
+.contatti input[type="email"],
+.contatti textarea {
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: 'Crimson Pro', serif;
+    font-size: 1rem;
+    resize: vertical;
+}
+
+.contatti button {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    font-size: 1.1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.contatti button:hover {
+    background: #a83229;
+}
+
+/* Banner Cookie */
+
+@keyframes slideIn {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeOut {
+    to { opacity: 0; visibility: hidden; }
+}
+
+#cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, var(--background-gradient-start) 0%, var(--background-gradient-end) 100%);
+    color: white;
+    padding: 1.5rem;
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.2);
+    z-index: 1000;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    animation: slideIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+    font-family: 'Crimson Pro', serif;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+#cookie-banner.hidden {
+    animation: fadeOut 0.6s forwards;
+}
+
+.cookie-text {
+    flex: 1;
+    min-width: 250px;
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+.cookie-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.cookie-btn {
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 600;
+    border: none;
+    font-size: 1rem;
+}
+
+#accept-cookies {
+    background: var(--cookie-btn-accept-bg);
+    color: white;
+}
+
+#reject-cookies {
+    background: var(--cookie-btn-reject-bg);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+#cookie-settings {
+    background: transparent;
+    color: #8e8eff;
+    text-decoration: underline;
+}
+
+.cookie-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+
+/* Responsive */
+
+@media (max-width: 1024px) {
+    .search-container {
+        padding-left: 10px;
+    }
+    .search-input {
+        width: 150px;
+    }
+    .search-input:focus {
+        width: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 15px;
+    }
+
+    .menu {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .dropdown {
+        width: 100%;
+    }
+
+    .mega-menu {
+        position: relative;
+        width: 100% !important;
+        box-shadow: none;
+    }
+
+    .hero {
+        margin-top: 30px;
+        padding: 20px;
+    }
+
+    .saluto {
+        font-size: 2rem;
+    }
+
+    #cookie-banner {
+        flex-direction: column;
+        text-align: center;
+    }
+    .cookie-buttons {
+        width: 100%;
+        justify-content: center;
+    }
+}
+</style>
+</head>
+
+<body>
+    <div class="parallax-bg"></div>
+
     <nav class="navbar" role="navigation" aria-label="Menu principale">
         <ul class="menu" role="menubar">
             <!-- Incipit -->
             <li role="none" class="dropdown">
-                <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-controls="incipit-submenu" id="incipit-btn">
                     <i class="fas fa-book-open"></i> Incipit <span class="arrow">▼</span>
                 </button>
-                <div class="submenu" role="menu" aria-label="Sottomenu Incipit">
+                <div class="submenu" role="menu" aria-label="Sottomenu Incipit" id="incipit-submenu" aria-labelledby="incipit-btn">
                     <p class="frase-chiave">«Dall'oscurità del non-sapere, una scintilla: il primo perché che illuminò la coscienza umana.»</p>
                     <p>Prima delle parole, prima degli dei, esisteva quel momento sospeso in cui l'uomo si fermò a contemplare il cielo notturno. Fu allora che il pensiero prese forma - non come risposta, ma come vibrazione pura di meraviglia.</p>
                     <p>Questo spazio non è una collezione di concetti. È un campo magnetico dove le domande dei nostri antenati filosofi continuano a risuonare, invitandoci a ripercorrere quel primo, rivoluzionario atto di curiosità.</p>
                 </div>
-<div class="philosopher-avatar" data-philosopher="plato">
-    <img src="immagini%20per%20sito/platone.jpg" alt="Platone">
-    <div class="hover-portrait"></div>
-</div>
-<div class="parallax-bg"></div>
-<div class="quote-carousel">
-    <blockquote>"Conosci te stesso" <footer>- Socrate</footer></blockquote>
-<blockquote>"Non bisogna curarsi troppo della vita, ma della vita buona" <footer>- Platone</footer></blockquote>
-<blockquote>"L'uomo è la misura di tutte le cose" <footer>- Protagora</footer></blockquote>
-    <!-- Altre citazioni nascoste -->
-</div>
-
-
-<style>
-.parallax-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('immagini/cielo.avif') center/cover no-repeat fixed;
-    opacity: 0.03;
-    z-index: -1;
-}
-</style>
             </li>
 
             <!-- Filosofia antica -->
             <li role="none" class="dropdown">
-                <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-controls="antica-submenu" id="antica-btn">
                     Filosofia antica <span class="arrow">▼</span>
                 </button>
-                <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia antica">
+                <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia antica" id="antica-submenu" aria-labelledby="antica-btn">
                     <div>
                         <h4>Scuola ionica</h4>
                         <a href="/Presocratici/talete.html" role="menuitem">Talete</a>
@@ -919,7 +572,7 @@ body.loaded .saluto::after {
                         <a href="Presocratici/senofane.html" role="menuitem">Senofane</a>
                         <a href="/Presocratici/parmenide.html" role="menuitem">Parmenide</a>
                         <a href="articoli/zenone.html" role="menuitem">Zenone</a>
-                        <a href="articoli/zenone.html" role="menuitem">Melisso</a>
+                        <a href="articoli/melisso.html" role="menuitem">Melisso</a>
                     </div>
                     <div>
                         <h4>Altri</h4>
@@ -932,7 +585,7 @@ body.loaded .saluto::after {
                         <a href="/articoli/pitagora.html" role="menuitem">Pitagora</a>
                         <a href="/articoli/filolao.html" role="menuitem">Filolao</a>
                         <a href="/articoli/alcmeone.html" role="menuitem">Alcmeone</a>
-                        <a href="articoli/archita.html" role="menuitem">Archita/a>
+                        <a href="articoli/archita.html" role="menuitem">Archita</a>
                         <a href="/articoli/ippaso.html" role="menuitem">Ippaso</a>
                     </div>
                 </div>
@@ -940,342 +593,178 @@ body.loaded .saluto::after {
 
             <!-- Filosofia classica -->
             <li role="none" class="dropdown">
-                <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-controls="classica-submenu" id="classica-btn">
                     Filosofia classica <span class="arrow">▼</span>
                 </button>
-                <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia classica">
+                <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia classica" id="classica-submenu" aria-labelledby="classica-btn">
                     <div>
-                        <h4>Classici</h4>
-                        <a href="articoli/socrate.html" role="menuitem">Socrate</a>
-                        <a href="articoli/platone.html" role="menuitem">Platone</a>
-                        <a href="articoli/aristotele.html" role="menuitem">Aristotele</a>
+                        <h4>Socrate e Platone</h4>
+                        <a href="/articoli/socrate.html" role="menuitem">Socrate</a>
+                        <a href="/articoli/ipazia.html" role="menuitem">Ipazia</a>
+                        <a href="/articoli/platonismo.html" role="menuitem">Platonismo</a>
                     </div>
                     <div>
-                        <h4>Platonici</h4>
-                        <a href="articoli/senofonte.html" role="menuitem">Senofonte</a>
-                        <a href="articoli/antistene.html" role="menuitem">Antistene</a>
-                        <a href="#" role="menuitem">Aristippo</a>
+                        <h4>Aristotele</h4>
+                        <a href="/articoli/aristotele.html" role="menuitem">Aristotele</a>
                     </div>
                     <div>
-                        <h4>Stoici</h4>
-                        <a href="articoli/zenone.html" role="menuitem">Zenone</a>
-                        <a href="#" role="menuitem">Epitteto</a>
-                        <a href="#" role="menuitem">Seneca</a>
+                        <h4>Scuola epicurea</h4>
+                        <a href="/articoli/epicureismo.html" role="menuitem">Epicuro</a>
                     </div>
                     <div>
-                        <h4>Epicurei</h4>
-                        <a href="#" role="menuitem">Epicuro</a>
-                        <a href="#" role="menuitem">Lucrezio</a>
-                        <a href="#" role="menuitem">Cicerone</a>
+                        <h4>Scuola stoica</h4>
+                        <a href="/articoli/stoicismo.html" role="menuitem">Stoicismo</a>
                     </div>
                 </div>
             </li>
 
-            <!-- Filosofia medievale -->
+            <!-- Medioevo / Patristica -->
             <li role="none" class="dropdown">
-                <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
-                    Medievale/Patristica <span class="arrow">▼</span>
+                <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-controls="medioevo-submenu" id="medioevo-btn">
+                    Medioevo / Patristica <span class="arrow">▼</span>
                 </button>
-                <div class="mega-menu columns-2" role="menu" aria-label="Sottomenu Filosofia medievale">
+                <div class="mega-menu columns-2" role="menu" aria-label="Sottomenu Medioevo / Patristica" id="medioevo-submenu" aria-labelledby="medioevo-btn">
                     <div>
-                        <h4>Medievale</h4>
-                        <a href="#" role="menuitem">Tommaso d'Aquino</a>
-                        <a href="#" role="menuitem">Anselmo</a>
-                        <a href="#" role="menuitem">Guglielmo di Ockham</a>
-                        <a href="#" role="menuitem">Duns Scoto</a>
+                        <h4>Padri della Chiesa</h4>
+                        <a href="/articoli/agostino.html" role="menuitem">Agostino</a>
+                        <a href="/articoli/tommaso.html" role="menuitem">Tommaso d'Aquino</a>
                     </div>
                     <div>
-                        <h4>Patristica</h4>
-                        <a href="#" role="menuitem">Agostino</a>
-                        <a href="#" role="menuitem">Origene</a>
-                        <a href="#" role="menuitem">Gregorio di Nissa</a>
-                        <a href="#" role="menuitem">Tertulliano</a>
+                        <h4>Filosofi medievali</h4>
+                        <a href="/articoli/duns-scoto.html" role="menuitem">Duns Scoto</a>
+                        <a href="/articoli/guglielmo.html" role="menuitem">Guglielmo di Ockham</a>
                     </div>
                 </div>
             </li>
 
             <!-- Filosofia moderna -->
             <li role="none" class="dropdown">
-                <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-controls="moderna-submenu" id="moderna-btn">
                     Filosofia moderna <span class="arrow">▼</span>
                 </button>
-                <div class="mega-menu columns-3" role="menu" aria-label="Sottomenu Filosofia moderna">
-                    <div>
-                        <h4>Razionalisti</h4>
-                        <a href="#" role="menuitem">Cartesio</a>
-                        <a href="#" role="menuitem">Spinoza</a>
-                        <a href="#" role="menuitem">Leibniz</a>
-                    </div>
-                    <div>
-                        <h4>Empiristi</h4>
-                        <a href="#" role="menuitem">Locke</a>
-                        <a href="#" role="menuitem">Hume</a>
-                        <a href="#" role="menuitem">Berkeley</a>
-                    </div>
-                    <div>
-                        <h4>Kant e oltre</h4>
-                        <a href="#" role="menuitem">Kant</a>
-                        <a href="#" role="menuitem">Fichte</a>
-                        <a href="#" role="menuitem">Schelling</a>
-                    </div>
+                <div class="mega-menu columns-1" role="menu" aria-label="Sottomenu Filosofia moderna" id="moderna-submenu" aria-labelledby="moderna-btn">
+                    <a href="/articoli/descartes.html" role="menuitem">Cartesio</a>
+                    <a href="/articoli/spinoza.html" role="menuitem">Spinoza</a>
+                    <a href="/articoli/leibniz.html" role="menuitem">Leibniz</a>
+                    <a href="/articoli/kant.html" role="menuitem">Kant</a>
                 </div>
             </li>
 
             <!-- Filosofia contemporanea -->
             <li role="none" class="dropdown">
-                <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
-                    Contemporanea <span class="arrow">▼</span>
+                <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-controls="contemporanea-submenu" id="contemporanea-btn">
+                    Filosofia contemporanea <span class="arrow">▼</span>
                 </button>
-                <div class="mega-menu columns-3" role="menu" aria-label="Sottomenu Filosofia contemporanea">
-                    <div>
-                        <h4>Ottocento</h4>
-                        <a href="#" role="menuitem">Hegel</a>
-                        <a href="#" role="menuitem">Schopenhauer</a>
-                        <a href="#" role="menuitem">Nietzsche</a>
-                    </div>
-                    <div>
-                        <h4>Fenomenologia</h4>
-                        <a href="#" role="menuitem">Husserl</a>
-                        <a href="#" role="menuitem">Heidegger</a>
-                        <a href="#" role="menuitem">Merleau-Ponty</a>
-                    </div>
-                    <div>
-                        <h4>Postmoderni</h4>
-                        <a href="#" role="menuitem">Sartre</a>
-                        <a href="#" role="menuitem">Foucault</a>
-                        <a href="#" role="menuitem">Derrida</a>
-                    </div>
+                <div class="mega-menu columns-1" role="menu" aria-label="Sottomenu Filosofia contemporanea" id="contemporanea-submenu" aria-labelledby="contemporanea-btn">
+                    <a href="/articoli/heidegger.html" role="menuitem">Heidegger</a>
+                    <a href="/articoli/sartre.html" role="menuitem">Sartre</a>
+                    <a href="/articoli/foucault.html" role="menuitem">Foucault</a>
                 </div>
             </li>
+
+            <!-- Contatti -->
+            <li role="none" class="dropdown">
+                <a href="/contatti.html" role="menuitem" class="menu-btn" style="padding:15px 12px; font-weight:600;">
+                    Contatti <i class="fas fa-envelope"></i>
+                </a>
+            </li>
         </ul>
-       
 
-
-        <!-- FORM DI RICERCA -->
-        <div class="search-container">
-            <form role="search" class="search-form">
-                <input type="search" 
-                       aria-label="Cerca filosofi o correnti" 
-                       placeholder="Cerca..." 
-                       class="search-input">
-                <button type="submit" 
-                        aria-label="Avvia ricerca" 
-                        class="search-btn">
-                    <i class="fas fa-search"></i>
-                </button>
+        <div class="search-container" role="search">
+            <form class="search-form" action="/search.html" method="get">
+                <input type="text" class="search-input" name="q" placeholder="Cerca..." aria-label="Cerca nel sito" />
+                <button type="submit" class="search-btn" aria-label="Invia ricerca"><i class="fas fa-search"></i></button>
             </form>
         </div>
     </nav>
 
-    <section class="hero" aria-label="Saluto di benvenuto">
-        <h1 class="saluto">Benvenuti in Echi di Sofia</h1>
-        <p class="sottotitolo">Dove il pensiero antico risuona nel presente</p>
-        <p class="citazione">"Non è possedendo la verità, ma cercandola, che l'uomo si espande"</p>
-    </section>
+    <main>
+        <section class="hero" role="main">
+            <h1 class="saluto" aria-label="Benvenuto su Echi di Sofia">Benvenuto su Echi di Sofia</h1>
+            <p class="sottotitolo">Il viaggio nella filosofia antica e oltre.</p>
 
-    <script>
-    // GESTIONE HOVER AVANZATA
-    document.addEventListener('DOMContentLoaded', function() {
-        const dropdowns = document.querySelectorAll('.dropdown');
-        
-        dropdowns.forEach(dropdown => {
-            // Apertura menu
-            dropdown.addEventListener('mouseenter', function() {
-                const menu = this.querySelector('.submenu, .mega-menu');
-                menu.style.opacity = '1';
-                menu.style.visibility = 'visible';
-                menu.style.transform = 'translateY(5px)';
-                menu.style.pointerEvents = 'auto';
-            });
-            
-            // Chiusura controllata
-            dropdown.addEventListener('mouseleave', function(e) {
-                const menu = this.querySelector('.submenu, .mega-menu');
-                
-                // Timer per evitare chiusura accidentale
-                setTimeout(() => {
-                    if (!this.matches(':hover') && !menu.matches(':hover')) {
-                        menu.style.opacity = '0';
-                        menu.style.visibility = 'hidden';
-                        menu.style.transform = 'translateY(0)';
-                        menu.style.pointerEvents = 'none';
-                    }
-                }, 100);
-            });
-            
-            // Gestione hover sui sottomenu
-            const submenus = dropdown.querySelectorAll('.submenu, .mega-menu');
-            submenus.forEach(menu => {
-                menu.addEventListener('mouseenter', function() {
-                    this.style.opacity = '1';
-                    this.style.visibility = 'visible';
-                    this.style.transform = 'translateY(5px)';
-                });
-                
-                menu.addEventListener('mouseleave', function() {
-                    this.style.opacity = '0';
-                    this.style.visibility = 'hidden';
-                    this.style.transform = 'translateY(0)';
-                });
-            });
-        });
+            <div class="quote-carousel" aria-live="polite" aria-atomic="true">
+                <blockquote>«Conosci te stesso» – Socrate</blockquote>
+                <blockquote>«La vita non esaminata non è degna di essere vissuta» – Socrate</blockquote>
+            </div>
 
-        // Funzionalità di ricerca
-        document.querySelector('.search-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const query = this.querySelector('input').value.trim();
-            if(query) {
-                alert(`Ricerca implementata: "${query}"\n\nQuesta è una demo. Nella pratica, collegheresti un sistema di ricerca reale.`);
-               // Sostituire con: window.location.href = `/search?q=${encodeURIComponent(query)}`;
-            }
-        });
+            <div class="philosopher-avatar" tabindex="0" aria-describedby="desc-socrate" role="img" aria-label="Ritratto di Socrate">
+                <img src="immagini per sito/Socrates_portrait.jpg" alt="Socrate in stile antico" style="width: 80px; height: 80px; border-radius: 50%;" />
+                <div class="hover-portrait"></div>
+            </div>
+            <p id="desc-socrate" style="max-width: 280px; margin: 0 auto; font-style: italic; color: var(--text-light);">
+                Socrate, maestro del dialogo, ha segnato il fondamento della filosofia occidentale con il suo metodo induttivo e la sua incessante ricerca della verità.
+            </p>
+        </section>
 
-        // Interattività aggiuntiva per il titolo
-        const title = document.querySelector('.saluto');
-        title.addEventListener('mouseover', () => {
-            title.style.animation = 'echoEffect 1s ease-out';
-        });
-        title.addEventListener('mouseout', () => {
-            title.style.animation = '';
-        });
+        <!-- Contatti (esempio semplice) -->
+        <section class="contatti" aria-label="Modulo contatti">
+            <h4>Contattaci</h4>
+            <form action="/contatti-invia.php" method="post" aria-describedby="form-info">
+                <p id="form-info">Compila il modulo per qualsiasi domanda o suggerimento.</p>
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" name="nome" required />
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required />
+
+                <label for="messaggio">Messaggio</label>
+                <textarea id="messaggio" name="messaggio" rows="5" required></textarea>
+
+                <button type="submit">Invia</button>
+            </form>
+        </section>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+        <p>© 2025 Echi di Sofia &mdash; <a href="/privacy.html">Privacy & Cookie Policy</a></p>
+    </footer>
+
+    <!-- Banner cookie -->
+    <div id="cookie-banner" role="region" aria-label="Banner per i cookie">
+        <div class="cookie-text">
+            Questo sito utilizza cookie per migliorare la tua esperienza. Accetta per continuare la navigazione.
+        </div>
+        <div class="cookie-buttons">
+            <button id="accept-cookies" class="cookie-btn" aria-label="Accetta cookie">Accetta</button>
+            <button id="reject-cookies" class="cookie-btn" aria-label="Rifiuta cookie">Rifiuta</button>
+        </div>
+    </div>
+
+<script>
+  // Toggle menu aria-expanded
+  document.querySelectorAll('.menu-btn[aria-haspopup="true"]').forEach(button => {
+    button.addEventListener('click', () => {
+      const expanded = button.getAttribute('aria-expanded') === 'true';
+      button.setAttribute('aria-expanded', !expanded);
     });
-window.addEventListener('load', () => {
-    document.body.classList.add('loaded');
-});
-window.addEventListener('scroll', () => {
-    document.body.classList.toggle('scrolled', window.scrollY > 50);
-});
-    </script>
-    <footer class="site-footer">
-  <div class="footer-content">
-    <p>&copy; 2025 <strong>K. Klys</strong> – Tutti i diritti riservati.</p>
-    <p><a href="mailto:info@echidisofia.org">info@echidisofia.org</a></p>
-  </div>
-</footer>
-    <section class="contatti">
-  <h4>Contattami</h4>
-  <form action="https://formspree.io/f/xpwrnzda" method="POST">
-    <label for="name">Nome</label>
-    <input type="text" id="name" name="name" required>
+  });
 
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" required>
+  // Banner cookie gestione con localStorage
+  const cookieBanner = document.getElementById('cookie-banner');
+  const acceptBtn = document.getElementById('accept-cookies');
+  const rejectBtn = document.getElementById('reject-cookies');
 
-    <label for="message">Messaggio</label>
-    <textarea id="message" name="message" rows="5" required></textarea>
+  function hideBanner() {
+    cookieBanner.classList.add('hidden');
+    setTimeout(() => cookieBanner.style.display = 'none', 600);
+  }
 
-    <button type="submit">Invia</button>
-  </form>
-</section>
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Echi di Sofia - Cookie</title>
-    <style>
-        /* ANIMAZIONE ENTRATA/USCITA */
-        @keyframes slideIn {
-            from { transform: translateY(100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        
-        @keyframes fadeOut {
-            to { opacity: 0; visibility: hidden; }
-        }
+  // Controlla se consenso già dato
+  if (localStorage.getItem('cookie-consent')) {
+    cookieBanner.style.display = 'none';
+  }
 
-        /* STILE BANNER */
-        #cookie-banner {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(135deg, #2a2a72 0%, #1a1a3a 100%);
-            color: white;
-            padding: 1.5rem;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.2);
-            z-index: 1000;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1rem;
-            animation: slideIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-            font-family: 'Crimson Pro', serif;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
+  acceptBtn.addEventListener('click', () => {
+    localStorage.setItem('cookie-consent', 'accepted');
+    hideBanner();
+  });
 
-        #cookie-banner.hidden {
-            animation: fadeOut 0.6s forwards;
-        }
-
-        .cookie-text {
-            flex: 1;
-            min-width: 250px;
-            line-height: 1.6;
-        }
-
-        .cookie-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .cookie-btn {
-            padding: 0.6rem 1.2rem;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 600;
-            border: none;
-        }
-
-        #accept-cookies {
-            background: #c0392b;
-            color: white;
-        }
-
-        #reject-cookies {
-            background: linear-gradient(135deg, 
-                #ff3a3a 0%, 
-                #c0392b 50%, 
-                #a41616 100%);;
-            color: white;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-
-        #cookie-settings {
-            background: transparent;
-            color: #8e8eff;
-            text-decoration: underline;
-        }
-
-        /* EFFETTI INTERATTIVI */
-        .cookie-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 600px) {
-            #cookie-banner {
-                flex-direction: column;
-                text-align: center;
-            }
-            .cookie-buttons {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Banner Cookie -->
-   
-
-    
-</body>
-</html>
+  rejectBtn.addEventListener('click', () => {
+    localStorage.setItem('cookie-consent', 'rejected');
+    hideBanner();
+  });
+</script>
 
 </body>
 </html>
