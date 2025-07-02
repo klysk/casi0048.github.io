@@ -104,3 +104,9 @@ function socraticSearch() {
     ];
     // Mostra le domande sequenzialmente
 }
+document.addEventListener('DOMContentLoaded', function() {
+    const titolo = document.getElementById('echi-titolo-principale');
+    if (titolo) {
+        titolo.setAttribute('data-text', titolo.textContent);
+    }
+});
