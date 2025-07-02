@@ -29,7 +29,7 @@
             padding-top: 80px;
         }
 
-        /* NAVIGAZIONE PRINCIPALE - ORA VISIBILE */
+        /* NAVIGAZIONE */
         .nav-container {
             position: fixed;
             top: 0;
@@ -86,7 +86,7 @@
             transition: transform 0.3s;
         }
 
-        /* MEGA MENU VISIBILE */
+        /* MEGA MENU */
         .mega-menu {
             position: absolute;
             left: 0;
@@ -100,10 +100,13 @@
             transition: all 0.3s;
             z-index: 100;
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
             gap: 2rem;
             border-top: 3px solid var(--accent);
         }
+
+        .columns-2 { grid-template-columns: repeat(2, 1fr); }
+        .columns-3 { grid-template-columns: repeat(3, 1fr); }
+        .columns-4 { grid-template-columns: repeat(4, 1fr); }
 
         .mega-menu-column {
             padding: 0 1rem;
@@ -140,7 +143,7 @@
             transform: rotate(180deg);
         }
 
-        /* HEADER PRINCIPALE */
+        /* HEADER */
         .main-header {
             background: linear-gradient(var(--primary), var(--primary)), 
                         url('https://images.unsplash.com/photo-1505506874110-6a7a69069a08?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
@@ -152,28 +155,6 @@
             position: relative;
             clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
             margin-bottom: 3rem;
-        }
-
-        .site-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .site-subtitle {
-            font-size: 1.5rem;
-            font-style: italic;
-            max-width: 800px;
-            margin: 0 auto;
-            opacity: 0.9;
-        }
-
-        /* CONTENUTO PRINCIPALE */
-        .main-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
         }
 
         /* MOBILE MENU */
@@ -198,6 +179,20 @@
         .hamburger span:nth-child(2) { top: 10px; }
         .hamburger span:nth-child(3) { top: 20px; }
 
+        .hamburger.open span:nth-child(1) {
+            top: 10px;
+            transform: rotate(45deg);
+        }
+
+        .hamburger.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.open span:nth-child(3) {
+            top: 10px;
+            transform: rotate(-45deg);
+        }
+
         @media (max-width: 768px) {
             .hamburger {
                 display: block;
@@ -214,6 +209,7 @@
                 align-items: flex-start;
                 padding: 2rem;
                 transition: all 0.3s;
+                overflow-y: auto;
             }
 
             .nav-links.active {
@@ -234,7 +230,7 @@
                 opacity: 1;
                 visibility: visible;
                 transform: none;
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr !important;
             }
 
             .nav-item:hover .mega-menu {
@@ -244,7 +240,7 @@
     </style>
 </head>
 <body>
-    <!-- NAVIGAZIONE ORA VISIBILE -->
+    <!-- NAVIGAZIONE COMPLETA -->
     <div class="nav-container">
         <nav>
             <a href="index.html" class="logo">Echi di <span>Sofia</span></a>
@@ -263,7 +259,7 @@
                 <!-- FILOSOFIA ANTICA -->
                 <li class="nav-item">
                     <a href="#" class="nav-link">Filosofia Antica <span class="arrow">▼</span></a>
-                    <div class="mega-menu">
+                    <div class="mega-menu columns-4">
                         <div class="mega-menu-column">
                             <h4>Scuola Ionica</h4>
                             <a href="/presocratici/talete.html">Talete</a>
@@ -294,7 +290,7 @@
                 <!-- FILOSOFIA CLASSICA -->
                 <li class="nav-item">
                     <a href="#" class="nav-link">Filosofia Classica <span class="arrow">▼</span></a>
-                    <div class="mega-menu">
+                    <div class="mega-menu columns-3">
                         <div class="mega-menu-column">
                             <h4>Grandi Maestri</h4>
                             <a href="/classici/socrate.html">Socrate</a>
@@ -312,6 +308,79 @@
                             <a href="/classici/senofonte.html">Senofonte</a>
                             <a href="/classici/aristippo.html">Aristippo</a>
                             <a href="/classici/antistene.html">Antistene</a>
+                        </div>
+                    </div>
+                </li>
+                
+                <!-- FILOSOFIA MEDIEVALE -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Filosofia Medievale <span class="arrow">▼</span></a>
+                    <div class="mega-menu columns-2">
+                        <div class="mega-menu-column">
+                            <h4>Scolastica</h4>
+                            <a href="/medievale/tommaso.html">Tommaso d'Aquino</a>
+                            <a href="/medievale/anselmo.html">Anselmo d'Aosta</a>
+                            <a href="/medievale/ockham.html">Guglielmo di Ockham</a>
+                            <a href="/medievale/scoto.html">Duns Scoto</a>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>Patristica</h4>
+                            <a href="/medievale/agostino.html">Sant'Agostino</a>
+                            <a href="/medievale/origene.html">Origene</a>
+                            <a href="/medievale/gerolamo.html">San Gerolamo</a>
+                            <a href="/medievale/gregorio.html">Gregorio di Nissa</a>
+                        </div>
+                    </div>
+                </li>
+                
+                <!-- FILOSOFIA MODERNA -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Filosofia Moderna <span class="arrow">▼</span></a>
+                    <div class="mega-menu columns-3">
+                        <div class="mega-menu-column">
+                            <h4>Razionalismo</h4>
+                            <a href="/moderna/cartesio.html">Cartesio</a>
+                            <a href="/moderna/spinoza.html">Spinoza</a>
+                            <a href="/moderna/leibniz.html">Leibniz</a>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>Empirismo</h4>
+                            <a href="/moderna/locke.html">John Locke</a>
+                            <a href="/moderna/hume.html">David Hume</a>
+                            <a href="/moderna/berkeley.html">George Berkeley</a>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>Illuminismo</h4>
+                            <a href="/moderna/kant.html">Immanuel Kant</a>
+                            <a href="/moderna/rousseau.html">Rousseau</a>
+                            <a href="/moderna/voltaire.html">Voltaire</a>
+                        </div>
+                    </div>
+                </li>
+                
+                <!-- FILOSOFIA CONTEMPORANEA -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Filosofia Contemporanea <span class="arrow">▼</span></a>
+                    <div class="mega-menu columns-3">
+                        <div class="mega-menu-column">
+                            <h4>Ottocento</h4>
+                            <a href="/contemporanea/hegel.html">Hegel</a>
+                            <a href="/contemporanea/schopenhauer.html">Schopenhauer</a>
+                            <a href="/contemporanea/nietzsche.html">Nietzsche</a>
+                            <a href="/contemporanea/marx.html">Karl Marx</a>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>Fenomenologia</h4>
+                            <a href="/contemporanea/husserl.html">Husserl</a>
+                            <a href="/contemporanea/heidegger.html">Heidegger</a>
+                            <a href="/contemporanea/merleau-ponty.html">Merleau-Ponty</a>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>Postmoderni</h4>
+                            <a href="/contemporanea/foucault.html">Foucault</a>
+                            <a href="/contemporanea/derrida.html">Derrida</a>
+                            <a href="/contemporanea/deleuze.html">Deleuze</a>
+                            <a href="/contemporanea/lyotard.html">Lyotard</a>
                         </div>
                     </div>
                 </li>
@@ -340,8 +409,6 @@
 
         hamburger.addEventListener('click', () => {
             navLinks.classList.toggle('active');
-            
-            // Animazione hamburger
             hamburger.classList.toggle('open');
         });
 
@@ -353,6 +420,16 @@
                     hamburger.classList.remove('open');
                 }
             });
+        });
+
+        // Chiudi menu quando si clicca fuori
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768 && 
+                !e.target.closest('.nav-container') && 
+                navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('open');
+            }
         });
     </script>
 </body>
