@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenone di Elea: I Paradossi che Sfidarono la Ragione</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Stili Generali e Reset */
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 3.2em;
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 2.4em;
+            color: #3498db;
+            margin-top: 30px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: #555;
+            margin-top: 25px;
+        }
+
+        h4 {
+            font-size: 1.3em;
+            color: #444;
+            margin-top: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .quote {
+            font-style: italic;
+            background-color: #ecf0f1;
+            padding: 18px 25px;
+            border-left: 5px solid #95a5a6;
+            margin: 25px 0;
+            border-radius: 4px;
+            line-height: 1.5;
+        }
+
+        .quote footer {
+            text-align: right;
+            margin-top: 12px;
+            font-size: 0.95em;
+            color: #7f8c8d;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+        }
+
+        .image-container figcaption {
+            font-size: 0.9em;
+            color: #777;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Stili per l'Accordion (Sezioni Espandibili) */
+        .accordion-section {
+            max-width: 900px;
+            margin: 25px auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .accordion-button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 20px 30px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s ease;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .accordion-button:hover {
+            background-color: #2980b9;
+        }
+
+        .accordion-button h2 {
+            color: white;
+            margin: 0; /* Rimuovi margini predefiniti dell'h2 per evitare sdoppiamenti */
+            font-size: 1em; /* L'h2 prende la dimensione del button */
+            border-bottom: none; /* Rimuovi il bordo dall'h2 interno al bottone */
+            padding-bottom: 0;
+        }
+
+        .accordion-button i {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-button.active i {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 0 30px;
+            background-color: #ffffff;
+            max-height: 0; /* Nasconde il contenuto */
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out; /* Aumento durata transizione */
+            box-sizing: border-box; /* Include padding nel calcolo dell'altezza */
+        }
+
+        .accordion-content.show {
+            max-height: 2500px; /* Valore grande per accomodare il contenuto esteso */
+            padding: 30px;
+        }
+
+        .accordion-content ul {
+            list-style-type: none; /* Rimuove i bullet point di default */
+            padding-left: 0;
+        }
+
+        .accordion-content ul li {
+            margin-bottom: 15px;
+            padding-left: 25px; /* Spazio per l'icona personalizzata */
+            position: relative;
+        }
+
+        .accordion-content ul li::before {
+            content: '➤'; /* Icona personalizzata */
+            color: #3498db;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+            position: absolute;
+            left: 0;
+            top: 0; /* Assicurati che l'icona sia allineata con l'inizio del testo */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                margin: 20px auto;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2.5em;
+            }
+            h2 {
+                font-size: 2em;
+            }
+            .accordion-button {
+                padding: 15px 20px;
+                font-size: 1.5em;
+            }
+            .accordion-content {
+                padding: 0 20px;
+            }
+            .accordion-content.show {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Zenone di Elea: I Paradossi che Sfidarono la Ragione</h1>
+
+        <div class="image-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Zeno_of_Elea.png/800px-Zeno_of_Elea.png" alt="Rappresentazione di Zenone di Elea">
+            <figcaption>Rappresentazione immaginaria di Zenone di Elea, filosofo presocratico.</figcaption>
+        </div>
+
+        <p>
+            Nell'affascinante panorama della filosofia antica, poche figure hanno lasciato un'impronta così enigmatica e duratura come **Zenone di Elea** (circa 490 a.C. – 430 a.C.). Non un costruttore di sistemi metafisici originali come il suo maestro Parmenide, Zenone si distinse per la sua straordinaria abilità dialettica, esercitata nella creazione di argomentazioni sottili e apparentemente inconfutabili: i celebri **paradossi**. Questi enigmi logici, intesi a dimostrare l'illusorietà del movimento e della molteplicità, continuano a stimolare il pensiero critico e a trovare risonanza in campi diversi come la filosofia, la matematica e persino la fisica contemporanea, a millenni di distanza dalla loro formulazione.
+        </p>
+        <p>
+            Zenone è stato il difensore per eccellenza della dottrina eleatica, una scuola di pensiero che affermava l'immutabilità e l'unità dell'Essere. Le sue argomentazioni non miravano a negare l'evidenza dei sensi, ma a rivelare le profonde contraddizioni logiche insite nelle nostre concezioni intuitive di spazio, tempo e movimento, qualora questi venissero considerati reali e divisibili all'infinito.
+        </p>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>Il Contesto Eleatico: L'Essere Immutabile</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Per afferrare appieno il significato dei paradossi di Zenone, è fondamentale comprendere il contesto filosofico della **Scuola Eleatica**. Fondata da **Parmenide** a Elea, colonia greca dell'Italia meridionale, questa scuola propose una visione radicalmente opposta a quella dei filosofi della <em>physis</em> (natura), che cercavano l'<em>archè</em> (principio) nei vari elementi (acqua, aria, fuoco) e accettavano il mutamento come realtà.
+            </p>
+            <p>
+                Parmenide distinse tra la "via della verità" e la "via dell'opinione". La prima, accessibile solo attraverso la ragione, rivelava che l'<strong>Essere</strong> è:
+            </p>
+            <ul>
+                <li><strong>Uno:</strong> Non ci possono essere più esseri, altrimenti uno dovrebbe essere non-essere rispetto all'altro.</li>
+                <li><strong>Eterno:</strong> Non può essere nato (dal non-essere) né può morire (nel non-essere).</li>
+                <li><strong>Immutabile:</strong> Il cambiamento implicherebbe che l'Essere diventi ciò che non è, cioè non-essere.</li>
+                <li><strong>Ingegenerato e Incorruttibile:</strong> Non ha avuto inizio e non avrà fine.</li>
+                <li><strong>Immobile e Continuo:</strong> Il movimento implicherebbe passaggio dal non-essere (dove non c'era) all'essere (dove è), e la molteplicità implicherebbe separazioni (non-essere tra gli enti).</li>
+            </ul>
+            <p>
+                La "via dell'opinione", invece, è quella dei sensi, che ci ingannano mostrandoci un mondo fatto di divenire, di molteplicità e di movimento. Questi fenomeni sono per Parmenide pure illusioni.
+            </p>
+            <div class="quote">
+                <p>«...ciò che è, è; ciò che non è, non è. Questo è il sentiero della Persuasione, poiché essa segue la Verità.»</p>
+                <footer>— Parmenide, Sulla Natura (frammento 2)</footer>
+            </div>
+            <p>
+                In questo scenario, Zenone non era un filosofo che avanzava nuove teorie sull'Essere, ma piuttosto un "logistico" o un "dialettico" il cui scopo era **difendere la posizione di Parmenide dimostrando l'assurdità logica delle tesi opposte**. I suoi paradossi erano strumenti di confutazione, volti a evidenziare le contraddizioni intrinseche nelle nozioni di movimento e molteplicità, qualora accettate come reali. Era come dire: "Se voi credete al movimento e alla molteplicità, allora dovete accettare queste assurdità."
+            </p>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>I Celebri Paradossi Contro il Movimento</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                I paradossi più celebri di Zenone sono quelli che mettono in discussione la possibilità logica del movimento. Sebbene ci siano giunti solo in forma frammentaria, principalmente tramite la citazione di **Aristotele** nella sua "Fisica", la loro acutezza logica è innegabile. Essi si basano sull'idea che lo spazio e il tempo siano divisibili all'infinito.
+            </p>
+
+            <ul>
+                <li>
+                    <h4>1. L'Achille e la Tartaruga</h4>
+                    <p>
+                        Questo è forse il più iconico dei paradossi di Zenone. Achille, il velocissimo eroe greco, sta gareggiando con una lenta tartaruga. La tartaruga parte con un leggero vantaggio. Zenone argomenta che Achille non potrà mai raggiungere la tartaruga. Perché?
+                    </p>
+                    <p>
+                        Ogni volta che Achille raggiunge il punto da cui la tartaruga è partita, la tartaruga avrà nel frattempo percorso un altro, seppur piccolo, tratto. Achille dovrà quindi coprire questo nuovo tratto, e nel mentre la tartaruga si sarà mossa ancora. Questo processo si ripete all'infinito: c'è sempre un nuovo, più piccolo, intervallo che Achille deve coprire prima di "raggiungere" la tartaruga, e la tartaruga avrà sempre un nuovo piccolo vantaggio. Pertanto, il divario, per quanto infinitesimale, non si annulla mai, e Achille non la raggiungerà mai.
+                    </p>
+                    <div class="quote">
+                        <p>«Il più veloce a correre non sarà mai raggiunto dal più lento, poiché l'inseguitore deve prima arrivare nel punto da cui il fuggitivo è partito, di modo che il più lento ha sempre un certo vantaggio.»</p>
+                        <footer>— Aristotele, Fisica, VI, 9, 239b</footer>
+                    </div>
+                </li>
+                <li>
+                    <h4>2. La Dicotomia (o Il Paradosso della Corsa)</h4>
+                    <p>
+                        Per percorrere una qualsiasi distanza da un punto A a un punto B, un corridore deve prima raggiungere la metà della distanza. Una volta raggiunta questa metà, deve poi raggiungere la metà della metà rimanente, e così via all'infinito.
+                    </p>
+                    <p>
+                        Poiché esistono infinite "metà" da percorrere (1/2, 1/4, 1/8, 1/16...), e ogni singola metà richiede un certo lasso di tempo per essere coperta, Zenone conclude che è impossibile raggiungere la destinazione. Anzi, è impossibile anche solo iniziare il movimento, poiché per compiere il primo passo occorrerebbe prima averne compiuto la metà, e così via, in una regressione infinita.
+                    </p>
+                </li>
+                <li>
+                    <h4>3. La Freccia in Volo</h4>
+                    <p>
+                        Consideriamo una freccia in volo. In ogni singolo istante del suo volo, la freccia occupa uno spazio uguale a se stessa, ovvero è immobile. Se la freccia è immobile in ogni istante del suo percorso, e il tempo è composto da una successione di istanti, allora la freccia è immobile per tutta la durata del suo "volo".
+                    </p>
+                    <p>
+                        Questo paradosso sfida la nostra intuizione di come si compone il movimento da singoli "momenti". Se un oggetto non si muove in un istante, come può muoversi attraverso una sequenza di istanti? Implica una critica alla concezione atomistica del tempo.
+                    </p>
+                </li>
+                <li>
+                    <h4>4. Lo Stadio (o I Blocchi in Movimento)</h4>
+                    <p>
+                        Questo paradosso, il più complesso, immagina tre file di blocchi disposte in uno stadio. Una fila (A) è ferma. Due altre file (B e C) si muovono a velocità uguali ma in direzioni opposte, passando per la fila A.
+                    </p>
+                    <p>
+                        Zenone argomenta che la velocità di un corpo è relativa al punto di riferimento. Se B impiega un certo tempo per passare A (che è fermo), allora C (che si muove nella direzione opposta) impiegherà metà di quel tempo per passare A, oppure B passerà C in metà tempo rispetto ad A. Questo porta a una contraddizione sulla natura del tempo: se in un dato tempo un corpo si muove di una certa lunghezza rispetto a uno e del doppio rispetto a un altro, allora metà di quel tempo è uguale al doppio di quel tempo, il che è assurdo. Zenone sembra voler mostrare che la nozione stessa di tempo e velocità è contraddittoria quando si suppone una loro divisibilità.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>I Paradossi Contro la Molteplicità</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Oltre ai paradossi sul movimento, Zenone formulò anche argomentazioni contro la realtà della **molteplicità**, cioè l'idea che esistano più enti distinti anziché un unico Essere.
+            </p>
+            <ul>
+                <li>
+                    <h4>1. Il Grano di Miglio</h4>
+                    <p>
+                        Un singolo chicco di miglio, cadendo a terra, non produce alcun suono percepibile. Un sacco di chicchi di miglio che cade produce chiaramente un suono. Se il suono prodotto da un sacco è la somma dei suoni prodotti dai singoli chicchi, e un singolo chicco non produce suono (cioè zero), come può la somma di infiniti zeri produrre qualcosa (un suono)?
+                    </p>
+                    <p>
+                        Questo paradosso sfida l'idea che una qualità emergente (come il suono) possa derivare dalla somma di componenti che non possiedono quella qualità singolarmente. Mette in discussione la nozione di composizione e l'esistenza delle grandezze minime.
+                    </p>
+                </li>
+                <li>
+                    <h4>2. Il Grado di Grandezza</h4>
+                    <p>
+                        Se le cose sono molteplici, devono avere una certa grandezza e una certa distanza l'una dall'altra. Ma se le cose hanno grandezza, possono essere divise all'infinito. Se si dividono all'infinito, diventano infinitamente piccole, fino a non avere più grandezza e quindi a non esistere. Se invece non hanno grandezza, come possono, sommandosi, formare qualcosa di grande?
+                    </p>
+                    <p>
+                        Questo paradosso gioca sulla contraddizione tra l'idea di una divisione infinita e la percezione di grandezze finite, mettendo in crisi la nozione stessa di entità discrete e misurabili.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>L'Eredità e la Rilevanza Attuale di Zenone</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                L'obiettivo primario di Zenone non era convincere le persone che il movimento non esiste (era evidente che sì), ma piuttosto **mostrare le difficoltà logiche e concettuali insite nelle concezioni comuni** di movimento, spazio, tempo e molteplicità. Voleva dimostrare che le posizioni che si opponevano a Parmenide cadevano in contraddizioni persino maggiori. La sua metodologia, la **dialettica**, basata sulla <em>reductio ad absurdum</em> (mostrare l'assurdità delle tesi avversarie), fu una pietra miliare per lo sviluppo del pensiero critico greco e influenzò profondamente Socrate e Platone.
+            </p>
+
+            <h3>Impatto e Interpretazioni Postume</h3>
+            <p>
+                Per secoli, i paradossi di Zenone sono stati oggetto di dibattito e di tentativi di soluzione.
+            </p>
+            <ul>
+                <li>
+                    <h4>Soluzioni Filosofiche</h4>
+                    <p>
+                        Filosofi come Aristotele cercarono di confutarli distinguendo tra la divisibilità "in potenza" e "in atto" dello spazio e del tempo. Altri, come i pensatori atomisti, tentarono di risolverli postulando l'esistenza di unità minime indivisibili (gli atomi), superando l'idea di infinita divisibilità.
+                    </p>
+                </li>
+                <li>
+                    <h4>Soluzioni Matematiche</h4>
+                    <p>
+                        La vera "soluzione" ai paradossi del movimento è arrivata con lo sviluppo del **calcolo infinitesimale** (Leibniz e Newton nel XVII secolo) e della teoria delle **serie infinite convergenti**. Matematicamente, una somma infinita di termini positivi può convergere a un valore finito. Ad esempio, la serie 1/2 + 1/4 + 1/8 + ... converge a 1. Questo significa che, anche se ci sono infiniti passi, la somma delle distanze o dei tempi può essere finita.
+                    </p>
+                </li>
+                <li>
+                    <h4>Riflessioni Moderne</h4>
+                    <p>
+                        Nonostante le soluzioni matematiche, i paradossi di Zenone continuano a stimolare la riflessione. Essi mettono in luce la profonda differenza tra la nostra esperienza intuitiva del mondo e la sua descrizione logico-matematica. In fisica, la questione della quantizzazione dello spazio-tempo (l'idea che spazio e tempo non siano infinitamente divisibili ma composti da "quanti" minimi) a volte riaccende il dibattito sui paradossi di Zenone in un contesto moderno.
+                    </p>
+                </li>
+            </ul>
+            <p>
+                In definitiva, Zenone di Elea, con la sua abilità nel creare aporie apparentemente insolubili, non ha solo difeso la dottrina del suo maestro, ma ha costretto intere generazioni di pensatori a esaminare più a fondo le fondamenta logiche delle loro concezioni del mondo. La sua eredità è un invito costante alla precisione concettuale e alla vigilanza razionale, rendendolo un pilastro irrinunciabile nella storia del pensiero.
+            </p>
+        </div>
+    </div>
+
+    ---
+
+    <div class="container">
+        <p style="text-align: center; font-style: italic; color: #666; margin-top: 50px;">
+            "La ragione non può comprendere il movimento, benché i sensi lo attestino."
+        </p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const content = this.nextElementSibling; // Seleziona il div con il contenuto
+                    
+                    // Opzionale: Chiudi tutti gli altri pannelli aperti
+                    accordionButtons.forEach(otherButton => {
+                        if (otherButton !== this && otherButton.classList.contains('active')) {
+                            otherButton.classList.remove('active');
+                            otherButton.nextElementSibling.classList.remove('show');
+                        }
+                    });
+
+                    // Apri/chiudi il pannello cliccato
+                    this.classList.toggle('active');
+                    content.classList.toggle('show');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

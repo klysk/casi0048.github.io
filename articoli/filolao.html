@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filolao di Crotone: Il Numero, il Cosmo e il Fuoco Centrale</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Stili Generali e Reset */
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 3.2em;
+            text-align: center;
+            border-bottom: 2px solid #3498db; /* Blu per Filolao (cosmo, razionalità) */
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 2.4em;
+            color: #3498db; /* Blu per Filolao */
+            margin-top: 30px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: #555;
+            margin-top: 25px;
+        }
+
+        h4 {
+            font-size: 1.3em;
+            color: #444;
+            margin-top: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #e67e22; /* Arancione per evidenziazioni */
+        }
+
+        .quote {
+            font-style: italic;
+            background-color: #eaf6fc; /* Sfondo chiaro per le citazioni */
+            padding: 18px 25px;
+            border-left: 5px solid #3498db; /* Blu per le citazioni */
+            margin: 25px 0;
+            border-radius: 4px;
+            line-height: 1.5;
+        }
+
+        .quote footer {
+            text-align: right;
+            margin-top: 12px;
+            font-size: 0.95em;
+            color: #7f8c8d;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+        }
+
+        .image-container figcaption {
+            font-size: 0.9em;
+            color: #777;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Stili per l'Accordion (Sezioni Espandibili) */
+        .accordion-section {
+            max-width: 900px;
+            margin: 25px auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .accordion-button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 20px 30px;
+            background-color: #3498db; /* Blu per il bottone */
+            color: white;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s ease;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .accordion-button:hover {
+            background-color: #2980b9;
+        }
+
+        .accordion-button h2 {
+            color: white;
+            margin: 0;
+            font-size: 1em;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .accordion-button i {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-button.active i {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 0 30px;
+            background-color: #ffffff;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            box-sizing: border-box;
+        }
+
+        .accordion-content.show {
+            max-height: 3500px; /* Valore grande per accomodare il contenuto esteso */
+            padding: 30px;
+        }
+
+        .accordion-content ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .accordion-content ul li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .accordion-content ul li::before {
+            content: '🌌'; /* Simbolo di galassia/cosmo per Filolao */
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                margin: 20px auto;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2.5em;
+            }
+            h2 {
+                font-size: 2em;
+            }
+            .accordion-button {
+                padding: 15px 20px;
+                font-size: 1.5em;
+            }
+            .accordion-content {
+                padding: 0 20px;
+            }
+            .accordion-content.show {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Filolao di Crotone: Il Numero, il Cosmo e il Fuoco Centrale</h1>
+
+        <div class="image-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/23/Philolaus_of_Croton.jpg" alt="Rappresentazione artistica di Filolao di Crotone">
+            <figcaption>Filolao di Crotone, uno dei più importanti Pitagorici.</figcaption>
+        </div>
+
+        <p>
+            Nel V secolo a.C., dopo la dispersione della comunità pitagorica di Crotone, emerse la figura di **Filolao di Crotone** (circa 470 – 385 a.C.). Egli è considerato il primo Pitagorico ad aver sistemato e messo per iscritto le dottrine della scuola, rendendole accessibili a un pubblico più ampio e garantendo la loro sopravvivenza. Grazie a lui, e ai pochi frammenti della sua opera "Sulla Natura" (Περὶ φύσεως) giunti fino a noi, abbiamo una comprensione più chiara e strutturata del pensiero pitagorico, che altrimenti sarebbe rimasto quasi interamente segreto e orale. La sua influenza fu tale da arrivare a Platone, che sembra abbia acquistato alcuni dei suoi libri.
+        </p>
+        <p>
+            Filolao approfondì la teoria del **numero come principio cosmico**, sviluppando una cosmologia rivoluzionaria con la teoria del **Fuoco Centrale** e un'articolata concezione dell'anima e della conoscenza, sempre nel solco della tradizione pitagorica di unire scienza e misticismo.
+        </p>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>Il Ruolo del Numero e dei Contrari</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Filolao rafforzò la dottrina pitagorica secondo cui il **numero è l'archè** (principio) di tutte le cose, ma la sua specificità risiede nella spiegazione di come il numero agisca per creare il mondo.
+            </p>
+            <ul>
+                <li>
+                    <h4>Limitato e Illimitato:</h4>
+                    <p>
+                        Per Filolao, la realtà è composta da due principi fondamentali: il **limitato** (πέραινον - *perainon*) e l'**illimitato** (ἄπειρον - *apeiron*).
+                        <ul>
+                            <li>Il <span class="highlight">Limitato</span> è ciò che dà forma, definizione, ordine (es. unità, dispari, determinazione).</li>
+                            <li>L'<span class="highlight">Illimitato</span> è ciò che è indefinito, informe, caotico (es. pluralità, pari, indeterminatezza).</li>
+                        </ul>
+                    </p>
+                </li>
+                <li>
+                    <h4>L'Armonia e il Numero:</h4>
+                    <p>
+                        Affinché qualcosa possa esistere e essere conoscibile, è necessaria l'**armonizzazione** di questi due principi opposti. Ed è qui che interviene il **Numero**. Il numero, attraverso la sua capacità di stabilire proporzioni e relazioni, è il mezzo che impone un limite all'illimitato, generando così l'ordine e la realtà conoscibile del cosmo.
+                    </p>
+                    <div class="quote">
+                        <p>«E in verità tutto ciò che si conosce ha numero; perché senza di esso non sarebbe possibile comprendere né conoscere alcunché.»</p>
+                        <footer>— Filolao (frammento B4 DK)</footer>
+                    </div>
+                    <p>
+                        Senza questa fusione armonica tra limite e illimitato, tutto rimarrebbe confuso e incomprensibile. Il numero non è solo una descrizione delle cose, ma la loro causa intrinseca, il principio che le rende ordinate e intelligibili.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>La Cosmologia Eliocentrica (o Pirocentrica) di Filolao</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                La dottrina cosmologica di Filolao è una delle sue innovazioni più celebri e anticipatorie, distinguendolo dai modelli geocentrici precedenti.
+            </p>
+            <ul>
+                <li>
+                    <h4>Il Fuoco Centrale (Estia):</h4>
+                    <p>
+                        Filolao pose al centro dell'universo non la Terra, ma un invisibile **Fuoco Centrale** (Κεντρικὸν Πῦρ), che egli chiamava "Estia" (Hestía), la dea del focolare, o "custode dell'unità". Questo fuoco non è il Sole, ma il centro motore e vitale del cosmo, da cui si irradia il calore e la luce.
+                    </p>
+                </li>
+                <li>
+                    <h4>I Corpi Celesti e la Controterra:</h4>
+                    <p>
+                        Attorno a questo Fuoco Centrale, ruotano in cerchi perfetti:
+                        <ol>
+                            <li>La **Controterra** (Ἀντίχθων - *Antichthon*): un corpo celeste che si trova tra la Terra e il Fuoco Centrale, e che è invisibile a noi perché la Terra le rivolge sempre la stessa faccia. La sua introduzione serviva a spiegare le eclissi e a portare il numero dei corpi celesti visibili a dieci (un numero sacro, la Tetractys).</li>
+                            <li>La **Terra**: la Terra ruota attorno al Fuoco Centrale, e non è immobile al centro. Questo fu un passo rivoluzionario.</li>
+                            <li>La **Luna**</li>
+                            <li>Il **Sole**</li>
+                            <li>I **cinque Pianeti** conosciuti all'epoca (Mercurio, Venere, Marte, Giove, Saturno)</li>
+                            <li>La Sfera delle **Stelle Fisse**</li>
+                        </ol>
+                        In totale, Filolao identificò **dieci corpi celesti** che ruotavano attorno al Fuoco Centrale.
+                    </p>
+                </li>
+                <li>
+                    <h4>L'Armonia e il Movimento:</h4>
+                    <p>
+                        Il movimento di questi corpi celesti era governato da rapporti numerici precisi, producendo l'**Armonia delle Sfere**, una musica inaudibile all'orecchio umano ma percepibile dall'intelletto. Questo sistema non era strettamente "eliocentrico" nel senso moderno (il Sole non era al centro), ma fu un'audace anticipazione di un universo non geocentrico.
+                    </p>
+                    <div class="quote">
+                        <p>«Il centro è il fuoco, il primo elemento, da cui si irradiano gli altri.»</p>
+                        <footer>— Filolao (riferito da Aristotele)</footer>
+                    </div>
+                </li>
+            </ul>
+            <p>
+                Questa cosmologia fu un passo fondamentale verso la rivoluzione copernicana e influenzò pensatori come Platone (nel Timeo) e, indirettamente, Aristarco di Samo.
+            </p>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>L'Anima e la Conoscenza in Filolao</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Filolao, come altri Pitagorici, dedicò attenzione anche alla natura dell'anima e al processo della conoscenza, sempre in relazione alla sua teoria del numero e dell'armonia.
+            </p>
+            <ul>
+                <li>
+                    <h4>L'Anima come Armonia:</h4>
+                    <p>
+                        Una delle sue dottrine più note riguarda l'anima: essa è un'**armonia** o una **proporzione** dei quattro elementi che compongono il corpo. Non è una sostanza separata, ma la giusta mescolanza e organizzazione di caldo, freddo, umido e secco. Quando questa armonia si distrugge, l'anima (intesa come vita e coscienza) perisce.
+                    </p>
+                    <p>
+                        Questa visione, se da un lato sembra materialistica, dall'altro implica che l'anima è di natura numerica, essendo un rapporto matematico.
+                    </p>
+                </li>
+                <li>
+                    <h4>La Conoscenza e i Sensi:</h4>
+                    <p>
+                        Filolao riconosce l'importanza dei sensi per la conoscenza del mondo esterno, ma sottolinea come la vera comprensione derivi dalla **ragione** e dal **numero**. I sensi ci danno informazioni frammentarie e disordinate; è il numero, attraverso la sua capacità di imporre ordine e proporzione, che permette all'intelletto di comprendere la struttura armonica della realtà.
+                    </p>
+                </li>
+                <li>
+                    <h4>Medicina:</h4>
+                    <p>
+                        La sua visione dell'anima come armonia ebbe un impatto significativo sulla medicina antica. La salute era vista come uno stato di equilibrio e armonia delle qualità e degli elementi nel corpo, mentre la malattia era il risultato di uno squilibrio. Il medico doveva ripristinare questa armonia.
+                    </p>
+                </li>
+            </ul>
+            <p>
+                Filolao, pur fedele alla tradizione pitagorica, la sviluppò con un approccio più sistematico e razionale, rendendo esplicite le implicazioni scientifiche e cosmologiche della dottrina del numero.
+            </p>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>L'Eredità e l'Influenza di Filolao</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Filolao è una figura cruciale per la storia del pensiero antico, non solo come custode del Pitagorismo, ma come innovatore in diversi campi.
+            </p>
+            <ul>
+                <li>
+                    <h4>Fonti per il Pitagorismo:</h4>
+                    <p>
+                        È attraverso i frammenti di Filolao che gran parte della filosofia pitagorica ci è giunta. Senza di lui, la comprensione di questa scuola sarebbe stata molto più limitata e basata su resoconti di seconda mano.
+                    </p>
+                </li>
+                <li>
+                    <h4>Influenza su Platone:</h4>
+                    <p>
+                        L'influenza di Filolao su **Platone** è ampiamente riconosciuta. Si dice che Platone abbia acquistato opere di Filolao per una somma considerevole. Concetti come l'importanza del numero, l'anima come armonia e forse l'idea di un cosmo ordinato matematicamente (presente nel *Timeo*) mostrano chiari debiti a Filolao. La sua visione dell'anima come armonia, sebbene rigettata da Platone nel *Fedone* (dove l'anima è una sostanza separata), dimostra l'ampiezza delle idee pitagoriche con cui Platone si confrontò.
+                    </p>
+                </li>
+                <li>
+                    <h4>Anticipazione Astronomica:</h4>
+                    <p>
+                        La sua teoria del **Fuoco Centrale** e della Terra in movimento fu una delle prime e più audaci deviazioni dal modello geocentrico, ponendo le basi per future rivoluzioni astronomiche. Fu un precursore di **Aristarco di Samo** e, secoli dopo, indirettamente, di **Copernico**.
+                    </p>
+                </li>
+                <li>
+                    <h4>Sviluppo della Matematica:</h4>
+                    <p>
+                        Filolao continuò lo sviluppo della matematica pitagorica, approfondendo lo studio dei numeri e delle loro applicazioni alla realtà fisica.
+                    </p>
+                </li>
+            </ul>
+            <p>
+                Filolao, quindi, non fu un semplice epigono di Pitagora, ma un pensatore originale che diede forma e coerenza alle dottrine della scuola, rendendole accessibili e aprendo nuove strade nell'astronomia e nella metafisica. La sua opera ha permesso al Pitagorismo di influenzare profondamente i giganti della filosofia successiva, consolidando il ruolo del numero come principio esplicativo del cosmo.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const content = this.nextElementSibling; // Seleziona il div con il contenuto
+                    
+                    // Opzionale: Chiudi tutti gli altri pannelli aperti
+                    accordionButtons.forEach(otherButton => {
+                        if (otherButton !== this && otherButton.classList.contains('active')) {
+                            otherButton.classList.remove('active');
+                            otherButton.nextElementSibling.classList.remove('show');
+                        }
+                    });
+
+                    // Apri/chiudi il pannello cliccato
+                    this.classList.toggle('active');
+                    content.classList.toggle('show');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

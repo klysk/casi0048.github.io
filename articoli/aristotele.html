@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aristotele: La Logica, la Metafisica e l'Enciclopedia del Sapere</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/css/all.min.css">
+    <style>
+        /* Stili Generali e Reset */
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 3.2em;
+            text-align: center;
+            border-bottom: 2px solid #27ae60; /* Verde per Aristotele (natura, scienza, ragione) */
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 2.4em;
+            color: #27ae60; /* Verde per Aristotele */
+            margin-top: 30px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: #555;
+            margin-top: 25px;
+        }
+
+        h4 {
+            font-size: 1.3em;
+            color: #444;
+            margin-top: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #d35400; /* Arancione per evidenziazioni */
+        }
+
+        .quote {
+            font-style: italic;
+            background-color: #ebfaef; /* Sfondo chiaro per le citazioni */
+            padding: 18px 25px;
+            border-left: 5px solid #27ae60; /* Verde per le citazioni */
+            margin: 25px 0;
+            border-radius: 4px;
+            line-height: 1.5;
+        }
+
+        .quote footer {
+            text-align: right;
+            margin-top: 12px;
+            font-size: 0.95em;
+            color: #7f8c8d;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+        }
+
+        .image-container figcaption {
+            font-size: 0.9em;
+            color: #777;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Stili per l'Accordion (Sezioni Espandibili) */
+        .accordion-section {
+            max-width: 900px;
+            margin: 25px auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .accordion-button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 20px 30px;
+            background-color: #27ae60; /* Verde per il bottone */
+            color: white;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s ease;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .accordion-button:hover {
+            background-color: #229a56;
+        }
+
+        .accordion-button h2 {
+            color: white;
+            margin: 0;
+            font-size: 1em;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .accordion-button i {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-button.active i {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 0 30px;
+            background-color: #ffffff;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            box-sizing: border-box;
+        }
+
+        .accordion-content.show {
+            max-height: 5500px; /* Valore grande per accomodare il contenuto esteso */
+            padding: 30px;
+        }
+
+        .accordion-content ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .accordion-content ul li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .accordion-content ul li::before {
+            content: '🌿'; /* Simbolo di natura/bioscienza per Aristotele */
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                margin: 20px auto;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2.5em;
+            }
+            h2 {
+                font-size: 2em;
+            }
+            .accordion-button {
+                padding: 15px 20px;
+                font-size: 1.5em;
+            }
+            .accordion-content {
+                padding: 0 20px;
+            }
+            .accordion-content.show {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Aristotele: La Logica, la Metafisica e l'Enciclopedia del Sapere</h1>
+
+        <div class="image-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/ae/Aristotle_Altemps_Inv8575.jpg" alt="Busto di Aristotele">
+            <figcaption>Busto di Aristotele, uno dei più grandi intelletti dell'antichità.</figcaption>
+        </div>
+
+        <p>
+            **Aristotele** (Stagira, 384 a.C. – Calcide, 322 a.C.) è, insieme al suo maestro Platone, una delle figure più imponenti e seminali della storia del pensiero occidentale. Dopo aver trascorso quasi vent'anni all'Accademia platonica, sviluppò un sistema filosofico e scientifico profondamente originale, che si distinse da quello del suo maestro pur riconoscendone l'importanza. Aristotele non si limitò a indagare la metafisica o l'etica, ma produsse un'opera enciclopedica che abbracciò praticamente ogni campo del sapere del suo tempo: dalla logica alla fisica, dalla biologia all'astronomia, dalla politica alla retorica, dall'etica alla poetica.
+        </p>
+        <p>
+            Il suo approccio sistematico e la sua enfasi sull'osservazione empirica lo resero il fondatore di molte discipline scientifiche e un punto di riferimento incontrastato per oltre un millennio, influenzando profondamente la filosofia medievale islamica ed europea, fino alla rivoluzione scientifica.
+        </p>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>Dall'Accademia al Liceo: La Vita e l'Opera</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                La biografia di Aristotele è un percorso di formazione e indipendenza intellettuale.
+            </p>
+            <ul>
+                <li>
+                    <h4>Gli Anni Formativi e l'Accademia:</h4>
+                    <p>
+                        Nato a Stagira, nella regione della Calcide, Aristotele si trasferì ad Atene all'età di diciassette anni per entrare nell'Accademia di Platone, dove rimase per circa vent'anni (fino alla morte di Platone nel 347 a.C.). Qui apprese e approfondì la filosofia del maestro, pur sviluppando progressivamente critiche e orientamenti propri, in particolare riguardo alla **teoria delle Idee**.
+                    </p>
+                </li>
+                <li>
+                    <h4>Precettore di Alessandro Magno:</h4>
+                    <p>
+                        Dopo la morte di Platone, Aristotele lasciò Atene. Fu chiamato da Filippo II di Macedonia a fare da precettore a suo figlio, il futuro Alessandro Magno, un ruolo che ricoprì per alcuni anni. Questa esperienza gli permise di entrare in contatto con ambienti diversi e di approfondire le sue conoscenze naturalistiche e politiche.
+                    </p>
+                </li>
+                <li>
+                    <h4>La Fondazione del Liceo:</h4>
+                    <p>
+                        Nel 335 a.C., Aristotele tornò ad Atene e fondò la sua scuola, il **Liceo** (dal ginnasio dedicato ad Apollo Licio). A differenza dell'Accademia, che aveva un carattere più speculativo e matematico, il Liceo era orientato alla ricerca empirica e alla classificazione del sapere. I suoi allievi erano chiamati "Peripatetici" (dal greco *peripatos*, passeggiata), poiché si dice che Aristotele insegnasse passeggiando nei viali del ginnasio.
+                    </p>
+                </li>
+                <li>
+                    <h4>La Produzione Scritta:</h4>
+                    <p>
+                        Le opere di Aristotele si dividono in:
+                        <ul>
+                            <li><span class="highlight">Scritti essoterici:</span> Destinati al pubblico, in forma dialogica, di cui ci sono giunti solo frammenti (es. "Sull'anima", "Eudemo").</li>
+                            <li><span class="highlight">Scritti esoterici (o acroamatici):</span> Appunti per le lezioni al Liceo, destinati agli allievi. Sono questi i testi che ci sono giunti e che formano il corpus delle sue opere principali (es. "Metafisica", "Fisica", "Etica Nicomachea", "Organon").</li>
+                        </ul>
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>La Critica a Platone e la Teoria della Sostanza</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Nonostante l'enorme rispetto per Platone, Aristotele si distaccò radicalmente dalla teoria delle Idee. La sua critica è riassunta nella celebre frase: <span class="highlight">"Amicus Plato, sed magis amica veritas"</span> (Platone mi è amico, ma la verità mi è più amica).
+            </p>
+            <ul>
+                <li>
+                    <h4>La Critica alle Idee Trascendenti:</h4>
+                    <p>
+                        Aristotele criticò l'Idea platonica di un "mondo separato" (Iperuranio) delle Idee. Per lui, le Idee non possono essere al di fuori delle cose, ma devono essere immanenti ad esse, ovvero in esse stesse. La separazione tra mondo sensibile e mondo intelligibile creava più problemi di quanti ne risolvesse (il "terzo uomo" argomento).
+                    </p>
+                </li>
+                <li>
+                    <h4>La Teoria della Sostanza (Οὐσία - *Ousía*):</h4>
+                    <p>
+                        Il concetto centrale della metafisica aristotelica è la **Sostanza**. Per Aristotele, il vero essere, ciò che esiste in modo primario e autonomo, è l'individuo concreto, l'ente sensibile (es. "questo cavallo", "questo uomo").
+                        <br>La sostanza è ciò che non è predicato di un soggetto, ma è il soggetto stesso.
+                    </p>
+                    <p>
+                        Ogni sostanza è un **sinolo** (σύνολον - *synolon*), ovvero un'unione indissolubile di:
+                        <ul>
+                            <li><span class="highlight">Materia (ὕλη - *hylē*):</span> Il substrato indeterminato, la possibilità di essere qualcosa.</li>
+                            <li><span class="highlight">Forma (μορφή - *morphē* o εἶδος - *eidos*):</span> La struttura essenziale, ciò che rende la materia quella determinata cosa (es. l'idea di "cavallo" nel cavallo concreto). La forma è per Aristotele l'equivalente dell'Idea platonica, ma non è separata dalla materia, è in essa.</li>
+                        </ul>
+                        La forma è la vera essenza della cosa e la sua finalità.
+                    </p>
+                </li>
+                <li>
+                    <h4>Potenza e Atto (Δύναμις e Ἐνέργεια):</h4>
+                    <p>
+                        Per spiegare il movimento e il cambiamento nel mondo, Aristotele introduce i concetti di **potenza** (δύναμις - *dynamis*) e **atto** (ἐνέργεια - *energeia* o ἐντελέχεια - *entelecheia*).
+                        <ul>
+                            <li>La <span class="highlight">Potenza:</span> È la possibilità di una cosa di diventare qualcosa che ancora non è (es. il seme è un albero in potenza).</li>
+                            <li>L'<span class="highlight">Atto:</span> È la realizzazione di quella possibilità, l'essere compiuto e perfetto (es. l'albero è l'atto del seme).</li>
+                        </ul>
+                        L'atto è superiore alla potenza, perché è la sua finalità e perfezione. Il movimento è il passaggio dalla potenza all'atto.
+                    </p>
+                </li>
+                <li>
+                    <h4>Le Quattro Cause:</h4>
+                    <p>
+                        Aristotele identifica quattro tipi di cause che spiegano il divenire di ogni cosa:
+                        <ol>
+                            <li><span class="highlight">Causa Materiale:</span> La materia di cui è fatta una cosa (es. il bronzo della statua).</li>
+                            <li><span class="highlight">Causa Formale:</span> La forma o essenza di una cosa (es. la forma della statua che il bronzo assume).</li>
+                            <li><span class="highlight">Causa Efficiente:</span> Chi produce il cambiamento o la cosa (es. lo scultore).</li>
+                            <li><span class="highlight">Causa Finale:</span> Il fine o scopo per cui una cosa esiste o si muove (es. lo scopo per cui la statua è stata fatta).</li>
+                        </ol>
+                        La causa finale è spesso la più importante per Aristotele, poiché la natura tende sempre verso un fine.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>La Logica (Organon)</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Aristotele è considerato il padre della **logica formale**. Non la considerava una parte della filosofia, ma uno **strumento** (ὄργανον - *organon*) propedeutico a ogni conoscenza, un'analisi delle forme corrette del ragionamento.
+            </p>
+            <ul>
+                <li>
+                    <h4>Concetti e Categorie:</h4>
+                    <p>
+                        La logica parte dall'analisi dei **concetti**, che sono le rappresentazioni mentali delle cose. Essi possono essere organizzati in base a genere e specie. Aristotele individua dieci **categorie** (κατηγορίαι - *kategoríai*), i modi più generali in cui l'essere si manifesta e può essere predicato di un soggetto:
+                        <br>Sostanza, quantità, qualità, relazione, dove, quando, stare, avere, agire, subire.
+                        <br>La categoria della Sostanza è la principale, in quanto le altre categorie sono "accidenti" che ineriscono alla sostanza.
+                    </p>
+                </li>
+                <li>
+                    <h4>Giudizi e Proposizioni:</h4>
+                    <p>
+                        I concetti si uniscono in **giudizi** o **proposizioni** (es. "Socrate è un uomo"). Le proposizioni possono essere universali/particolari e affermative/negative.
+                    </p>
+                </li>
+                <li>
+                    <h4>Il Sillogismo:</h4>
+                    <p>
+                        Il culmine della logica aristotelica è il **sillogismo**, la forma perfetta del ragionamento deduttivo. È un ragionamento in cui, poste alcune premesse, ne consegue necessariamente una conclusione.
+                    </p>
+                    <div class="quote">
+                        <p>«Il sillogismo è un discorso in cui, poste alcune premesse, ne segue necessariamente qualcos'altro per il fatto che queste sono così.»</p>
+                        <footer>— Aristotele, Analitici Primi</footer>
+                    </div>
+                    <p>
+                        Esempio classico:
+                        <ul>
+                            <li>Tutti gli uomini sono mortali (Premessa maggiore)</li>
+                            <li>Socrate è un uomo (Premessa minore)</li>
+                            <li>Dunque, Socrate è mortale (Conclusione)</li>
+                        </ul>
+                        Il sillogismo garantisce la correttezza formale del ragionamento, ma non la verità delle premesse.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>L'Etica e la Politica: La Felicità e la Virtù</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                L'etica e la politica di Aristotele sono strettamente connesse, poiché l'uomo è per natura un "animale politico" (ζῷον πολιτικόν - *zōon politikon*).
+            </p>
+            <ul>
+                <li>
+                    <h4>L'Etica Nicomachea: La Felicità (Eudaimonia):</h4>
+                    <p>
+                        L'etica aristotelica, esposta principalmente nell'"Etica Nicomachea", è un'etica della **felicità** (εὐδαιμονία - *eudaimonia*), intesa non come piacere effimero, ma come realizzazione piena della propria natura. L'uomo realizza se stesso esercitando la sua funzione specifica, che è la **ragione**.
+                    </p>
+                </li>
+                <li>
+                    <h4>Le Virtù: Etiche e Dianoetiche:</h4>
+                    <p>
+                        La felicità si raggiunge attraverso la pratica delle **virtù** (ἀρετή - *aretē*). Aristotele distingue due tipi di virtù:
+                        <ul>
+                            <li><span class="highlight">Virtù Etiche (o Morali):</span> Riguardano il carattere e si acquisiscono con l'abitudine e l'esercizio. Sono la "giusta misura" (μεσότης - *mesotes*), la "via di mezzo" tra due estremi viziosi (es. il coraggio è la via di mezzo tra la viltà e la temerarietà). Esempi: giustizia, temperanza, generosità, coraggio.</li>
+                            <li><span class="highlight">Virtù Dianoetiche (o Intellettuali):</span> Riguardano la parte razionale dell'anima e si acquisiscono con l'insegnamento e lo studio. La più alta è la **sapienza** (σοφία - *sophia*), che consiste nella contemplazione delle verità eterne (la vita teoretica, bios theoretikos). La **phronesis** (φρόνησις - saggezza pratica) è la virtù che permette di applicare la ragione alle situazioni concrete, scegliendo il giusto mezzo.</li>
+                        </ul>
+                    </p>
+                </li>
+                <li>
+                    <h4>La Politica: L'Uomo come Animale Politico:</h4>
+                    <p>
+                        Nella sua opera "Politica", Aristotele afferma che lo stato (polis) è una comunità naturale, non artificiale. L'uomo è un animale politico perché solo nella polis può realizzare pienamente la sua natura razionale e morale.
+                    </p>
+                </li>
+                <li>
+                    <h4>Classificazione delle Costituzioni:</h4>
+                    <p>
+                        Aristotele analizza diverse forme di governo, classificandole in base al numero di governanti e alla loro finalità:
+                        <ul>
+                            <li><span class="highlight">Retto (per il bene comune):</span> Monarchia, Aristocrazia, Politia (o Democrazia Costituzionale)</li>
+                            <li><span class="highlight">Degenerato (per l'interesse personale):</span> Tirannide, Oligarchia, Democrazia (degenerata, governo della massa)</li>
+                        </ul>
+                        Preferisce la **Politia**, una via di mezzo tra oligarchia e democrazia, dove prevale la classe media, garantendo stabilità e giustizia.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>La Cosmologia e il Primo Motore Immobile</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Aristotele sviluppò un modello cosmologico geocentrico e finalistico che dominò il pensiero scientifico per quasi due millenni.
+            </p>
+            <ul>
+                <li>
+                    <h4>Il Cosmo Geocentrico:</h4>
+                    <p>
+                        Per Aristotele, l'universo è finito, sferico e diviso in due regioni:
+                        <ol>
+                            <li><span class="highlight">Mondo Sublunare:</span> La regione terrestre, soggetta a generazione e corruzione. Composto dai quattro elementi (terra, acqua, aria, fuoco), che tendono ai loro luoghi naturali (terra al centro, fuoco più in alto). I moti sono rettilinei.</li>
+                            <li><span class="highlight">Mondo Sopralunare:</span> La regione celeste, perfetta e incorruttibile. Composto da un quinto elemento, l'**etere** (o quintessenza), eterno e immutabile. I corpi celesti (Luna, Sole, Pianeti, stelle) si muovono di moto circolare uniforme, il moto perfetto.</li>
+                        </ol>
+                    </p>
+                </li>
+                <li>
+                    <h4>Il Primo Motore Immobile:</h4>
+                    <p>
+                        Per spiegare il movimento eterno e circolare dei cieli, Aristotele postula l'esistenza di un **Primo Motore Immobile**. Questo essere è:
+                        <ul>
+                            <li><span class="highlight">Immobile:</span> Non ha bisogno di essere mosso da altro; è pura attività (atto puro).</li>
+                            <li><span class="highlight">Eterno e Immortale:</span> Non soggetto a divenire.</li>
+                            <li><span class="highlight">Pensiero di Pensiero:</span> La sua attività è la pura auto-contemplazione, la più alta forma di intelligenza. Non pensa altro che se stesso, perché è l'essere più perfetto.</li>
+                        </ul>
+                        Il Primo Motore muove il mondo non per "contatto" o "spinta" (causa efficiente), ma per **attrazione** (causa finale). I cieli si muovono perché "desiderano" la perfezione del Primo Motore, proprio come un amante è attratto dall'amato.
+                    </p>
+                    <div class="quote">
+                        <p>«Vi è un motore che è immobile ed eterno ed è sostanza e atto puro.»</p>
+                        <footer>— Aristotele, Metafisica</footer>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>L'Eredità e l'Influenza di Aristotele</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                L'impatto di Aristotele sulla cultura occidentale e non solo è quasi incommensurabile.
+            </p>
+            <ul>
+                <li>
+                    <h4>Il Fondatore di Molte Discipline:</h4>
+                    <p>
+                        È considerato il fondatore di diverse discipline:
+                        <ul>
+                            <li><span class="highlight">Logica:</span> I suoi "Analitici" furono il testo base per la logica per oltre duemila anni.</li>
+                            <li><span class="highlight">Biologia:</span> Le sue osservazioni e classificazioni del mondo animale sono straordinarie per l'epoca, facendone il padre della zoologia.</li>
+                            <li><span class="highlight">Retorica e Poetica:</span> Le sue teorie sulla persuasione e sull'arte tragica ("catarsi") sono ancora studiate.</li>
+                        </ul>
+                    </p>
+                </li>
+                <li>
+                    <h4>La Scolastica Medievale:</h4>
+                    <p>
+                        Nel Medioevo, in particolare con **Tommaso d'Aquino**, Aristotele divenne "il Filosofo" per eccellenza. La sua logica e la sua metafisica furono assimilate e cristianizzate, costituendo la spina dorsale della filosofia scolastica. La sua cosmologia e la sua fisica dominarono il pensiero scientifico fino a Galileo e Newton.
+                    </p>
+                </li>
+                <li>
+                    <h4>Filosofia Islamica ed Ebraica:</h4>
+                    <p>
+                        Aristotele ebbe un'enorme influenza anche sul pensiero islamico (es. Averroè, Avicenna) ed ebraico (es. Maimonide), dove le sue opere furono tradotte e commentate ampiamente, contribuendo a preservarne la conoscenza.
+                    </p>
+                </li>
+                <li>
+                    <h4>Il Rifiuto e la Riscoperta:</h4>
+                    <p>
+                        Con la rivoluzione scientifica del XVI-XVII secolo, la fisica e la cosmologia aristotelica furono superate. Tuttavia, la sua logica, la sua etica e la sua metafisica continuano a essere studiate e a ispirare il pensiero contemporaneo.
+                    </p>
+                </li>
+            </ul>
+            <p>
+                Aristotele rappresenta il culmine della filosofia greca e l'inizio di un'era di indagine sistematica e scientifica. La sua capacità di analizzare, classificare e collegare ogni aspetto della realtà, dal più piccolo organismo al movimento dei cieli, ne fa un gigante intellettuale la cui eredità è ancora viva e fondamentale per la comprensione del pensiero occidentale.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const content = this.nextElementSibling; // Seleziona il div con il contenuto
+                    
+                    // Opzionale: Chiudi tutti gli altri pannelli aperti
+                    accordionButtons.forEach(otherButton => {
+                        if (otherButton !== this && otherButton.classList.contains('active')) {
+                            otherButton.classList.remove('active');
+                            otherButton.nextElementSibling.classList.remove('show');
+                        }
+                    });
+
+                    // Apri/chiudi il pannello cliccato
+                    this.classList.toggle('active');
+                    content.classList.toggle('show');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

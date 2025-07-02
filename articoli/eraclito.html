@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eraclito di Efeso: Il Filosofo del Divenire e del Logos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Stili Generali e Reset */
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 3.2em;
+            text-align: center;
+            border-bottom: 2px solid #e74c3c; /* Colore distintivo per Eraclito */
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 2.4em;
+            color: #e74c3c; /* Colore distintivo per Eraclito */
+            margin-top: 30px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: #555;
+            margin-top: 25px;
+        }
+
+        h4 {
+            font-size: 1.3em;
+            color: #444;
+            margin-top: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #3498db; /* Colore per evidenziazioni */
+        }
+
+        .quote {
+            font-style: italic;
+            background-color: #fef1e6; /* Sfondo leggermente caldo per le citazioni */
+            padding: 18px 25px;
+            border-left: 5px solid #e74c3c;
+            margin: 25px 0;
+            border-radius: 4px;
+            line-height: 1.5;
+        }
+
+        .quote footer {
+            text-align: right;
+            margin-top: 12px;
+            font-size: 0.95em;
+            color: #7f8c8d;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+        }
+
+        .image-container figcaption {
+            font-size: 0.9em;
+            color: #777;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Stili per l'Accordion (Sezioni Espandibili) */
+        .accordion-section {
+            max-width: 900px;
+            margin: 25px auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .accordion-button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 20px 30px;
+            background-color: #e74c3c; /* Colore del bottone per Eraclito */
+            color: white;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s ease;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .accordion-button:hover {
+            background-color: #c0392b;
+        }
+
+        .accordion-button h2 {
+            color: white;
+            margin: 0;
+            font-size: 1em;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .accordion-button i {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-button.active i {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 0 30px;
+            background-color: #ffffff;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            box-sizing: border-box;
+        }
+
+        .accordion-content.show {
+            max-height: 3000px; /* Valore grande per accomodare il contenuto esteso */
+            padding: 30px;
+        }
+
+        .accordion-content ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .accordion-content ul li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .accordion-content ul li::before {
+            content: '🔥'; /* Simbolo di fuoco per Eraclito */
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                margin: 20px auto;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2.5em;
+            }
+            h2 {
+                font-size: 2em;
+            }
+            .accordion-button {
+                padding: 15px 20px;
+                font-size: 1.5em;
+            }
+            .accordion-content {
+                padding: 0 20px;
+            }
+            .accordion-content.show {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Eraclito di Efeso: Il Filosofo del Divenire e del Logos</h1>
+
+        <div class="image-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Heraclitus_by_Johannes_Moreelse.jpeg/800px-Heraclitus_by_Johannes_Moreelse.jpeg" alt="Rappresentazione di Eraclito di Efeso">
+            <figcaption>Eraclito, raffigurato in un'opera di Johannes Moreelse (XVII secolo).</figcaption>
+        </div>
+
+        <p>
+            Nel VI secolo a.C., mentre le città della Ionia fiorivano come centri di pensiero e commercio, emerse una delle figure più enigmatiche e influenti della filosofia presocratica: **Eraclito di Efeso** (circa 535 a.C. – 475 a.C.). Soprannominato "l'Oscuro" (ὁ Σκοτεινός) per la sua scrittura aforismatica, oracolare e spesso ambigua, Eraclito fu un pensatore radicale, aristocratico di nascita e di spirito, che disprezzava la massa e i suoi costumi. La sua filosofia, basata sulla centralità del **divenire** e sull'importanza del **Logos**, si contrapponeva nettamente alle scuole monistiche e statiche del suo tempo, ponendo le basi per un dinamismo che avrebbe influenzato pensatori da Platone a Hegel e oltre.
+        </p>
+        <p>
+            Di Eraclito ci sono giunti circa 130 frammenti della sua unica opera, "Sulla Natura" (Περὶ φύσεως), spesso enigmatici ma ricchi di profonde intuizioni sul cosmo, sull'uomo e sulla conoscenza. La sua eredità risiede nella sua capacità di cogliere l'essenza dinamica della realtà, un concetto rivoluzionario che sfida la nostra percezione di stabilità.
+        </p>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>Il Divenire Costante: "Panta Rhei"</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                La dottrina centrale e più famosa di Eraclito è quella del **divenire universale**, sintetizzata nella celebre (ma non sua esatta) espressione greca <span class="highlight">"Panta Rhei"</span> (πάντα ῥεῖ), che significa "tutto scorre". Per Eraclito, la realtà non è statica e immutabile come sosteneva Parmenide, ma è in un continuo, incessante flusso e trasformazione.
+            </p>
+            <div class="quote">
+                <p>«Non si può scendere due volte nello stesso fiume.»</p>
+                <footer>— Eraclito (frammento B91 DK)</footer>
+            </div>
+            <p>
+                Questo aforisma esemplifica perfettamente la sua visione: sebbene il fiume sembri lo stesso, l'acqua che lo compone è costantemente nuova. Allo stesso modo, anche l'individuo che vi si immerge è diverso. Tutto è in un perpetuo stato di **cambiamento e trasformazione**. Non c'è nulla di fisso o permanente. Questa idea si contrapponeva direttamente alla filosofia degli Eleati (Parmenide e Zenone), per i quali il divenire era solo un'illusione sensoriale.
+            </p>
+            <p>
+                Eraclito vedeva questo flusso non come un caos disordinato, ma come un processo regolato da una legge intrinseca. La stabilità che percepiamo nel mondo non è data dall'immutabilità delle cose, ma dalla **costanza della legge del mutamento stesso**. È come la fiamma di una candela: sebbene la fiamma sia in continuo movimento e consumi cera e ossigeno, mantiene una sua forma riconoscibile. La sua "identità" risiede proprio nel suo costante divenire.
+            </p>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>Il Fuoco: Archè e Simbolo del Divenire</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Come molti presocratici, Eraclito cercò un **principio originario (archè)** che potesse spiegare la realtà. Egli identificò questo principio nel **fuoco** (πῦρ). La scelta del fuoco non è casuale né semplicemente materialistica, ma profondamente simbolica e filosofica:
+            </p>
+            <ul>
+                <li>
+                    <h4>Simbolo del Divenire:</h4>
+                    <p>
+                        Il fuoco è l'elemento che più di ogni altro incarna il divenire e la trasformazione. È in costante movimento, muta forma, consuma e genera (cenere, fumo, calore), eppure conserva una sua identità. Non è mai "lo stesso" in due istanti successivi, proprio come la realtà stessa.
+                    </p>
+                </li>
+                <li>
+                    <h4>Principio Energetico e Ordinatore:</h4>
+                    <p>
+                        Il fuoco è visto come una forza dinamica che regola il cosmo attraverso la sua accensione e estinzione secondo misura. Non è solo un elemento passivo, ma una potenza attiva che governa il cambiamento.
+                    </p>
+                </li>
+                <li>
+                    <h4>Metafora del Logos:</h4>
+                    <p>
+                        Il fuoco è anche metafora del **Logos**, la ragione universale che governa il divenire. Esso non è solo materia, ma anche intelligenza e ordine.
+                    </p>
+                </li>
+            </ul>
+            <div class="quote">
+                <p>«Questo cosmo, il medesimo per tutti, nessuno degli dèi né degli uomini lo ha creato, ma è sempre stato ed è e sarà fuoco vivo, che si accende e si spegne secondo misura.»</p>
+                <footer>— Eraclito (frammento B30 DK)</footer>
+            </div>
+            <p>
+                Questa visione cosmologica suggerisce un universo eterno, senza inizio né fine, che si auto-organizza attraverso il costante processo di accensione e spegnimento del fuoco, un processo regolato da una legge razionale.
+            </p>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>L'Armonia dei Contrari e il Logos</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Eraclito comprese che il divenire non è caotico, ma è guidato da una profonda **armonia**, nata dalla tensione e dalla lotta dei **contrari**. Per lui, gli opposti non si annullano a vicenda, ma coesistono e si implicano reciprocamente, generando l'equilibrio del cosmo.
+            </p>
+            <ul>
+                <li>
+                    <h4>La Coesistenza degli Opposti:</h4>
+                    <p>
+                        Caldo e freddo, giorno e notte, vita e morte, bene e male: questi opposti non sono separati, ma sono facce della stessa medaglia, necessari l'uno all'altro per esistere. La malattia rende la salute desiderabile, la fame rende dolce la sazietà.
+                    </p>
+                </li>
+                <li>
+                    <h4>La Guerra come Madre di Tutte le Cose:</h4>
+                    <p>
+                        Il conflitto (πόλεμος - <em>polemos</em>) è la forza motrice del divenire. Non inteso come conflitto distruttivo, ma come tensione creativa tra opposti, che genera armonia e ordine.
+                    </p>
+                    <div class="quote">
+                        <p>«La guerra è padre di tutte le cose, di tutte re; e gli uni li rivelò dèi e gli altri uomini, gli uni li fece schiavi gli altri liberi.»</p>
+                        <footer>— Eraclito (frammento B53 DK)</footer>
+                    </div>
+                </li>
+                <li>
+                    <h4>L'Armonia Nascosta:</h4>
+                    <p>
+                        L'armonia non è evidente ai sensi, ma è una <span class="highlight">"armonia nascosta"</span> (ἁρμονίη ἀφανής), più potente di quella manifesta. È l'equilibrio dinamico che emerge dalla tensione dei contrari, simile a quella di un arco o di una lira, dove la tensione opposta delle corde e del legno produce una melodia.
+                    </p>
+                </li>
+            </ul>
+
+            <h3>Il Logos: La Ragione Universale</h3>
+            <p>
+                Ciò che governa e armonizza questo incessante divenire è il **Logos** (λόγος). Il Logos di Eraclito è un concetto polisemico e fondamentale:
+            </p>
+            <ul>
+                <li><strong>Ragione Universale:</strong> È la legge cosmica che ordina il divenire, una sorta di "ragione ardente" che pervade tutto.</li>
+                <li><strong>Principio Strutturante:</strong> È la struttura razionale e la misura che regola l'accendersi e lo spegnersi del fuoco.</li>
+                <li><strong>Parola e Discorso:</strong> È anche la parola, il discorso che rivela questa verità, sebbene molti uomini non lo comprendano.</li>
+            </ul>
+            <p>
+                Il Logos è accessibile a tutti, ma solo pochi riescono a comprenderlo, perché la maggior parte degli uomini vive in un "mondo privato", seguendo le proprie opinioni e i propri sensi ingannevoli, anziché la ragione universale. Questa consapevolezza del Logos come principio cosmico e norma etica distingue Eraclito dai primi naturalisti.
+            </p>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>La Conoscenza e l'Uomo in Eraclito</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Eraclito era un aristocratico che disprezzava la conoscenza superficiale e la saggezza popolare. Per lui, la vera saggezza non derivava dall'accumulo di molte informazioni (πολυμαθίη), ma dalla comprensione del Logos universale.
+            </p>
+            <ul>
+                <li>
+                    <h4>Critica della Polimathia:</h4>
+                    <p>
+                        «Molteplice conoscenza non insegna l'intelletto» (B40 DK). Eraclito criticava apertamente figure come Esiodo, Pitagora e Senofane per la loro superficialità o per non aver colto l'unità dietro la molteplicità.
+                    </p>
+                </li>
+                <li>
+                    <h4>L'Anima e il Fuoco:</h4>
+                    <p>
+                        Anche l'anima umana partecipa del Logos. Un'anima saggia è "secca", simile al fuoco, ovvero pura e razionale. Un'anima "umida" (per esempio, intossicata dal vino) è meno capace di comprendere la verità.
+                    </p>
+                </li>
+                <li>
+                    <h4>La Verità Nascosta:</h4>
+                    <p>
+                        La verità è profonda e non si rivela facilmente. Eraclito invitava gli uomini a "cercare se stessi" (B101 DK), implicando che la comprensione del Logos esteriore passa attraverso l'auto-conoscenza e l'intuizione interiore.
+                    </p>
+                </li>
+            </ul>
+            <div class="quote">
+                <p>«La natura ama nascondersi.»</p>
+                <footer>— Eraclito (frammento B123 DK)</footer>
+            </div>
+            <p>
+                Questa affermazione racchiude il suo approccio: la verità non è immediatamente accessibile ai sensi, ma va ricercata con la ragione e con una profonda meditazione sulla natura delle cose. Eraclito vedeva sé stesso come un messaggero di questa verità, incompreso dalla maggior parte degli uomini che preferivano seguire le loro illusioni.
+            </p>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>L'Eredità e l'Influenza di Eraclito</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                La filosofia di Eraclito, sebbene criptica, ha avuto un'influenza monumentale sul pensiero occidentale:
+            </p>
+            <ul>
+                <li>
+                    <h4>Platone:</h4>
+                    <p>
+                        Il concetto eracliteo del divenire universale fu cruciale per Platone, che lo usò come base per la sua teoria delle Idee. Per Platone, il mondo sensibile è il mondo del divenire eracliteo, ma al di sopra di esso esiste un mondo immutabile e perfetto (le Idee) che solo la ragione può cogliere, fornendo una soluzione al problema della stabilità e del cambiamento.
+                    </p>
+                </li>
+                <li>
+                    <h4>Stoicismo:</h4>
+                    <p>
+                        Gli Stoici ripresero il concetto di Logos come ragione universale, fuoco divino che pervade e ordina il cosmo. Per loro, vivere secondo virtù significava vivere in armonia con questo Logos.
+                    </p>
+                </li>
+                <li>
+                    <h4>Hegel:</h4>
+                    <p>
+                        Georg Wilhelm Friedrich Hegel nel XIX secolo vide in Eraclito un precursore della sua dialettica. Il divenire come sintesi degli opposti, la "guerra" come motore del progresso storico e filosofico, sono concetti che risuonano fortemente con la filosofia hegeliana.
+                    </p>
+                </li>
+                <li>
+                    <h4>La Fisicità e la Modernità:</h4>
+                    <p>
+                        La sua intuizione che il mondo è un processo dinamico, piuttosto che una collezione di oggetti statici, trova eco in alcune concezioni della fisica moderna e della filosofia della scienza, che enfatizzano l'interconnessione e la trasformazione continua della realtà.
+                    </p>
+                </li>
+            </ul>
+            <p>
+                Eraclito rimane un filosofo di straordinaria profondità. La sua insistenza sulla legge del divenire, sulla tensione degli opposti e sulla comprensione del Logos continua a offrire spunti di riflessione per chiunque cerchi di comprendere la natura complessa e dinamica del nostro universo. La sua "oscurità" non è una barriera, ma un invito a una più profonda meditazione.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const content = this.nextElementSibling; // Seleziona il div con il contenuto
+                    
+                    // Opzionale: Chiudi tutti gli altri pannelli aperti
+                    accordionButtons.forEach(otherButton => {
+                        if (otherButton !== this && otherButton.classList.contains('active')) {
+                            otherButton.classList.remove('active');
+                            otherButton.nextElementSibling.classList.remove('show');
+                        }
+                    });
+
+                    // Apri/chiudi il pannello cliccato
+                    this.classList.toggle('active');
+                    content.classList.toggle('show');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

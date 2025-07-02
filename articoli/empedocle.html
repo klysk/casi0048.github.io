@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empedocle di Agrigento: I Quattro Elementi e le Forze Cosmiche</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Stili Generali e Reset */
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 3.2em;
+            text-align: center;
+            border-bottom: 2px solid #27ae60; /* Verde per Empedocle (natura) */
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 2.4em;
+            color: #27ae60; /* Verde per Empedocle */
+            margin-top: 30px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: #555;
+            margin-top: 25px;
+        }
+
+        h4 {
+            font-size: 1.3em;
+            color: #444;
+            margin-top: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #e74c3c; /* Rosso per evidenziazioni */
+        }
+
+        .quote {
+            font-style: italic;
+            background-color: #e6faed; /* Sfondo chiaro per le citazioni */
+            padding: 18px 25px;
+            border-left: 5px solid #27ae60; /* Verde per le citazioni */
+            margin: 25px 0;
+            border-radius: 4px;
+            line-height: 1.5;
+        }
+
+        .quote footer {
+            text-align: right;
+            margin-top: 12px;
+            font-size: 0.95em;
+            color: #7f8c8d;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+        }
+
+        .image-container figcaption {
+            font-size: 0.9em;
+            color: #777;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Stili per l'Accordion (Sezioni Espandibili) */
+        .accordion-section {
+            max-width: 900px;
+            margin: 25px auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .accordion-button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 20px 30px;
+            background-color: #27ae60; /* Verde per il bottone */
+            color: white;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s ease;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .accordion-button:hover {
+            background-color: #229a58;
+        }
+
+        .accordion-button h2 {
+            color: white;
+            margin: 0;
+            font-size: 1em;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .accordion-button i {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-button.active i {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 0 30px;
+            background-color: #ffffff;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            box-sizing: border-box;
+        }
+
+        .accordion-content.show {
+            max-height: 3500px; /* Valore grande per accomodare il contenuto esteso */
+            padding: 30px;
+        }
+
+        .accordion-content ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .accordion-content ul li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .accordion-content ul li::before {
+            content: '🌿'; /* Simbolo di natura/erba per Empedocle */
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                margin: 20px auto;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2.5em;
+            }
+            h2 {
+                font-size: 2em;
+            }
+            .accordion-button {
+                padding: 15px 20px;
+                font-size: 1.5em;
+            }
+            .accordion-content {
+                padding: 0 20px;
+            }
+            .accordion-content.show {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Empedocle di Agrigento: I Quattro Elementi e le Forze Cosmiche</h1>
+
+        <div class="image-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/ea/Empedocles_by_Salvator_Rosa.jpg" alt="Rappresentazione di Empedocle di Agrigento">
+            <figcaption>Empedocle di Agrigento, in un dipinto di Salvator Rosa (XVII secolo).</figcaption>
+        </div>
+
+        <p>
+            Nel cuore del V secolo a.C., in una Sicilia rigogliosa e culturalmente vivace, visse **Empedocle di Agrigento** (circa 490 – 430 a.C.). Figura carismatica e complessa, fu non solo un filosofo, ma anche un medico, un poeta, un oratore, e persino un taumaturgo, con un'aura quasi divina che lo circondava. La sua filosofia rappresenta un tentativo ingegnoso di risolvere il dilemma centrale del suo tempo: conciliare l'immutabilità dell'Essere parmenideo con l'evidenza del divenire e della molteplicità, senza ricorrere al non-essere. Il suo sistema, esposto in opere poetiche come "Sulla Natura" (Περὶ φύσεως) e "Purificazioni" (Καθαρμοί), introduce i celebri **quattro elementi (radici)** e due **forze cosmiche** che ciclicamente governano l'universo.
+        </p>
+        <p>
+            Empedocle fu l'ultimo dei grandi "fisici" presocratici e il primo a proporre una teoria dei quattro elementi che avrebbe dominato il pensiero scientifico e filosofico occidentale per oltre due millenni. La sua visione del mondo è un'affascinante sintesi di scienza, misticismo e religione.
+        </p>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>Il Problema del Divenire e la Risposta di Empedocle</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Empedocle si trovò di fronte al medesimo problema che aveva stimolato Anassagora: come spiegare la nascita e la morte, il cambiamento e la molteplicità, senza violare il principio eleatico che "nulla nasce dal nulla e nulla perisce nel nulla"? Parmenide aveva sostenuto che il divenire è un'illusione, mentre Eraclito lo aveva elevato a legge universale.
+            </p>
+            <ul>
+                <li>
+                    <h4>Accettazione del Principio Parmenideo:</h4>
+                    <p>
+                        Empedocle concorda con Parmenide: l'Essere non può nascere o morire. Le cose non possono apparire dal non-essere o dissolversi nel non-essere. Questo significa che i principi fondamentali della realtà devono essere <span class="highlight">eterni e immutabili</span>.
+                    </p>
+                </li>
+                <li>
+                    <h4>Spiegazione del Divenire:</h4>
+                    <p>
+                        A differenza di Parmenide, però, Empedocle non nega l'evidenza del mutamento nel mondo sensibile. Per lui, il divenire non è un'illusione, ma un processo di **aggregazione e disgregazione** di elementi preesistenti. Le cose che vediamo nascere e morire sono combinazioni di questi elementi immutabili.
+                    </p>
+                </li>
+            </ul>
+            <div class="quote">
+                <p>«Non v'è nascimento di nessuna delle cose mortali, né fine alcuna di morte rovinosa, ma solo mescolanza e separazione di cose mescolate.»</p>
+                <footer>— Empedocle (frammento B8 DK)</footer>
+            </div>
+            <p>
+                Questa fu la sua soluzione brillante: se gli elementi sono eterni, ma si mescolano e si separano, allora si può spiegare la diversità e il cambiamento senza invocare il "non-essere".
+            </p>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>I Quattro Elementi (Radici)</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Empedocle è famoso per aver postulato l'esistenza di **quattro "radici" (ῥιζώματα)**, eterni, immutabili e indistruttibili, che sono i costituenti ultimi di tutta la realtà. Questi sono:
+            </p>
+            <ul>
+                <li>
+                    <h4>Terra (Γῆ):</h4>
+                    <p>Associata alla solidità, alla stabilità, alla materialità.</p>
+                </li>
+                <li>
+                    <h4>Acqua (Ὕδωρ):</h4>
+                    <p>Rappresenta la liquidità, il nutrire, l'umidità.</p>
+                </li>
+                <li>
+                    <h4>Aria (Ἀήρ):</h4>
+                    <p>Legata alla leggerezza, all'invisibilità, al respiro.</p>
+                </li>
+                <li>
+                    <h4>Fuoco (Πῦρ):</h4>
+                    <p>Simboleggia il calore, l'energia, la trasformazione.</p>
+                </li>
+            </ul>
+            <p>
+                Questi quattro elementi sono passivi, inerti di per sé, e non possono muoversi o mescolarsi da soli. La loro combinazione in diverse proporzioni genera la molteplicità delle cose che percepiamo nel mondo. Ad esempio, il sangue è una combinazione di tutti e quattro gli elementi in determinate proporzioni, così come le ossa, i muscoli, ecc.
+            </p>
+            <div class="quote">
+                <p>«...da queste quattro cose, da cui s'accrescono tutte le cose che sono, che furono e che saranno: gli alberi, gli uomini e le donne, le fiere e gli uccelli e i pesci, nutriti nelle acque; e perfino i lunghi dèi, onorati più degli altri.»</p>
+                <footer>— Empedocle (frammento B21 DK)</footer>
+            </div>
+            <p>
+                Questa teoria dei quattro elementi divenne la base della cosmologia, della medicina e della scienza per gran parte dell'antichità e del Medioevo, influenzando pensatori come Platone, Aristotele e i medici galenici.
+            </p>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>Le Forze Cosmiche: Amore e Discordia</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Per spiegare il movimento e la mescolanza/separazione dei quattro elementi, Empedocle introdusse due forze attive e contrapposte, anch'esse eterne e cosmiche:
+            </p>
+            <ul>
+                <li>
+                    <h4>Amore (Φιλία - Philía):</h4>
+                    <p>
+                        È la forza di attrazione, unione, mescolanza. Causa l'aggregazione degli elementi simili e la fusione delle cose, portando alla nascita e alla creazione. È la forza dell'armonia e dell'unità.
+                    </p>
+                </li>
+                <li>
+                    <h4>Discordia (Νεῖκος - Neikos):</h4>
+                    <p>
+                        È la forza di separazione, divisione, odio. Causa la disgregazione delle cose, la loro disunione e la distruzione. È la forza del conflitto e della molteplicità.
+                    </p>
+                </li>
+            </ul>
+            <p>
+                Queste due forze agiscono ciclicamente sull'universo, determinando quattro fasi cosmiche principali:
+            </p>
+            <ol>
+                <li>
+                    <h4>Sfero (Sphaíros):</h4>
+                    <p>
+                        Dominio completo dell'Amore. Tutti e quattro gli elementi sono perfettamente mescolati in un'unità omogenea, una sfera divina e immobile. Non c'è distinzione né movimento. È lo stato di perfetta unità.
+                    </p>
+                </li>
+                <li>
+                    <h4>Inizio della Discordia:</h4>
+                    <p>
+                        La Discordia inizia a penetrare nello Sfero, separando gradualmente gli elementi. Inizia il processo di formazione del mondo come lo conosciamo, con la nascita e la mescolanza delle cose.
+                    </p>
+                </li>
+                <li>
+                    <h4>Dominio della Discordia:</h4>
+                    <p>
+                        La Discordia raggiunge il suo culmine, separando completamente gli elementi l'uno dall'altro. L'universo è un caos di elementi completamente divisi, senza alcuna mescolanza. È lo stato di massima molteplicità e disunione.
+                    </p>
+                </li>
+                <li>
+                    <h4>Inizio dell'Amore:</h4>
+                    <p>
+                        L'Amore inizia a riprendere il sopravvento, ricominciando a mescolare gli elementi separati dalla Discordia, portando a una nuova fase di formazione e aggregazione, fino a tornare allo Sfero.
+                    </p>
+                </li>
+            </ol>
+            <p>
+                Questo ciclo eterno di Amore e Discordia spiega il divenire e la nascita e morte dei singoli enti nel cosmo, senza negare l'eternità degli elementi. È una visione cosmologica dinamica e ciclica, dove la lotta tra opposti genera la realtà.
+            </p>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>La Gnoseologia e la Fisiologia Empedoclea</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Empedocle non si limitò alla cosmologia, ma estese la sua teoria dei quattro elementi anche alla gnoseologia (teoria della conoscenza) e alla fisiologia.
+            </p>
+            <ul>
+                <li>
+                    <h4>Conoscenza per "Simile con Simile":</h4>
+                    <p>
+                        La conoscenza avviene secondo il principio <span class="highlight">"il simile conosce il simile"</span>. Questo significa che percepiamo gli oggetti esterni perché nel nostro corpo (e nei nostri organi di senso) sono presenti gli stessi quattro elementi di cui è composto l'oggetto percepito. Particelle (effluvi) emanate dagli oggetti esterni entrano nei nostri pori sensoriali e, incontrando elementi simili, li attivano, generando la sensazione.
+                    </p>
+                    <div class="quote">
+                        <p>«Per terra la terra, per acqua l'acqua vediamo, per etere l'etere divino, per fuoco il fuoco distruttore; per amore l'amore e la Discordia per la trista Discordia.»</p>
+                        <footer>— Empedocle (frammento B109 DK)</footer>
+                    </div>
+                </li>
+                <li>
+                    <h4>Il Sangue e il Pensiero:</h4>
+                    <p>
+                        Il sangue era considerato la sede principale del pensiero, essendo la mescolanza più equilibrata e completa di tutti e quattro gli elementi nel corpo. Questo lo rende capace di percepire e pensare.
+                    </p>
+                </li>
+                <li>
+                    <h4>La Respirazione:</h4>
+                    <p>
+                        La respirazione è un processo ciclico di entrata e uscita dell'aria attraverso pori che si chiudono e si aprono, un'analogia al ciclo cosmico di Amore e Discordia.
+                    </p>
+                </li>
+            </ul>
+            <h3>Le "Purificazioni" e l'Anima</h3>
+            <p>
+                Accanto alla sua opera "Sulla Natura" (più fisica e cosmologica), Empedocle compose i "Purificazioni", un poema di carattere mistico e religioso che rivela la sua adesione a dottrine orfiche e pitagoriche:
+            </p>
+            <ul>
+                <li>
+                    <h4>Metempsicosi:</h4>
+                    <p>
+                        Empedocle credeva nella <span class="highlight">trasmigrazione delle anime</span> (metempsicosi). Le anime sono demoni divini che, a causa di una colpa originaria (ad esempio, il nutrirsi di carne, rompendo un giuramento sacro), sono cadute nel mondo e sono costrette a reincarnarsi in diverse forme di vita (animali, piante, esseri umani) attraverso un lungo ciclo di purificazione.
+                    </p>
+                </li>
+                <li>
+                    <h4>Vivere Virtuosamente:</h4>
+                    <p>
+                        Il percorso verso la liberazione da questo ciclo di rinascite implica una vita di purificazione, astinenza (in particolare dal consumo di carne) e la pratica della virtù, fino a raggiungere lo status di "mortale immortale" o addirittura di dio.
+                    </p>
+                </li>
+            </ul>
+            <p>
+                Questa dualità tra una spiegazione razionale del cosmo e una profonda spiritualità mistica rende Empedocle una figura unica e affascinante nel panorama presocratico.
+            </p>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>L'Eredità e l'Influenza di Empedocle</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Empedocle ha lasciato un'impronta indelebile nella storia del pensiero occidentale, fungendo da ponte tra diverse tradizioni filosofiche e scientifiche:
+            </p>
+            <ul>
+                <li>
+                    <h4>La Teoria dei Quattro Elementi:</h4>
+                    <p>
+                        Questa è senza dubbio la sua influenza più duratura. Adottata e sistematizzata da **Aristotele**, la teoria dei quattro elementi (terra, acqua, aria, fuoco) divenne il paradigma dominante per la comprensione della materia e delle sue trasformazioni per oltre duemila anni, fino alla rivoluzione scientifica moderna.
+                    </p>
+                </li>
+                <li>
+                    <h4>Influenza sulla Medicina:</h4>
+                    <p>
+                        Il modello dei quattro elementi fu integrato nella medicina ippocratica e poi galenica, dove vennero associati ai quattro umori (sangue, flegma, bile gialla, bile nera) e ai quattro temperamenti, formando la base della patologia e della terapia per secoli.
+                    </p>
+                </li>
+                <li>
+                    <h4>Dinamismo Cosmico:</h4>
+                    <p>
+                        La sua concezione di due forze opposte che creano e distruggono ciclicamente il mondo anticipa in qualche modo le successive dialettiche filosofiche (come quella hegeliana) e la fisica che studia le forze fondamentali.
+                    </p>
+                </li>
+                <li>
+                    <h4>Sintesi Filosofica:</h4>
+                    <p>
+                        Empedocle è ammirato per aver tentato di conciliare le posizioni estreme di Parmenide (immutabilità) ed Eraclito (mutamento), offrendo una soluzione elegante che salvaguardava entrambi gli aspetti della realtà.
+                    </p>
+                </li>
+                <li>
+                    <h4>Poeta-Filosofo:</h4>
+                    <p>
+                        La sua scelta di esprimere la filosofia in versi lo colloca in una tradizione illustre, e il suo stile poetico ha contribuito alla sua fama e alla memorabilità delle sue dottrine.
+                    </p>
+                </li>
+            </ul>
+            <p>
+                La figura di Empedocle, con la sua ricchezza di interessi e la sua visione sincretica, rimane una delle più affascinanti della filosofia antica. I suoi contributi non furono solo speculativi, ma fornirono anche un quadro interpretativo per la scienza e la medicina che perdurò per secoli, dimostrando la potenza duratura delle sue intuizioni.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const content = this.nextElementSibling; // Seleziona il div con il contenuto
+                    
+                    // Opzionale: Chiudi tutti gli altri pannelli aperti
+                    accordionButtons.forEach(otherButton => {
+                        if (otherButton !== this && otherButton.classList.contains('active')) {
+                            otherButton.classList.remove('active');
+                            otherButton.nextElementSibling.classList.remove('show');
+                        }
+                    });
+
+                    // Apri/chiudi il pannello cliccato
+                    this.classList.toggle('active');
+                    content.classList.toggle('show');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

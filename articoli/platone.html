@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platone: Il Mondo delle Idee e la Ricerca della Giustizia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Stili Generali e Reset */
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 3.2em;
+            text-align: center;
+            border-bottom: 2px solid #9b59b6; /* Viola per Platone (idealismo, profondità) */
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 2.4em;
+            color: #9b59b6; /* Viola per Platone */
+            margin-top: 30px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: #555;
+            margin-top: 25px;
+        }
+
+        h4 {
+            font-size: 1.3em;
+            color: #444;
+            margin-top: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #2980b9; /* Blu per evidenziazioni */
+        }
+
+        .quote {
+            font-style: italic;
+            background-color: #f5eff9; /* Sfondo chiaro per le citazioni */
+            padding: 18px 25px;
+            border-left: 5px solid #9b59b6; /* Viola per le citazioni */
+            margin: 25px 0;
+            border-radius: 4px;
+            line-height: 1.5;
+        }
+
+        .quote footer {
+            text-align: right;
+            margin-top: 12px;
+            font-size: 0.95em;
+            color: #7f8c8d;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+        }
+
+        .image-container figcaption {
+            font-size: 0.9em;
+            color: #777;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Stili per l'Accordion (Sezioni Espandibili) */
+        .accordion-section {
+            max-width: 900px;
+            margin: 25px auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .accordion-button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 20px 30px;
+            background-color: #9b59b6; /* Viola per il bottone */
+            color: white;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s ease;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .accordion-button:hover {
+            background-color: #8e44ad;
+        }
+
+        .accordion-button h2 {
+            color: white;
+            margin: 0;
+            font-size: 1em;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .accordion-button i {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-button.active i {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 0 30px;
+            background-color: #ffffff;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            box-sizing: border-box;
+        }
+
+        .accordion-content.show {
+            max-height: 5000px; /* Valore grande per accomodare il contenuto esteso */
+            padding: 30px;
+        }
+
+        .accordion-content ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .accordion-content ul li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .accordion-content ul li::before {
+            content: '🏛️'; /* Simbolo di accademia/idea per Platone */
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                margin: 20px auto;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2.5em;
+            }
+            h2 {
+                font-size: 2em;
+            }
+            .accordion-button {
+                padding: 15px 20px;
+                font-size: 1.5em;
+            }
+            .accordion-content {
+                padding: 0 20px;
+            }
+            .accordion-content.show {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Platone: Il Mondo delle Idee e la Ricerca della Giustizia</h1>
+
+        <div class="image-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Plato_Silanion_Musei_Capitolini.jpg" alt="Busto di Platone">
+            <figcaption>Busto di Platone, conservato nei Musei Capitolini.</figcaption>
+        </div>
+
+        <p>
+            **Platone** (Αριστοκλῆς, Aristocle, detto Platone per la sua robustezza fisica; Atene, 428/427 a.C. – Atene, 348/347 a.C.) è, senza ombra di dubbio, uno dei pensatori più influenti di tutta la storia della filosofia occidentale. Allievo di Socrate e maestro di Aristotele, fu il fondatore dell'Accademia di Atene, la prima vera istituzione filosofica dell'Occidente. La sua opera, giunta a noi quasi integralmente, è composta principalmente da **dialoghi**, in cui Socrate è spesso il protagonista. Attraverso questi dialoghi, Platone non solo preservò e reinterpretò il pensiero del suo maestro, ma sviluppò una sua complessa e originale visione del mondo, che spazia dalla metafisica all'etica, dalla politica all'estetica.
+        </p>
+        <p>
+            Il nucleo della filosofia platonica è la **dottrina delle Idee**, un concetto rivoluzionario che ha profondamente segnato il pensiero occidentale, proponendo l'esistenza di una realtà superiore, eterna e immutabile, al di là del mondo sensibile.
+        </p>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>Il Contesto Storico e la Nascita della Filosofia di Platone</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                La filosofia di Platone non può essere compresa appieno senza considerare il convulso contesto storico-politico in cui visse.
+            </p>
+            <ul>
+                <li>
+                    <h4>La Crisi di Atene:</h4>
+                    <p>
+                        Platone visse in un periodo di profonda crisi per Atene. La sconfitta nella Guerra del Peloponneso (404 a.C.) e il successivo regime oligarchico dei Trenta Tiranni (di cui alcuni suoi parenti facevano parte), seguito dal ripristino della democrazia ma con le sue debolezze, lo portarono a riflettere sulla decadenza politica e morale della sua città.
+                    </p>
+                </li>
+                <li>
+                    <h4>L'Esecuzione di Socrate:</h4>
+                    <p>
+                        L'evento che segnò indelebilmente Platone fu la condanna a morte del suo maestro Socrate (399 a.C.), considerato da Platone "il più giusto degli uomini". Questa ingiustizia lo convinse che la vita politica attiva non era possibile in uno stato corrotto e che solo una radicale riforma della società, basata sulla vera conoscenza, avrebbe potuto salvare la *polis*.
+                    </p>
+                    <div class="quote">
+                        <p>«Vidi che il genere umano non sarebbe mai stato liberato dal male se prima non fossero giunti al potere i veri filosofi o se i capi politici non fossero diventati, per grazia divina, veri filosofi.»</p>
+                        <footer>— Platone, Lettera VII</footer>
+                    </div>
+                </li>
+                <li>
+                    <h4>La Ricerca della Verità Universale:</h4>
+                    <p>
+                        Di fronte al relativismo dei Sofisti (che Socrate aveva già contrastato) e alla fragilità delle istituzioni ateniesi, Platone sentì la necessità di cercare dei principi etici e politici **universali e immutabili**, che potessero garantire un fondamento solido alla conoscenza, alla morale e alla vita politica. Questa ricerca lo condusse alla teoria delle Idee.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>La Dottrina delle Idee: Metafisica e Gnoseologia</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                La teoria delle Idee è il cuore della filosofia platonica e costituisce sia una soluzione al problema della conoscenza (gnoseologia) sia una visione della realtà (metafisica).
+            </p>
+            <ul>
+                <li>
+                    <h4>La Genesi della Teoria:</h4>
+                    <p>
+                        Platone giunse alla teoria delle Idee dalla necessità di dare un fondamento oggettivo ai concetti etici di Socrate (il Bene, la Giustizia) e di superare il dualismo eracliteo del divenire e parmenideo dell'essere. Se esiste una verità e una morale oggettiva, esse non possono risiedere nel mondo sensibile, che è mutevole e imperfetto.
+                    </p>
+                </li>
+                <li>
+                    <h4>Il Mondo delle Idee (Iperuranio):</h4>
+                    <p>
+                        Platone postula l'esistenza di un mondo separato e trascendente, l'**Iperuranio** (ὑπερουράνιος τόπος - *hyperouranios topos*), un "luogo al di là del cielo" (non fisico, ma metaforico), dove risiedono le **Idee** (εἶδος - *eidos* o ἰδέα - *idea*). Le Idee non sono semplici concetti mentali, ma entità perfette, eterne, immutabili e universali, che costituiscono il vero essere.
+                    </p>
+                    <p>
+                        Sono i modelli, gli archetipi, le forme perfette di tutte le cose che esistono nel mondo sensibile. Ad esempio, non ci sono molte "bellezze" o molte "giustizie", ma una sola Idea di Bellezza e una sola Idea di Giustizia, di cui le cose belle o le azioni giuste nel mondo sensibile sono solo copie imperfette.
+                    </p>
+                </li>
+                <li>
+                    <h4>Dualismo Ontologico:</h4>
+                    <p>
+                        La realtà è divisa in due piani:
+                        <ol>
+                            <li>Il **Mondo Sensibile:** È il mondo che percepiamo con i sensi, mutevole, imperfetto, soggetto al divenire e alla corruzione. È una copia imperfetta del mondo delle Idee.</li>
+                            <li>Il **Mondo Intelligibile (delle Idee):** È il mondo accessibile solo all'intelletto (νόος - *noos*), eterno, immutabile, perfetto. È la vera realtà.</li>
+                        </ol>
+                    </p>
+                </li>
+                <li>
+                    <h4>Gerarchia delle Idee:</h4>
+                    <p>
+                        Non tutte le Idee hanno lo stesso valore. Esiste una gerarchia, al cui vertice si trova l'**Idea del Bene** (τὸ ἀγαθόν - *to agathon*), che è la causa e la fonte di tutte le altre Idee, paragonabile al Sole che illumina e rende visibili le cose.
+                    </p>
+                </li>
+                <li>
+                    <h4>Rapporto tra Idee e Cose:</h4>
+                    <p>
+                        Platone descrive il rapporto tra le Idee e le cose sensibili in tre modi:
+                        <ul>
+                            <li><span class="highlight">Mimesi (imitazione):</span> Le cose sensibili imitano le Idee.</li>
+                            <li><span class="highlight">Metessi (partecipazione):</span> Le cose sensibili partecipano alle Idee.</li>
+                            <li><span class="highlight">Parusia (presenza):</span> Le Idee sono presenti nelle cose sensibili.</li>
+                        </ul>
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>La Gnoseologia Platonica: Anamnesi e Gradi della Conoscenza</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Se le Idee esistono in un mondo separato, come possiamo conoscerle? Platone risponde con la dottrina dell'**anamnesi** (ricordo) e con una distinzione dei gradi della conoscenza.
+            </p>
+            <ul>
+                <li>
+                    <h4>Anamnesi (Dottrina della Reminiscenza):</h4>
+                    <p>
+                        Secondo Platone, la nostra anima, prima di incarnarsi nel corpo, risiedeva nell'Iperuranio e contemplava direttamente le Idee. Nel momento dell'incarnazione, l'anima dimentica le Idee. Tuttavia, il contatto con le cose sensibili (che sono copie delle Idee) stimola il ricordo (ἀνάμνησις - *anamnesis*) delle Idee innate. Conoscere è quindi **ricordare**.
+                    </p>
+                    <div class="quote">
+                        <p>«Conoscere è ricordare.»</p>
+                        <footer>— Platone, Menone</footer>
+                    </div>
+                </li>
+                <li>
+                    <h4>Gradi della Conoscenza (Linea Divisa - Repubblica, Libro VI):</h4>
+                    <p>
+                        Platone illustra i gradi della conoscenza attraverso la celebre metafora della **linea divisa**, che distingue due grandi regni della realtà (sensibile e intelligibile) e i rispettivi livelli di conoscenza:
+                        <ol>
+                            <li>
+                                <span class="highlight">Conoscenza Sensibile (Opinione - δόξα - *doxa*):</span>
+                                <ul>
+                                    <li>**Eikasia (immaginazione):** La conoscenza più bassa, che riguarda le ombre o le immagini delle cose sensibili.</li>
+                                    <li>**Pistis (credenza):** La conoscenza delle cose sensibili stesse, basata sulla percezione diretta.</li>
+                                </ul>
+                                L'opinione è mutevole, incerta e non porta alla vera conoscenza.
+                            </li>
+                            <li>
+                                <span class="highlight">Conoscenza Intelligibile (Scienza - ἐπιστήμη - *epistēmē*):</span>
+                                <ul>
+                                    <li>**Dianoia (ragione discorsiva):** La conoscenza matematica, geometrica. Pur essendo astratta, parte da ipotesi e utilizza figure sensibili come ausilio.</li>
+                                    <li>**Noesis (intelletto puro):** Il grado più alto di conoscenza, che si rivolge direttamente alle Idee, le coglie nella loro essenza e risale fino all'Idea del Bene. Questo è il campo della dialettica filosofica.</li>
+                                </ul>
+                                La scienza è stabile, certa e raggiunge la verità.
+                            </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>La Politica: La Città Ideale e il Filosofo Re</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                La filosofia politica di Platone, esposta principalmente ne "La Repubblica", è un'estensione della sua metafisica e gnoseologia. Per Platone, solo la conoscenza delle Idee (in particolare dell'Idea del Bene e della Giustizia) può garantire la costruzione di una polis (città) giusta e felice.
+            </p>
+            <ul>
+                <li>
+                    <h4>La Città Ideale e le Classi Sociali:</h4>
+                    <p>
+                        Platone propone uno stato ideale strutturato in tre classi, ognuna corrispondente a una parte dell'anima e a una virtù specifica:
+                        <ol>
+                            <li><span class="highlight">Governanti-Filosofi (Anima Razionale - Virtù della Sapienza):</span> Sono i custodi dello stato, coloro che hanno contemplato le Idee e conoscono il Bene. Sono i soli in grado di governare giustamente, perché la loro azione è guidata dalla ragione.</li>
+                            <li><span class="highlight">Guerrieri (Anima Irascibile - Virtù del Coraggio):</span> Sono i difensori dello stato, coloro che proteggono la città con forza e onore.</li>
+                            <li><span class="highlight">Produttori (Anima Concupiscibile - Virtù della Temperanza):</span> Sono gli artigiani, gli agricoltori, i mercanti, che provvedono ai bisogni materiali della città.</li>
+                        </ol>
+                    </p>
+                    <p>
+                        La **giustizia nella polis** si realizza quando ogni classe svolge il proprio compito senza interferire con gli altri, e quando l'intera città è governata dalla sapienza dei filosofi.
+                    </p>
+                </li>
+                <li>
+                    <h4>Il "Filosofo Re":</h4>
+                    <p>
+                        Platone sostiene che la salvezza dello stato dipende dal fatto che i filosofi diventino re, o che i re diventino filosofi. Solo il filosofo, avendo accesso al mondo delle Idee, conosce il Bene e la Giustizia e può, quindi, guidare la città verso la felicità. Questa è una forma di **aristocrazia della ragione**.
+                    </p>
+                </li>
+                <li>
+                    <h4>La Comunanza dei Beni per i Custodi:</h4>
+                    <p>
+                        Per evitare la corruzione, i governanti-filosofi e i guerrieri non devono possedere proprietà private né famiglia. Devono vivere in una sorta di comunismo, dedicandosi interamente al bene dello stato. Questo per evitare che interessi personali o familiari li distolgano dalla loro missione.
+                    </p>
+                </li>
+                <li>
+                    <h4>Degenerazione delle Forme di Governo:</h4>
+                    <p>
+                        Platone analizza anche le forme degenerate di governo (oligarchia, timocrazia, democrazia, tirannide), considerandole un allontanamento dalla giustizia e dall'armonia. In particolare, la democrazia, pur nella sua apparente libertà, è vista come un governo dove il popolo, privo di vera conoscenza, è facilmente manipolabile e può portare al caos e infine alla tirannide.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>L'Anima, la Bellezza e il Mito della Caverna</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Platone sviluppa anche una complessa teoria dell'anima e utilizza miti e allegorie per illustrare i suoi concetti più profondi.
+            </p>
+            <ul>
+                <li>
+                    <h4>La Tripartizione dell'Anima:</h4>
+                    <p>
+                        L'anima individuale, come lo stato, è divisa in tre parti:
+                        <ol>
+                            <li><span class="highlight">Anima Razionale (Logistikon):</span> La parte più alta, sede della ragione e della sapienza, che deve governare. Risiede nel cervello.</li>
+                            <li><span class="highlight">Anima Irascibile (Thymoeides):</span> Sede della forza, del coraggio, delle passioni nobili. Aiuta la ragione a dominare gli impulsi. Risiede nel petto.</li>
+                            <li><span class="highlight">Anima Concupiscibile (Epithymetikon):</span> Sede dei desideri e degli istinti primari (fame, sete, sesso). Deve essere controllata dalla ragione. Risiede nel ventre.</li>
+                        </ol>
+                        La **giustizia nell'individuo** si realizza quando la parte razionale domina le altre due, portando all'armonia interiore.
+                    </p>
+                </li>
+                <li>
+                    <h4>Il Mito della Bighe Alata (Fedro):</h4>
+                    <p>
+                        Questo mito descrive l'anima come una biga trainata da due cavalli (uno bianco, nobile, che rappresenta l'anima irascibile; uno nero, disobbediente, che rappresenta l'anima concupiscibile) e guidata da un auriga (l'anima razionale). La biga deve salire verso l'Iperuranio per contemplare le Idee. La capacità dell'auriga di mantenere l'equilibrio determina quanto l'anima possa elevarsi nella conoscenza.
+                    </p>
+                </li>
+                <li>
+                    <h4>L'Amore Platonico (Eros):</h4>
+                    <p>
+                        L'Eros non è solo amore sensuale, ma una forza che spinge l'anima a elevarsi dal desiderio delle bellezze sensibili, imperfette e mutevoli, alla contemplazione della Bellezza in sé, l'Idea del Bello. È una forza ascensionale che conduce alla conoscenza del Bene.
+                    </p>
+                </li>
+                <li>
+                    <h4>Il Mito della Caverna (Repubblica, Libro VII):</h4>
+                    <p>
+                        Questa è forse l'allegoria più famosa di Platone. Immagina un gruppo di prigionieri incatenati in una caverna fin dalla nascita, costretti a guardare solo una parete di fondo. Dietro di loro, un fuoco proietta ombre sulla parete, che i prigionieri scambiano per la realtà. Uno di loro si libera e, con difficoltà, sale verso l'uscita, scoprendo la luce del Sole e il mondo esterno. Inizialmente accecato, poi comprende la vera realtà. Tornato nella caverna per liberare i compagni, questi non gli credono e, anzi, cercano di ucciderlo.
+                    </p>
+                    <p>
+                        **Significato del mito:**
+                        <ul>
+                            <li><span class="highlight">La Caverna:</span> Il mondo sensibile in cui viviamo.</li>
+                            <li><span class="highlight">Le Ombre:</span> Le apparenze sensibili, la conoscenza ingannevole (eikasia).</li>
+                            <li><span class="highlight">Il Fuoco:</span> Il Sole del mondo sensibile, fonte di conoscenza illusoria.</li>
+                            <li><span class="highlight">La Via in Salita:</span> Il processo della conoscenza, la dialettica filosofica.</li>
+                            <li><span class="highlight">Il Mondo Esterno:</span> Il mondo delle Idee (Iperuranio).</li>
+                            <li><span class="highlight">Il Sole:</span> L'Idea del Bene.</li>
+                            <li><span class="highlight">Il Prigioniero Liberato:</span> Il filosofo, che ha raggiunto la vera conoscenza.</li>
+                            <li><span class="highlight">Il Ritorno nella Caverna:</span> Il dovere del filosofo di guidare gli altri verso la verità, anche a costo della propria vita (richiamo a Socrate).</li>
+                        </ul>
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>L'Accademia e l'Eredità di Platone</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Nel 387 a.C., Platone fondò l'**Accademia** ad Atene, una scuola che per quasi mille anni (fino al 529 d.C.) fu il centro della ricerca filosofica, scientifica e matematica.
+            </p>
+            <ul>
+                <li>
+                    <h4>Il Motto dell'Accademia:</h4>
+                    <p>
+                        Sulla porta dell'Accademia si diceva fosse scritto: <span class="highlight">"Non entri chi non conosce la geometria"</span>. Questo sottolinea l'importanza della matematica come propedeutica alla filosofia, perché abitua la mente all'astrazione e al ragionamento rigoroso, preparando alla contemplazione delle Idee.
+                    </p>
+                </li>
+                <li>
+                    <h4>Influenza Duratura:</h4>
+                    <p>
+                        L'influenza di Platone è stata immensa e pervasiva in ogni campo del sapere occidentale:
+                        <ul>
+                            <li><span class="highlight">Filosofia:</span> Ha posto le basi della metafisica, dell'etica, della politica e dell'estetica. Il suo dualismo anima/corpo e il suo idealismo sono stati punti di riferimento e di dibattito per secoli.</li>
+                            <li><span class="highlight">Cristianesimo:</span> La sua distinzione tra mondo sensibile e mondo intelligibile, la sua concezione dell'anima immortale e la gerarchia delle Idee influenzarono profondamente i Padri della Chiesa e la teologia cristiana.</li>
+                            <li><span class="highlight">Scienza e Matematica:</span> Pur non essendo uno scienziato in senso moderno, la sua enfasi sulla struttura matematica della realtà influenzò lo sviluppo della scienza e della cosmologia.</li>
+                            <li><span class="highlight">Letteratura e Arte:</span> I suoi dialoghi sono capolavori letterari, e i suoi miti hanno ispirato innumerevoli opere d'arte e letterarie.</li>
+                        </ul>
+                    </p>
+                </li>
+                <li>
+                    <h4>"Tutta la filosofia occidentale è una serie di note a piè di pagina a Platone":</h4>
+                    <p>
+                        Questa celebre affermazione di Alfred North Whitehead evidenzia la portata dell'eredità platonica. Anche chi si oppone a Platone, spesso lo fa partendo dai problemi e dalle categorie da lui stesso poste.
+                    </p>
+                </li>
+            </ul>
+            <p>
+                Platone rimane una figura colossale, un pensatore che ha osato trascendere il mondo delle apparenze per cercare una verità più profonda e un ordine intrinseco alla realtà, un'ordine che potesse guidare l'uomo e la società verso la giustizia e la felicità. La sua ricerca dell'Assoluto e del Bene continua a risuonare nel dibattito filosofico contemporaneo.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const content = this.nextElementSibling; // Seleziona il div con il contenuto
+                    
+                    // Opzionale: Chiudi tutti gli altri pannelli aperti
+                    accordionButtons.forEach(otherButton => {
+                        if (otherButton !== this && otherButton.classList.contains('active')) {
+                            otherButton.classList.remove('active');
+                            otherButton.nextElementSibling.classList.remove('show');
+                        }
+                    });
+
+                    // Apri/chiudi il pannello cliccato
+                    this.classList.toggle('active');
+                    content.classList.toggle('show');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

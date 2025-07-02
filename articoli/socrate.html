@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socrate: Il Filosofo del "So di non sapere" e la Ricerca della Virtù</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Stili Generali e Reset */
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 3.2em;
+            text-align: center;
+            border-bottom: 2px solid #34495e; /* Grigio scuro per Socrate (rigore, sobrietà) */
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 2.4em;
+            color: #34495e; /* Grigio scuro per Socrate */
+            margin-top: 30px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: #555;
+            margin-top: 25px;
+        }
+
+        h4 {
+            font-size: 1.3em;
+            color: #444;
+            margin-top: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #e74c3c; /* Rosso per evidenziazioni */
+        }
+
+        .quote {
+            font-style: italic;
+            background-color: #ebedef; /* Sfondo chiaro per le citazioni */
+            padding: 18px 25px;
+            border-left: 5px solid #34495e; /* Grigio scuro per le citazioni */
+            margin: 25px 0;
+            border-radius: 4px;
+            line-height: 1.5;
+        }
+
+        .quote footer {
+            text-align: right;
+            margin-top: 12px;
+            font-size: 0.95em;
+            color: #7f8c8d;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+        }
+
+        .image-container figcaption {
+            font-size: 0.9em;
+            color: #777;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Stili per l'Accordion (Sezioni Espandibili) */
+        .accordion-section {
+            max-width: 900px;
+            margin: 25px auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .accordion-button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 20px 30px;
+            background-color: #34495e; /* Grigio scuro per il bottone */
+            color: white;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s ease;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .accordion-button:hover {
+            background-color: #2c3e50;
+        }
+
+        .accordion-button h2 {
+            color: white;
+            margin: 0;
+            font-size: 1em;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .accordion-button i {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-button.active i {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 0 30px;
+            background-color: #ffffff;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            box-sizing: border-box;
+        }
+
+        .accordion-content.show {
+            max-height: 4500px; /* Valore grande per accomodare il contenuto esteso */
+            padding: 30px;
+        }
+
+        .accordion-content ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .accordion-content ul li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .accordion-content ul li::before {
+            content: '🤔'; /* Simbolo di pensiero/domanda per Socrate */
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                margin: 20px auto;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2.5em;
+            }
+            h2 {
+                font-size: 2em;
+            }
+            .accordion-button {
+                padding: 15px 20px;
+                font-size: 1.5em;
+            }
+            .accordion-content {
+                padding: 0 20px;
+            }
+            .accordion-content.show {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Socrate: Il Filosofo del "So di non sapere" e la Ricerca della Virtù</h1>
+
+        <div class="image-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Socrates_Louvre.jpg" alt="Busto di Socrate">
+            <figcaption>Busto di Socrate, una delle poche rappresentazioni che abbiamo.</figcaption>
+        </div>
+
+        <p>
+            Nel cuore di Atene, nel V secolo a.C., visse e operò una delle figure più emblematiche e rivoluzionarie della storia della filosofia: **Socrate** (circa 470/469 – 399 a.C.). La sua importanza non deriva da un corpus di opere scritte – egli non ne lasciò alcuna – ma dalla sua stessa vita, dalla sua metodologia di indagine, dalla sua incrollabile dedizione alla ricerca della verità e della virtù, e dalla sua tragica morte. Socrate fu un filosofo atipico, un "tafano" (come si autodefiniva) che pungolava i suoi concittadini a interrogarsi sulle questioni fondamentali dell'esistenza, della morale e della conoscenza.
+        </p>
+        <p>
+            La sua figura ci è giunta principalmente attraverso le testimonianze dei suoi allievi, in particolare **Platone** e **Senofonte**, e del suo critico **Aristofane**. Nonostante le differenze nelle loro rappresentazioni, emerge un ritratto coerente di un uomo che fece della ricerca del sapere e dell'esame di sé e degli altri la sua missione esistenziale.
+        </p>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>Il Problema delle Fonti e il "So di non Sapere"</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Il primo e più grande problema per chiunque voglia studiare Socrate è la mancanza di sue opere scritte. Questo rende la sua figura un "enigma" filosofico, noto come il <span class="highlight">"problema socratico"</span>.
+            </p>
+            <ul>
+                <li>
+                    <h4>Le Testimonianze Principali:</h4>
+                    <ul>
+                        <li>
+                            <span class="highlight">Platone:</span> Il suo allievo più famoso, lo rende protagonista della maggior parte dei suoi dialoghi. Il Socrate platonico è spesso idealizzato e portavoce delle idee del maestro, ma anche di quelle dello stesso Platone.
+                        </li>
+                        <li>
+                            <span class="highlight">Senofonte:</span> Un altro allievo, nelle sue "Memorabili" e "Apologia di Socrate", presenta un Socrate più pragmatico e meno metafisico, focalizzato sugli aspetti etici e pratici della vita.
+                        </li>
+                        <li>
+                            <span class="highlight">Aristofane:</span> Il commediografo, nella sua commedia "Le Nuvole", lo ritrae come un sofista che insegna a rendere forte il discorso debole, parodiando e distorcendo la sua figura.
+                        </li>
+                    </ul>
+                    <p>Dalla comparazione di queste fonti, gli studiosi cercano di ricostruire il "vero" Socrate.</p>
+                </li>
+                <li>
+                    <h4>L'Oracolo di Delfi e l'Ignoranza Socratica:</h4>
+                    <p>
+                        Si narra che l'Oracolo di Delfi, interrogato da un amico di Socrate (Cherofonte), abbia affermato che nessuno era più sapiente di Socrate. Perplesso, Socrate intraprese un'indagine, interrogando politici, poeti e artigiani, considerati saggi. Scoprì che essi, pur non sapendo, credevano di sapere. Socrate invece, pur non sapendo, era consapevole della propria ignoranza.
+                    </p>
+                    <div class="quote">
+                        <p>«So di non sapere.»</p>
+                        <footer>— Socrate (riportato da Platone nell'Apologia)</footer>
+                    </div>
+                    <p>
+                        Questa celebre affermazione non è un'espressione di rassegnazione, ma il fondamento della sua filosofia. È la consapevolezza della propria ignoranza che spinge alla ricerca della verità, distinguendosi da chi si accontenta di false certezze. È il punto di partenza per la vera conoscenza.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>Il Metodo Socratico: Ironia e Maieutica</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Il metodo di Socrate non consisteva in lezioni o discorsi frontali, ma in un **dialogo** continuo e serrato con i suoi interlocutori, per le strade, nelle piazze, nei ginnasi di Atene. Questo metodo si articola in due fasi principali:
+            </p>
+            <ul>
+                <li>
+                    <h4>L'Ironia (Εἰρωνεία - *Eironeía*):</h4>
+                    <p>
+                        Inizialmente, Socrate fingeva di essere ignorante, ponendo domande ingenue al suo interlocutore che si riteneva esperto su un dato argomento (es. "Cos'è la giustizia?", "Cos'è la virtù?"). Attraverso una serie di domande apparentemente innocue, conduceva il suo interlocutore a esprimere le proprie certezze. Poi, con ulteriori domande, evidenziava le contraddizioni e le lacune nel suo ragionamento, portandolo alla <span class="highlight">confutazione</span> (ἔλεγχος - *elenchos*) e alla consapevolezza della propria ignoranza (ἀπορία - *aporia*). Questo momento di crisi, sebbene doloroso, era propedeutico alla vera ricerca.
+                    </p>
+                </li>
+                <li>
+                    <h4>La Maieutica (Μαιευτική - *Maieutikē*):</h4>
+                    <p>
+                        Una volta che l'interlocutore aveva ammesso di "non sapere", Socrate lo aiutava a "partorire" la verità che era già in lui. La maieutica, come l'arte dell'ostetrica (mestiere di sua madre), non infondeva conoscenze dall'esterno, ma aiutava a far emergere la verità intrinseca all'anima. Attraverso ulteriori domande e analisi, si cercava di definire concetti universali (come la giustizia, il bene, il coraggio), superando gli esempi particolari.
+                    </p>
+                    <div class="quote">
+                        <p>«La mia arte ostetrica ha il potere di svegliare i pensieri.»</p>
+                        <footer>— Socrate (riportato da Platone nel Teeteto)</footer>
+                    </div>
+                    <p>
+                        L'obiettivo non era tanto quello di dare risposte definitive, quanto di stimolare la ricerca autonoma e la riflessione critica.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>L'Etica Socratica: Virtù, Conoscenza e Demone</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                La filosofia di Socrate si concentrò principalmente sull'**etica**, sulla ricerca del bene e della virtù (ἀρετή - *aretē*), intesa non come una qualità innata o un privilegio di nascita, ma come una **conoscenza** acquisibile.
+            </p>
+            <ul>
+                <li>
+                    <h4>Intellettualismo Etico:</h4>
+                    <p>
+                        Socrate sosteneva che la <span class="highlight">virtù è conoscenza</span> e il vizio è ignoranza. Nessuno fa il male volontariamente (ἀκράτεια - *akrasia*). Se si conosce veramente il bene, non si può non agire bene. Il male deriva da un errore di giudizio, da un'ignoranza su ciò che è realmente vantaggioso per l'anima.
+                    </p>
+                    <p>
+                        Questo implica che la moralità non è una questione di seguire regole esterne, ma di comprendere razionalmente ciò che è giusto. La vera felicità (εὐδαιμονία - *eudaimonia*) consiste nella pratica della virtù.
+                    </p>
+                </li>
+                <li>
+                    <h4>La Cura dell'Anima:</h4>
+                    <p>
+                        Per Socrate, la cosa più importante per l'uomo è la **cura della propria anima** (ἐπιμέλεια τῆς ψυχῆς - *epimeleia tēs psychēs*), intesa come la parte razionale e morale dell'individuo. La ricchezza, la fama, il successo sono beni secondari; ciò che conta è l'eccellenza morale dell'anima.
+                    </p>
+                </li>
+                <li>
+                    <h4>Il Demone Socratico (Δαιμόνιον - *Daimonion*):</h4>
+                    <p>
+                        Socrate parlava di una voce interiore, un segno divino o un "demone" (daimonion) che lo dissuadeva dal compiere certe azioni. Non era una voce che suggeriva cosa fare, ma solo cosa *non* fare. Questo fu interpretato come una forma di intuizione morale o di coscienza, un'anticipazione del concetto di coscienza morale individuale.
+                    </p>
+                    <div class="quote">
+                        <p>«Una voce divina, che mi si è manifestata fin da fanciullo, e che mi dissuade sempre da ciò che sto per fare, mai mi spinge a farlo.»</p>
+                        <footer>— Socrate (riportato da Platone nell'Apologia)</footer>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>Il Processo e la Morte di Socrate</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                La vita di Socrate ebbe un epilogo drammatico e ingiusto, che lo elevò a simbolo della libertà di pensiero e della coerenza filosofica.
+            </p>
+            <ul>
+                <li>
+                    <h4>Le Accuse:</h4>
+                    <p>
+                        Nel 399 a.C., Socrate fu accusato da Meleto, Anito e Licone di due capi d'accusa:
+                        <ol>
+                            <li><span class="highlight">Corrompere i giovani:</span> Attraverso il suo metodo di interrogazione, si diceva che allontanasse i giovani dalle tradizioni e dalla pietà.</li>
+                            <li><span class="highlight">Non credere negli dèi della città e introdurre nuove divinità:</span> Riferimento al suo daimonion e al suo approccio critico alla religione tradizionale.</li>
+                        </ol>
+                        In realtà, le accuse erano probabilmente motivate da rancori politici e dal disagio che il suo metodo critico generava nell'Atene post-guerra del Peloponneso, in un clima di restaurazione conservatrice.
+                    </p>
+                </li>
+                <li>
+                    <h4>L'Apologia:</h4>
+                    <p>
+                        Nel suo processo, Socrate non tentò di scagionarsi con umiltà o di supplicare la giuria. L'Apologia di Platone ci presenta un Socrate fiero e dignitoso che difende il suo ruolo di filosofo come un dono divino alla città, un "tafano" necessario per risvegliare Atene dal suo torpore intellettuale e morale. Preferì difendere la sua missione piuttosto che la sua vita.
+                    </p>
+                </li>
+                <li>
+                    <h4>La Condanna a Morte:</h4>
+                    <p>
+                        La giuria (un'assemblea di 501 cittadini) lo condannò a morte per avvelenamento (cicuta). Socrate accettò serenamente la condanna, rifiutando la possibilità di fuggire offertagli dagli amici.
+                    </p>
+                </li>
+                <li>
+                    <h4>Morte e Coerenza:</h4>
+                    <p>
+                        La sua morte, narrata da Platone nel "Critone" e nel "Fedone", è l'atto finale della sua coerenza filosofica. Rifiutando di violare le leggi della sua città, anche se ingiuste nei suoi confronti, Socrate dimostrò la sua profonda lealtà alla giustizia e alla ragione, e la sua indifferenza di fronte alla morte fisica rispetto all'integrità morale.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>L'Eredità e l'Influenza di Socrate</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Nonostante non abbia scritto nulla, l'impatto di Socrate sulla filosofia occidentale è immenso, segnando un prima e un dopo.
+            </p>
+            <ul>
+                <li>
+                    <h4>Il "Padre della Filosofia Morale":</h4>
+                    <p>
+                        È universalmente riconosciuto come il fondatore della **filosofia morale o etica**, spostando il focus dell'indagine filosofica dalla natura (cosmologia) all'uomo, alla sua condotta e alla sua anima.
+                    </p>
+                </li>
+                <li>
+                    <h4>Metodo Dialettico:</h4>
+                    <p>
+                        Il suo metodo del dialogo, basato sull'interrogazione, la confutazione e la ricerca di definizioni universali, divenne il fondamento della **dialettica**, centrale in Platone e oltre.
+                    </p>
+                </li>
+                <li>
+                    <h4>Influenza su Platone:</h4>
+                    <p>
+                        La filosofia di Platone è impensabile senza Socrate. Quasi tutti i dialoghi platonici vedono Socrate come protagonista, e molte delle sue teorie (come la dottrina delle Idee) si sviluppano a partire dalle questioni sollevate da Socrate.
+                    </p>
+                </li>
+                <li>
+                    <h4>Scuole Socratiche Minori:</h4>
+                    <p>
+                        Dopo la sua morte, diversi allievi di Socrate fondarono le cosiddette "scuole socratiche minori", sviluppando aspetti diversi del pensiero del maestro:
+                        <ul>
+                            <li><span class="highlight">Scuola Cinica:</span> (Antistene, Diogene) enfatizzava l'autarchia, l'indifferenza ai beni materiali e il disprezzo delle convenzioni sociali.</li>
+                            <li><span class="highlight">Scuola Cirenaica:</span> (Aristippo) poneva il piacere come sommo bene (edonismo).</li>
+                            <li><span class="highlight">Scuola Megarica:</span> (Euclide di Megara) si concentrava sulla logica e sulle aporie.</li>
+                        </ul>
+                    </p>
+                </li>
+                <li>
+                    <h4>Simbolo di Integrità Intellettuale:</h4>
+                    <p>
+                        La sua vita, il suo processo e la sua morte lo hanno reso un simbolo eterno di integrità intellettuale, di coraggio civile e di dedizione incondizionata alla verità, un modello per i filosofi di ogni epoca.
+                    </p>
+                </li>
+            </ul>
+            <p>
+                Socrate ha posto le basi per tutta la filosofia successiva, non tanto per le risposte che ha dato, ma per le domande che ha posto e per il modo in cui ha spinto l'uomo a interrogarsi su sé stesso e sulla propria condotta. La sua domanda "Che cos'è?" è il punto di partenza della ricerca filosofica sulla natura delle cose e dei concetti universali.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const content = this.nextElementSibling; // Seleziona il div con il contenuto
+                    
+                    // Opzionale: Chiudi tutti gli altri pannelli aperti
+                    accordionButtons.forEach(otherButton => {
+                        if (otherButton !== this && otherButton.classList.contains('active')) {
+                            otherButton.classList.remove('active');
+                            otherButton.nextElementSibling.classList.remove('show');
+                        }
+                    });
+
+                    // Apri/chiudi il pannello cliccato
+                    this.classList.toggle('active');
+                    content.classList.toggle('show');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

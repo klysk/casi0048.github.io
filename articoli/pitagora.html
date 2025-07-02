@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pitagora e il Pitagorismo: Il Numero come Archè del Cosmo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Stili Generali e Reset */
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 3.2em;
+            text-align: center;
+            border-bottom: 2px solid #8e44ad; /* Viola scuro per Pitagora (mistero, numeri) */
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 2.4em;
+            color: #8e44ad; /* Viola scuro per Pitagora */
+            margin-top: 30px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: #555;
+            margin-top: 25px;
+        }
+
+        h4 {
+            font-size: 1.3em;
+            color: #444;
+            margin-top: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #2980b9; /* Blu per evidenziazioni (matematica) */
+        }
+
+        .quote {
+            font-style: italic;
+            background-color: #f7f3fb; /* Sfondo chiaro per le citazioni */
+            padding: 18px 25px;
+            border-left: 5px solid #8e44ad; /* Viola per le citazioni */
+            margin: 25px 0;
+            border-radius: 4px;
+            line-height: 1.5;
+        }
+
+        .quote footer {
+            text-align: right;
+            margin-top: 12px;
+            font-size: 0.95em;
+            color: #7f8c8d;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+        }
+
+        .image-container figcaption {
+            font-size: 0.9em;
+            color: #777;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Stili per l'Accordion (Sezioni Espandibili) */
+        .accordion-section {
+            max-width: 900px;
+            margin: 25px auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .accordion-button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 20px 30px;
+            background-color: #8e44ad; /* Viola scuro per il bottone */
+            color: white;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s ease;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .accordion-button:hover {
+            background-color: #7d3c98;
+        }
+
+        .accordion-button h2 {
+            color: white;
+            margin: 0;
+            font-size: 1em;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .accordion-button i {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-button.active i {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 0 30px;
+            background-color: #ffffff;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            box-sizing: border-box;
+        }
+
+        .accordion-content.show {
+            max-height: 4000px; /* Valore grande per accomodare il contenuto esteso */
+            padding: 30px;
+        }
+
+        .accordion-content ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .accordion-content ul li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .accordion-content ul li::before {
+            content: '➗'; /* Simbolo di divisione/numero per Pitagora */
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                margin: 20px auto;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2.5em;
+            }
+            h2 {
+                font-size: 2em;
+            }
+            .accordion-button {
+                padding: 15px 20px;
+                font-size: 1.5em;
+            }
+            .accordion-content {
+                padding: 0 20px;
+            }
+            .accordion-content.show {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pitagora e il Pitagorismo: Il Numero come Archè del Cosmo</h1>
+
+        <div class="image-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/ea/Pythagoras_by_Moreelse.jpg" alt="Rappresentazione di Pitagora">
+            <figcaption>Pitagora di Samo, raffigurato in un dipinto di Johannes Moreelse (XVII secolo).</figcaption>
+        </div>
+
+        <p>
+            Tra le figure più enigmatiche e al contempo influenti della filosofia antica, **Pitagora di Samo** (circa 570 – 495 a.C.) si staglia come un crocevia di scienza, religione e misticismo. Nonostante la sua esistenza sia avvolta nel mito e le sue dottrine siano giunte a noi principalmente attraverso fonti indirette e i suoi discepoli (i Pitagorici), la sua impronta sulla matematica, la musica, l'astronomia e la filosofia occidentale è innegabile. A lui si attribuisce la fondazione di una scuola o setta a Crotone, nell'Italia meridionale, dove la filosofia non era solo un esercizio intellettuale, ma uno stile di vita, una via verso la purificazione e la salvezza dell'anima.
+        </p>
+        <p>
+            Il cuore della dottrina pitagorica risiede nella convinzione che il **Numero** sia l'<em>archè</em> (principio) di tutte le cose, la chiave per comprendere l'armonia del cosmo e la struttura intrinseca della realtà.
+        </p>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>Pitagora: Tra Storia e Leggenda</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                La vita di Pitagora è un intreccio di fatti storici e leggende che rendono difficile distinguere il vero dal favoloso.
+            </p>
+            <ul>
+                <li>
+                    <h4>Origini e Viaggi:</h4>
+                    <p>
+                        Nato a Samo, si racconta che abbia viaggiato molto, recandosi in Egitto e forse in Babilonia, dove avrebbe acquisito conoscenze matematiche, astronomiche e religiose. Tali viaggi sono difficili da verificare, ma riflettono l'apertura culturale del mondo greco-orientale.
+                    </p>
+                </li>
+                <li>
+                    <h4>La Scuola di Crotone:</h4>
+                    <p>
+                        Verso il 530 a.C., si stabilì a Crotone, in Magna Grecia (attuale Calabria), dove fondò una comunità filosofica, religiosa e politica. Questa "scuola" non era un'accademia nel senso moderno, ma una vera e propria confraternita con regole di vita rigorose, basate su principi etici, dietetici e spirituali.
+                    </p>
+                </li>
+                <li>
+                    <h4>Riservatezza e Divisione:</h4>
+                    <p>
+                        La scuola era caratterizzata da una forte riservatezza: le dottrine erano segrete e attribuite allo stesso Pitagora (l'ipse dixit). I discepoli erano divisi in due categorie: gli <span class="highlight">acusmatici</span> (coloro che ascoltavano solo i precetti orali di Pitagora, senza spiegarli) e i <span class="highlight">matematici</span> (coloro che approfondivano le dottrine con studi e ricerche).
+                    </p>
+                </li>
+                <li>
+                    <h4>La Fine della Comunità:</h4>
+                    <p>
+                        L'influenza politica dei Pitagorici a Crotone e nelle città vicine portò a reazioni ostili. La comunità fu attaccata e distrutta, e molti Pitagorici furono uccisi o costretti alla fuga. Lo stesso Pitagora, si dice, morì in questo contesto violento o in esilio a Metaponto.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>Il Numero come Archè (Principio)</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                A differenza dei primi filosofi ionici che cercavano l'<em>archè</em> in un elemento materiale (acqua, aria, fuoco), i Pitagorici trovarono il principio di tutte le cose nel **Numero**.
+            </p>
+            <ul>
+                <li>
+                    <h4>Il Numero come Essenza:</h4>
+                    <p>
+                        Per i Pitagorici, le cose "sono" numeri. Non è che le cose "hanno" un numero o sono "spiegabili con" i numeri; piuttosto, la loro essenza stessa è numerica. Tutto è strutturato secondo rapporti numerici e proporzioni matematiche.
+                    </p>
+                </li>
+                <li>
+                    <h4>La Scoperta dell'Armonia Musicale:</h4>
+                    <p>
+                        La scoperta più famosa che avvalorò questa teoria fu quella dei **rapporti numerici nelle armonie musicali**. Si narra che Pitagora scoprì che le consonanze perfette (ottava, quinta, quarta) corrispondono a rapporti semplici di numeri interi (2:1, 3:2, 4:3). Questo dimostrò che qualcosa di apparentemente immateriale come la musica era governato da un ordine matematico.
+                    </p>
+                    <div class="quote">
+                        <p>«I numeri sono l'essenza stessa di tutte le cose.»</p>
+                        <footer>— I Pitagorici (attribuzione indiretta)</footer>
+                    </div>
+                </li>
+                <li>
+                    <h4>Il Numero come Punto e Geometria:</h4>
+                    <p>
+                        I numeri non erano solo astrazioni matematiche, ma avevano una loro concretezza geometrica. Il punto era l'unità (1), la linea era data da due punti (2), la superficie da tre punti (triangolo, 3), e il solido da quattro punti (piramide, 4). Questo mostrava come le forme geometriche (e quindi la realtà fisica) derivassero dal numero.
+                    </p>
+                </li>
+                <li>
+                    <h4>La Tetractys:</h4>
+                    <p>
+                        La **Tetractys** (τετρακτύς) era un simbolo sacro per i Pitagorici, un triangolo formato da dieci punti disposti in quattro righe (1+2+3+4 = 10). Rappresentava la perfezione, l'armonia del cosmo e la fonte di tutte le cose. Giuravano su di essa.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>I Contrari, l'Armonia e la Cosmologia</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                La visione pitagorica del cosmo è intrinsecamente legata alla loro dottrina dei numeri e dei contrari.
+            </p>
+            <ul>
+                <li>
+                    <h4>La Tavola dei Contrari:</h4>
+                    <p>
+                        I Pitagorici distinsero tra dieci coppie di opposti fondamentali che strutturano la realtà. Queste includevano:
+                        <ul>
+                            <li>Limitato - Illimitato</li>
+                            <li>Dispari - Pari</li>
+                            <li>Uno - Molti</li>
+                            <li>Destra - Sinistra</li>
+                            <li>Maschio - Femmina</li>
+                            <li>Quiete - Movimento</li>
+                            <li>Retto - Curvo</li>
+                            <li>Luce - Tenebra</li>
+                            <li>Bene - Male</li>
+                            <li>Quadrato - Oblungo</li>
+                        </ul>
+                        Per i Pitagorici, gli elementi del **limitato** (come il dispari, l'uno, la destra, la luce) erano associati al bene e all'ordine, mentre gli elementi dell'**illimitato** (il pari, i molti, la sinistra, la tenebra) erano associati al disordine.
+                    </p>
+                </li>
+                <li>
+                    <h4>L'Armonia come Equilibrio:</h4>
+                    <p>
+                        Il mondo e ogni cosa in esso sono il risultato dell'applicazione del principio del **limite sull'illimitato**. L'armonia non è l'eliminazione dei contrari, ma il loro equilibrio e la loro proporzione. Il numero stesso, come unità di pari e dispari, è un'armonia.
+                    </p>
+                </li>
+                <li>
+                    <h4>L'Armonia delle Sfere:</h4>
+                    <p>
+                        I Pitagorici credevano che i corpi celesti (Pianeti, Sole, Luna) si muovessero in sfere concentriche attorno a un fuoco centrale (non il Sole, ma un fuoco invisibile). I loro movimenti, proporzionati tra loro come i rapporti numerici che generano le armonie musicali, producevano una "musica inudibile" per gli esseri umani, l'**Armonia delle Sfere**. Questa musica era percepibile solo dall'intelletto puro.
+                    </p>
+                </li>
+                <li>
+                    <h4>La Sfera come Forma Perfetta:</h4>
+                    <p>
+                        La sfera era considerata la forma più perfetta, e per questo i cieli e il cosmo erano immaginati come sferici. Il loro modello cosmologico, sebbene non eliocentrico, era estremamente avanzato per l'epoca, con il fuoco centrale e la Terra che ruotava intorno ad esso (anche se non sul proprio asse).
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>L'Anima, la Metempsicosi e il Modo di Vita Pitagorico</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                La filosofia pitagorica non era solo una dottrina sul cosmo, ma anche un complesso sistema di credenze etiche e religiose che guidavano la vita dei suoi seguaci.
+            </p>
+            <ul>
+                <li>
+                    <h4>L'Anima Immortale:</h4>
+                    <p>
+                        I Pitagorici credevano nell'immortalità dell'anima e nella sua natura divina. L'anima è imprigionata nel corpo come in una tomba o una prigione.
+                    </p>
+                </li>
+                <li>
+                    <h4>La Metempsicosi (Trasmigrazione):</h4>
+                    <p>
+                        Cruciale per la loro dottrina era la credenza nella **metempsicosi** o reincarnazione. L'anima, dopo la morte del corpo, trasmigra in altri corpi, umani, animali o vegetali, fino a quando non si purifica e non si libera dal ciclo delle rinascite.
+                    </p>
+                    <div class="quote">
+                        <p>«Per i Pitagorici, l'anima è un'armonia; e se è un'armonia, è immortale.»</p>
+                        <footer>— Filolao (frammento indiretto)</footer>
+                    </div>
+                </li>
+                <li>
+                    <h4>Il Modo di Vita (Bios Pythagorikos):</h4>
+                    <p>
+                        Per raggiungere la purificazione (κάθαρσις) e la liberazione dal ciclo delle rinascite, i Pitagorici adottavano un rigoroso stile di vita:
+                        <ul>
+                            <li><strong>Regole Alimentari:</strong> Vegetarismo (astensione dalla carne per non nutrirsi di anime reincarnate), divieto di mangiare fave.</li>
+                            <li><strong>Purificazione del Corpo e della Mente:</strong> Attraverso la ginnastica, la musica (per armonizzare l'anima), e lo studio della matematica e della filosofia.</li>
+                            <li><strong>Silenzio e Contemplazione:</strong> Un periodo di silenzio (cinque anni per gli acusmatici) era imposto per sviluppare l'autocontrollo e la capacità di ascolto.</li>
+                            <li><strong>Fratellanza e Condivisione:</strong> La comunità era basata sulla condivisione dei beni e sulla solidarietà tra i membri.</li>
+                        </ul>
+                    </p>
+                </li>
+                <li>
+                    <h4>Il Filosofo come Amante della Sapienza:</h4>
+                    <p>
+                        A Pitagora si attribuisce il termine "filosofo" (φιλόσοφος), ovvero "colui che ama la sapienza". Egli sosteneva che solo Dio è sapiente, e l'uomo può al massimo essere un "amante della sapienza", un cercatore della verità.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>L'Eredità e l'Influenza del Pitagorismo</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Nonostante la distruzione della comunità di Crotone, il Pitagorismo continuò a influenzare il pensiero occidentale per secoli.
+            </p>
+            <ul>
+                <li>
+                    <h4>Matematica e Geometria:</h4>
+                    <p>
+                        I Pitagorici sono accreditati di importanti scoperte, tra cui il famoso <span class="highlight">Teorema di Pitagora</span> (sebbene la sua formulazione e dimostrazione possano essere posteriori al fondatore), la scoperta dei numeri irrazionali (che generò una crisi interna), e lo studio dei numeri perfetti, amichevoli e figurati. Diedero un impulso fondamentale allo sviluppo della matematica come disciplina astratta.
+                    </p>
+                </li>
+                <li>
+                    <h4>Musica e Acustica:</h4>
+                    <p>
+                        La loro intuizione dei rapporti numerici nell'armonia musicale fu la base dell'acustica e influenzò profondamente la teoria musicale per millenni.
+                    </p>
+                </li>
+                <li>
+                    <h4>Astronomia:</h4>
+                    <p>
+                        Le loro concezioni cosmologiche, sebbene non pienamente eliocentriche, rappresentarono un passo importante verso una visione non geocentrica dell'universo, influenzando in seguito Copernico.
+                    </p>
+                </li>
+                <li>
+                    <h4>Influenza su Platone:</h4>
+                    <p>
+                        **Platone** fu profondamente influenzato dal Pitagorismo. La sua concezione dell'anima, la teoria delle Idee (come archetipi intelligibili e matematicamente strutturati), l'importanza della matematica nella conoscenza e l'idea di un cosmo ordinato e armonioso sono tutti debiti al pensiero pitagorico. La sua accademia aveva come motto "Non entri chi non conosce la geometria".
+                    </p>
+                </li>
+                <li>
+                    <h4>Misticismo e Neo-Pitagorismo:</h4>
+                    <p>
+                        Il lato mistico e religioso del Pitagorismo ebbe una rinascita nel Neo-Pitagorismo romano e influenzò le tradizioni esoteriche e numerologiche fino al Rinascimento e oltre.
+                    </p>
+                </li>
+            </ul>
+            <p>
+                Pitagora, dunque, non fu solo un matematico o un filosofo, ma un riformatore religioso e sociale che cercò di unire la ricerca scientifica con un profondo anelito spirituale. La sua eredità è un testimone della perenne ricerca umana di ordine e significato, trovando nella struttura del numero l'armonia universale.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const content = this.nextElementSibling; // Seleziona il div con il contenuto
+                    
+                    // Opzionale: Chiudi tutti gli altri pannelli aperti
+                    accordionButtons.forEach(otherButton => {
+                        if (otherButton !== this && otherButton.classList.contains('active')) {
+                            otherButton.classList.remove('active');
+                            otherButton.nextElementSibling.classList.remove('show');
+                        }
+                    });
+
+                    // Apri/chiudi il pannello cliccato
+                    this.classList.toggle('active');
+                    content.classList.toggle('show');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

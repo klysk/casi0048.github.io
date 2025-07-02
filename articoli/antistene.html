@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antistene: Il Fondatore del Cinismo e la Virtù dell'Autosufficienza</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Stili Generali e Reset */
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 3.2em;
+            text-align: center;
+            border-bottom: 2px solid #8e44ad; /* Viola scuro per Antistene (rigore, distacco) */
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 2.4em;
+            color: #8e44ad; /* Viola scuro per Antistene */
+            margin-top: 30px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: #555;
+            margin-top: 25px;
+        }
+
+        h4 {
+            font-size: 1.3em;
+            color: #444;
+            margin-top: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #c0392b; /* Rosso mattone per evidenziazioni */
+        }
+
+        .quote {
+            font-style: italic;
+            background-color: #f7f1f9; /* Sfondo chiaro per le citazioni */
+            padding: 18px 25px;
+            border-left: 5px solid #8e44ad; /* Viola scuro per le citazioni */
+            margin: 25px 0;
+            border-radius: 4px;
+            line-height: 1.5;
+        }
+
+        .quote footer {
+            text-align: right;
+            margin-top: 12px;
+            font-size: 0.95em;
+            color: #7f8c8d;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+        }
+
+        .image-container figcaption {
+            font-size: 0.9em;
+            color: #777;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Stili per l'Accordion (Sezioni Espandibili) */
+        .accordion-section {
+            max-width: 900px;
+            margin: 25px auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .accordion-button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 20px 30px;
+            background-color: #8e44ad; /* Viola scuro per il bottone */
+            color: white;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s ease;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .accordion-button:hover {
+            background-color: #7d3c98;
+        }
+
+        .accordion-button h2 {
+            color: white;
+            margin: 0;
+            font-size: 1em;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .accordion-button i {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-button.active i {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 0 30px;
+            background-color: #ffffff;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            box-sizing: border-box;
+        }
+
+        .accordion-content.show {
+            max-height: 4500px; /* Valore grande per accomodare il contenuto esteso */
+            padding: 30px;
+        }
+
+        .accordion-content ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .accordion-content ul li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .accordion-content ul li::before {
+            content: '🐕'; /* Simbolo del cane per il cinismo */
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                margin: 20px auto;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2.5em;
+            }
+            h2 {
+                font-size: 2em;
+            }
+            .accordion-button {
+                padding: 15px 20px;
+                font-size: 1.5em;
+            }
+            .accordion-content {
+                padding: 0 20px;
+            }
+            .accordion-content.show {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Antistene: Il Fondatore del Cinismo e la Virtù dell'Autosufficienza</h1>
+
+        <div class="image-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Antisthenes_Farnese_Glyptothek_M%C3%BCnchen_299.jpg" alt="Busto di Antistene">
+            <figcaption>Busto di Antistene, filosofo greco, fondatore del Cinismo.</figcaption>
+        </div>
+
+        <p>
+            Nel variegato panorama delle scuole socratiche minori, sorte dopo la morte di Socrate, una delle più radicali e influenti fu il **Cinismo**. Sebbene spesso associato alla figura più celebre di Diogene di Sinope, il suo vero fondatore è riconosciuto in **Antistene** (Atene, circa 445 a.C. – 365 a.C.). Ex allievo del sofista Gorgia, fu profondamente colpito dalla figura e dal pensiero di Socrate, tanto da abbandonare la retorica per dedicarsi alla filosofia morale. Antistene interpretò il messaggio socratico di "cura dell'anima" e di ricerca della virtù in una chiave estremamente rigorosa, ponendo le basi per una filosofia di vita improntata all'autosufficienza e al disprezzo delle convenzioni sociali.
+        </p>
+        <p>
+            Come Socrate, Antistene non lasciò opere scritte significative; la sua dottrina ci è giunta attraverso testimonianze indirette, in particolare da Diogene Laerzio. La sua filosofia, incentrata sull'etica e sulla pratica di vita, fu una reazione critica alla complessità e alla corruzione della società ateniese del suo tempo.
+        </p>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>La Formazione e il Distacco da Socrate</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                La vita di Antistene è cruciale per comprendere la sua filosofia, poiché la pratica di vita era per lui inscindibile dalla teoria.
+            </p>
+            <ul>
+                <li>
+                    <h4>Da Sofista a Socratico:</h4>
+                    <p>
+                        Prima di incontrare Socrate, Antistene fu allievo di **Gorgia**, da cui apprese l'arte della retorica e un certo scetticismo riguardo alla possibilità di conoscere la verità oggettiva. Tuttavia, fu la figura carismatica di Socrate a convertirlo alla filosofia. Si racconta che fosse così assiduo alle lezioni di Socrate da percorrere ogni giorno una lunga strada per ascoltarlo.
+                    </p>
+                </li>
+                <li>
+                    <h4>L'Interpretazione del Messaggio Socratico:</h4>
+                    <p>
+                        Antistene si considerava un erede diretto di Socrate, ma interpretò il suo insegnamento in modo peculiare, ponendo l'accento sul lato più austero e autosufficiente del maestro. Mentre Platone sviluppava il concetto socratico di virtù in una metafisica delle Idee, Antistene lo radicalizzò verso la **negazione di ogni superfluo**.
+                    </p>
+                    <div class="quote">
+                        <p>«Basta a se stessa la virtù per essere felici; non ha bisogno di null'altro, se non della forza di Socrate.»</p>
+                        <footer>— Antistene (frammento da Diogene Laerzio)</footer>
+                    </div>
+                    <p>
+                        Questa affermazione rivela il suo focus sull'autosufficienza della virtù e sul modello di vita di Socrate, che seppe affrontare la morte con serenità grazie alla sua integrità morale.
+                    </p>
+                </li>
+                <li>
+                    <h4>La Nascita del Cinismo:</h4>
+                    <p>
+                        La scuola di Antistene si riuniva nel ginnasio del Cinosarge (Κυνόσαργες - *Kynosarges*), che significa "tempio del cane bianco". Questo nome, unito al soprannome "cane" (κύων - *kyon*) dato ai seguaci di questa corrente per il loro stile di vita anticonformista e "senza vergogna" (come i cani), diede origine al termine **Cinismo**.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>La Filosofia Morale: Autosufficienza e Rifiuto delle Convenzioni</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Il cuore della filosofia di Antistene è un'etica rigorosa, che mira alla **felicità** attraverso la virtù e l'indipendenza dai beni esterni.
+            </p>
+            <ul>
+                <li>
+                    <h4>La Virtù come Bene Supremo:</h4>
+                    <p>
+                        Per Antistene, la **virtù (ἀρετή - *aretē*) è l'unico bene**. È insegnabile e una volta acquisita non può essere perduta. La virtù è sufficiente per la felicità (αὐτάρκεια - *autarkeia*), non ha bisogno di null'altro. Questo principio lo allontana sia da Platone (che poneva la felicità nella contemplazione delle Idee) sia dagli Edonisti (che la vedevano nel piacere).
+                    </p>
+                </li>
+                <li>
+                    <h4>Il Rifiuto dei Beni Esteriori e delle Convenzioni:</h4>
+                    <p>
+                        Conseguenza diretta della sufficienza della virtù è il **disprezzo per tutto ciò che non è virtù**:
+                        <ul>
+                            <li><span class="highlight">Ricchezza:</span> Considerata inutile e dannosa, fonte di schiavitù e preoccupazioni.</li>
+                            <li><span class="highlight">Onore e Fama:</span> Vani e dipendenti dal giudizio altrui.</li>
+                            <li><span class="highlight">Piaceri Sensibili:</span> Visti come ostacoli alla virtù e al controllo di sé. Antistene sosteneva che il piacere è un male, e che la felicità non consiste nell'assenza di dolore, ma nel dominio sui desideri.</li>
+                            <li><span class="highlight">Convenzioni Sociali (Νόμος - *Nomos*):</span> Leggi, costumi, tradizioni, istituzioni politiche sono viste come artifici umani che allontanano l'uomo dalla natura e dalla vera virtù. Il saggio deve vivere secondo natura, non secondo la legge.</li>
+                        </ul>
+                    </p>
+                    <div class="quote">
+                        <p>«Preferisco la pazzia alla voluttà.»</p>
+                        <footer>— Antistene (frammento da Diogene Laerzio)</footer>
+                    </div>
+                </li>
+                <li>
+                    <h4>L'Ascesi e la Fatica:</h4>
+                    <p>
+                        Antistene esaltava la **fatica** (πόνος - *ponos*) e la **rinuncia** come strumenti per raggiungere la virtù e l'indipendenza. L'esercizio fisico e mentale, il sopportare le avversità, il privarsi del superfluo, sono visti come vie per temprare il carattere e liberarsi dalla schiavitù dei piaceri e dei bisogni.
+                    </p>
+                </li>
+                <li>
+                    <h4>Il Cosmopolitismo:</h4>
+                    <p>
+                        Rifiutando le leggi e le distinzioni tra Greci e Barbari, i Cinici, a partire da Antistene, si dichiararono **cittadini del mondo** (κοσμοπολίτης - *kosmopolites*). La loro vera patria è il cosmo, non una città-stato particolare.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>La Logica e la Teoria della Conoscenza</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Sebbene la sua filosofia fosse prevalentemente etica, Antistene sviluppò anche alcune posizioni logiche e gnoseologiche, spesso in polemica con Platone.
+            </p>
+            <ul>
+                <li>
+                    <h4>Rifiuto delle Idee Platoniche:</h4>
+                    <p>
+                        Antistene fu un convinto oppositore della teoria platonica delle Idee. Per lui, esistono solo gli **individui particolari** e le loro qualità. Non esistono "idee" universali separate dalle cose. Quando si parlava dell'Idea di "cavallo", Antistene rispondeva: <span class="highlight">"Vedo il cavallo, ma non la cavalinità"</span>.
+                    </p>
+                    <p>
+                        Questa posizione è un anticipo del nominalismo, ovvero della tesi secondo cui gli universali sono solo nomi o concetti mentali, e non hanno esistenza reale al di fuori degli individui.
+                    </p>
+                </li>
+                <li>
+                    <h4>Il Principio di Non-Contraddizione e l'Identità:</h4>
+                    <p>
+                        Antistene sosteneva che si può predicare di una cosa solo ciò che essa è, cioè l'identico di se stessa. Una proposizione deve essere un'identità. Ad esempio, si può dire "l'uomo è uomo", ma non "l'uomo è buono", perché "uomo" e "buono" sono concetti diversi. Questa visione portava a un tipo di **predicazione tautologica** e rendeva quasi impossibile la comunicazione e la conoscenza complessa.
+                    </p>
+                    <p>
+                        Questo rigore logico, che negava la possibilità di predicati diversi dal soggetto, lo metteva in contrasto con Platone, per il quale la predicazione era essenziale per la partecipazione delle cose alle Idee.
+                    </p>
+                </li>
+                <li>
+                    <h4>Linguaggio e Verità:</h4>
+                    <p>
+                        Per Antistene, ogni cosa ha un solo nome proprio. Questo indica una diffidenza verso l'astrazione e una forte enfasi sulla concretezza e sull'individuale, riflettendo la sua etica del ritorno alla "natura" delle cose.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>L'Eredità di Antistene e il Cinismo Successivo</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Sebbene la sua logica non abbia avuto grande fortuna, l'etica di Antistene fu la base per lo sviluppo del Cinismo e influenzò indirettamente altre scuole filosofiche.
+            </p>
+            <ul>
+                <li>
+                    <h4>L'Eredità del Cinismo:</h4>
+                    <p>
+                        La figura più celebre e radicale del Cinismo fu **Diogene di Sinope**, che spinse all'estremo il rigore e il disprezzo delle convenzioni sociali, vivendo in una botte e comportandosi in modo deliberatamente provocatorio. Altri Cinici notevoli furono Cratete di Tebe e Ipparchia.
+                    </p>
+                    <p>
+                        Il Cinismo è caratterizzato da:
+                        <ul>
+                            <li><span class="highlight">Autosufficienza (αὐτάρκεια - *autarkeia*):</span> Raggiungibile attraverso la virtù e il disprezzo dei beni materiali.</li>
+                            <li><span class="highlight">Indifferenza (ἀπάθεια - *apatheia*):</span> Raggiungimento di uno stato di imperturbabilità di fronte alle passioni e alle avversità.</li>
+                            <li><span class="highlight">Libertà di parola (παρρησία - *parrhesia*):</span> La capacità di dire la verità senza timore, anche se scomoda.</li>
+                            <li><span class="highlight">Vita "secondo natura":</span> Il rifiuto delle leggi e delle convenzioni sociali in favore di uno stile di vita semplice e primordiale.</li>
+                        </ul>
+                    </p>
+                </li>
+                <li>
+                    <h4>Influenza sulle Scuole Successive:</h4>
+                    <p>
+                        Pur nella sua radicalità, il Cinismo influenzò profondamente altre scuole filosofiche posteriori, in particolare lo **Stoicismo**. Gli Stoici ripresero e moderarono molti temi cinici, come l'importanza della virtù, l'autosufficienza, la necessità di vivere secondo ragione e l'ideale cosmopolita, ma li integrarono in un sistema metafisico e logico più articolato. Zenone di Cizio, il fondatore dello Stoicismo, fu allievo di Cratete, un cinico di spicco.
+                    </p>
+                </li>
+                <li>
+                    <h4>Il Concetto Moderno di "Cinico":</h4>
+                    <p>
+                        È importante notare che il significato moderno del termine "cinico" (inteso come persona scettica, disillusa, che crede che le motivazioni umane siano sempre egoistiche) è un'evoluzione distorta del significato originale. I Cinici antichi non erano disillusi nel senso pessimistico, ma anzi erano convinti di aver trovato la strada per la vera felicità, anche se la loro via richiedeva un rigoroso distacco dalla società e dalle sue illusioni.
+                    </p>
+                </li>
+            </ul>
+            <p>
+                Antistene, pur rimanendo nell'ombra del più celebre Diogene, fu il catalizzatore di un movimento filosofico che sfidò le convenzioni, esaltò la libertà interiore e l'autosufficienza, e influenzò per secoli il pensiero etico occidentale. La sua figura è un promemoria dell'importanza di interrogarsi sul valore delle cose e sulla vera fonte della felicità.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const content = this.nextElementSibling; // Seleziona il div con il contenuto
+                    
+                    // Opzionale: Chiudi tutti gli altri pannelli aperti
+                    accordionButtons.forEach(otherButton => {
+                        if (otherButton !== this && otherButton.classList.contains('active')) {
+                            otherButton.classList.remove('active');
+                            otherButton.nextElementSibling.classList.remove('show');
+                        }
+                    });
+
+                    // Apri/chiudi il pannello cliccato
+                    this.classList.toggle('active');
+                    content.classList.toggle('show');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
