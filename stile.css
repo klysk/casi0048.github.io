@@ -512,3 +512,34 @@ a:hover {
     background: #1a1a2e;
     box-shadow: 0 0 10px rgba(255,255,255,0.05);
 }
+/* ANIMAZIONE SICURA PER IL TITOLO */
+#echi-titolo-principale {
+    position: relative;
+    display: inline-block;
+    animation: echi-float 3s ease-in-out infinite;
+}
+
+@keyframes echi-float {
+    0%, 100% { transform: translateY(0) rotate(0.5deg); }
+    50% { transform: translateY(-8px) rotate(-0.5deg); }
+}
+
+/* Effetto "echo" solo per il testo */
+#echi-titolo-principale::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.3;
+    animation: echi-echo 3s ease-out infinite;
+}
+
+@keyframes echi-echo {
+    to { 
+        transform: scale(1.05); 
+        opacity: 0;
+        filter: blur(1px);
+    }
+}
