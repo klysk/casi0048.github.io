@@ -16,7 +16,76 @@
     <i class="fas fa-moon"></i>
   </button>
 <!...................inizio bannar cooki------------>
-<
+<!-- COOKIE BANNER - VERSIONE FINALE TESTATA -->
+<script>
+// 1. Controlla se esiste già una preferenza
+if(!localStorage.getItem('cookieConsent')) {
+    // 2. Crea il banner
+    const banner = document.createElement('div');
+    banner.id = 'cookie-banner-final';
+    banner.style.cssText = `
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #2a2a72;
+        color: white;
+        padding: 15px;
+        z-index: 1000;
+        font-family: 'Crimson Pro', serif;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        box-shadow: 0 -5px 15px rgba(0,0,0,0.2);
+        animation: fadeInUp 0.5s ease-out;
+    `;
+    
+    banner.innerHTML = `
+        <div style="flex: 1; min-width: 250px;">
+            <p style="margin: 0;">Usiamo cookie per migliorare la tua esperienza. 
+            <a href="https://drive.google.com/file/d/16duY9J-L4s03gJeG_CeO7XZ-poLvXrhk/view?usp=drive_link" 
+               target="_blank" 
+               style="color: #8e8eff; text-decoration: underline;">
+                Leggi l'informativa
+            </a></p>
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <button id="cookie-accept" style="padding: 8px 16px; background: #c0392b; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                Accetta
+            </button>
+            <button id="cookie-reject" style="padding: 8px 16px; background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; cursor: pointer;">
+                Rifiuta
+            </button>
+        </div>
+        <style>
+            @keyframes fadeInUp {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            @keyframes fadeOutDown {
+                to { opacity: 0; transform: translateY(20px); }
+            }
+        </style>
+    `;
+    
+    // 3. Aggiungi al DOM
+    document.body.appendChild(banner);
+    
+    // 4. Gestisci i click
+    document.getElementById('cookie-accept').addEventListener('click', function() {
+        localStorage.setItem('cookieConsent', 'accepted');
+        banner.style.animation = 'fadeOutDown 0.5s forwards';
+        setTimeout(() => banner.remove(), 500);
+    });
+    
+    document.getElementById('cookie-reject').addEventListener('click', function() {
+        localStorage.setItem('cookieConsent', 'rejected');
+        banner.style.animation = 'fadeOutDown 0.5s forwards';
+        setTimeout(() => banner.remove(), 500);
+    });
+}
+</script>
     <!----------------fine banner cooki-------->
 
 
@@ -689,29 +758,7 @@ body.loaded .saluto::after {
     opacity: 1;
 }
     </style>
-    <!----------script per coocki banner------------------------------------------>
-    <div id="cookie-banner" class="cookie-banner hidden">
-  <p>
-    Questo sito utilizza cookie per migliorare l’esperienza utente.
-    <a href="https://drive.google.com/file/d/16duY9J-L4s03gJeG_CeO7XZ-poLvXrhk/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Informativa</a>.
-  </p>
-  <button id="accept-cookies">Accetta</button>
-</div>
-
-<script>
-    // Carica il banner solo se non ha già scelto
-    if(!localStorage.getItem('cookiePrefs')) {
-        const banner = document.createElement('div');
-        banner.innerHTML = `
-            <div id="cookie-banner" style="/* stili qui */">
-                <!-- contenuto banner -->
-            </div>
-        `;
-        document.body.appendChild(banner);
-    }
-</script>
-    <!----------------------------------------------------------->
-</head>
+   
 <body>
 <!------------------------------------------------------------->
 <div class="parallax-bg"></div>
