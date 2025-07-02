@@ -766,62 +766,59 @@ body {
   });
 </script>
                 <!--inizio popover-->
-<!-- SEZIONE FILOSOFI POPUP -->
-<section id="filosofi-popover-wrapper" style="position: relative; max-width: 1000px; margin: 80px auto 60px; padding: 0 20px;">
+<!-- POPOVER FILOSOFI: LOCALIZZATO -->
+<section id="filosofi-popover-wrapper" style="position: relative; max-width: 900px; margin: 100px auto 60px; padding: 0 20px;">
 
-  <!-- Contenuto che appare sopra il pulsante -->
+  <!-- CONTENUTO DEL POPOVER -->
   <div id="popover-filosofi" style="
     display: none;
     position: absolute;
-    bottom: 100%;
+    bottom: 60px;
     left: 0;
     right: 0;
-    background: #fdfdfd;
+    background: #fefefe;
     border-radius: 12px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     padding: 30px;
-    margin-bottom: 20px;
-    z-index: 10;
+    z-index: 99;
     animation: fadeSlideDown 0.5s ease-out;
   ">
     <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">
+      <!-- FILOSOFO 1 -->
+      <div style="flex: 1 1 250px; text-align: center;">
+        <img src="immagini per sito/aristotele.webp" alt="Aristotele" style="width: 140px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+        <h3 style="margin: 10px 0 5px; color: #c0392b;">Aristotele</h3>
+        <p style="font-size: 0.95rem; color: #444;">Padre della logica e della metafisica sistematica.</p>
+      </div>
 
-      <!-- Aristotele -->
-      <article style="flex: 1 1 260px; text-align: center; font-family: 'Crimson Pro', serif;">
-        <img src="immagini per sito/aristotele.webp" alt="Aristotele" style="width: 160px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
-        <h3 style="margin-top: 12px; color: #c0392b;">Aristotele</h3>
-        <p style="font-size: 1rem; color: #444;">Padre della logica e della metafisica sistematica. Ha segnato la filosofia per secoli.</p>
-      </article>
+      <!-- FILOSOFO 2 -->
+      <div style="flex: 1 1 250px; text-align: center;">
+        <img src="immagini per sito/ipazia.webp" alt="Ipazia" style="width: 140px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+        <h3 style="margin: 10px 0 5px; color: #c0392b;">Ipazia</h3>
+        <p style="font-size: 0.95rem; color: #444;">Simbolo del sapere femminile e del pensiero libero.</p>
+      </div>
 
-      <!-- Ipazia -->
-      <article style="flex: 1 1 260px; text-align: center; font-family: 'Crimson Pro', serif;">
-        <img src="immagini per sito/ipazia.webp" alt="Ipazia" style="width: 160px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
-        <h3 style="margin-top: 12px; color: #c0392b;">Ipazia</h3>
-        <p style="font-size: 1rem; color: #444;">Simbolo del sapere femminile, grande matematica e filosofa neoplatonica.</p>
-      </article>
-
-      <!-- Socrate -->
-      <article style="flex: 1 1 260px; text-align: center; font-family: 'Crimson Pro', serif;">
-        <img src="immagini per sito/socrate.webp" alt="Socrate" style="width: 160px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
-        <h3 style="margin-top: 12px; color: #c0392b;">Socrate</h3>
-        <p style="font-size: 1rem; color: #444;">Il dialogo, la maieutica e il coraggio di pensare controcorrente.</p>
-      </article>
-
+      <!-- FILOSOFO 3 -->
+      <div style="flex: 1 1 250px; text-align: center;">
+        <img src="immagini per sito/socrate.webp" alt="Socrate" style="width: 140px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+        <h3 style="margin: 10px 0 5px; color: #c0392b;">Socrate</h3>
+        <p style="font-size: 0.95rem; color: #444;">Il coraggio di pensare controcorrente.</p>
+      </div>
     </div>
   </div>
 
   <!-- PULSANTE -->
-  <div style="text-align: center;">
+  <div style="text-align: center; margin-top: 40px;">
     <button id="btn-filosofi" aria-haspopup="true" aria-expanded="false" aria-controls="popover-filosofi" style="
       background: #c0392b;
-      border: none;
       color: white;
-      font-weight: bold;
-      font-size: 1.25rem;
+      border: none;
+      font-size: 1.2rem;
+      font-weight: 600;
       padding: 14px 28px;
       border-radius: 8px;
       cursor: pointer;
-      box-shadow: 0 4px 8px rgba(192,57,43,0.4);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       transition: background-color 0.3s ease;
     ">
       Loro hanno cambiato la civiltà del pensiero
@@ -843,23 +840,29 @@ body {
 }
 </style>
 
-<!-- SCRIPT -->
+<!-- SCRIPT LOCALE -->
 <script>
+document.addEventListener('DOMContentLoaded', function() {
   const btnFilosofi = document.getElementById('btn-filosofi');
   const popover = document.getElementById('popover-filosofi');
 
   btnFilosofi.addEventListener('click', () => {
-    const isVisible = popover.style.display === 'block';
-    if (isVisible) {
+    const visible = popover.style.display === 'block';
+    popover.style.display = visible ? 'none' : 'block';
+    btnFilosofi.setAttribute('aria-expanded', visible ? 'false' : 'true');
+  });
+
+  // Chiudi se si clicca fuori
+  document.addEventListener('click', function(e) {
+    const wrapper = document.getElementById('filosofi-popover-wrapper');
+    if (!wrapper.contains(e.target)) {
       popover.style.display = 'none';
       btnFilosofi.setAttribute('aria-expanded', 'false');
-    } else {
-      popover.style.display = 'block';
-      popover.style.animation = 'fadeSlideDown 0.5s ease-out';
-      btnFilosofi.setAttribute('aria-expanded', 'true');
     }
   });
+});
 </script>
+
 
                <!--fine popover-->
 </body>
