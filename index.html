@@ -687,6 +687,20 @@ body.loaded .saluto::after {
     opacity: 1;
 }
     </style>
+    <!----------script per coocki banner------------------------------------------>
+<script>
+    // Carica il banner solo se non ha già scelto
+    if(!localStorage.getItem('cookiePrefs')) {
+        const banner = document.createElement('div');
+        banner.innerHTML = `
+            <div id="cookie-banner" style="/* stili qui */">
+                <!-- contenuto banner -->
+            </div>
+        `;
+        document.body.appendChild(banner);
+    }
+</script>
+    <!----------------------------------------------------------->
 </head>
 <body>
 <!------------------------------------------------------------->
