@@ -17,75 +17,125 @@
     <i class="fas fa-moon"></i>
   </button>
 <!...................inizio bannar cooki------------>
-<!-- COOKIE BANNER - VERSIONE FINALE TESTATA -->
+<!-- Cookie Banner Avanzato -->
+<div id="cookie-banner" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: linear-gradient(135deg, #2a2a72 0%, #1a1a3a 100%); color: white; padding: 20px; z-index: 1000; font-family: 'Crimson Pro'; box-shadow: 0 -5px 25px rgba(0,0,0,0.3); animation: fadeInUp 0.6s;">
+  <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 20px; align-items: center;">
+    <div style="flex: 1; min-width: 300px;">
+      <p style="margin: 0; line-height: 1.6; font-size: 1.1rem;">
+        Echi di Sofia utilizza cookie essenziali e analitici. 
+        <a href="https://drive.google.com/file/d/16duY9J-L4s03gJeG_CeO7XZ-poLvXrhk/view" target="_blank" style="color: #8e8eff; text-decoration: underline;">Leggi l'informativa</a>
+      </p>
+    </div>
+    
+    <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-end;">
+      <button id="customize-cookies" style="padding: 10px 18px; background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; cursor: pointer; transition: all 0.3s;">
+        <i class="fas fa-sliders-h" style="margin-right: 8px;"></i> Personalizza
+      </button>
+      <button id="reject-all" style="padding: 10px 18px; background: linear-gradient(135deg, #ff3a3a 0%, #a41616 100%); color: white; border: none; border-radius: 4px; cursor: pointer; transition: all 0.3s;">
+        Rifiuta tutto
+      </button>
+      <button id="accept-all" style="padding: 10px 18px; background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%); color: white; border: none; border-radius: 4px; cursor: pointer; transition: all 0.3s;">
+        Accetta tutto
+      </button>
+    </div>
+  </div>
+
+  <!-- Pannello Personalizzazione (nascosto inizialmente) -->
+  <div id="cookie-settings" style="display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
+    <h4 style="margin-bottom: 15px; font-family: 'Playfair Display';">Preferenze Cookie</h4>
+    
+    <div style="display: flex; flex-direction: column; gap: 15px;">
+      <label style="display: flex; align-items: center; cursor: pointer;">
+        <input type="checkbox" name="essential" checked disabled style="margin-right: 10px;">
+        <span>Cookie Essenziali <small>(sempre attivi)</small></span>
+      </label>
+      
+      <label style="display: flex; align-items: center; cursor: pointer;">
+        <input type="checkbox" name="analytics" checked style="margin-right: 10px; accent-color: #c0392b;">
+        <span>Cookie Analitici</span>
+      </label>
+      
+      <label style="display: flex; align-items: center; cursor: pointer;">
+        <input type="checkbox" name="marketing" style="margin-right: 10px; accent-color: #c0392b;">
+        <span>Cookie Marketing</span>
+      </label>
+    </div>
+    
+    <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+      <button id="save-settings" style="padding: 8px 20px; background: #2a2a72; color: white; border: 1px solid #8e8eff; border-radius: 4px; cursor: pointer;">
+        Salva Preferenze
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  #customize-cookies:hover {
+    background: rgba(255,255,255,0.1) !important;
+  }
+  
+  #reject-all:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(164,22,22,0.3);
+  }
+  
+  #accept-all:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(46,125,50,0.3);
+  }
+</style>
+
 <script>
-// 1. Controlla se esiste già una preferenza
-if(!localStorage.getItem('cookieConsent')) {
-    // 2. Crea il banner
-    const banner = document.createElement('div');
-    banner.id = 'cookie-banner-final';
-    banner.style.cssText = `
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: #2a2a72;
-        color: white;
-        padding: 15px;
-        z-index: 1000;
-        font-family: 'Crimson Pro', serif;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        box-shadow: 0 -5px 15px rgba(0,0,0,0.2);
-        animation: fadeInUp 0.5s ease-out;
-    `;
+document.addEventListener('DOMContentLoaded', function() {
+  const banner = document.getElementById('cookie-banner');
+  const settingsPanel = document.getElementById('cookie-settings');
+  
+  // Mostra banner solo se non c'è preferenza salvata
+  if(!localStorage.getItem('cookiePreferences')) {
+    banner.style.display = 'block';
+  }
+
+  // Gestione pulsanti
+  document.getElementById('customize-cookies').addEventListener('click', function() {
+    settingsPanel.style.display = settingsPanel.style.display === 'block' ? 'none' : 'block';
+  });
+  
+  document.getElementById('accept-all').addEventListener('click', function() {
+    savePreferences({ essential: true, analytics: true, marketing: true });
+  });
+  
+  document.getElementById('reject-all').addEventListener('click', function() {
+    savePreferences({ essential: true, analytics: false, marketing: false });
+  });
+  
+  document.getElementById('save-settings').addEventListener('click', function() {
+    const preferences = {
+      essential: true,
+      analytics: document.querySelector('input[name="analytics"]').checked,
+      marketing: document.querySelector('input[name="marketing"]').checked
+    };
+    savePreferences(preferences);
+  });
+  
+  function savePreferences(prefs) {
+    localStorage.setItem('cookiePreferences', JSON.stringify(prefs));
+    banner.style.animation = 'fadeInUp 0.6s reverse';
+    setTimeout(() => banner.remove(), 600);
     
-    banner.innerHTML = `
-        <div style="flex: 1; min-width: 250px;">
-            <p style="margin: 0;">Usiamo cookie per migliorare la tua esperienza. 
-            <a href="https://drive.google.com/file/d/16duY9J-L4s03gJeG_CeO7XZ-poLvXrhk/view?usp=drive_link" 
-               target="_blank" 
-               style="color: #8e8eff; text-decoration: underline;">
-                Leggi l'informativa
-            </a></p>
-        </div>
-        <div style="display: flex; gap: 10px;">
-            <button id="cookie-accept" style="padding: 8px 16px; background: #c0392b; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                Accetta
-            </button>
-            <button id="cookie-reject" style="padding: 8px 16px; background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; cursor: pointer;">
-                Rifiuta
-            </button>
-        </div>
-        <style>
-            @keyframes fadeInUp {
-                from { opacity: 0; transform: translateY(20px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-            @keyframes fadeOutDown {
-                to { opacity: 0; transform: translateY(20px); }
-            }
-        </style>
-    `;
-    
-    // 3. Aggiungi al DOM
-    document.body.appendChild(banner);
-    
-    // 4. Gestisci i click
-    document.getElementById('cookie-accept').addEventListener('click', function() {
-        localStorage.setItem('cookieConsent', 'accepted');
-        banner.style.animation = 'fadeOutDown 0.5s forwards';
-        setTimeout(() => banner.remove(), 500);
-    });
-    
-    document.getElementById('cookie-reject').addEventListener('click', function() {
-        localStorage.setItem('cookieConsent', 'rejected');
-        banner.style.animation = 'fadeOutDown 0.5s forwards';
-        setTimeout(() => banner.remove(), 500);
-    });
-}
+    // Applica le preferenze (esempio)
+    if(prefs.analytics) {
+      console.log('Caricamento Google Analytics...');
+    }
+    if(prefs.marketing) {
+      console.log('Caricamento Facebook Pixel...');
+    }
+  }
+});
 </script>
     <!----------------fine banner cooki-------->
 
