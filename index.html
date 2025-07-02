@@ -16,11 +16,18 @@
     <i class="fas fa-moon"></i>
   </button>
 <!...................inizio bannar cooki------------>
+<!-- METTI QUESTO CODICE PRIMA DEL </body> -->
 <script>
-// CONTROLLO COOKIE PRIMA DI CARICARE LA PAGINA
-document.addEventListener('DOMContentLoaded', function() {
-  const bannerHTML = `
-    <div id="cookie-banner" style="
+// 1. CONTROLLO INIZIALE (prima di tutto il resto)
+(function() {
+  // Blocca l'eventuale flash visivo
+  document.documentElement.style.visibility = 'hidden';
+  
+  // Crea il banner IN MEMORIA (non ancora visibile)
+  const banner = document.createElement('div');
+  banner.id = 'cookie-banner';
+  banner.innerHTML = `
+    <div style="
       position:fixed; 
       bottom:0; 
       left:0; 
@@ -30,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
       padding:15px; 
       z-index:1000;
       font-family:'Crimson Pro', serif;
-      display:none;
+      animation:fadeIn 0.5s;
     ">
       <div style="max-width:800px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px;">
         <p style="margin:0; flex:1; min-width:250px;">
@@ -51,39 +58,35 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
       </div>
     </div>
+    <style>
+      @keyframes fadeIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+      @keyframes fadeOut { to { opacity:0; transform:translateY(20px); } }
+    </style>
   `;
 
-  // Mostra solo se non ha già scelto
+  // 2. VERIFICA SE MOSTRARE IL BANNER
   if(!localStorage.getItem('cookiePrefs')) {
-    document.body.insertAdjacentHTML('beforeend', bannerHTML);
-    const banner = document.getElementById('cookie-banner');
-    banner.style.display = 'block';
-    
-    // Animazione di entrata
-    banner.style.animation = 'fadeIn 0.5s forwards';
-    document.head.insertAdjacentHTML('beforeend', `
-      <style>
-        @keyframes fadeIn {
-          from { opacity:0; transform:translateY(20px); }
-          to { opacity:1; transform:translateY(0); }
-        }
-      </style>
-    `);
+    document.body.appendChild(banner);
+  }
 
-    // Gestione click
-    document.getElementById('accept-cookies').addEventListener('click', function() {
+  // 3. GESTISCI I CLICK
+  document.addEventListener('click', function(e) {
+    if(e.target.id === 'accept-cookies') {
       localStorage.setItem('cookiePrefs', 'accepted');
       banner.style.animation = 'fadeOut 0.5s forwards';
       setTimeout(() => banner.remove(), 500);
-    });
-
-    document.getElementById('reject-cookies').addEventListener('click', function() {
+    }
+    
+    if(e.target.id === 'reject-cookies') {
       localStorage.setItem('cookiePrefs', 'rejected');
       banner.style.animation = 'fadeOut 0.5s forwards';
       setTimeout(() => banner.remove(), 500);
-    });
-  }
-});
+    }
+  });
+
+  // 4. MOSTRA LA PAGINA (dopo aver processato i cookie)
+  document.documentElement.style.visibility = '';
+})();
 </script>
     <!----------------fine banner cooki-------->
 
