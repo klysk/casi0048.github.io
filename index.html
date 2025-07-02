@@ -1232,48 +1232,9 @@ window.addEventListener('scroll', () => {
 </head>
 <body>
     <!-- Banner Cookie -->
-    <div id="cookie-banner">
-        <div class="cookie-text">
-            <p>Echi di Sofia utilizza cookie per migliorare la tua esperienza. Consulta la nostra <a href="https://drive.google.com/file/d/16duY9J-L4s03gJeG_CeO7XZ-poLvXrhk/view?usp=drive_link" style="color: #8e8eff;" target="_blank">informativa sui cookie</a> per maggiori dettagli.</p>
-        </div>
-        <div class="cookie-buttons">
-            <button id="accept-cookies" class="cookie-btn">Accetta tutti</button>
-            <button id="reject-cookies" class="cookie-btn">Rifiuta</button>
-            <button id="cookie-settings" class="cookie-btn">Impostazioni</button>
-        </div>
-    </div>
+   
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const banner = document.getElementById('cookie-banner');
-            const acceptBtn = document.getElementById('accept-cookies');
-            const rejectBtn = document.getElementById('reject-cookies');
-            const settingsBtn = document.getElementById('cookie-settings');
-
-            // Controlla se l'utente ha già scelto
-            if(localStorage.getItem('cookiePrefs')) {
-                banner.style.display = 'none';
-            }
-
-            // Gestione click
-            acceptBtn.addEventListener('click', function() {
-                localStorage.setItem('cookiePrefs', 'all');
-                banner.classList.add('hidden');
-                setTimeout(() => banner.remove(), 600);
-            });
-
-            rejectBtn.addEventListener('click', function() {
-                localStorage.setItem('cookiePrefs', 'none');
-                banner.classList.add('hidden');
-                setTimeout(() => banner.remove(), 600);
-            });
-
-            settingsBtn.addEventListener('click', function() {
-                // Aggiungi qui la logica per le impostazioni avanzate
-                alert("Pagina delle impostazioni cookie (personalizzabile)");
-            });
-        });
-    </script>
+    
 </body>
 </html>
 
