@@ -2,1443 +2,446 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Echi di Sofia - Filosofia attraverso i secoli</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-<!-- favicon -->
-  <link rel="icon" type="image/png" href="favicon_io/favicon-16x16.png" />
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="css/styles.css" />
-  <link rel="stylesheet" href="darkmode.css" />
-
-  <!-- JS -->
-  <script src="darkmode.js" defer></script>
-</head>
-<body>
-  <!-- bottone dark mode -->
-  <button id="darkModeToggle" aria-label="Toggle Dark Mode">🌓</button>
-
-    
-    
-
-<!...................inizio bannar cooki------------>
-<!-- Nuovo Cookie Banner con Personalizzazione - Da inserire PRIMA di </body> -->
-<div id="cookie-consent-banner" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: linear-gradient(135deg, #2a2a72 0%, #1a1a3a 100%); color: white; padding: 20px; z-index: 1000; font-family: 'Crimson Pro'; box-shadow: 0 -5px 25px rgba(0,0,0,0.3);">
-  <div style="max-width: 1200px; margin: 0 auto;">
-    <!-- Messaggio Principale -->
-    <div id="cookie-main-message">
-      <p style="margin: 0 0 15px 0; line-height: 1.6;">
-        Utilizziamo cookie per migliorare la tua esperienza. 
-        <a href="https://drive.google.com/file/d/16duY9J-L4s03gJeG_CeO7XZ-poLvXrhk/view" target="_blank" style="color: #8e8eff; text-decoration: underline;">Maggiori informazioni</a>
-      </p>
-      <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-        <button id="cookie-accept-all" style="padding: 10px 20px; background: #c0392b; color: white; border: none; border-radius: 4px; cursor: pointer; transition: all 0.3s;">
-          Accetta tutti
-        </button>
-        <button id="cookie-customize" style="padding: 10px 20px; background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; cursor: pointer; transition: all 0.3s;">
-          Personalizza
-        </button>
-        <button id="cookie-reject-all" style="padding: 10px 20px; background: transparent; color: #ff6b6b; border: 1px solid #ff6b6b; border-radius: 4px; cursor: pointer; transition: all 0.3s;">
-          Rifiuta tutti
-        </button>
-      </div>
-    </div>
-
-    <!-- Pannello Personalizzazione (nascosto inizialmente) -->
-    <div id="cookie-settings-panel" style="display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
-      <h4 style="margin-bottom: 15px; font-family: 'Playfair Display';">Preferenze Cookie</h4>
-      
-      <div style="margin-bottom: 15px;">
-        <label style="display: flex; align-items: center; padding: 8px 0; cursor: pointer;">
-          <input type="checkbox" id="cookie-essential" checked disabled style="margin-right: 10px;">
-          <span><strong>Cookie Necessari</strong><br><small style="opacity: 0.8;">Sempre attivi - Servono per il funzionamento base del sito</small></span>
-        </label>
-        
-        <label style="display: flex; align-items: center; padding: 8px 0; cursor: pointer;">
-          <input type="checkbox" id="cookie-analytics" style="margin-right: 10px;">
-          <span><strong>Cookie Statistici</strong><br><small style="opacity: 0.8;">Ci aiutano a migliorare il sito analizzando l'utilizzo</small></span>
-        </label>
-        
-        <label style="display: flex; align-items: center; padding: 8px 0; cursor: pointer;">
-          <input type="checkbox" id="cookie-marketing" style="margin-right: 10px;">
-          <span><strong>Cookie Marketing</strong><br><small style="opacity: 0.8;">Per mostrarti contenuti personalizzati</small></span>
-        </label>
-      </div>
-      
-      <div style="display: flex; justify-content: space-between;">
-        <button id="cookie-settings-back" style="padding: 8px 16px; background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; cursor: pointer;">
-          Indietro
-        </button>
-        <button id="cookie-save-settings" style="padding: 8px 20px; background: #8e8eff; color: #1a1a3a; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">
-          Salva Preferenze
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-// Gestione completa del Cookie Banner
-document.addEventListener('DOMContentLoaded', function() {
-  const banner = document.getElementById('cookie-consent-banner');
-  const mainMessage = document.getElementById('cookie-main-message');
-  const settingsPanel = document.getElementById('cookie-settings-panel');
-  
-  // Mostra il banner solo se non ci sono preferenze salvate
-  if(!getCookiePreferences()) {
-    banner.style.display = 'block';
-    banner.style.animation = 'fadeInUp 0.5s forwards';
-    
-    // Aggiungi stili dinamici
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-      #cookie-customize:hover {
-        background: rgba(255,255,255,0.1) !important;
-      }
-      #cookie-reject-all:hover {
-        background: rgba(255,107,107,0.1) !important;
-      }
-      #cookie-accept-all:hover {
-        background: #a41616 !important;
-        transform: translateY(-1px);
-      }
-    `;
-    document.head.appendChild(style);
-  }
-
-  // Gestione click sui pulsanti principali
-  document.getElementById('cookie-accept-all').addEventListener('click', function() {
-    saveCookiePreferences({
-      essential: true,
-      analytics: true,
-      marketing: true,
-      timestamp: new Date().getTime()
-    });
-    hideBanner();
-  });
-
-  document.getElementById('cookie-reject-all').addEventListener('click', function() {
-    saveCookiePreferences({
-      essential: true,
-      analytics: false,
-      marketing: false,
-      timestamp: new Date().getTime()
-    });
-    hideBanner();
-  });
-
-  document.getElementById('cookie-customize').addEventListener('click', function() {
-    mainMessage.style.display = 'none';
-    settingsPanel.style.display = 'block';
-  });
-
-  // Gestione pannello personalizzazione
-  document.getElementById('cookie-settings-back').addEventListener('click', function() {
-    settingsPanel.style.display = 'none';
-    mainMessage.style.display = 'block';
-  });
-
-  document.getElementById('cookie-save-settings').addEventListener('click', function() {
-    const preferences = {
-      essential: true,
-      analytics: document.getElementById('cookie-analytics').checked,
-      marketing: document.getElementById('cookie-marketing').checked,
-      timestamp: new Date().getTime()
-    };
-    saveCookiePreferences(preferences);
-    hideBanner();
-  });
-
-  // Funzioni di supporto
-  function getCookiePreferences() {
-    const prefs = localStorage.getItem('cookiePreferences');
-    return prefs ? JSON.parse(prefs) : null;
-  }
-
-  function saveCookiePreferences(prefs) {
-    localStorage.setItem('cookiePreferences', JSON.stringify(prefs));
-    console.log('Preferenze salvate:', prefs);
-    // Qui puoi caricare gli script in base alle preferenze
-  }
-
-  function hideBanner() {
-    banner.style.animation = 'fadeInUp 0.5s reverse forwards';
-    setTimeout(() => banner.style.display = 'none', 500);
-  }
-});
-</script>
-    <!----------------fine banner cooki-------->
-
-
-    
-
-
-</style>
-<style>
-.parallax-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('immagini per sito/cielo.jpg') center/cover no-repeat fixed;
-    opacity: 0.03;
-    z-index: -1;
-}
-</style>
-</button>
-
-<style>
-
-        /* RESET & VARIABILI */
+    <title>Echi di Sofia - Portale di Filosofia</title>
+    <style>
         :root {
             --primary: #2a2a72;
-            --primary-light: #3a3a8a;
+            --primary-light: #8e8eff;
             --accent: #c0392b;
-            --text: #1a1a1a;
-            --text-light: #666;
-            --bg: #ffffff;
-            --border: #eaeaea;
-            --hover-bg: #f8f8f8;
+            --text: #333;
+            --bg: #f9f5f0;
+            --paper: #fffcf8;
         }
-        .dark-mode {
-    --primary: #8e8eff;
-    --accent: #ff6b6b;
-    --text: #f0f0f0;
-    --bg: #1a1a2e;
-    --border: #2d2d4d;
-}
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Crimson Pro', serif;
+            background-color: var(--bg);
             color: var(--text);
-            background: var(--bg);
-            padding-top: 80px;
-            line-height: 1.6;
+            line-height: 1.8;
+            background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+            padding-top: 85px;
         }
-        
-        /* NAVBAR PRINCIPALE */
-        .navbar {
+
+        /* HEADER PRINCIPALE */
+        .main-header {
+            background: linear-gradient(rgba(42,42,114,0.9), rgba(42,42,114,0.9)), 
+                        url('https://images.unsplash.com/photo-1505506874110-6a7a69069a08?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 8rem 1rem;
+            text-align: center;
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+            margin-bottom: 3rem;
+        }
+
+        .site-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .site-subtitle {
+            font-size: 1.5rem;
+            font-style: italic;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        /* NAVIGAZIONE PRINCIPALE */
+        .nav-container {
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            height: 80px;
-            background: rgba(255,255,255,0.98);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-bottom: 1px solid rgba(0,0,0,0.1);
-            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            width: 100%;
             z-index: 1000;
-            padding: 0 5%;
+            background: var(--primary);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 1rem 2rem;
         }
-        .navbar {
-    transition: box-shadow 0.5s ease;
-}
-body.scrolled .navbar {
-    box-shadow: 0 5px 30px rgba(0,0,0,0.15);
-}
-        .menu {
+
+        .logo {
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
             display: flex;
             list-style: none;
-            height: 100%;
-            align-items: center;
         }
-        body::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: 
-        radial-gradient(circle at 20% 30%, rgba(42,42,114,0.05) 0%, transparent 30%),
-        radial-gradient(circle at 80% 70%, rgba(192,57,43,0.05) 0%, transparent 30%);
-    z-index: -2;
-    animation: bgPulse 20s infinite alternate;
-}
-@keyframes bgPulse {
-    0% { opacity: 0.3; }
-    100% { opacity: 0.7; }
-}
-        /* VOCI MENU */
-        .dropdown {
+
+        .nav-item {
             position: relative;
-            height: 100%;
+            margin-left: 1.5rem;
         }
-        
-        .menu-btn {
-            background: none;
-            border: none;
-            height: 100%;
-            padding: 0 20px;
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            padding: 0.5rem 0;
             display: flex;
             align-items: center;
-            font-family: 'Playfair Display', serif;
-            font-weight: 500;
-            font-size: 1rem;
-            color: var(--text);
-            cursor: pointer;
-            transition: all 0.3s;
         }
-        
-        .menu-btn:hover {
-            color: var(--accent);
-        }
-        
-        .menu-btn .arrow {
-            margin-left: 8px;
-            font-size: 0.8rem;
+
+        .nav-link .arrow {
+            margin-left: 5px;
             transition: transform 0.3s;
         }
-        
-        /* SOTTOMENU */
-        .submenu, .mega-menu {
+
+        /* MEGA MENU (NON TRASPARENTE) */
+        .mega-menu {
             position: absolute;
             left: 0;
-            top: 100%;
-            background: var(--bg);
-            border-radius: 8px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            width: 100%;
+            background: var(--primary);
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            transform: translateY(10px);
+            transition: all 0.3s;
             z-index: 100;
-            pointer-events: none;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            border-top: 3px solid var(--accent);
         }
-        .submenu {
-    perspective: 1000px;
-    transform-style: preserve-3d;
-    transform: rotateY(-5deg);
-    transition: transform 0.5s ease;
-}
 
+        .mega-menu-column {
+            padding: 0 1rem;
+        }
 
-.submenu {
-    background: url('immagini per sito/cielo.jpg'), linear-gradient(to bottom, #f9f3e9 0%, #f5e8d0 100%);
-    border: none;
-    border-radius: 0 8px 8px 8px;
-    box-shadow: 
-        0 10px 20px rgba(0,0,0,0.1),
-        inset 0 0 0 1px rgba(255,255,255,0.5),
-        inset 0 0 30px rgba(210,180,140,0.4);
-    transform-origin: top left;
-    transform: scaleY(0.9) perspective(500px) rotateX(10deg);
-    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
+        .mega-menu-column h4 {
+            color: var(--primary-light);
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
 
-.dropdown:hover .submenu {
-    transform: scaleY(1) rotateX(0);
-}
+        .mega-menu-column a {
+            display: block;
+            color: white;
+            padding: 0.5rem 0;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
 
-.dropdown:hover .submenu {
-    transform: rotateY(0);
-}
-.submenu::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -10px;
-    width: 10px;
-    height: 100%;
-    background: linear-gradient(to right, rgba(0,0,0,0.1), transparent);
-    transform-origin: right;
-    transform: rotateY(60deg);
-}
-        .dropdown:hover .submenu,
-        .dropdown:hover .mega-menu {
+        .mega-menu-column a:hover {
+            color: var(--primary-light);
+            padding-left: 0.5rem;
+        }
+
+        .nav-item:hover .mega-menu {
             opacity: 1;
             visibility: visible;
-            transform: translateY(5px);
-            pointer-events: auto;
-        }
-        .mega-menu a {
-    position: relative;
-    z-index: 1;
-}
-.mega-menu a::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 100%;
-    background: linear-gradient(to right, rgba(192,57,43,0.1), transparent);
-    z-index: -1;
-    transition: width 0.4s ease;
-}
-.mega-menu a:hover::before {
-    width: 100%;
-}
-        /* ZONA DI ATTIVAZIONE */
-        .dropdown::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 100%;
-            height: 20px;
-            background: transparent;
-        }
-        
-        /* STILE INCIPIT */
-        .submenu {
-            width: 350px;
-            padding: 25px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #f8f9fa 100%);
-            border-left: 4px solid var(--accent);
-        }
-        
-        .frase-chiave {
-            font-style: italic;
-            font-size: 1.1rem;
-            color: var(--primary);
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-        
-        /* MEGA MENU A COLONNE */
-        .mega-menu {
-            padding: 30px;
-            display: flex;
-            gap: 30px;
-        }
-        
-        .columns-4 { width: 900px; }
-        .columns-3 { width: 700px; }
-        .columns-2 { width: 600px; }
-        .columns-1 { width: 300px; }
-        
-        .mega-menu > div {
-            flex: 1;
-        }
-        
-        .mega-menu h4 {
-            font-family: 'Playfair Display', serif;
-            color: var(--accent);
-            margin-bottom: 15px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid var(--border);
-            font-size: 1.1rem;
-        }
-.mega-menu a {
-    position: relative;
-    overflow: hidden;
-}
-
-.mega-menu a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background: var(--accent);
-    transition: width 0.3s ease;
-}
-
-.mega-menu a:hover::after {
-    width: 100%;
-}
-        
-        .mega-menu a {
-            display: block;
-            padding: 8px 0;
-            color: var(--text-light);
-            text-decoration: none;
-            transition: all 0.3s;
-            position: relative;
-            padding-left: 15px;
-        }
-        
-        .mega-menu a:hover {
-            color: var(--accent);
-            padding-left: 25px;
-        }
-        
-        .mega-menu a::before {
-            content: '→';
-            position: absolute;
-            left: 0;
-            opacity: 0;
-            transition: all 0.3s;
-        }
-        
-        .mega-menu a:hover::before {
-            opacity: 1;
-            left: 5px;
-        }
-:root {
-    --primary-gradient: linear-gradient(135deg, #2a2a72 0%, #3a3a8a 100%);
-    --accent-gradient: linear-gradient(to right, #c0392b, #e74c3c);
-}
-
-.menu-btn {
-    background: transparent;
-    transition: all 0.3s;
-    position: relative;
-}
-
-.menu-btn::after {
-    content: '';
-    position: absolute;
-    bottom: 15px;
-    left: 20px;
-    width: calc(100% - 40px);
-    height: 2px;
-    background: var(--accent-gradient);
-    transform: scaleX(0);
-    transition: transform 0.3s;
-}
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
-}
-
-.citazione {
-    animation: float 6s ease-in-out infinite;
-    transition: all 0.3s;
-}
-
-.citazione:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.menu-btn:hover::after {
-    transform: scaleX(1);
-}
-        /* FORM DI RICERCA */
-        .search-container {
-            margin-left: auto;
-            padding-left: 20px;
+            transform: translateY(0);
         }
 
-        .search-form {
-            position: relative;
-            display: flex;
-            align-items: center;
+        .nav-item:hover .arrow {
+            transform: rotate(180deg);
         }
 
-        .search-input {
-            width: 180px;
-            padding: 8px 15px;
-            padding-right: 35px;
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            font-family: 'Crimson Pro', serif;
-            font-size: 0.9rem;
-            color: var(--text);
-            background: rgba(255,255,255,0.8);
-            transition: all 0.3s;
-        }
-
-        .search-input:focus {
-            width: 220px;
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 2px rgba(192, 57, 43, 0.2);
-        }
-
-        .search-btn {
-            position: absolute;
-            right: 10px;
-            background: none;
-            border: none;
-            color: var(--text-light);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .search-btn:hover {
-            color: var(--accent);
-            transform: scale(1.1);
-        }
-.search-input {
-    backdrop-filter: blur(5px);
-    background: rgba(255,255,255,0.7) !important;
-    border: none !important;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-}
-
-.search-input:focus {
-    box-shadow: 0 0 0 3px rgba(192,57,43,0.2), 0 5px 20px rgba(0,0,0,0.1);
-}
-        /* SEZIONE EROICA */
-        .hero {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 0 20px;
-            text-align: center;
-        }
-        .hero {
-    max-width: 800px;
-    margin: 100px auto;
-    padding: 40px;
-    text-align: center;
-    background: rgba(255,255,255,0.9);
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255,255,255,0.3);
-    position: relative;
-    overflow: hidden;
-}
-
-.hero::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(42,42,114,0.05) 0%, rgba(192,57,43,0.03) 100%);
-    z-index: -1;
-    animation: rotate 30s linear infinite;
-}
-.submenu, .mega-menu {
-    will-change: transform, opacity;
-    transform-origin: top center;
-    transform: translateY(10px) scale(0.95);
-    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-.dropdown:hover .submenu,
-.dropdown:hover .mega-menu {
-    transform: translateY(5px) scale(1);
-}
-
-@keyframes rotate {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-        /* ANIMAZIONE DEL TITOLO */
-        .saluto {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            color: var(--primary);
-            margin-bottom: 20px;
-            font-weight: 600;
-            position: relative;
-            display: inline-block;
-            animation: titleEntrance 1.5s ease-out forwards;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transform-style: preserve-3d;
-        }
-.saluto {
-    text-shadow: 0 2px 10px rgba(42,42,114,0.3);
-    position: relative;
-    display: inline-block;
-}
-.saluto {
-    position: relative;
-}
-.saluto::after {
-    content: "";
-    position: absolute;
-    bottom: -10px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--accent);
-    transition: width 2s ease-out;
-}
-body.loaded .saluto::after {
-    width: 100%;
-}
-
-.saluto::before {
-    content: '';
-    position: absolute;
-    top: -10px;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at center, rgba(255,255,255,0.8) 0%, transparent 70%);
-    z-index: -1;
-    opacity: 0.5;
-}
-        .saluto::before,
-        .saluto::after {
-            content: 'Echi di Sofia';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.3;
-        }
-
-        .saluto::before {
-            color: var(--accent);
-            z-index: -1;
-            animation: echoEffect 4s infinite ease-in-out 1s;
-        }
-
-        .saluto::after {
-            color: var(--primary-light);
-            z-index: -2;
-            animation: echoEffect 4s infinite ease-in-out 2s;
-        }
-
-        @keyframes titleEntrance {
-            0% {
-                opacity: 0;
-                transform: translateY(30px) rotateX(60deg);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) rotateX(0);
-            }
-        }
-                                                            
-        @keyframes echoEffect {
-            0%, 100% {
-                transform: translateY(0) scale(1);
-                opacity: 0.2;
-            }
-            50% {
-                transform: translateY(-10px) scale(1.03);
-                opacity: 0.4;
-            }
-        }
-
-        /* Animazione per il sottotitolo */
-        .sottotitolo {
-            font-size: 1.5rem;
-            color: var(--text-light);
-            margin-bottom: 30px;
-            animation: fadeInUp 1s ease-out 0.5s both;
-            position: relative;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Animazione per la citazione */
-        .citazione {
-            font-style: italic;
-            font-size: 1.2rem;
-            color: var(--text-light);
-            max-width: 600px;
+        /* CONTENUTO PRINCIPALE */
+        .main-content {
+            max-width: 1200px;
             margin: 0 auto;
-            animation: fadeIn 1.5s ease-out 1s both;
-            border-left: 3px solid var(--accent);
-            padding-left: 20px;
+            padding: 2rem;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .philosophy-section {
+            background: var(--paper);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 3px solid var(--accent);
         }
 
-        @media (max-width: 1024px) {
-            .search-container {
-                padding-left: 10px;
-            }
-            .search-input {
-                width: 150px;
-            }
-            .search-input:focus {
-                width: 180px;
-            }
-        }
-@media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-        height: auto;
-        padding: 15px;
-    }
-    
-    .menu {
-        flex-direction: column;
-        width: 100%;
-    }
-    
-    .dropdown {
-        width: 100%;
-    }
-    
-    .mega-menu {
-        position: relative;
-        width: 100% !important;
-        box-shadow: none;
-    }
-    
-    .hero {
-        margin-top: 30px;
-        padding: 20px;
-    }
-    
-    .saluto {
-        font-size: 2rem;
-    }
-}
-.quote-carousel {
-    position: relative;
-    height: 100px;
-    margin: 30px 0;
-}
-.quote-carousel blockquote {
-    position: absolute;
-    opacity: 0;
-    transition: opacity 1s ease, transform 1s ease;
-    font-size: 1.3rem;
-    font-style: italic;
-}
-.quote-carousel blockquote:nth-child(1) {
-    animation: quoteFade 12s infinite;
-}
-.quote-carousel blockquote:nth-child(2) {
-    animation: quoteFade 12s infinite 4s;
-}
-@keyframes quoteFade {
-    0%, 100% { opacity: 0; transform: translateY(20px); }
-    10%, 30% { opacity: 1; transform: translateY(0); }
-}
-.philosopher-avatar {
-    position: relative;
-    width: 80px;
-    height: 80px;
-    filter: sepia(80%) brightness(90%);
-    transition: all 0.5s;
-}
-
-.hover-portrait {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('immagini per sito/Socrates_Louvre.jpg') center/cover;
-    opacity: 0;
-    mix-blend-mode: multiply;
-    transition: opacity 0.5s;
-}
-
-.philosopher-avatar:hover {
-    filter: none;
-    transform: scale(1.1);
-}
-
-.philosopher-avatar:hover .hover-portrait {
-    opacity: 1;
-}
-    </style>
-   
-<body>
-<!------------------------------------------------------------->
-<div class="parallax-bg"></div>
-
-<style>
-.parallax-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('immagini per sito/cielo.avif') center/cover no-repeat fixed;
-    opacity: 0.03;
-    z-index: -1;
-}
-</style>
-
-<!-------------------------------------------------------------->
-    <nav class="navbar" role="navigation" aria-label="Menu principale">
-        <ul class="menu" role="menubar">
-            <!-- Incipit -->
-            <li role="none" class="dropdown">
-                <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-book-open"></i> Incipit<br> <span class="arrow">▼</span>
-                </button>
-                <div class="submenu" role="menu" aria-label="Sottomenu Incipit">
-                    <p class="frase-chiave">«Dall'oscurità del non-sapere, una scintilla: il primo perché che illuminò la coscienza umana.»</p>
-                    <p>Prima delle parole, prima degli dei, esisteva quel momento sospeso in cui l'uomo si fermò a contemplare il cielo notturno. Fu allora che il pensiero prese forma - non come risposta, ma come vibrazione pura di meraviglia.</p>
-                    <p>Questo spazio non è una collezione di concetti. È un campo magnetico dove le domande dei nostri antenati filosofi continuano a risuonare, invitandoci a ripercorrere quel primo, rivoluzionario atto di curiosità.</p>
-                </div>
-<div class="philosopher-avatar" data-philosopher="plato">
-    <img src="immagini%20per%20sito/platone.jpg" alt="Platone">
-    <div class="hover-portrait"></div>
-</div>
-             
-<div class="parallax-bg"></div>
-<div class="quote-carousel">
-    <blockquote>"Conosci te stesso" <footer>- Socrate</footer></blockquote>
-<blockquote>"Non bisogna curarsi troppo della vita, ma della vita buona" <footer>- Platone</footer></blockquote>
-<blockquote>"L'uomo è la misura di tutte le cose" <footer>- Protagora</footer></blockquote>
-    <!-- Altre citazioni nascoste -->
-</div>
- 
-          
-
-
-<style>
-.parallax-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('immagini/cielo.avif') center/cover no-repeat fixed;
-    opacity: 0.03;
-    z-index: -1;
-}
-</style>
-            </li>
-
-            <!-- Filosofia antica -->
-            <li role="none" class="dropdown">
-                <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
-                    Filosofia antica <span class="arrow">▼</span>
-                </button>
-                <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia antica">
-                    <div>
-                        <h4>Scuola ionica</h4>
-                        <a href="/Presocratici/talete.html" role="menuitem">Talete</a>
-                        <a href="Presocratici/anassimandro.html" role="menuitem">Anassimandro</a>
-                        <a href="Presocratici/anassimene.html" role="menuitem">Anassimene</a>
-                    </div>
-                    <div>
-                        <h4>Scuola eleatica</h4>
-                        <a href="Presocratici/senofane.html" role="menuitem">Senofane</a>
-                        <a href="/Presocratici/parmenide.html" role="menuitem">Parmenide</a>
-                        <a href="articoli/zenone.html" role="menuitem">Zenone</a>
-                        <a href="articoli/zenone.html" role="menuitem">Melisso</a>
-                    </div>
-                    <div>
-                        <h4>Altri</h4>
-                        <a href="articoli/eraclito.html" role="menuitem">Eraclito</a>
-                        <a href="/Presocratici/anassagora.html" role="menuitem">Anassagora</a>
-                        <a href="/articoli/empedocle.html" role="menuitem">Empedocle</a>
-                    </div>
-                    <div>
-                        <h4>Pitagorici</h4>
-                        <a href="/articoli/pitagora.html" role="menuitem">Pitagora</a>
-                        <a href="/articoli/filolao.html" role="menuitem">Filolao</a>
-                        <a href="/articoli/alcmeone.html" role="menuitem">Alcmeone</a>
-                        <a href="articoli/archita.html" role="menuitem">Archita</a>
-                        <a href="/articoli/ippaso.html" role="menuitem">Ippaso</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Filosofia classica -->
-            <li role="none" class="dropdown">
-                <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
-                    Filosofia classica <span class="arrow">▼</span>
-                </button>
-                <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia classica">
-                    <div>
-                        <h4>Classici</h4>
-                        <a href="articoli/socrate.html" role="menuitem">Socrate</a>
-                        <a href="articoli/platone.html" role="menuitem">Platone</a>
-                        <a href="articoli/aristotele.html" role="menuitem">Aristotele</a>
-                    </div>
-                    <div>
-                        <h4>Platonici</h4>
-                        <a href="articoli/senofonte.html" role="menuitem">Senofonte</a>
-                        <a href="articoli/antistene.html" role="menuitem">Antistene</a>
-                        <a href="#" role="menuitem">Aristippo</a>
-                    </div>
-                    <div>
-                        <h4>Stoici</h4>
-                        <a href="articoli/zenone.html" role="menuitem">Zenone</a>
-                        <a href="#" role="menuitem">Epitteto</a>
-                        <a href="#" role="menuitem">Seneca</a>
-                    </div>
-                    <div>
-                        <h4>Epicurei</h4>
-                        <a href="#" role="menuitem">Epicuro</a>
-                        <a href="#" role="menuitem">Lucrezio</a>
-                        <a href="#" role="menuitem">Cicerone</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Filosofia medievale -->
-            <li role="none" class="dropdown">
-                <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
-                    Medievale/Patristica <span class="arrow">▼</span>
-                </button>
-                <div class="mega-menu columns-2" role="menu" aria-label="Sottomenu Filosofia medievale">
-                    <div>
-                        <h4>Medievale</h4>
-                        <a href="#" role="menuitem">Tommaso d'Aquino</a>
-                        <a href="#" role="menuitem">Anselmo</a>
-                        <a href="#" role="menuitem">Guglielmo di Ockham</a>
-                        <a href="#" role="menuitem">Duns Scoto</a>
-                    </div>
-                    <div>
-                        <h4>Patristica</h4>
-                        <a href="#" role="menuitem">Agostino</a>
-                        <a href="#" role="menuitem">Origene</a>
-                        <a href="#" role="menuitem">Gregorio di Nissa</a>
-                        <a href="#" role="menuitem">Tertulliano</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Filosofia moderna -->
-            <li role="none" class="dropdown">
-                <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
-                    Filosofia moderna <span class="arrow">▼</span>
-                </button>
-                <div class="mega-menu columns-3" role="menu" aria-label="Sottomenu Filosofia moderna">
-                    <div>
-                        <h4>Razionalisti</h4>
-                        <a href="#" role="menuitem">Cartesio</a>
-                        <a href="#" role="menuitem">Spinoza</a>
-                        <a href="#" role="menuitem">Leibniz</a>
-                    </div>
-                    <div>
-                        <h4>Empiristi</h4>
-                        <a href="#" role="menuitem">Locke</a>
-                        <a href="#" role="menuitem">Hume</a>
-                        <a href="#" role="menuitem">Berkeley</a>
-                    </div>
-                    <div>
-                        <h4>Kant e oltre</h4>
-                        <a href="#" role="menuitem">Kant</a>
-                        <a href="#" role="menuitem">Fichte</a>
-                        <a href="#" role="menuitem">Schelling</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Filosofia contemporanea -->
-            <li role="none" class="dropdown">
-                <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
-                    Contemporanea <span class="arrow">▼</span>
-                </button>
-                <div class="mega-menu columns-3" role="menu" aria-label="Sottomenu Filosofia contemporanea">
-                    <div>
-                        <h4>Ottocento</h4>
-                        <a href="#" role="menuitem">Hegel</a>
-                        <a href="#" role="menuitem">Schopenhauer</a>
-                        <a href="#" role="menuitem">Nietzsche</a>
-                    </div>
-                    <div>
-                        <h4>Fenomenologia</h4>
-                        <a href="#" role="menuitem">Husserl</a>
-                        <a href="#" role="menuitem">Heidegger</a>
-                        <a href="#" role="menuitem">Merleau-Ponty</a>
-                    </div>
-                    <div>
-                        <h4>Postmoderni</h4>
-                        <a href="#" role="menuitem">Sartre</a>
-                        <a href="#" role="menuitem">Foucault</a>
-                        <a href="#" role="menuitem">Derrida</a>
-                    </div>
-                </div>
-            </li>
-        </ul>
-       
-
-
-        <!-- FORM DI RICERCA -->
-        <div class="search-container">
-            <form role="search" class="search-form">
-                <input type="search" 
-                       aria-label="Cerca filosofi o correnti" 
-                       placeholder="Cerca..." 
-                       class="search-input">
-                <button type="submit" 
-                        aria-label="Avvia ricerca" 
-                        class="search-btn">
-                    <i class="fas fa-search"></i>
-                </button>
-            </form>
-        </div>
-    </nav>
-<!--  inizio inserimento logo-->
-<div class="logo-container" role="banner" aria-label="Logo del sito">
-  <a href="/" title="Homepage">
-    <img src="Logo2a.png" alt="Logo Echi di Sofia" />
-  </a>
-</div>
-<style>
-/* CSS da inserire nel tuo file styles.css o dentro un <style> */
-.logo-container {
-  position: fixed;     /* fisso in alto a destra */
-  top: 10px;           /* distanziamento dal bordo superiore */
-  right: 10px;         /* distanziamento dal bordo destro */
-  z-index: 1001;       /* sopra tutti */
-}
-
-.logo-container img {
-  max-height: 50px;    /* altezza contenuta e proporzionata */
-  width: auto;
-  display: block;
-  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.15)); /* ombra leggera */
-  transition: transform 0.3s ease;
-}
-
-.logo-container img:hover {
-  transform: scale(1.05); /* leggero ingrandimento al passaggio */
-}
-
-</style>
-    <!-- fine inserimento logo-->
-    <section class="hero" aria-label="Saluto di benvenuto">
-  <h1 class="saluto">Benvenuti in Echi di Sofia</h1>
-  <p class="sottotitolo">Dove il pensiero antico risuona nel presente</p>
-  <blockquote style="text-align: center;">
-  «Non è possedendo la verità, ma cercandola, che l'uomo si espande»
-</blockquote>
-</section>
-</section>
-
-    </section>
-
-    <script>
-    // GESTIONE HOVER AVANZATA
-    document.addEventListener('DOMContentLoaded', function() {
-        const dropdowns = document.querySelectorAll('.dropdown');
-        
-        dropdowns.forEach(dropdown => {
-            // Apertura menu
-            dropdown.addEventListener('mouseenter', function() {
-                const menu = this.querySelector('.submenu, .mega-menu');
-                menu.style.opacity = '1';
-                menu.style.visibility = 'visible';
-                menu.style.transform = 'translateY(5px)';
-                menu.style.pointerEvents = 'auto';
-            });
-            
-            // Chiusura controllata
-            dropdown.addEventListener('mouseleave', function(e) {
-                const menu = this.querySelector('.submenu, .mega-menu');
-                
-                // Timer per evitare chiusura accidentale
-                setTimeout(() => {
-                    if (!this.matches(':hover') && !menu.matches(':hover')) {
-                        menu.style.opacity = '0';
-                        menu.style.visibility = 'hidden';
-                        menu.style.transform = 'translateY(0)';
-                        menu.style.pointerEvents = 'none';
-                    }
-                }, 100);
-            });
-            
-            // Gestione hover sui sottomenu
-            const submenus = dropdown.querySelectorAll('.submenu, .mega-menu');
-            submenus.forEach(menu => {
-                menu.addEventListener('mouseenter', function() {
-                    this.style.opacity = '1';
-                    this.style.visibility = 'visible';
-                    this.style.transform = 'translateY(5px)';
-                });
-                
-                menu.addEventListener('mouseleave', function() {
-                    this.style.opacity = '0';
-                    this.style.visibility = 'hidden';
-                    this.style.transform = 'translateY(0)';
-                });
-            });
-        });
-
-        // Funzionalità di ricerca
-        document.querySelector('.search-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const query = this.querySelector('input').value.trim();
-            if(query) {
-                alert(`Ricerca implementata: "${query}"\n\nQuesta è una demo. Nella pratica, collegheresti un sistema di ricerca reale.`);
-               // Sostituire con: window.location.href = `/search?q=${encodeURIComponent(query)}`;
-            }
-        });
-
-        // Interattività aggiuntiva per il titolo
-        const title = document.querySelector('.saluto');
-        title.addEventListener('mouseover', () => {
-            title.style.animation = 'echoEffect 1s ease-out';
-        });
-        title.addEventListener('mouseout', () => {
-            title.style.animation = '';
-        });
-    });
-window.addEventListener('load', () => {
-    document.body.classList.add('loaded');
-});
-window.addEventListener('scroll', () => {
-    document.body.classList.toggle('scrolled', window.scrollY > 50);
-});
-    </script>
-   
-    <section class="contatti">
-  <h4>Contattami</h4>
-  <form action="https://formspree.io/f/xpwrnzda" method="POST">
-    <label for="name">Nome</label>
-    <input type="text" id="name" name="name" required>
-
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" required>
-
-    <label for="message">Messaggio</label>
-    <textarea id="message" name="message" rows="5" required></textarea>
-
-    <button type="submit">Invia</button>
-  </form>
-</section>
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Echi di Sofia - Cookie</title>
-    <style>
-        /* ANIMAZIONE ENTRATA/USCITA */
-        @keyframes slideIn {
-            from { transform: translateY(100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        
-        @keyframes fadeOut {
-            to { opacity: 0; visibility: hidden; }
+        .section-title {
+            color: var(--primary);
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 1rem;
         }
 
-        /* STILE BANNER */
-        #cookie-banner {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(135deg, #2a2a72 0%, #1a1a3a 100%);
+        /* FOOTER */
+        footer {
+            background: var(--text);
             color: white;
-            padding: 1.5rem;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.2);
-            z-index: 1000;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1rem;
-            animation: slideIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-            font-family: 'Crimson Pro', serif;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
         }
 
-        #cookie-banner.hidden {
-            animation: fadeOut 0.6s forwards;
-        }
-
-        .cookie-text {
-            flex: 1;
-            min-width: 250px;
-            line-height: 1.6;
-        }
-
-        .cookie-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .cookie-btn {
-            padding: 0.6rem 1.2rem;
-            border-radius: 4px;
+        /* MOBILE MENU */
+        .hamburger {
+            display: none;
             cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 600;
-            border: none;
         }
 
-        #accept-cookies {
-            background: #c0392b;
-            color: white;
-        }
-
-        #reject-cookies {
-            background: linear-gradient(135deg, 
-                #ff3a3a 0%, 
-                #c0392b 50%, 
-                #a41616 100%);;
-            color: white;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-
-        #cookie-settings {
-            background: transparent;
-            color: #8e8eff;
-            text-decoration: underline;
-        }
-
-        /* EFFETTI INTERATTIVI */
-        .cookie-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 600px) {
-            #cookie-banner {
-                flex-direction: column;
-                text-align: center;
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
             }
-            .cookie-buttons {
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                height: 100vh;
+                background: var(--primary);
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 5rem 2rem;
+                transition: all 0.3s;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-item {
+                margin: 1rem 0;
                 width: 100%;
-                justify-content: center;
+            }
+
+            .mega-menu {
+                position: static;
+                display: none;
+                width: 100%;
+                padding: 1rem;
+                margin-top: 0.5rem;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                grid-template-columns: 1fr;
+            }
+
+            .nav-item:hover .mega-menu {
+                display: grid;
             }
         }
     </style>
 </head>
 <body>
-    <!--Fine  Banner Cookie -->
-<style>
-  .site-footer {
-    text-align: center; /* per centrare il contenuto nel footer */
-    padding: 40px 0 20px;
-  }
-
-  .popover-container {
-    position: relative;
-    display: inline-block;
-    margin-top: 20px;
-  }
-
-  .popover-btn {
-    padding: 10px 20px;
-    font-size: 1rem;
-    font-family: 'Playfair Display', serif;
-    cursor: pointer;
-    border: none;
-    background-color: #2a2a72;
-    color: white;
-    border-radius: 6px;
-    transition: all 0.3s;
-  }
-
-  .popover-btn:hover {
-    background-color: #1a1a3a;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  }
-
-  .popover-content {
-    position: absolute;
-    bottom: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: white;
-    border: 1px solid #ccc;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    display: none;
-    z-index: 10;
-    width: auto;
-    min-width: 420px;
-  }
-
-  .popover-container:hover .popover-content {
-    display: block;
-    animation: fadeIn 0.3s ease-out;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateX(-50%) translateY(10px); }
-    to { opacity: 1; transform: translateX(-50%) translateY(0); }
-  }
-
-  .filosofi-container {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: nowrap;
-  }
-
-  .filosofo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 110px;
-    transition: all 0.3s;
-  }
-
-  .filosofo:hover {
-    transform: translateY(-5px);
-  }
-
-  .filosofo img {
-    width: 100px;
-    height: 130px; /* rettangolare verticale */
-    border-radius: 8px; /* angoli arrotondati, ma non tondo */
-    object-fit: cover;
-    border: 2px solid #2a2a72;
-    margin-bottom: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  }
-
-  .filosofo span {
-    font-weight: bold;
-    text-align: center;
-    font-size: 0.9rem;
-    color: #2a2a72;
-  }
-</style>
-
-<footer class="site-footer">
-  <div class="popover-container">
-    <button class="popover-btn">Loro hanno alterato il paradigma.</button>
-    <div class="popover-content" role="dialog" aria-label="Filosofi famosi">
-      <div class="filosofi-container">
-        <div class="filosofo">
-          <img src="immagini%20per%20sito/socrate.webp" alt="Socrate">
-          <span>Socrate</span>
-        </div>
-        <div class="filosofo">
-          <img src="immagini%20per%20sito/platone.jpg" alt="Platone">
-          <span>Platone</span>
-        </div>
-          <div class="filosofo">
-          <img src="immagini%20per%20sito/Aristotle_.jpg" alt="Aristotele">
-          <span>Aristotele</span>
-        </div>
-          <div class="filosofo">
-          <img src="immagini%20per%20sito/kant.webp" alt="Kant">
-          <span>Kant</span>
-        </div>
-     
-      
-      </div>
+    <!-- NAVIGAZIONE -->
+    <div class="nav-container">
+        <nav>
+            <a href="index.html" class="logo">Echi di <span>Sofia</span></a>
+            
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <ul class="nav-links">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+                
+                <!-- FILOSOFIA ANTICA -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Filosofia Antica <span class="arrow">▼</span></a>
+                    <div class="mega-menu">
+                        <div class="mega-menu-column">
+                            <h4>Scuola Ionica</h4>
+                            <a href="/presocratici/talete.html">Talete</a>
+                            <a href="/presocratici/anassimandro.html">Anassimandro</a>
+                            <a href="/presocratici/anassimene.html">Anassimene</a>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>Scuola Eleatica</h4>
+                            <a href="/presocratici/parmenide.html">Parmenide</a>
+                            <a href="/presocratici/zenone.html">Zenone</a>
+                            <a href="/presocratici/melisso.html">Melisso</a>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>Altri Presocratici</h4>
+                            <a href="/presocratici/eraclito.html">Eraclito</a>
+                            <a href="/presocratici/anassagora.html">Anassagora</a>
+                            <a href="/presocratici/empedocle.html">Empedocle</a>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>Pitagorici</h4>
+                            <a href="/presocratici/pitagora.html">Pitagora</a>
+                            <a href="/presocratici/filolao.html">Filolao</a>
+                            <a href="/presocratici/alcmeone.html">Alcmeone</a>
+                        </div>
+                    </div>
+                </li>
+                
+                <!-- FILOSOFIA CLASSICA -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Filosofia Classica <span class="arrow">▼</span></a>
+                    <div class="mega-menu">
+                        <div class="mega-menu-column">
+                            <h4>Grandi Maestri</h4>
+                            <a href="/classici/socrate.html">Socrate</a>
+                            <a href="/classici/platone.html">Platone</a>
+                            <a href="/classici/aristotele.html">Aristotele</a>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>Scuole Ellenistiche</h4>
+                            <a href="/classici/stoici.html">Stoici</a>
+                            <a href="/classici/epicurei.html">Epicurei</a>
+                            <a href="/classici/cinici.html">Cinici</a>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>Altri</h4>
+                            <a href="/classici/senofonte.html">Senofonte</a>
+                            <a href="/classici/aristippo.html">Aristippo</a>
+                            <a href="/classici/antistene.html">Antistene</a>
+                        </div>
+                    </div>
+                </li>
+                
+                <!-- FILOSOFIA MODERNA -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Filosofia Moderna <span class="arrow">▼</span></a>
+                    <div class="mega-menu">
+                        <div class="mega-menu-column">
+                            <h4>Razionalisti</h4>
+                            <a href="/moderna/cartesio.html">Cartesio</a>
+                            <a href="/moderna/spinoza.html">Spinoza</a>
+                            <a href="/moderna/leibniz.html">Leibniz</a>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>Empiristi</h4>
+                            <a href="/moderna/locke.html">Locke</a>
+                            <a href="/moderna/hume.html">Hume</a>
+                            <a href="/moderna/berkeley.html">Berkeley</a>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>Illuminismo</h4>
+                            <a href="/moderna/kant.html">Kant</a>
+                            <a href="/moderna/rousseau.html">Rousseau</a>
+                            <a href="/moderna/voltaire.html">Voltaire</a>
+                        </div>
+                    </div>
+                </li>
+                
+                <!-- FILOSOFIA CONTEMPORANEA -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Contemporanea <span class="arrow">▼</span></a>
+                    <div class="mega-menu">
+                        <div class="mega-menu-column">
+                            <h4>Ottocento</h4>
+                            <a href="/contemporanea/hegel.html">Hegel</a>
+                            <a href="/contemporanea/schopenhauer.html">Schopenhauer</a>
+                            <a href="/contemporanea/nietzsche.html">Nietzsche</a>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>Fenomenologia</h4>
+                            <a href="/contemporanea/husserl.html">Husserl</a>
+                            <a href="/contemporanea/heidegger.html">Heidegger</a>
+                            <a href="/contemporanea/merleau-ponty.html">Merleau-Ponty</a>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>Postmoderni</h4>
+                            <a href="/contemporanea/foucault.html">Foucault</a>
+                            <a href="/contemporanea/derrida.html">Derrida</a>
+                            <a href="/contemporanea/deleuze.html">Deleuze</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </nav>
     </div>
-  </div>
-</footer>
-  <footer class="site-footer">
-  <div class="footer-content">
-    <p>&copy; 2025 <strong>K. Klys</strong> – Tutti i diritti riservati.</p>
-    <p><a href="mailto:info@echidisofia.org">info@echidisofia.org</a></p>
-  </div>
-</footer>   
 
-    
+    <!-- HEADER -->
+    <header class="main-header">
+        <h1 class="site-title">Echi di Sofia</h1>
+        <p class="site-subtitle">Esplora la storia del pensiero filosofico</p>
+    </header>
+
+    <!-- CONTENUTO PRINCIPALE -->
+    <main class="main-content">
+        <section class="philosophy-section">
+            <h2 class="section-title">Benvenuti in Echi di Sofia</h2>
+            <p>Un portale dedicato allo studio della filosofia attraverso i secoli. Esplora le diverse epoche, scuole e pensatori che hanno plasmato il pensiero occidentale.</p>
+        </section>
+
+        <section class="philosophy-section">
+            <h2 class="section-title">Filosofia Antica</h2>
+            <p>Dai Presocratici ai grandi sistemi di Platone e Aristotele, scopri le origini del pensiero filosofico occidentale.</p>
+        </section>
+
+        <section class="philosophy-section">
+            <h2 class="section-title">Filosofia Classica</h2>
+            <p>L'età d'oro della filosofia greca, con le grandi scuole ellenistiche che hanno influenzato millenni di pensiero.</p>
+        </section>
+
+        <section class="philosophy-section">
+            <h2 class="section-title">Filosofia Moderna</h2>
+            <p>Dalla rivoluzione scientifica all'Illuminismo, un periodo di radicale ripensamento della conoscenza e della realtà.</p>
+        </section>
+
+        <section class="philosophy-section">
+            <h2 class="section-title">Filosofia Contemporanea</h2>
+            <p>Le correnti di pensiero del XIX e XX secolo che hanno ridefinito il nostro modo di comprendere l'esistenza.</p>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2023 Echi di Sofia - Tutti i diritti riservati</p>
+        <p><a href="mailto:info@echidisofia.org" style="color: var(--primary-light);">info@echidisofia.org</a></p>
+    </footer>
+
+    <!-- SCRIPT -->
+    <script>
+        // Menu mobile
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Chiudi menu al click su link (mobile)
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+
+        // Gestione resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                navLinks.classList.remove('active');
+            }
+        });
+    </script>
 </body>
-    
 </html>
-
-
-
