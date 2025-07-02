@@ -6,12 +6,12 @@
     <title>Echi di Sofia - Portale di Filosofia</title>
     <style>
         :root {
-            --primary: #2a2a72;       /* Blu scuro */
-            --primary-light: #8e8eff; /* Blu chiaro */
-            --accent: #c0392b;        /* Rosso */
-            --text: #333;             /* Testo scuro */
-            --bg: #f9f5f0;            /* Sfondo chiaro */
-            --paper: #fffcf8;         /* Sfondo carta */
+            --primary: #2a2a72;
+            --primary-light: #8e8eff;
+            --accent: #c0392b;
+            --text: #333;
+            --bg: #f9f5f0;
+            --paper: #fffcf8;
         }
 
         * {
@@ -29,7 +29,7 @@
             padding-top: 80px;
         }
 
-        /* NAVIGAZIONE PRINCIPALE */
+        /* NAVIGAZIONE PRINCIPALE - ORA VISIBILE */
         .nav-container {
             position: fixed;
             top: 0;
@@ -86,12 +86,12 @@
             transition: transform 0.3s;
         }
 
-        /* MEGA MENU COMPLETAMENTE OPACO */
+        /* MEGA MENU VISIBILE */
         .mega-menu {
             position: absolute;
             left: 0;
             width: 100%;
-            background: var(--primary); /* Sfondo solido */
+            background: var(--primary);
             padding: 2rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             opacity: 0;
@@ -105,10 +105,8 @@
             border-top: 3px solid var(--accent);
         }
 
-        /* COLONNE DEL MEGA MENU - ORA TUTTE OPACHE */
         .mega-menu-column {
             padding: 0 1rem;
-            background: var(--primary); /* Forza sfondo opaco */
         }
 
         .mega-menu-column h4 {
@@ -116,7 +114,7 @@
             font-family: 'Playfair Display', serif;
             margin-bottom: 1rem;
             padding-bottom: 0.5rem;
-            border-bottom: 1px solid rgba(255,255,255,0.3);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
         }
 
         .mega-menu-column a {
@@ -156,6 +154,21 @@
             margin-bottom: 3rem;
         }
 
+        .site-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .site-subtitle {
+            font-size: 1.5rem;
+            font-style: italic;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
         /* CONTENUTO PRINCIPALE */
         .main-content {
             max-width: 1200px;
@@ -163,20 +176,27 @@
             padding: 2rem;
         }
 
-        /* FOOTER */
-        footer {
-            background: var(--text);
-            color: white;
-            text-align: center;
-            padding: 2rem;
-            margin-top: 3rem;
-        }
-
         /* MOBILE MENU */
         .hamburger {
             display: none;
             cursor: pointer;
+            width: 30px;
+            height: 20px;
+            position: relative;
         }
+
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: white;
+            transition: all 0.3s;
+        }
+
+        .hamburger span:nth-child(1) { top: 0; }
+        .hamburger span:nth-child(2) { top: 10px; }
+        .hamburger span:nth-child(3) { top: 20px; }
 
         @media (max-width: 768px) {
             .hamburger {
@@ -185,14 +205,14 @@
 
             .nav-links {
                 position: fixed;
-                top: 0;
+                top: 80px;
                 right: -100%;
                 width: 80%;
-                height: 100vh;
+                height: calc(100vh - 80px);
                 background: var(--primary);
                 flex-direction: column;
                 align-items: flex-start;
-                padding: 5rem 2rem;
+                padding: 2rem;
                 transition: all 0.3s;
             }
 
@@ -224,7 +244,7 @@
     </style>
 </head>
 <body>
-    <!-- NAVIGAZIONE -->
+    <!-- NAVIGAZIONE ORA VISIBILE -->
     <div class="nav-container">
         <nav>
             <a href="index.html" class="logo">Echi di <span>Sofia</span></a>
@@ -240,36 +260,29 @@
                     <a href="index.html" class="nav-link">Home</a>
                 </li>
                 
-                <!-- FILOSOFIA ANTICA CON 4 COLONNE OPACHE -->
+                <!-- FILOSOFIA ANTICA -->
                 <li class="nav-item">
                     <a href="#" class="nav-link">Filosofia Antica <span class="arrow">▼</span></a>
                     <div class="mega-menu">
-                        <!-- Colonna 1 - Scuola Ionica -->
-                        <div class="mega-menu-column" style="background: #2a2a72;">
+                        <div class="mega-menu-column">
                             <h4>Scuola Ionica</h4>
                             <a href="/presocratici/talete.html">Talete</a>
                             <a href="/presocratici/anassimandro.html">Anassimandro</a>
                             <a href="/presocratici/anassimene.html">Anassimene</a>
                         </div>
-                        
-                        <!-- Colonna 2 - Scuola Eleatica -->
-                        <div class="mega-menu-column" style="background: #2a2a72;">
+                        <div class="mega-menu-column">
                             <h4>Scuola Eleatica</h4>
                             <a href="/presocratici/parmenide.html">Parmenide</a>
                             <a href="/presocratici/zenone.html">Zenone</a>
                             <a href="/presocratici/melisso.html">Melisso</a>
                         </div>
-                        
-                        <!-- Colonna 3 - Altri Presocratici -->
-                        <div class="mega-menu-column" style="background: #2a2a72;">
+                        <div class="mega-menu-column">
                             <h4>Altri Presocratici</h4>
                             <a href="/presocratici/eraclito.html">Eraclito</a>
                             <a href="/presocratici/anassagora.html">Anassagora</a>
                             <a href="/presocratici/empedocle.html">Empedocle</a>
                         </div>
-                        
-                        <!-- Colonna 4 - Pitagorici -->
-                        <div class="mega-menu-column" style="background: #2a2a72;">
+                        <div class="mega-menu-column">
                             <h4>Pitagorici</h4>
                             <a href="/presocratici/pitagora.html">Pitagora</a>
                             <a href="/presocratici/filolao.html">Filolao</a>
@@ -278,7 +291,30 @@
                     </div>
                 </li>
                 
-                <!-- Altri menu... -->
+                <!-- FILOSOFIA CLASSICA -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Filosofia Classica <span class="arrow">▼</span></a>
+                    <div class="mega-menu">
+                        <div class="mega-menu-column">
+                            <h4>Grandi Maestri</h4>
+                            <a href="/classici/socrate.html">Socrate</a>
+                            <a href="/classici/platone.html">Platone</a>
+                            <a href="/classici/aristotele.html">Aristotele</a>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>Scuole Ellenistiche</h4>
+                            <a href="/classici/stoici.html">Stoici</a>
+                            <a href="/classici/epicurei.html">Epicurei</a>
+                            <a href="/classici/cinici.html">Cinici</a>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>Altri Autori</h4>
+                            <a href="/classici/senofonte.html">Senofonte</a>
+                            <a href="/classici/aristippo.html">Aristippo</a>
+                            <a href="/classici/antistene.html">Antistene</a>
+                        </div>
+                    </div>
+                </li>
             </ul>
         </nav>
     </div>
@@ -291,22 +327,22 @@
 
     <!-- CONTENUTO PRINCIPALE -->
     <main class="main-content">
-        <!-- Sezioni di contenuto... -->
+        <section>
+            <h2>Benvenuti nel portale di filosofia</h2>
+            <p>Esplora le diverse epoche del pensiero filosofico attraverso il nostro menu completo.</p>
+        </section>
     </main>
 
-    <!-- FOOTER -->
-    <footer>
-        <p>© 2023 Echi di Sofia - Tutti i diritti riservati</p>
-        <p><a href="mailto:info@echidisofia.org" style="color: var(--primary-light);">info@echidisofia.org</a></p>
-    </footer>
-
     <script>
-        // Menu mobile
+        // GESTIONE MENU MOBILE
         const hamburger = document.querySelector('.hamburger');
         const navLinks = document.querySelector('.nav-links');
 
         hamburger.addEventListener('click', () => {
             navLinks.classList.toggle('active');
+            
+            // Animazione hamburger
+            hamburger.classList.toggle('open');
         });
 
         // Chiudi menu al click su link (mobile)
@@ -314,15 +350,9 @@
             link.addEventListener('click', () => {
                 if (window.innerWidth <= 768) {
                     navLinks.classList.remove('active');
+                    hamburger.classList.remove('open');
                 }
             });
-        });
-
-        // Gestione resize
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) {
-                navLinks.classList.remove('active');
-            }
         });
     </script>
 </body>
