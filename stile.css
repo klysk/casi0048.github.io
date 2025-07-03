@@ -343,6 +343,177 @@ body.loaded .saluto-sapienziale .parola {
     display: none;
   }
 }
-</style>
+<!-- extra animazione saluto -->
+/* SISTEMA DI ANIMAZIONE FILOSOFICO */
+:root {
+  --durata-ritmica: 1.618s; /* Proporzione aurea */
+  --colore-primordiale: #2a2a72;
+  --colore-divino: #c0392b;
+  --luce-essenziale: #f5f3e9;
+}
+
+.saluto-container {
+  position: relative;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  isolation: isolate;
+}
+
+/* TIPOGRAFIA ANIMATA */
+.saluto-cosmico {
+  font-family: 'Palatino Linotype', 'Playfair Display', serif;
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 700;
+  display: inline-flex;
+  gap: 0.5em;
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  line-height: 1;
+  color: var(--colore-primordiale);
+}
+
+.parola-eco,
+.parola-connettiva,
+.parola-sapienza {
+  position: relative;
+  display: inline-block;
+  transform-origin: bottom center;
+  opacity: 0;
+  animation: 
+    apparizione-verbale var(--durata-ritmica) forwards,
+    oscillazione-cosmica calc(var(--durata-ritmica) * 3) infinite ease-in-out 1s;
+}
+
+.parola-eco {
+  animation-delay: 0.3s;
+  text-shadow: 0 0 10px rgba(42, 42, 114, 0.3);
+}
+
+.parola-connettiva {
+  animation-delay: 0.6s;
+  color: var(--colore-divino);
+}
+
+.parola-sapienza {
+  animation-delay: 0.9s;
+  background: linear-gradient(to right, #2a5272, #2a2a72);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ANIMAZIONI PRINCIPALI */
+@keyframes apparizione-verbale {
+  0% {
+    opacity: 0;
+    transform: translateY(1em) rotateX(90deg);
+    filter: blur(5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes oscillazione-cosmica {
+  0%, 100% { transform: translateY(0) rotateZ(0deg); }
+  25% { transform: translateY(-0.2em) rotateZ(0.5deg); }
+  75% { transform: translateY(0.1em) rotateZ(-0.3deg); }
+}
+
+/* ONDA FILOSOFICA (SVG ANIMATO) */
+.onda-filosofica {
+  position: absolute;
+  bottom: -0.5em;
+  left: 0;
+  width: 100%;
+  height: 0.5em;
+  stroke: var(--colore-divino);
+  stroke-width: 2;
+  fill: none;
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 1200;
+  animation: 
+    tracciamento-onda calc(var(--durata-ritmica) * 2) forwards ease-out 0.5s,
+    pulsazione-essenziale 4s infinite ease-in-out 2s;
+}
+
+@keyframes tracciamento-onda {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes pulsazione-essenziale {
+  50% { stroke-width: 3; opacity: 0.8; }
+}
+
+/* AURA PNEUMATICA */
+.aura-pulsante {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(192, 57, 43, 0.1) 0%,
+    rgba(42, 42, 114, 0.05) 50%,
+    transparent 70%
+  );
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  opacity: 0;
+  animation: 
+    espansione-aura calc(var(--durata-ritmica) * 3) forwards,
+    pulsazione-aura 8s infinite cubic-bezier(0.455, 0.03, 0.515, 0.955) 2s;
+}
+
+@keyframes espansione-aura {
+  0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+@keyframes pulsazione-aura {
+  0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.05); }
+}
+
+/* INTERAZIONE AVANZATA */
+.saluto-container:hover .parola-eco {
+  animation: eco-risonante 2s infinite alternate;
+}
+
+@keyframes eco-risonante {
+  to { text-shadow: 0 0 20px rgba(42, 42, 114, 0.6); }
+}
+
+.saluto-container:hover .onda-filosofica {
+  animation-play-state: paused;
+}
+
+/* DARK MODE ADATTIVO */
+@media (prefers-color-scheme: dark) {
+  .saluto-cosmico {
+    color: var(--luce-essenziale);
+  }
+  .parola-sapienza {
+    background: linear-gradient(to right, #8e8eff, #7fb8ff);
+  }
+  .aura-pulsante {
+    mix-blend-mode: screen;
+  }
+}
+
+/* PERFORMANCE OPTIMIZATION */
+@media (prefers-reduced-motion) {
+  .saluto-cosmico > span,
+  .onda-filosofica,
+  .aura-pulsante {
+    animation: none !important;
+    opacity: 1 !important;
+    stroke-dashoffset: 0 !important;
+  }
+}
 
 
