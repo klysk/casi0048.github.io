@@ -235,6 +235,139 @@ body.loaded .saluto.filosofico .parola {
     display: none;
   }
 }
+/* SISTEMA CROMATICO NEOPLATONICO */
+:root {
+  --porpora-imperiale: #5c2a72;
+  --oro-del-sole: #c07d2b;
+  --blu-cosmico: #2a5272;
+  --bianco-avorio: #f5f3e9;
+}
+
+/* TIPOGRAFIA DINAMICA */
+@font-face {
+  font-family: 'Palatino Philosopher';
+  src: local('Palatino'), local('Palatino Linotype');
+  unicode-range: U+0370-03FF; /* Solo per caratteri greci */
+}
+
+.saluto-sapienziale {
+  font-family: 'Palatino Philosopher', 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 0.5em;
+  margin: 0 auto;
+  color: var(--porpora-imperiale);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  line-height: 1.2;
+  perspective: 800px;
+}
+
+.parola {
+  position: relative;
+  display: inline-block;
+  transition: all 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+  transform-style: preserve-3d;
+}
+
+.greca {
+  font-style: italic;
+  color: var(--blu-cosmico);
+  font-weight: 400;
+}
+
+/* FILO D'ORO PLATONICO */
+.filo-aurico {
+  position: absolute;
+  bottom: -0.5em;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  stroke: var(--oro-del-sole);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  fill: none;
+  stroke-dasharray: 120%;
+  stroke-dashoffset: 120%;
+  transition: stroke-dashoffset 1.2s 0.3s;
+}
+
+/* ANIMAZIONE AUREA */
+@keyframes vibrazione-essenziale {
+  0%, 100% { transform: translateY(0) rotateX(0); }
+  25% { transform: translateY(-2px) rotateX(5deg); }
+  75% { transform: translateY(1px) rotateX(-3deg); }
+}
+
+.saluto-sapienziale:hover .parola {
+  animation: vibrazione-essenziale 1.5s infinite alternate;
+}
+
+.saluto-sapienziale:hover .parola:nth-child(2) {
+  color: var(--oro-del-sole);
+  animation-delay: 0.2s;
+}
+
+.saluto-sapienziale:hover .filo-aurico {
+  stroke-dashoffset: 0;
+}
+
+/* EFFETTO MANOSCRITTO */
+.parola::after {
+  content: attr(data-char);
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: var(--bianco-avorio);
+  z-index: -1;
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.3));
+  opacity: 0.7;
+  clip-path: polygon(0 0, 100% 0, 100% 60%, 0 60%);
+}
+
+/* CARICAMENTO ANIMATO */
+body.loaded .saluto-sapienziale .parola {
+  transform: translateY(0.5em);
+  opacity: 0;
+  animation: 
+    apparizione 0.8s forwards,
+    riverbero 6s infinite 1s;
+}
+
+@keyframes apparizione {
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes riverbero {
+  0%, 100% { text-shadow: 0 0 0 rgba(42, 42, 114, 0); }
+  50% { text-shadow: 0 0 8px rgba(92, 42, 114, 0.4); }
+}
+
+/* DARK MODE ADATTIVO */
+.dark-mode .saluto-sapienziale {
+  --porpora-imperiale: #b18aff;
+  --oro-del-sole: #ff9e5e;
+  --blu-cosmico: #7fb8ff;
+  --bianco-avorio: #1a1a2e;
+}
+
+.dark-mode .parola::after {
+  mix-blend-mode: luminosity;
+}
+
+/* RESPONSIVE ESSENZIALE */
+@media (max-width: 768px) {
+  .saluto-sapienziale {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  
+  .filo-aurico {
+    display: none;
+  }
+}
 </style>
 
 <!-- ESEMPIO APPLICAZIONE ALLA TUA STRUCTURA -->
