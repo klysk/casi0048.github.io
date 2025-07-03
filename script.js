@@ -139,5 +139,20 @@ document.getElementById('generate-quote').addEventListener('click', function() {
       banner.classList.remove('show');
     });
   });
+document.querySelectorAll('.dropdown').forEach(item => {
+    item.addEventListener('mousemove', (e) => {
+        const rect = item.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        item.querySelector('.submenu').style.transform = `
+            rotateX(${(y - centerY) / 40}deg)
+            rotateY(${(x - centerX) / -40}deg)
+            translateZ(10px)
+        `;
+    });
+});
 </script>
 
