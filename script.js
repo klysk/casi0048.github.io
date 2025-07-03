@@ -37,7 +37,11 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
   });
-
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.dropdown')) {
+        hideAllSubmenus();
+    }
+});
   document.querySelector('.search-form').addEventListener('submit', function (e) {
     e.preventDefault();
     const query = this.querySelector('input').value.trim();
