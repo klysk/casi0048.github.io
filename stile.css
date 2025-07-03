@@ -139,6 +139,102 @@ body {
   .saluto { font-size: 2.5rem; }
   .article-card { padding: 1.5rem; }
 }
+<!--  aggiunta  -->
+/* Stile Base con Variabili CSS */
+.saluto.filosofico {
+  --colore-primario: #2a2a72;
+  --colore-secondario: #c0392b;
+  --durata-transizione: 0.6s;
+  position: relative;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  text-align: center;
+  margin: 0 auto;
+  width: fit-content;
+  perspective: 1000px;
+}
+
+/* Animazione Parole Separate */
+.parola {
+  display: inline-block;
+  position: relative;
+  transition: all var(--durata-transizione) cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.parola-1 { color: var(--colore-primario); transform: translateX(-10px); }
+.parola-2 { color: var(--colore-secondario); }
+.parola-3 { color: var(--colore-primario); transform: translateX(10px); }
+
+.saluto:hover .parola-1,
+.saluto:hover .parola-3 {
+  transform: translateX(0);
+}
+
+/* Effetto Aura Dinamica */
+.effetto-aura {
+  position: absolute;
+  top: -30%;
+  left: -20%;
+  width: 140%;
+  height: 160%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(138, 43, 226, 0.1) 0%,
+    rgba(0, 0, 0, 0) 70%
+  );
+  z-index: -1;
+  opacity: 0;
+  transition: opacity var(--durata-transizione) ease;
+  mix-blend-mode: multiply;
+}
+
+.saluto:hover .effetto-aura {
+  opacity: 1;
+  animation: pulsazione-aura 6s infinite alternate;
+}
+
+/* Animazioni Keyframe */
+@keyframes pulsazione-aura {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(0.98); opacity: 0.9; }
+}
+
+@keyframes riverbero-testo {
+  0% { text-shadow: 0 0 0 rgba(42, 42, 114, 0); }
+  20% { text-shadow: 0 0 10px rgba(42, 42, 114, 0.3); }
+  100% { text-shadow: 0 0 5px rgba(42, 42, 114, 0); }
+}
+
+/* Effetto Caricamento */
+body.loaded .saluto.filosofico .parola {
+  animation: riverbero-testo 1.5s ease-out forwards;
+}
+
+/* Dark Mode Adaptation */
+.dark-mode .saluto.filosofico {
+  --colore-primario: #8e8eff;
+  --colore-secondario: #ff6b6b;
+}
+
+.dark-mode .effetto-aura {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(142, 142, 255, 0.2) 0%,
+    rgba(0, 0, 0, 0) 70%
+  );
+}
+
+/* Ottimizzazione Mobile */
+@media (max-width: 768px) {
+  .saluto.filosofico {
+    font-size: 2.5rem;
+  }
+  
+  .effetto-aura {
+    display: none;
+  }
+}
 </style>
 
 <!-- ESEMPIO APPLICAZIONE ALLA TUA STRUCTURA -->
