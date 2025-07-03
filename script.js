@@ -1,269 +1,163 @@
+ document.addEventListener('DOMContentLoaded', function() {
+           const banner = document.getElementById('cookie-consent-banner');
+           const mainMessage = document.getElementById('cookie-main-message');
+           const settingsPanel = document.getElementById('cookie-settings-panel');
+           
+           // Mostra il banner solo se non ci sono preferenze salvate
+           if(!getCookiePreferences()) {
+             banner.style.display = 'block';
+             banner.style.animation = 'fadeInUp 0.5s forwards';
+             
+             // Aggiungi stili dinamici
+             const style = document.createElement('style');
+             style.textContent = `
+               @keyframes fadeInUp {
+                 from { opacity: 0; transform: translateY(20px); }
+                 to { opacity: 1; transform: translateY(0); }
+               }
+               #cookie-customize:hover {
+                 background: rgba(255,255,255,0.1) !important;
+               }
+               #cookie-reject-all:hover {
+                 background: rgba(255,107,107,0.1) !important;
+               }
+               #cookie-accept-all:hover {
+                 background: #a41616 !important;
+                 transform: translateY(-1px);
+               }
+             `;
+             document.head.appendChild(style);
+           }
+         
+           // Gestione click sui pulsanti principali
+           document.getElementById('cookie-accept-all').addEventListener('click', function() {
+             saveCookiePreferences({
+               essential: true,
+               analytics: true,
+               marketing: true,
+               timestamp: new Date().getTime()
+             });
+             hideBanner();
+           });
+         
+           document.getElementById('cookie-reject-all').addEventListener('click', function() {
+             saveCookiePreferences({
+               essential: true,
+               analytics: false,
+               marketing: false,
+               timestamp: new Date().getTime()
+             });
+             hideBanner();
+           });
+         
+           document.getElementById('cookie-customize').addEventListener('click', function() {
+             mainMessage.style.display = 'none';
+             settingsPanel.style.display = 'block';
+           });
+         
+           // Gestione pannello personalizzazione
+           document.getElementById('cookie-settings-back').addEventListener('click', function() {
+             settingsPanel.style.display = 'none';
+             mainMessage.style.display = 'block';
+           });
+         
+           document.getElementById('cookie-save-settings').addEventListener('click', function() {
+             const preferences = {
+               essential: true,
+               analytics: document.getElementById('cookie-analytics').checked,
+               marketing: document.getElementById('cookie-marketing').checked,
+               timestamp: new Date().getTime()
+             };
+             saveCookiePreferences(preferences);
+             hideBanner();
+           });
+         
+           // Funzioni di supporto
+           function getCookiePreferences() {
+             const prefs = localStorage.getItem('cookiePreferences');
+             return prefs ? JSON.parse(prefs) : null;
+           }
+         
+           function saveCookiePreferences(prefs) {
+             localStorage.setItem('cookiePreferences', JSON.stringify(prefs));
+             console.log('Preferenze salvate:', prefs);
+             // Qui puoi caricare gli script in base alle preferenze
+           }
+         
+           function hideBanner() {
+             banner.style.animation = 'fadeInUp 0.5s reverse forwards';
+             setTimeout(() => banner.style.display = 'none', 500);
+           }
+         });
 
-// INIZIALIZZAZIONE
-window.addEventListener('load', () => {
-  const saluto = document.querySelector('.saluto-cosmico');
-  saluto.style.animationPlayState = 'running';
-  
-  // Caricamento progressivo
-  setTimeout(() => {
-    saluto.classList.add('caricamento-completo');
-  }, 1500);
-});
-
-document.addEventListener('DOMContentLoaded', function () {
-  const dropdowns = document.querySelectorAll('.dropdown');
-
-  dropdowns.forEach(dropdown => {
-    dropdown.addEventListener('mouseenter', function () {
-      const menu = this.querySelector('.submenu, .mega-menu');
-      menu.style.opacity = '1';
-      menu.style.visibility = 'visible';
-      menu.style.transform = 'translateY(5px)';
-      menu.style.pointerEvents = 'auto';
-    });
-
-    dropdown.addEventListener('mouseleave', function () {
-      const menu = this.querySelector('.submenu, .mega-menu');
-      setTimeout(() => {
-        if (!this.matches(':hover') && !menu.matches(':hover')) {
-          menu.style.opacity = '0';
-          menu.style.visibility = 'hidden';
-          menu.style.transform = 'translateY(0)';
-          menu.style.pointerEvents = 'none';
-        }
-      }, 100);
-    });
-
-    const submenus = dropdown.querySelectorAll('.submenu, .mega-menu');
-    submenus.forEach(menu => {
-      menu.addEventListener('mouseenter', function () {
-        this.style.opacity = '1';
-        this.style.visibility = 'visible';
-        this.style.transform = 'translateY(5px)';
-      });
-
-      menu.addEventListener('mouseleave', function () {
-        this.style.opacity = '0';
-        this.style.visibility = 'hidden';
-        this.style.transform = 'translateY(0)';
-      });
-    });
-  });
-document.addEventListener('click', (e) => {
-    if (!e.target.closest('.dropdown')) {
-        hideAllSubmenus();
-    }
-});
-  document.querySelector('.search-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-    const query = this.querySelector('input').value.trim();
-    if (query) {
-      alert(`Ricerca implementata: "${query}"\n\nQuesta è una demo. Nella pratica, collegheresti un sistema di ricerca reale.`);
-    }
-  });
-
-  const title = document.querySelector('.saluto');
-  title.addEventListener('mouseover', () => {
-    title.style.animation = 'echoEffect 1s ease-out';
-  });
-  title.addEventListener('mouseout', () => {
-    title.style.animation = '';
-  });
-});
-
-window.addEventListener('load', () => {
-  document.body.classList.add('loaded');
-});
-
-window.addEventListener('scroll', () => {
-  document.body.classList.toggle('scrolled', window.scrollY > 50);
-});
-document.querySelectorAll('.philosopher-link').forEach(item => {
-    item.addEventListener('mouseenter', (e) => {
-        const quote = e.target.dataset.quote;
-        const tooltip = document.createElement('div');
-        tooltip.className = 'platonic-dialog';
-        tooltip.innerHTML = `
-            <div class="speaker">${e.target.textContent}:</div>
-            <div class="quote">"${quote}"</div>
-        `;
-        document.body.appendChild(tooltip);
-        
-        // Posiziona il tooltip logicamente
-        // Anima con movimento "a scomparsa"
-    });
-});
-document.addEventListener('DOMContentLoaded', () => {
-  const toggleBtn = document.getElementById('darkModeToggle');
-  const body = document.body;
-  const icon = toggleBtn.querySelector('i');
-
-  toggleBtn.addEventListener('click', () => {
-    body.classList.toggle('dark-mode'); // attiva/disattiva dark mode
-
-    // Cambia icona tra luna e sole
-    if (body.classList.contains('dark-mode')) {
-      icon.classList.remove('fa-moon');
-      icon.classList.add('fa-sun');
-    } else {
-      icon.classList.remove('fa-sun');
-      icon.classList.add('fa-moon');
-    }
-  });
-});
-// Trasforma la ricerca in un'intervista guidata
-function socraticSearch() {
-    const questions = [
-        "Cosa cerchi esattamente?",
-        "Perché pensi che questo concetto sia importante?",
-        "Quale filosofo potrebbe aiutarti?"
-    ];
-    // Mostra le domande sequenzialmente
-}
-document.addEventListener('DOMContentLoaded', function() {
-    const titolo = document.getElementById('echi-titolo-principale');
-    if (titolo) {
-        titolo.setAttribute('data-text', titolo.textContent);
-    }
-});
-document.getElementById('generate-quote').addEventListener('click', function() {
-    const quotes = [
-        { text: "Conosci te stesso", author: "Socrate" },
-        { text: "Penso, dunque sono", author: "Cartesio" }
-    ];
-    const random = quotes[Math.floor(Math.random() * quotes.length)];
-    document.getElementById('quote-display').innerHTML = 
-        `<p>"${random.text}"</p><small>— ${random.author}</small>`;
-});
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const banner = document.getElementById('cookie-banner');
-    const acceptBtn = document.getElementById('accept-cookies');
-
-    if (!localStorage.getItem('cookiesAccepted')) {
-      setTimeout(() => {
-        banner.classList.add('show');
-      }, 1000);
-    }
-
-    acceptBtn.addEventListener('click', () => {
-      localStorage.setItem('cookiesAccepted', 'true');
-      banner.classList.remove('show');
-    });
-  });
-document.querySelectorAll('.dropdown').forEach(item => {
-    item.addEventListener('mousemove', (e) => {
-        const rect = item.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        item.querySelector('.submenu').style.transform = `
-            rotateX(${(y - centerY) / 40}deg)
-            rotateY(${(x - centerX) / -40}deg)
-            translateZ(10px)
-        `;
-    });
-});
-if (CSS.paintWorklet) {
-    CSS.paintWorklet.addModule(`
-        registerPaint('philosopherGlow', class {
-            static get inputProperties() { return ['--glow-color']; }
-            paint(ctx, size, props) {
-                const color = props.get('--glow-color').toString();
-                ctx.shadowColor = color;
-                ctx.shadowBlur = 15;
-                ctx.fillStyle = color;
-                ctx.globalCompositeOperation = 'lighter';
-                ctx.beginPath();
-                ctx.arc(size.width/2, size.height/2, size.width/3, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-    `);
-}
-  window.addEventListener('load', () => {
-  document.body.classList.add('loaded');
-  
-  // Effetto di enfasi al passaggio del mouse
-  const saluto = document.querySelector('.saluto.filosofico');
-  saluto.addEventListener('mousemove', (e) => {
-    const rect = saluto.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    
-    saluto.style.setProperty('--mouse-x', `${(x - centerX) / 20}px`);
-    saluto.querySelector('.effetto-aura').style.transform = 
-      `translateX(calc(${(x - centerX) / 10}px)) 
-       translateY(${(y - rect.height/2) / 15}px)`;
-  });
-});
-// Inizializzazione caratteri greci
-document.querySelectorAll('.greca').forEach(el => {
-  const text = el.textContent;
-  el.innerHTML = '';
-  [...text].forEach((char, i) => {
-    const span = document.createElement('span');
-    span.textContent = char;
-    span.style.setProperty('--delay', `${i * 0.05}s`);
-    span.style.animationDelay = `calc(var(--delay) + 0.3s`;
-    el.appendChild(span);
-  });
-});
-
-// Effetto parallasse
-document.querySelector('.saluto-sapienziale').addEventListener('mousemove', (e) => {
-  const { left, top, width, height } = e.target.getBoundingClientRect();
-  const x = (e.clientX - left) / width - 0.5;
-  const y = (e.clientY - top) / height - 0.5;
-  
-  e.target.style.setProperty('--rx', `${y * 10}deg`);
-  e.target.style.setProperty('--ry', `${x * -10}deg`);
-});
-
-// Attiva transizioni dopo il load
-window.addEventListener('load', () => {
-  document.body.classList.add('loaded');
-  document.querySelector('.filo-aurico').style.transition = 'stroke-dashoffset 1.2s 0.5s';
-});
-<!-- extra animazione saluto --
-// INTERAZIONE DINAMICA
-document.querySelector('.saluto-container').addEventListener('mousemove', (e) => {
-  const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
-  const x = (e.clientX - left) / width - 0.5;
-  const y = (e.clientY - top) / height - 0.5;
-  
-  e.currentTarget.style.setProperty('--rx', `${y * 10}deg`);
-  e.currentTarget.style.setProperty('--ry', `${x * -10}deg`);
-  
-  // Effetto parallasse per l'aura
-  const aura = e.currentTarget.querySelector('.aura-pulsante');
-  aura.style.transform = `
-    translate(-50%, -50%)
-    scale(${1 + Math.abs(x * 0.1)})
-    rotate(${x * 5}deg)
-  `;
-});
-
-// INIZIALIZZAZIONE
-window.addEventListener('load', () => {
-  const saluto = document.querySelector('.saluto-cosmico');
-  saluto.style.animationPlayState = 'running';
-  
-  // Caricamento progressivo
-  setTimeout(() => {
-    saluto.classList.add('caricamento-completo');
-  }, 1500);
-});
-
-<script>
-  document.querySelector('.search-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const valore = this.q.value.trim();
-    if (valore) {
-      alert("Hai cercato: " + valore);
-    }
-  });
-</script>
+// GESTIONE HOVER AVANZATA
+            document.addEventListener('DOMContentLoaded', function() {
+                const dropdowns = document.querySelectorAll('.dropdown');
+                
+                dropdowns.forEach(dropdown => {
+                    // Apertura menu
+                    dropdown.addEventListener('mouseenter', function() {
+                        const menu = this.querySelector('.submenu, .mega-menu')
+                        menu.style.opacity = '1';
+                        menu.style.visibility = 'visible';
+                        menu.style.transform = 'translateY(5px)';
+                        menu.style.pointerEvents = 'auto';
+                    });
+                    
+                    // Chiusura controllata
+                    dropdown.addEventListener('mouseleave', function(e) {
+                        const menu = this.querySelector('.submenu, .mega-menu');
+                        
+                        // Timer per evitare chiusura accidentale
+                        setTimeout(() => {
+                            if (!this.matches(':hover') && !menu.matches(':hover')) {
+                                menu.style.opacity = '0';
+                                menu.style.visibility = 'hidden';
+                                menu.style.transform = 'translateY(0)';
+                                menu.style.pointerEvents = 'none';
+                            }
+                        }, 100);
+                    });
+                    
+                    // Gestione hover sui sottomenu
+                    const submenus = dropdown.querySelectorAll('.submenu, .mega-menu');
+                    submenus.forEach(menu => {
+                        menu.addEventListener('mouseenter', function() {
+                            this.style.opacity = '1';
+                            this.style.visibility = 'visible';
+                            this.style.transform = 'translateY(5px)';
+                        });
+                        
+                        menu.addEventListener('mouseleave', function() {
+                            this.style.opacity = '0';
+                            this.style.visibility = 'hidden';
+                            this.style.transform = 'translateY(0)';
+                        });
+                    });
+                });
+            
+                // Funzionalità di ricerca
+                document.querySelector('.search-form').addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const query = this.querySelector('input').value.trim();
+                    if(query) {
+                        alert(`Ricerca implementata: "${query}"\n\nQuesta è una demo. Nella pratica, collegheresti un sistema di ricerca reale.`);
+                       // Sostituire con: window.location.href = `/search?q=${encodeURIComponent(query)}`;
+                    }
+                });
+            
+                // Interattività aggiuntiva per il titolo
+                const title = document.querySelector('.saluto');
+                title.addEventListener('mouseover', () => {
+                    title.style.animation = 'echoEffect 1s ease-out';
+                });
+                title.addEventListener('mouseout', () => {
+                    title.style.animation = '';
+                });
+            });
+            window.addEventListener('load', () => {
+            document.body.classList.add('loaded');
+            });
+            window.addEventListener('scroll', () => {
+            document.body.classList.toggle('scrolled', window.scrollY > 50);
+            });
