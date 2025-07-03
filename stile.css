@@ -516,4 +516,89 @@ body.loaded .saluto-sapienziale .parola {
   }
 }
 
+:root {
+  --blu-cosmico: #2a5272;
+  --oro-pitagorico: #c07d2b;
+  --porpora-platonica: #5c2a72;
+}
 
+.loader-cosmico {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background: rgba(10, 10, 30, 0.98);
+  z-index: 9999;
+  font-family: 'Crimson Pro', serif;
+}
+
+.sfere {
+  position: relative;
+  width: 150px;
+  height: 150px;
+}
+
+.sfera {
+  position: absolute;
+  border-radius: 50%;
+  border-style: solid;
+  border-color: transparent;
+  animation-timing-function: cubic-bezier(0.55, 0.06, 0.68, 0.19);
+}
+
+/* Sfere concentriche con proporzioni auree */
+.sfera-1 {
+  width: 100%;
+  height: 100%;
+  border-width: 2px;
+  border-top-color: var(--oro-pitagorico);
+  animation: rotazione-cosmica 8s infinite linear;
+}
+
+.sfera-2 {
+  width: 61.8%; /* Sezione aurea */
+  height: 61.8%;
+  top: 19.1%;
+  left: 19.1%;
+  border-width: 1.5px;
+  border-right-color: var(--blu-cosmico);
+  animation: rotazione-inversa 6s infinite linear;
+}
+
+.sfera-3 {
+  width: 38.2%; /* Sezione aurea */
+  height: 38.2%;
+  top: 30.9%;
+  left: 30.9%;
+  border-width: 1px;
+  border-bottom-color: var(--porpora-platonica);
+  animation: rotazione-cosmica 4s infinite linear;
+}
+
+.loader-testo {
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 2em;
+  font-size: 1.2rem;
+  animation: pulsazione-testo 3s infinite alternate;
+}
+
+/* Animazioni chiave */
+@keyframes rotazione-cosmica {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes rotazione-inversa {
+  to { transform: rotate(-360deg); }
+}
+
+@keyframes pulsazione-testo {
+  to { opacity: 0.3; letter-spacing: 1px; }
+}
+.loader-svg {
+  width: 150px;
+  height: 150px;
+  filter: drop-shadow(0 0 5px rgba(192, 125, 43, 0.5));
+}
