@@ -258,3 +258,12 @@ window.addEventListener('load', () => {
   }, 1500);
 });
 
+<script>
+  document.querySelector('.search-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const valore = this.q.value.trim();
+    if (valore) {
+      alert("Hai cercato: " + valore);
+    }
+  });
+</script>
