@@ -768,3 +768,93 @@ body.loaded .saluto-sapienziale .parola {
 	transform: translateZ(0);
 	will-change: transform, opacity;
 }
+.site-footer {
+    text-align: center; /* per centrare il contenuto nel footer */
+    padding: 40px 0 20px;
+  }
+
+  .popover-container {
+    position: relative;
+    display: inline-block;
+    margin-top: 20px;
+  }
+
+  .popover-btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-family: 'Playfair Display', serif;
+    cursor: pointer;
+    border: none;
+    background-color: #2a2a72;
+    color: white;
+    border-radius: 6px;
+    transition: all 0.3s;
+  }
+
+  .popover-btn:hover {
+    background-color: #1a1a3a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+
+  .popover-content {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    display: none;
+    z-index: 10;
+    width: auto;
+    min-width: 420px;
+  }
+
+  .popover-container:hover .popover-content {
+    display: block;
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
+
+  .filosofi-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: nowrap;
+  }
+
+  .filosofo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 110px;
+    transition: all 0.3s;
+  }
+
+  .filosofo:hover {
+    transform: translateY(-5px);
+  }
+
+  .filosofo img {
+    width: 100px;
+    height: 130px; /* rettangolare verticale */
+    border-radius: 8px; /* angoli arrotondati, ma non tondo */
+    object-fit: cover;
+    border: 2px solid #2a2a72;
+    margin-bottom: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  .filosofo span {
+    font-weight: bold;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #2a2a72;
+  }
