@@ -171,5 +171,22 @@ if (CSS.paintWorklet) {
         }
     `);
 }
+  window.addEventListener('load', () => {
+  document.body.classList.add('loaded');
+  
+  // Effetto di enfasi al passaggio del mouse
+  const saluto = document.querySelector('.saluto.filosofico');
+  saluto.addEventListener('mousemove', (e) => {
+    const rect = saluto.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    
+    saluto.style.setProperty('--mouse-x', `${(x - centerX) / 20}px`);
+    saluto.querySelector('.effetto-aura').style.transform = 
+      `translateX(calc(${(x - centerX) / 10}px)) 
+       translateY(${(y - rect.height/2) / 15}px)`;
+  });
+});
 </script>
 
