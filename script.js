@@ -154,5 +154,22 @@ document.querySelectorAll('.dropdown').forEach(item => {
         `;
     });
 });
+if (CSS.paintWorklet) {
+    CSS.paintWorklet.addModule(`
+        registerPaint('philosopherGlow', class {
+            static get inputProperties() { return ['--glow-color']; }
+            paint(ctx, size, props) {
+                const color = props.get('--glow-color').toString();
+                ctx.shadowColor = color;
+                ctx.shadowBlur = 15;
+                ctx.fillStyle = color;
+                ctx.globalCompositeOperation = 'lighter';
+                ctx.beginPath();
+                ctx.arc(size.width/2, size.height/2, size.width/3, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+    `);
+}
 </script>
 
