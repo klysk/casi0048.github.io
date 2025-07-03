@@ -2,27 +2,51 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    
+  <nav class="navbar" role="navigation" aria-label="Menu principale">
+        <ul class="menu" role="menubar">
+            <!-- Incipit -->
+            <li role="none" class="dropdown">
+                <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-book-open"></i> Incipit<br> <span class="arrow">▼</span>
+                </button>
+                <div class="submenu" role="menu" aria-label="Sottomenu Incipit">
+                    <p class="frase-chiave">«Dall'oscurità del non-sapere, una scintilla: il primo perché che illuminò la coscienza umana.»</p>
+                    <p>Prima delle parole, prima degli dei, esisteva quel momento sospeso in cui l'uomo si fermò a contemplare il cielo notturno. Fu allora che il pensiero prese forma - non come risposta, ma come vibrazione pura di meraviglia.</p>
+                    <p>Questo spazio non è una collezione di concetti. È un campo magnetico dove le domande dei nostri antenati filosofi continuano a risuonare, invitandoci a ripercorrere quel primo, rivoluzionario atto di curiosità.</p>
+                </div>
+<div class="philosopher-avatar" data-philosopher="plato">
+    <img src="immagini%20per%20sito/platone.jpg" alt="Platone">
+    <div class="hover-portrait"></div>
+</div>
+ 
+<div class="parallax-bg"></div>
+<div class="quote-carousel">
+    <blockquote>"Conosci te stesso" <footer>- Socrate</footer></blockquote>
+<blockquote>"Non bisogna curarsi troppo della vita, ma della vita buona" <footer>- Platone</footer></blockquote>
+<blockquote>"L'uomo è la misura di tutte le cose" <footer>- Protagora</footer></blockquote>
+    <!-- Altre citazioni nascoste -->
+</div>
+ 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Echi di Sofia - Filosofia attraverso i secoli</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+ 
 <!-- favicon -->
   <link rel="icon" type="image/png" href="favicon_io/favicon-16x16.png" />
-
+ 
   <!-- CSS -->
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="darkmode.css" />
-
+ 
   <!-- JS -->
   <script src="darkmode.js" defer></script>
 </head>
 <body>
   <!-- bottone dark mode -->
   <button id="darkModeToggle" aria-label="Toggle Dark Mode">🌓</button>
-
-
+ 
+ 
 <!...................inizio bannar cooki------------>
 <!-- Nuovo Cookie Banner con Personalizzazione - Da inserire PRIMA di </body> -->
 <div id="cookie-consent-banner" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: linear-gradient(135deg, #2a2a72 0%, #1a1a3a 100%); color: white; padding: 20px; z-index: 1000; font-family: 'Crimson Pro'; box-shadow: 0 -5px 25px rgba(0,0,0,0.3);">
@@ -45,28 +69,28 @@
         </button>
       </div>
     </div>
-
+ 
     <!-- Pannello Personalizzazione (nascosto inizialmente) -->
     <div id="cookie-settings-panel" style="display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
       <h4 style="margin-bottom: 15px; font-family: 'Playfair Display';">Preferenze Cookie</h4>
-      
+ 
       <div style="margin-bottom: 15px;">
         <label style="display: flex; align-items: center; padding: 8px 0; cursor: pointer;">
           <input type="checkbox" id="cookie-essential" checked disabled style="margin-right: 10px;">
           <span><strong>Cookie Necessari</strong><br><small style="opacity: 0.8;">Sempre attivi - Servono per il funzionamento base del sito</small></span>
         </label>
-        
+ 
         <label style="display: flex; align-items: center; padding: 8px 0; cursor: pointer;">
           <input type="checkbox" id="cookie-analytics" style="margin-right: 10px;">
           <span><strong>Cookie Statistici</strong><br><small style="opacity: 0.8;">Ci aiutano a migliorare il sito analizzando l'utilizzo</small></span>
         </label>
-        
+ 
         <label style="display: flex; align-items: center; padding: 8px 0; cursor: pointer;">
           <input type="checkbox" id="cookie-marketing" style="margin-right: 10px;">
           <span><strong>Cookie Marketing</strong><br><small style="opacity: 0.8;">Per mostrarti contenuti personalizzati</small></span>
         </label>
       </div>
-      
+ 
       <div style="display: flex; justify-content: space-between;">
         <button id="cookie-settings-back" style="padding: 8px 16px; background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; cursor: pointer;">
           Indietro
@@ -78,19 +102,19 @@
     </div>
   </div>
 </div>
-
+ 
 <script>
 // Gestione completa del Cookie Banner
 document.addEventListener('DOMContentLoaded', function() {
   const banner = document.getElementById('cookie-consent-banner');
   const mainMessage = document.getElementById('cookie-main-message');
   const settingsPanel = document.getElementById('cookie-settings-panel');
-  
+ 
   // Mostra il banner solo se non ci sono preferenze salvate
   if(!getCookiePreferences()) {
     banner.style.display = 'block';
     banner.style.animation = 'fadeInUp 0.5s forwards';
-    
+ 
     // Aggiungi stili dinamici
     const style = document.createElement('style');
     style.textContent = `
@@ -111,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
     document.head.appendChild(style);
   }
-
+ 
   // Gestione click sui pulsanti principali
   document.getElementById('cookie-accept-all').addEventListener('click', function() {
     saveCookiePreferences({
@@ -122,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     hideBanner();
   });
-
+ 
   document.getElementById('cookie-reject-all').addEventListener('click', function() {
     saveCookiePreferences({
       essential: true,
@@ -132,18 +156,18 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     hideBanner();
   });
-
+ 
   document.getElementById('cookie-customize').addEventListener('click', function() {
     mainMessage.style.display = 'none';
     settingsPanel.style.display = 'block';
   });
-
+ 
   // Gestione pannello personalizzazione
   document.getElementById('cookie-settings-back').addEventListener('click', function() {
     settingsPanel.style.display = 'none';
     mainMessage.style.display = 'block';
   });
-
+ 
   document.getElementById('cookie-save-settings').addEventListener('click', function() {
     const preferences = {
       essential: true,
@@ -154,19 +178,19 @@ document.addEventListener('DOMContentLoaded', function() {
     saveCookiePreferences(preferences);
     hideBanner();
   });
-
+ 
   // Funzioni di supporto
   function getCookiePreferences() {
     const prefs = localStorage.getItem('cookiePreferences');
     return prefs ? JSON.parse(prefs) : null;
   }
-
+ 
   function saveCookiePreferences(prefs) {
     localStorage.setItem('cookiePreferences', JSON.stringify(prefs));
     console.log('Preferenze salvate:', prefs);
     // Qui puoi caricare gli script in base alle preferenze
   }
-
+ 
   function hideBanner() {
     banner.style.animation = 'fadeInUp 0.5s reverse forwards';
     setTimeout(() => banner.style.display = 'none', 500);
@@ -174,14 +198,14 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
     <!----------------fine banner cooki-------->
-    
-    
-
-
-    
-
-
-</style>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 <style>
 .parallax-bg {
     position: fixed;
@@ -195,9 +219,9 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 </style>
 </button>
-
+ 
 <style>
-
+ 
         /* RESET & VARIABILI */
         :root {
             --primary: #2a2a72;
@@ -216,13 +240,13 @@ document.addEventListener('DOMContentLoaded', function() {
     --bg: #1a1a2e;
     --border: #2d2d4d;
 }
-
+ 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+ 
         body {
             font-family: 'Crimson Pro', serif;
             color: var(--text);
@@ -230,7 +254,7 @@ document.addEventListener('DOMContentLoaded', function() {
             padding-top: 80px;
             line-height: 1.6;
         }
-        
+ 
         /* NAVBAR PRINCIPALE */
         .navbar {
             position: fixed;
@@ -283,7 +307,7 @@ body.scrolled .navbar {
             position: relative;
             height: 100%;
         }
-        
+ 
         .menu-btn {
             background: none;
             border: none;
@@ -298,17 +322,17 @@ body.scrolled .navbar {
             cursor: pointer;
             transition: all 0.3s;
         }
-        
+ 
         .menu-btn:hover {
             color: var(--accent);
         }
-        
+ 
         .menu-btn .arrow {
             margin-left: 8px;
             font-size: 0.8rem;
             transition: transform 0.3s;
         }
-        
+ 
         /* SOTTOMENU */
         .submenu, .mega-menu {
             position: absolute;
@@ -329,8 +353,8 @@ body.scrolled .navbar {
     transform: rotateY(-5deg);
     transition: transform 0.5s ease;
 }
-
-
+ 
+ 
 .submenu {
     background: url('immagini per sito/cielo.jpg'), linear-gradient(to bottom, #f9f3e9 0%, #f5e8d0 100%);
     border: none;
@@ -343,11 +367,11 @@ body.scrolled .navbar {
     transform: scaleY(0.9) perspective(500px) rotateX(10deg);
     transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-
+ 
 .dropdown:hover .submenu {
     transform: scaleY(1) rotateX(0);
 }
-
+ 
 .dropdown:hover .submenu {
     transform: rotateY(0);
 }
@@ -397,7 +421,7 @@ body.scrolled .navbar {
             height: 20px;
             background: transparent;
         }
-        
+ 
         /* STILE INCIPIT */
         .submenu {
             width: 350px;
@@ -405,7 +429,7 @@ body.scrolled .navbar {
             background: linear-gradient(135deg, #f5f7fa 0%, #f8f9fa 100%);
             border-left: 4px solid var(--accent);
         }
-        
+ 
         .frase-chiave {
             font-style: italic;
             font-size: 1.1rem;
@@ -413,23 +437,23 @@ body.scrolled .navbar {
             margin-bottom: 15px;
             font-weight: 600;
         }
-        
+ 
         /* MEGA MENU A COLONNE */
         .mega-menu {
             padding: 30px;
             display: flex;
             gap: 30px;
         }
-        
+ 
         .columns-4 { width: 900px; }
         .columns-3 { width: 700px; }
         .columns-2 { width: 600px; }
         .columns-1 { width: 300px; }
-        
+ 
         .mega-menu > div {
             flex: 1;
         }
-        
+ 
         .mega-menu h4 {
             font-family: 'Playfair Display', serif;
             color: var(--accent);
@@ -442,7 +466,7 @@ body.scrolled .navbar {
     position: relative;
     overflow: hidden;
 }
-
+ 
 .mega-menu a::after {
     content: '';
     position: absolute;
@@ -453,11 +477,11 @@ body.scrolled .navbar {
     background: var(--accent);
     transition: width 0.3s ease;
 }
-
+ 
 .mega-menu a:hover::after {
     width: 100%;
 }
-        
+ 
         .mega-menu a {
             display: block;
             padding: 8px 0;
@@ -467,12 +491,12 @@ body.scrolled .navbar {
             position: relative;
             padding-left: 15px;
         }
-        
+ 
         .mega-menu a:hover {
             color: var(--accent);
             padding-left: 25px;
         }
-        
+ 
         .mega-menu a::before {
             content: '→';
             position: absolute;
@@ -480,7 +504,7 @@ body.scrolled .navbar {
             opacity: 0;
             transition: all 0.3s;
         }
-        
+ 
         .mega-menu a:hover::before {
             opacity: 1;
             left: 5px;
@@ -489,13 +513,13 @@ body.scrolled .navbar {
     --primary-gradient: linear-gradient(135deg, #2a2a72 0%, #3a3a8a 100%);
     --accent-gradient: linear-gradient(to right, #c0392b, #e74c3c);
 }
-
+ 
 .menu-btn {
     background: transparent;
     transition: all 0.3s;
     position: relative;
 }
-
+ 
 .menu-btn::after {
     content: '';
     position: absolute;
@@ -511,17 +535,17 @@ body.scrolled .navbar {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-5px); }
 }
-
+ 
 .citazione {
     animation: float 6s ease-in-out infinite;
     transition: all 0.3s;
 }
-
+ 
 .citazione:hover {
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
-
+ 
 .menu-btn:hover::after {
     transform: scaleX(1);
 }
@@ -530,13 +554,13 @@ body.scrolled .navbar {
             margin-left: auto;
             padding-left: 20px;
         }
-
+ 
         .search-form {
             position: relative;
             display: flex;
             align-items: center;
         }
-
+ 
         .search-input {
             width: 180px;
             padding: 8px 15px;
@@ -549,14 +573,14 @@ body.scrolled .navbar {
             background: rgba(255,255,255,0.8);
             transition: all 0.3s;
         }
-
+ 
         .search-input:focus {
             width: 220px;
             outline: none;
             border-color: var(--accent);
             box-shadow: 0 0 0 2px rgba(192, 57, 43, 0.2);
         }
-
+ 
         .search-btn {
             position: absolute;
             right: 10px;
@@ -566,7 +590,7 @@ body.scrolled .navbar {
             cursor: pointer;
             transition: all 0.3s;
         }
-
+ 
         .search-btn:hover {
             color: var(--accent);
             transform: scale(1.1);
@@ -577,7 +601,7 @@ body.scrolled .navbar {
     border: none !important;
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
-
+ 
 .search-input:focus {
     box-shadow: 0 0 0 3px rgba(192,57,43,0.2), 0 5px 20px rgba(0,0,0,0.1);
 }
@@ -601,7 +625,7 @@ body.scrolled .navbar {
     position: relative;
     overflow: hidden;
 }
-
+ 
 .hero::before {
     content: '';
     position: absolute;
@@ -619,12 +643,12 @@ body.scrolled .navbar {
     transform: translateY(10px) scale(0.95);
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
-
+ 
 .dropdown:hover .submenu,
 .dropdown:hover .mega-menu {
     transform: translateY(5px) scale(1);
 }
-
+ 
 @keyframes rotate {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
@@ -663,7 +687,7 @@ body.scrolled .navbar {
 body.loaded .saluto::after {
     width: 100%;
 }
-
+ 
 .saluto::before {
     content: '';
     position: absolute;
@@ -685,19 +709,19 @@ body.loaded .saluto::after {
             height: 100%;
             opacity: 0.3;
         }
-
+ 
         .saluto::before {
             color: var(--accent);
             z-index: -1;
             animation: echoEffect 4s infinite ease-in-out 1s;
         }
-
+ 
         .saluto::after {
             color: var(--primary-light);
             z-index: -2;
             animation: echoEffect 4s infinite ease-in-out 2s;
         }
-
+ 
         @keyframes titleEntrance {
             0% {
                 opacity: 0;
@@ -708,7 +732,7 @@ body.loaded .saluto::after {
                 transform: translateY(0) rotateX(0);
             }
         }
-                                                            
+ 
         @keyframes echoEffect {
             0%, 100% {
                 transform: translateY(0) scale(1);
@@ -719,7 +743,7 @@ body.loaded .saluto::after {
                 opacity: 0.4;
             }
         }
-
+ 
         /* Animazione per il sottotitolo */
         .sottotitolo {
             font-size: 1.5rem;
@@ -728,7 +752,7 @@ body.loaded .saluto::after {
             animation: fadeInUp 1s ease-out 0.5s both;
             position: relative;
         }
-
+ 
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -739,7 +763,7 @@ body.loaded .saluto::after {
                 transform: translateY(0);
             }
         }
-
+ 
         /* Animazione per la citazione */
         .citazione {
             font-style: italic;
@@ -751,12 +775,12 @@ body.loaded .saluto::after {
             border-left: 3px solid var(--accent);
             padding-left: 20px;
         }
-
+ 
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
-
+ 
         @media (max-width: 1024px) {
             .search-container {
                 padding-left: 10px;
@@ -774,27 +798,27 @@ body.loaded .saluto::after {
         height: auto;
         padding: 15px;
     }
-    
+ 
     .menu {
         flex-direction: column;
         width: 100%;
     }
-    
+ 
     .dropdown {
         width: 100%;
     }
-    
+ 
     .mega-menu {
         position: relative;
         width: 100% !important;
         box-shadow: none;
     }
-    
+ 
     .hero {
         margin-top: 30px;
         padding: 20px;
     }
-    
+ 
     .saluto {
         font-size: 2rem;
     }
@@ -828,7 +852,7 @@ body.loaded .saluto::after {
     filter: sepia(80%) brightness(90%);
     transition: all 0.5s;
 }
-
+ 
 .hover-portrait {
     position: absolute;
     top: 0;
@@ -840,21 +864,21 @@ body.loaded .saluto::after {
     mix-blend-mode: multiply;
     transition: opacity 0.5s;
 }
-
+ 
 .philosopher-avatar:hover {
     filter: none;
     transform: scale(1.1);
 }
-
+ 
 .philosopher-avatar:hover .hover-portrait {
     opacity: 1;
 }
     </style>
-   
+ 
 <body>
 <!------------------------------------------------------------->
 <div class="parallax-bg"></div>
-
+ 
 <style>
 .parallax-bg {
     position: fixed;
@@ -867,36 +891,12 @@ body.loaded .saluto::after {
     z-index: -1;
 }
 </style>
-
-<!-------------------------------------------------------------->
-    <nav class="navbar" role="navigation" aria-label="Menu principale">
-        <ul class="menu" role="menubar">
-            <!-- Incipit -->
-            <li role="none" class="dropdown">
-                <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-book-open"></i> Incipit<br> <span class="arrow">▼</span>
-                </button>
-                <div class="submenu" role="menu" aria-label="Sottomenu Incipit">
-                    <p class="frase-chiave">«Dall'oscurità del non-sapere, una scintilla: il primo perché che illuminò la coscienza umana.»</p>
-                    <p>Prima delle parole, prima degli dei, esisteva quel momento sospeso in cui l'uomo si fermò a contemplare il cielo notturno. Fu allora che il pensiero prese forma - non come risposta, ma come vibrazione pura di meraviglia.</p>
-                    <p>Questo spazio non è una collezione di concetti. È un campo magnetico dove le domande dei nostri antenati filosofi continuano a risuonare, invitandoci a ripercorrere quel primo, rivoluzionario atto di curiosità.</p>
-                </div>
-<div class="philosopher-avatar" data-philosopher="plato">
-    <img src="immagini%20per%20sito/platone.jpg" alt="Platone">
-    <div class="hover-portrait"></div>
-</div>
-             
-<div class="parallax-bg"></div>
-<div class="quote-carousel">
-    <blockquote>"Conosci te stesso" <footer>- Socrate</footer></blockquote>
-<blockquote>"Non bisogna curarsi troppo della vita, ma della vita buona" <footer>- Platone</footer></blockquote>
-<blockquote>"L'uomo è la misura di tutte le cose" <footer>- Protagora</footer></blockquote>
-    <!-- Altre citazioni nascoste -->
-</div>
  
-          
-
-
+<!-------------------------------------------------------------->
+ 
+ 
+ 
+ 
 <style>
 .parallax-bg {
     position: fixed;
@@ -910,7 +910,7 @@ body.loaded .saluto::after {
 }
 </style>
             </li>
-
+ 
             <!-- Filosofia antica -->
             <li role="none" class="dropdown">
                 <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
@@ -946,7 +946,7 @@ body.loaded .saluto::after {
                     </div>
                 </div>
             </li>
-
+ 
             <!-- Filosofia classica -->
             <li role="none" class="dropdown">
                 <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
@@ -979,7 +979,7 @@ body.loaded .saluto::after {
                     </div>
                 </div>
             </li>
-
+ 
             <!-- Filosofia medievale -->
             <li role="none" class="dropdown">
                 <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
@@ -1002,7 +1002,7 @@ body.loaded .saluto::after {
                     </div>
                 </div>
             </li>
-
+ 
             <!-- Filosofia moderna -->
             <li role="none" class="dropdown">
                 <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
@@ -1029,7 +1029,7 @@ body.loaded .saluto::after {
                     </div>
                 </div>
             </li>
-
+ 
             <!-- Filosofia contemporanea -->
             <li role="none" class="dropdown">
                 <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
@@ -1057,9 +1057,9 @@ body.loaded .saluto::after {
                 </div>
             </li>
         </ul>
-       
-
-
+ 
+ 
+ 
         <!-- NAVBAR CON LOGO E BARRA DI RICERCA -->
 <nav class="navbar" role="navigation" aria-label="Menu principale">
   <!-- Logo -->
@@ -1068,7 +1068,7 @@ body.loaded .saluto::after {
       <img src="Logo2a.png" alt="Logo Echi di Sofia" class="logo-img" />
     </a>
   </div>
-
+ 
   <!-- Form di ricerca -->
   <div class="search-container">
     <form role="search" class="search-form" action="#" method="get">
@@ -1085,7 +1085,7 @@ body.loaded .saluto::after {
     </form>
   </div>
 </nav>
-
+ 
 <!--  inizio inserimento logo-->
 <div class="logo-container" role="banner" aria-label="Logo del sito">
   <a href="/" title="Homepage">
@@ -1100,7 +1100,7 @@ body.loaded .saluto::after {
   right: 10px;         /* distanziamento dal bordo destro */
   z-index: 1001;       /* sopra tutti */
 }
-
+ 
 .logo-container img {
   max-height: 50px;    /* altezza contenuta e proporzionata */
   width: auto;
@@ -1108,11 +1108,11 @@ body.loaded .saluto::after {
   filter: drop-shadow(0 1px 2px rgba(0,0,0,0.15)); /* ombra leggera */
   transition: transform 0.3s ease;
 }
-
+ 
 .logo-container img:hover {
   transform: scale(1.05); /* leggero ingrandimento al passaggio */
 }
-
+ 
 </style>
     <!-- fine inserimento logo-->
     <section class="hero" aria-label="Saluto di benvenuto">
@@ -1123,14 +1123,14 @@ body.loaded .saluto::after {
 </blockquote>
 </section>
 </section>
-
+ 
     </section>
-
+ 
     <script>
     // GESTIONE HOVER AVANZATA
     document.addEventListener('DOMContentLoaded', function() {
         const dropdowns = document.querySelectorAll('.dropdown');
-        
+ 
         dropdowns.forEach(dropdown => {
             // Apertura menu
             dropdown.addEventListener('mouseenter', function() {
@@ -1140,11 +1140,11 @@ body.loaded .saluto::after {
                 menu.style.transform = 'translateY(5px)';
                 menu.style.pointerEvents = 'auto';
             });
-            
+ 
             // Chiusura controllata
             dropdown.addEventListener('mouseleave', function(e) {
                 const menu = this.querySelector('.submenu, .mega-menu');
-                
+ 
                 // Timer per evitare chiusura accidentale
                 setTimeout(() => {
                     if (!this.matches(':hover') && !menu.matches(':hover')) {
@@ -1155,7 +1155,7 @@ body.loaded .saluto::after {
                     }
                 }, 100);
             });
-            
+ 
             // Gestione hover sui sottomenu
             const submenus = dropdown.querySelectorAll('.submenu, .mega-menu');
             submenus.forEach(menu => {
@@ -1164,7 +1164,7 @@ body.loaded .saluto::after {
                     this.style.visibility = 'visible';
                     this.style.transform = 'translateY(5px)';
                 });
-                
+ 
                 menu.addEventListener('mouseleave', function() {
                     this.style.opacity = '0';
                     this.style.visibility = 'hidden';
@@ -1172,7 +1172,7 @@ body.loaded .saluto::after {
                 });
             });
         });
-
+ 
         // Funzionalità di ricerca
         document.querySelector('.search-form').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -1182,7 +1182,7 @@ body.loaded .saluto::after {
                // Sostituire con: window.location.href = `/search?q=${encodeURIComponent(query)}`;
             }
         });
-
+ 
         // Interattività aggiuntiva per il titolo
         const title = document.querySelector('.saluto');
         title.addEventListener('mouseover', () => {
@@ -1199,19 +1199,19 @@ window.addEventListener('scroll', () => {
     document.body.classList.toggle('scrolled', window.scrollY > 50);
 });
     </script>
-   
+ 
     <section class="contatti">
   <h4>Contattami</h4>
   <form action="https://formspree.io/f/xpwrnzda" method="POST">
     <label for="name">Nome</label>
     <input type="text" id="name" name="name" required>
-
+ 
     <label for="email">Email</label>
     <input type="email" id="email" name="email" required>
-
+ 
     <label for="message">Messaggio</label>
     <textarea id="message" name="message" rows="5" required></textarea>
-
+ 
     <button type="submit">Invia</button>
   </form>
 </section>
@@ -1227,11 +1227,11 @@ window.addEventListener('scroll', () => {
             from { transform: translateY(100%); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
-        
+ 
         @keyframes fadeOut {
             to { opacity: 0; visibility: hidden; }
         }
-
+ 
         /* STILE BANNER */
         #cookie-banner {
             position: fixed;
@@ -1252,23 +1252,23 @@ window.addEventListener('scroll', () => {
             font-family: 'Crimson Pro', serif;
             border-top: 1px solid rgba(255,255,255,0.1);
         }
-
+ 
         #cookie-banner.hidden {
             animation: fadeOut 0.6s forwards;
         }
-
+ 
         .cookie-text {
             flex: 1;
             min-width: 250px;
             line-height: 1.6;
         }
-
+ 
         .cookie-buttons {
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
         }
-
+ 
         .cookie-btn {
             padding: 0.6rem 1.2rem;
             border-radius: 4px;
@@ -1277,12 +1277,12 @@ window.addEventListener('scroll', () => {
             font-weight: 600;
             border: none;
         }
-
+ 
         #accept-cookies {
             background: #c0392b;
             color: white;
         }
-
+ 
         #reject-cookies {
             background: linear-gradient(135deg, 
                 #ff3a3a 0%, 
@@ -1291,19 +1291,19 @@ window.addEventListener('scroll', () => {
             color: white;
             border: 1px solid rgba(255,255,255,0.3);
         }
-
+ 
         #cookie-settings {
             background: transparent;
             color: #8e8eff;
             text-decoration: underline;
         }
-
+ 
         /* EFFETTI INTERATTIVI */
         .cookie-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 3px 10px rgba(0,0,0,0.2);
         }
-
+ 
         /* RESPONSIVE */
         @media (max-width: 600px) {
             #cookie-banner {
@@ -1324,13 +1324,13 @@ window.addEventListener('scroll', () => {
     text-align: center; /* per centrare il contenuto nel footer */
     padding: 40px 0 20px;
   }
-
+ 
   .popover-container {
     position: relative;
     display: inline-block;
     margin-top: 20px;
   }
-
+ 
   .popover-btn {
     padding: 10px 20px;
     font-size: 1rem;
@@ -1342,13 +1342,13 @@ window.addEventListener('scroll', () => {
     border-radius: 6px;
     transition: all 0.3s;
   }
-
+ 
   .popover-btn:hover {
     background-color: #1a1a3a;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   }
-
+ 
   .popover-content {
     position: absolute;
     bottom: 50px;
@@ -1364,24 +1364,24 @@ window.addEventListener('scroll', () => {
     width: auto;
     min-width: 420px;
   }
-
+ 
   .popover-container:hover .popover-content {
     display: block;
     animation: fadeIn 0.3s ease-out;
   }
-
+ 
   @keyframes fadeIn {
     from { opacity: 0; transform: translateX(-50%) translateY(10px); }
     to { opacity: 1; transform: translateX(-50%) translateY(0); }
   }
-
+ 
   .filosofi-container {
     display: flex;
     gap: 20px;
     justify-content: center;
     flex-wrap: nowrap;
   }
-
+ 
   .filosofo {
     display: flex;
     flex-direction: column;
@@ -1389,11 +1389,11 @@ window.addEventListener('scroll', () => {
     width: 110px;
     transition: all 0.3s;
   }
-
+ 
   .filosofo:hover {
     transform: translateY(-5px);
   }
-
+ 
   .filosofo img {
     width: 100px;
     height: 130px; /* rettangolare verticale */
@@ -1403,7 +1403,7 @@ window.addEventListener('scroll', () => {
     margin-bottom: 8px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   }
-
+ 
   .filosofo span {
     font-weight: bold;
     text-align: center;
@@ -1411,7 +1411,7 @@ window.addEventListener('scroll', () => {
     color: #2a2a72;
   }
 </style>
-
+ 
 <footer class="site-footer">
   <div class="popover-container">
     <button class="popover-btn">Loro hanno alterato il paradigma.</button>
@@ -1433,8 +1433,8 @@ window.addEventListener('scroll', () => {
           <img src="immagini%20per%20sito/kant.webp" alt="Kant">
           <span>Kant</span>
         </div>
-     
-      
+ 
+ 
       </div>
     </div>
   </div>
@@ -1459,12 +1459,12 @@ window.addEventListener('scroll', () => {
   margin: 2em auto;
   font-family: 'Crimson Pro', serif;
 }
-
+ 
 .ricerca h2 {
   font-size: 1.5rem;
   margin-bottom: 0.5em;
 }
-
+ 
 .cerca-sito input[type="text"] {
   width: 260px;
   padding: 6px 10px;
@@ -1473,7 +1473,7 @@ window.addEventListener('scroll', () => {
   border-radius: 6px;
   outline: none;
 }
-
+ 
 .cerca-sito button {
   padding: 6px 16px;
   font-size: 1rem;
@@ -1485,11 +1485,11 @@ window.addEventListener('scroll', () => {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-
+ 
 .cerca-sito button:hover {
   background-color: #555;
 }
-
+ 
 </style>
       <!-- fine modulo cerca google-->
 </footer>   
@@ -1515,7 +1515,7 @@ window.addEventListener('scroll', () => {
   border-radius: 8px;
   position: relative;
 }
-
+ 
 .citazione-filosofica::before {
   content: "❝";
   font-size: 2.5rem;
@@ -1524,7 +1524,7 @@ window.addEventListener('scroll', () => {
   left: 15px;
   top: 5px;
 }
-
+ 
 .citazione-filosofica footer {
   text-align: right;
   margin-top: 1em;
@@ -1533,6 +1533,6 @@ window.addEventListener('scroll', () => {
   color: #666;
 }
 </style>
-
-
-
+ 
+ 
+ 
