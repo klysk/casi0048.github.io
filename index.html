@@ -784,7 +784,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('/home/casimiro/Immagini/immagini per sito/cielo.avif') center/cover no-repeat fixed;
+            background: url('immagini per sito/cielo.avif') center/cover no-repeat fixed;
             opacity: 0.03;
             z-index: -1;
             }
@@ -795,7 +795,7 @@
                <!-- Incipit -->
                <li role="none" class="dropdown">
                   <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
-                  <i class="fas fa-book-open"></i> Incipit <span class="arrow">▼</span>
+                  <i class="fas fa-book-open"></i> Incipit<br> <span class="arrow">▼</span>
                   </button>
                   <div class="submenu" role="menu" aria-label="Sottomenu Incipit">
                      <p class="frase-chiave">«Dall'oscurità del non-sapere, una scintilla: il primo perché che illuminò la coscienza umana.»</p>
@@ -865,7 +865,7 @@
                         <a href="/articoli/pitagora.html" role="menuitem">Pitagora</a>
                         <a href="/articoli/filolao.html" role="menuitem">Filolao</a>
                         <a href="/articoli/alcmeone.html" role="menuitem">Alcmeone</a>
-                        <a href="articoli/archita.html" role="menuitem">Archita/a>
+                        <a href="articoli/archita.html" role="menuitem">Archita</a>
                         <a href="/articoli/ippaso.html" role="menuitem">Ippaso</a>
                      </div>
                   </div>
@@ -992,10 +992,41 @@
                </form>
             </div>
          </nav>
+         <!--  inizio inserimento logo-->
+         <div class="logo-container" role="banner" aria-label="Logo del sito">
+            <a href="/" title="Homepage">
+            <img src="Logo2a.png" alt="Logo Echi di Sofia" />
+            </a>
+         </div>
+         <style>
+            /* CSS da inserire nel tuo file styles.css o dentro un 
+         <style> */
+            .logo-container {
+            position: fixed;     /* fisso in alto a destra */
+            top: 10px;           /* distanziamento dal bordo superiore */
+            right: 10px;         /* distanziamento dal bordo destro */
+            z-index: 1001;       /* sopra tutti */
+            }
+            .logo-container img {
+            max-height: 50px;    /* altezza contenuta e proporzionata */
+            width: auto;
+            display: block;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.15)); /* ombra leggera */
+            transition: transform 0.3s ease;
+            }
+            .logo-container img:hover {
+            transform: scale(1.05); /* leggero ingrandimento al passaggio */
+            }
+         </style>
+         <!-- fine inserimento logo-->
          <section class="hero" aria-label="Saluto di benvenuto">
             <h1 class="saluto">Benvenuti in Echi di Sofia</h1>
             <p class="sottotitolo">Dove il pensiero antico risuona nel presente</p>
-            <p class="citazione">"Non è possedendo la verità, ma cercandola, che l'uomo si espande"</p>
+            <blockquote style="text-align: center;">
+               «Non è possedendo la verità, ma cercandola, che l'uomo si espande»
+            </blockquote>
+         </section>
+         </section>
          </section>
          <script>
             // GESTIONE HOVER AVANZATA
@@ -1070,33 +1101,6 @@
             document.body.classList.toggle('scrolled', window.scrollY > 50);
             });
          </script>
-         <footer class="site-footer">
-            <div class="footer-content">
-               <p>&copy; 2025 <strong>K. Klys</strong> – Tutti i diritti riservati.</p>
-               <p><a href="mailto:info@echidisofia.org">info@echidisofia.org</a></p>
-            </div>
-         </footer>
-         <footer class="site-footer">
-  <div class="popover-container">
-    <button class="popover-btn">Loro hanno alterato il paradigma.</button>
-    <div class="popover-content" role="dialog" aria-label="Filosofi famosi">
-      <div class="filosofi-container">
-        <div class="filosofo">
-          <img src="immagini%20per%20sito/socrate.webp" alt="Socrate">
-          <span>Socrate</span>
-        </div>
-        <div class="filosofo">
-          <img src="immagini%20per%20sito/platone.jpg" alt="Platone">
-          <span>Platone</span>
-        </div>
-          <div class="filosofo">
-          <img src="immagini%20per%20sito/Aristotle_.jpg" alt="Aristotele">
-          <span>Aristotele</span>
-        </div>
-          <div class="filosofo">
-          <img src="immagini%20per%20sito/kant.webp" alt="Kant">
-          <span>Kant</span>
-        </div>
          <section class="contatti">
             <h4>Contattami</h4>
             <form action="https://formspree.io/f/xpwrnzda" method="POST">
@@ -1201,8 +1205,118 @@
                </style>
             </head>
             <body>
-               <!-- Banner Cookie -->
+               <!--Fine  Banner Cookie -->
+               <style>
+                  .site-footer {
+                  text-align: center; /* per centrare il contenuto nel footer */
+                  padding: 40px 0 20px;
+                  }
+                  .popover-container {
+                  position: relative;
+                  display: inline-block;
+                  margin-top: 20px;
+                  }
+                  .popover-btn {
+                  padding: 10px 20px;
+                  font-size: 1rem;
+                  font-family: 'Playfair Display', serif;
+                  cursor: pointer;
+                  border: none;
+                  background-color: #2a2a72;
+                  color: white;
+                  border-radius: 6px;
+                  transition: all 0.3s;
+                  }
+                  .popover-btn:hover {
+                  background-color: #1a1a3a;
+                  transform: translateY(-2px);
+                  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+                  }
+                  .popover-content {
+                  position: absolute;
+                  bottom: 50px;
+                  left: 50%;
+                  transform: translateX(-50%);
+                  background: white;
+                  border: 1px solid #ccc;
+                  padding: 20px;
+                  border-radius: 8px;
+                  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+                  display: none;
+                  z-index: 10;
+                  width: auto;
+                  min-width: 420px;
+                  }
+                  .popover-container:hover .popover-content {
+                  display: block;
+                  animation: fadeIn 0.3s ease-out;
+                  }
+                  @keyframes fadeIn {
+                  from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+                  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+                  }
+                  .filosofi-container {
+                  display: flex;
+                  gap: 20px;
+                  justify-content: center;
+                  flex-wrap: nowrap;
+                  }
+                  .filosofo {
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  width: 110px;
+                  transition: all 0.3s;
+                  }
+                  .filosofo:hover {
+                  transform: translateY(-5px);
+                  }
+                  .filosofo img {
+                  width: 100px;
+                  height: 130px; /* rettangolare verticale */
+                  border-radius: 8px; /* angoli arrotondati, ma non tondo */
+                  object-fit: cover;
+                  border: 2px solid #2a2a72;
+                  margin-bottom: 8px;
+                  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                  }
+                  .filosofo span {
+                  font-weight: bold;
+                  text-align: center;
+                  font-size: 0.9rem;
+                  color: #2a2a72;
+                  }
+               </style>
+               <footer class="site-footer">
+                  <div class="popover-container">
+                     <button class="popover-btn">Loro hanno alterato il paradigma.</button>
+                     <div class="popover-content" role="dialog" aria-label="Filosofi famosi">
+                        <div class="filosofi-container">
+                           <div class="filosofo">
+                              <img src="immagini%20per%20sito/socrate.webp" alt="Socrate">
+                              <span>Socrate</span>
+                           </div>
+                           <div class="filosofo">
+                              <img src="immagini%20per%20sito/platone.jpg" alt="Platone">
+                              <span>Platone</span>
+                           </div>
+                           <div class="filosofo">
+                              <img src="immagini%20per%20sito/Aristotle_.jpg" alt="Aristotele">
+                              <span>Aristotele</span>
+                           </div>
+                           <div class="filosofo">
+                              <img src="immagini%20per%20sito/kant.webp" alt="Kant">
+                              <span>Kant</span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </footer>
+               <footer class="site-footer">
+                  <div class="footer-content">
+                     <p>&copy; 2025 <strong>K. Klys</strong> – Tutti i diritti riservati.</p>
+                     <p><a href="mailto:info@echidisofia.org">info@echidisofia.org</a></p>
+                  </div>
+               </footer>
             </body>
          </html>
-   </body>
-</html>
