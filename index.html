@@ -908,7 +908,20 @@ body.loaded .saluto::after {
         0% calc(100% - 10px)
     );
 }
-    
+ .submenu {
+    --gradient-pos: 0%;
+    background: 
+        linear-gradient(
+            90deg, 
+            rgba(42, 42, 114, 0.9) var(--gradient-pos), 
+            rgba(192, 57, 43, 0.7) calc(var(--gradient-pos) + 20%)
+        );
+    transition: --gradient-pos 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.dropdown:hover .submenu {
+    --gradient-pos: 80%;
+}   
     <!--   css aggiunto fine  -->
     </style>
    
