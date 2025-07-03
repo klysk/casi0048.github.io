@@ -1,20 +1,3 @@
-// INTERAZIONE DINAMICA
-document.querySelector('.saluto-container').addEventListener('mousemove', (e) => {
-  const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
-  const x = (e.clientX - left) / width - 0.5;
-  const y = (e.clientY - top) / height - 0.5;
-  
-  e.currentTarget.style.setProperty('--rx', `${y * 10}deg`);
-  e.currentTarget.style.setProperty('--ry', `${x * -10}deg`);
-  
-  // Effetto parallasse per l'aura
-  const aura = e.currentTarget.querySelector('.aura-pulsante');
-  aura.style.transform = `
-    translate(-50%, -50%)
-    scale(${1 + Math.abs(x * 0.1)})
-    rotate(${x * 5}deg)
-  `;
-});
 
 // INIZIALIZZAZIONE
 window.addEventListener('load', () => {
