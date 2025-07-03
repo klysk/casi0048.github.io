@@ -188,5 +188,33 @@ if (CSS.paintWorklet) {
        translateY(${(y - rect.height/2) / 15}px)`;
   });
 });
+// Inizializzazione caratteri greci
+document.querySelectorAll('.greca').forEach(el => {
+  const text = el.textContent;
+  el.innerHTML = '';
+  [...text].forEach((char, i) => {
+    const span = document.createElement('span');
+    span.textContent = char;
+    span.style.setProperty('--delay', `${i * 0.05}s`);
+    span.style.animationDelay = `calc(var(--delay) + 0.3s`;
+    el.appendChild(span);
+  });
+});
+
+// Effetto parallasse
+document.querySelector('.saluto-sapienziale').addEventListener('mousemove', (e) => {
+  const { left, top, width, height } = e.target.getBoundingClientRect();
+  const x = (e.clientX - left) / width - 0.5;
+  const y = (e.clientY - top) / height - 0.5;
+  
+  e.target.style.setProperty('--rx', `${y * 10}deg`);
+  e.target.style.setProperty('--ry', `${x * -10}deg`);
+});
+
+// Attiva transizioni dopo il load
+window.addEventListener('load', () => {
+  document.body.classList.add('loaded');
+  document.querySelector('.filo-aurico').style.transition = 'stroke-dashoffset 1.2s 0.5s';
+});
 </script>
 
