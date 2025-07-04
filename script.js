@@ -182,4 +182,10 @@
     .catch(error => {
       console.error('Errore nel caricamento degli articoli:', error);
     });
+AOS.init({
+  disable: window.innerWidth < 768, // disattiva su mobile
+  startEvent: 'DOMContentLoaded', // carica più velocemente
+  debounceDelay: 50, // ottimizzazione performance
+  throttleDelay: 99, // ottimizzazione scroll
+});
 </script>
