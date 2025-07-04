@@ -2289,84 +2289,108 @@ body.loaded .saluto-sapienziale .parola {
     flex-direction: column;
   }
 }
-/* Layout affiancato migliorato */
+
+/* Layout principale affiancato */
 .contenitore-affiancato {
   display: flex;
-  justify-content: space-between;
   align-items: flex-start;
-  gap: 2rem;
+  gap: 3rem;
   max-width: 1200px;
-  margin: 3rem auto;
+  margin: 4rem auto 5rem;
   padding: 0 2rem;
 }
 
-/* Nuove proporzioni: colonna sinistra più ampia */
+/* Proporzioni aggiornate */
 .colonna-sinistra {
   flex: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .colonna-destra {
   flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-/* Responsive per dispositivi mobili */
-@media screen and (max-width: 768px) {
-  .contenitore-affiancato {
-    flex-direction: column;
-  }
+/* Hero (saluto) con margini equilibrati */
+.hero {
+  padding: 2rem 3rem;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
 }
 
+.hero .saluto {
+  font-family: 'Crimson Pro', serif;
+  font-size: 2.8rem;
+  margin: 0 0 1rem;
+  color: #5a4634;
+  text-align: center;
+}
+
+.hero .sottotitolo {
+  font-size: 1.3rem;
+  color: #867f6e;
+  margin: 0;
+  text-align: center;
+}
+
+/* Ultimi articoli */
 .ultimi-articoli {
-  background: #fdfcf9;
+  background-color: #fdfcf9;
   border: 1px solid #e0dccc;
-  padding: 1.5rem;
+  padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
   font-family: 'Crimson Pro', serif;
 }
 
 .ultimi-articoli h2 {
-  font-size: 1.5rem;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 0.5rem;
-  margin-bottom: 1rem;
+  font-size: 1.6rem;
+  color: #5a4634;
+  margin-bottom: 1.5rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  border-bottom: 1px solid #e0dccc;
+  padding-bottom: 0.5rem;
 }
 
 .lista-articoli .articolo {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .articolo h3 {
-  margin: 0;
-  font-size: 1.2rem;
-}
-
-.articolo h3 a {
-  text-decoration: none;
-  color: #333;
-}
-
-.articolo h3 a:hover {
-  color: #8e6b20;
-  text-decoration: underline;
+  margin: 0 0 0.3rem;
+  font-size: 1.15rem;
 }
 
 .articolo time {
   font-size: 0.9rem;
-  color: #666;
+  color: #777;
+  margin-bottom: 0.5rem;
+  display: block;
 }
 
 .articolo p {
-  margin: 0.3rem 0 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #3f3f3f;
   text-align: justify;
+  margin: 0;
 }
 
-/* Mobile */
+/* Responsive */
 @media screen and (max-width: 768px) {
   .contenitore-affiancato {
     flex-direction: column;
+    gap: 2rem;
+  }
+  .hero .saluto {
+    font-size: 2.2rem;
   }
 }
