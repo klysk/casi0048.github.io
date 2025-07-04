@@ -1,0 +1,122 @@
+
+/* Layout principale affiancato */
+.contenitore-affiancato {
+  display: flex;
+  align-items: flex-start;
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 4rem auto 5rem;
+  padding: 0 2rem;
+  background: rgba(255, 0, 0, 0.03); /* leggero rosso per test */
+}
+
+/* Colonne */
+.colonna-sinistra {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.colonna-destra {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Hero */
+.hero {
+  padding: 2rem 3rem;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+}
+
+.hero .saluto {
+  font-family: 'Crimson Pro', serif;
+  font-size: 2.8rem;
+  margin: 0 0 1rem;
+  color: #5a4634;
+  text-align: center;
+}
+
+.hero .sottotitolo {
+  font-size: 1.3rem;
+  color: #867f6e;
+  margin: 0;
+  text-align: center;
+}
+
+/* Ultimi articoli */
+.ultimi-articoli {
+  font-family: 'Crimson Pro', serif;
+  background-color: #fdfcf9;
+  border: 1px solid #e0dccc;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  padding: 2rem;
+}
+
+.ultimi-articoli h2 {
+  font-size: 1.6rem;
+  color: #5a4634;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid #e0dccc;
+  padding-bottom: 0.5rem;
+}
+
+.lista-articoli {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.lista-articoli .articolo {
+  margin-bottom: 2rem;
+}
+
+.articolo h3 {
+  margin: 0 0 0.3rem;
+  font-size: 1.2rem;
+}
+
+.articolo h3 a {
+  color: #3b2e1a;
+  text-decoration: none;
+}
+
+.articolo h3 a:hover {
+  color: #a88b3a;
+  text-decoration: underline;
+}
+
+.articolo time {
+  font-size: 0.9rem;
+  color: #867f6e;
+  margin: 0.3rem 0;
+  display: block;
+}
+
+.articolo p {
+  margin: 0;
+  font-size: 1rem;
+  color: #3f3f3f;
+  line-height: 1.5;
+  text-align: justify;
+}
+
+/* Mobile layout */
+@media screen and (max-width: 768px) {
+  .contenitore-affiancato {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .hero .saluto {
+    font-size: 2.2rem;
+  }
+}
