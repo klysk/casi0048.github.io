@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epicuro: Il Filosofo del Piacere come Assenza di Dolore e Turbamento</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Stili Generali e Reset */
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 3.2em;
+            text-align: center;
+            border-bottom: 2px solid #2ecc71; /* Verde brillante per piacere/serenità */
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 2.4em;
+            color: #2ecc71; /* Verde brillante per piacere/serenità */
+            margin-top: 30px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: #555;
+            margin-top: 25px;
+        }
+
+        h4 {
+            font-size: 1.3em;
+            color: #444;
+            margin-top: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #f1c40f; /* Giallo per evidenziazioni chiave */
+        }
+
+        .quote {
+            font-style: italic;
+            background-color: #f5fff8; /* Sfondo chiaro per le citazioni */
+            padding: 18px 25px;
+            border-left: 5px solid #2ecc71; /* Verde brillante per le citazioni */
+            margin: 25px 0;
+            border-radius: 4px;
+            line-height: 1.5;
+        }
+
+        .quote footer {
+            text-align: right;
+            margin-top: 12px;
+            font-size: 0.95em;
+            color: #7f8c8d;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+        }
+
+        .image-container figcaption {
+            font-size: 0.9em;
+            color: #777;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Stili per l'Accordion (Sezioni Espandibili) */
+        .accordion-section {
+            max-width: 900px;
+            margin: 25px auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .accordion-button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 20px 30px;
+            background-color: #2ecc71; /* Verde brillante per il bottone */
+            color: white;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s ease;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .accordion-button:hover {
+            background-color: #28b463;
+        }
+
+        .accordion-button h2 {
+            color: white;
+            margin: 0;
+            font-size: 1em;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .accordion-button i {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-button.active i {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 0 30px;
+            background-color: #ffffff;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            box-sizing: border-box;
+        }
+
+        .accordion-content.show {
+            max-height: 4500px; /* Valore grande per accomodare il contenuto esteso */
+            padding: 30px;
+        }
+
+        .accordion-content ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .accordion-content ul li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .accordion-content ul li::before {
+            content: '🌿'; /* Simbolo della natura/giardino per Epicuro */
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                margin: 20px auto;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2.5em;
+            }
+            h2 {
+                font-size: 2em;
+            }
+            .accordion-button {
+                padding: 15px 20px;
+                font-size: 1.5em;
+            }
+            .accordion-content {
+                padding: 0 20px;
+            }
+            .accordion-content.show {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Epicuro: Il Filosofo del Piacere come Assenza di Dolore e Turbamento</h1>
+
+        <div class="image-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Epicurus_Pio-Clementino_Inv317.jpg/640px-Epicurus_Pio-Clementino_Inv317.jpg" alt="Busto di Epicuro">
+            <figcaption>Busto di Epicuro, filosofo greco antico.</figcaption>
+        </div>
+
+        <p>
+            Nel IV secolo a.C., in un'Atene post-aristotelica e segnata dai mutamenti politici e sociali, emerse la figura di **Epicuro** (341-270 a.C.), fondatore di una delle scuole filosofiche più influenti dell'Ellenismo: l'Epicureismo. Spesso fraintesa e ridotta a una ricerca sfrenata dei piaceri, la filosofia epicurea è in realtà una dottrina complessa e raffinata, orientata alla conquista della **felicità** e della **tranquillità dell'anima** attraverso un piacere inteso come assenza di dolore fisico (**aponìa**) e di turbamento psichico (**atarassia**).
+        </p>
+        <p>
+            Epicuro fondò la sua scuola ad Atene, in un luogo noto come "Il Giardino" (Κῆπος - *Kêpos*), un ambiente sereno e appartato dove uomini e donne, schiavi e liberi, potevano dedicarsi alla filosofia in un clima di amicizia e reciproco sostegno. La sua visione della vita e del cosmo offriva una via d'uscita dall'ansia e dalla paura, invitando l'individuo a concentrarsi su ciò che è veramente necessario per una vita serena e soddisfacente.
+        </p>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>Vita, La Scuola del Giardino e Le Fonti</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                La vita di Epicuro fu esemplare della sua dottrina, dedicata alla ricerca della serenità in un ambiente comunitario.
+            </p>
+            <ul>
+                <li>
+                    <h4>Origini e Giovinezza:</h4>
+                    <p>
+                        Epicuro nacque a Samo, un'isola dell'Egeo, da genitori ateniesi. Fin da giovane mostrò un'attitudine per la filosofia, studiando Democrito (dal quale riprese la teoria atomistica) e Aristippo di Cirene (dal quale derivò l'enfasi sul piacere). Dopo aver insegnato in diverse città, si stabilì ad Atene.
+                    </p>
+                </li>
+                <li>
+                    <h4>Il Giardino (Κῆπος):</h4>
+                    <p>
+                        Intorno al 307 a.C., Epicuro fondò la sua scuola ad Atene, situata in un giardino alla periferia della città. A differenza delle altre scuole filosofiche (come l'Accademia di Platone o il Liceo di Aristotele), il Giardino era un luogo di ritiro e di vita comune, dove i discepoli vivevano insieme al maestro in un'atmosfera di profonda amicizia e condivisione. Qui si accettavano tutti, senza distinzione di sesso o ceto sociale, un fatto rivoluzionario per l'epoca.
+                    </p>
+                </li>
+                <li>
+                    <h4>Le Opere e le Fonti:</h4>
+                    <p>
+                        Epicuro fu uno scrittore prolifico, ma la maggior parte delle sue opere è andata perduta. Le nostre conoscenze della sua filosofia derivano principalmente da:
+                        <ul>
+                            <li>Tre <span class="highlight">Lettere</span> (a Erodoto, a Meneceo, a Pitocle) conservate da Diogene Laerzio, che espongono i fondamenti della fisica, dell'etica e della meteorologia.</li>
+                            <li>Le <span class="highlight">Massime Capitali</span> (Κύριαι Δόξαι - *Kyriai Doxai*), una raccolta di aforismi che riassumono i principi etici.</li>
+                            <li>Frammenti di papiri trovati a Ercolano (nella Villa dei Papiri).</li>
+                            <li>Testimonianze di autori successivi, in particolare il poeta romano **Lucrezio** con il suo poema didascalico "De rerum natura" ("Sulla natura delle cose"), che è la fonte più completa e sistematica dell'Epicureismo.</li>
+                        </ul>
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>La Fisica Epicurea: L'Atomismo e l'Assenza di Paura</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                La fisica di Epicuro ha uno scopo etico: liberare l'uomo dalla paura.
+            </p>
+            <ul>
+                <li>
+                    <h4>L'Atomismo di Democrito con il "Clinamen":</h4>
+                    <p>
+                        Epicuro riprende la teoria atomistica di Democrito: l'universo è composto solo da **atomi** (particelle indivisibili, eterne e in movimento nel vuoto) e **vuoto**. Gli atomi, urtandosi, formano e dissolvono i mondi. Tuttavia, Epicuro introduce un'innovazione fondamentale: il **"clinamen"** (o "deviazione"). Per spiegare il libero arbitrio umano e la formazione dei mondi, Epicuro ipotizza che gli atomi non cadano in linea retta, ma possano subire una minima e imprevedibile deviazione dal loro corso rettilineo. Questo introduce una possibilità di **libertà** e casualità nel determinismo atomistico, rendendo l'uomo responsabile delle proprie azioni.
+                    </p>
+                </li>
+                <li>
+                    <h4>La Confutazione della Paura degli Dei:</h4>
+                    <p>
+                        La fisica atomistica serve a liberare l'uomo dalla paura più grande: quella degli dei. Secondo Epicuro, gli dei esistono, ma vivono in una regione separata tra i mondi (gli *intermundia*) e non si preoccupano minimamente delle vicende umane. Non intervengono nelle nostre vite né ci puniscono o ricompensano. Pertanto, è inutile temerli o cercare di propiziarseli.
+                    </p>
+                    <div class="quote">
+                        <p>«Non esiste l'essere immortale e beato che non ha cura di nulla.»</p>
+                        <footer>— Epicuro (Massime Capitali, 1)</footer>
+                    </div>
+                </li>
+                <li>
+                    <h4>La Confutazione della Paura della Morte:</h4>
+                    <p>
+                        Un'altra paura fondamentale da cui la fisica epicurea ci libera è quella della **morte**. Poiché l'anima è anch'essa composta di atomi e si dissolve con il corpo, non c'è una vita dopo la morte e quindi nessuna punizione.
+                    </p>
+                    <div class="quote">
+                        <p>«La morte non è nulla per noi. Quando ci siamo noi, la morte non c'è, quando c'è la morte, noi non ci siamo.»</p>
+                        <footer>— Epicuro (Lettera a Meneceo)</footer>
+                    </div>
+                    <p>
+                        La morte è semplicemente la fine della sensazione, e ciò che non si sente non è un male. Questa visione mira a eliminare l'angoscia esistenziale legata alla mortalità.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>L'Etica Epicurea: Il Piacere come Atarassia e Aponia</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Il culmine della filosofia epicurea è l'etica, la dottrina sulla ricerca della felicità.
+            </p>
+            <ul>
+                <li>
+                    <h4>Il Piacere come Bene Supremo:</h4>
+                    <p>
+                        Per Epicuro, il piacere (ἡδονή - *hedoné*) è il principio e il fine della vita felice. Tuttavia, non si tratta di un piacere sfrenato e sensoriale, ma di un piacere statico e stabile, definito come l'**assenza di dolore (aponìa)** nel corpo e l'**assenza di turbamento (atarassia)** nell'anima. Questo è il "piacere catastematico", contrapposto al "piacere cinetico" (transitorio e spesso seguito da dispiacere).
+                    </p>
+                </li>
+                <li>
+                    <h4>La Classificazione dei Desideri:</h4>
+                    <p>
+                        Per raggiungere l'aponìa e l'atarassia, è fondamentale saper distinguere e gestire i desideri:
+                        <ul>
+                            <li><span class="highlight">Desideri Naturali e Necessari:</span> Quelli la cui soddisfazione elimina un dolore (es. bere quando si ha sete, mangiare quando si ha fame). Sono facili da soddisfare e sono la base della felicità.</li>
+                            <li><span class="highlight">Desideri Naturali e Non Necessari:</span> Varianti lussuose dei desideri necessari (es. bere vino pregiato anziché acqua, mangiare cibi raffinati). Possono essere soddisfatti con moderazione, ma la loro ricerca eccessiva può portare al turbamento.</li>
+                            <li><span class="highlight">Desideri Vani e Non Naturali:</span> Quelli che nascono da false opinioni (es. ricchezza, potere, fama). Sono difficili da soddisfare, non eliminano alcun dolore intrinseco e portano inevitabilmente a turbamento e frustrazione. Vanno eliminati.</li>
+                        </ul>
+                        La saggezza consiste nel soddisfare solo i desideri naturali e necessari, e nel limitare o eliminare gli altri.
+                    </p>
+                </li>
+                <li>
+                    <h4>Il "Tetrafarmaco" (Quadruplice Rimedio):</h4>
+                    <p>
+                        Epicuro riassume la sua dottrina etica in quattro massime fondamentali, il cosiddetto "tetrafarmaco", che serve a liberare l'uomo dalle quattro principali paure:
+                        <ol>
+                            <li><span class="highlight">Non aver paura degli dei:</span> Non si interessano a noi.</li>
+                            <li><span class="highlight">Non aver paura della morte:</span> Quando c'è la morte, noi non ci siamo.</li>
+                            <li><span class="highlight">Il bene (il piacere) è facile da procurare:</span> Basta soddisfare i desideri naturali e necessari.</li>
+                            <li><span class="highlight">Il male (il dolore) è facile da sopportare:</span> Se è acuto, è breve; se è cronico, è lieve.</li>
+                        </ol>
+                    </p>
+                </li>
+                <li>
+                    <h4>L'Amicizia (Φιλία - *Philía*):</h4>
+                    <p>
+                        L'amicizia è considerata da Epicuro il bene più grande per una vita felice. È una fonte di piacere e sicurezza, un rifugio dalle avversità del mondo esterno e un supporto reciproco nella ricerca della saggezza. La vita nel Giardino era basata proprio su questo ideale di comunità amicale.
+                    </p>
+                </li>
+                <li>
+                    <h4>"Vivi Nascosto" (Λάθε Βιώσας - *Lathe Biôsas*):</h4>
+                    <p>
+                        Questa massima epicurea invita a ritirarsi dalla vita pubblica e dalle ambizioni politiche, fonti di ansia e turbamento. L'uomo saggio cerca la tranquillità in una vita semplice e discreta, lontano dagli onori e dalle preoccupazioni del mondo.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>La Canonica e la Gnoseologia</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                La canonica epicurea è la teoria della conoscenza, che stabilisce i criteri di verità.
+            </p>
+            <ul>
+                <li>
+                    <h4>La Sensazione come Criterio di Verità:</h4>
+                    <p>
+                        Epicuro è un empirista: la sensazione (αἴσθησις - *aísthesis*) è il primo e più affidabile criterio di verità. Le sensazioni sono sempre vere in quanto immediate e passive. Gli errori sorgono solo dai giudizi che noi formuliamo sulle sensazioni.
+                    </p>
+                </li>
+                <li>
+                    <h4>Le Prolessi (Anticipazioni):</h4>
+                    <p>
+                        Le prolessi (προλήψεις - *proléipseis*) sono concetti o idee generali che si formano nella mente per ripetute esperienze sensoriali (es. l'idea di "uomo" o di "giustizia"). Sono anch'esse un criterio di verità, in quanto derivano direttamente dalle sensazioni e anticipano la conoscenza futura.
+                    </p>
+                </li>
+                <li>
+                    <h4>Le Emozioni (Piacere/Dolore) come Criterio Etico:</h4>
+                    <p>
+                        A livello etico, i sentimenti di piacere e dolore sono i criteri naturali che ci guidano verso ciò che è bene (piacere) e ciò che è male (dolore).
+                    </p>
+                </li>
+                <li>
+                    <h4>L'Inferenza (Επιβολή - *Epibolḗ*):</h4>
+                    <p>
+                        La ragione e l'inferenza sono utilizzate per andare oltre ciò che è immediatamente percepibile (come l'esistenza degli atomi o del vuoto), ma sempre partendo dai dati sensoriali e dalle prolessi. La logica non è una disciplina autonoma, ma uno strumento al servizio della fisica e dell'etica.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>L'Eredità e la Rilevanza di Epicuro</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                L'Epicureismo è sopravvissuto per secoli, influenzando il pensiero romano e moderno, nonostante i numerosi fraintendimenti.
+            </p>
+            <ul>
+                <li>
+                    <h4>La Diffusione a Roma:</h4>
+                    <p>
+                        L'Epicureismo trovò terreno fertile a Roma, dove fu abbracciato da importanti personalità, tra cui il già citato **Lucrezio**, che con il "De rerum natura" rese accessibili i complessi principi epicurei alla cultura latina. Altri seguaci illustri furono Gaio Cassio Longino e Quinto Orazio Flacco (sebbene con alcune riserve).
+                    </p>
+                </li>
+                <li>
+                    <h4>Fraintendimenti e Calunnie:</h4>
+                    <p>
+                        Fin dall'antichità, la filosofia di Epicuro fu spesso travisata dai suoi avversari (soprattutto stoici e cristiani), che la dipinsero come una dottrina che promuoveva l'edonismo sfrenato, la dissolutezza e l'ateismo. Questa caricatura ha oscurato per secoli la vera natura della sua ricerca di una vita sobria e serena.
+                    </p>
+                </li>
+                <li>
+                    <h4>Riscoperta e Influenza Moderna:</h4>
+                    <p>
+                        Nel Rinascimento e nell'Illuminismo, Epicuro fu riscoperto e rivalutato. Pensatori come Pierre Gassendi, Thomas Jefferson e John Locke trassero ispirazione dal suo atomismo e dalla sua etica. La sua enfasi sull'assenza di dolore e sulla tranquillità dell'anima, la sua critica alle paure irrazionali e la sua celebrazione dell'amicizia risuonano ancora oggi.
+                    </p>
+                </li>
+                <li>
+                    <h4>Il Giardino come Modello:</h4>
+                    <p>
+                        Il concetto di "Giardino" come comunità filosofica e luogo di ritiro dalla frenesia del mondo è diventato un archetipo, un simbolo di una vita dedicata alla riflessione, alla semplice gioia e all'amicizia, lontano dalle preoccupazioni materialistiche e dalle ambizioni effimere.
+                    </p>
+                </li>
+            </ul>
+            <p>
+                Epicuro, con la sua dottrina della felicità basata sul piacere come assenza di dolore e turbamento, offrì un percorso pratico per una vita appagante in un'epoca di incertezze. La sua eredità ci invita ancora oggi a riflettere su ciò che è veramente necessario per la nostra serenità, a liberarci dalle paure irrazionali e a coltivare le relazioni autentiche, ricordandoci che la vera ricchezza risiede nella pace dell'anima.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const content = this.nextElementSibling; // Seleziona il div con il contenuto
+                    
+                    // Opzionale: Chiudi tutti gli altri pannelli aperti
+                    accordionButtons.forEach(otherButton => {
+                        if (otherButton !== this && otherButton.classList.contains('active')) {
+                            otherButton.classList.remove('active');
+                            otherButton.nextElementSibling.classList.remove('show');
+                        }
+                    });
+
+                    // Apri/chiudi il pannello cliccato
+                    this.classList.toggle('active');
+                    content.classList.toggle('show');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

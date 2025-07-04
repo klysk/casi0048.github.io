@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epitteto: Il Filosofo Schiavo e la Libertà Interiore Stoica</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Stili Generali e Reset */
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 3.2em;
+            text-align: center;
+            border-bottom: 2px solid #34495e; /* Grigio-blu scuro per Stoicismo/Gravitas */
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 2.4em;
+            color: #34495e; /* Grigio-blu scuro per Stoicismo/Gravitas */
+            margin-top: 30px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: #555;
+            margin-top: 25px;
+        }
+
+        h4 {
+            font-size: 1.3em;
+            color: #444;
+            margin-top: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #c0392b; /* Rosso mattone per evidenziazioni chiave */
+        }
+
+        .quote {
+            font-style: italic;
+            background-color: #f6f8f9; /* Sfondo chiaro per le citazioni */
+            padding: 18px 25px;
+            border-left: 5px solid #34495e; /* Grigio-blu scuro per le citazioni */
+            margin: 25px 0;
+            border-radius: 4px;
+            line-height: 1.5;
+        }
+
+        .quote footer {
+            text-align: right;
+            margin-top: 12px;
+            font-size: 0.95em;
+            color: #7f8c8d;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+        }
+
+        .image-container figcaption {
+            font-size: 0.9em;
+            color: #777;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Stili per l'Accordion (Sezioni Espandibili) */
+        .accordion-section {
+            max-width: 900px;
+            margin: 25px auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .accordion-button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 20px 30px;
+            background-color: #34495e; /* Grigio-blu scuro per il bottone */
+            color: white;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s ease;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .accordion-button:hover {
+            background-color: #2c3e50;
+        }
+
+        .accordion-button h2 {
+            color: white;
+            margin: 0;
+            font-size: 1em;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .accordion-button i {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-button.active i {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 0 30px;
+            background-color: #ffffff;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            box-sizing: border-box;
+        }
+
+        .accordion-content.show {
+            max-height: 4500px; /* Valore grande per accomodare il contenuto esteso */
+            padding: 30px;
+        }
+
+        .accordion-content ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .accordion-content ul li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .accordion-content ul li::before {
+            content: '🔗'; /* Simbolo della catena spezzata/libertà per Epitteto */
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                margin: 20px auto;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2.5em;
+            }
+            h2 {
+                font-size: 2em;
+            }
+            .accordion-button {
+                padding: 15px 20px;
+                font-size: 1.5em;
+            }
+            .accordion-content {
+                padding: 0 20px;
+            }
+            .accordion-content.show {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Epitteto: Il Filosofo Schiavo e la Libertà Interiore Stoica</h1>
+
+        <div class="image-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Epictetus_-_Roman_copy_of_a_Greek_bust.jpg" alt="Busto di Epitteto">
+            <figcaption>Busto di Epitteto, filosofo stoico.</figcaption>
+        </div>
+
+        <p>
+            Tra le figure più ispiratrici dello Stoicismo romano, **Epitteto** (circa 55 – 135 d.C.) si distingue non solo per la profondità del suo pensiero, ma anche per la sua straordinaria biografia. Nato schiavo a Gerapoli, in Frigia (odierna Turchia), e portato a Roma, Epitteto visse una vita di privazioni e dipendenza fisica, eppure divenne uno dei più grandi maestri della **libertà interiore**. La sua filosofia, basata sulla distinzione tra ciò che è in nostro potere e ciò che non lo è, offriva una via per raggiungere la tranquillità e la felicità indipendentemente dalle circostanze esterne.
+        </p>
+        <p>
+            Come Socrate e molti altri stoici, Epitteto non scrisse nulla di suo pugno. I suoi insegnamenti ci sono giunti grazie agli appunti e alla rielaborazione del suo allievo Flavio Arriano, che raccolse le sue "Diatribe" e il celebre "Manuale" (o "Enchiridion"). Queste opere sono diventate testi fondamentali per chiunque cerchi una guida pratica per una vita virtuosa e resiliente.
+        </p>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>Vita, Schiavitù e Formazione Filosofica</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                La vita di Epitteto è un testimone diretto della sua filosofia: fu lui stesso l'esempio vivente della sua dottrina.
+            </p>
+            <ul>
+                <li>
+                    <h4>Dalla Schiavitù alla Libertà:</h4>
+                    <p>
+                        Epitteto nacque schiavo e fu posseduto da Epafrodito, un liberto e segretario dell'imperatore Nerone. Si racconta che la sua gamba claudicante fosse il risultato di una tortura inflitta dal suo padrone. Nonostante la sua condizione, Epafrodito gli permise di studiare filosofia, e così Epitteto divenne allievo del celebre stoico **Musonio Rufo**. Questa opportunità fu cruciale per la sua formazione.
+                    </p>
+                    <p>
+                        In seguito fu manomesso, ottenendo la libertà. La sua stessa vita dimostrava che la vera libertà non è una condizione esterna, ma uno stato interiore.
+                    </p>
+                </li>
+                <li>
+                    <h4>L'Esilio e la Scuola di Nicopoli:</h4>
+                    <p>
+                        Nell'anno 92 d.C., l'imperatore Domiziano, sospettoso dei filosofi, li espulse da Roma. Epitteto si trasferì a **Nicopoli**, nell'Epiro (attuale Grecia), dove fondò la sua scuola e insegnò fino alla sua morte. Qui, la sua fama crebbe, attirando studenti da tutto l'Impero, inclusi personaggi di rilievo come l'imperatore Adriano, sebbene non fosse un suo allievo diretto.
+                    </p>
+                </li>
+                <li>
+                    <h4>Le "Diatribe" e il "Manuale":</h4>
+                    <p>
+                        Come detto, non abbiamo scritti diretti di Epitteto. La sua filosofia è conosciuta tramite l'allievo **Flavio Arriano**, che trascrisse le lezioni del maestro nelle "Diatribe" (Διατριβαί - *Diatribai*, ovvero "Conversazioni" o "Discorsi") e ne riassunse i concetti chiave nel "Manuale" (Ἐγχειρίδιον - *Encheiridion*, "Breve Trattato" o "Guida Tascabile"). Queste opere sono caratterizzate da un tono colloquiale, ricco di esempi e analogie pratiche, e si rivolgono direttamente al lettore/allievo.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>La Filosofia del "Ciò che Dipende da Noi"</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Il cuore della dottrina di Epitteto è la distinzione fondamentale tra ciò che possiamo controllare e ciò che non possiamo.
+            </p>
+            <ul>
+                <li>
+                    <h4>La Dichotomia del Controllo:</h4>
+                    <p>
+                        Questa è la pietra angolare del pensiero epitteteo, espressa fin dalle prime righe del "Manuale":
+                        <div class="quote">
+                            <p>«Delle cose, alcune dipendono da noi, altre no. Dipendono da noi: il giudizio, l'impulso, il desiderio, l'avversione, e in una parola, tutte quelle che sono azioni nostre. Non dipendono da noi: il corpo, i beni, la reputazione, le cariche, e in una parola, tutte quelle che non sono azioni nostre.»</p>
+                            <footer>— Epitteto, Manuale, I</footer>
+                        </div>
+                        <p>
+                            Questo principio implica che la nostra felicità e la nostra serenità dipendono unicamente dalla nostra capacità di distinguere queste due categorie e di agire solo su ciò che è in nostro potere.
+                        </p>
+                    </p>
+                </li>
+                <li>
+                    <h4>Ciò che Dipende da Noi: Le Rappresentazioni (Giudizi):</h4>
+                    <p>
+                        In nostro potere non sono gli eventi stessi, ma le nostre **rappresentazioni (φαντασίαι - *phantasíai*)** o giudizi su di essi. Non possiamo controllare se piove, ma possiamo controllare come reagiamo alla pioggia. Se consideriamo la pioggia un male, soffriremo; se la consideriamo indifferente, o necessaria, non soffriremo. La felicità, quindi, non sta nell'eliminare gli eventi spiacevoli, ma nel cambiare il nostro giudizio su di essi.
+                    </p>
+                    <p>
+                        Questo include le nostre opinioni, i nostri desideri, le nostre avversioni e, in generale, l'uso che facciamo delle nostre facoltà razionali.
+                    </p>
+                </li>
+                <li>
+                    <h4>Ciò che Non Dipende da Noi: Le Cose Esterne:</h4>
+                    <p>
+                        Tutto ciò che è esterno a noi – il nostro corpo, la salute, la ricchezza, la fama, la reputazione, il successo, la morte – non è sotto il nostro controllo diretto. Affannarsi per queste cose è futile e fonte di turbamento.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>La Virtù, la Pace Interiore e l'Apatia Stoica</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                L'applicazione della dicotomia del controllo porta alla virtù e alla pace dell'anima.
+            </p>
+            <ul>
+                <li>
+                    <h4>Vivere Secondo Natura e Ragione:</h4>
+                    <p>
+                        Come tutti gli stoici, Epitteto esorta a vivere **secondo natura (κατὰ φύσιν - *katà phýsin*)**, intendendo con "natura" la ragione universale (Logos) che governa il cosmo. Per l'essere umano, vivere secondo natura significa vivere secondo ragione, allineando la propria volontà con l'ordine divino del mondo. Accettare ciò che non si può cambiare è parte di questa armonia.
+                    </p>
+                </li>
+                <li>
+                    <h4>L'Apatia e l'Atarassia:</h4>
+                    <p>
+                        Il fine della filosofia è raggiungere l'**apatia (ἀπάθεια - *apatheia*)**, ovvero l'assenza di passioni (desideri irrazionali, paure, dolori eccessivi), che non significa indifferenza o mancanza di sentimenti, ma il controllo razionale su di essi. Questo porta all'**atarassia (ἀταραξία - *ataraxia*)**, la serenità e imperturbabilità dell'anima.
+                    </p>
+                </li>
+                <li>
+                    <h4>Il Ruolo della Volontà:</h4>
+                    <p>
+                        La volontà (προαίρεσις - *proairesis*) è la nostra facoltà più preziosa, l'unica veramente libera e in nostro potere. È attraverso l'educazione e la disciplina della volontà che possiamo raggiungere la virtù e la felicità.
+                    </p>
+                </li>
+                <li>
+                    <h4>L'Esercizio e la Pratica:</h4>
+                    <p>
+                        La filosofia per Epitteto non è solo teoria, ma una pratica quotidiana (ἄσκησις - *askesis*). È un allenamento costante per distinguere ciò che dipende da noi e ciò che non dipende, e per accettare con equanimità quest'ultimo.
+                        <div class="quote">
+                            <p>«Non cercare che le cose vadano come tu vuoi, ma desidera che vadano come vanno, e sarai felice.»</p>
+                            <footer>— Epitteto, Manuale, VIII</footer>
+                        </div>
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>L'Eredità e l'Influenza di Epitteto</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Il pensiero di Epitteto ha avuto un'eco profonda nei secoli, influenzando generazioni di pensatori e leader.
+            </p>
+            <ul>
+                <li>
+                    <h4>Influenza su Marco Aurelio:</h4>
+                    <p>
+                        L'imperatore romano **Marco Aurelio**, uno dei più grandi filosofi stoici, fu profondamente influenzato da Epitteto. Le sue "Meditazioni" riflettono in ogni pagina gli insegnamenti di Epitteto, riaffermando la distinzione tra ciò che è in nostro potere e ciò che non lo è, e l'importanza dell'accettazione del destino.
+                    </p>
+                </li>
+                <li>
+                    <h4>Lo Stoicismo Romano:</h4>
+                    <p>
+                        Epitteto, insieme a Seneca e Marco Aurelio, è una delle figure chiave dello Stoicismo romano, la fase più "morale" e pratica di questa filosofia. Il loro focus si sposta dalla fisica e logica della Stoa antica all'etica e alla psicoterapia dell'anima.
+                    </p>
+                </li>
+                <li>
+                    <h4>Applicazioni Moderne:</h4>
+                    <p>
+                        Gli insegnamenti di Epitteto sono stati riscoperti e applicati in vari contesti moderni:
+                        <ul>
+                            <li><span class="highlight">Psicoterapia Cognitivo-Comportamentale (CBT):</span> Molti principi della CBT, in particolare l'idea che non sono gli eventi a turbarci, ma i nostri giudizi su di essi, trovano un parallelo diretto nelle "Diatribe" di Epitteto.</li>
+                            <li><span class="highlight">Resilienza e Self-Help:</span> Le sue opere sono una fonte inesauribile di ispirazione per lo sviluppo della resilienza, della gestione dello stress e della ricerca della felicità in un mondo incerto.</li>
+                            <li><span class="highlight">Leadership:</span> Molti principi stoici, in particolare la capacità di mantenere la calma sotto pressione e di concentrarsi su ciò che si può controllare, sono considerati fondamentali per una leadership efficace.</li>
+                        </ul>
+                    </p>
+                </li>
+                <li>
+                    <h4>Un Messaggio Senza Tempo:</h4>
+                    <p>
+                        La semplicità, la chiarezza e la profonda saggezza degli insegnamenti di Epitteto lo rendono uno dei filosofi più accessibili e pertinenti ancora oggi. La sua vita, da schiavo a faro di libertà interiore, è la dimostrazione più potente della validità della sua filosofia.
+                    </p>
+                </li>
+            </ul>
+            <p>
+                Epitteto, il filosofo che non possedeva nulla se non la sua virtù e la sua ragione, ci ha lasciato in eredità un tesoro inestimabile: la consapevolezza che la vera libertà e felicità risiedono sempre dentro di noi, indipendentemente dalle catene fisiche o dalle avversità esterne. La sua voce continua a risuonare, invitandoci a distinguere, ad accettare e a vivere con dignità e serenità.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const content = this.nextElementSibling; // Seleziona il div con il contenuto
+                    
+                    // Opzionale: Chiudi tutti gli altri pannelli aperti
+                    accordionButtons.forEach(otherButton => {
+                        if (otherButton !== this && otherButton.classList.contains('active')) {
+                            otherButton.classList.remove('active');
+                            otherButton.nextElementSibling.classList.remove('show');
+                        }
+                    });
+
+                    // Apri/chiudi il pannello cliccato
+                    this.classList.toggle('active');
+                    content.classList.toggle('show');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
