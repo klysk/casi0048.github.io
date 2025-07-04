@@ -161,3 +161,25 @@
             window.addEventListener('scroll', () => {
             document.body.classList.toggle('scrolled', window.scrollY > 50);
             });
+<script>
+  fetch('articoli.json')
+    .then(response => response.json())
+    .then(articoli => {
+      const container = document.getElementById('lista-articoli');
+      articoli.forEach(articolo => {
+        const div = document.createElement('div');
+        div.classList.add('articolo');
+        div.innerHTML = `
+          <h3><a href="${articolo.link}">${articolo.titolo}</a></h3>
+          <time datetime="${articolo.data}">${new Date(articolo.data).toLocaleDateString('it-IT', {
+            year: 'numeric', month: 'long', day: 'numeric'
+          })}</time>
+          <p>${articolo.descrizione}</p>
+        `;
+        container.appendChild(div);
+      });
+    })
+    .catch(error => {
+      console.error('Errore nel caricamento degli articoli:', error);
+    });
+</script>
