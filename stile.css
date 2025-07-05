@@ -113,4 +113,127 @@
 .logo-link {
   margin-right: 30px;
 }
+<--  aggiunta-->
+/* MENU GALATTICO DESKTOP */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 1rem 0;
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+}
 
+.menu-container {
+    max-width: 100%;
+    width: 96%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+}
+
+.menu-desktop ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 2.5rem;
+    flex-wrap: nowrap;
+}
+
+.menu-desktop li {
+    position: relative;
+}
+
+.menu-desktop a,
+.menu-desktop button.menu-btn {
+    font-family: 'Cormorant Garamond', serif;
+    background: none;
+    border: none;
+    color: #f0f0f0;
+    font-size: 1.2rem;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 0.4rem 0;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+}
+
+.menu-desktop a:hover,
+.menu-desktop button.menu-btn:hover {
+    color: #D4AF37;
+}
+
+.menu-desktop a::after,
+.menu-desktop button.menu-btn::after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: #D4AF37;
+    transition: width 0.3s ease-in-out;
+}
+
+.menu-desktop a:hover::after,
+.menu-desktop button.menu-btn:hover::after {
+    width: 100%;
+}
+
+.menu-desktop .arrow {
+    margin-left: 0.3rem;
+    font-size: 0.8rem;
+}
+
+/* Mega-menu container */
+.dropdown {
+    position: relative;
+}
+
+.mega-menu {
+    display: none;
+    position: absolute;
+    top: 120%;
+    left: 0;
+    padding: 2rem;
+    background-color: #111;
+    border: 1px solid #333;
+    border-radius: 10px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.4);
+    z-index: 999;
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    min-width: 700px;
+}
+
+.dropdown:hover .mega-menu {
+    display: grid;
+}
+
+.mega-menu h4 {
+    color: #D4AF37;
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.mega-menu a {
+    display: block;
+    color: #eee;
+    text-decoration: none;
+    padding: 0.2rem 0;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.mega-menu a:hover {
+    color: #D4AF37;
+    padding-left: 5px;
+}
