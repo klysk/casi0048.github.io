@@ -1,353 +1,49 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Echi di Sofia | Filosofia Esplosiva</title>
-    <style>
-        /* RESET EFFETTO WOW */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Georgia', serif;
-            overflow-x: hidden;
-            background: #0a0a0a;
-            color: #f0f0f0;
-        }
-        
-        /* HEADER FLUIDO */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            background: rgba(10,10,10,0.9);
-            backdrop-filter: blur(10px);
-            padding: 1.5rem 0;
-            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-        
-        header.scrolled {
-            padding: 0.8rem 0;
-            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
-        }
-        
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            background: linear-gradient(45deg, #D4AF37, #f1c27d);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-decoration: none;
-            letter-spacing: 1px;
-        }
-        
-        /* MENU CYBER */
-        .menu-desktop ul {
-            display: flex;
-            list-style: none;
-            gap: 2.5rem;
-        }
-        
-        .menu-desktop a {
-            color: #f0f0f0;
-            text-decoration: none;
-            font-size: 1.1rem;
-            position: relative;
-            padding: 0.5rem 0;
-        }
-        
-        .menu-desktop a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: #D4AF37;
-            transition: width 0.4s cubic-bezier(0.77, 0, 0.175, 1);
-        }
-        
-        .menu-desktop a:hover::after {
-            width: 100%;
-        }
-        
-        /* HERO SECTION COMPATTA */
-        .hero {
-            height: 65vh;
-            min-height: 500px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            padding-top: 80px;
-        }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') center/cover;
-            z-index: -2;
-            filter: brightness(0.4);
-        }
-        
-        /* PARTICELLE ANIMATE (pseudo-elemento) */
-        .hero::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            z-index: -1;
-            opacity: 0.7;
-        }
-        
-        .hero-content {
-            max-width: 800px;
-            padding: 0 2rem;
-        }
-        
-        .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.1;
-            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2.5rem;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        
-        /* PULSANTE ESPLOSIVO */
-        .btn-explode {
-            display: inline-block;
-            position: relative;
-            background: transparent;
-            color: #D4AF37;
-            border: 2px solid #D4AF37;
-            padding: 1rem 2.5rem;
-            font-size: 1.1rem;
-            font-weight: 600;
-            text-decoration: none;
-            border-radius: 50px;
-            overflow: hidden;
-            z-index: 1;
-            transition: all 0.4s;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        
-        .btn-explode::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #D4AF37;
-            z-index: -1;
-            transform: scaleX(0);
-            transform-origin: right;
-            transition: transform 0.4s cubic-bezier(0.5, 1.6, 0.4, 0.7);
-        }
-        
-        .btn-explode:hover {
-            color: #0a0a0a;
-        }
-        
-        .btn-explode:hover::before {
-            transform: scaleX(1);
-            transform-origin: left;
-        }
-        
-        /* ANIMAZIONI PERSONALIZZATE */
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-        
-        @keyframes morph {
-            0% { border-radius: 60% 40% 30% 70%/60% 30% 70% 40%; }
-            50% { border-radius: 30% 60% 70% 40%/50% 60% 30% 60%; }
-            100% { border-radius: 60% 40% 30% 70%/60% 30% 70% 40%; }
-        }
-        
-        @keyframes textExplode {
-            0% { letter-spacing: -10px; opacity: 0; }
-            100% { letter-spacing: normal; opacity: 1; }
-        }
-        
-        /* EFFETTO PARTICOLATO */
-        .particle {
-            position: absolute;
-            background: #D4AF37;
-            border-radius: 50%;
-            pointer-events: none;
-        }
-        
-        /* FOOTER FLUTTUANTE */
-        footer {
-            text-align: center;
-            padding: 3rem 0;
-            background: linear-gradient(to top, #0a0a0a, transparent);
-            position: relative;
-        }
-        
-        footer p {
-            font-size: 0.9rem;
-            opacity: 0.7;
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        /* RESPONSIVE */
-        @media (max-width: 768px) {
-            .hero {
-                height: 70vh;
-                padding-top: 100px;
-            }
-            
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero p {
-                font-size: 1.1rem;
-            }
-            
-            .menu-desktop {
-                display: none;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Menu Fisso -->
-    <header id="mainHeader">
-        <div class="container">
-            <a href="#" class="logo">ECHI DI SOFIA</a>
-            
-            <nav class="menu-desktop">
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Epoche</a></li>
-                    <li><a href="#">Autori</a></li>
-                    <li><a href="#">Articoli</a></li>
-                    <li><a href="#">Contatti</a></li>
-                </ul>
-            </nav>
+<footer class="site-footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3 class="footer-title">Esplora</h3>
+            <ul class="footer-links">
+                <li><a href="#" class="footer-link">Mappa del sito</a></li>
+                <li><a href="#" class="footer-link">Linea del tempo</a></li>
+                <li><a href="#" class="footer-link">Filosofi per epoca</a></li>
+            </ul>
         </div>
-    </header>
 
-    <!-- Hero Section Compatta -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1 id="mainTitle">LA FILOSOFIA È VIVA</h1>
-            <p id="subTitle">Esplora 2500 anni di pensiero in un'esperienza immersiva</p>
-            <a href="#" class="btn-explode" id="ctaButton">ACCEDI ALLA SAPIENZA</a>
+        <div class="footer-section">
+            <h3 class="footer-title">Risorse</h3>
+            <ul class="footer-links">
+                <li><a href="#" class="footer-link">Biblioteca</a></li>
+                <li><a href="#" class="footer-link">Glossario</a></li>
+                <li><a href="#" class="footer-link">Fonti primarie</a></li>
+            </ul>
         </div>
-    </section>
 
-    <!-- Footer -->
-    <footer>
-        <p>© 2023 Echi di Sofia - Tutti i diritti riservati</p>
-    </footer>
+        <div class="footer-section">
+            <h3 class="footer-title">Contatti</h3>
+            <ul class="footer-links">
+                <li><a href="mailto:info@echidisofia.it" class="footer-link">Email</a></li>
+                <li><a href="#" class="footer-link">Newsletter</a></li>
+                <li><a href="#" class="footer-link">Collabora con noi</a></li>
+            </ul>
+        </div>
 
-    <!-- Script con Animazioni Stravolgenti -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Animazione header al scroll
-            const header = document.getElementById('mainHeader');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    header.classList.add('scrolled');
-                } else {
-                    header.classList.remove('scrolled');
-                }
-            });
-            
-            // Effetto esplosione testo
-            const mainTitle = document.getElementById('mainTitle');
-            const subTitle = document.getElementById('subTitle');
-            const ctaButton = document.getElementById('ctaButton');
-            
-            setTimeout(() => {
-                mainTitle.style.animation = 'textExplode 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
-                mainTitle.style.opacity = '1';
-                mainTitle.style.transform = 'translateY(0)';
-            }, 300);
-            
-            setTimeout(() => {
-                subTitle.style.animation = 'textExplode 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
-                subTitle.style.opacity = '1';
-                subTitle.style.transform = 'translateY(0)';
-            }, 800);
-            
-            setTimeout(() => {
-                ctaButton.style.animation = 'textExplode 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
-                ctaButton.style.opacity = '1';
-                ctaButton.style.transform = 'translateY(0)';
-            }, 1200);
-            
-            // Effetto particelle al mouse
-            const hero = document.querySelector('.hero');
-            let particles = [];
-            
-            hero.addEventListener('mousemove', (e) => {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                
-                const size = Math.random() * 8 + 2;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                particle.style.left = `${e.clientX}px`;
-                particle.style.top = `${e.clientY}px`;
-                
-                const animDuration = Math.random() * 3 + 2;
-                particle.style.animation = `float ${animDuration}s linear infinite`;
-                
-                hero.appendChild(particle);
-                particles.push(particle);
-                
-                // Rimuovi particelle dopo l'animazione
-                setTimeout(() => {
-                    particle.remove();
-                    particles = particles.filter(p => p !== particle);
-                }, animDuration * 1000);
-            });
-            
-            // Effetto morphing sul pulsante
-            setInterval(() => {
-                ctaButton.style.animation = 'morph 8s ease-in-out infinite';
-            }, 100);
-        });
-    </script>
-</body>
-</html>
+        <div class="footer-section">
+            <h3 class="footer-title">Echi di Sofia</h3>
+            <p class="footer-text">Il portale che fa risuonare la filosofia attraverso i secoli.</p>
+            <div class="footer-social">
+                <a href="#" class="social-icon" aria-label="Facebook">[FB]</a>
+                <a href="#" class="social-icon" aria-label="Twitter">[TW]</a>
+                <a href="#" class="social-icon" aria-label="Instagram">[IG]</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p class="copyright">&copy; 2023 Echi di Sofia. Tutti i diritti riservati.</p>
+        <div class="legal-links">
+            <a href="#" class="legal-link">Privacy Policy</a>
+            <a href="#" class="legal-link">Termini d'uso</a>
+            <a href="#" class="legal-link">Cookie</a>
+        </div>
+    </div>
+</footer>
