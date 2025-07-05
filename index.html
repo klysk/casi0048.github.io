@@ -1,41 +1,283 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Echi di Sofia</title>
-
-  <!-- ✅ Collegamento al file CSS principale -->
-  <link rel="stylesheet" href="https://casi0048.github.io/stile.css" />
-
-  <!-- ✅ Google Fonts (estetica filosofica) -->
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet" />
-
-  <!-- ✅ Font Awesome (icone) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-
-  <!-- ✅ Favicon (dalla cartella media su GitHub) -->
-  <link rel="icon" type="image/png" href="https://casi0048.github.io/media/favicon-16x16.png" />
-
-  <!-- ❌ Rimosso: css/styles.css (presunto duplicato non usato) -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Echi di Sofia | Filosofia attraverso i secoli</title>
+    <style>
+        /* RESET E STILI BASE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        /* HEADER E MENU */
+        header {
+            background: #0D0D0D;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            color: #D4AF37;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        /* MENU DESKTOP */
+        .menu-desktop ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .menu-desktop a {
+            color: #F5F5F5;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem 0;
+        }
+        
+        .menu-desktop a:hover {
+            color: #D4AF37;
+            border-bottom: 2px solid #D4AF37;
+        }
+        
+        /* MENU MOBILE */
+        .menu-mobile-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        
+        .menu-mobile-btn span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: #F5F5F5;
+            margin: 5px 0;
+            transition: all 0.3s;
+        }
+        
+        .menu-mobile {
+            display: none;
+            background: #0D0D0D;
+            padding: 1rem 0;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+        }
+        
+        .menu-mobile ul {
+            list-style: none;
+        }
+        
+        .menu-mobile li {
+            margin: 1rem 0;
+            text-align: center;
+        }
+        
+        .menu-mobile a {
+            color: #F5F5F5;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+        
+        /* HERO SECTION */
+        .hero {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1505506874110-6a7a69069a08?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 0 1rem;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #D4AF37;
+            color: #0D0D0D;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background: #F5F5F5;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        /* FOOTER */
+        footer {
+            background: #0D0D0D;
+            color: #F5F5F5;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+        
+        /* ANIMAZIONI */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .menu-desktop {
+                display: none;
+            }
+            
+            .menu-mobile-btn {
+                display: block;
+            }
+            
+            .menu-mobile.active {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .menu-mobile-btn.open span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            
+            .menu-mobile-btn.open span:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .menu-mobile-btn.open span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -6px);
+            }
+        }
+    </style>
 </head>
 <body>
-  <!-- ✅ Contenuto dimostrativo -->
-  <h1>Benvenuto in Echi di Sofia</h1>
-  <p>Scopri la saggezza che ha attraversato i secoli.</p>
+    <!-- Menu di Navigazione -->
+    <header>
+        <div class="container">
+            <a href="#" class="logo">ECHI DI SOFIA</a>
+            
+            <!-- Menu Desktop -->
+            <nav class="menu-desktop">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Epoche</a></li>
+                    <li><a href="#">Autori</a></li>
+                    <li><a href="#">Articoli</a></li>
+                    <li><a href="#">Contatti</a></li>
+                </ul>
+            </nav>
+            
+            <!-- Menu Mobile (Icona Hamburger) -->
+            <button class="menu-mobile-btn" aria-label="Apri menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        
+        <!-- Menu Mobile (Dropdown) -->
+        <nav class="menu-mobile">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Epoche</a></li>
+                <li><a href="#">Autori</a></li>
+                <li><a href="#">Articoli</a></li>
+                <li><a href="#">Contatti</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <!-- ✅ Esempio immagine da /media -->
-  <img src="https://casi0048.github.io/media/platone.jpg" alt="Platone" style="width:200px; border-radius: 8px;" />
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Esplora la Filosofia</h1>
+        <p>Un viaggio attraverso i secoli, dai Presocratici al Postmoderno</p>
+        <a href="#" class="btn">Inizia il Viaggio</a>
+    </section>
 
-  <!-- ✅ Script principale -->
-  <script src="https://casi0048.github.io/script.js"></script>
+    <!-- Footer -->
+    <footer>
+        <p>© 2023 Echi di Sofia. Tutti i diritti riservati.</p>
+    </footer>
 
-  <!-- ❓ Script secondario opzionale (se esiste) -->
-  <script src="https://casi0048.github.io/script/main.js"></script>
-
-  <!-- ✅ Libreria per animazioni -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <!-- Script JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuBtn = document.querySelector('.menu-mobile-btn');
+            const mobileMenu = document.querySelector('.menu-mobile');
+            
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('active');
+                menuBtn.classList.toggle('open');
+            });
+            
+            // Chiudi il menu mobile quando si clicca su un link
+            document.querySelectorAll('.menu-mobile a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                    menuBtn.classList.remove('open');
+                });
+            });
+            
+            // Animazione al caricamento
+            const heroContent = document.querySelector('.hero h1');
+            heroContent.style.opacity = '0';
+            setTimeout(() => {
+                heroContent.style.opacity = '1';
+            }, 300);
+        });
+    </script>
 </body>
 </html>
