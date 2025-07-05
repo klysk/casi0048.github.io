@@ -1,3 +1,692 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECHI DI SOFIA | Il Portale della Filosofia</title>
+    <style>
+        /* RESET STELLARE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+            perspective: 1000px;
+        }
+        
+        /* MENU GALATTICO */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 2rem 0;
+            transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        
+        header.scrolled {
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .menu-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #D4AF37, #f1c27d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-decoration: none;
+            letter-spacing: 1px;
+            transition: all 0.4s;
+        }
+        
+        .logo:hover {
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.7);
+        }
+        
+        .menu-desktop ul {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+        
+        .menu-desktop a {
+            color: #f0f0f0;
+            text-decoration: none;
+            font-size: 1.1rem;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: all 0.4s;
+        }
+        
+        .menu-desktop a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #D4AF37;
+            transition: width 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        
+        .menu-desktop a:hover::after {
+            width: 100%;
+        }
+        
+        .menu-mobile-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+        
+        .menu-mobile-btn span {
+            display: block;
+            width: 30px;
+            height: 3px;
+            background: #D4AF37;
+            margin: 6px 0;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        .menu-mobile {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 70%;
+            height: 100vh;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 15%;
+        }
+        
+        .menu-mobile ul {
+            list-style: none;
+        }
+        
+        .menu-mobile li {
+            margin: 2rem 0;
+            opacity: 0;
+            transform: translateX(30px);
+        }
+        
+        .menu-mobile a {
+            color: #f0f0f0;
+            text-decoration: none;
+            font-size: 1.5rem;
+            position: relative;
+            transition: all 0.4s;
+        }
+        
+        .menu-mobile a:hover {
+            color: #D4AF37;
+        }
+        
+        /* ANIMAZIONE DI INGRESSO (OVERLAY) */
+        .intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            animation: dissolve 4s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+        }
+        
+        @keyframes dissolve {
+            0% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+        
+        .intro-text {
+            font-size: 5vw;
+            text-align: center;
+            line-height: 1.3;
+            opacity: 0;
+            transform: translateY(50px);
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.7);
+        }
+        
+        .intro-text:nth-child(1) {
+            animation: textReveal 1.5s 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+            color: #D4AF37;
+        }
+        
+        .intro-text:nth-child(2) {
+            animation: textReveal 1.5s 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+            font-size: 3vw;
+            margin-top: 2vw;
+        }
+        
+        @keyframes textReveal {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* SFONDO GALATTICO */
+        .galaxy-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/><feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 150 -50"/></filter><rect width="100%" height="100%" filter="url(%23noise)"/></svg>');
+            z-index: -2;
+            animation: galaxyRotate 120s linear infinite;
+        }
+        
+        @keyframes galaxyRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* CONTENUTO PRINCIPALE */
+        .main-content {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20vh 10vw;
+            text-align: center;
+            opacity: 0;
+            animation: contentAppear 3s 4s forwards;
+        }
+        
+        @keyframes contentAppear {
+            to { opacity: 1; }
+        }
+        
+        h1 {
+            font-size: 6vw;
+            margin-bottom: 5vh;
+            position: relative;
+            color: #D4AF37;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+        }
+        
+        .welcome-text {
+            font-size: 1.5vw;
+            line-height: 1.8;
+            max-width: 800px;
+            margin-bottom: 8vh;
+            position: relative;
+        }
+        
+        .philosopher-quote {
+            font-style: italic;
+            font-size: 1.8vw;
+            margin: 5vh 0;
+            position: relative;
+            padding: 0 5vw;
+        }
+        
+        .philosopher-quote::before,
+        .philosopher-quote::after {
+            content: '"';
+            font-size: 3vw;
+            color: #D4AF37;
+            position: absolute;
+        }
+        
+        .philosopher-quote::before {
+            left: 0;
+            top: -1vw;
+        }
+        
+        .philosopher-quote::after {
+            right: 0;
+            bottom: -2vw;
+        }
+        
+        .enter-btn {
+            position: relative;
+            display: inline-block;
+            padding: 1.5vh 4vw;
+            font-size: 1.5vw;
+            color: #D4AF37;
+            border: 2px solid #D4AF37;
+            border-radius: 50px;
+            text-decoration: none;
+            overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+            z-index: 1;
+        }
+        
+        .enter-btn:hover {
+            color: #000;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.5);
+        }
+        
+        .enter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #D4AF37;
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        .enter-btn:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        
+        /* EFFETTI SPECIALI */
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(212, 175, 55, 0.8);
+            border-radius: 50%;
+            filter: blur(1px);
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .menu-desktop {
+                display: none;
+            }
+            
+            .menu-mobile-btn {
+                display: block;
+            }
+            
+            .intro-text {
+                font-size: 10vw;
+            }
+            
+            .intro-text:nth-child(2) {
+                font-size: 6vw;
+            }
+            
+            h1 {
+                font-size: 12vw;
+            }
+            
+            .welcome-text {
+                font-size: 4vw;
+            }
+            
+            .philosopher-quote {
+                font-size: 5vw;
+            }
+            
+            .enter-btn {
+                font-size: 5vw;
+                padding: 2vh 8vw;
+            }
+        }
+/* Menu Mobile con Ricerca */
+.menu-mobile {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 85%;
+    height: 100vh;
+    background: rgba(15, 15, 15, 0.98);
+    backdrop-filter: blur(15px);
+    z-index: 1000;
+    transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+    display: flex;
+    flex-direction: column;
+    padding-top: 80px;
+}
+
+.mobile-search-container {
+    padding: 0 25px;
+    margin-bottom: 30px;
+}
+
+.mobile-search-form {
+    position: relative;
+}
+
+.mobile-search-input {
+    width: 100%;
+    padding: 12px 45px 12px 20px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 30px;
+    background: rgba(30, 30, 30, 0.7);
+    color: #fff;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+/* Menu Mobile con Ricerca */
+.menu-mobile {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 85%;
+    height: 100vh;
+    background: rgba(15, 15, 15, 0.98);
+    backdrop-filter: blur(15px);
+    z-index: 1000;
+    transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+    display: flex;
+    flex-direction: column;
+    padding-top: 80px;
+}
+
+.mobile-search-container {
+    padding: 0 25px;
+    margin-bottom: 30px;
+}
+
+.mobile-search-form {
+    position: relative;
+}
+
+.mobile-search-input {
+    width: 100%;
+    padding: 12px 45px 12px 20px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 30px;
+    background: rgba(30, 30, 30, 0.7);
+    color: #fff;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.mobile-search-input:focus {
+    border-color: #D4AF37;
+    outline: none;
+    background: rgba(40, 40, 40, 0.9);
+}
+
+.mobile-search-btn {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.mobile-menu-list {
+    list-style: none;
+    padding: 0 25px;
+}
+
+.mobile-menu-link {
+    display: block;
+    color: #f0f0f0;
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+    transition: all 0.3s;
+}
+
+.mobile-menu-link:hover {
+    color: #D4AF37;
+    padding-left: 10px;
+    border-bottom-color: rgba(212, 175, 55, 0.3);
+}
+
+/* Animazione apertura menu */
+.menu-mobile.active {
+    right: 0;
+}
+
+/* Icona hamburger -> X */
+.menu-mobile-btn.open span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 6px);
+}
+.menu-mobile-btn.open span:nth-child(2) {
+    opacity: 0;
+}
+.menu-mobile-btn.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -6px);
+}
+
+    </style>
+</head>
+<body>
+  <body>
+    <!-- OVERLAY DI PRESENTAZIONE -->
+    <div class="intro-overlay">
+        <div class="intro-text">ECHI DI SOFIA</div>
+        <div class="intro-text">Il pensiero che attraversa i millenni</div>
+    </div>
+    
+    <!-- MENU GALATTICO -->
+    <header id="mainHeader">
+        <div class="menu-container">
+            <a href="#" class="logo">ECHI DI SOFIA</a>
+            
+            <nav class="menu-desktop">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Epoche</a></li>
+                    <li><a href="#">Autori</a></li>
+                    <li><a href="#">Articoli</a></li>
+                    <li><a href="#">Contatti</a></li>
+                    <li class="search-desktop-item">
+                        <form action="/cerca" method="GET" class="search-form">
+                            <input type="text" placeholder="Cerca..." name="q" class="search-input">
+                            <button type="submit" class="search-button">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+            
+            <button class="menu-mobile-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        
+        <nav class="menu-mobile" id="mobileMenu">
+            <div class="search-mobile-container">
+                <form action="/cerca" method="GET" class="search-form">
+                    <input type="text" placeholder="Cerca filosofi..." name="q" class="search-input">
+                    <button type="submit" class="search-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Epoche</a></li>
+                <li><a href="#">Autori</a></li>
+                <li><a href="#">Articoli</a></li>
+                <li><a href="#">Contatti</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <!-- SFONDO GALATTICO -->
+    <!-- SFONDO GALATTICO -->
+    <div class="galaxy-bg"></div>
+    
+    <!-- PARTICELLE FLUTTUANTI -->
+    <div class="floating-particles" id="particles"></div>
+    
+    <!-- CONTENUTO PRINCIPALE -->
+    <div class="main-content">
+        <h1>BENVENUTO, CERCATORE DI SAPIENZA</h1>
+        
+        <div class="welcome-text">
+            In questo spazio sacro al pensiero, ogni click è un passo attraverso i secoli. 
+            Dai frammenti dei Presocratici alle complessità del Postmoderno, ti guideremo 
+            in un viaggio dove le domande valgono più delle risposte.
+        </div>
+        
+        <div class="philosopher-quote">
+            Non è la risposta che illumina, ma la domanda
+        </div>
+        
+        <a href="#" class="enter-btn">OLTREPASSARE LA SOGLIA</a>
+    </div>
+    
+    <!-- SCRIPT PER EFFETTI SPECIALI -->
+    <script>
+        // ANIMAZIONE PARTICELLE
+        document.addEventListener('DOMContentLoaded', () => {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = window.innerWidth < 768 ? 30 : 100;
+            
+            // Crea particelle fluttuanti
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Posizione e dimensioni random
+                const size = Math.random() * 5 + 1;
+                const posX = Math.random() * window.innerWidth;
+                const posY = Math.random() * window.innerHeight;
+                const opacity = Math.random() * 0.5 + 0.3;
+                const duration = Math.random() * 20 + 10;
+                const delay = Math.random() * -20;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}px`;
+                particle.style.top = `${posY}px`;
+                particle.style.opacity = opacity;
+                particle.style.animation = `float ${duration}s ${delay}s infinite linear`;
+                
+                particlesContainer.appendChild(particle);
+            }
+            
+            // Animazione personalizzata per il testo filosofico
+            const quote = document.querySelector('.philosopher-quote');
+            setTimeout(() => {
+                quote.style.animation = `textGlow 3s infinite alternate`;
+            }, 5000);
+            
+            // Menu mobile
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenuBtn.classList.toggle('open');
+                mobileMenu.style.right = mobileMenu.style.right === '0px' ? '-100%' : '0px';
+                
+                // Animazione voci del menu
+                const menuItems = mobileMenu.querySelectorAll('li');
+                if (mobileMenu.style.right === '0px') {
+                    menuItems.forEach((item, index) => {
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateX(0)';
+                        item.style.transition = `all 0.4s ${index * 0.1 + 0.3}s cubic-bezier(0.165, 0.84, 0.44, 1)`;
+                    });
+                } else {
+                    menuItems.forEach(item => {
+                        item.style.opacity = '0';
+                        item.style.transform = 'translateX(30px)';
+                    });
+                }
+            });
+            
+            // Header scroll effect
+            const header = document.getElementById('mainHeader');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        });
+        
+        // Aggiungi keyframe dinamicamente per effetti speciali
+        const styleSheet = document.styleSheets[0];
+        styleSheet.insertRule(`
+            @keyframes float {
+                0%, 100% { transform: translateY(0) translateX(0); }
+                25% { transform: translateY(-20vh) translateX(10vw); }
+                50% { transform: translateY(-10vh) translateX(-10vw); }
+                75% { transform: translateY(-30vh) translateX(5vw); }
+            }`, styleSheet.cssRules.length);
+            
+        styleSheet.insertRule(`
+            @keyframes textGlow {
+                from { text-shadow: 0 0 10px rgba(212, 175, 55, 0.5); }
+                to { text-shadow: 0 0 20px rgba(212, 175, 55, 0.9), 0 0 30px rgba(212, 175, 55, 0.7); }
+            }`, styleSheet.cssRules.length);
+            
+        styleSheet.insertRule(`
+            .menu-mobile-btn.open span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 6px);
+            }
+            .menu-mobile-btn.open span:nth-child(2) {
+                opacity: 0;
+            }
+            .menu-mobile-btn.open span:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -6px);
+            }`, styleSheet.cssRules.length);
+    </script>
+<!--  inizio footer     -->
 <footer class="site-footer">
     <div class="footer-content">
         <div class="footer-section">
@@ -47,3 +736,192 @@
         </div>
     </div>
 </footer>
+  <style>
+
+.site-footer {
+    background: #0a0a0a;
+    color: #ffffff; /* Bianco puro per migliore contrasto */
+    padding: 4rem 0 0; /* Più spazio */
+    border-top: 1px solid rgba(212, 175, 55, 0.3);
+    position: relative;
+    z-index: 10;
+    font-family: 'Cormorant Garamond', serif; /* Coerenza con il tuo stile */
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 colonne esplicite */
+    gap: 3rem; /* Più spazio tra colonne */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.footer-section {
+    margin-bottom: 2rem;
+}
+
+.footer-title {
+    color: #D4AF37;
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.footer-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background: #D4AF37;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-link {
+    color: #e0e0e0; /* Grigio chiaro per migliore leggibilità */
+    text-decoration: none;
+    display: block;
+    padding: 0.6rem 0;
+    transition: all 0.3s ease;
+    font-size: 1.05rem;
+    letter-spacing: 0.3px;
+}
+
+.footer-link:hover {
+    color: #D4AF37;
+    padding-left: 8px; /* Animazione più evidente */
+}
+
+.footer-text {
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    color: #cccccc; /* Testo più leggibile */
+    font-size: 1rem;
+}
+
+.footer-social {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.social-icon {
+    color: #f0f0f0;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+}
+
+.social-icon:hover {
+    color: #D4AF37;
+    transform: translateY(-3px) scale(1.1);
+}
+
+.footer-bottom {
+    background: rgba(15, 15, 15, 0.9); /* Sfondo più leggibile */
+    padding: 1.8rem 2rem;
+    margin-top: 3rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+.copyright {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #aaaaaa;
+}
+
+.legal-links {
+    display: flex;
+    gap: 1.8rem;
+}
+
+.legal-link {
+    color: #aaaaaa;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.legal-link:hover {
+    color: #D4AF37;
+    text-decoration: underline;
+}
+
+/* LINEA DECORATIVA SUPERIORE */
+.site-footer::before {
+    content: '';
+    display: block;
+    height: 3px;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(212, 175, 55, 0.5), 
+        rgba(212, 175, 55, 0.8), 
+        rgba(212, 175, 55, 0.5), 
+        transparent);
+    width: 80%;
+    margin: 0 auto 3rem;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2.5rem;
+    }
+    
+    .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .footer-section {
+        text-align: center;
+    }
+    
+    .footer-title::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .footer-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .legal-links {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+}
+.site-footer::before {
+    content: '';
+    display: block;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+    width: 100%;
+    margin-bottom: 2rem;
+}
+</style>
+</body>
+</html>
