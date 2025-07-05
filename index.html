@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Echi di Sofia | Filosofia attraverso i secoli</title>
+    <title>Echi di Sofia | Filosofia Esplosiva</title>
     <style>
-        /* RESET E STILI BASE */
+        /* RESET EFFETTO WOW */
         * {
             margin: 0;
             padding: 0;
@@ -13,20 +13,27 @@
         }
         
         body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #f9f9f9;
+            font-family: 'Georgia', serif;
+            overflow-x: hidden;
+            background: #0a0a0a;
+            color: #f0f0f0;
         }
         
-        /* HEADER E MENU */
+        /* HEADER FLUIDO */
         header {
-            background: #0D0D0D;
-            padding: 1rem 0;
-            position: sticky;
+            position: fixed;
             top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            width: 100%;
+            z-index: 1000;
+            background: rgba(10,10,10,0.9);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 0;
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        
+        header.scrolled {
+            padding: 0.8rem 0;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
         }
         
         .container {
@@ -39,177 +46,214 @@
         }
         
         .logo {
-            color: #D4AF37;
-            font-size: 1.5rem;
-            font-weight: bold;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #D4AF37, #f1c27d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             text-decoration: none;
+            letter-spacing: 1px;
         }
         
-        /* MENU DESKTOP */
+        /* MENU CYBER */
         .menu-desktop ul {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 2.5rem;
         }
         
         .menu-desktop a {
-            color: #F5F5F5;
+            color: #f0f0f0;
             text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
+            font-size: 1.1rem;
+            position: relative;
             padding: 0.5rem 0;
         }
         
-        .menu-desktop a:hover {
-            color: #D4AF37;
-            border-bottom: 2px solid #D4AF37;
-        }
-        
-        /* MENU MOBILE */
-        .menu-mobile-btn {
-            display: none;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0.5rem;
-        }
-        
-        .menu-mobile-btn span {
-            display: block;
-            width: 25px;
-            height: 3px;
-            background: #F5F5F5;
-            margin: 5px 0;
-            transition: all 0.3s;
-        }
-        
-        .menu-mobile {
-            display: none;
-            background: #0D0D0D;
-            padding: 1rem 0;
+        .menu-desktop a::after {
+            content: '';
             position: absolute;
-            top: 100%;
+            bottom: 0;
             left: 0;
+            width: 0;
+            height: 2px;
+            background: #D4AF37;
+            transition: width 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        
+        .menu-desktop a:hover::after {
             width: 100%;
         }
         
-        .menu-mobile ul {
-            list-style: none;
-        }
-        
-        .menu-mobile li {
-            margin: 1rem 0;
-            text-align: center;
-        }
-        
-        .menu-mobile a {
-            color: #F5F5F5;
-            text-decoration: none;
-            font-size: 1.1rem;
-        }
-        
-        /* HERO SECTION */
+        /* HERO SECTION COMPATTA */
         .hero {
-            height: 80vh;
+            height: 65vh;
+            min-height: 500px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1505506874110-6a7a69069a08?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            padding: 0 1rem;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') center/cover;
+            z-index: -2;
+            filter: brightness(0.4);
+        }
+        
+        /* PARTICELLE ANIMATE (pseudo-elemento) */
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            z-index: -1;
+            opacity: 0.7;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            padding: 0 2rem;
         }
         
         .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            animation: fadeIn 1s ease-out;
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            opacity: 0;
+            transform: translateY(30px);
         }
         
         .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            max-width: 600px;
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            transform: translateY(30px);
         }
         
-        .btn {
+        /* PULSANTE ESPLOSIVO */
+        .btn-explode {
             display: inline-block;
-            background: #D4AF37;
-            color: #0D0D0D;
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
+            position: relative;
+            background: transparent;
+            color: #D4AF37;
+            border: 2px solid #D4AF37;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
             text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s;
+            border-radius: 50px;
+            overflow: hidden;
+            z-index: 1;
+            transition: all 0.4s;
+            opacity: 0;
+            transform: translateY(30px);
         }
         
-        .btn:hover {
-            background: #F5F5F5;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        .btn-explode::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #D4AF37;
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s cubic-bezier(0.5, 1.6, 0.4, 0.7);
         }
         
-        /* FOOTER */
+        .btn-explode:hover {
+            color: #0a0a0a;
+        }
+        
+        .btn-explode:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        
+        /* ANIMAZIONI PERSONALIZZATE */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes morph {
+            0% { border-radius: 60% 40% 30% 70%/60% 30% 70% 40%; }
+            50% { border-radius: 30% 60% 70% 40%/50% 60% 30% 60%; }
+            100% { border-radius: 60% 40% 30% 70%/60% 30% 70% 40%; }
+        }
+        
+        @keyframes textExplode {
+            0% { letter-spacing: -10px; opacity: 0; }
+            100% { letter-spacing: normal; opacity: 1; }
+        }
+        
+        /* EFFETTO PARTICOLATO */
+        .particle {
+            position: absolute;
+            background: #D4AF37;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        
+        /* FOOTER FLUTTUANTE */
         footer {
-            background: #0D0D0D;
-            color: #F5F5F5;
             text-align: center;
-            padding: 2rem 0;
-            margin-top: 2rem;
+            padding: 3rem 0;
+            background: linear-gradient(to top, #0a0a0a, transparent);
+            position: relative;
         }
         
-        /* ANIMAZIONI */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        footer p {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            animation: float 6s ease-in-out infinite;
         }
         
         /* RESPONSIVE */
         @media (max-width: 768px) {
-            .menu-desktop {
-                display: none;
-            }
-            
-            .menu-mobile-btn {
-                display: block;
-            }
-            
-            .menu-mobile.active {
-                display: block;
+            .hero {
+                height: 70vh;
+                padding-top: 100px;
             }
             
             .hero h1 {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
             
             .hero p {
-                font-size: 1rem;
+                font-size: 1.1rem;
             }
             
-            .menu-mobile-btn.open span:nth-child(1) {
-                transform: rotate(45deg) translate(5px, 5px);
-            }
-            
-            .menu-mobile-btn.open span:nth-child(2) {
-                opacity: 0;
-            }
-            
-            .menu-mobile-btn.open span:nth-child(3) {
-                transform: rotate(-45deg) translate(7px, -6px);
+            .menu-desktop {
+                display: none;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Menu di Navigazione -->
-    <header>
+    <!-- Menu Fisso -->
+    <header id="mainHeader">
         <div class="container">
             <a href="#" class="logo">ECHI DI SOFIA</a>
             
-            <!-- Menu Desktop -->
             <nav class="menu-desktop">
                 <ul>
                     <li><a href="#">Home</a></li>
@@ -219,64 +263,90 @@
                     <li><a href="#">Contatti</a></li>
                 </ul>
             </nav>
-            
-            <!-- Menu Mobile (Icona Hamburger) -->
-            <button class="menu-mobile-btn" aria-label="Apri menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
         </div>
-        
-        <!-- Menu Mobile (Dropdown) -->
-        <nav class="menu-mobile">
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Epoche</a></li>
-                <li><a href="#">Autori</a></li>
-                <li><a href="#">Articoli</a></li>
-                <li><a href="#">Contatti</a></li>
-            </ul>
-        </nav>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Hero Section Compatta -->
     <section class="hero">
-        <h1>Esplora la Filosofia</h1>
-        <p>Un viaggio attraverso i secoli, dai Presocratici al Postmoderno</p>
-        <a href="#" class="btn">Inizia il Viaggio</a>
+        <div class="hero-content">
+            <h1 id="mainTitle">LA FILOSOFIA È VIVA</h1>
+            <p id="subTitle">Esplora 2500 anni di pensiero in un'esperienza immersiva</p>
+            <a href="#" class="btn-explode" id="ctaButton">ACCEDI ALLA SAPIENZA</a>
+        </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <p>© 2023 Echi di Sofia. Tutti i diritti riservati.</p>
+        <p>© 2023 Echi di Sofia - Tutti i diritti riservati</p>
     </footer>
 
-    <!-- Script JS -->
+    <!-- Script con Animazioni Stravolgenti -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const menuBtn = document.querySelector('.menu-mobile-btn');
-            const mobileMenu = document.querySelector('.menu-mobile');
-            
-            menuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('active');
-                menuBtn.classList.toggle('open');
+            // Animazione header al scroll
+            const header = document.getElementById('mainHeader');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
             });
             
-            // Chiudi il menu mobile quando si clicca su un link
-            document.querySelectorAll('.menu-mobile a').forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.remove('active');
-                    menuBtn.classList.remove('open');
-                });
-            });
+            // Effetto esplosione testo
+            const mainTitle = document.getElementById('mainTitle');
+            const subTitle = document.getElementById('subTitle');
+            const ctaButton = document.getElementById('ctaButton');
             
-            // Animazione al caricamento
-            const heroContent = document.querySelector('.hero h1');
-            heroContent.style.opacity = '0';
             setTimeout(() => {
-                heroContent.style.opacity = '1';
+                mainTitle.style.animation = 'textExplode 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+                mainTitle.style.opacity = '1';
+                mainTitle.style.transform = 'translateY(0)';
             }, 300);
+            
+            setTimeout(() => {
+                subTitle.style.animation = 'textExplode 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+                subTitle.style.opacity = '1';
+                subTitle.style.transform = 'translateY(0)';
+            }, 800);
+            
+            setTimeout(() => {
+                ctaButton.style.animation = 'textExplode 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+                ctaButton.style.opacity = '1';
+                ctaButton.style.transform = 'translateY(0)';
+            }, 1200);
+            
+            // Effetto particelle al mouse
+            const hero = document.querySelector('.hero');
+            let particles = [];
+            
+            hero.addEventListener('mousemove', (e) => {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                const size = Math.random() * 8 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${e.clientX}px`;
+                particle.style.top = `${e.clientY}px`;
+                
+                const animDuration = Math.random() * 3 + 2;
+                particle.style.animation = `float ${animDuration}s linear infinite`;
+                
+                hero.appendChild(particle);
+                particles.push(particle);
+                
+                // Rimuovi particelle dopo l'animazione
+                setTimeout(() => {
+                    particle.remove();
+                    particles = particles.filter(p => p !== particle);
+                }, animDuration * 1000);
+            });
+            
+            // Effetto morphing sul pulsante
+            setInterval(() => {
+                ctaButton.style.animation = 'morph 8s ease-in-out infinite';
+            }, 100);
         });
     </script>
 </body>
