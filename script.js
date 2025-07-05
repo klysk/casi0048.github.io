@@ -47,3 +47,18 @@ document.addEventListener('DOMContentLoaded', () => {
     gsap.to(".hero__cta", { scale: 1, duration: 0.3 });
   });
 });
+// Animazione timeline al scroll
+gsap.registerPlugin(ScrollTrigger);
+
+gsap.utils.toArray(".timeline__item").forEach(item => {
+  gsap.from(item, {
+    scrollTrigger: {
+      trigger: item,
+      start: "top 80%",
+      toggleActions: "play none none none"
+    },
+    opacity: 0,
+    x: -50,
+    duration: 1
+  });
+});
