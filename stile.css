@@ -1,90 +1,39 @@
-/* Reset e Font */
-* {
-  margin: 0;
+.menu-dropdown {
+  position: relative;
+}
+
+.menu-dropdown .submenu {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
   padding: 0;
-  box-sizing: border-box;
+  margin: 0;
+  z-index: 999;
+  min-width: 200px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-body {
-  font-family: 'Inter', sans-serif;
-  overflow-x: hidden;
-  color: #F5F5F5;
+.menu-dropdown .submenu li {
+  list-style: none;
 }
 
-/* Hero Section */
-.hero {
-  position: relative;
-  height: 100vh;
-  width: 100%;
-  overflow: hidden;
+.menu-dropdown .submenu li a {
+  display: block;
+  padding: 10px;
+  color: #333;
+  text-decoration: none;
 }
 
-.hero__video video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -1;
+.menu-dropdown .submenu li a:hover {
+  background-color: #f0f0f0;
 }
 
-#particles-js {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: transparent;
-  z-index: 0;
+.menu-dropdown:hover .submenu {
+  display: block;
 }
 
-.hero__content {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  text-align: center;
-  padding: 0 20px;
-}
-
-.hero__title {
-  font-family: 'EB Garamond', serif;
-  font-size: 6rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  color: #D4AF37;
-  opacity: 0; /* Inizialmente nascosto per l'animazione GSAP */
-}
-
-.hero__subtitle {
-  font-size: 1.5rem;
-  margin-bottom: 2rem;
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-.hero__cta {
-  background: transparent;
-  border: 2px solid #00E5FF;
-  color: #00E5FF;
-  padding: 12px 30px;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-.hero__cta:hover {
-  background: rgba(0, 229, 255, 0.1);
-  box-shadow: 0 0 15px #00E5FF;
-}
-
-/* Animazione lettere */
-.letter {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(20px);
+.menu-dropdown .freccia {
+  margin-left: 5px;
+  font-size: 0.8em;
 }
