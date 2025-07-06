@@ -824,7 +824,7 @@
             </div>
         </div>
        
-    </footer>
+ 
     
     <!-- SCRIPT PER EFFETTI SPECIALI -->
     <script>
@@ -899,25 +899,151 @@
       <i class="fas fa-search"></i>
     </button>
   </form>
-         <div id="cookie-banner" class="cookie-banner">
-  <div class="cookie-content">
-    <div class="cookie-text">
-      <p><i class="fas fa-cookie-bite"></i> <strong>Echi di Sofua custodisce la tua riservatezza</strong></p>
-      <p>Utilizziamo <em>cookie essenziali</em> per preservare la memoria digitale di Sofua. Alcuni cookie tecnici ci aiutano a mantenere questo archivio. Leggi la <a href="/privacy-policy" class="privacy-link">Privacy Policy</a> per conoscere i dettagli.</p>
-    </div>
-    <div class="cookie-buttons">
-      <button id="accept-cookies" class="cookie-btn accept-btn">
-        <i class="fas fa-check-circle"></i> Accetta tutti
-      </button>
-      <button id="customize-cookies" class="cookie-btn customize-btn">
-        <i class="fas fa-cog"></i> Personalizza
-      </button>
-      <button id="reject-cookies" class="cookie-btn reject-btn">
-        <i class="fas fa-times-circle"></i> Rifiuta non essenziali
-      </button>
+     <!-- BANNER COOKIE GALATTICO -->
+<div id="cookieBanner" class="cookie-banner">
+  <div class="cookie-bg">
+    <div class="cookie-container">
+      <p>
+        <i class="fas fa-cookie-bite"></i>
+        Questo sito utilizza <strong>cookie essenziali</strong> e di preferenza per migliorare l’esperienza utente.
+        <a href="/privacy.html" target="_blank">Privacy Policy</a>.
+      </p>
+      <div class="cookie-buttons">
+        <button id="acceptCookies">Accetta tutti</button>
+        <button id="customizeCookies">Personalizza</button>
+        <button id="rejectCookies">Rifiuta</button>
+      </div>
+      <div id="cookieSettings" class="cookie-settings">
+        <p><strong>Preferenze cookie:</strong></p>
+        <label><input type="checkbox" checked disabled> Cookie essenziali (sempre attivi)</label><br>
+        <label><input type="checkbox" id="preferenceCookies"> Cookie di preferenza</label><br>
+        <button id="savePreferences">Salva preferenze</button>
+      </div>
     </div>
   </div>
 </div>
+
+<!-- STILE GALATTICO -->
+<style>
+@keyframes fadeSlideUp {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50vh;
+  z-index: 9999;
+  display: none;
+  animation: fadeSlideUp 1.2s ease-out forwards;
+}
+
+.cookie-bg {
+  height: 100%;
+  width: 100%;
+  background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, transparent 70%), url('https://upload.wikimedia.org/wikipedia/commons/3/3f/Fondo_estrellas.gif') center/cover no-repeat;
+  background-blend-mode: screen;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cookie-container {
+  background: rgba(0, 0, 0, 0.85);
+  border: 2px solid #ffd700;
+  box-shadow: 0 0 30px #ffd70088, 0 0 60px #ffd70033;
+  border-radius: 20px;
+  padding: 2rem;
+  max-width: 600px;
+  text-align: center;
+  font-family: 'Crimson Pro', serif;
+  color: #f0f0f0;
+}
+
+.cookie-container a {
+  color: #ffd700;
+  text-decoration: underline;
+}
+
+.cookie-buttons {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.cookie-buttons button,
+#savePreferences {
+  background: transparent;
+  border: 1px solid #ffd700;
+  color: #ffd700;
+  padding: 0.6rem 1.4rem;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cookie-buttons button:hover,
+#savePreferences:hover {
+  background: #ffd700;
+  color: #000;
+}
+
+.cookie-settings {
+  margin-top: 1rem;
+  display: none;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+}
+</style>
+
+<!-- SCRIPT FUNZIONALE -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const banner = document.getElementById('cookieBanner');
+  const customizeBtn = document.getElementById('customizeCookies');
+  const saveBtn = document.getElementById('savePreferences');
+  const settings = document.getElementById('cookieSettings');
+
+  if (!localStorage.getItem('cookieConsent')) {
+    banner.style.display = 'block';
+  }
+
+  document.getElementById('acceptCookies').addEventListener('click', () => {
+    localStorage.setItem('cookieConsent', 'all');
+    banner.remove();
+  });
+
+  document.getElementById('rejectCookies').addEventListener('click', () => {
+    localStorage.setItem('cookieConsent', 'none');
+    banner.remove();
+  });
+
+  customizeBtn.addEventListener('click', () => {
+    settings.style.display = 'block';
+  });
+
+  saveBtn.addEventListener('click', () => {
+    const pref = document.getElementById('preferenceCookies').checked ? 'preference' : 'essential';
+    localStorage.setItem('cookieConsent', pref);
+    banner.remove();
+  });
+});
+</script>
+   </footer>    
 </body>
 </html>
 
