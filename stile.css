@@ -172,3 +172,135 @@
 .google-search-box i {
   font-size: 16px;
 }
+<style>
+  /* ===== TRADUTTORE PERSONALIZZATO ===== */
+  #google_translate_element {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    filter: drop-shadow(0 2px 8px rgba(10, 10, 10, 0.3));
+    transition: all 0.4s ease;
+  }
+
+  #google_translate_element:hover {
+    transform: translateY(-3px);
+    filter: drop-shadow(0 4px 12px rgba(10, 10, 10, 0.4));
+  }
+
+  .goog-te-combo {
+    background-color: #F8F4E9 !important;
+    border: 2px solid #D4AF37 !important;
+    border-radius: 4px !important;
+    padding: 8px 12px !important;
+    font-family: 'Old Standard TT', serif !important;
+    color: #5a3921 !important;
+    font-size: 14px !important;
+    cursor: pointer !important;
+    appearance: none !important;
+    background-image: 
+      url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%235a3921'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 8px center !important;
+    background-size: 18px !important;
+    padding-right: 32px !important;
+    min-width: 140px !important;
+    transition: all 0.3s !important;
+  }
+
+  .goog-te-combo:hover {
+    background-color: #F0E6D6 !important;
+    border-color: #B08A5F !important;
+  }
+
+  .goog-te-gadget {
+    font-family: var(--font-body) !important;
+    color: transparent !important;
+  }
+
+  .goog-te-gadget .goog-te-combo {
+    margin: 0 !important;
+  }
+
+  .goog-te-banner-frame {
+    display: none !important; /* Nasconde la barra inferiore */
+  }
+
+  .goog-tooltip {
+    display: none !important;
+  }
+
+  /* Icona personalizzata */
+  .translate-icon {
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+    width: 40px;
+    height: 40px;
+    background-color: #D4AF37;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 9998;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s;
+  }
+
+  .translate-icon:hover {
+    background-color: #B08A5F;
+    transform: scale(1.1);
+  }
+
+  .translate-icon i {
+    color: #0A0A0A;
+    font-size: 18px;
+  }
+
+  /* Banner di conferma stile vintage */
+  .goog-te-balloon-frame {
+    background-color: #F8F4E9 !important;
+    border: 1px solid #D4AF37 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    font-family: 'Old Standard TT', serif !important;
+  }
+
+  .goog-te-balloon-frame .goog-te-button {
+    background-color: #D4AF37 !important;
+    border: none !important;
+    color: #0A0A0A !important;
+    padding: 6px 12px !important;
+    border-radius: 2px !important;
+    font-family: 'Playfair Display', serif !important;
+  }
+
+  .goog-te-balloon-frame .goog-te-button:hover {
+    background-color: #B08A5F !important;
+  }
+</style>
+
+<!-- Icona trigger personalizzata -->
+<div class="translate-icon" onclick="document.querySelector('.goog-te-combo').click()">
+  <i class="fas fa-language"></i>
+</div>
+
+<!-- Widget Google Translate -->
+<div id="google_translate_element"></div>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'it',
+    includedLanguages: 'en,de,fr,es,pl,pt',
+    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+    autoDisplay: false
+  }, 'google_translate_element');
+  
+  // Nasconde il testo predefinito
+  var $googleDiv = $(".goog-te-gadget");
+  $googleDiv.html($googleDiv.html().replace(/^[^<]+/,""));
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
