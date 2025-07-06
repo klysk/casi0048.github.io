@@ -3,16 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate">
     <title>ECHI DI SOFIA | Il Portale della Filosofia</title>
-  <link rel="icon" type="image/png" href="favicon_io/favicon-32x32.png">
-<script src="https://casi0048.github.io/script.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="favicon_io/favicon-32x32.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Playfair+Display:wght@400;700&family=Cormorant+Garamond:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://casi0048.github.io/script.js"></script>
 
-    
-       <style>
-      
+    <style>
         /* RESET STELLARE */
         * {
             margin: 0;
@@ -71,7 +69,7 @@
             text-shadow: 0 0 15px rgba(212, 175, 55, 0.7);
         }
         
-        /* NUOVO MENU CON STRUTTURA RICHIESTA */
+        /* MENU DESKTOP */
         .menu-desktop ul {
             display: flex;
             list-style: none;
@@ -202,7 +200,7 @@
             transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
         
-        /* ANIMAZIONE DI INGRESSO (OVERLAY) */
+        /* ANIMAZIONE INTRO */
         .intro-overlay {
             position: fixed;
             top: 0;
@@ -267,7 +265,7 @@
             to { transform: rotate(360deg); }
         }
         
-        /* CONTENUTO PRINCIPALE - PAGINA DI BENVENUTO */
+        /* CONTENUTO PRINCIPALE */
         .main-content {
             min-height: 100vh;
             display: flex;
@@ -386,7 +384,7 @@
             transform-origin: left;
         }
         
-        /* EFFETTI SPECIALI */
+        /* PARTICELLE */
         .floating-particles {
             position: fixed;
             top: 0;
@@ -487,6 +485,150 @@
             color: #D4AF37;
         }
         
+        /* TRADUTTORE GOOGLE */
+        #google_translate_element {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            filter: drop-shadow(0 4px 12px rgba(10, 10, 10, 0.25));
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        
+        .goog-te-combo {
+            background: #F5EFE6 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="%235a3921"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 12px center !important;
+            border: 2px solid #8B4513 !important;
+            border-radius: 30px !important;
+            padding: 12px 40px 12px 20px !important;
+            font-family: 'Cormorant Garamond', serif !important;
+            color: #5a3921 !important;
+            font-size: 15px !important;
+            cursor: pointer !important;
+            appearance: none !important;
+            min-width: 160px !important;
+            transition: all 0.4s !important;
+            box-shadow: inset 0 0 0 1px rgba(139, 69, 19, 0.2) !important;
+            background-size: 16px !important;
+        }
+        
+        .goog-te-combo:hover {
+            background-color: #E8D9B5 !important;
+            border-color: #6B4423 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(139, 69, 19, 0.2) !important;
+        }
+        
+        .goog-te-gadget {
+            font-family: inherit !important;
+            color: transparent !important;
+        }
+        
+        .goog-te-banner-frame,
+        .goog-te-balloon-frame {
+            display: none !important;
+        }
+        
+        /* COOKIE BANNER */
+        #cookieBanner {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            background: linear-gradient(45deg, #D4AF37, #f1c27d);
+            color: #000;
+            padding: 1rem 2rem;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 -4px 15px rgba(212, 175, 55, 0.7);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            max-width: 90vw;
+            z-index: 11000;
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 1.5s ease, opacity 1.5s ease;
+        }
+        
+        #cookieBanner.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        #cookieBanner p {
+            margin: 0 1rem 0 0;
+            display: inline-block;
+            max-width: 70vw;
+        }
+        
+        #cookieBanner a {
+            color: #000;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        
+        #cookieBanner button {
+            background: #000;
+            color: #D4AF37;
+            border: 2px solid #D4AF37;
+            border-radius: 30px;
+            padding: 0.4rem 1rem;
+            margin-left: 0.7rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Cormorant Garamond', serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        #cookieBanner button:hover {
+            background: #D4AF37;
+            color: #000;
+        }
+        
+        /* RICERCA GOOGLE */
+        .google-search-box {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 9999;
+        }
+        
+        .google-search-box form {
+            display: flex;
+            align-items: center;
+        }
+        
+        .google-search-box input[type="text"] {
+            background: #F5EFE6;
+            border: 2px solid #8B4513;
+            border-radius: 30px 0 0 30px;
+            padding: 12px 20px;
+            font-family: 'Cormorant Garamond', serif;
+            color: #5a3921;
+            font-size: 15px;
+            min-width: 200px;
+            transition: all 0.4s;
+        }
+        
+        .google-search-box input[type="text"]:focus {
+            outline: none;
+            border-color: #6B4423;
+            background: #E8D9B5;
+        }
+        
+        .google-search-box button {
+            background: #8B4513;
+            color: #F5EFE6;
+            border: none;
+            border-radius: 0 30px 30px 0;
+            padding: 12px 15px;
+            cursor: pointer;
+            transition: all 0.4s;
+        }
+        
+        .google-search-box button:hover {
+            background: #6B4423;
+        }
+        
         /* RESPONSIVE */
         @media (max-width: 1024px) {
             .mega-menu {
@@ -495,6 +637,10 @@
             }
             
             .columns-4 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-content {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
@@ -560,27 +706,57 @@
                 left: 50%;
                 transform: translateX(-50%);
             }
+            
+            #google_translate_element,
+            .google-search-box {
+                bottom: 90px;
+            }
+            
+            #cookieBanner {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            #cookieBanner p {
+                margin: 0 0 1rem 0;
+                max-width: 100%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .google-search-box {
+                left: 15px;
+                right: 15px;
+                bottom: 150px;
+                width: calc(100% - 30px);
+            }
+            
+            .google-search-box input[type="text"] {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
-   
-
-    <!-- OVERLAY DI PRESENTAZIONE -->
+    <!-- OVERLAY INTRO -->
     <div class="intro-overlay">
         <div class="intro-text">ECHI DI SOFIA</div>
         <div class="intro-text">Il pensiero che attraversa i millenni</div>
     </div>
     
-    <!-- MENU GALATTICO -->
+    <!-- HEADER -->
     <header id="mainHeader">
         <div class="menu-container">
             <a href="#" class="logo">ECHI DI SOFIA</a>
             
             <nav class="menu-desktop">
                 <ul role="menu">
-                     <a href="#" role="menuitem" style="color: #f0f0f0;">Home</a
-                   
+                    <li role="none"><a href="#" role="menuitem" style="color: #f0f0f0;">Home</a></li>
+                    
                     <!-- Filosofia antica -->
                     <li role="none" class="dropdown">
                         <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
@@ -727,9 +903,6 @@
                         </div>
                     </li>
                 </ul>
-               
-</div>
-
             </nav>
             
             <button class="menu-mobile-btn" id="mobileMenuBtn">
@@ -740,21 +913,19 @@
         </div>
     </header>
     
-    <!-- SFONDO GALATTICO -->
+    <!-- SFONDO -->
     <div class="galaxy-bg"></div>
-    
-    <!-- PARTICELLE FLUTTUANTI -->
     <div class="floating-particles" id="particles"></div>
     
-    <!-- CONTENUTO PRINCIPALE - PAGINA DI BENVENUTO -->
+    <!-- CONTENUTO PRINCIPALE -->
     <div class="main-content">
         <h1>BENVENUTO, CERCATORE DI SAPIENZA</h1>
         
         <div class="welcome-text">
-           La filosofia non cerca nella creazione o nella sapienza divina l’ideale ultimo,
+            La filosofia non cerca nella creazione o nella sapienza divina l'ideale ultimo,
             capace di farci sentire davvero a casa propria in questo mondo, 
-            ma riconosce che è l’uomo, con la sua ragione e il suo interrogare, la misura di tutte le cose.
- </div>
+            ma riconosce che è l'uomo, con la sua ragione e il suo interrogare, la misura di tutte le cose.
+        </div>
         
         <div class="philosopher-quote">
             Non è la risposta che illumina, ma la domanda
@@ -763,11 +934,11 @@
         <a href="#articles" class="enter-btn">OLTREPASSARE LA SOGLIA</a>
     </div>
     
-    <!-- SEZIONE ARTICOLI (ESEMPIO) -->
+    <!-- SEZIONE ARTICOLI -->
     <section id="articles" style="padding: 100px 0; background: rgba(10,10,10,0.7);">
         <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
             <h2 style="text-align: center; color: #D4AF37; margin-bottom: 50px; font-size: 2.5rem;">ULTIMI SAGGI</h2>
-            <!-- Qui inserire gli articoli -->
+            <!-- Contenuto articoli -->
         </div>
     </section>
     
@@ -807,9 +978,9 @@
                     Il portale che fa risuonare la filosofia attraverso i secoli.
                 </p>
                 <div style="display: flex; gap: 15px;">
-                    <a href="#" style="color: #a0a0a0; font-size: 1.2rem;">⌨</a>
-                    <a href="#" style="color: #a0a0a0; font-size: 1.2rem;">⌘</a>
-                    <a href="#" style="color: #a0a0a0; font-size: 1.2rem;">⌥</a>
+                    <a href="#" style="color: #a0a0a0; font-size: 1.2rem;"><i class="fab fa-twitter"></i></a>
+                    <a href="#" style="color: #a0a0a0; font-size: 1.2rem;"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" style="color: #a0a0a0; font-size: 1.2rem;"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
         </div>
@@ -822,22 +993,44 @@
                 <a href="#">Cookie</a>
             </div>
         </div>
-       
- 
+    </footer>
     
-    <!-- SCRIPT PER EFFETTI SPECIALI -->
+    <!-- RICERCA GOOGLE -->
+    <div class="google-search-box">
+        <form method="get" action="https://www.google.com/search" target="_blank" role="search">
+            <input type="text" name="q" placeholder="Cerca su Google tra gli echi..." aria-label="Campo di ricerca">
+            <input type="hidden" name="sitesearch" value="echidisofia.org">
+            <button type="submit" aria-label="Cerca">
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
+    </div>
+    
+    <!-- BANNER COOKIE -->
+    <div id="cookieBanner" role="region" aria-label="Banner informativo cookie">
+        <p>
+            Utilizziamo cookie per migliorare l'esperienza. 
+            <a href="privacy.html" target="_blank" rel="noopener noreferrer">Leggi la Privacy Policy</a>.
+        </p>
+        <button id="acceptCookiesBtn" aria-label="Accetta tutti i cookie">Accetta</button>
+        <button id="customizeCookiesBtn" aria-label="Personalizza le preferenze cookie">Personalizza</button>
+        <button id="rejectCookiesBtn" aria-label="Rifiuta i cookie non essenziali">Rifiuta</button>
+    </div>
+    
+    <!-- TRADUTTORE GOOGLE -->
+    <div id="google_translate_element"></div>
+    
+    <!-- SCRIPT -->
     <script>
-        // ANIMAZIONE PARTICELLE
+        // PARTICLES
         document.addEventListener('DOMContentLoaded', () => {
             const particlesContainer = document.getElementById('particles');
             const particleCount = window.innerWidth < 768 ? 30 : 100;
             
-            // Crea particelle fluttuanti
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
                 
-                // Posizione e dimensioni random
                 const size = Math.random() * 5 + 1;
                 const posX = Math.random() * window.innerWidth;
                 const posY = Math.random() * window.innerHeight;
@@ -855,7 +1048,7 @@
                 particlesContainer.appendChild(particle);
             }
             
-            // Header scroll effect
+            // HEADER SCROLL
             const header = document.getElementById('mainHeader');
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 50) {
@@ -865,7 +1058,7 @@
                 }
             });
             
-            // Smooth scroll per i link interni
+            // SMOOTH SCROLL
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -878,9 +1071,50 @@
                     });
                 });
             });
+            
+            // COOKIE BANNER
+            const banner = document.getElementById('cookieBanner');
+            const acceptBtn = document.getElementById('acceptCookiesBtn');
+            const rejectBtn = document.getElementById('rejectCookiesBtn');
+            const customizeBtn = document.getElementById('customizeCookiesBtn');
+            const localStorageKey = 'echiDiSofiaCookieConsent';
+            
+            function showBanner() {
+                banner.classList.add('show');
+            }
+            
+            function hideBanner() {
+                banner.classList.remove('show');
+            }
+            
+            function hasConsent() {
+                return localStorage.getItem(localStorageKey) !== null;
+            }
+            
+            function saveConsent(value) {
+                localStorage.setItem(localStorageKey, value);
+            }
+            
+            acceptBtn.addEventListener('click', () => {
+                saveConsent('accepted');
+                hideBanner();
+            });
+            
+            rejectBtn.addEventListener('click', () => {
+                saveConsent('rejected');
+                hideBanner();
+            });
+            
+            customizeBtn.addEventListener('click', () => {
+                alert('Funzione Personalizza da implementare');
+            });
+            
+            if (!hasConsent()) {
+                setTimeout(showBanner, 800);
+            }
         });
         
-        // Animazione float per le particelle
+        // FLOAT ANIMATION
         const styleSheet = document.styleSheets[0];
         styleSheet.insertRule(`
             @keyframes float {
@@ -890,144 +1124,23 @@
                 75% { transform: translateY(-30vh) translateX(5vw); }
             }`, styleSheet.cssRules.length);
     </script>
-     <div class="google-search-box">
-  <form method="get" action="https://www.google.com/search" target="_blank" role="search">
-    <input type="text" name="q" placeholder="Cerca su Google tra gli echi..." aria-label="Campo di ricerca">
-    <input type="hidden" name="sitesearch" value="echidisofia.org">
-    <button type="submit" aria-label="Cerca">
-      <i class="fas fa-search"></i>
-    </button>
-  </form>
-     <!-- BANNER COOKIE GALATTICO -->
-<!-- BANNER COOKIE -->
-<style>
-  #cookieBanner {
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%) translateY(100%);
-    background: linear-gradient(45deg, #D4AF37, #f1c27d);
-    color: #000;
-    padding: 1rem 2rem;
-    border-radius: 10px 10px 0 0;
-    box-shadow: 0 -4px 15px rgba(212, 175, 55, 0.7);
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1rem;
-    max-width: 90vw;
-    z-index: 11000;
-    opacity: 0;
-    pointer-events: none;
-    transition: transform 1.5s ease, opacity 1.5s ease;
-  }
-  #cookieBanner.show {
-    transform: translateX(-50%) translateY(0);
-    opacity: 1;
-    pointer-events: auto;
-  }
-  #cookieBanner p {
-    margin: 0 1rem 0 0;
-    display: inline-block;
-    max-width: 70vw;
-  }
-  #cookieBanner a {
-    color: #000;
-    text-decoration: underline;
-    font-weight: 600;
-  }
-  #cookieBanner button {
-    background: #000;
-    color: #D4AF37;
-    border: 2px solid #D4AF37;
-    border-radius: 30px;
-    padding: 0.4rem 1rem;
-    margin-left: 0.7rem;
-    font-weight: 700;
-    cursor: pointer;
-    font-family: 'Cormorant Garamond', serif;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  #cookieBanner button:hover {
-    background: #D4AF37;
-    color: #000;
-  }
-</style>
-
-<div id="cookieBanner" role="region" aria-label="Banner informativo cookie">
-  <p>
-    Utilizziamo cookie per migliorare l’esperienza. 
-    <a href="privacy.html" target="_blank" rel="noopener noreferrer">Leggi la Privacy Policy</a>.
-  </p>
-  <button id="acceptCookiesBtn" aria-label="Accetta tutti i cookie">Accetta</button>
-  <button id="customizeCookiesBtn" aria-label="Personalizza le preferenze cookie">Personalizza</button>
-  <button id="rejectCookiesBtn" aria-label="Rifiuta i cookie non essenziali">Rifiuta</button>
-</div>
-
-<script>
-  (function() {
-    const banner = document.getElementById('cookieBanner');
-    const acceptBtn = document.getElementById('acceptCookiesBtn');
-    const rejectBtn = document.getElementById('rejectCookiesBtn');
-    const customizeBtn = document.getElementById('customizeCookiesBtn');
-    const localStorageKey = 'echiDiSofiaCookieConsent';
-
-    // Funzione per mostrare il banner con animazione
-    function showBanner() {
-      banner.classList.add('show');
-    }
-    // Funzione per nascondere il banner
-    function hideBanner() {
-      banner.classList.remove('show');
-    }
-
-    // Controlla se l’utente ha già scelto
-    function hasConsent() {
-      return localStorage.getItem(localStorageKey) !== null;
-    }
-
-    // Salva la scelta utente
-    function saveConsent(value) {
-      localStorage.setItem(localStorageKey, value);
-    }
-
-    // Eventi pulsanti
-    acceptBtn.addEventListener('click', () => {
-      saveConsent('accepted');
-      hideBanner();
-      // Puoi aggiungere codice per attivare i cookie essenziali e non
-    });
-    rejectBtn.addEventListener('click', () => {
-      saveConsent('rejected');
-      hideBanner();
-      // Puoi disabilitare i cookie non essenziali
-    });
-    customizeBtn.addEventListener('click', () => {
-      alert('Funzione Personalizza da implementare');
-      // Qui potresti aprire un pannello per scegliere cookie preferiti
-    });
-
-    // Mostra banner solo se non ha già dato consenso
-    if (!hasConsent()) {
-      // Usa un piccolo delay per far vedere l’animazione di scivolamento
-      setTimeout(showBanner, 800);
-    }
-  })();
-</script>
-
-  
-    <div id="google_translate_element"></div>
-
-<script type="text/javascript">
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement({
-    pageLanguage: 'it',
-    includedLanguages: 'it,en,de,fr,es,pl,pt', // Puoi modificare o ampliare le lingue
-    layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-  }, 'google_translate_element');
-}
-</script>
-
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
- </footer> 
+    
+    <!-- GOOGLE TRANSLATE -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'it',
+                includedLanguages: 'it,en,de,fr,es,pl,pt',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+            
+            // Nasconde il testo predefinito
+            setTimeout(() => {
+                const gadget = document.querySelector('.goog-te-gadget');
+                if(gadget) gadget.innerHTML = gadget.innerHTML.replace(/^[^<]+/,'');
+            }, 500);
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
-
