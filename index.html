@@ -1045,30 +1045,37 @@
     <!-- SCRIPT -->
 
    <script>
+<script>
+/* === INIZIALIZZAZIONE === */
 document.addEventListener('DOMContentLoaded', function() {
-    // 1. Configurazione iniziale
+    
+    /* === 1. SETUP INIZIALE === */
+    // Ottieni il canvas e imposta le dimensioni
     const canvas = document.getElementById('starCanvas');
-    if(!canvas) return;
+    if(!canvas) return; // Se non esiste, termina
     
     const ctx = canvas.getContext('2d');
     let width = canvas.width = window.innerWidth;
     let height = canvas.height = window.innerHeight;
     
-    // 2. Classe Star migliorata
+    /* === 2. CLASSE STAR (GESTISCE SINGOLA STELLA) === */
     class Star {
         constructor() {
-            this.reset(true);
-            this.speed = Math.random() * 0.02 + 0.005;
-            this.angle = Math.random() * Math.PI * 2;
-            this.color = `hsla(${Math.random() * 30 + 30}, 80%, ${Math.random() * 30 + 60}%, ${Math.random() * 0.5 + 0.3})`;
-            this.resistance = Math.random() * 0.05 + 0.01;
+            this.reset(true); // Resetta la posizione iniziale
+            this.speed = Math.random() * 0.02 + 0.005; // Velocità unica per ogni stella
+            this.angle = Math.random() * Math.PI * 2; // Angolo casuale
+            this.color = `hsla(${Math.random() * 30 + 30}, 80%, ${Math.random() * 30 + 60}%, ${Math.random() * 0.5 + 0.3})`; // Colore dorato
+            this.resistance = Math.random() * 0.05 + 0.01; // Resistenza al movimento
         }
         
+        /* Resetta la posizione della stella */
         reset(initial = false) {
             if(initial) {
+                // Posizione casuale iniziale
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
             } else {
+                // Durante l'esplosione, posiziona ai bordi
                 const side = Math.floor(Math.random() * 4);
                 switch(side) {
                     case 0: this.x = 0; this.y = Math.random() * height; break;
@@ -1078,57 +1085,69 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
             
-            this.baseX = this.x;
-            this.baseY = this.y;
-            this.targetX = this.baseX;
-            this.targetY = this.baseY;
-            this.size = Math.random() * 1.5 + 0.5;
-            this.originalSize = this.size;
-            this.exploded = false;
+            this.baseX = this.x; // Posizione base X
+            this.baseY = this.y; // Posizione base Y
+            this.targetX = this.baseX; // Target X
+            this.targetY = this.baseY; // Target Y
+            this.size = Math.random() * 1.5 + 0.5; // Dimensione casuale
+            this.originalSize = this.size; // Salva dimensione originale
+            this.exploded = false; // Stato esplosione
         }
         
+        /* Disegna la stella sul canvas */
         draw() {
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
             ctx.fillStyle = this.color;
-            ctx.shadowBlur = this.size * 2;
+            ctx.shadowBlur = this.size * 2; // Aggiunge glow
             ctx.shadowColor = this.color;
             ctx.fill();
-            ctx.shadowBlur = 0;
+            ctx.shadowBlur = 0; // Resetta glow
         }
         
+        /* Aggiorna posizione e stato della stella */
         update(mouse) {
+            // Movimento orbitale naturale
             this.angle += this.speed;
             this.baseX += Math.cos(this.angle) * 0.3;
             this.baseY += Math.sin(this.angle) * 0.3;
             
+            // Interazione con il mouse
             if(mouse.x && mouse.y) {
                 const dx = mouse.x - this.x;
                 const dy = mouse.y - this.y;
                 const distance = Math.sqrt(dx * dx + dy * dy);
-                const mouseRadius = mouse.exploding ? 300 : 150;
+                const mouseRadius = mouse.exploding ? 300 : 150; // Raggio più grande durante esplosione
                 
                 if(distance < mouseRadius) {
+                    // Calcola la forza in base alla distanza
                     const force = mouse.exploding ? 
                         (mouseRadius - distance) / mouseRadius * 2 : 
                         (mouseRadius - distance) / mouseRadius;
                     
+                    // Calcola l'angolo per la direzione
                     const angle = Math.atan2(dy, dx);
+                    
+                    // Imposta il target per l'allontanamento
                     this.targetX = this.baseX - Math.cos(angle) * force * 100;
                     this.targetY = this.baseY - Math.sin(angle) * force * 100;
                     
+                    // Durante l'esplosione, aumenta la dimensione
                     if(mouse.exploding) {
                         this.size = this.originalSize * (1 + force * 3);
                         this.exploded = true;
                     }
                 } else if(this.exploded) {
+                    // Se l'esplosione è finita, resetta
                     this.reset();
                 }
             }
             
+            // Movimento verso il target
             this.x += (this.targetX - this.x) * this.resistance;
             this.y += (this.targetY - this.y) * this.resistance;
             
+            // Ritorno alla dimensione originale
             if(this.size > this.originalSize) {
                 this.size *= 0.95;
                 if(this.size < this.originalSize * 1.1) {
@@ -1138,19 +1157,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // 3. Inizializzazione stelle
+    /* === 3. CREAZIONE STELLE === */
     const stars = [];
-    const starCount = Math.floor(width * height / 1000);
-    const mouse = { x: null, y: null, exploding: false };
+    const starCount = Math.floor(width * height / 1000); // Numero proporzionale alla dimensione schermo
+    const mouse = { x: null, y: null, exploding: false }; // Stato mouse
     
+    // Crea tutte le stelle
     for(let i = 0; i < starCount; i++) {
         stars.push(new Star());
     }
 
-    // 4. Animazione principale
+    /* === 4. FUNZIONE ANIMAZIONE PRINCIPALE === */
     function animate() {
+        // Pulisci il canvas
         ctx.clearRect(0, 0, width, height);
         
+        // Crea sfondo nebulosa
         const gradient = ctx.createRadialGradient(
             width * 0.3, height * 0.3, 0,
             width * 0.3, height * 0.3, Math.max(width, height) * 0.8
@@ -1160,48 +1182,55 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, width, height);
         
+        // Aggiorna e disegna tutte le stelle
         stars.forEach(star => {
             star.update(mouse);
             star.draw();
         });
         
+        // Richiedi il prossimo frame
         requestAnimationFrame(animate);
     }
 
-    // 5. Gestione eventi
+    /* === 5. GESTIONE EVENTI === */
+    // Movimento mouse
     canvas.addEventListener('mousemove', (e) => {
         mouse.x = e.clientX;
         mouse.y = e.clientY;
     });
     
+    // Mouse esce dal canvas
     canvas.addEventListener('mouseout', () => {
         mouse.x = null;
         mouse.y = null;
     });
     
+    // Click per esplosione
     canvas.addEventListener('click', () => {
         mouse.exploding = true;
-        setTimeout(() => mouse.exploding = false, 300);
+        setTimeout(() => mouse.exploding = false, 300); // Esplosione dura 300ms
     });
     
+    // Ridimensionamento finestra
     window.addEventListener('resize', () => {
         width = canvas.width = window.innerWidth;
         height = canvas.height = window.innerHeight;
-        stars.forEach(star => star.reset(true));
+        stars.forEach(star => star.reset(true)); // Resetta tutte le stelle
     });
 
-    // 6. Avvia animazione
+    /* === 6. AVVIO ANIMAZIONE === */
     animate();
 
-    // 7. Particelle fluttuanti (div)
+    /* === 7. PARTICHELLE FLUTTUANTI (ELEMENTI DIV) === */
     const particlesContainer = document.getElementById('particles');
     if(particlesContainer) {
-        const particleCount = window.innerWidth < 768 ? 30 : 100;
+        const particleCount = window.innerWidth < 768 ? 30 : 100; // Meno particelle su mobile
         
         for(let i = 0; i < particleCount; i++) {
             const particle = document.createElement('div');
             particle.classList.add('particle');
             
+            // Stili CSS dinamici
             particle.style.cssText = `
                 width: ${Math.random() * 3 + 1}px;
                 height: ${Math.random() * 3 + 1}px;
@@ -1215,7 +1244,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // 8. Header scroll effect
+    /* === 8. HEADER SCROLL EFFECT === */
     const header = document.getElementById('mainHeader');
     if(header) {
         window.addEventListener('scroll', () => {
@@ -1223,7 +1252,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // 9. Smooth scroll
+    /* === 9. SMOOTH SCROLL PER LINK INTERNI === */
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
@@ -1238,7 +1267,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // 10. Cookie banner
+    /* === 10. COOKIE BANNER === */
     const banner = document.getElementById('cookieBanner');
     if(banner) {
         const acceptBtn = document.getElementById('acceptCookiesBtn');
@@ -1277,20 +1306,23 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         if (!hasConsent()) {
-            setTimeout(showBanner, 1000);
+            setTimeout(showBanner, 1000); // Mostra dopo 1 secondo
         }
     }
 });
 
-// Stile per l'animazione float
+/* === STILI CSS DINAMICI === */
 const floatStyle = document.createElement('style');
 floatStyle.textContent = `
+    /* Animazione particelle fluttuanti */
     @keyframes float {
         0%, 100% { transform: translate(0, 0); }
         25% { transform: translate(10vw, -20vh); }
         50% { transform: translate(-10vw, -10vh); }
         75% { transform: translate(5vw, -30vh); }
     }
+    
+    /* Stile particelle */
     .particle {
         position: absolute;
         background: rgba(212, 175, 55, 0.7);
@@ -1299,6 +1331,8 @@ floatStyle.textContent = `
         pointer-events: none;
         will-change: transform;
     }
+    
+    /* Stile canvas stelle */
     #starCanvas {
         position: fixed;
         top: 0;
@@ -1310,6 +1344,7 @@ floatStyle.textContent = `
     }
 `;
 document.head.appendChild(floatStyle);
+</script>
 </script>
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
@@ -1345,8 +1380,7 @@ document.head.appendChild(floatStyle);
         z-index: -1;
     }
     </style>
-</body>
-</html>
+
  
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
