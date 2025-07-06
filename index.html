@@ -900,149 +900,120 @@
     </button>
   </form>
      <!-- BANNER COOKIE GALATTICO -->
-<div class="cookie-banner" id="cookieBanner">
-  <div class="cookie-bg">
-    <div class="cookie-container">
-      <p>
-        <i class="fas fa-cookie-bite"></i>
-        Questo sito utilizza <strong>cookie essenziali</strong> e di preferenza per migliorare l’esperienza utente.
-        <a href="/privacy.html" target="_blank">Privacy Policy</a>.
-      </p>
-      <div class="cookie-buttons">
-        <button id="acceptCookies">Accetta tutti</button>
-        <button id="customizeCookies">Personalizza</button>
-        <button id="rejectCookies">Rifiuta</button>
-      </div>
-      <div id="cookieSettings" class="cookie-settings">
-        <p><strong>Preferenze cookie:</strong></p>
-        <label><input type="checkbox" checked disabled> Cookie essenziali (sempre attivi)</label><br>
-        <label><input type="checkbox" id="preferenceCookies"> Cookie di preferenza</label><br>
-        <button id="savePreferences">Salva preferenze</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- STILE GALATTICO -->
+<<!-- BANNER COOKIE -->
 <style>
-@keyframes fadeSlideUp {
-  0% {
-    transform: translateY(100%);
+  #cookieBanner {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(100%);
+    background: linear-gradient(45deg, #D4AF37, #f1c27d);
+    color: #000;
+    padding: 1rem 2rem;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0 -4px 15px rgba(212, 175, 55, 0.7);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    max-width: 90vw;
+    z-index: 11000;
     opacity: 0;
+    pointer-events: none;
+    transition: transform 1.5s ease, opacity 1.5s ease;
   }
-  100% {
-    transform: translateY(0);
+  #cookieBanner.show {
+    transform: translateX(-50%) translateY(0);
     opacity: 1;
+    pointer-events: auto;
   }
-}
-
-.cookie-banner {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 50vh;
-  z-index: 9999;
-  display: none;
-  animation: fadeSlideUp 1.2s ease-out forwards;
-}
-
-.cookie-bg {
-  height: 100%;
-  width: 100%;
-  background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, transparent 70%), url('https://upload.wikimedia.org/wikipedia/commons/3/3f/Fondo_estrellas.gif') center/cover no-repeat;
-  background-blend-mode: screen;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.cookie-container {
-  background: rgba(0, 0, 0, 0.85);
-  border: 2px solid #ffd700;
-  box-shadow: 0 0 30px #ffd70088, 0 0 60px #ffd70033;
-  border-radius: 20px;
-  padding: 2rem;
-  max-width: 600px;
-  text-align: center;
-  font-family: 'Crimson Pro', serif;
-  color: #f0f0f0;
-}
-
-.cookie-container a {
-  color: #ffd700;
-  text-decoration: underline;
-}
-
-.cookie-buttons {
-  margin-top: 1rem;
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.cookie-buttons button,
-#savePreferences {
-  background: transparent;
-  border: 1px solid #ffd700;
-  color: #ffd700;
-  padding: 0.6rem 1.4rem;
-  border-radius: 30px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.cookie-buttons button:hover,
-#savePreferences:hover {
-  background: #ffd700;
-  color: #000;
-}
-
-.cookie-settings {
-  margin-top: 1rem;
-  display: none;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 1rem;
-  border-radius: 10px;
-  font-size: 0.95rem;
-}
+  #cookieBanner p {
+    margin: 0 1rem 0 0;
+    display: inline-block;
+    max-width: 70vw;
+  }
+  #cookieBanner a {
+    color: #000;
+    text-decoration: underline;
+    font-weight: 600;
+  }
+  #cookieBanner button {
+    background: #000;
+    color: #D4AF37;
+    border: 2px solid #D4AF37;
+    border-radius: 30px;
+    padding: 0.4rem 1rem;
+    margin-left: 0.7rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Cormorant Garamond', serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  #cookieBanner button:hover {
+    background: #D4AF37;
+    color: #000;
+  }
 </style>
 
-<!-- SCRIPT FUNZIONALE -->
+<div id="cookieBanner" role="region" aria-label="Banner informativo cookie">
+  <p>
+    Utilizziamo cookie per migliorare l’esperienza. 
+    <a href="privacy.html" target="_blank" rel="noopener noreferrer">Leggi la Privacy Policy</a>.
+  </p>
+  <button id="acceptCookiesBtn" aria-label="Accetta tutti i cookie">Accetta</button>
+  <button id="customizeCookiesBtn" aria-label="Personalizza le preferenze cookie">Personalizza</button>
+  <button id="rejectCookiesBtn" aria-label="Rifiuta i cookie non essenziali">Rifiuta</button>
+</div>
+
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const banner = document.getElementById('cookieBanner');
-  const customizeBtn = document.getElementById('customizeCookies');
-  const saveBtn = document.getElementById('savePreferences');
-  const settings = document.getElementById('cookieSettings');
+  (function() {
+    const banner = document.getElementById('cookieBanner');
+    const acceptBtn = document.getElementById('acceptCookiesBtn');
+    const rejectBtn = document.getElementById('rejectCookiesBtn');
+    const customizeBtn = document.getElementById('customizeCookiesBtn');
+    const localStorageKey = 'echiDiSofiaCookieConsent';
 
-  if (!localStorage.getItem('cookieConsent')) {
-    banner.style.display = 'block';
-  }
+    // Funzione per mostrare il banner con animazione
+    function showBanner() {
+      banner.classList.add('show');
+    }
+    // Funzione per nascondere il banner
+    function hideBanner() {
+      banner.classList.remove('show');
+    }
 
-  document.getElementById('acceptCookies').addEventListener('click', () => {
-    localStorage.setItem('cookieConsent', 'all');
-    banner.remove();
-  });
+    // Controlla se l’utente ha già scelto
+    function hasConsent() {
+      return localStorage.getItem(localStorageKey) !== null;
+    }
 
-  document.getElementById('rejectCookies').addEventListener('click', () => {
-    localStorage.setItem('cookieConsent', 'none');
-    banner.remove();
-  });
+    // Salva la scelta utente
+    function saveConsent(value) {
+      localStorage.setItem(localStorageKey, value);
+    }
 
-  customizeBtn.addEventListener('click', () => {
-    settings.style.display = 'block';
-  });
+    // Eventi pulsanti
+    acceptBtn.addEventListener('click', () => {
+      saveConsent('accepted');
+      hideBanner();
+      // Puoi aggiungere codice per attivare i cookie essenziali e non
+    });
+    rejectBtn.addEventListener('click', () => {
+      saveConsent('rejected');
+      hideBanner();
+      // Puoi disabilitare i cookie non essenziali
+    });
+    customizeBtn.addEventListener('click', () => {
+      alert('Funzione Personalizza da implementare');
+      // Qui potresti aprire un pannello per scegliere cookie preferiti
+    });
 
-  saveBtn.addEventListener('click', () => {
-    const pref = document.getElementById('preferenceCookies').checked ? 'preference' : 'essential';
-    localStorage.setItem('cookieConsent', pref);
-    banner.remove();
-  });
-});
+    // Mostra banner solo se non ha già dato consenso
+    if (!hasConsent()) {
+      // Usa un piccolo delay per far vedere l’animazione di scivolamento
+      setTimeout(showBanner, 800);
+    }
+  })();
 </script>
+
    </footer>    
 </body>
 </html>
