@@ -1,3 +1,1641 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate">
+    <title>ECHI DI SOFIA | Il Portale della Filosofia</title>
+    <link rel="icon" type="image/png" href="favicon_io/favicon-32x32.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Playfair+Display:wght@400;700&family=Cormorant+Garamond:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://casi0048.github.io/script.js"></script>
+
+    <style>
+        /* RESET STELLARE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+            perspective: 1000px;
+        }
+        
+        /* MENU GALATTICO */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 2rem 0;
+            transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        
+        header.scrolled {
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .menu-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #D4AF37, #f1c27d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-decoration: none;
+            letter-spacing: 1px;
+            transition: all 0.4s;
+        }
+        
+        .logo:hover {
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.7);
+        }
+        
+        /* MENU DESKTOP */
+        .menu-desktop ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .dropdown {
+            position: relative;
+        }
+        
+        .menu-btn {
+            background: transparent;
+            border: none;
+            color: #f0f0f0;
+            font-family: inherit;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+        
+        .menu-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #D4AF37;
+            transition: width 0.3s ease;
+        }
+        
+        .dropdown:hover .menu-btn::after {
+            width: 100%;
+        }
+        
+        .arrow {
+            font-size: 0.7rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .dropdown:hover .arrow {
+            transform: rotate(180deg);
+        }
+        
+        .mega-menu {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90vw;
+            max-width: 1200px;
+            background: rgba(15, 15, 15, 0.98);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            display: none;
+            z-index: 100;
+            border-top: 2px solid #D4AF37;
+            animation: fadeIn 0.2s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        
+        .dropdown:hover .mega-menu {
+            display: grid;
+        }
+        
+        .columns-4 {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+        
+        .columns-3 {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        
+        .columns-2 {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+        
+        .mega-menu h4 {
+            color: #D4AF37;
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .mega-menu a {
+            display: block;
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 0.5rem 0;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+        
+        .mega-menu a:hover {
+            color: #D4AF37;
+            padding-left: 8px;
+        }
+        
+        .menu-mobile-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+        
+        .menu-mobile-btn span {
+            display: block;
+            width: 30px;
+            height: 3px;
+            background: #D4AF37;
+            margin: 6px 0;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        /* ANIMAZIONE INTRO */
+        .intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            animation: dissolve 4s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+        }
+        
+        @keyframes dissolve {
+            0% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+        
+        .intro-text {
+            font-size: 5vw;
+            text-align: center;
+            line-height: 1.3;
+            opacity: 0;
+            transform: translateY(50px);
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.7);
+        }
+        
+        .intro-text:nth-child(1) {
+            animation: textReveal 1.5s 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+            color: #D4AF37;
+        }
+        
+        .intro-text:nth-child(2) {
+            animation: textReveal 1.5s 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+            font-size: 3vw;
+            margin-top: 2vw;
+        }
+        
+        @keyframes textReveal {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* SFONDO GALATTICO */
+        /* Modifica lo stile galaxy-bg esistente */
+.galaxy-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    overflow: hidden;
+}
+
+#starCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+        .galaxy-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/><feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 150 -50"/></filter><rect width="100%" height="100%" filter="url(%23noise)"/></svg>');
+            z-index: -2;
+            animation: galaxyRotate 120s linear infinite;
+        }
+        
+        @keyframes galaxyRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* CONTENUTO PRINCIPALE */
+        .main-content {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20vh 10vw;
+            text-align: center;
+            opacity: 0;
+            animation: contentAppear 3s 4s forwards;
+        }
+        .intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            animation: dissolve 4s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+        }
+        @keyframes contentAppear {
+            to { opacity: 1; }
+        }
+        
+        h1 {
+            font-size: 6vw;
+            margin-bottom: 5vh;
+            position: relative;
+            color: #D4AF37;
+            font-family: 'Playfair Display', serif;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+        }
+        
+        .welcome-text {
+            font-size: 1.5vw;
+            line-height: 1.8;
+            max-width: 800px;
+            margin-bottom: 8vh;
+            position: relative;
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .philosopher-quote {
+            font-style: italic;
+            font-size: 1.8vw;
+            margin: 5vh 0;
+            position: relative;
+            padding: 0 5vw;
+            color: #f1e5ac;
+            animation: pulse 6s infinite alternate;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; text-shadow: 0 0 15px rgba(212, 175, 55, 0.5); }
+        }
+        
+        .philosopher-quote::before,
+        .philosopher-quote::after {
+            content: '"';
+            font-size: 3vw;
+            color: #D4AF37;
+            position: absolute;
+            opacity: 0.6;
+        }
+        
+        .philosopher-quote::before {
+            left: 0;
+            top: -1vw;
+        }
+        
+        .philosopher-quote::after {
+            right: 0;
+            bottom: -2vw;
+        }
+        
+        .enter-btn {
+            position: relative;
+            display: inline-block;
+            padding: 1.5vh 4vw;
+            font-size: 1.5vw;
+            color: #D4AF37;
+            border: 2px solid #D4AF37;
+            border-radius: 50px;
+            text-decoration: none;
+            overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+            z-index: 1;
+        }
+        
+        .enter-btn:hover {
+            color: #000;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.5);
+        }
+        
+        .enter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #D4AF37;
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        .enter-btn:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        
+        /* PARTICELLE */
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(212, 175, 55, 0.8);
+            border-radius: 50%;
+            filter: blur(1px);
+        }
+        
+        /* FOOTER */
+        .site-footer {
+            background: linear-gradient(to bottom, #0a0a0a, #000000);
+            padding: 4rem 0 0;
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+            position: relative;
+            z-index: 10;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .footer-section h3 {
+            color: #D4AF37;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 1px;
+            background: #D4AF37;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links a {
+            color: #c0c0c0;
+            text-decoration: none;
+            display: block;
+            padding: 0.5rem 0;
+            transition: all 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #D4AF37;
+            padding-left: 5px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+        }
+        
+        .copyright {
+            color: #a0a0a0;
+            margin-bottom: 1rem;
+        }
+        
+        .legal-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+        
+        .legal-links a {
+            color: #a0a0a0;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .legal-links a:hover {
+            color: #D4AF37;
+        }
+        
+        /* TRADUTTORE GOOGLE */
+        #google_translate_element {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            filter: drop-shadow(0 4px 12px rgba(10, 10, 10, 0.25));
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        
+        .goog-te-combo {
+            background: #F5EFE6 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="%235a3921"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 12px center !important;
+            border: 2px solid #8B4513 !important;
+            border-radius: 30px !important;
+            padding: 12px 40px 12px 20px !important;
+            font-family: 'Cormorant Garamond', serif !important;
+            color: #5a3921 !important;
+            font-size: 15px !important;
+            cursor: pointer !important;
+            appearance: none !important;
+            min-width: 160px !important;
+            transition: all 0.4s !important;
+            box-shadow: inset 0 0 0 1px rgba(139, 69, 19, 0.2) !important;
+            background-size: 16px !important;
+        }
+        
+        .goog-te-combo:hover {
+            background-color: #E8D9B5 !important;
+            border-color: #6B4423 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(139, 69, 19, 0.2) !important;
+        }
+        
+        .goog-te-gadget {
+            font-family: inherit !important;
+            color: transparent !important;
+        }
+        
+        .goog-te-banner-frame,
+        .goog-te-balloon-frame {
+            display: none !important;
+        }
+        
+        /* COOKIE BANNER */
+        #cookieBanner {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            background: linear-gradient(45deg, #D4AF37, #f1c27d);
+            color: #000;
+            padding: 1rem 2rem;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 -4px 15px rgba(212, 175, 55, 0.7);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            max-width: 90vw;
+            z-index: 11000;
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 1.5s ease, opacity 1.5s ease;
+        }
+        
+        #cookieBanner.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        #cookieBanner p {
+            margin: 0 1rem 0 0;
+            display: inline-block;
+            max-width: 70vw;
+        }
+        
+        #cookieBanner a {
+            color: #000;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        
+        #cookieBanner button {
+            background: #000;
+            color: #D4AF37;
+            border: 2px solid #D4AF37;
+            border-radius: 30px;
+            padding: 0.4rem 1rem;
+            margin-left: 0.7rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Cormorant Garamond', serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        #cookieBanner button:hover {
+            background: #D4AF37;
+            color: #000;
+        }
+        
+        /* RICERCA GOOGLE */
+        .google-search-box {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 9999;
+        }
+        
+        .google-search-box form {
+            display: flex;
+            align-items: center;
+        }
+        
+        .google-search-box input[type="text"] {
+            background: #F5EFE6;
+            border: 2px solid #8B4513;
+            border-radius: 30px 0 0 30px;
+            padding: 12px 20px;
+            font-family: 'Cormorant Garamond', serif;
+            color: #5a3921;
+            font-size: 15px;
+            min-width: 200px;
+            transition: all 0.4s;
+        }
+        
+        .google-search-box input[type="text"]:focus {
+            outline: none;
+            border-color: #6B4423;
+            background: #E8D9B5;
+        }
+        
+        .google-search-box button {
+            background: #8B4513;
+            color: #F5EFE6;
+            border: none;
+            border-radius: 0 30px 30px 0;
+            padding: 12px 15px;
+            cursor: pointer;
+            transition: all 0.4s;
+        }
+        
+        .google-search-box button:hover {
+            background: #6B4423;
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .mega-menu {
+                width: 95vw;
+                padding: 1.5rem;
+            }
+            
+            .columns-4 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-desktop {
+                display: none;
+            }
+            
+            .menu-mobile-btn {
+                display: block;
+            }
+            
+            .intro-text {
+                font-size: 10vw;
+            }
+            
+            .intro-text:nth-child(2) {
+                font-size: 6vw;
+            }
+            
+            h1 {
+                font-size: 12vw;
+            }
+            
+            .welcome-text {
+                font-size: 4vw;
+            }
+            
+            .philosopher-quote {
+                font-size: 5vw;
+            }
+            
+            .enter-btn {
+                font-size: 5vw;
+                padding: 2vh 8vw;
+            }
+            
+            .mega-menu {
+                position: fixed;
+                left: 0;
+                top: 80px;
+                width: 100%;
+                transform: none;
+                border-radius: 0;
+                max-width: 100%;
+                overflow-y: auto;
+                max-height: calc(100vh - 80px);
+            }
+            
+            .columns-4,
+            .columns-3,
+            .columns-2 {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .footer-section h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            #google_translate_element,
+            .google-search-box {
+                bottom: 90px;
+            }
+            
+            #cookieBanner {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            #cookieBanner p {
+                margin: 0 0 1rem 0;
+                max-width: 100%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .google-search-box {
+                left: 15px;
+                right: 15px;
+                bottom: 150px;
+                width: calc(100% - 30px);
+            }
+            
+            .google-search-box input[type="text"] {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<!-- OVERLAY INTRO -->
+    <div class="intro-overlay">
+        <div class="intro-text">ECHI DI SOFIA</div>
+        <div class="intro-text">Il pensiero che attraversa i millenni</div>
+    </div>
+    
+    <!-- HEADER -->
+    <header id="mainHeader">
+        <div class="menu-container">
+            <a href="#" class="logo">ECHI DI SOFIA</a>
+            
+            <nav class="menu-desktop">
+                <ul role="menu">
+                    <li role="none"><a href="#" role="menuitem" style="color: #f0f0f0;">Home</a></li>
+                    
+                    <!-- Filosofia antica -->
+                    <li role="none" class="dropdown">
+                        <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                            Filosofia antica <span class="arrow">▼</span>
+                        </button>
+                        <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia antica">
+                            <div>
+                                <h4>Scuola ionica</h4>
+                                <a href="/Presocratici/talete.html" role="menuitem">Talete</a>
+                                <a href="Presocratici/anassimandro.html" role="menuitem">Anassimandro</a>
+                                <a href="Presocratici/anassimene.html" role="menuitem">Anassimene</a>
+                            </div>
+                            <div>
+                                <h4>Scuola eleatica</h4>
+                                <a href="Presocratici/senofane.html" role="menuitem">Senofane</a>
+                                <a href="/Presocratici/parmenide.html" role="menuitem">Parmenide</a>
+                                <a href="articoli/zenone.html" role="menuitem">Zenone</a>
+                                <a href="articoli/zenone.html" role="menuitem">Melisso</a>
+                            </div>
+                            <div>
+                                <h4>Altri</h4>
+                                <a href="articoli/eraclito.html" role="menuitem">Eraclito</a>
+                                <a href="/Presocratici/anassagora.html" role="menuitem">Anassagora</a>
+                                <a href="/articoli/empedocle.html" role="menuitem">Empedocle</a>
+                            </div>
+                            <div>
+                                <h4>Pitagorici</h4>
+                                <a href="/articoli/pitagora.html" role="menuitem">Pitagora</a>
+                                <a href="/articoli/filolao.html" role="menuitem">Filolao</a>
+                                <a href="/articoli/alcmeone.html" role="menuitem">Alcmeone</a>
+                                <a href="articoli/archita.html" role="menuitem">Archita</a>
+                                <a href="/articoli/ippaso.html" role="menuitem">Ippaso</a>
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <!-- Filosofia classica -->
+                    <li role="none" class="dropdown">
+                        <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                            Filosofia classica <span class="arrow">▼</span>
+                        </button>
+                        <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia classica">
+                            <div>
+                                <h4>Classici</h4>
+                                <a href="articoli/socrate.html" role="menuitem">Socrate</a>
+                                <a href="articoli/platone.html" role="menuitem">Platone</a>
+                                <a href="articoli/aristotele.html" role="menuitem">Aristotele</a>
+                            </div>
+                            <div>
+                                <h4>Platonici</h4>
+                                <a href="articoli/senofonte.html" role="menuitem">Senofonte</a>
+                                <a href="articoli/antistene.html" role="menuitem">Antistene</a>
+                                <a href="#" role="menuitem">Aristippo</a>
+                            </div>
+                            <div>
+                                <h4>Stoici</h4>
+                                <a href="articoli/zenone.html" role="menuitem">Zenone</a>
+                                <a href="#" role="menuitem">Epitteto</a>
+                                <a href="#" role="menuitem">Seneca</a>
+                            </div>
+                            <div>
+                                <h4>Epicurei</h4>
+                                <a href="#" role="menuitem">Epicuro</a>
+                                <a href="#" role="menuitem">Lucrezio</a>
+                                <a href="#" role="menuitem">Cicerone</a>
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <!-- Filosofia medievale -->
+                    <li role="none" class="dropdown">
+                        <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                            Medievale/Patristica <span class="arrow">▼</span>
+                        </button>
+                        <div class="mega-menu columns-2" role="menu" aria-label="Sottomenu Filosofia medievale">
+                            <div>
+                                <h4>Medievale</h4>
+                                <a href="#" role="menuitem">Tommaso d'Aquino</a>
+                                <a href="#" role="menuitem">Anselmo</a>
+                                <a href="#" role="menuitem">Guglielmo di Ockham</a>
+                                <a href="#" role="menuitem">Duns Scoto</a>
+                            </div>
+                            <div>
+                                <h4>Patristica</h4>
+                                <a href="#" role="menuitem">Agostino</a>
+                                <a href="#" role="menuitem">Origene</a>
+                                <a href="#" role="menuitem">Gregorio di Nissa</a>
+                                <a href="#" role="menuitem">Tertulliano</a>
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <!-- Filosofia moderna -->
+                    <li role="none" class="dropdown">
+                        <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                            Filosofia moderna <span class="arrow">▼</span>
+                        </button>
+                        <div class="mega-menu columns-3" role="menu" aria-label="Sottomenu Filosofia moderna">
+                            <div>
+                                <h4>Razionalisti</h4>
+                                <a href="#" role="menuitem">Cartesio</a>
+                                <a href="#" role="menuitem">Spinoza</a>
+                                <a href="#" role="menuitem">Leibniz</a>
+                            </div>
+                            <div>
+                                <h4>Empiristi</h4>
+                                <a href="#" role="menuitem">Locke</a>
+                                <a href="#" role="menuitem">Hume</a>
+                                <a href="#" role="menuitem">Berkeley</a>
+                            </div>
+                            <div>
+                                <h4>Kant e oltre</h4>
+                                <a href="#" role="menuitem">Kant</a>
+                                <a href="#" role="menuitem">Fichte</a>
+                                <a href="#" role="menuitem">Schelling</a>
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <!-- Filosofia contemporanea -->
+                    <li role="none" class="dropdown">
+                        <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                            Contemporanea <span class="arrow">▼</span>
+                        </button>
+                        <div class="mega-menu columns-3" role="menu" aria-label="Sottomenu Filosofia contemporanea">
+                            <div>
+                                <h4>Ottocento</h4>
+                                <a href="#" role="menuitem">Hegel</a>
+                                <a href="#" role="menuitem">Schopenhauer</a>
+                                <a href="#" role="menuitem">Nietzsche</a>
+                            </div>
+                            <div>
+                                <h4>Fenomenologia</h4>
+                                <a href="#" role="menuitem">Husserl</a>
+                                <a href="#" role="menuitem">Heidegger</a>
+                                <a href="#" role="menuitem">Merleau-Ponty</a>
+                            </div>
+                            <div>
+                                <h4>Postmoderni</h4>
+                                <a href="#" role="menuitem">Sartre</a>
+                                <a href="#" role="menuitem">Foucault</a>
+                                <a href="#" role="menuitem">Derrida</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+            
+            <button class="menu-mobile-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+    
+    <!-- SFONDO -->
+    <!-- Sostituisci il div galaxy-bg esistente con questo: -->
+<div class="galaxy-bg" id="galaxyBg">
+    <canvas id="starCanvas"></canvas>
+</div>
+    <div class="floating-particles" id="particles"></div>
+    
+    <!-- CONTENUTO PRINCIPALE -->
+    <div class="main-content">
+        <h1>BENVENUTO, CERCATORE DI SAPIENZA</h1>
+        
+        <div class="welcome-text">
+            La filosofia non cerca nella creazione o nella sapienza divina l'ideale ultimo,
+            capace di farci sentire davvero a casa propria in questo mondo, 
+            ma riconosce che è l'uomo, con la sua ragione e il suo interrogare, la misura di tutte le cose.
+        </div>
+        
+        <div class="philosopher-quote">
+            Non è la risposta che illumina, ma la domanda
+        </div>
+        
+        <a href="#articles" class="enter-btn">OLTREPASSARE LA SOGLIA</a>
+    </div>
+    
+    <!-- SEZIONE ARTICOLI -->
+    <section id="articles" style="padding: 100px 0; background: rgba(10,10,10,0.7);">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <h2 style="text-align: center; color: #D4AF37; margin-bottom: 50px; font-size: 2.5rem;">ULTIMI SAGGI</h2>
+            <!-- Contenuto articoli -->
+        </div>
+    </section>
+    <style> 
+ 
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Esplora</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Mappa del sito</a></li>
+                    <li><a href="#">Linea del tempo</a></li>
+                    <li><a href="#">Filosofi per epoca</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Risorse</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Biblioteca</a></li>
+                    <li><a href="#">Glossario</a></li>
+                    <li><a href="#">Fonti primarie</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contatti</h3>
+                <ul class="footer-links">
+                    <li><a href="mailto:info@echidisofia.it">Email</a></li>
+                    <li><a href="#">Newsletter</a></li>
+                    <li><a href="#">Collabora con noi</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Echi di Sofia</h3>
+                <p style="color: #a0a0a0; line-height: 1.6; margin-bottom: 1rem;">
+                    Il portale che fa risuonare la filosofia attraverso i secoli.
+                </p>
+                <div style="display: flex; gap: 15px;">
+                    <a href="#" style="color: #a0a0a0; font-size: 1.2rem;"><i class="fab fa-twitter"></i></a>
+                    <a href="#" style="color: #a0a0a0; font-size: 1.2rem;"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" style="color: #a0a0a0; font-size: 1.2rem;"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2023 Echi di Sofia. Tutti i diritti riservati.</p>
+            <div class="legal-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Termini d'uso</a>
+                <a href="#">Cookie</a>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- RICERCA GOOGLE -->
+    <div class="google-search-box">
+        <form method="get" action="https://www.google.com/search" target="_blank" role="search">
+            <input type="text" name="q" placeholder="Cerca su Google tra gli echi..." aria-label="Campo di ricerca">
+            <input type="hidden" name="sitesearch" value="echidisofia.org">
+            <button type="submit" aria-label="Cerca">
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
+    </div>
+    
+    <!-- BANNER COOKIE -->
+    <div id="cookieBanner" role="region" aria-label="Banner informativo cookie">
+        <p>
+            Utilizziamo cookie per migliorare l'esperienza. 
+            <a href="privacy.html" target="_blank" rel="noopener noreferrer">Leggi la Privacy Policy</a>.
+        </p>
+        <button id="acceptCookiesBtn" aria-label="Accetta tutti i cookie">Accetta</button>
+        <button id="customizeCookiesBtn" aria-label="Personalizza le preferenze cookie">Personalizza</button>
+        <button id="rejectCookiesBtn" aria-label="Rifiuta i cookie non essenziali">Rifiuta</button>
+    </div>
+    
+    <!-- TRADUTTORE GOOGLE -->
+    <div id="google_translate_element"></div>
+    
+    <!-- SCRIPT -->
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 1. Particelle fluttuanti (div)
+        const particlesContainer = document.getElementById('particles');
+        if(particlesContainer) {
+            const particleCount = window.innerWidth < 768 ? 30 : 100;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                const size = Math.random() * 3 + 1;
+                const posX = Math.random() * window.innerWidth;
+                const posY = Math.random() * window.innerHeight;
+                const opacity = Math.random() * 0.5 + 0.3;
+                const duration = Math.random() * 20 + 10;
+                const delay = Math.random() * -20;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}px`;
+                particle.style.top = `${posY}px`;
+                particle.style.opacity = opacity;
+                particle.style.animation = `float ${duration}s ${delay}s infinite linear`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // 2. Animazione stelle canvas
+        const canvas = document.getElementById('starCanvas');
+        if(canvas) {
+            const ctx = canvas.getContext('2d');
+            
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+            
+            const stars = [];
+            const starCount = 200;
+            const mouse = { x: null, y: null };
+            
+            class Star {
+                constructor() {
+                    this.resetPosition();
+                    this.size = Math.random() * 1.5 + 0.5;
+                    this.speed = Math.random() * 0.02;
+                    this.angle = Math.random() * Math.PI * 2;
+                    this.color = `rgba(212, 175, 55, ${Math.random() * 0.5 + 0.3})`;
+                }
+                
+                resetPosition() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.baseX = this.x;
+                    this.baseY = this.y;
+                }
+                
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                }
+                
+                update() {
+                    this.angle += this.speed;
+                    this.baseX += Math.cos(this.angle) * 0.2;
+                    this.baseY += Math.sin(this.angle) * 0.2;
+                    
+                    if (mouse.x && mouse.y) {
+                        const dx = mouse.x - this.x;
+                        const dy = mouse.y - this.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        const maxDistance = 150;
+                        
+                        if (distance < maxDistance) {
+                            const force = (maxDistance - distance) / maxDistance;
+                            this.x -= dx * force * 0.1;
+                            this.y -= dy * force * 0.1;
+                        } else {
+                            this.returnToBase();
+                        }
+                    } else {
+                        this.returnToBase();
+                    }
+                }
+                
+                returnToBase() {
+                    this.x += (this.baseX - this.x) * 0.05;
+                    this.y += (this.baseY - this.y) * 0.05;
+                }
+            }
+            
+            function initStars() {
+                stars.length = 0;
+                for (let i = 0; i < starCount; i++) {
+                    stars.push(new Star());
+                }
+            }
+            
+            function animateStars() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Sfondo nebulosa
+                const gradient = ctx.createRadialGradient(
+                    canvas.width/2, canvas.height/2, 0,
+                    canvas.width/2, canvas.height/2, Math.max(canvas.width, canvas.height)/2
+                );
+                gradient.addColorStop(0, 'rgba(27, 39, 53, 0.8)');
+                gradient.addColorStop(1, 'rgba(9, 10, 15, 1)');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                for (const star of stars) {
+                    star.update();
+                    star.draw();
+                }
+                
+                requestAnimationFrame(animateStars);
+            }
+            
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+            });
+            
+            window.addEventListener('mouseout', () => {
+                mouse.x = null;
+                mouse.y = null;
+            });
+            
+            window.addEventListener('resize', () => {
+                resizeCanvas();
+                stars.forEach(star => star.resetPosition());
+            });
+            
+            initStars();
+            animateStars();
+        }
+
+        // 3. Header scroll effect
+        const header = document.getElementById('mainHeader');
+        if(header) {
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        }
+        
+        // 4. Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const target = document.querySelector(targetId);
+                if(target) {
+                    const headerHeight = document.getElementById('mainHeader')?.offsetHeight || 0;
+                    window.scrollTo({
+                        top: target.offsetTop - headerHeight,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // 5. Cookie banner
+        const banner = document.getElementById('cookieBanner');
+        if(banner) {
+            const acceptBtn = document.getElementById('acceptCookiesBtn');
+            const rejectBtn = document.getElementById('rejectCookiesBtn');
+            const customizeBtn = document.getElementById('customizeCookiesBtn');
+            const localStorageKey = 'echiDiSofiaCookieConsent';
+            
+            function showBanner() {
+                banner.classList.add('show');
+            }
+            
+            function hideBanner() {
+                banner.classList.remove('show');
+            }
+            
+            function hasConsent() {
+                return localStorage.getItem(localStorageKey) !== null;
+            }
+            
+            function saveConsent(value) {
+                localStorage.setItem(localStorageKey, value);
+            }
+            
+            if(acceptBtn) acceptBtn.addEventListener('click', () => {
+                saveConsent('accepted');
+                hideBanner();
+            });
+            
+            if(rejectBtn) rejectBtn.addEventListener('click', () => {
+                saveConsent('rejected');
+                hideBanner();
+            });
+            
+            if(customizeBtn) customizeBtn.addEventListener('click', () => {
+                alert('Funzione Personalizza da implementare');
+            });
+            
+            if (!hasConsent()) {
+                setTimeout(showBanner, 1000);
+            }
+        }
+    });
+
+    // Aggiungi l'animazione float
+    const floatAnimation = `
+    @keyframes float {
+        0%, 100% { transform: translateY(0) translateX(0); }
+        25% { transform: translateY(-20vh) translateX(10vw); }
+        50% { transform: translateY(-10vh) translateX(-10vw); }
+        75% { transform: translateY(-30vh) translateX(5vw); }
+    }`;
+    
+    const style = document.createElement('style');
+    style.innerHTML = floatAnimation;
+    document.head.appendChild(style);
+
+    // Google Translate
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'it',
+            includedLanguages: 'it,en,de,fr,es,pl,pt',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
+        
+        setTimeout(() => {
+            const gadget = document.querySelector('.goog-te-gadget');
+            if(gadget) gadget.innerHTML = gadget.innerHTML.replace(/^[^<]+/,'');
+        }, 500);
+    }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <style>
+    .particle {
+        position: absolute;
+        background: rgba(212, 175, 55, 0.8);
+        border-radius: 50%;
+        filter: blur(1px);
+        pointer-events: none;
+        will-change: transform;
+    }
+
+    .galaxy-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -2;
+        overflow: hidden;
+        background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+    }
+
+    #starCanvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+    }
+    </style>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // PARTICELLE FLUTTUANTI
+    const particlesContainer = document.getElementById('particles');
+    if (particlesContainer) {
+        const particleCount = window.innerWidth < 768 ? 30 : 100;
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            const size = Math.random() * 3 + 1;
+            const posX = Math.random() * window.innerWidth;
+            const posY = Math.random() * window.innerHeight;
+            const opacity = Math.random() * 0.5 + 0.3;
+            const duration = Math.random() * 20 + 10;
+            const delay = Math.random() * -20;
+
+            Object.assign(particle.style, {
+                width: `${size}px`,
+                height: `${size}px`,
+                left: `${posX}px`,
+                top: `${posY}px`,
+                opacity,
+                animation: `float ${duration}s ${delay}s infinite linear`
+            });
+
+            particlesContainer.appendChild(particle);
+        }
+    }
+
+    // ANIMAZIONE STELLE
+    const canvas = document.getElementById('starCanvas');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const stars = [];
+        const starCount = 800;
+        const mouse = { x: null, y: null };
+
+        class Star {
+            constructor() {
+                this.reset();
+                this.speed = Math.random() * 0.2 + 0.05;
+                this.color = `hsla(45, 80%, ${Math.random() * 30 + 60}%, ${Math.random() * 0.5 + 0.3})`;
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 1.5 + 0.5;
+                this.originalSize = this.size;
+            }
+
+            update() {
+                this.y += this.speed;
+                if (this.y > canvas.height) this.reset();
+
+                if (mouse.x !== null && mouse.y !== null) {
+                    const dx = mouse.x - this.x;
+                    const dy = mouse.y - this.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < 100) {
+                        this.size = this.originalSize * 2;
+                        this.x -= dx * 0.02;
+                        this.y -= dy * 0.02;
+                    } else {
+                        this.size = this.originalSize;
+                    }
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = this.size * 2;
+                ctx.shadowColor = this.color;
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < starCount; i++) {
+            stars.push(new Star());
+        }
+
+        function animateStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach(star => {
+                star.update();
+                star.draw();
+            });
+            requestAnimationFrame(animateStars);
+        }
+
+        window.addEventListener('mousemove', e => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            stars.forEach(star => star.reset());
+        });
+
+        animateStars();
+    }
+
+    // HEADER SCROLL
+    const header = document.getElementById('mainHeader');
+    if (header) {
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('scrolled', window.scrollY > 50);
+        });
+    }
+
+    // SMOOTH SCROLL
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', e => {
+            e.preventDefault();
+            const targetId = anchor.getAttribute('href');
+            const target = document.querySelector(targetId);
+            const headerHeight = document.getElementById('mainHeader')?.offsetHeight || 0;
+            if (target) {
+                window.scrollTo({
+                    top: target.offsetTop - headerHeight,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // COOKIE BANNER
+    const banner = document.getElementById('cookieBanner');
+    if (banner) {
+        const acceptBtn = document.getElementById('acceptCookiesBtn');
+        const rejectBtn = document.getElementById('rejectCookiesBtn');
+        const customizeBtn = document.getElementById('customizeCookiesBtn');
+        const localStorageKey = 'echiDiSofiaCookieConsent';
+
+        function showBanner() {
+            banner.classList.add('show');
+        }
+
+        function hideBanner() {
+            banner.classList.remove('show');
+        }
+
+        function hasConsent() {
+            return localStorage.getItem(localStorageKey) !== null;
+        }
+
+        function saveConsent(value) {
+            localStorage.setItem(localStorageKey, value);
+        }
+
+        acceptBtn?.addEventListener('click', () => {
+            saveConsent('accepted');
+            hideBanner();
+        });
+
+        rejectBtn?.addEventListener('click', () => {
+            saveConsent('rejected');
+            hideBanner();
+        });
+
+        customizeBtn?.addEventListener('click', () => {
+            alert('Funzione Personalizza da implementare');
+        });
+
+        if (!hasConsent()) {
+            setTimeout(showBanner, 1000);
+        }
+    }
+});
+
+// ANIMAZIONE PARTICELLE
+const floatAnimation = `
+@keyframes float {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    25% { transform: translateY(-20vh) translateX(10vw); }
+    50% { transform: translateY(-10vh) translateX(-10vw); }
+    75% { transform: translateY(-30vh) translateX(5vw); }
+}`;
+const style = document.createElement('style');
+style.innerHTML = floatAnimation;
+document.head.appendChild(style);
+
+// GOOGLE TRANSLATE
+function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+        pageLanguage: 'it',
+        includedLanguages: 'it,en,de,fr,es,pl,pt',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+    }, 'google_translate_element');
+
+    setTimeout(() => {
+        const gadget = document.querySelector('.goog-te-gadget');
+        if (gadget) gadget.innerHTML = gadget.innerHTML.replace(/^[^<]+/, '');
+    }, 500);
+}
+</script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<style>
+/* PARTICELLE */
+.particle {
+    position: absolute;
+    background: rgba(212, 175, 55, 0.8);
+    border-radius: 50%;
+    filter: blur(1px);
+    pointer-events: none;
+    will-change: transform;
+}
+
+/* CANVAS E SFONDO */
+#starCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.galaxy-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+}
+
+/* HEADER SCROLL */
+header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    padding: 2rem 0;
+    transition: all 0.6s ease;
+}
+header.scrolled {
+    background: rgba(10, 10, 10, 0.9);
+    backdrop-filter: blur(10px);
+    padding: 1rem 0;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* INTRO */
+.intro-overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0; left: 0;
+    background: #0a0a0a;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    animation: dissolve 4s forwards;
+}
+@keyframes dissolve {
+    0%, 80% { opacity: 1; }
+    100% { opacity: 0; visibility: hidden; }
+}
+.intro-text {
+    font-size: 5vw;
+    text-align: center;
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.7);
+    opacity: 0;
+    transform: translateY(50px);
+}
+.intro-text:nth-child(1) {
+    color: #D4AF37;
+    animation: textReveal 1.5s 0.5s forwards;
+}
+.intro-text:nth-child(2) {
+    font-size: 3vw;
+    margin-top: 2vw;
+    animation: textReveal 1.5s 1.5s forwards;
+}
+@keyframes textReveal {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Cormorant Garamond', serif;
+    color: #fff;
+    overflow-x: hidden;
+    background: #000;
+}
+</style>
  </script>
      <div class="google-search-box">
   <form method="get" action="https://www.google.com/search" target="_blank" role="search">
@@ -140,3 +1778,6 @@ function googleTranslateElementInit() {
 </body>
 </html>
 
+
+ 
+   
