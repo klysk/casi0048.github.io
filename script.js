@@ -150,3 +150,35 @@ document.addEventListener("DOMContentLoaded", function () {
     alert("Funzione di personalizzazione in arrivo...");
   });
 });
+// cookie-script.js
+document.addEventListener('DOMContentLoaded', function() {
+  const banner = document.getElementById('cookie-banner');
+  
+  // Mostra il banner solo se non è stata ancora fatta una scelta
+  if (!getCookiePreference()) {
+    banner.style.display = 'block';
+  }
+
+  // Gestione pulsanti
+  document.getElementById('accept-cookies').addEventListener('click', () => setCookiePreference('all'));
+  document.getElementById('reject-cookies').addEventListener('click', () => setCookiePreference('essential'));
+  document.getElementById('customize-cookies').addEventListener('click', showCustomizationPanel);
+
+  // Funzioni di supporto
+  function setCookiePreference(type) {
+    localStorage.setItem('cookiePref', type);
+    banner.style.display = 'none';
+    if (type === 'all') {
+      // Carica tutti i cookie (es: Google Analytics)
+    }
+  }
+
+  function getCookiePreference() {
+    return localStorage.getItem('cookiePref');
+  }
+
+  function showCustomizationPanel() {
+    // Implementa qui un pannello avanzato con toggle per varie categorie
+    window.location.href = "/privacy-policy#cookie-settings"; // Reindirizza alla policy
+  }
+});
