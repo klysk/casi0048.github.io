@@ -62,3 +62,69 @@ gsap.utils.toArray(".timeline__item").forEach(item => {
     duration: 1
   });
 });
+// Gestione completa del Cookie Banner
+document.addEventListener('DOMContentLoaded', function() {
+  const banner = document.getElementById('cookie-banner');
+  const acceptBtn = document.getElementById('accept-cookies');
+  const rejectBtn = document.getElementById('reject-cookies');
+  const customizeBtn = document.getElementById('customize-cookies');
+
+  // Controlla se l'utente ha già scelto
+  if (!localStorage.getItem('cookieChoice')) {
+    banner.style.display = 'block';
+  }
+
+  // Gestione pulsanti
+  acceptBtn.addEventListener('click', function() {
+    localStorage.setItem('cookieChoice', 'accepted');
+    banner.style.display = 'none';
+    // Qui puoi caricare tutti i cookie
+  });
+
+  rejectBtn.addEventListener('click', function() {
+    localStorage.setItem('cookieChoice', 'rejected');
+    banner.style.display = 'none';
+    // Blocca cookie non essenziali
+  });
+
+  customizeBtn.addEventListener('click', function() {
+    // Apri un modal personalizzato (esempio base)
+    alert("Personalizzazione cookie: implementa qui le tue preferenze");
+    // Per una versione avanzata, crea un pannello con toggle
+  });
+});
+customizeBtn.addEventListener('click', function() {
+  document.getElementById('cookie-modal').style.display = 'block';
+});
+// cookie-script.js
+document.addEventListener('DOMContentLoaded', function() {
+  const banner = document.getElementById('cookie-banner');
+  
+  // Mostra il banner solo se non è stata ancora fatta una scelta
+  if (!getCookiePreference()) {
+    banner.style.display = 'block';
+  }
+
+  // Gestione pulsanti
+  document.getElementById('accept-cookies').addEventListener('click', () => setCookiePreference('all'));
+  document.getElementById('reject-cookies').addEventListener('click', () => setCookiePreference('essential'));
+  document.getElementById('customize-cookies').addEventListener('click', showCustomizationPanel);
+
+  // Funzioni di supporto
+  function setCookiePreference(type) {
+    localStorage.setItem('cookiePref', type);
+    banner.style.display = 'none';
+    if (type === 'all') {
+      // Carica tutti i cookie (es: Google Analytics)
+    }
+  }
+
+  function getCookiePreference() {
+    return localStorage.getItem('cookiePref');
+  }
+
+  function showCustomizationPanel() {
+    // Implementa qui un pannello avanzato con toggle per varie categorie
+    window.location.href = "/privacy-policy#cookie-settings"; // Reindirizza alla policy
+  }
+});
