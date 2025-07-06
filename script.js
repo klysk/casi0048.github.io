@@ -128,3 +128,25 @@ document.addEventListener('DOMContentLoaded', function() {
     window.location.href = "/privacy-policy#cookie-settings"; // Reindirizza alla policy
   }
 });
+document.addEventListener("DOMContentLoaded", function () {
+  const banner = document.getElementById("cookieBanner");
+  const accepted = localStorage.getItem("cookieConsent");
+
+  if (!accepted) {
+    banner.style.display = "block";
+  }
+
+  document.getElementById("acceptCookies").addEventListener("click", function () {
+    localStorage.setItem("cookieConsent", "accepted");
+    banner.style.display = "none";
+  });
+
+  document.getElementById("rejectCookies").addEventListener("click", function () {
+    localStorage.setItem("cookieConsent", "rejected");
+    banner.style.display = "none";
+  });
+
+  document.getElementById("customizeCookies").addEventListener("click", function () {
+    alert("Funzione di personalizzazione in arrivo...");
+  });
+});
