@@ -29,6 +29,93 @@
             min-height: 100vh;
         }
 
+        /* BARRA SUPERIORE CON RICERCA E TRADUTTORE */
+        .top-bar {
+            background: rgba(10, 10, 26, 0.9);
+            backdrop-filter: blur(5px);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            padding: 0.8rem 2rem;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 1.5rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .search-translate-container {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .search-container input {
+            padding: 0.6rem 1rem 0.6rem 2.5rem;
+            background: rgba(20, 20, 40, 0.8);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 4px;
+            color: #e0e0e0;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            transition: all 0.3s;
+            width: 250px;
+        }
+
+        .search-container input:focus {
+            outline: none;
+            border-color: #ffd700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            color: rgba(255, 215, 0, 0.7);
+        }
+
+        /* Stile per il traduttore Google */
+        .translate-container {
+            position: relative;
+        }
+
+        .translate-btn {
+            background: rgba(20, 20, 40, 0.8);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            color: #e0e0e0;
+            padding: 0.6rem 1rem;
+            font-family: 'Cormorant Garamond', serif;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .translate-btn:hover {
+            border-color: #ffd700;
+        }
+
+        .translate-btn i {
+            color: rgba(255, 215, 0, 0.7);
+        }
+
+        #google_translate_element {
+            position: absolute;
+            opacity: 0;
+            width: 1px;
+            height: 1px;
+        }
+
         /* SFONDO STELLATO */
         .starfield {
             position: fixed;
@@ -77,6 +164,7 @@
             backdrop-filter: blur(5px);
             position: fixed;
             width: 100%;
+            top: 60px; /* Spazio per la barra superiore */
             z-index: 100;
             border-bottom: 1px solid rgba(255, 215, 0, 0.3);
         }
@@ -195,66 +283,8 @@
 
         /* CONTENUTO PRINCIPALE */
         main {
-            padding-top: 100px;
+            padding-top: 160px; /* Aumentato per le due barre fisse */
             min-height: 100vh;
-        }
-
-        /* STILE BOX RICERCA E TRADUTTORE */
-        .search-container, .translate-container {
-            margin-left: 1.5rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .gcse-search input {
-            background: rgba(10, 10, 30, 0.7) !important;
-            border: 1px solid rgba(255, 215, 0, 0.3) !important;
-            color: #e0e0e0 !important;
-            padding: 0.5rem 1rem !important;
-            font-family: 'Cormorant Garamond', serif !important;
-            border-radius: 4px !important;
-            width: 200px !important;
-            transition: all 0.3s !important;
-        }
-
-        .gcse-search input:focus {
-            outline: none !important;
-            border-color: #ffd700 !important;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3) !important;
-        }
-
-        /* Stile per il traduttore Google */
-        .goog-te-gadget {
-            color: transparent !important;
-        }
-
-        .goog-te-gadget .goog-te-combo {
-            background: rgba(10, 10, 30, 0.7) !important;
-            border: 1px solid rgba(255, 215, 0, 0.3) !important;
-            color: #e0e0e0 !important;
-            padding: 0.3rem 0.5rem !important;
-            font-family: 'Cormorant Garamond', serif !important;
-            border-radius: 4px !important;
-            cursor: pointer !important;
-            transition: all 0.3s !important;
-        }
-
-        .goog-te-gadget .goog-te-combo:hover {
-            border-color: #ffd700 !important;
-        }
-
-        /* Nascondi il testo del traduttore */
-        .goog-te-gadget-simple .skiptranslate {
-            display: none !important;
-        }
-
-        /* Banner di conferma */
-        .goog-te-banner-frame.skiptranslate {
-            display: none !important;
-        }
-
-        body {
-            top: 0 !important;
         }
 
         /* ANIMAZIONE BENVENUTO */
@@ -323,6 +353,14 @@
                 left: 2.5vw;
                 transform: none;
             }
+            
+            .top-bar {
+                padding: 0.8rem 1rem;
+            }
+            
+            .search-container input {
+                width: 200px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -330,66 +368,72 @@
                 display: none;
             }
             
-            .search-container, .translate-container {
-                margin-left: 0;
-                margin-top: 1rem;
+            .top-bar {
+                justify-content: center;
+                padding: 0.8rem;
+            }
+            
+            .search-translate-container {
+                width: 100%;
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+            
+            .search-container {
                 width: 100%;
             }
             
-            .gcse-search input {
-                width: 100% !important;
+            .search-container input {
+                width: 100%;
+            }
+            
+            .translate-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            main {
+                padding-top: 180px; /* Più spazio per le barre su mobile */
+            }
+            
+            .welcome-title {
+                font-size: 3rem;
+            }
+            
+            .welcome-quote {
+                font-size: 1.2rem;
+                padding: 1rem;
             }
         }
-.search-top {
-  display: flex;
-  align-items: center;
-  margin-left: auto;
-  background: rgba(20, 20, 40, 0.8);
-  border: 1px solid rgba(255, 215, 0, 0.2);
-  border-radius: 6px;
-  padding: 0.2rem 0.5rem;
+.goog-te-gadget {
+    display: inline-block !important;
 }
 
-.search-top form {
-  display: flex;
-  align-items: center;
-}
-
-.search-top input[type="text"] {
-  background: transparent;
-  border: none;
-  color: #ffd700;
-  padding: 0.4rem 0.6rem;
-  font-size: 1rem;
-  font-family: 'Cormorant Garamond', serif;
-  width: 160px;
-}
-
-.search-top input[type="text"]::placeholder {
-  color: #aaaaaa;
-}
-
-.search-top input:focus {
-  outline: none;
-}
-
-.search-top button {
-  background: none;
-  border: none;
-  color: #ffd700;
-  font-size: 1.1rem;
-  cursor: pointer;
-  padding: 0.4rem;
-  transition: color 0.3s;
-}
-
-.search-top button:hover {
-  color: #ffffff;
+#google_translate_element {
+    display: block !important;
 }
 
     </style>
 </head>
 <body>
+    <!-- BARRA SUPERIORE CON RICERCA E TRADUTTORE -->
+    <div class="top-bar">
+        <div class="search-translate-container">
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" placeholder="Cerca filosofi, concetti..." id="searchInput">
+            </div>
+            
+            <div class="translate-container">
+                <button class="translate-btn" id="translateBtn">
+                    <i class="fas fa-language"></i>
+                    <span>Traduci</span>
+                </button>
+                <div id="google_translate_element"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- SFONDO STELLATO -->
     <div class="starfield" id="starfield"></div>
     
@@ -403,23 +447,6 @@
             
             <div style="display: flex; align-items: center;">
                 <nav class="menu-desktop">
-<!--   inserita ricerca -->
-<div class="search-top">
-  <form action="https://www.google.com/search" method="get" role="search" target="_blank">
-    <input
-      type="text"
-      name="q"
-      placeholder="Cerca tra gli Echi..."
-      aria-label="Campo di ricerca"
-      required
-    />
-    <input type="hidden" name="sitesearch" value="echidisofia.org" />
-    <button type="submit" aria-label="Cerca">
-      <i class="fas fa-search"></i>
-    </button>
-  </form>
-</div>
-<!--  fine inserimento ricerca-->
                     <ul role="menu">
                         <li><a href="#" role="menuitem">Home</a></li>
                         
@@ -431,11 +458,9 @@
                             <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia antica">
                                 <div>
                                     <h4>Scuola ionica</h4>
-                                     <a href="/Presocratici/talete.html" role="menuitem">Talete</a>
-                                <a href="Presocratici/anassimandro.html" role="menuitem">Anassimandro</a>
-
-                               <a href="Presocratici/anassimene.html" role="menuitem">Anassimene</a>
-
+                                    <a href="/Presocratici/talete.html" role="menuitem">Talete</a>
+                                    <a href="Presocratici/anassimandro.html" role="menuitem">Anassimandro</a>
+                                    <a href="Presocratici/anassimene.html" role="menuitem">Anassimene</a>
                                 </div>
                                 <div>
                                     <h4>Scuola eleatica</h4>
@@ -461,128 +486,36 @@
                             </div>
                         </li>
                         
-                        <!-- Filosofia classica -->
-                        <li role="none" class="dropdown">
-                            <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
-                                Filosofia classica <span class="arrow">▼</span>
-                            </button>
-                            <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia classica">
-                                <div>
-                                    <h4>Classici</h4>
-                                    <a href="articoli/socrate.html" role="menuitem">Socrate</a>
-                                    <a href="articoli/platone.html" role="menuitem">Platone</a>
-                                    <a href="articoli/aristotele.html" role="menuitem">Aristotele</a>
-                                </div>
-                                <div>
-                                    <h4>Platonici</h4>
-                                    <a href="articoli/senofonte.html" role="menuitem">Senofonte</a>
-                                    <a href="articoli/antistene.html" role="menuitem">Antistene</a>
-                                    <a href="#" role="menuitem">Aristippo</a>
-                                </div>
-                                <div>
-                                    <h4>Stoici</h4>
-                                    <a href="articoli/zenone.html" role="menuitem">Zenone</a>
-                                    <a href="#" role="menuitem">Epitteto</a>
-                                    <a href="#" role="menuitem">Seneca</a>
-                                </div>
-                                <div>
-                                    <h4>Epicurei</h4>
-                                    <a href="#" role="menuitem">Epicuro</a>
-                                    <a href="#" role="menuitem">Lucrezio</a>
-                                    <a href="#" role="menuitem">Cicerone</a>
-                                </div>
-                            </div>
-                        </li>
-                        
-                        <!-- Filosofia medievale -->
-                        <li role="none" class="dropdown">
-                            <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
-                                Medievale/Patristica <span class="arrow">▼</span>
-                            </button>
-                            <div class="mega-menu columns-2" role="menu" aria-label="Sottomenu Filosofia medievale">
-                                <div>
-                                    <h4>Medievale</h4>
-                                    <a href="#" role="menuitem">Tommaso d'Aquino</a>
-                                    <a href="#" role="menuitem">Anselmo</a>
-                                    <a href="#" role="menuitem">Guglielmo di Ockham</a>
-                                    <a href="#" role="menuitem">Duns Scoto</a>
-                                </div>
-                                <div>
-                                    <h4>Patristica</h4>
-                                    <a href="#" role="menuitem">Agostino</a>
-                                    <a href="#" role="menuitem">Origene</a>
-                                    <a href="#" role="menuitem">Gregorio di Nissa</a>
-                                    <a href="#" role="menuitem">Tertulliano</a>
-                                </div>
-                            </div>
-                        </li>
-                        
-                        <!-- Filosofia moderna -->
-                        <li role="none" class="dropdown">
-                            <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
-                                Filosofia moderna <span class="arrow">▼</span>
-                            </button>
-                            <div class="mega-menu columns-3" role="menu" aria-label="Sottomenu Filosofia moderna">
-                                <div>
-                                    <h4>Razionalisti</h4>
-                                    <a href="#" role="menuitem">Cartesio</a>
-                                    <a href="#" role="menuitem">Spinoza</a>
-                                    <a href="#" role="menuitem">Leibniz</a>
-                                </div>
-                                <div>
-                                    <h4>Empiristi</h4>
-                                    <a href="#" role="menuitem">Locke</a>
-                                    <a href="#" role="menuitem">Hume</a>
-                                    <a href="#" role="menuitem">Berkeley</a>
-                                </div>
-                                <div>
-                                    <h4>Kant e oltre</h4>
-                                    <a href="#" role="menuitem">Kant</a>
-                                    <a href="#" role="menuitem">Fichte</a>
-                                    <a href="#" role="menuitem">Schelling</a>
-                                </div>
-                            </div>
-                        </li>
-                        
-                        <!-- Filosofia contemporanea -->
-                        <li role="none" class="dropdown">
-                            <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
-                                Contemporanea <span class="arrow">▼</span>
-                            </button>
-                            <div class="mega-menu columns-3" role="menu" aria-label="Sottomenu Filosofia contemporanea">
-                                <div>
-                                    <h4>Ottocento</h4>
-                                    <a href="#" role="menuitem">Hegel</a>
-                                    <a href="#" role="menuitem">Schopenhauer</a>
-                                    <a href="#" role="menuitem">Nietzsche</a>
-                                </div>
-                                <div>
-                                    <h4>Fenomenologia</h4>
-                                    <a href="#" role="menuitem">Husserl</a>
-                                    <a href="#" role="menuitem">Heidegger</a>
-                                    <a href="#" role="menuitem">Merleau-Ponty</a>
-                                </div>
-                                <div>
-                                    <h4>Postmoderni</h4>
-                                    <a href="#" role="menuitem">Sartre</a>
-                                    <a href="#" role="menuitem">Foucault</a>
-                                    <a href="#" role="menuitem">Derrida</a>
-                                </div>
-                            </div>
-                        </li>
+                        <!-- Altri menu items -->
                     </ul>
                 </nav>
-                
-                <!-- BOX RICERCA E TRADUZIONE -->
-                <div class="search-container">
-                    <div class="gcse-search"></div>
-                </div>
-                
-                <div class="translate-container">
-                    <div id="google_translate_element"></div>
-                </div>
             </div>
         </div>
+<script type="text/javascript">
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("translateBtn");
+  const box = document.getElementById("google_translate_element");
+  
+  box.style.display = "none"; // lo nasconde all'avvio
+
+  btn.addEventListener("click", () => {
+    box.style.display = box.style.display === "none" ? "block" : "none";
+  });
+});
+
+
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'it',
+      includedLanguages: 'en,fr,de,es,el,pl,pt,ro,ru',
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+      autoDisplay: false
+    }, 'google_translate_element');
+  }
+</script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     </header>
 
     <!-- SEZIONE BENVENUTO -->
@@ -851,629 +784,36 @@
                 layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
                 autoDisplay: false
             }, 'google_translate_element');
+            
+            // Nascondi il widget nativo di Google
+            const googleTranslateElement = document.querySelector('.goog-te-gadget');
+            if (googleTranslateElement) {
+                googleTranslateElement.style.display = 'none';
+            }
         }
+
+        // GESTIONE PULSANTE TRADUCI
+        document.getElementById('translateBtn').addEventListener('click', function() {
+            const googleTranslateCombo = document.querySelector('.goog-te-combo');
+            if (googleTranslateCombo) {
+                googleTranslateCombo.click();
+            }
+        });
+
+        // RICERCA PERSONALIZZATA
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const query = this.value.trim();
+                if (query) {
+                    // Implementa qui la tua logica di ricerca
+                    alert(`Hai cercato: ${query}`);
+                    this.value = '';
+                }
+            }
+        });
 
         // AVVIA L'ANIMAZIONE
         window.addEventListener('load', playWelcomeAnimation);
     </script>
-<!-----------------------bannar cooki-->>
-<!-- CSS -->
-<style>
-    /* BANNER COOKIE IN STILE ECHI DI SOFIA */
-    #cookie-banner {
-        position: fixed;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90%;
-        max-width: 1200px;
-        background: linear-gradient(135deg, #D4AF37 0%, #f1c27d 100%);
-        color: #000;
-        padding: 1.5rem;
-        border-radius: 10px 10px 0 0;
-        box-shadow: 0 -5px 25px rgba(212, 175, 55, 0.3);
-        font-family: 'Cormorant Garamond', serif;
-        z-index: 1000;
-        display: none;
-        animation: slideUp 0.5s ease-out forwards;
-        border-top: 3px solid rgba(0,0,0,0.1);
-    }
-
-    @keyframes slideUp {
-        from { transform: translateX(-50%) translateY(100%); }
-        to { transform: translateX(-50%) translateY(0); }
-    }
-
-    #cookie-banner.show {
-        display: block;
-    }
-
-    .cookie-content {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 1rem;
-    }
-
-    .cookie-text {
-        flex: 1;
-        min-width: 300px;
-        font-size: 1.1rem;
-        line-height: 1.6;
-    }
-
-    .cookie-text a {
-        color: #000;
-        text-decoration: underline;
-        font-weight: 600;
-        transition: all 0.3s;
-    }
-
-    .cookie-text a:hover {
-        color: #5a3921;
-    }
-
-    .cookie-buttons {
-        display: flex;
-        gap: 0.8rem;
-        flex-wrap: wrap;
-    }
-
-    .cookie-btn {
-        padding: 0.7rem 1.5rem;
-        border-radius: 50px;
-        font-family: 'Cormorant Garamond', serif;
-        font-weight: 700;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        border: none;
-        font-size: 1rem;
-    }
-
-    #accept-cookies {
-        background: #000;
-        color: #D4AF37;
-        border: 2px solid #000;
-    }
-
-    #accept-cookies:hover {
-        background: #D4AF37;
-        color: #000;
-    }
-
-    #customize-cookies {
-        background: transparent;
-        color: #000;
-        border: 2px solid #000;
-    }
-
-    #customize-cookies:hover {
-        background: rgba(0,0,0,0.1);
-    }
-
-    #reject-cookies {
-        background: transparent;
-        color: #000;
-        border: 2px solid transparent;
-        text-decoration: underline;
-    }
-
-    #reject-cookies:hover {
-        text-decoration: none;
-    }
-
-    /* MODALE PERSONALIZZAZIONE */
-    #cookie-modal {
-        display: none;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: linear-gradient(135deg, #1B2735 0%, #090A0F 100%);
-        padding: 2rem;
-        border-radius: 10px;
-        z-index: 1001;
-        max-width: 600px;
-        width: 90%;
-        box-shadow: 0 5px 30px rgba(0,0,0,0.5);
-        border: 1px solid #D4AF37;
-    }
-
-    .cookie-options {
-        margin: 1.5rem 0;
-    }
-
-    .cookie-option {
-        margin-bottom: 1rem;
-        padding-bottom: 1rem;
-        border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-    }
-
-    .cookie-option label {
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-        color: #f1e5ac;
-        font-size: 1.1rem;
-    }
-
-    .cookie-option input {
-        margin-right: 1rem;
-        accent-color: #D4AF37;
-    }
-
-    .modal-buttons {
-        display: flex;
-        justify-content: flex-end;
-        gap: 1rem;
-    }
-
-    @media (max-width: 768px) {
-        .cookie-content {
-            flex-direction: column;
-        }
-        
-        .cookie-text {
-            min-width: auto;
-            text-align: center;
-        }
-        
-        .cookie-buttons {
-            width: 100%;
-            justify-content: center;
-        }
-    }
-
-
-        /* FOOTER STYLE */
-        footer {
-            background: rgba(10, 10, 30, 0.95);
-            backdrop-filter: blur(5px);
-            border-top: 1px solid rgba(255, 215, 0, 0.3);
-            padding: 3rem 0 1.5rem;
-            color: #e0e0e0;
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .footer-column h3 {
-            color: #ffd700;
-            font-family: 'Cinzel Decorative', cursive;
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-            padding-bottom: 0.5rem;
-        }
-
-        .footer-column h3::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 50px;
-            height: 1px;
-            background: linear-gradient(90deg, #ffd700, transparent);
-        }
-
-        .footer-column ul {
-            list-style: none;
-        }
-
-        .footer-column li {
-            margin-bottom: 0.8rem;
-        }
-
-        .footer-column a {
-            color: #e0e0e0;
-            text-decoration: none;
-            transition: all 0.3s;
-            display: inline-block;
-            position: relative;
-        }
-
-        .footer-column a::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -2px;
-            width: 0;
-            height: 1px;
-            background: #ffd700;
-            transition: width 0.3s ease;
-        }
-
-        .footer-column a:hover {
-            color: #ffd700;
-        }
-
-        .footer-column a:hover::after {
-            width: 100%;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255, 215, 0, 0.1);
-            color: #ffd700;
-            transition: all 0.3s;
-        }
-
-        .social-links a:hover {
-            background: rgba(255, 215, 0, 0.3);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
-        }
-
-        .newsletter-form {
-            margin-top: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .newsletter-form input {
-            padding: 0.8rem 1rem;
-            background: rgba(20, 20, 40, 0.8);
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            border-radius: 4px;
-            color: #e0e0e0;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1rem;
-            transition: all 0.3s;
-        }
-
-        .newsletter-form input:focus {
-            outline: none;
-            border-color: #ffd700;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-        }
-
-        .newsletter-form button {
-            padding: 0.8rem 1.5rem;
-            background: linear-gradient(135deg, #ffd700, #ffaa00);
-            border: none;
-            border-radius: 4px;
-            color: #0a0a1a;
-            font-family: 'Cinzel Decorative', cursive;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .newsletter-form button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
-        }
-
-        .copyright {
-            text-align: center;
-            margin-top: 3rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(255, 215, 0, 0.1);
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
-        }
-
-        .scroll-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 215, 0, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ffd700;
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s;
-            z-index: 99;
-            border: none;
-        }
-
-        .scroll-top.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .scroll-top:hover {
-            background: rgba(255, 215, 0, 0.3);
-            transform: translateY(-3px);
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 768px) {
-            .footer-container {
-                grid-template-columns: 1fr;
-                gap: 2.5rem;
-            }
-            
-            .footer-column h3 {
-                margin-bottom: 1rem;
-            }
-        }
-</style>
-
-<!-- HTML -->
-<div id="cookie-banner">
-    <div class="cookie-content">
-        <div class="cookie-text">
-            Utilizziamo cookie essenziali e tecnici per migliorare la tua esperienza. 
-            <a href="/privacy-policy" target="_blank">Leggi la nostra Privacy Policy</a>.
-        </div>
-        <div class="cookie-buttons">
-            <button id="accept-cookies" class="cookie-btn">Accetta tutti</button>
-            <button id="customize-cookies" class="cookie-btn">Personalizza</button>
-            <button id="reject-cookies" class="cookie-btn">Rifiuta non essenziali</button>
-        </div>
-    </div>
-</div>
-
-<!-- MODALE PERSONALIZZAZIONE -->
-<div id="cookie-modal">
-    <h3 style="color: #D4AF37; margin-bottom: 1rem; font-size: 1.5rem;">Preferenze Cookie</h3>
-    <div class="cookie-options">
-        <div class="cookie-option">
-            <label>
-                <input type="checkbox" name="essential" checked disabled>
-                Cookie Essenziali
-                <span style="font-size: 0.9rem; color: #a0a0a0; display: block; margin-top: 0.3rem;">
-                    Necessari per il funzionamento del sito (sempre attivi)
-                </span>
-            </label>
-        </div>
-        <div class="cookie-option">
-            <label>
-                <input type="checkbox" name="analytics" checked>
-                Cookie Analitici
-                <span style="font-size: 0.9rem; color: #a0a0a0; display: block; margin-top: 0.3rem;">
-                    Ci aiutano a migliorare il sito analizzando il traffico
-                </span>
-            </label>
-        </div>
-        <div class="cookie-option">
-            <label>
-                <input type="checkbox" name="marketing">
-                Cookie di Marketing
-                <span style="font-size: 0.9rem; color: #a0a0a0; display: block; margin-top: 0.3rem;">
-                    Per mostrarti contenuti personalizzati
-                </span>
-            </label>
-        </div>
-    </div>
-    <div class="modal-buttons">
-        <button id="save-preferences" class="cookie-btn" style="background: #D4AF37; color: #000; border: 2px solid #D4AF37;">Salva Preferenze</button>
-    </div>
-</div>
-
-<!-- JavaScript -->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const cookieBanner = document.getElementById('cookie-banner');
-        const cookieModal = document.getElementById('cookie-modal');
-        const acceptBtn = document.getElementById('accept-cookies');
-        const customizeBtn = document.getElementById('customize-cookies');
-        const rejectBtn = document.getElementById('reject-cookies');
-        const savePrefBtn = document.getElementById('save-preferences');
-        
-        // Controlla se l'utente ha già accettato i cookie
-        if (!getCookie('cookie_consent')) {
-            setTimeout(() => {
-                cookieBanner.classList.add('show');
-            }, 1000);
-        }
-        
-        // Gestione click sui pulsanti
-        acceptBtn.addEventListener('click', function() {
-            setCookie('cookie_consent', 'all', 365);
-            cookieBanner.classList.remove('show');
-        });
-        
-        customizeBtn.addEventListener('click', function() {
-            cookieModal.style.display = 'block';
-        });
-        
-        rejectBtn.addEventListener('click', function() {
-            setCookie('cookie_consent', 'essential', 365);
-            cookieBanner.classList.remove('show');
-        });
-        
-        savePrefBtn.addEventListener('click', function() {
-            const analytics = document.querySelector('input[name="analytics"]').checked;
-            const marketing = document.querySelector('input[name="marketing"]').checked;
-            
-            const consent = {
-                essential: true,
-                analytics: analytics,
-                marketing: marketing
-            };
-            
-            setCookie('cookie_consent', JSON.stringify(consent), 365);
-            cookieModal.style.display = 'none';
-            cookieBanner.classList.remove('show');
-        });
-        
-        // Chiudi modale cliccando fuori
-        window.addEventListener('click', function(event) {
-            if (event.target === cookieModal) {
-                cookieModal.style.display = 'none';
-            }
-        });
-        
-        // Funzioni per i cookie
-        function setCookie(name, value, days) {
-            const date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            const expires = "expires=" + date.toUTCString();
-            document.cookie = name + "=" + value + ";" + expires + ";path=/";
-        }
-        
-        function getCookie(name) {
-            const cookieName = name + "=";
-            const decodedCookie = decodeURIComponent(document.cookie);
-            const cookieArray = decodedCookie.split(';');
-            
-            for(let i = 0; i < cookieArray.length; i++) {
-                let cookie = cookieArray[i];
-                while (cookie.charAt(0) === ' ') {
-                    cookie = cookie.substring(1);
-                }
-                if (cookie.indexOf(cookieName) === 0) {
-                    return cookie.substring(cookieName.length, cookie.length);
-                }
-            }
-            return null;
-        }
-    });
-</script>
-
-
-<footer>
-        <div class="footer-container">
-            <!-- Colonna 1: Navigazione -->
-            <div class="footer-column">
-                <h3>Esplora</h3>
-                <ul>
-                    <li><a href="#">Filosofia Antica</a></li>
-                    <li><a href="#">Filosofia Classica</a></li>
-                    <li><a href="#">Filosofia Medievale</a></li>
-                    <li><a href="#">Filosofia Moderna</a></li>
-                    <li><a href="#">Filosofia Contemporanea</a></li>
-                </ul>
-            </div>
-            
-            <!-- Colonna 2: Risorse -->
-            <div class="footer-column">
-                <h3>Risorse</h3>
-                <ul>
-                    <li><a href="#">Biblioteca</a></li>
-                    <li><a href="#">Glossario</a></li>
-                    <li><a href="#">Cronologia</a></li>
-                    <li><a href="#">Mappe Concettuali</a></li>
-                    <li><a href="#">Fonti Primarie</a></li>
-                </ul>
-            </div>
-            
-            <!-- Colonna 3: Contatti -->
-            <div class="footer-column">
-                <h3>Contatti</h3>
-                <ul>
-                    <li><a href="mailto:info@echidisofia.it">info@echidisofia.it</a></li>
-                    <li><a href="#">Collabora con noi</a></li>
-                    <li><a href="#">Domande frequenti</a></li>
-                    <li><a href="#">Supporto</a></li>
-                </ul>
-                
-                <div class="social-links">
-                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                </div>
-            </div>
-            
-            <!-- Colonna 4: Newsletter -->
-            <div class="footer-column">
-                <h3>Rimani aggiornato</h3>
-                <p>Iscriviti alla nostra newsletter per ricevere contenuti esclusivi.</p>
-                <form class="newsletter-form" id="newsletterForm">
-                    <input type="email" placeholder="La tua email" required>
-                    <button type="submit">Iscriviti</button>
-                </form>
-            </div>
-        </div>
-        
-        <div class="copyright">
-            <p>&copy; 2023 Echi di Sofia. Tutti i diritti riservati.</p>
-        </div>
-<div id="google_translate_element"></div>
-<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-<script>
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement({
-      pageLanguage: 'it',
-      layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-    }, 'google_translate_element');
-  }
-</script>
-
-    </footer>
-    
-    <!-- PULSANTE SCROLL TO TOP -->
-    <button class="scroll-top" id="scrollTopBtn">
-        <i class="fas fa-arrow-up"></i>
-    </button>
-
-    <script>
-        // SCROLL TO TOP
-        const scrollTopBtn = document.getElementById('scrollTopBtn');
-        
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                scrollTopBtn.classList.add('active');
-            } else {
-                scrollTopBtn.classList.remove('active');
-            }
-        });
-        
-        scrollTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-
-        // NEWSLETTER FORM
-        const newsletterForm = document.getElementById('newsletterForm');
-        
-        newsletterForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = newsletterForm.querySelector('input').value;
-            
-            // Simulazione invio (sostituire con codice reale)
-            console.log(`Email inviata: ${email}`);
-            
-            // Reset del form
-            newsletterForm.reset();
-            
-            // Messaggio di successo
-            alert('Grazie per esserti iscritto alla nostra newsletter!');
-        });
-
-        // ANIMAZIONE LINK AL HOVER
-        document.querySelectorAll('.footer-column a').forEach(link => {
-            link.addEventListener('mouseenter', () => {
-                link.style.color = '#ffd700';
-            });
-            
-            link.addEventListener('mouseleave', () => {
-                link.style.color = '#e0e0e0';
-            });
-        });
-    </script>
-
-</footer>
-
 </body>
 </html>
