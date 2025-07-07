@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
@@ -21,7 +21,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&display=swap" rel="stylesheet">
 
     
-
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -207,7 +206,7 @@
             backdrop-filter: blur(5px);
             position: fixed;
             width: 100%;
-            top: 60px; /* Spazio per la barra superiore */
+            top: 60px;
             z-index: 100;
             border-bottom: 1px solid rgba(255, 215, 0, 0.3);
         }
@@ -227,6 +226,11 @@
             color: #ffd700;
             text-decoration: none;
             letter-spacing: 2px;
+            transition: all 0.3s;
+        }
+
+        .logo:hover {
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
         }
 
         /* STILI DEL MENU */
@@ -249,7 +253,7 @@
             cursor: pointer;
             padding: 0.5rem 0;
             text-decoration: none;
-            transition: color 0.3s;
+            transition: all 0.3s;
             display: inline-block;
         }
 
@@ -259,6 +263,7 @@
 
         .menu-btn:hover, .menu-desktop > ul > li > a:hover {
             color: #ffd700;
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
         }
 
         .arrow {
@@ -284,6 +289,7 @@
             padding: 2rem;
             z-index: 10;
             animation: fadeIn 0.3s ease-out;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
 
         @keyframes fadeIn {
@@ -309,6 +315,7 @@
             margin-bottom: 1rem;
             padding-bottom: 0.5rem;
             border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+            font-size: 1.1rem;
         }
 
         .mega-menu a {
@@ -317,16 +324,18 @@
             text-decoration: none;
             padding: 0.5rem 0;
             transition: all 0.3s;
+            font-size: 1rem;
         }
 
         .mega-menu a:hover {
             color: #ffd700;
             padding-left: 0.5rem;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
         }
 
         /* CONTENUTO PRINCIPALE */
         main {
-            padding-top: 160px; /* Aumentato per le due barre fisse */
+            padding-top: 160px;
             min-height: 100vh;
         }
 
@@ -442,7 +451,7 @@
             }
             
             main {
-                padding-top: 180px; /* Più spazio per le barre su mobile */
+                padding-top: 180px;
             }
             
             .welcome-title {
@@ -453,6 +462,37 @@
                 font-size: 1.2rem;
                 padding: 1rem;
             }
+        }
+
+        /* ANIMAZIONI AGGIUNTIVE */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse-animation {
+            animation: pulse 3s infinite ease-in-out;
+        }
+
+        /* EFFETTO SOTTOLINEATO */
+        .underline-effect {
+            position: relative;
+        }
+
+        .underline-effect::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #ffd700;
+            transition: width 0.3s ease;
+        }
+
+        .underline-effect:hover::after {
+            width: 100%;
         }
     </style>
 </head>
@@ -489,11 +529,11 @@
             <div style="display: flex; align-items: center;">
                 <nav class="menu-desktop">
                     <ul role="menu">
-                        <li><a href="#" role="menuitem">Home</a></li>
+                        <li><a href="#" role="menuitem" class="underline-effect">Home</a></li>
                         
                         <!-- Filosofia antica -->
                         <li role="none" class="dropdown">
-                            <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                            <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
                                 Filosofia antica <span class="arrow">▼</span>
                             </button>
                             <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia antica">
@@ -527,7 +567,120 @@
                             </div>
                         </li>
                         
-                        <!-- Altri menu items -->
+                        <!-- Filosofia classica -->
+                        <li role="none" class="dropdown">
+                            <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                                Filosofia classica <span class="arrow">▼</span>
+                            </button>
+                            <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia classica">
+                                <div>
+                                    <h4>Classici</h4>
+                                    <a href="articoli/socrate.html" role="menuitem">Socrate</a>
+                                    <a href="articoli/platone.html" role="menuitem">Platone</a>
+                                    <a href="articoli/aristotele.html" role="menuitem">Aristotele</a>
+                                </div>
+                                <div>
+                                    <h4>Platonici</h4>
+                                    <a href="articoli/senofonte.html" role="menuitem">Senofonte</a>
+                                    <a href="articoli/antistene.html" role="menuitem">Antistene</a>
+                                    <a href="#" role="menuitem">Aristippo</a>
+                                </div>
+                                <div>
+                                    <h4>Stoici</h4>
+                                    <a href="articoli/zenone.html" role="menuitem">Zenone</a>
+                                    <a href="#" role="menuitem">Epitteto</a>
+                                    <a href="#" role="menuitem">Seneca</a>
+                                </div>
+                                <div>
+                                    <h4>Epicurei</h4>
+                                    <a href="#" role="menuitem">Epicuro</a>
+                                    <a href="#" role="menuitem">Lucrezio</a>
+                                    <a href="#" role="menuitem">Cicerone</a>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <!-- Filosofia medievale -->
+                        <li role="none" class="dropdown">
+                            <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                                Medievale/Patristica <span class="arrow">▼</span>
+                            </button>
+                            <div class="mega-menu columns-2" role="menu" aria-label="Sottomenu Filosofia medievale">
+                                <div>
+                                    <h4>Medievale</h4>
+                                    <a href="#" role="menuitem">Tommaso d'Aquino</a>
+                                    <a href="#" role="menuitem">Anselmo</a>
+                                    <a href="#" role="menuitem">Guglielmo di Ockham</a>
+                                    <a href="#" role="menuitem">Duns Scoto</a>
+                                </div>
+                                <div>
+                                    <h4>Patristica</h4>
+                                    <a href="#" role="menuitem">Agostino</a>
+                                    <a href="#" role="menuitem">Origene</a>
+                                    <a href="#" role="menuitem">Gregorio di Nissa</a>
+                                    <a href="#" role="menuitem">Tertulliano</a>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <!-- Filosofia moderna -->
+                        <li role="none" class="dropdown">
+                            <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                                Filosofia moderna <span class="arrow">▼</span>
+                            </button>
+                            <div class="mega-menu columns-3" role="menu" aria-label="Sottomenu Filosofia moderna">
+                                <div>
+                                    <h4>Razionalisti</h4>
+                                    <a href="#" role="menuitem">Cartesio</a>
+                                    <a href="#" role="menuitem">Spinoza</a>
+                                    <a href="#" role="menuitem">Leibniz</a>
+                                </div>
+                                <div>
+                                    <h4>Empiristi</h4>
+                                    <a href="#" role="menuitem">Locke</a>
+                                    <a href="#" role="menuitem">Hume</a>
+                                    <a href="#" role="menuitem">Berkeley</a>
+                                </div>
+                                <div>
+                                    <h4>Kant e oltre</h4>
+                                    <a href="#" role="menuitem">Kant</a>
+                                    <a href="#" role="menuitem">Fichte</a>
+                                    <a href="#" role="menuitem">Schelling</a>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <!-- Filosofia contemporanea -->
+                        <li role="none" class="dropdown">
+                            <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                                Contemporanea <span class="arrow">▼</span>
+                            </button>
+                            <div class="mega-menu columns-3" role="menu" aria-label="Sottomenu Filosofia contemporanea">
+                                <div>
+                                    <h4>Ottocento</h4>
+                                    <a href="#" role="menuitem">Hegel</a>
+                                    <a href="#" role="menuitem">Schopenhauer</a>
+                                    <a href="#" role="menuitem">Nietzsche</a>
+                                </div>
+                                <div>
+                                    <h4>Fenomenologia</h4>
+                                    <a href="#" role="menuitem">Husserl</a>
+                                    <a href="#" role="menuitem">Heidegger</a>
+                                    <a href="#" role="menuitem">Merleau-Ponty</a>
+                                </div>
+                                <div>
+                                    <h4>Postmoderni</h4>
+                                    <a href="#" role="menuitem">Sartre</a>
+                                    <a href="#" role="menuitem">Foucault</a>
+                                    <a href="#" role="menuitem">Derrida</a>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <!-- Altre sezioni -->
+                        <li><a href="articoli/correnti.html" role="menuitem" class="underline-effect">Correnti</a></li>
+                        <li><a href="articoli/glossario.html" role="menuitem" class="underline-effect">Glossario</a></li>
+                        <li><a href="contatti.html" role="menuitem" class="underline-effect">Contatti</a></li>
                     </ul>
                 </nav>
             </div>
@@ -538,7 +691,7 @@
     <section class="welcome-section">
         <div class="welcome-mask"></div>
         <div class="welcome-content">
-            <h1 class="welcome-title">ECHI DI SOFIA</h1>
+            <h1 class="welcome-title pulse-animation">ECHI DI SOFIA</h1>
             <div class="welcome-quote">
                 <p class="quote-text"></p>
                 <span class="quote-author"></span>
@@ -796,7 +949,7 @@
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
                 pageLanguage: 'it',
-                includedLanguages: 'en,es,fr,de,pt,ru,zh-CN,zh-TW,ja,ar,hi,bn,pa,ta,te,ml,ko,vi,th,it,pl,uk,tr,fa,nl,sv,fi,da,no,he,el,hu,cs,ro,sk,sl,hr,bs,sr,bg,mk,sq,et,lv,lt,ka,hy,az,eu,is,ga,cy,af,sw,zu,xh,yo,ha,ig,mr,ne,si,km,my,lo,gl,gd,mt,haw,sm,mi,fy,co,lb,gn,ln,st,tn,ts,ss,rn,ny,mg,uz,kk,ky,tg,tk,az,ku,ps,bo,dz,jw,su,am,as,be,bm,ce,ch,co',
+                includedLanguages: 'en,es,fr,de,pt,ru,zh-CN,ja,ar,hi,bn,ko,vi,th,pl,tr,nl,sv,fi,he',
                 layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
                 autoDisplay: false,
                 multilanguagePage: true
@@ -805,7 +958,7 @@
             // Mostra solo il menu a tendina e nascondi il resto
             const googleTranslateElement = document.querySelector('.goog-te-gadget');
             if (googleTranslateElement) {
-                googleTranslateElement.style.fontSize = '0'; // Nasconde il testo
+                googleTranslateElement.style.fontSize = '0';
             }
             
             // Stili aggiuntivi per il menu a tendina
