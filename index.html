@@ -85,6 +85,8 @@
         /* Stile per il traduttore Google */
         .translate-container {
             position: relative;
+            display: flex;
+            align-items: center;
         }
 
         .translate-btn {
@@ -109,11 +111,47 @@
             color: rgba(255, 215, 0, 0.7);
         }
 
-        #google_translate_element {
-            position: absolute;
-            opacity: 0;
-            width: 1px;
-            height: 1px;
+        /* Stili per il menu a tendina di Google Translate */
+        .goog-te-combo {
+            font-family: 'Cormorant Garamond', serif !important;
+            background: rgba(20, 20, 40, 0.8) !important;
+            color: #e0e0e0 !important;
+            border: 1px solid rgba(255, 215, 0, 0.3) !important;
+            border-radius: 4px !important;
+            padding: 8px 15px !important;
+            cursor: pointer !important;
+            margin-left: 10px;
+            height: 40px;
+        }
+
+        /* Nasconde il banner di Google */
+        .goog-te-banner-frame {
+            display: none !important;
+        }
+
+        /* Stile per il menu a tendina quando è aperto */
+        .goog-te-menu2 {
+            background: rgba(20, 20, 40, 0.98) !important;
+            border: 1px solid rgba(255, 215, 0, 0.3) !important;
+            color: #e0e0e0 !important;
+            max-height: 300px !important;
+            overflow-y: auto !important;
+        }
+
+        .goog-te-menu2-item div, .goog-te-menu2-item:link {
+            color: #e0e0e0 !important;
+            font-family: 'Cormorant Garamond', serif !important;
+            padding: 8px 15px !important;
+        }
+
+        .goog-te-menu2-item:hover {
+            background-color: rgba(255, 215, 0, 0.1) !important;
+            color: #ffd700 !important;
+        }
+
+        /* Nasconde il testo del gadget Google */
+        .goog-te-gadget {
+            color: transparent !important;
         }
 
         /* SFONDO STELLATO */
@@ -392,6 +430,12 @@
                 justify-content: center;
             }
             
+            .goog-te-combo {
+                width: 100%;
+                margin-left: 0;
+                margin-top: 10px;
+            }
+            
             main {
                 padding-top: 180px; /* Più spazio per le barre su mobile */
             }
@@ -421,7 +465,7 @@
                     <i class="fas fa-language"></i>
                     <span>Traduci</span>
                 </button>
-                <div id="google_translate_element"></div>
+                <div id="google_translate_element" style="display: inline-block;"></div>
             </div>
         </div>
     </div>
@@ -748,14 +792,27 @@
             new google.translate.TranslateElement({
                 pageLanguage: 'it',
                 includedLanguages: 'en,es,fr,de,pt,ru,zh-CN,ja,ar',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                autoDisplay: false
+                layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
+                autoDisplay: false,
+                multilanguagePage: true
             }, 'google_translate_element');
             
-            // Nascondi il widget nativo di Google
+            // Mostra solo il menu a tendina e nascondi il resto
             const googleTranslateElement = document.querySelector('.goog-te-gadget');
             if (googleTranslateElement) {
-                googleTranslateElement.style.display = 'none';
+                googleTranslateElement.style.fontSize = '0'; // Nasconde il testo
+            }
+            
+            // Stili aggiuntivi per il menu a tendina
+            const combo = document.querySelector('.goog-te-combo');
+            if (combo) {
+                combo.style.fontFamily = "'Cormorant Garamond', serif";
+                combo.style.background = "rgba(20, 20, 40, 0.8)";
+                combo.style.color = "#e0e0e0";
+                combo.style.border = "1px solid rgba(255, 215, 0, 0.3)";
+                combo.style.borderRadius = "4px";
+                combo.style.padding = "8px 15px";
+                combo.style.cursor = "pointer";
             }
         }
 
@@ -763,7 +820,13 @@
         document.getElementById('translateBtn').addEventListener('click', function() {
             const googleTranslateCombo = document.querySelector('.goog-te-combo');
             if (googleTranslateCombo) {
-                googleTranslateCombo.click();
+                // Simula un click sul menu a tendina per aprirlo
+                const event = new MouseEvent('mousedown', {
+                    bubbles: true,
+                    cancelable: true,
+                    view: window
+                });
+                googleTranslateCombo.dispatchEvent(event);
             }
         });
 
