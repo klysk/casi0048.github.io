@@ -494,56 +494,7 @@
         .underline-effect:hover::after {
             width: 100%;
         }
-        .cookie-banner {
-  position: fixed;
-  bottom: -200px;
-  left: 0;
-  width: 100%;
-  background: rgba(10,10,26,0.95);
-  border-top: 2px solid #ffd700;
-  color: #e0e0e0;
-  padding: 1.5rem 2rem;
-  font-family: 'Cormorant Garamond', serif;
-  z-index: 3000;
-  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.5);
-  display: none;
-}
-
-.cookie-content {
-  max-width: 960px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.cookie-content a {
-  color: #ffd700;
-  text-decoration: underline;
-}
-
-.cookie-buttons {
-  margin-top: 1rem;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.cookie-buttons button {
-  background: rgba(255, 215, 0, 0.1);
-  border: 1px solid #ffd700;
-  color: #ffd700;
-  padding: 0.6rem 1.4rem;
-  border-radius: 4px;
-  font-family: inherit;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.cookie-buttons button:hover {
-  background: #ffd700;
-  color: #0a0a1a;
-}
-
+      
     </style>
 </head>
 <body>
@@ -1052,6 +1003,57 @@
         // AVVIA L'ANIMAZIONE
         window.addEventListener('load', playWelcomeAnimation);
         
+ 
+</script>
+
+    
+    <!--  inizio   banner cooki   -->
+<div id="cookie-banner" class="cookie-banner">
+  <div class="cookie-content">
+    <p>
+      Questo sito utilizza cookie tecnici e di terze parti per migliorare l’esperienza utente. 
+      <a href="policy.html" target="_blank">Leggi la Privacy Policy</a>.
+    </p>
+    <div class="cookie-buttons">
+      <button id="accept-cookies">Accetta</button>
+      <button id="customize-cookies">Personalizza</button>
+      <button id="reject-cookies">Rifiuta</button>
+    </div>
+  </div>
+</div>
+<!--   inizio cooki banner   -->
+<!-- BANNER COOKIE -->
+<div id="cookie-banner" style="display:none; position: fixed; bottom: -200px; left: 0; width: 100%;
+    background: rgba(10,10,26,0.95); border-top: 2px solid #ffd700; color: #e0e0e0;
+    padding: 1.5rem 2rem; font-family: 'Cormorant Garamond', serif; z-index: 3000;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.5);">
+  <div style="max-width: 960px; margin: 0 auto; text-align: center;">
+    <p>
+      Questo sito utilizza cookie tecnici e di terze parti per migliorare l’esperienza utente.
+      <a href="policy.html" target="_blank" style="color: #ffd700; text-decoration: underline;">Leggi la Privacy Policy</a>.
+    </p>
+    <div style="margin-top: 1rem; display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem;">
+      <button id="accept-cookies" style="background: rgba(255, 215, 0, 0.1); border: 1px solid #ffd700;
+          color: #ffd700; padding: 0.6rem 1.4rem; border-radius: 4px; font-family: inherit; cursor: pointer;">
+        Accetta
+      </button>
+      <button id="customize-cookies" style="background: rgba(255, 215, 0, 0.1); border: 1px solid #ffd700;
+          color: #ffd700; padding: 0.6rem 1.4rem; border-radius: 4px; font-family: inherit; cursor: pointer;">
+        Personalizza
+      </button>
+      <button id="reject-cookies" style="background: rgba(255, 215, 0, 0.1); border: 1px solid #ffd700;
+          color: #ffd700; padding: 0.6rem 1.4rem; border-radius: 4px; font-family: inherit; cursor: pointer;">
+        Rifiuta
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- GSAP (se non incluso già sopra) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<!-- SCRIPT BANNER COOKIE -->
+<script>
   window.addEventListener("DOMContentLoaded", () => {
     const banner = document.getElementById("cookie-banner");
     const acceptBtn = document.getElementById("accept-cookies");
@@ -1060,7 +1062,6 @@
 
     if (!localStorage.getItem("cookieConsent")) {
       banner.style.display = "block";
-
       gsap.to("#cookie-banner", {
         duration: 1.2,
         y: -200,
@@ -1097,23 +1098,7 @@
   });
 </script>
 
-    
-    <!--  inizio   banner cooki   -->
-<div id="cookie-banner" class="cookie-banner">
-  <div class="cookie-content">
-    <p>
-      Questo sito utilizza cookie tecnici e di terze parti per migliorare l’esperienza utente. 
-      <a href="policy.html" target="_blank">Leggi la Privacy Policy</a>.
-    </p>
-    <div class="cookie-buttons">
-      <button id="accept-cookies">Accetta</button>
-      <button id="customize-cookies">Personalizza</button>
-      <button id="reject-cookies">Rifiuta</button>
-    </div>
-  </div>
-</div>
 
-
-    <!--       fine banner cooki -->>
+    <!--         fine cooki banner   -->
 </body>
 </html>
