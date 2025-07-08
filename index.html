@@ -16,7 +16,7 @@
     
     <!-- GSAP per animazioni -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
-    
+     <div id="google_translate_element"></div>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -110,7 +110,43 @@
         .translate-btn i {
             color: rgba(255, 215, 0, 0.7);
         }
+/* Stili minimi per il traduttore - ESSENZIALI */
+        .goog-te-combo {
+            font-family: 'Cormorant Garamond', serif !important;
+            background: rgba(20, 20, 40, 0.9) !important;
+            color: #e0e0e0 !important;
+            border: 1px solid rgba(255, 215, 0, 0.5) !important;
+            padding: 8px 15px !important;
+            border-radius: 4px !important;
+            cursor: pointer !important;
+            margin-left: 10px;
+            font-size: 1rem !important;
+        }
 
+        .goog-te-banner-frame, 
+        .goog-te-gadget-icon, 
+        .goog-te-gadget-simple .goog-te-menu-value {
+            display: none !important;
+        }
+
+        .goog-te-menu-frame {
+            max-height: 300px !important;
+            overflow-y: auto !important;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3) !important;
+            border: 1px solid rgba(255, 215, 0, 0.3) !important;
+            background: rgba(10, 10, 30, 0.98) !important;
+        }
+
+        .goog-te-menu2-item div, 
+        .goog-te-menu2-item:link {
+            color: #e0e0e0 !important;
+            font-family: 'Cormorant Garamond', serif !important;
+            padding: 10px 15px !important;
+        }
+
+        .goog-te-menu2-item:hover {
+            background-color: rgba(255, 215, 0, 0.1) !important;
+        }
         /* Stili per il menu a tendina di Google Translate */
         .goog-te-combo {
             font-family: 'Cormorant Garamond', serif !important;
@@ -490,6 +526,43 @@
         .underline-effect:hover::after {
             width: 100%;
         }
+        goog-te-combo {
+            font-family: 'Cormorant Garamond', serif !important;
+            background: rgba(20, 20, 40, 0.9) !important;
+            color: #e0e0e0 !important;
+            border: 1px solid rgba(255, 215, 0, 0.5) !important;
+            padding: 8px 15px !important;
+            border-radius: 4px !important;
+            cursor: pointer !important;
+            margin-left: 10px;
+            font-size: 1rem !important;
+        }
+
+        .goog-te-banner-frame, 
+        .goog-te-gadget-icon, 
+        .goog-te-gadget-simple .goog-te-menu-value {
+            display: none !important;
+        }
+
+        .goog-te-menu-frame {
+            max-height: 300px !important;
+            overflow-y: auto !important;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3) !important;
+            border: 1px solid rgba(255, 215, 0, 0.3) !important;
+            background: rgba(10, 10, 30, 0.98) !important;
+        }
+
+        .goog-te-menu2-item div, 
+        .goog-te-menu2-item:link {
+            color: #e0e0e0 !important;
+            font-family: 'Cormorant Garamond', serif !important;
+            padding: 10px 15px !important;
+        }
+
+        .goog-te-menu2-item:hover {
+            background-color: rgba(255, 215, 0, 0.1) !important;
+        }
+        
     </style>
 </head>
 <body>
@@ -695,6 +768,7 @@
             </div>
         </div>
     </section>
+ <div id="google_translate_element"></div>
 
     <main>
         <!-- Il tuo contenuto qui -->
@@ -999,6 +1073,103 @@
 
         // AVVIA L'ANIMAZIONE
         window.addEventListener('load', playWelcomeAnimation);
+           // INIZIALIZZAZIONE TRADUTTORE AGGIORNATA
+    function googleTranslateElementInit() {
+        // Prima pulisci eventuali elementi esistenti
+        const oldWidget = document.getElementById('google_translate_element');
+        oldWidget.innerHTML = '';
+        
+        // Inizializza il widget
+        new google.translate.TranslateElement({
+            pageLanguage: 'it',
+            includedLanguages: 'en,es,fr,de,pt,ru,zh-CN,ja,ar,hi,bn,ko,vi,th,pl,tr,nl,sv,fi,he',
+            layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
+            autoDisplay: false,
+            multilanguagePage: true
+        }, 'google_translate_element');
+
+        // Intervallo per gestire il caricamento asincrono
+        const checkWidget = setInterval(() => {
+            const gadget = document.querySelector('.goog-te-gadget');
+            const combo = document.querySelector('.goog-te-combo');
+            
+            if (gadget && combo) {
+                clearInterval(checkWidget);
+                
+                // Personalizzazione avanzata
+                gadget.style.fontSize = '0';  // Nasconde il testo predefinito
+                combo.style.visibility = 'visible';
+                
+                // Aggiungi icona personalizzata
+                const icon = document.createElement('i');
+                icon.className = 'fas fa-language';
+                icon.style.marginRight = '8px';
+                icon.style.color = 'rgba(255, 215, 0, 0.7)';
+                gadget.insertBefore(icon, combo);
+            }
+        }, 100);
+    }
+
+    // Carica lo script Google Translate
+    function loadGoogleTranslate() {
+        const script = document.createElement('script');
+        script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+        script.async = true;
+        document.body.appendChild(script);
+    }
+
+    // INIZIALIZZAZIONE TRADUTTORE AGGIORNATA
+    function googleTranslateElementInit() {
+        // Prima pulisci eventuali elementi esistenti
+        const oldWidget = document.getElementById('google_translate_element');
+        oldWidget.innerHTML = '';
+        
+        // Inizializza il widget
+        new google.translate.TranslateElement({
+            pageLanguage: 'it',
+            includedLanguages: 'en,es,fr,de,pt,ru,zh-CN,ja,ar,hi,bn,ko,vi,th,pl,tr,nl,sv,fi,he',
+            layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
+            autoDisplay: false,
+            multilanguagePage: true
+        }, 'google_translate_element');
+
+        // Intervallo per gestire il caricamento asincrono
+        const checkWidget = setInterval(() => {
+            const gadget = document.querySelector('.goog-te-gadget');
+            const combo = document.querySelector('.goog-te-combo');
+            
+            if (gadget && combo) {
+                clearInterval(checkWidget);
+                
+                // Personalizzazione avanzata
+                gadget.style.fontSize = '0';  // Nasconde il testo predefinito
+                combo.style.visibility = 'visible';
+                
+                // Aggiungi icona personalizzata
+                const icon = document.createElement('i');
+                icon.className = 'fas fa-language';
+                icon.style.marginRight = '8px';
+                icon.style.color = 'rgba(255, 215, 0, 0.7)';
+                gadget.insertBefore(icon, combo);
+            }
+        }, 100);
+    }
+
+    // Carica lo script Google Translate
+    function loadGoogleTranslate() {
+        const script = document.createElement('script');
+        script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+        script.async = true;
+        document.body.appendChild(script);
+    }
+
+    // Avvia il caricamento quando la pagina è pronta
+    document.addEventListener('DOMContentLoaded', loadGoogleTranslate);
+    // Avvia il caricamento quando la pagina è pronta
+    document.addEventListener('DOMContentLoaded', loadGoogleTranslate);
+        
     </script>
+
+
 </body>
 </html>
