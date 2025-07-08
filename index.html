@@ -990,17 +990,14 @@ main {
             }
         });
 
-        // RICERCA PERSONALIZZATA
-        document.getElementById('searchInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                const query = this.value.trim();
-                if (query) {
-                    // Implementa qui la tua logica di ricerca
-                    alert(`Hai cercato: ${query}`);
-                    this.value = '';
-                }
-            }
-        });
+    
+
+<!-- FORM DI RICERCA GOOGLE BASE -->
+<form action="https://www.google.com/search" method="get" target="_blank" class="search-form" style="display: flex; align-items: center; gap: 0.5rem;">
+  <input type="text" name="q" id="searchInput" placeholder="Cerca tra gli Echi di Sofia..." style="padding: 0.6rem 1rem; font-family: 'Cormorant Garamond'; border: 1px solid rgba(255,215,0,0.3); border-radius: 4px; background: rgba(20,20,40,0.8); color: #e0e0e0;">
+  <input type="hidden" name="sitesearch" value="casi0048.github.io"> <!-- Cambia se usi un dominio personalizzato -->
+  <button type="submit" style="padding: 0.6rem 1rem; background-color: #ffd700; border: none; color: #000; border-radius: 4px; font-family: 'Cormorant Garamond'; cursor: pointer;">Cerca</button>
+</form>
 
         // AVVIA L'ANIMAZIONE
         window.addEventListener('load', playWelcomeAnimation);
@@ -1768,6 +1765,26 @@ main {
             symbol.style.animation = `fadeIn 1s ${delay}s forwards`;
         });
     </script>
+
+    <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.getElementById("searchInput");
+
+    if (searchInput) {
+      searchInput.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          const query = this.value.trim();
+          if (query !== "") {
+            const site = "casi0048.github.io"; // cambia con "echidisofia.it" se usi dominio personalizzato
+            const searchUrl = `https://www.google.com/search?q=site:${site} ${encodeURIComponent(query)}`;
+            window.open(searchUrl, "_blank"); // apre i risultati in una nuova scheda
+          }
+        }
+      });
+    }
+  });
+</script>
+
 </body>
 </html>
     <!--   fine footer  -->
