@@ -1059,14 +1059,17 @@
 
 <!--   inizio cooki banner   -->
 <!-- BANNER COOKIE -->
-<div id="cookie-banner" style="display:none; position: fixed; bottom: -200px; left: 0; width: 100%;
+<!-- 🔸 INIZIO BANNER COOKIE -->
+<div id="cb-notice" style="display: none; position: fixed; bottom: 0; left: 0; width: 100%;
     background: rgba(10,10,26,0.95); border-top: 2px solid #ffd700; color: #e0e0e0;
     padding: 1.5rem 2rem; font-family: 'Cormorant Garamond', serif; z-index: 3000;
-    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.5);">
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.5); transform: translateY(100%);">
   <div style="max-width: 960px; margin: 0 auto; text-align: center;">
     <p>
       Questo sito utilizza cookie tecnici e di terze parti per migliorare l’esperienza utente.
-      <a href="policy.html" target="_blank" style="color: #ffd700; text-decoration: underline;">Leggi la Privacy Policy</a>.
+      <a href="policy.html" target="_blank" style="color: #ffd700; text-decoration: underline;">
+        Leggi la Privacy Policy
+      </a>.
     </p>
     <div style="margin-top: 1rem; display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem;">
       <button id="accept-cookies" style="background: rgba(255, 215, 0, 0.1); border: 1px solid #ffd700;
@@ -1078,22 +1081,62 @@
         Personalizza
       </button>
       <button id="reject-cookies" style="background: rgba(255, 215, 0, 0.1); border: 1px solid #ffd700;
-          color: #ffd700; padding: 0.6rem 1.4rem; border-radius: 4px; font-family: inherit; cursor: pointer
+          color: #ffd700; padding: 0.6rem 1.4rem; border-radius: 4px; font-family: inherit; cursor: pointer;">
         Rifiuta
       </button>
     </div>
   </div>
 </div>
+<!-- 🔸 FINE BANNER COOKIE -->
 
-<!-- GSAP (se non incluso già sopra) -->
+<!-- ✅ LIBRERIA GSAP -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
-<!-- SCRIPT BANNER COOKIE -->
-
+<!-- ✅ SCRIPT LOGICO PER BANNER COOKIE -->
+<script>
   window.addEventListener("DOMContentLoaded", () => {
-    
-</script>
+    const banner = document.getElementById("cb-notice");
+    const acceptBtn = document.getElementById("accept-cookies");
+    const customizeBtn = document.getElementById("customize-cookies");
+    const rejectBtn = document.getElementById("reject-cookies");
 
+    if (!localStorage.getItem("cookieConsent")) {
+      banner.style.display = "block";
+      gsap.from("#cb-notice", {
+        y: 200,
+        opacity: 0,
+        duration: 1.3,
+        ease: "power4.out"
+      });
+    }
+
+    function closeBanner() {
+      gsap.to("#cb-notice", {
+        y: 200,
+        opacity: 0,
+        duration: 1,
+        ease: "power2.in",
+        onComplete: () => {
+          banner.style.display = "none";
+        }
+      });
+    }
+
+    acceptBtn.addEventListener("click", () => {
+      localStorage.setItem("cookieConsent", "accepted");
+      closeBanner();
+    });
+
+    rejectBtn.addEventListener("click", () => {
+      localStorage.setItem("cookieConsent", "rejected");
+      closeBanner();
+    });
+
+    customizeBtn.addEventListener("click", () => {
+      alert("Funzione di personalizzazione in arrivo...");
+    });
+  });
+</script>
 
     <!--         fine cooki banner   -->
 </body>
