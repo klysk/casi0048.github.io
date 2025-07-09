@@ -461,55 +461,80 @@
             </div>
         </div>
     </div>
-
-<!--  inizio 4 filosofi -->
-<!-- Bottone centrato con testo evocativo -->
-<div style="text-align: center; margin: 30px 0;">
-  <button id="paradigma-btn" style="
-    padding: 12px 25px;
-    background: #2a4b3a; /* Verde bottiglia */
-    color: #f8f4e9; /* Crema chiaro */
-    border: none;
-    cursor: pointer;
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
-    border-radius: 4px;
-    transition: background 0.3s;
-  ">
+<!-- 🎓 Inizio Sezione "4 Filosofi" -->
+<section id="sezione-filosofi" style="padding: 40px 20px;">
+  <h2 style="text-align: center; font-family: 'Playfair Display', serif; color: #2a4b3a; margin-bottom: 20px;">
     Loro hanno cambiato il paradigma
-  </button>
-</div>
+  </h2>
 
-<!-- Griglia filosofi (nascosta inizialmente) -->
-<div id="filosofi-grid" style="
-  display: none;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  background: #f8f4e9; /* Sfondo crema */
-  border-radius: 8px;
-  text-align: center;
-">
-  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px;">
-    <!-- Filosofo 1 -->
-    <div>
-      <img src="socrate.jpg" alt="Socrate" style="width: 100%; border-radius: 50%; border: 3px solid #8B5A2B;">
-      <p style="margin-top: 10px; color: #3e3a36; font-weight: bold;">Socrate</p>
-      <p style="font-style: italic; color: #2a4b3a;">"So di non sapere."</p>
+  <div style="text-align: center; margin: 30px 0;">
+    <button id="paradigma-btn" style="
+      padding: 12px 25px;
+      background: #2a4b3a;
+      color: #f8f4e9;
+      border: none;
+      cursor: pointer;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      border-radius: 4px;
+      transition: background 0.3s;
+    ">
+      Mostra i filosofi
+    </button>
+  </div>
+
+  <div id="filosofi-grid" style="
+    display: none;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f8f4e9;
+    border-radius: 8px;
+    text-align: center;
+  ">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px;">
+      <!-- Filosofo 1 -->
+      <div>
+        <img src="socrate.jpg" alt="Ritratto di Socrate" style="width: 100%; border-radius: 50%; border: 3px solid #8B5A2B;">
+        <p style="margin-top: 10px; color: #3e3a36; font-weight: bold;">Socrate</p>
+        <p style="font-style: italic; color: #2a4b3a;">"So di non sapere."</p>
+      </div>
+      <!-- Filosofo 2 -->
+      <div>
+        <img src="platone.jpg" alt="Ritratto di Platone" style="width: 100%; border-radius: 50%; border: 3px solid #8B5A2B;">
+        <p style="margin-top: 10px; color: #3e3a36; font-weight: bold;">Platone</p>
+        <p style="font-style: italic; color: #2a4b3a;">"La realtà è un'ombra delle Idee."</p>
+      </div>
+      <!-- Filosofo 3 -->
+      <div>
+        <img src="kant.jpg" alt="Ritratto di Immanuel Kant" style="width: 100%; border-radius: 50%; border: 3px solid #8B5A2B;">
+        <p style="margin-top: 10px; color: #3e3a36; font-weight: bold;">Kant</p>
+        <p style="font-style: italic; color: #2a4b3a;">"Agisci come se la tua azione diventasse legge universale."</p>
+      </div>
+      <!-- Filosofo 4 -->
+      <div>
+        <img src="nietzsche.jpg" alt="Ritratto di Nietzsche" style="width: 100%; border-radius: 50%; border: 3px solid #8B5A2B;">
+        <p style="margin-top: 10px; color: #3e3a36; font-weight: bold;">Nietzsche</p>
+        <p style="font-style: italic; color: #2a4b3a;">"Dio è morto."</p>
+      </div>
     </div>
-    <!-- Filosofo 2 -->
-    <div>
-      <img src="platone.jpg" alt="Platone" style="width: 100%; border-radius: 50%; border: 3px solid #8B5A2B;">
-      <p style="margin-top: 10px; color: #3e3a36; font-weight: bold;">Platone</p>
-      <p style="font-style: italic; color: #2a4b3a;">"La realtà è un'ombra delle Idee."</p>
-    </div>
-    <!-- Filosofo 3 -->
-    <div>
-      <img src="kant.jpg" alt="Kant" style="width: 100%; border-radius: 50%; border: 3px solid #8B5A2B;">
-      <p style="margin-top: 10px; color: #3e3a36; font-weight: bold;">Kant</p>
-      <p style="font-style: italic; color: #2a4b3a;">"Agisci come se la tua azione diventasse legge universale."</p>
-    </div>
-    <!-- Filosofo 4 -->
+  </div>
+</section>
+
+<style>
+#paradigma-btn:hover {
+  background: #3e3a36;
+}
+</style>
+
+<script>
+document.getElementById("paradigma-btn").addEventListener("click", function () {
+  const grid = document.getElementById("filosofi-grid");
+  grid.style.display = (grid.style.display === "none" || grid.style.display === "") ? "block" : "none";
+});
+</script>
+<!-- 🔚 Fine Sezione "4 Filosofi" -->
+
     <div>
       <img src="nietzsche.jpg" alt="Nietzsche" style="width: 100%; border-radius: 50%; border: 3px solid #8B5A2B;">
       <p style="margin-top: 10px; color: #3e3a36; font-weight: bold;">Nietzsche</p>
