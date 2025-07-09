@@ -450,97 +450,81 @@
         <div class="search-translate-container">
             
 <!-- 🎓 Inizio Sezione "4 Filosofi" -->
-<section id="sezione-filosofi" style="padding: 40px 20px;">
-  <h2 style="text-align: center; font-family: 'Playfair Display', serif; color: #2a4b3a; margin-bottom: 20px;">
+
+<!--  inizio 4 filosofi -->
+<!-- Bottone centrato -->
+<div style="text-align: center; margin: 20px 0;">
+  <button id="paradigma-btn" style="
+    padding: 12px 25px;
+    background: #2a4b3a;
+    color: #f8f4e9;
+    border: none;
+    cursor: pointer;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    border-radius: 4px;
+  ">
     Loro hanno cambiato il paradigma
-  </h2>
+  </button>
+</div>
 
-  <div style="text-align: center; margin: 30px 0;">
-    <button id="paradigma-btn" style="
-      padding: 12px 25px;
-      background: #2a4b3a;
-      color: #f8f4e9;
-      border: none;
-      cursor: pointer;
-      font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
-      border-radius: 4px;
-      transition: background 0.3s;
-    ">
-      Mostra i filosofi
-    </button>
-  </div>
-
-  <div id="filosofi-grid" style="
-    display: none;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 20px;
+<!-- Overlay nascosto con i 4 filosofi -->
+<div id="filosofi-overlay" style="
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+">
+  <div style="
     background: #f8f4e9;
-    border-radius: 8px;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 800px;
     text-align: center;
   ">
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px;">
+    <h3 style="color: #2a4b3a; margin-bottom: 20px;">I Filosofi che hanno cambiato il paradigma</h3>
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
       <!-- Filosofo 1 -->
       <div>
-        <img src="socrate.jpg" alt="Ritratto di Socrate" style="width: 100%; border-radius: 50%; border: 3px solid #8B5A2B;">
+        <img src="socrate.jpg" alt="Socrate" style="width: 100%; max-width: 120px; border-radius: 50%; border: 3px solid #8B5A2B;">
         <p style="margin-top: 10px; color: #3e3a36; font-weight: bold;">Socrate</p>
         <p style="font-style: italic; color: #2a4b3a;">"So di non sapere."</p>
       </div>
       <!-- Filosofo 2 -->
       <div>
-        <img src="platone.jpg" alt="Ritratto di Platone" style="width: 100%; border-radius: 50%; border: 3px solid #8B5A2B;">
+        <img src="platone.jpg" alt="Platone" style="width: 100%; max-width: 120px; border-radius: 50%; border: 3px solid #8B5A2B;">
         <p style="margin-top: 10px; color: #3e3a36; font-weight: bold;">Platone</p>
         <p style="font-style: italic; color: #2a4b3a;">"La realtà è un'ombra delle Idee."</p>
       </div>
       <!-- Filosofo 3 -->
       <div>
-        <img src="kant.jpg" alt="Ritratto di Immanuel Kant" style="width: 100%; border-radius: 50%; border: 3px solid #8B5A2B;">
+        <img src="kant.jpg" alt="Kant" style="width: 100%; max-width: 120px; border-radius: 50%; border: 3px solid #8B5A2B;">
         <p style="margin-top: 10px; color: #3e3a36; font-weight: bold;">Kant</p>
         <p style="font-style: italic; color: #2a4b3a;">"Agisci come se la tua azione diventasse legge universale."</p>
       </div>
       <!-- Filosofo 4 -->
       <div>
-        <img src="nietzsche.jpg" alt="Ritratto di Nietzsche" style="width: 100%; border-radius: 50%; border: 3px solid #8B5A2B;">
+        <img src="nietzsche.jpg" alt="Nietzsche" style="width: 100%; max-width: 120px; border-radius: 50%; border: 3px solid #8B5A2B;">
         <p style="margin-top: 10px; color: #3e3a36; font-weight: bold;">Nietzsche</p>
         <p style="font-style: italic; color: #2a4b3a;">"Dio è morto."</p>
       </div>
     </div>
-  </div>
-</section>
-
-<style>
-#paradigma-btn:hover {
-  background: #3e3a36;
-}
-</style>
-
-<script>
-document.getElementById("paradigma-btn").addEventListener("click", function () {
-  const grid = document.getElementById("filosofi-grid");
-  grid.style.display = (grid.style.display === "none" || grid.style.display === "") ? "block" : "none";
-});
-</script>
-<!-- 🔚 Fine Sezione "4 Filosofi" -->
-            <div class="search-container">
-                <i class="fas fa-search search-icon"></i>
-                <form action="https://www.google.com/search" method="get" target="_blank">
-                    <input type="hidden" name="sitesearch" value="www.echidisofia.org">
-                    <input type="text" name="q" placeholder="Cerca nel sito..." required>
-                </form>
-            </div>
-            
-            <div class="translate-container">
-                <div id="google_translate_element"></div>
-            </div>
-        </div>
-    </div>
-
-    <div>
-      <img src="nietzsche.jpg" alt="Nietzsche" style="width: 100%; border-radius: 50%; border: 3px solid #8B5A2B;">
-      <p style="margin-top: 10px; color: #3e3a36; font-weight: bold;">Nietzsche</p>
-      <p style="font-style: italic; color: #2a4b3a;">"Dio è morto."</p>
-    </div>
+    <button id="chiudi-overlay" style="
+      margin-top: 20px;
+      padding: 8px 15px;
+      background: #2a4b3a;
+      color: #f8f4e9;
+      border: none;
+      cursor: pointer;
+    ">
+      Chiudi
+    </button>
   </div>
 </div>
 <style>
@@ -550,11 +534,28 @@ document.getElementById("paradigma-btn").addEventListener("click", function () {
 }
 </style>
 <script>
-document.getElementById("paradigma-btn").addEventListener("click", function() {
-  const grid = document.getElementById("filosofi-grid");
-  grid.style.display = grid.style.display === "block" ? "none" : "block";
-});
+<script>
+  // Apri overlay
+  document.getElementById("paradigma-btn").addEventListener("click", function() {
+    document.getElementById("filosofi-overlay").style.display = "flex";
+  });
+
+  // Chiudi overlay
+  document.getElementById("chiudi-overlay").addEventListener("click", function() {
+    document.getElementById("filosofi-overlay").style.display = "none";
+  });
+
+  // Chiudi cliccando fuori dal contenuto
+  document.getElementById("filosofi-overlay").addEventListener("click", function(e) {
+    if (e.target === this) {
+      this.style.display = "none";
+    }
+  });
 </script>
+
+<!-- fine 4 folosofi  -->
+
+
 <!-- fine 4 folosofi  -->
 
 
