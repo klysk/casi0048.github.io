@@ -1,1273 +1,825 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Echi di Sofia - Filosofia attraverso i secoli</title>
-<link rel="icon" type="image/png" href="favicon_io/favicon-32x32.png">
-<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <link rel="icon" href="favicon_io/favicon.ico" />
 
-    <style>
-        :root {
-            --primary-color: #8e6c88;
-            --secondary-color: #4a4e69;
-            --accent-color: #c9ada7;
-            --text-color: #f2e9e4;
-            --dark-bg: #22223b;
-            --darker-bg: #1a1a2e;
-            --gold-color: #d4af37;
-        }
+  <!-- CSS base -->
+  <style>
+    /* ======= BASE STYLE ======= */
+    body {
+      margin: 0; 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #121318;
+      color: #eee;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+      padding-bottom: 120px; /* per footer */
+    }
 
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
-        }
-        
-        body {
-            font-family: 'Cormorant Garamond', serif;
-            color: var(--text-color);
-            background: var(--darker-bg);
-            overflow-x: hidden;
-            min-height: 100vh;
-            position: relative;
-        }
- body {
-            margin: 0;
-            overflow: hidden;
-            background: #0f0f1a;
-            font-family: 'Arial', sans-serif;
-        }
-                body {
-            margin: 0;
-            overflow: hidden;
-            background: #0f0f1a;
-            font-family: 'Arial', sans-serif;
-            height: 100vh;
-            width: 100vw;
-        }
-        #particles-js {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-        .philosophy-element {
-            position: absolute;
-            color: rgba(255, 215, 0, 0.9);
-            font-size: 1.5rem;
-            font-weight: bold;
-            z-index: 2;
-            pointer-events: none;
-            user-select: none;
-            text-shadow: 0 0 5px rgba(255, 215, 0, 0.7);
-            will-change: transform;
-        }
-        #particles-js {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-        .philosophy-element {
-            position: absolute;
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 1.5rem;
-            font-weight: bold;
-            z-index: 2;
-            pointer-events: none;
-            user-select: none;
-        }
-        /* Starfield Background */
-        .starfield {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-        }
-        
-        .star {
-            position: absolute;
-            background-color: #fff;
-            border-radius: 50%;
-            animation: twinkle 5s infinite ease-in-out;
-        }
-        
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 1; }
-        }
+    a {
+      color: #a8d5ba;
+      text-decoration: none;
+    }
+    a:hover, a:focus {
+      text-decoration: underline;
+      outline: none;
+    }
 
-        /* Top Bar */
-        .top-bar {
-            background: rgba(10, 10, 26, 0.9);
-            backdrop-filter: blur(5px);
-            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
-            padding: 0.8rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-        }
+    /* HEADER */
+    header {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      background: #1a1c22;
+      z-index: 10000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.8);
+    }
+    .top-bar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 8px 20px;
+      gap: 15px;
+      font-size: 1.1rem;
+      background: #162018;
+    }
 
-        .search-translate-container {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
+    /* SEARCH & TRANSLATE */
+    .search-translate-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .search-container input {
+      padding: 6px 12px;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: none;
+      width: 220px;
+      transition: box-shadow 0.3s ease;
+    }
+    .search-container input:focus {
+      outline: none;
+      box-shadow: 0 0 8px #4caf50;
+    }
+    #searchButton {
+      background-color: #2a4b3a;
+      color: #eee;
+      border: none;
+      padding: 7px 14px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+    #searchButton:hover, #searchButton:focus {
+      background-color: #3e6b52;
+      outline: none;
+    }
+    .translate-container button {
+      background: none;
+      border: none;
+      font-size: 1.6rem;
+      cursor: pointer;
+      color: #a8d5ba;
+      transition: color 0.3s ease;
+    }
+    .translate-container button:hover, .translate-container button:focus {
+      color: #4caf50;
+      outline: none;
+    }
 
-        .search-container {
-            display: flex;
-            align-items: center;
-            position: relative;
-        }
+    /* HAMBURGER */
+    .hamburger {
+      display: none;
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      width: 30px;
+      height: 22px;
+      cursor: pointer;
+      flex-direction: column;
+      justify-content: space-between;
+      z-index: 11000;
+    }
+    .hamburger div {
+      width: 100%;
+      height: 4px;
+      background: #eee;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    @media (max-width: 900px) {
+      .hamburger {
+        display: flex;
+      }
+      .top-bar {
+        justify-content: flex-start;
+      }
+      .search-container input {
+        width: 140px;
+      }
+    }
 
-        .search-container input {
-            padding: 0.6rem 1rem 0.6rem 2.5rem;
-            background: rgba(20, 20, 40, 0.8);
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            border-radius: 4px;
-            color: var(--text-color);
-            font-family: inherit;
-            font-size: 1rem;
-            transition: all 0.3s;
-            width: 250px;
-        }
+    /* MENU DESKTOP */
+    nav.menu-desktop ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      background: #1a1c22;
+      font-weight: 600;
+      font-size: 1rem;
+      user-select: none;
+      position: relative;
+    }
+    nav.menu-desktop > ul > li {
+      position: relative;
+    }
+    nav.menu-desktop a,
+    nav.menu-desktop button.menu-btn {
+      display: block;
+      padding: 15px 22px;
+      color: #eee;
+      text-decoration: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 600;
+    }
+    nav.menu-desktop a:hover,
+    nav.menu-desktop button.menu-btn:hover,
+    nav.menu-desktop a:focus,
+    nav.menu-desktop button.menu-btn:focus {
+      background-color: #2a4b3a;
+      outline: none;
+    }
 
-        .search-container input:focus {
-            outline: none;
-            border-color: var(--gold-color);
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-        }
+    /* FRECCIA MENU */
+    .menu-btn .arrow {
+      margin-left: 6px;
+      font-size: 0.8rem;
+      transition: transform 0.3s ease;
+      display: inline-block;
+    }
+    .dropdown.open > button.menu-btn .arrow {
+      transform: rotate(180deg);
+    }
 
-        .search-icon {
-            position: absolute;
-            left: 1rem;
-            color: rgba(255, 215, 0, 0.7);
-            pointer-events: none;
-        }
+    /* MEGA MENU */
+    .mega-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #22252a;
+      padding: 20px 30px;
+      display: none;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.7);
+      border-radius: 8px;
+      color: #ddd;
+      z-index: 9999;
+      max-width: 900px;
+      white-space: nowrap;
+    }
+    .mega-menu > div {
+      display: inline-block;
+      vertical-align: top;
+      margin-right: 30px;
+      min-width: 150px;
+    }
+    .mega-menu h4 {
+      margin-bottom: 14px;
+      font-size: 1.1rem;
+      color: #a8d5ba;
+    }
+    .mega-menu a {
+      display: block;
+      padding: 5px 0;
+      color: #ccc;
+      font-weight: 400;
+    }
+    .mega-menu a:hover,
+    .mega-menu a:focus {
+      color: #4caf50;
+      outline: none;
+    }
+    .columns-2 > div {
+      width: 45%;
+    }
+    .columns-3 > div {
+      width: 30%;
+    }
+    .columns-4 > div {
+      width: 22%;
+    }
 
-        /* Google Translate Styles */
-        #google_translate_element {
-            min-width: 120px;
-        }
+    /* MOSTRA MEGA MENU */
+    .dropdown.open > .mega-menu {
+      display: block;
+    }
 
-        .goog-te-gadget {
-            font-size: 0 !important;
-        }
+    /* MOBILE MENU */
+    @media (max-width: 900px) {
+      nav.menu-desktop > ul {
+        flex-direction: column;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease;
+        background: #1a1c22;
+      }
+      nav.menu-desktop.open > ul {
+        max-height: 1000px; /* sufficientemente alto */
+      }
+      nav.menu-desktop > ul > li {
+        border-bottom: 1px solid #333;
+      }
+      .mega-menu {
+        position: static;
+        max-height: 0;
+        overflow: hidden;
+        box-shadow: none;
+        padding: 10px 20px;
+        white-space: normal;
+        transition: max-height 0.3s ease;
+      }
+      .dropdown.open > .mega-menu {
+        max-height: 1000px;
+        display: block;
+      }
+      .menu-btn {
+        width: 100%;
+        text-align: left;
+      }
+    }
 
-        .goog-te-gadget-simple {
-            background-color: transparent !important;
-            border: 1px solid rgba(255, 215, 0, 0.3) !important;
-            border-radius: 4px !important;
-            padding: 6px 12px !important;
-            color: var(--text-color) !important;
-            font-family: 'Cormorant Garamond', serif !important;
-        }
+    /* SEZIONE BENVENUTO */
+    #benvenuto {
+      padding: 160px 20px 60px;
+      text-align: center;
+      background: transparent;
+      position: relative;
+      z-index: 1;
+    }
+    #benvenuto .titolo {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 900;
+      color: #4caf50;
+      letter-spacing: 0.1em;
+      position: relative;
+      user-select: none;
+    }
+    #benvenuto .sottotitolo {
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      color: #a8d5ba;
+      margin-top: 12px;
+      font-weight: 500;
+    }
 
-        .goog-te-menu-value span {
-            color: var(--text-color) !important;
-        }
+    /* SEZIONE CITAZIONI */
+    #citazioni {
+      max-width: 900px;
+      margin: 0 auto 60px;
+      padding: 0 20px;
+      font-style: italic;
+      color: #ccc;
+      font-size: 1.2rem;
+      text-align: center;
+    }
+    #citazioni blockquote {
+      margin: 20px 0;
+      position: relative;
+      padding-left: 1.2em;
+      border-left: 3px solid #4caf50;
+    }
 
-        .goog-te-menu-value img {
-            display: none !important;
-        }
+    /* ARTICOLI */
+    #articoli {
+      padding: 40px 20px 80px;
+      max-width: 1200px;
+      margin: auto;
+      background: rgba(26,28,34,0.8);
+      border-radius: 8px;
+      box-shadow: 0 0 15px #1a2d1b;
+    }
+    #articoli h2 {
+      text-align: center;
+      color: #a8d5ba;
+      margin-bottom: 40px;
+      font-weight: 700;
+      font-size: 2rem;
+    }
+    .articolo-card {
+      background: #23312b;
+      padding: 15px;
+      border-radius: 6px;
+      box-shadow: inset 0 0 8px #1a2d1b;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    .articolo-card:hover,
+    .articolo-card:focus-within {
+      transform: translateY(-6px);
+      box-shadow: 0 4px 12px #4caf50;
+      outline: none;
+    }
+    .articolo-card img {
+      width: 100%;
+      border-radius: 5px;
+      margin-bottom: 12px;
+    }
+    .articolo-card h3 {
+      margin: 0 0 10px;
+      font-weight: 700;
+      color: #82c78e;
+    }
+    .articolo-card p {
+      flex-grow: 1;
+      color: #cde1cd;
+      margin-bottom: 15px;
+      font-size: 1rem;
+    }
+    .articolo-card a {
+      font-weight: 700;
+      color: #4caf50;
+      align-self: flex-start;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+    .articolo-card a:hover,
+    .articolo-card a:focus {
+      text-decoration: underline;
+      outline: none;
+    }
 
-        /* Header */
-        header {
-            background: rgba(10, 10, 30, 0.95);
-            backdrop-filter: blur(5px);
-            position: fixed;
-            width: 100%;
-            top: 60px;
-            z-index: 100;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
-        }
-        
-        .menu-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-family: 'Cinzel Decorative', cursive;
-            font-size: 1.8rem;
-            color: var(--gold-color);
-            text-decoration: none;
-            letter-spacing: 2px;
-            transition: all 0.3s;
-        }
+    /* FOOTER */
+    footer {
+      background: #1a1c22;
+      text-align: center;
+      padding: 25px 20px;
+      font-size: 0.9rem;
+      color: #777;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
 
-        .logo:hover {
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
-        }
+    /* COOKIE BANNER */
+    #cookie-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      background: #2a4b3a;
+      color: #eee;
+      padding: 16px 20px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.8);
+      font-size: 0.9rem;
+      z-index: 15000;
+    }
+    #cookie-banner span {
+      flex-grow: 1;
+      margin-right: 12px;
+    }
+    #cookie-banner button {
+      background: #4caf50;
+      border: none;
+      color: #fff;
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: 5px;
+      margin-left: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    #cookie-banner button:hover, #cookie-banner button:focus {
+      background-color: #357a38;
+      outline: none;
+    }
+  </style>
 
-        /* Menu */
-        .menu-desktop ul {
-            display: flex;
-            list-style: none;
-        }
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
-        .menu-desktop > ul > li {
-            position: relative;
-            margin-left: 1.5rem;
-        }
+  <!-- Particles.js -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
 
-        .menu-btn, .menu-desktop > ul > li > a {
-            background: none;
-            border: none;
-            color: var(--text-color);
-            font-family: inherit;
-            font-size: 1.1rem;
-            cursor: pointer;
-            padding: 0.5rem 0;
-            text-decoration: none;
-            transition: all 0.3s;
-            display: inline-block;
-        }
-
-        .menu-desktop > ul > li > a {
-            padding: 0.5rem 1rem;
-        }
-
-        .menu-btn:hover, .menu-desktop > ul > li > a:hover {
-            color: var(--gold-color);
-            text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
-        }
-
-        .arrow {
-            font-size: 0.7rem;
-            margin-left: 0.5rem;
-            transition: transform 0.3s;
-        }
-
-        .dropdown:hover .arrow {
-            transform: rotate(180deg);
-        }
-
-        /* Mega Menu */
-        .mega-menu {
-            display: none;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 900px;
-            background: rgba(10, 10, 30, 0.98);
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            border-top: 3px solid var(--gold-color);
-            padding: 2rem;
-            z-index: 10;
-            animation: fadeIn 0.3s ease-out;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateX(-50%) translateY(10px); }
-            to { opacity: 1; transform: translateX(-50%) translateY(0); }
-        }
-
-        .dropdown:hover .mega-menu {
-            display: grid;
-        }
-
-        .columns-2 { grid-template-columns: repeat(2, 1fr); }
-        .columns-3 { grid-template-columns: repeat(3, 1fr); }
-        .columns-4 { grid-template-columns: repeat(4, 1fr); }
-
-        .mega-menu > div {
-            padding: 0 1rem;
-        }
-
-        .mega-menu h4 {
-            color: var(--gold-color);
-            font-family: 'Cinzel Decorative', cursive;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
-            font-size: 1.1rem;
-        }
-
-        .mega-menu a {
-            display: block;
-            color: var(--text-color);
-            text-decoration: none;
-            padding: 0.5rem 0;
-            transition: all 0.3s;
-            font-size: 1rem;
-        }
-
-        .mega-menu a:hover {
-            color: var(--gold-color);
-            padding-left: 0.5rem;
-        }
-
-        /* Main Content */
-        main {
-            padding-top: 160px;
-            min-height: 100vh;
-        }
-
-        /* Welcome Section */
-        .welcome-section {
-            position: relative;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-        
-        .welcome-mask {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--darker-bg);
-            z-index: 1;
-        }
-        
-        .welcome-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            opacity: 0;
-            transform: scale(0.8);
-        }
-        
-        .welcome-title {
-            font-family: 'Cinzel Decorative', cursive;
-            font-size: 5rem;
-            color: transparent;
-            background: linear-gradient(90deg, var(--gold-color), #ffaa00, var(--gold-color));
-            -webkit-background-clip: text;
-            background-clip: text;
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-            margin-bottom: 2rem;
-            letter-spacing: 3px;
-        }
-        
-        .welcome-quote {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.8rem;
-            color: rgba(255,255,255,0.9);
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-            border-left: 3px solid var(--gold-color);
-        }
-        
-        .quote-author {
-            display: block;
-            font-style: italic;
-            margin-top: 1rem;
-            color: var(--gold-color);
-            font-size: 1.4rem;
-        }
-
-        /* Quotes Section */
-        #citazioni {
-            margin: 40px auto;
-            max-width: 700px;
-            font-style: italic;
-            font-size: 1.3rem;
-            color: #eee;
-            text-align: center;
-            position: relative;
-            z-index: 2;
-            min-height: 3em;
-        }
-
-        /* Particles */
-        .philo-particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-            overflow: hidden;
-        }
-        
-        .particle {
-            position: absolute;
-            font-family: 'Arial Unicode MS';
-            will-change: transform;
-            transition: transform 0.5s ease-out;
-            text-shadow: 0 0 10px rgba(255,215,0,0.4);
-        }
-
-        /* Cookie Banner */
-        .cookie-banner {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: var(--dark-bg);
-            color: var(--text-color);
-            padding: 15px 20px;
-            border-top: 2px solid var(--accent-color);
-            z-index: 1000;
-            display: none;
-        }
-
-        .cookie-banner-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .cookie-text {
-            flex: 1;
-            min-width: 250px;
-        }
-
-        .cookie-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .cookie-btn {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-family: inherit;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .accept-btn {
-            background: var(--accent-color);
-            color: var(--dark-bg);
-        }
-
-        .settings-btn {
-            background: transparent;
-            color: var(--text-color);
-            border: 1px solid var(--accent-color);
-        }
-
-        .reject-btn {
-            background: transparent;
-            color: var(--text-color);
-        }
-
-        /* Responsive */
-        @media (max-width: 992px) {
-            .mega-menu {
-                width: 95vw;
-                left: 2.5vw;
-                transform: none;
-            }
-            
-            .top-bar {
-                padding: 0.8rem 1rem;
-            }
-            
-            .search-container input {
-                width: 200px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .menu-desktop {
-                display: none;
-            }
-            
-            .top-bar {
-                justify-content: center;
-                padding: 0.8rem;
-            }
-            
-            .search-translate-container {
-                width: 100%;
-                flex-direction: column;
-                gap: 0.8rem;
-            }
-            
-            .search-container {
-                width: 100%;
-            }
-            
-            .search-container input {
-                width: 100%;
-            }
-            
-            main {
-                padding-top: 180px;
-            }
-            
-            .welcome-title {
-                font-size: 3rem;
-            }
-            
-            .welcome-quote {
-                font-size: 1.2rem;
-                padding: 1rem;
-            }
-        }
-        #particles-js {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: #000;
-        }
-    </style>
+  <!-- Google CSE -->
+  <script async src="https://cse.google.com/cse.js?cx=YOUR_CSE_ID"></script>
 </head>
 <body>
-     <div id="particles-js"></div>
-    <div id="google_translate_element"></div>
-    <div id="cookie-banner">
-        <p>Questo sito usa cookie. <button id="accept-cookies">Accetta</button></p>
-    </div>
-    
-    <!-- Starfield Background -->
-    <div class="starfield" id="starfield"></div>
-    
-    <!-- Interactive Particles -->
-    <div class="philo-particles" id="philoParticles"></div>
-    
-    <!-- Top Bar -->
+  <div id="particles-js"></div>
+
+  <header role="banner" aria-label="Menu di navigazione principale">
     <div class="top-bar">
-        <a class="logo" href="index.html">Φ ECHI DI SOFIA</a>
-        
-        <div class="search-translate-container">
-            <div class="search-container">
-                <i class="fas fa-search search-icon"></i>
-                <input id="search-input" type="text" placeholder="Cerca..." aria-label="Campo ricerca"/>
-                <button id="search-btn" aria-label="Cerca" style="display:none;"></button>
-            </div>
-            <div id="google_translate_element"></div>
+      <div class="search-translate-container">
+        <div class="search-container">
+          <input type="text" id="searchInput" placeholder="Cerca filosofi, concetti..." aria-label="Cerca nel sito" />
+          <button id="searchButton" aria-label="Esegui ricerca">Cerca</button>
         </div>
-    </div>
-    
-    <!-- Header -->
-    <header id="mainHeader">
-        <div class="menu-container">
-            <nav class="menu-desktop">
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    
-                    <!-- Filosofia antica -->
-                    <li class="dropdown">
-                        <button class="menu-btn">
-                            Filosofia antica <span class="arrow">▼</span>
-                        </button>
-                        <div class="mega-menu columns-4">
-                            <div>
-                                <h4>Scuola ionica</h4>
-                                <a href="/Presocratici/talete.html">Talete</a>
-                                <a href="Presocratici/anassimandro.html">Anassimandro</a>
-                                <a href="Presocratici/anassimene.html">Anassimene</a>
-                            </div>
-                            <div>
-                                <h4>Scuola eleatica</h4>
-                                <a href="Presocratici/senofane.html">Senofane</a>
-                                <a href="/Presocratici/parmenide.html">Parmenide</a>
-                                <a href="articoli/zenone.html">Zenone</a>
-                                <a href="articoli/zenone.html">Melisso</a>
-                            </div>
-                            <div>
-                                <h4>Altri</h4>
-                                <a href="articoli/eraclito.html">Eraclito</a>
-                                <a href="/Presocratici/anassagora.html">Anassagora</a>
-                                <a href="/articoli/empedocle.html">Empedocle</a>
-                            </div>
-                            <div>
-                                <h4>Pitagorici</h4>
-                                <a href="/articoli/pitagora.html">Pitagora</a>
-                                <a href="/articoli/filolao.html">Filolao</a>
-                                <a href="/articoli/alcmeone.html">Alcmeone</a>
-                                <a href="articoli/archita.html">Archita</a>
-                                <a href="/articoli/ippaso.html">Ippaso</a>
-                            </div>
-                        </div>
-                    </li>
-                    
-                    <!-- Filosofia classica -->
-                    <li class="dropdown">
-                        <button class="menu-btn">
-                            Filosofia classica <span class="arrow">▼</span>
-                        </button>
-                        <div class="mega-menu columns-4">
-                            <div>
-                                <h4>Classici</h4>
-                                <a href="articoli/socrate.html">Socrate</a>
-                                <a href="articoli/platone.html">Platone</a>
-                                <a href="articoli/aristotele.html">Aristotele</a>
-                            </div>
-                            <div>
-                                <h4>Platonici</h4>
-                                <a href="articoli/senofonte.html">Senofonte</a>
-                                <a href="articoli/antistene.html">Antistene</a>
-                                <a href="#">Aristippo</a>
-                            </div>
-                            <div>
-                                <h4>Stoici</h4>
-                                <a href="articoli/zenone.html">Zenone</a>
-                                <a href="#">Epitteto</a>
-                                <a href="#">Seneca</a>
-                            </div>
-                            <div>
-                                <h4>Epicurei</h4>
-                                <a href="#">Epicuro</a>
-                                <a href="#">Lucrezio</a>
-                                <a href="#">Cicerone</a>
-                            </div>
-                        </div>
-                    </li>
-                    
-                    <!-- Filosofia medievale -->
-                    <li class="dropdown">
-                        <button class="menu-btn">
-                            Medievale/Patristica <span class="arrow">▼</span>
-                        </button>
-                        <div class="mega-menu columns-2">
-                            <div>
-                                <h4>Medievale</h4>
-                                <a href="#">Tommaso d'Aquino</a>
-                                <a href="#">Anselmo</a>
-                                <a href="#">Guglielmo di Ockham</a>
-                                <a href="#">Duns Scoto</a>
-                            </div>
-                            <div>
-                                <h4>Patristica</h4>
-                                <a href="#">Agostino</a>
-                                <a href="#">Origene</a>
-                                <a href="#">Gregorio di Nissa</a>
-                                <a href="#">Tertulliano</a>
-                            </div>
-                        </div>
-                    </li>
-                    
-                    <!-- Filosofia moderna -->
-                    <li class="dropdown">
-                        <button class="menu-btn">
-                            Filosofia moderna <span class="arrow">▼</span>
-                        </button>
-                        <div class="mega-menu columns-3">
-                            <div>
-                                <h4>Razionalisti</h4>
-                                <a href="#">Cartesio</a>
-                                <a href="#">Spinoza</a>
-                                <a href="#">Leibniz</a>
-                            </div>
-                            <div>
-                                <h4>Empiristi</h4>
-                                <a href="#">Locke</a>
-                                <a href="#">Hume</a>
-                                <a href="#">Berkeley</a>
-                            </div>
-                            <div>
-                                <h4>Kant e oltre</h4>
-                                <a href="#">Kant</a>
-                                <a href="#">Fichte</a>
-                                <a href="#">Schelling</a>
-                            </div>
-                        </div>
-                    </li>
-                    
-                    <!-- Filosofia contemporanea -->
-                    <li class="dropdown">
-                        <button class="menu-btn">
-                            Contemporanea <span class="arrow">▼</span>
-                        </button>
-                        <div class="mega-menu columns-3">
-                            <div>
-                                <h4>Ottocento</h4>
-                                <a href="#">Hegel</a>
-                                <a href="#">Schopenhauer</a>
-                                <a href="#">Nietzsche</a>
-                            </div>
-                            <div>
-                                <h4>Fenomenologia</h4>
-                                <a href="#">Husserl</a>
-                                <a href="#">Heidegger</a>
-                                <a href="#">Merleau-Ponty</a>
-                            </div>
-                            <div>
-                                <h4>Postmoderni</h4>
-                                <a href="#">Sartre</a>
-                                <a href="#">Foucault</a>
-                                <a href="#">Derrida</a>
-                            </div>
-                        </div>
-                    </li>
-                    
-                    <li><a href="contatti.html">Contatti</a></li>
-                </ul>
-            </nav>
+        <div class="translate-container">
+          <button id="translate-btn" title="Traduci" aria-label="Apri traduttore">🌐</button>
         </div>
-    </header>
-
-    <!-- Main Content -->
-    <main>
-        <!-- Welcome Section -->
-        <section class="welcome-section">
-            <div class="welcome-mask"></div>
-            <div class="welcome-content">
-                <h1 class="welcome-title">ECHI DI SOFIA</h1>
-                <div class="welcome-quote">
-                    <p class="quote-text"></p>
-                    <span class="quote-author"></span>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Quotes Section -->
-        <section id="citazioni" class="quote-rotating" aria-live="polite" aria-atomic="true"></section>
-    </main>
-
-    <!-- Cookie Banner -->
-    <div class="cookie-banner" id="cookieBanner">
-        <div class="cookie-banner-content">
-            <div class="cookie-text">
-                <p>Questo sito utilizza cookie per migliorare la tua esperienza. Continuando la navigazione accetti l'uso dei cookie.</p>
-            </div>
-            <div class="cookie-buttons">
-                <button class="cookie-btn accept-btn">Accetta tutti</button>
-                <button class="cookie-btn settings-btn">Impostazioni</button>
-                <button class="cookie-btn reject-btn">Rifiuta</button>
-            </div>
-        </div>
+      </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-    <script async src="https://cse.google.com/cse.js?cx=87b07564ab3cb462a"></script>
+    <button class="hamburger" aria-label="Apri menu" aria-expanded="false" aria-controls="menu-desktop">
+      <div></div><div></div><div></div>
+    </button>
 
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Create stars for background
-        const starfield = document.getElementById('starfield');
-        for (let i = 0; i < 200; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
-            star.style.width = `${Math.random() * 3}px`;
-            star.style.height = star.style.width;
-            star.style.left = `${Math.random() * 100}%`;
-            star.style.top = `${Math.random() * 100}%`;
-            star.style.opacity = Math.random();
-            star.style.animationDuration = `${5 + Math.random() * 10}s`;
-            starfield.appendChild(star);
-        }
+    <nav class="menu-desktop" id="menu-desktop" role="navigation" aria-label="Menu principale">
+      <ul role="menu">
+        <li><a href="index.html" role="menuitem" tabindex="0">Home</a></li>
 
-        // Initialize particles.js
-        particlesJS('particles-js', {
-            particles: {
-                number: { value: 80, density: { enable: true, value_area: 800 } },
-                color: { value: "#d4af37" },
-                shape: { type: "circle" },
-                opacity: { value: 0.5, random: true },
-                size: { value: 3, random: true },
-                line_linked: {
-                    enable: true,
-                    distance: 150,
-                    color: "#6b8e9b",
-                    opacity: 0.4,
-                    width: 1
-                },
-                move: {
-                    enable: true,
-                    speed: 1,
-                    direction: "none",
-                    random: true,
-                    straight: false,
-                    out_mode: "out"
-                }
-            },
-            interactivity: {
-                detect_on: "canvas",
-                events: {
-                    onhover: { enable: true, mode: "grab" },
-                    onclick: { enable: true, mode: "push" }
-                },
-                modes: {
-                    grab: { distance: 140, line_linked: { opacity: 1 } },
-                    push: { particles_nb: 4 }
-                }
-            },
-            retina_detect: true
-        });
+        <li role="none" class="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
+            Filosofia antica <span class="arrow">▼</span>
+          </button>
+          <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia antica">
+            <div>
+              <h4>Scuola ionica</h4>
+              <a href="/Presocratici/talete.html" role="menuitem" tabindex="-1">Talete</a>
+              <a href="Presocratici/anassimandro.html" role="menuitem" tabindex="-1">Anassimandro</a>
+              <a href="Presocratici/anassimene.html" role="menuitem" tabindex="-1">Anassimene</a>
+            </div>
+            <div>
+              <h4>Scuola eleatica</h4>
+              <a href="Presocratici/senofane.html" role="menuitem" tabindex="-1">Senofane</a>
+              <a href="/Presocratici/parmenide.html" role="menuitem" tabindex="-1">Parmenide</a>
+              <a href="articoli/zenone.html" role="menuitem" tabindex="-1">Zenone</a>
+              <a href="articoli/zenone.html" role="menuitem" tabindex="-1">Melisso</a>
+            </div>
+            <div>
+              <h4>Altri</h4>
+              <a href="articoli/eraclito.html" role="menuitem" tabindex="-1">Eraclito</a>
+              <a href="/Presocratici/anassagora.html" role="menuitem" tabindex="-1">Anassagora</a>
+              <a href="/articoli/empedocle.html" role="menuitem" tabindex="-1">Empedocle</a>
+            </div>
+            <div>
+              <h4>Pitagorici</h4>
+              <a href="/articoli/pitagora.html" role="menuitem" tabindex="-1">Pitagora</a>
+              <a href="/articoli/filolao.html" role="menuitem" tabindex="-1">Filolao</a>
+              <a href="/articoli/alcmeone.html" role="menuitem" tabindex="-1">Alcmeone</a>
+              <a href="articoli/archita.html" role="menuitem" tabindex="-1">Archita</a>
+              <a href="/articoli/ippaso.html" role="menuitem" tabindex="-1">Ippaso</a>
+            </div>
+          </div>
+        </li>
 
-        // Search functionality
-        const searchBtn = document.getElementById('search-btn');
-        const searchInput = document.getElementById('search-input');
-        
-        searchInput.addEventListener('keypress', function(e) {
-            if(e.key === 'Enter') performSearch();
-        });
+        <li role="none" class="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
+            Filosofia classica <span class="arrow">▼</span>
+          </button>
+          <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia classica">
+            <div>
+              <h4>Classici</h4>
+              <a href="articoli/socrate.html" role="menuitem" tabindex="-1">Socrate</a>
+              <a href="articoli/platone.html" role="menuitem" tabindex="-1">Platone</a>
+              <a href="articoli/aristotele.html" role="menuitem" tabindex="-1">Aristotele</a>
+            </div>
+            <div>
+              <h4>Platonici</h4>
+              <a href="articoli/senofonte.html" role="menuitem" tabindex="-1">Senofonte</a>
+              <a href="articoli/antistene.html" role="menuitem" tabindex="-1">Antistene</a>
+              <a href="#" role="menuitem" tabindex="-1">Aristippo</a>
+            </div>
+            <div>
+              <h4>Stoici</h4>
+              <a href="articoli/zenone.html" role="menuitem" tabindex="-1">Zenone</a>
+              <a href="#" role="menuitem" tabindex="-1">Epitteto</a>
+              <a href="#" role="menuitem" tabindex="-1">Seneca</a>
+            </div>
+            <div>
+              <h4>Epicurei</h4>
+              <a href="#" role="menuitem" tabindex="-1">Epicuro</a>
+              <a href="#" role="menuitem" tabindex="-1">Lucrezio</a>
+              <a href="#" role="menuitem" tabindex="-1">Cicerone</a>
+            </div>
+          </div>
+        </li>
 
-        function performSearch() {
-            const query = searchInput.value.trim();
-            if(query) {
-                const url = `https://cse.google.com/cse?cx=87b07564ab3cb462a&q=${encodeURIComponent(query)}`;
-                window.open(url, '_blank');
-            }
-        }
+        <li role="none" class="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
+            Medievale/Patristica <span class="arrow">▼</span>
+          </button>
+          <div class="mega-menu columns-2" role="menu" aria-label="Sottomenu Filosofia medievale">
+            <div>
+              <h4>Medievale</h4>
+              <a href="#" role="menuitem" tabindex="-1">Tommaso d'Aquino</a>
+              <a href="#" role="menuitem" tabindex="-1">Anselmo</a>
+              <a href="#" role="menuitem" tabindex="-1">Guglielmo di Ockham</a>
+              <a href="#" role="menuitem" tabindex="-1">Duns Scoto</a>
+            </div>
+            <div>
+              <h4>Patristica</h4>
+              <a href="#" role="menuitem" tabindex="-1">Agostino</a>
+              <a href="#" role="menuitem" tabindex="-1">Origene</a>
+              <a href="#" role="menuitem" tabindex="-1">Gregorio di Nissa</a>
+              <a href="#" role="menuitem" tabindex="-1">Tertulliano</a>
+            </div>
+          </div>
+        </li>
 
-        // Google Translate
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'it',
-                includedLanguages: 'it,en,es,fr,de,pt,ru,zh-CN,ja,ar,hi,bn,ko,vi,th,pl,tr,nl,sv,fi,he',
-                layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
-                autoDisplay: false,
-                multilanguagePage: true
-            }, 'google_translate_element');
-            
-            // Stili aggiuntivi per il traduttore
-            const style = document.createElement('style');
-            style.textContent = `
-                .goog-te-gadget { font-size: 0 !important; }
-                .goog-te-gadget-simple { 
-                    background: transparent !important;
-                    border: 1px solid rgba(255, 215, 0, 0.3) !important;
-                    border-radius: 4px !important;
-                    padding: 6px 12px !important;
-                    color: var(--text-color) !important;
-                    font-family: 'Cormorant Garamond', serif !important;
-                }
-                .goog-te-menu-value span { color: var(--text-color) !important; }
-                .goog-te-menu-value img { display: none !important; }
-            `;
-            document.head.appendChild(style);
-        }
-        
-        // Load Google Translate
-        const translateScript = document.createElement('script');
-        translateScript.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-        document.body.appendChild(translateScript);
+        <li role="none" class="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
+            Filosofia moderna <span class="arrow">▼</span>
+          </button>
+          <div class="mega-menu columns-3" role="menu" aria-label="Sottomenu Filosofia moderna">
+            <div>
+              <h4>Razionalisti</h4>
+              <a href="#" role="menuitem" tabindex="-1">Cartesio</a>
+              <a href="#" role="menuitem" tabindex="-1">Spinoza</a>
+              <a href="#" role="menuitem" tabindex="-1">Leibniz</a>
+            </div>
+            <div>
+              <h4>Empiristi</h4>
+              <a href="#" role="menuitem" tabindex="-1">Locke</a>
+              <a href="#" role="menuitem" tabindex="-1">Hume</a>
+              <a href="#" role="menuitem" tabindex="-1">Berkeley</a>
+            </div>
+            <div>
+              <h4>Kant e oltre</h4>
+              <a href="#" role="menuitem" tabindex="-1">Kant</a>
+              <a href="#" role="menuitem" tabindex="-1">Fichte</a>
+              <a href="#" role="menuitem" tabindex="-1">Schelling</a>
+            </div>
+          </div>
+        </li>
 
-        // Floating particles
-        const symbols = ['∞', 'Φ', 'Ψ', 'Δ', 'λ', 'Ω', 'π', '∑', '∏', '√'];
-        const container = document.getElementById('philoParticles');
-        const particles = [];
-        
-        for (let i = 0; i < 30; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            
-            const size = 0.8 + Math.random() * 1.5;
-            const symbol = symbols[Math.floor(Math.random() * symbols.length)];
-            
-            particle.textContent = symbol;
-            particle.style.fontSize = `${size}rem`;
-            particle.style.color = `rgba(255, 215, 0, ${0.5 + Math.random() * 0.5})`;
-            particle.style.opacity = '0';
-            
-            container.appendChild(particle);
-            
-            particles.push({
-                element: particle,
-                x: Math.random() * window.innerWidth,
-                y: Math.random() * window.innerHeight,
-                vx: (Math.random() - 0.5) * 0.5,
-                vy: (Math.random() - 0.5) * 0.5
-            });
-            
-            // Fade in
-            setTimeout(() => {
-                particle.style.transition = 'opacity 2s';
-                particle.style.opacity = '0.7';
-            }, Math.random() * 2000);
-        }
+        <li role="none" class="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
+            Contemporanea <span class="arrow">▼</span>
+          </button>
+          <div class="mega-menu columns-3" role="menu" aria-label="Sottomenu Filosofia contemporanea">
+            <div>
+              <h4>Ottocento</h4>
+              <a href="#" role="menuitem" tabindex="-1">Hegel</a>
+              <a href="#" role="menuitem" tabindex="-1">Schopenhauer</a>
+              <a href="#" role="menuitem" tabindex="-1">Nietzsche</a>
+            </div>
+            <div>
+              <h4>Fenomenologia</h4>
+              <a href="#" role="menuitem" tabindex="-1">Husserl</a>
+              <a href="#" role="menuitem" tabindex="-1">Heidegger</a>
+              <a href="#" role="menuitem" tabindex="-1">Merleau-Ponty</a>
+            </div>
+            <div>
+              <h4>Postmoderni</h4>
+              <a href="#" role="menuitem" tabindex="-1">Sartre</a>
+              <a href="#" role="menuitem" tabindex="-1">Foucault</a>
+              <a href="#" role="menuitem" tabindex="-1">Derrida</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
 
-        // Animate particles
-        function animateParticles() {
-            particles.forEach(p => {
-                p.x += p.vx;
-                p.y += p.vy;
-                
-                // Bounce off edges
-                if (p.x < 0 || p.x > window.innerWidth) p.vx *= -1;
-                if (p.y < 0 || p.y > window.innerHeight) p.vy *= -1;
-                
-                p.element.style.transform = `translate(${p.x}px, ${p.y}px)`;
-            });
-            
-            requestAnimationFrame(animateParticles);
-        }
-        
-        animateParticles();
+  <main>
+    <section id="benvenuto" tabindex="-1" aria-label="Benvenuto">
+      <h1 class="titolo" aria-live="polite">Echi di Sofia</h1>
+      <p class="sottotitolo">Filosofia attraverso i secoli</p>
+    </section>
 
-        // Welcome animation
-        gsap.registerPlugin(TextPlugin);
-        
-        const welcomeQuotes = [
-            { text: "Conosci te stesso e conoscerai l'universo e gli dei.", author: "Socrate" },
-            { text: "Il sapere è l'unico bene che aumenta condividendolo.", author: "Pitagora" },
-            { text: "La meraviglia è il principio di ogni conoscenza.", author: "Aristotele" },
-            { text: "Penso, dunque sono.", author: "Cartesio" }
-        ];
-        
-        const randomQuote = welcomeQuotes[Math.floor(Math.random() * welcomeQuotes.length)];
-        
-        // Animazione iniziale
-        const tl = gsap.timeline();
-        
-        tl.to(".welcome-mask", {
-            duration: 1.5,
-            height: 0,
-            ease: "power4.inOut"
-        })
-        .to(".welcome-content", {
-            duration: 1.2,
-            opacity: 1,
-            scale: 1,
-            ease: "elastic.out(1, 0.5)"
-        }, "-=0.8")
-        .to(".quote-text", {
-            duration: 2,
-            text: randomQuote.text,
-            ease: "none"
-        })
-        .to(".quote-author", {
-            duration: 1,
-            text: `— ${randomQuote.author}`,
-            ease: "power2.out"
-        });
+    <section id="citazioni" aria-label="Citazioni filosofiche">
+      <blockquote tabindex="0">"Conosci te stesso." — Socrate</blockquote>
+      <blockquote tabindex="0">"Tutto scorre." — Eraclito</blockquote>
+      <blockquote tabindex="0">"La felicità dipende da noi." — Aristotele</blockquote>
+    </section>
 
-        // Rotating quotes
-        const quotes = [
-            { text: "L'uomo è la misura di tutte le cose", author: "Protagora" },
-            { text: "Tutto scorre", author: "Eraclito" },
-            { text: "L'uomo è condannato ad essere libero", author: "Sartre" },
-            { text: "Dio è morto", author: "Nietzsche" }
-        ];
-        
-        const quoteContainer = document.getElementById('citazioni');
-        let currentQuote = 0;
-        
-        function showNextQuote() {
-            const quote = quotes[currentQuote];
-            quoteContainer.innerHTML = `
-                <p>"${quote.text}"</p>
-                <span>- ${quote.author}</span>
-            `;
-            
-            // Animation
-            gsap.from(quoteContainer, {
-                opacity: 0,
-                y: 20,
-                duration: 1,
-                ease: "power2.out"
-            });
-            
-            currentQuote = (currentQuote + 1) % quotes.length;
-        }
-        
-        // Initial quote
-        showNextQuote();
-        
-        // Rotate quotes every 6 seconds
-        setInterval(showNextQuote, 6000);
+    <section id="articoli" aria-label="Articoli filosofici">
+      <h2>Articoli Filosofici</h2>
+      <div class="articolo-card" tabindex="0">
+        <img src="immagini/eraclito.jpg" alt="Eraclito" />
+        <h3>Il logos in Eraclito</h3>
+        <p>Eraclito e il fuoco dell'universo in continuo divenire.</p>
+        <a href="articoli/eraclito.html">Leggi →</a>
+      </div>
+      <div class="articolo-card" tabindex="0">
+        <img src="immagini/sartre.jpg" alt="Sartre" />
+        <h3>L'essere e il nulla</h3>
+        <p>Un viaggio esistenzialista tra libertà, angoscia e coscienza.</p>
+        <a href="articoli/sartre.html">Leggi →</a>
+      </div>
+      <div class="articolo-card" tabindex="0">
+        <img src="immagini/epicuro.jpg" alt="Epicuro" />
+        <h3>Epicuro e il piacere sobrio</h3>
+        <p>Scopri il significato autentico del piacere nella filosofia epicurea.</p>
+        <a href="articoli/epicuro.html">Leggi →</a>
+      </div>
+    </section>
+  </main>
 
-        // Cookie Banner
-        const cookieBanner = document.getElementById('cookieBanner');
-        const acceptBtn = cookieBanner.querySelector('.accept-btn');
-        const rejectBtn = cookieBanner.querySelector('.reject-btn');
-        const settingsBtn = cookieBanner.querySelector('.settings-btn');
+  <footer role="contentinfo">
+    <p>&copy; 2025 Echi di Sofia. Tutti i diritti riservati.</p>
+  </footer>
 
-        function getCookie(name) {
-            const nameEQ = name + "=";
-            const ca = document.cookie.split(';');
-            for(let i = 0; i < ca.length; i++) {
-                let c = ca[i];
-                while (c.charAt(0) === ' ') c = c.substring(1);
-                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length);
-            }
-            return null;
-        }
+  <!-- BANNER COOKIE -->
+  <div id="cookie-banner" role="region" aria-label="Banner cookie">
+    <span>Utilizziamo i cookie per migliorare l'esperienza utente.</span>
+    <div>
+      <button id="accept">Accetta</button>
+      <button id="reject">Rifiuta</button>
+      <button id="customize">Personalizza</button>
+    </div>
+  </div>
 
-        function setCookie(name, value, days) {
-            const date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            const expires = "expires=" + date.toUTCString();
-            document.cookie = name + "=" + value + ";" + expires + ";path=/";
-        }
-
-        if (!getCookie('cookie_consent')) {
-            cookieBanner.style.display = 'block';
-            
-            // Animazione di entrata
-            gsap.from(cookieBanner, {
-                y: 100,
-                opacity: 0,
-                duration: 0.5,
-                ease: "power2.out"
-            });
-        }
-
-        acceptBtn.addEventListener('click', () => {
-            setCookie('cookie_consent', 'accepted', 365);
-            gsap.to(cookieBanner, {
-                y: 100,
-                opacity: 0,
-                duration: 0.5,
-                ease: "power2.in",
-                onComplete: () => cookieBanner.style.display = 'none'
-            });
-        });
-
-        rejectBtn.addEventListener('click', () => {
-            setCookie('cookie_consent', 'rejected', 30);
-            gsap.to(cookieBanner, {
-                y: 100,
-                opacity: 0,
-                duration: 0.5,
-                ease: "power2.in",
-                onComplete: () => cookieBanner.style.display = 'none'
-            });
-        });
-
-        settingsBtn.addEventListener('click', () => {
-            alert("Impostazioni cookie: qui potresti implementare un pannello più dettagliato per la gestione delle preferenze.");
-        });
+  <!-- SCRIPTS -->
+  <script>
+    // Particles.js config
+    particlesJS('particles-js', {
+      particles: {
+        number: { value: 80, density: { enable: true, value_area: 800 } },
+        color: { value: "#4caf50" },
+        shape: { type: "circle" },
+        opacity: { value: 0.5, random: false },
+        size: { value: 3, random: true },
+        line_linked: { enable: true, distance: 150, color: "#4caf50", opacity: 0.4, width: 1 },
+        move: { enable: true, speed: 3, direction: "none", random: false, straight: false, bounce: false }
+      },
+      interactivity: {
+        detect_on: "canvas",
+        events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } },
+        modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
+      },
+      retina_detect: true
     });
-    </script>
-    <div id="google_translate_element"></div>
-<script>
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement(
-      { pageLanguage: 'it' },
-      'google_translate_element'
-    );
-  }
-    
-</script>
-    
-    <!-- %%%%%%%%%%%%%%%%inizio  script &&&&&&&&&&&&&&&&&&&&&&&&&&  -->
- <script>
-        // ===== GOOGLE TRANSLATE =====
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement(
-                { pageLanguage: 'it' },
-                'google_translate_element'
-            );
+
+    // MENU - Dropdown toggle and mobile toggle
+    const dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(dropdown => {
+      const btn = dropdown.querySelector('.menu-btn');
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        const isOpen = dropdown.classList.contains('open');
+        // chiudi tutti i dropdown
+        dropdowns.forEach(d => {
+          d.classList.remove('open');
+          d.querySelector('.menu-btn').setAttribute('aria-expanded', 'false');
+        });
+        if (!isOpen) {
+          dropdown.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
         }
+      });
+    });
 
-        // ===== COOKIE BANNER =====
-        document.addEventListener("DOMContentLoaded", function() {
-            // Mostra il banner solo se il cookie non è accettato
-            if (!document.cookie.includes('cookies_accepted=true')) {
-                document.getElementById('cookie-banner').style.display = 'block';
-            }
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('nav.menu-desktop');
+    hamburger.addEventListener('click', () => {
+      const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+      hamburger.setAttribute('aria-expanded', String(!expanded));
+      navMenu.classList.toggle('open');
+      // chiudi tutti i dropdown aperti al toggle mobile
+      dropdowns.forEach(d => {
+        d.classList.remove('open');
+        d.querySelector('.menu-btn').setAttribute('aria-expanded', 'false');
+      });
+    });
 
-            document.getElementById("accept-cookies").addEventListener("click", function() {
-                document.cookie = "cookies_accepted=true; max-age=2592000; path=/";
-                document.getElementById("cookie-banner").style.display = "none";
-            });
+    // GSAP animazione titolo con simboli filosofici
+    function createPhilosophyElements() {
+      return [
+        "Φ", "Ψ", "Λ", "Δ", "∞", "∀", "∃", "∴", "⊕", "⊗",
+        "Sapienza", "Verità", "Logos", "Eros", "Mito", "Essere", "Divenire", "Idee"
+      ];
+    }
+
+    function animateTitle() {
+      const titolo = document.querySelector(".titolo");
+      const elements = createPhilosophyElements();
+
+      // container simboli filosofici
+      const container = document.createElement("div");
+      container.style.position = "absolute";
+      container.style.left = 0;
+      container.style.top = 0;
+      container.style.width = "100%";
+      container.style.height = titolo.offsetHeight + "px";
+      container.style.pointerEvents = "none";
+      container.style.overflow = "visible";
+      titolo.style.position = "relative";
+      titolo.appendChild(container);
+
+      // crea simboli sparsi animati intorno al titolo
+      elements.forEach((el, i) => {
+        const span = document.createElement("span");
+        span.textContent = el;
+        span.style.position = "absolute";
+        span.style.fontSize = `${Math.random() * 18 + 18}px`;
+        span.style.color = `rgba(76, 175, 80, ${0.1 + Math.random() * 0.5})`;
+        span.style.left = `${Math.random() * 100}%`;
+        span.style.top = `${Math.random() * 100}%`;
+        span.style.userSelect = "none";
+        container.appendChild(span);
+
+        gsap.to(span, {
+          y: 10 + Math.random() * 20,
+          x: (Math.random() - 0.5) * 30,
+          rotation: 360 * (Math.random() - 0.5),
+          duration: 4 + Math.random() * 4,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          delay: i * 0.15
         });
+      });
 
-        // ===== PARTICLES.JS CONFIG =====
-        document.addEventListener("DOMContentLoaded", function() {
-            if (document.getElementById("particles-js")) {
-                particlesJS("particles-js", {
-                    particles: {
-                        number: { value: 60 },
-                        color: { value: "#ffd700" },
-                        size: {
-                            value: 2,
-                            random: true,
-                            anim: { enable: true, speed: 3, size_min: 0.1 }
-                        },
-                        line_linked: {
-                            enable: true,
-                            distance: 150,
-                            color: "#ffffff",
-                            opacity: 0.3,
-                            width: 0.5
-                        },
-                        move: {
-                            enable: true,
-                            speed: 1,
-                            direction: "none",
-                            out_mode: "out"
-                        }
-                    }
-                });
-            }
+      // animazione scala + rotazione del titolo
+      gsap.to(titolo, {
+        scale: 1.1,
+        rotation: 6,
+        duration: 3,
+        repeat: -1,
+        yoyo: true,
+        ease: "power1.inOut"
+      });
+    }
 
-            // ===== ELEMENTI FILOSOFICI ANIMATI =====
-            function createPhilosophyElements() {
-                const elements = [
-                    "Φ", "Ψ", "Λ", "Δ", "∞", "∀", "∃", "∴", "⊕", "⊗",
-                    "Sapienza", "Verità", "Logos", "Eros", "Mito", "Essere", "Divenire", "Idee"
-                ];
+    window.addEventListener('load', () => {
+      animateTitle();
+    });
 
-                for (let i = 0; i < 20; i++) {
-                    const element = document.createElement("div");
-                    element.className = "philosophy-element";
-                    element.textContent = elements[Math.floor(Math.random() * elements.length)];
-                    
-                    // Stili dinamici
-                    element.style.fontSize = (1 + Math.random() * 2) + "rem";
-                    element.style.color = `rgba(255, 215, 0, ${0.7 + Math.random() * 0.3})`;
-                    
-                    document.body.appendChild(element);
+    // COOKIE BANNER
+    const banner = document.getElementById('cookie-banner');
+    const cookieAccepted = document.cookie.split('; ').find(row => row.startsWith('cookie-ok='));
+    if (cookieAccepted) banner.style.display = 'none';
 
-                    const startX = Math.random() * window.innerWidth;
-                    const startY = Math.random() * window.innerHeight;
+    document.getElementById('accept').addEventListener('click', () => {
+      document.cookie = "cookie-ok=yes; path=/; max-age=31536000";
+      banner.style.display = 'none';
+    });
+    document.getElementById('reject').addEventListener('click', () => {
+      document.cookie = "cookie-ok=no; path=/; max-age=31536000";
+      banner.style.display = 'none';
+    });
+    document.getElementById('customize').addEventListener('click', () => {
+      alert('Funzione personalizzazione in sviluppo.');
+    });
 
-                    // Animazione di entrata
-                    gsap.fromTo(element, 
-                        { opacity: 0, scale: 0.5, x: startX, y: startY },
-                        { opacity: 1, scale: 1, duration: 2, ease: "back.out" }
-                    );
+    // Google Translate toggle
+    document.getElementById('translate-btn').addEventListener('click', () => {
+      let el = document.getElementById('google_translate_element');
+      if (!el) {
+        el = document.createElement('div');
+        el.id = 'google_translate_element';
+        el.style.position = 'fixed';
+        el.style.top = '50px';
+        el.style.right = '20px';
+        el.style.zIndex = '20000';
+        el.style.background = '#1a1c22';
+        el.style.padding = '10px';
+        el.style.borderRadius = '8px';
+        document.body.appendChild(el);
+        new google.translate.TranslateElement({ pageLanguage: 'it', layout: google.translate.TranslateElement.InlineLayout.SIMPLE }, 'google_translate_element');
+      } else {
+        el.style.display = (el.style.display === 'none' || !el.style.display) ? 'block' : 'none';
+      }
+    });
 
-                    // Animazione continua
-                    gsap.to(element, {
-                        x: startX + (Math.random() * 200 - 100),
-                        y: startY + (Math.random() * 200 - 100),
-                        rotation: Math.random() * 360,
-                        duration: 15 + Math.random() * 20,
-                        repeat: -1,
-                        yoyo: true,
-                        ease: "sine.inOut"
-                    });
-
-                    // Effetto scintillio
-                    gsap.to(element, {
-                        scale: 1.2,
-                        duration: 3,
-                        repeat: -1,
-                        yoyo: true,
-                        ease: "elastic.out"
-                    });
-                }
-            }
-
-            createPhilosophyElements();
+    // RICERCA CSE
+    document.getElementById('searchButton').addEventListener('click', () => {
+      const query = document.getElementById('searchInput').value.trim();
+      if (!query) return alert('Inserisci un termine di ricerca.');
+      // CSE ufficiale usa il div automatico
+      const gcse = document.getElementById('gcse-search');
+      if (!gcse) {
+        const div = document.createElement('div');
+        div.id = 'gcse-search';
+        div.style.marginTop = '12px';
+        div.style.maxWidth = '800px';
+        div.style.marginLeft = 'auto';
+        div.style.marginRight = 'auto';
+        document.body.appendChild(div);
+        window.google && window.google.search && window.google.search.cse.element.render({
+          div: 'gcse-search',
+          tag: 'search',
+          attributes: { enableAutoComplete: true }
         });
-    </script>
-
-        <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // ===== PARTICLES.JS CONFIG =====
-            particlesJS("particles-js", {
-                particles: {
-                    number: { value: 60 },
-                    color: { value: "#ffd700" },
-                    size: {
-                        value: 2,
-                        random: true,
-                        anim: { enable: true, speed: 3, size_min: 0.1 }
-                    },
-                    line_linked: {
-                        enable: true,
-                        distance: 150,
-                        color: "#ffffff",
-                        opacity: 0.3,
-                        width: 0.5
-                    },
-                    move: {
-                        enable: true,
-                        speed: 1,
-                        direction: "none",
-                        out_mode: "out"
-                    }
-                }
-            });
-
-            // ===== ELEMENTI FILOSOFICI ANIMATI =====
-            function createPhilosophyElements() {
-                const elements = [
-                    "Φ", "Ψ", "Λ", "Δ", "∞", "∀", "∃", "∴", "⊕", "⊗",
-                    "Sapienza", "Verità", "Logos", "Eros", "Mito", "Essere", "Divenire", "Idee"
-                ];
-
-                for (let i = 0; i < 30; i++) {  // Aumentato a 30 elementi
-                    const element = document.createElement("div");
-                    element.className = "philosophy-element";
-                    
-                    // Seleziona random tra simboli e parole
-                    const content = elements[Math.floor(Math.random() * elements.length)];
-                    element.textContent = content;
-                    
-                    // Dimensioni maggiori per le parole
-                    if(content.length > 1) {
-                        element.style.fontSize = (1.2 + Math.random() * 0.8) + "rem";
-                    } else {
-                        element.style.fontSize = (2 + Math.random() * 2) + "rem";
-                    }
-                    
-                    document.body.appendChild(element);
-
-                    // Posizione iniziale casuale
-                    const startX = Math.random() * window.innerWidth;
-                    const startY = Math.random() * window.innerHeight;
-
-                    // Animazione di entrata
-                    gsap.fromTo(element, 
-                        { 
-                            opacity: 0, 
-                            scale: 0.3,
-                            x: startX,
-                            y: startY
-                        },
-                        {
-                            opacity: 0.9,
-                            scale: 1,
-                            duration: 2,
-                            ease: "power2.out"
-                        }
-                    );
-
-                    // Animazione continua
-                    gsap.to(element, {
-                        x: "+=" + (Math.random() * 100 - 50),
-                        y: "+=" + (Math.random() * 100 - 50),
-                        rotation: Math.random() * 360,
-                        duration: 15 + Math.random() * 20,
-                        repeat: -1,
-                        yoyo: true,
-                        ease: "sine.inOut"
-                    });
-
-                    // Effetto pulsante
-                    gsap.to(element, {
-                        scale: 1.2,
-                        duration: 3 + Math.random() * 4,
-                        repeat: -1,
-                        yoyo: true,
-                        ease: "elastic.out"
-                    });
-                }
-            }
-
-            // Avvia tutto
-            createPhilosophyElements();
-            
-            // Ridimensionamento responsive
-            window.addEventListener('resize', function() {
-                document.querySelectorAll('.philosophy-element').forEach(el => el.remove());
-                createPhilosophyElements();
-            });
-        });
-    </script>
+      }
+      // imposta valore input CSE
+      const inputCse = document.querySelector('input.gsc-input');
+      if (inputCse) {
+        inputCse.value = query;
+        inputCse.focus();
+        // avvia la ricerca (simulate enter)
+        const evt = new KeyboardEvent('keydown', { key: 'Enter', keyCode: 13, bubbles: true });
+        inputCse.dispatchEvent(evt);
+      }
+    });
+  </script>
 </body>
 </html>
