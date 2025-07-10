@@ -484,9 +484,17 @@
                 padding: 1rem;
             }
         }
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #000;
+        }
     </style>
 </head>
 <body>
+    <div id="particles-js"></div> <!-- Elemento obbligatorio -->
+
     <!-- Starfield Background -->
     <div class="starfield" id="starfield"></div>
     
@@ -1013,5 +1021,18 @@
     document.getElementById("cookie-banner").style.display = "none";
   });
 </script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (document.getElementById("particles-js")) {
+                particlesJS("particles-js", {
+                    particles: {
+                        number: { value: 80 },
+                        color: { value: "#ffffff" }
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
