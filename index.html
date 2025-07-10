@@ -1835,5 +1835,27 @@
     document.head.appendChild(style);
 })();
 </script>
+    <script defer>
+  document.addEventListener("DOMContentLoaded", function() {
+    const cx = "87b07564ab3cb462a";
+    const searchBtn = document.getElementById('search-btn');
+    const searchInput = document.getElementById('search-input');
+
+    searchBtn.addEventListener('click', () => {
+      const query = searchInput.value.trim();
+      if(query) {
+        const url = `https://cse.google.com/cse?cx=${cx}&q=${encodeURIComponent(query)}`;
+        window.open(url, '_blank');
+      }
+    });
+
+    searchInput.addEventListener('keydown', e => {
+      if(e.key === 'Enter') {
+        searchBtn.click();
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
