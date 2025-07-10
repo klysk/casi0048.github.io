@@ -761,81 +761,103 @@
 
     window.addEventListener('load', () => {
       animateTitle();
-    });
+      });
+}  // chiusura funzione animateTitle
 
-    // COOKIE BANNER
-    const banner = document.getElementById('cookie-banner');
-    const cookieAccepted = document.cookie.split('; ').find(row => row.startsWith('cookie-ok='));
-    if (cookieAccepted) banner.style.display = 'none';
+<script>
+  // COOKIE BANNER
+  const banner = document.getElementById('cookie-banner');
+  const cookieAccepted = document.cookie.split('; ').find(row => row.startsWith('cookie-ok='));
+  if (cookieAccepted) banner.style.display = 'none';
 
-    document.getElementById('accept').addEventListener('click', () => {
-      document.cookie = "cookie-ok=yes; path=/; max-age=31536000";
-      banner.style.display = 'none';
-    });
-    document.getElementById('reject').addEventListener('click', () => {
-      document.cookie = "cookie-ok=no; path=/; max-age=31536000";
-      banner.style.display = 'none';
-    });
-    document.getElementById('customize').addEventListener('click', () => {
-      alert('Funzione personalizzazione in sviluppo.');
-    });
+  document.getElementById('accept').addEventListener('click', () => {
+    document.cookie = "cookie-ok=yes; path=/; max-age=31536000";
+    banner.style.display = 'none';
+  });
+  document.getElementById('reject').addEventListener('click', () => {
+    document.cookie = "cookie-ok=no; path=/; max-age=31536000";
+    banner.style.display = 'none';
+  });
+  document.getElementById('customize').addEventListener('click', () => {
+    alert('Funzione personalizzazione in sviluppo.');
+  });
 
-    // Google Translate toggle
-    document.getElementById('translate-btn').addEventListener('click', () => {
-      let el = document.getElementById('google_translate_element');
-      if (!el) {
-        el = document.createElement('div');
-        el.id = 'google_translate_element';
-        el.style.position = 'fixed';
-        el.style.top = '50px';
-        el.style.right = '20px';
-        el.style.zIndex = '20000';
-        el.style.background = '#1a1c22';
-        el.style.padding = '10px';
-        el.style.borderRadius = '8px';
-        document.body.appendChild(el);
-        new google.translate.TranslateElement({ pageLanguage: 'it', layout: google.translate.TranslateElement.InlineLayout.SIMPLE }, 'google_translate_element');
-      } else {
-        el.style.display = (el.style.display === 'none' || !el.style.display) ? 'block' : 'none';
-      }
-    });
+  // Google Translate toggle
+  document.getElementById('translate-btn').addEventListener('click', () => {
+    let el = document.getElementById('google_translate_element');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'google_translate_element';
+      el.style.position = 'fixed';
+      el.style.top = '50px';
+      el.style.right = '20px';
+      el.style.zIndex = '20000';
+      el.style.background = '#1a1c22';
+      el.style.padding = '10px';
+      el.style.borderRadius = '8px';
+      document.body.appendChild(el);
+      new google.translate.TranslateElement(
+        { pageLanguage: 'it', layout: google.translate.TranslateElement.InlineLayout.SIMPLE },
+        'google_translate_element'
+      );
+    } else {
+      el.style.display = (el.style.display === 'none' || !el.style.display) ? 'block' : 'none';
+    }
+  });
 
-    // RICERCA CSE
-    document.getElementById('searchButton').addEventListener('click', () => {
-      const query = document.getElementById('searchInput').value.trim();
-      if (!query) return alert('Inserisci un termine di ricerca.');
-      // CSE ufficiale usa il div automatico
-      const gcse = document.getElementById('gcse-search');
-      if (!gcse) {
-        const div = document.createElement('div');
-        div.id = 'gcse-search';
-        div.style.marginTop = '12px';
-        div.style.maxWidth = '800px';
-        div.style.marginLeft = 'auto';
-        div.style.marginRight = 'auto';
-        document.body.appendChild(div);
-        window.google && window.google.search && window.google.search.cse.element.render({
+  // RICERCA CSE - attendi che google.search.cse sia pronto prima di renderizzare
+  document.getElementById('searchButton').addEventListener('click', () => {
+    const query = document.getElementById('searchInput').value.trim();
+    if (!query) return alert('Inserisci un termine di ricerca.');
+
+    let gcse = document.getElementById('gcse-search');
+    if (!gcse) {
+      gcse = document.createElement('div');
+      gcse.id = 'gcse-search';
+      gcse.style.marginTop = '12px';
+      gcse.style.maxWidth = '800px';
+      gcse.style.marginLeft = 'auto';
+      gcse.style.marginRight = 'auto';
+      document.body.appendChild(gcse);
+    }
+
+    // Funzione per inizializzare la CSE se è caricata
+    function renderCSE() {
+      if (window.google?.search?.cse?.element) {
+        window.google.search.cse.element.render({
           div: 'gcse-search',
           tag: 'search',
           attributes: { enableAutoComplete: true }
         });
+        setSearchInputValue();
+      } else {
+        setTimeout(renderCSE, 200); // riprova finché non è pronto
       }
-      // imposta valore input CSE
+    }
+
+    // Imposta valore input e simula invio ricerca
+    function setSearchInputValue() {
       const inputCse = document.querySelector('input.gsc-input');
       if (inputCse) {
         inputCse.value = query;
         inputCse.focus();
-        // avvia la ricerca (simulate enter)
         const evt = new KeyboardEvent('keydown', { key: 'Enter', keyCode: 13, bubbles: true });
         inputCse.dispatchEvent(evt);
+      } else {
+        setTimeout(setSearchInputValue, 200);
       }
-    });
-  </script>
-  <div id="google_translate_element" style="display:none; position: fixed; top: 50px; right: 20px; background: #222; padding: 10px; border-radius: 8px; z-index: 10000;"></div>
+    }
 
+    renderCSE();
+  });
+</script>
+
+<!-- DIV per traduttore (inizialmente nascosto) -->
+<div id="google_translate_element" style="display:none; position: fixed; top: 50px; right: 20px; background: #222; padding: 10px; border-radius: 8px; z-index: 10000;"></div>
+
+<!-- Script Google Translate -->
 <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-  <script type="text/javascript">
+<script>
   function googleTranslateElementInit() {
     new google.translate.TranslateElement({
       pageLanguage: 'it',
@@ -843,13 +865,3 @@
     }, 'google_translate_element');
   }
 </script>
-
-  <script>
-  document.getElementById('translate-btn').addEventListener('click', () => {
-    const el = document.getElementById('google_translate_element');
-    el.style.display = (el.style.display === 'block') ? 'none' : 'block';
-  });
-</script>
-
-</body>
-</html>
