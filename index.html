@@ -1133,6 +1133,68 @@ gsap.to(element, {
 });
             createPhilosophyElements();
         });
+       <!--  aggiunta -->
+      function createPhilosophyElements() {
+    const elements = [
+        "Φ", "Ψ", "Λ", "Δ", "∞", "∀", "∃", "∴", "⊕", "⊗",
+        "Sapienza", "Verità", "Logos", "Eros", "Mito", "Essere", "Divenire", "Idee"
+    ];
+
+    // Crea 20 elementi filosofici in posizioni casuali
+    for (let i = 0; i < 20; i++) {
+        const element = document.createElement("div");
+        element.className = "philosophy-element";
+        
+        // Seleziona un simbolo o parola casuale dall'array
+        element.textContent = elements[Math.floor(Math.random() * elements.length)];
+        
+        // Imposta stili base
+        element.style.position = "absolute";
+        element.style.color = "rgba(255, 255, 255, 0.9)";
+        element.style.fontSize = (1 + Math.random() * 2) + "rem"; // Dimensione casuale tra 1-3rem
+        element.style.fontWeight = "bold";
+        element.style.zIndex = "2";
+        element.style.pointerEvents = "none";
+        
+        document.body.appendChild(element);
+
+        // Posizione iniziale casuale
+        const startX = Math.random() * window.innerWidth;
+        const startY = Math.random() * window.innerHeight;
+
+        // Animazione di entrata
+        gsap.fromTo(element, 
+            { 
+                opacity: 0, 
+                scale: 0.5,
+                x: startX,
+                y: startY
+            },
+            {
+                opacity: 1,
+                scale: 1,
+                duration: 2,
+                ease: "back.out"
+            }
+        );
+
+        // Animazione di fluttuazione continua
+        gsap.to(element, {
+            x: startX + (Math.random() * 200 - 100), // Spostamento orizzontale casuale ±100px
+            y: startY + (Math.random() * 200 - 100), // Spostamento verticale casuale ±100px
+            rotation: Math.random() * 360,           // Rotazione casuale
+            duration: 15 + Math.random() * 20,       // Durata variabile
+            repeat: -1,                              // Loop infinito
+            yoyo: true,                              // Andata e ritorno
+            ease: "sine.inOut"                       // Movimento naturale
+        });
+    }
+}
+
+// Esegui la funzione quando il DOM è pronto
+document.addEventListener("DOMContentLoaded", function() {
+    createPhilosophyElements();
+});     
     </script>
           
 </body>
