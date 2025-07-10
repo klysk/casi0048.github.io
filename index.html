@@ -3,16 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Echi di Sofia - Filosofia attraverso i secoli</title>
-    <link rel="icon" type="image/png" href="favicon_io/favicon-32x32.png">
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:wght@400;500;700&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+   <link rel="icon" type="image/png" href="favicon_io/favicon-32x32.png">
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
     <style>
         :root {
             --primary-color: #8e6c88;
@@ -38,7 +35,27 @@
             min-height: 100vh;
             position: relative;
         }
-
+ body {
+            margin: 0;
+            overflow: hidden;
+            background: #0f0f1a;
+            font-family: 'Arial', sans-serif;
+        }
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        .philosophy-element {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.5rem;
+            font-weight: bold;
+            z-index: 2;
+            pointer-events: none;
+            user-select: none;
+        }
         /* Starfield Background */
         .starfield {
             position: fixed;
@@ -1037,5 +1054,78 @@
     }
   }
 });
+ </script>     
+   <script>
+        // ===== PARTICOLES.JS (PARTICELLE PICCOLE) =====
+        document.addEventListener("DOMContentLoaded", function() {
+            if (document.getElementById("particles-js")) {
+                particlesJS("particles-js", {
+                    particles: {
+                        number: { value: 60 }, // Meno particelle
+                        color: { value: "#ffffff" },
+                        size: {
+                            value: 2, // Dimensione ridotta
+                            random: true,
+                            anim: { enable: true, speed: 3, size_min: 0.1 }
+                        },
+                        line_linked: {
+                            enable: true,
+                            distance: 150,
+                            color: "#ffffff",
+                            opacity: 0.3,
+                            width: 0.5
+                        },
+                        move: {
+                            enable: true,
+                            speed: 1,
+                            direction: "none",
+                            out_mode: "out"
+                        }
+                    }
+                });
+            }
+
+            // ===== ELEMENTI FILOSOFICI ANIMATI (GSAP) =====
+            function createPhilosophyElements() {
+                const elements = [
+                    "Φ", "Ψ", "Λ", "Δ", "∞", "∀", "∃", "∴", "⊕", "⊗",
+                    "Sapienza", "Verità", "Logos", "Eros", "Mito", "Essere", "Divenire", "Idee"
+                ];
+
+                for (let i = 0; i < 20; i++) {
+                    const element = document.createElement("div");
+                    element.className = "philosophy-element";
+                    element.textContent = elements[Math.floor(Math.random() * elements.length)];
+                    document.body.appendChild(element);
+
+                    // Posizione casuale
+                    const x = Math.random() * window.innerWidth;
+                    const y = Math.random() * window.innerHeight;
+
+                    // Animazione con GSAP
+                    gsap.set(element, { x, y, opacity: 0 });
+                    gsap.to(element, {
+                        opacity: 1,
+                        duration: 2,
+                        ease: "power2.out"
+                    });
+
+                    // Movimento fluttuante
+                    gsap.to(element, {
+                        y: y + (Math.random() * 100 - 50),
+                        x: x + (Math.random() * 100 - 50),
+                        rotation: Math.random() * 360,
+                        duration: 10 + Math.random() * 20,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut"
+                    });
+                }
+            }
+
+            createPhilosophyElements();
+        });
+    </script>
+          
 </body>
 </html>
