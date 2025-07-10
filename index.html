@@ -511,8 +511,12 @@
     </style>
 </head>
 <body>
-    <div id="particles-js"></div> <!-- Elemento obbligatorio -->
-
+     <div id="particles-js"></div>
+    <div id="google_translate_element"></div>
+    <div id="cookie-banner">
+        <p>Questo sito usa cookie. <button id="accept-cookies">Accetta</button></p>
+    </div>
+    
     <!-- Starfield Background -->
     <div class="starfield" id="starfield"></div>
     
@@ -1028,44 +1032,41 @@
       'google_translate_element'
     );
   }
-</script>
-<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <div id="cookie-banner">
-  <p>Questo sito usa cookie. <button id="accept-cookies">Accetta</button></p>
-</div>
-<script>
-  document.getElementById("accept-cookies").addEventListener("click", function() {
-    document.cookie = "cookies_accepted=true; max-age=2592000";
-    document.getElementById("cookie-banner").style.display = "none";
-  });
+    
 </script>
     
-   particlesJS("particles-js", {
-  particles: {
-    number: { value: 80 },
-    color: { value: "#ffd700" },
-    size: { 
-      value: 3, // <-- Questo controlla la dimensione delle particelle
-      random: true, // Se true, le dimensioni variano
-      anim: { 
-        enable: true, 
-        speed: 4, 
-        size_min: 0.3 
-      }
-    }
-  }
-});
- </script>     
-   <script>
-        // ===== PARTICOLES.JS (PARTICELLE PICCOLE) =====
+    <!-- %%%%%%%%%%%%%%%%inizio  script &&&&&&&&&&&&&&&&&&&&&&&&&&  -->
+ <script>
+        // ===== GOOGLE TRANSLATE =====
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement(
+                { pageLanguage: 'it' },
+                'google_translate_element'
+            );
+        }
+
+        // ===== COOKIE BANNER =====
+        document.addEventListener("DOMContentLoaded", function() {
+            // Mostra il banner solo se il cookie non è accettato
+            if (!document.cookie.includes('cookies_accepted=true')) {
+                document.getElementById('cookie-banner').style.display = 'block';
+            }
+
+            document.getElementById("accept-cookies").addEventListener("click", function() {
+                document.cookie = "cookies_accepted=true; max-age=2592000; path=/";
+                document.getElementById("cookie-banner").style.display = "none";
+            });
+        });
+
+        // ===== PARTICLES.JS CONFIG =====
         document.addEventListener("DOMContentLoaded", function() {
             if (document.getElementById("particles-js")) {
                 particlesJS("particles-js", {
                     particles: {
-                        number: { value: 60 }, // Meno particelle
-                        color: { value: "#ffffff" },
+                        number: { value: 60 },
+                        color: { value: "#ffd700" },
                         size: {
-                            value: 2, // Dimensione ridotta
+                            value: 2,
                             random: true,
                             anim: { enable: true, speed: 3, size_min: 0.1 }
                         },
@@ -1086,7 +1087,7 @@
                 });
             }
 
-            // ===== ELEMENTI FILOSOFICI ANIMATI (GSAP) =====
+            // ===== ELEMENTI FILOSOFICI ANIMATI =====
             function createPhilosophyElements() {
                 const elements = [
                     "Φ", "Ψ", "Λ", "Δ", "∞", "∀", "∃", "∴", "⊕", "⊗",
@@ -1097,105 +1098,46 @@
                     const element = document.createElement("div");
                     element.className = "philosophy-element";
                     element.textContent = elements[Math.floor(Math.random() * elements.length)];
+                    
+                    // Stili dinamici
+                    element.style.fontSize = (1 + Math.random() * 2) + "rem";
+                    element.style.color = `rgba(255, 215, 0, ${0.7 + Math.random() * 0.3})`;
+                    
                     document.body.appendChild(element);
 
-                    // Posizione casuale
-                    const x = Math.random() * window.innerWidth;
-                    const y = Math.random() * window.innerHeight;
+                    const startX = Math.random() * window.innerWidth;
+                    const startY = Math.random() * window.innerHeight;
 
-                    // Animazione con GSAP
-                    gsap.set(element, { x, y, opacity: 0 });
-                    gsap.to(element, {
-                        opacity: 1,
-                        duration: 2,
-                        ease: "power2.out"
-                    });
+                    // Animazione di entrata
+                    gsap.fromTo(element, 
+                        { opacity: 0, scale: 0.5, x: startX, y: startY },
+                        { opacity: 1, scale: 1, duration: 2, ease: "back.out" }
+                    );
 
-                    // Movimento fluttuante
+                    // Animazione continua
                     gsap.to(element, {
-                        y: y + (Math.random() * 100 - 50),
-                        x: x + (Math.random() * 100 - 50),
+                        x: startX + (Math.random() * 200 - 100),
+                        y: startY + (Math.random() * 200 - 100),
                         rotation: Math.random() * 360,
-                        duration: 10 + Math.random() * 20,
+                        duration: 15 + Math.random() * 20,
                         repeat: -1,
                         yoyo: true,
                         ease: "sine.inOut"
                     });
+
+                    // Effetto scintillio
+                    gsap.to(element, {
+                        scale: 1.2,
+                        duration: 3,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "elastic.out"
+                    });
                 }
             }
-// Esempio: Scintillio con GSAP
-gsap.to(element, {
-    scale: 1.2,
-    duration: 1.5,
-    repeat: -1,
-    yoyo: true,
-    ease: "elastic.out"
-});
+
             createPhilosophyElements();
         });
-       <!--  aggiunta -->
-      function createPhilosophyElements() {
-    const elements = [
-        "Φ", "Ψ", "Λ", "Δ", "∞", "∀", "∃", "∴", "⊕", "⊗",
-        "Sapienza", "Verità", "Logos", "Eros", "Mito", "Essere", "Divenire", "Idee"
-    ];
-
-    // Crea 20 elementi filosofici in posizioni casuali
-    for (let i = 0; i < 20; i++) {
-        const element = document.createElement("div");
-        element.className = "philosophy-element";
-        
-        // Seleziona un simbolo o parola casuale dall'array
-        element.textContent = elements[Math.floor(Math.random() * elements.length)];
-        
-        // Imposta stili base
-        element.style.position = "absolute";
-        element.style.color = "rgba(255, 255, 255, 0.9)";
-        element.style.fontSize = (1 + Math.random() * 2) + "rem"; // Dimensione casuale tra 1-3rem
-        element.style.fontWeight = "bold";
-        element.style.zIndex = "2";
-        element.style.pointerEvents = "none";
-        
-        document.body.appendChild(element);
-
-        // Posizione iniziale casuale
-        const startX = Math.random() * window.innerWidth;
-        const startY = Math.random() * window.innerHeight;
-
-        // Animazione di entrata
-        gsap.fromTo(element, 
-            { 
-                opacity: 0, 
-                scale: 0.5,
-                x: startX,
-                y: startY
-            },
-            {
-                opacity: 1,
-                scale: 1,
-                duration: 2,
-                ease: "back.out"
-            }
-        );
-
-        // Animazione di fluttuazione continua
-        gsap.to(element, {
-            x: startX + (Math.random() * 200 - 100), // Spostamento orizzontale casuale ±100px
-            y: startY + (Math.random() * 200 - 100), // Spostamento verticale casuale ±100px
-            rotation: Math.random() * 360,           // Rotazione casuale
-            duration: 15 + Math.random() * 20,       // Durata variabile
-            repeat: -1,                              // Loop infinito
-            yoyo: true,                              // Andata e ritorno
-            ease: "sine.inOut"                       // Movimento naturale
-        });
-    }
-}
-
-// Esegui la funzione quando il DOM è pronto
-document.addEventListener("DOMContentLoaded", function() {
-    createPhilosophyElements();
-});     
     </script>
-          
 </body>
 </html>
