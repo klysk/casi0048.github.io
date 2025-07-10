@@ -406,6 +406,29 @@
                 padding: 1rem;
             }
         }
+        #citazioni {
+  margin: 40px auto;
+  max-width: 700px;
+  font-style: italic;
+  font-size: 1.3rem;
+  color: #eee;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  min-height: 3em;
+}
+#citazioni span {
+  display: inline-block;
+  opacity: 0;
+}
+#quote-explosion {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
     </style>
 </head>
 <body>
@@ -739,6 +762,8 @@
         });
 
         // CITAZIONI FILOSOFICHE
+        <section id="citazioni" class="quote-rotating" aria-live="polite" aria-atomic="true"></section>
+        <canvas id="quote-explosion"></canvas>
         const quotes = [
             {
                 text: "Conosci te stesso e conoscerai l'universo e gli dei.",
@@ -1855,6 +1880,184 @@
       }
     });
   });
+        // CITAZIONI FILOSOFICHE CON GSAP + ESPLOSIONE
+const quotes = [
+  {
+    text: "Conosci te stesso e conoscerai l'universo e gli dei.",
+    author: "Socrate"
+  },
+  {
+    text: "Il sapere è l'unico bene che aumenta condividendolo.",
+    author: "Pitagora"
+  },
+  {
+    text: "La meraviglia è il principio di ogni conoscenza.",
+    author: "Aristotele"
+  },
+  {
+    text: "Penso, dunque sono.",
+    author: "Cartesio"
+  }
+];
+
+const quoteContainer = document.getElementById("citazioni");
+let currentQuote = 0;
+
+function showQuote(index) {
+  const quote = quotes[index];
+  quoteContainer.innerHTML = `<span>«${quote.text}» – ${quote.author}</span>`;
+
+  // Animazione GSAP entrata
+  gsap.fromTo(
+    quoteContainer.querySelector("span"),
+    { opacity: 0, y: 20 },
+    { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
+  );
+}
+
+// Inizializza canvas per esplosioni
+const canvas = document.getElementById("quote-explosion");
+const ctx = canvas.getContext("2d");
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+// Effetto particelle a esplosione
+function explodeParticles(x, y) {
+  const particles = [];
+  const colors = ["#fdbb2d", "#ff6a00", "#ffffff"];
+
+  for (let i = 0; i < 30; i++) {
+    particles.push({
+      x: x,
+      y: y,
+      radius: Math.random() * 3 + 2,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      vx: (Math.random() - 0.5) * 6,
+      vy: (Math.random() - 0.5) * 6,
+      alpha: 1
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.alpha -= 0.02;
+      ctx.beginPath();
+      ctx.globalAlpha = p.alpha;
+      ctx.fillStyle = p.color;
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+
+    if (particles.some(p => p.alpha > 0)) {
+      requestAnimationFrame(animate);
+    }
+  }
+
+  animate();
+}
+
+// Mostra prima citazione
+showQuote(currentQuote);
+
+// Rotazione automatica + esplosione + GSAP
+setInterval(() => {
+  currentQuote = (currentQuote + 1) % quotes.length;
+  showQuote(currentQuote);
+
+  // Coordinate per esplosione al centro del contenitore
+  const rect = quoteContainer.getBoundingClientRect();
+  const x = rect.left + rect.width / 2;
+  const y = rect.top + rect.height / 2;
+  explodeParticles(x, y);
+}, 6000);
+
+</script>
+<!-- Script Google CSE (motore di ricerca) -->
+<script async src="https://cse.google.com/cse.js?cx=87b07564ab3cb462a"></script>
+
+<!-- Script personalizzato: particles.js + ricerca -->
+<script defer>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Particles.js inizializzazione
+    particlesJS('particles-js', {
+      "particles": {
+        "number": {
+          "value": 80,
+          "density": {
+            "enable": true,
+            "value_area": 800
+          }
+        },
+        "color": { "value": "#fdbb2d" },
+        "shape": { "type": "circle" },
+        "opacity": { "value": 0.6 },
+        "size": { "value": 3, "random": true },
+        "line_linked": {
+          "enable": true,
+          "distance": 120,
+          "color": "#fdbb2d",
+          "opacity": 0.15,
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 1.5,
+          "direction": "none",
+          "random": true,
+          "out_mode": "out"
+        }
+      },
+      "interactivity": {
+        "events": {
+          "onhover": { "enable": true, "mode": "grab" },
+          "onclick": { "enable": true, "mode": "push" }
+        },
+        "modes": {
+          "grab": { "distance": 140, "line_linked": { "opacity": 0.4 } },
+          "push": { "particles_nb": 4 }
+        }
+      },
+      "retina_detect": true
+    });
+
+    // Ricerca Google CSE personalizzata
+    const cx = "87b07564ab3cb462a";
+    const searchBtn = document.getElementById('search-btn');
+    const searchInput = document.getElementById('search-input');
+
+    searchBtn.addEventListener('click', () => {
+      const query = searchInput.value.trim();
+      if(query) {
+        const url = `https://cse.google.com/cse?cx=${cx}&q=${encodeURIComponent(query)}`;
+        window.open(url, '_blank');
+      }
+    });
+
+    searchInput.addEventListener('keydown', e => {
+      if(e.key === 'Enter') {
+        searchBtn.click();
+      }
+    });
+  });
+    // Rotazione automatica delle citazioni
+const quotes = document.querySelectorAll('.quote-rotating span');
+let currentQuote = 0;
+
+setInterval(() => {
+  quotes[currentQuote].classList.remove('active');
+  currentQuote = (currentQuote + 1) % quotes.length;
+  quotes[currentQuote].classList.add('active');
+}, 6000); // ogni 6 secondi
+
 </script>
 
 </body>
