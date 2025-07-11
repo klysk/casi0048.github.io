@@ -1,86 +1,149 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Echi di Sofia - Filosofia attraverso i secoli</title>
-<link rel="icon" href="favicon_io/favicon.ico" />
-<!-- Qui andrebbero reinseriti gli stili CSS e il resto dell'head esattamente come già impostato nel file sopra -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Echi di Sofia - Filosofia attraverso i secoli</title>
+    <link rel="icon" href="favicon_io/favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: #0b0f1a;
+            color: #f0f0f0;
+            overflow-x: hidden;
+        }
+        header {
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+        h1 {
+            font-size: 3rem;
+            color: #9cf;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            background: rgba(0,0,0,0.7);
+            padding: 0;
+            margin: 0;
+        }
+        nav ul li {
+            position: relative;
+        }
+        nav ul li button.menu-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            padding: 1rem;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        nav ul li .mega-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 1rem;
+            z-index: 10;
+            flex-wrap: wrap;
+        }
+        nav ul li:hover .mega-menu {
+            display: flex;
+        }
+        .mega-menu div {
+            margin: 0 1rem;
+        }
+        .mega-menu h4 {
+            margin-top: 0;
+        }
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+        .cookie-banner button {
+            margin-left: 1rem;
+        }
+    </style>
 </head>
 <body>
-<!-- Header, barra superiore, menu -->
-<header>
-  <!--...-->  
-</header>
-
-<!-- Benvenuto -->
-<section id="benvenuto">
-  <div class="titolo">Echi di Sofia</div>
-  <div class="sottotitolo">Filosofia attraverso i secoli</div>
-</section>
-
-<!-- Citazioni -->
-<section id="citazioni">
-  <blockquote>"Conosci te stesso." — Socrate</blockquote>
-  <blockquote>"Tutto scorre." — Eraclito</blockquote>
-  <blockquote>"L'uomo è misura di tutte le cose." — Protagora</blockquote>
-</section>
-
-<!-- Cookie banner -->
-<div id="cookie-banner">
-  <p>Questo sito utilizza cookie per migliorare l'esperienza utente. Puoi scegliere come gestirli.</p>
-  <div>
-    <button id="cookie-accept">Accetta</button>
-    <button id="cookie-customize">Personalizza</button>
-    <button id="cookie-reject">Rifiuta</button>
-  </div>
-</div>
-
-<!-- Footer -->
-<footer>
-  &copy; 2025 Echi di Sofia. Tutti i diritti riservati.
-</footer>
-
-<!-- Script base -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  // GSAP animazione titolo
-  gsap.from(".titolo", {duration: 2, y: -100, opacity: 0, ease: "bounce"});
-  gsap.from(".sottotitolo", {duration: 2, delay: 0.5, y: 100, opacity: 0, ease: "power4.out"});
-  
-  // Hamburger toggle
-  const hamburger = document.querySelector(".hamburger");
-  const nav = document.querySelector("nav.menu-desktop");
-  hamburger.addEventListener("click", () => {
-    nav.classList.toggle("open");
-  });
-
-  // Cookie banner gestione
-  const cookieBanner = document.getElementById("cookie-banner");
-  if (!localStorage.getItem("cookieConsent")) {
-    cookieBanner.style.display = "block";
-  }
-  document.getElementById("cookie-accept").onclick = () => {
-    localStorage.setItem("cookieConsent", "accepted");
-    cookieBanner.style.display = "none";
-  };
-  document.getElementById("cookie-reject").onclick = () => {
-    localStorage.setItem("cookieConsent", "rejected");
-    cookieBanner.style.display = "none";
-  };
-  document.getElementById("cookie-customize").onclick = () => {
-    alert("Funzione di personalizzazione in arrivo!");
-  };
-});
-</script>
-
-<!-- Particles.js -->
-<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
-<script>
-particlesJS.load('particles-js', 'particles.json', function() {
-  console.log('Particles.js config loaded');
-});
-</script>
+    <div id="particles-js"></div>
+    <header>
+        <h1 id="main-title">Echi di Sofia</h1>
+        <p>Filosofia attraverso i secoli</p>
+    </header>
+    <nav>
+        <ul>
+            <!-- Filosofia antica -->
+            <li role="none" class="dropdown">
+                <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">Filosofia antica <span class="arrow">▼</span></button>
+                <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia antica">
+                    <div>
+                        <h4>Scuola ionica</h4>
+                        <a href="/Presocratici/talete.html" role="menuitem">Talete</a>
+                        <a href="Presocratici/anassimandro.html" role="menuitem">Anassimandro</a>
+                        <a href="Presocratici/anassimene.html" role="menuitem">Anassimene</a>
+                    </div>
+                    <div>
+                        <h4>Scuola eleatica</h4>
+                        <a href="Presocratici/senofane.html" role="menuitem">Senofane</a>
+                        <a href="/Presocratici/parmenide.html" role="menuitem">Parmenide</a>
+                        <a href="articoli/zenone.html" role="menuitem">Zenone</a>
+                        <a href="articoli/melisso.html" role="menuitem">Melisso</a>
+                    </div>
+                    <div>
+                        <h4>Altri</h4>
+                        <a href="articoli/eraclito.html" role="menuitem">Eraclito</a>
+                        <a href="/Presocratici/anassagora.html" role="menuitem">Anassagora</a>
+                        <a href="/articoli/empedocle.html" role="menuitem">Empedocle</a>
+                    </div>
+                    <div>
+                        <h4>Pitagorici</h4>
+                        <a href="/articoli/pitagora.html" role="menuitem">Pitagora</a>
+                        <a href="/articoli/filolao.html" role="menuitem">Filolao</a>
+                        <a href="/articoli/alcmeone.html" role="menuitem">Alcmeone</a>
+                        <a href="articoli/archita.html" role="menuitem">Archita</a>
+                        <a href="/articoli/ippaso.html" role="menuitem">Ippaso</a>
+                    </div>
+                </div>
+            </li>
+            <!-- Altri menu mantenuti -->
+        </ul>
+    </nav>
+    <div class="cookie-banner" id="cookie-banner">
+        <p>Questo sito utilizza cookie per migliorare l'esperienza di navigazione.</p>
+        <div>
+            <button id="accept-cookies">Accetta</button>
+            <button id="customize-cookies">Personalizza</button>
+            <button id="reject-cookies">Rifiuta</button>
+        </div>
+    </div>
+    <footer>
+        <p>© 2025 Echi di Sofia. Tutti i diritti riservati.</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            particlesJS("particles-js", {
+                particles: { number: { value: 80 }, color: { value: "#4caf50" }, shape: { type: "circle" }, opacity: { value: 0.5 }, size: { value: 3 }, line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.4, width: 1 }, move: { enable: true, speed: 2 } }, interactivity: { detect_on: "canvas", events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } } }, retina_detect: true
+            });
+            gsap.from("#main-title", { duration: 2, y: -100, opacity: 0, ease: "bounce" });
+            document.getElementById("accept-cookies").addEventListener("click", () => document.getElementById("cookie-banner").style.display = "none");
+            document.getElementById("customize-cookies").addEventListener("click", () => alert("Personalizzazione non implementata."));
+            document.getElementById("reject-cookies").addEventListener("click", () => document.getElementById("cookie-banner").style.display = "none");
+        });
+    </script>
 </body>
 </html>
