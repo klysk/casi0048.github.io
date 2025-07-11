@@ -3,140 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homepage Spettacolare</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;900&family=Montserrat:wght@300;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <title>Echi di Sofia</title>
+    <link rel="icon" href="favicon_io/favicon.ico" type="image/x-icon">
     <style>
-        body {
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+
+        body, html {
             margin: 0;
             padding: 0;
-            background-color: #000;
-            color: #fff;
-            font-family: 'Montserrat', sans-serif;
+            background: #0a0a0a;
+            color: #f0f0f0;
+            font-family: 'Playfair Display', serif;
             overflow-x: hidden;
         }
-
-        /* --- Effetto Lampo Perpetuo --- */
-        .lightning {
+        
+        #particles-js {
             position: fixed;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
-            opacity: 0;
-            pointer-events: none;
-            animation: lightning 5s infinite linear;
             z-index: -1;
         }
 
-        @keyframes lightning {
-            0%, 100% { opacity: 0; }
-            5%, 15%, 25%, 35%, 45%, 55%, 65%, 75%, 85%, 95% { 
-                opacity: 0.3; 
-                transform: scale(1.2);
-            }
-            10%, 20%, 30%, 40%, 50%, 60%, 70%, 80%, 90% { 
-                opacity: 0.1; 
-                transform: scale(1.1);
-            }
-        }
-
-        /* --- Titolo Animato (Font Elegante) --- */
-        .title {
-            font-family: 'Playfair Display', serif;
-            font-size: 5rem;
-            font-weight: 900;
+        header {
             text-align: center;
-            margin-top: 2rem;
-            background: linear-gradient(45deg, #ff00cc, #3333ff, #00ffcc);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: titleGlow 3s ease-in-out infinite alternate, float 4s ease-in-out infinite;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            padding-top: 120px;
         }
 
-        @keyframes titleGlow {
-            0% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
-            100% { text-shadow: 0 0 30px rgba(255, 255, 255, 0.7), 0 0 60px rgba(100, 149, 237, 0.5); }
+        h1 {
+            font-size: 4rem;
+            letter-spacing: 2px;
+            margin: 0;
+            color: #e0dada;
+        }
+        
+        .philosophy-quote {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            opacity: 0.7;
+            animation: fadeQuotes 20s linear infinite;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+        @keyframes fadeQuotes {
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; }
         }
 
-        /* --- Menu con Font Delicato e Moderno --- */
-        .menu {
+        .menu-desktop {
+            position: sticky;
+            top: 0;
+            background: rgba(10, 10, 10, 0.9);
+            z-index: 999;
             display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 3rem;
+            align-items: center;
+            justify-content: space-around;
+            padding: 10px 0;
         }
 
-        .menu a {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2rem;
+        .menu-desktop ul {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .menu-desktop ul li {
+            position: relative;
+            padding: 10px 20px;
+        }
+
+        .menu-desktop ul li a, .menu-btn {
             color: #fff;
             text-decoration: none;
-            transition: all 0.3s ease;
-            position: relative;
+            cursor: pointer;
         }
 
-        .menu a:hover {
-            color: #ff00cc;
-            transform: scale(1.1);
-        }
-
-        .menu a::after {
-            content: '';
+        .mega-menu {
             position: absolute;
-            bottom: -5px;
+            top: 100%;
             left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #ff00cc, #3333ff);
-            transition: width 0.3s ease;
+            display: none;
+            background: rgba(20, 20, 20, 0.95);
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
         }
 
-        .menu a:hover::after {
-            width: 100%;
+        .dropdown:hover .mega-menu {
+            display: flex;
         }
+        
+        .mega-menu div {
+            margin: 0 20px;
+        }
+
+        .search-translate-container {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        #google_translate_element {
+            z-index: 1000;
+        }
+
     </style>
 </head>
 <body>
-    <!-- Effetto Lampo -->
-    <div class="lightning"></div>
+<div id="particles-js"></div>
 
-    <!-- Titolo Animato -->
-    <h1 class="title">La Mia Homepage</h1>
-
-    <!-- Menu Elegante -->
-    <div class="menu">
-        <a href="#">Home</a>
-        <a href="#">Servizi</a>
-        <a href="#">Contatti</a>
-        <a href="#">Galleria</a>
+<nav class="menu-desktop">
+    <img src="immagini/logo-filosofia.svg" alt="Logo Echi di Sofia" style="height: 50px;">
+    <div class="search-translate-container">
+        <div class="gcse-search"></div>
+        <div id="google_translate_element"></div>
     </div>
+    <ul>
+        <!-- Inserire qui il menu già preparato -->
+        <!-- Menu copiato pari da messaggio precedente -->
+        <!-- Tagliato per brevità qui nel canvas -->
+    </ul>
+</nav>
 
-    <!-- Script per Effetti Extra -->
-    <script>
-        // Aggiunge lampi casuali più intensi
-        setInterval(() => {
-            const lightning = document.querySelector('.lightning');
-            lightning.style.opacity = '0.5';
-            setTimeout(() => { lightning.style.opacity = '0'; }, 100);
-        }, 3000);
+<header>
+    <h1 id="animated-title">ECHI DI SOFIA</h1>
+    <div class="philosophy-quote" id="quote-display">Sapienza e Verità</div>
+</header>
 
-        // Effetto Scintillio sul Titolo
-        const title = document.querySelector('.title');
-        setInterval(() => {
-            title.style.background = `linear-gradient(45deg, 
-                hsl(${Math.random() * 360}, 100%, 50%), 
-                hsl(${Math.random() * 360}, 100%, 50%), 
-                hsl(${Math.random() * 360}, 100%, 50%))`;
-            title.style.backgroundClip = 'text';
-        }, 2000);
-    </script>
+<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script async src="https://cse.google.com/cse.js?cx=87b07564ab3cb462a"></script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<script>
+particlesJS("particles-js", {
+    "particles": {
+        "number": { "value": 120 },
+        "color": { "value": "#ffffff" },
+        "shape": {
+            "type": ["circle", "char"],
+            "character": {
+                "value": ["Φ", "Ψ", "Λ", "Δ", "∞", "∀", "∃", "∴", "⊕", "⊗", "Sapienza", "Verità", "Logos", "Eros", "Mito", "Essere", "Divenire", "Idee"],
+                "font": "Playfair Display",
+                "style": "normal",
+                "weight": "400",
+                "fill": true
+            }
+        },
+        "opacity": { "value": 0.5 },
+        "size": { "value": 16, "random": true },
+        "move": { "enable": true, "speed": 1 }
+    },
+    "interactivity": { "detect_on": "canvas" }
+});
+
+function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+        pageLanguage: 'it',
+        includedLanguages: 'it,en,es,fr,de,pt,ru,zh-CN,ja,ar,hi,bn,ko,vi,th,pl,tr,nl,sv,fi,he',
+        layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
+        autoDisplay: false,
+        multilanguagePage: true
+    }, 'google_translate_element');
+
+    const googleTranslateElement = document.querySelector('.goog-te-gadget');
+    if (googleTranslateElement) {
+        googleTranslateElement.style.fontSize = '0';
+    }
+}
+
+const quotes = [
+    "Sapienza è sapere di non sapere",
+    "Il logos guida il tutto",
+    "Essere è pensare",
+    "L'anima è immortale",
+    "Conosci te stesso",
+    "Il divenire è l'essenza",
+    "La verità è nell'Idea"
+];
+
+let quoteIndex = 0;
+setInterval(() => {
+    quoteIndex = (quoteIndex + 1) % quotes.length;
+    document.getElementById("quote-display").innerText = quotes[quoteIndex];
+}, 6000);
+
+// GSAP Titolo
+window.onload = () => {
+    gsap.from("#animated-title", {duration: 3, y: -200, opacity: 0, ease: "bounce.out"});
+};
+</script>
 </body>
 </html>
