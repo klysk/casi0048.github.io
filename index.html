@@ -3,82 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Echi di Sofia</title>
+    <title>Echi di Sofia - Filosofia attraverso i secoli</title>
     <link rel="icon" href="favicon_io/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Libre+Baskerville&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
-
         body, html {
             margin: 0;
             padding: 0;
             background: #0a0a0a;
             color: #f0f0f0;
-            font-family: 'Playfair Display', serif;
+            font-family: 'Libre Baskerville', serif;
             overflow-x: hidden;
         }
-        
         #particles-js {
             position: fixed;
             width: 100%;
             height: 100%;
             z-index: -1;
         }
-
         header {
             text-align: center;
-            padding-top: 120px;
+            padding-top: 150px;
+            position: relative;
+            z-index: 1;
         }
-
         h1 {
-            font-size: 4rem;
-            letter-spacing: 2px;
+            font-size: 5rem;
             margin: 0;
             color: #e0dada;
+            text-shadow: 0 0 20px rgba(255,255,255,0.5);
+            font-family: 'Playfair Display', serif;
         }
-        
         .philosophy-quote {
             margin-top: 20px;
-            font-size: 1.5rem;
+            font-size: 1.7rem;
             opacity: 0.7;
-            animation: fadeQuotes 20s linear infinite;
+            text-shadow: 0 0 10px rgba(255,255,255,0.2);
         }
-
-        @keyframes fadeQuotes {
-            0% { opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { opacity: 0; }
-        }
-
         .menu-desktop {
             position: sticky;
             top: 0;
-            background: rgba(10, 10, 10, 0.9);
+            background: rgba(10, 10, 10, 0.95);
             z-index: 999;
             display: flex;
             align-items: center;
-            justify-content: space-around;
-            padding: 10px 0;
+            justify-content: space-between;
+            padding: 10px 20px;
         }
-
         .menu-desktop ul {
             display: flex;
             list-style: none;
             padding: 0;
             margin: 0;
         }
-
         .menu-desktop ul li {
             position: relative;
             padding: 10px 20px;
         }
-
         .menu-desktop ul li a, .menu-btn {
             color: #fff;
             text-decoration: none;
             cursor: pointer;
         }
-
         .mega-menu {
             position: absolute;
             top: 100%;
@@ -88,30 +74,49 @@
             padding: 20px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.5);
         }
-
         .dropdown:hover .mega-menu {
             display: flex;
         }
-        
         .mega-menu div {
             margin: 0 20px;
         }
-
         .search-translate-container {
             display: flex;
             gap: 15px;
             align-items: center;
         }
-
-        #google_translate_element {
-            z-index: 1000;
+        footer {
+            background: rgba(10, 10, 10, 0.95);
+            color: #ccc;
+            text-align: center;
+            padding: 20px;
+            margin-top: 100px;
         }
-
+        #cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(20, 20, 20, 0.95);
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 9999;
+        }
+        #cookie-banner button {
+            margin-left: 10px;
+            padding: 5px 10px;
+            background: #444;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 <div id="particles-js"></div>
-
 <nav class="menu-desktop">
     <img src="immagini/logo-filosofia.svg" alt="Logo Echi di Sofia" style="height: 50px;">
     <div class="search-translate-container">
@@ -120,43 +125,46 @@
     </div>
     <ul>
         <!-- Inserire qui il menu già preparato -->
-        <!-- Menu copiato pari da messaggio precedente -->
-        <!-- Tagliato per brevità qui nel canvas -->
     </ul>
 </nav>
-
 <header>
     <h1 id="animated-title">ECHI DI SOFIA</h1>
     <div class="philosophy-quote" id="quote-display">Sapienza e Verità</div>
 </header>
-
+<footer>
+    &copy; 2025 Echi di Sofia. Tutti i diritti riservati.
+</footer>
+<div id="cookie-banner">
+    Questo sito utilizza cookie. <a href="#">Leggi di più</a>
+    <div>
+        <button onclick="acceptCookies()">Accetta</button>
+        <button onclick="rejectCookies()">Rifiuta</button>
+    </div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script async src="https://cse.google.com/cse.js?cx=87b07564ab3cb462a"></script>
 <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
 <script>
 particlesJS("particles-js", {
     "particles": {
-        "number": { "value": 120 },
-        "color": { "value": "#ffffff" },
+        "number": { "value": 180 },
         "shape": {
-            "type": ["circle", "char"],
+            "type": "char",
             "character": {
-                "value": ["Φ", "Ψ", "Λ", "Δ", "∞", "∀", "∃", "∴", "⊕", "⊗", "Sapienza", "Verità", "Logos", "Eros", "Mito", "Essere", "Divenire", "Idee"],
+                "value": ["Φ", "Ψ", "Λ", "Δ", "∞", "∀", "∃", "∴", "⊕", "⊗", "Logos", "Fenomeno", "Mito", "Essere", "Divenire", "Idee"],
                 "font": "Playfair Display",
                 "style": "normal",
                 "weight": "400",
                 "fill": true
             }
         },
+        "color": { "value": "#ffffff" },
         "opacity": { "value": 0.5 },
         "size": { "value": 16, "random": true },
-        "move": { "enable": true, "speed": 1 }
-    },
-    "interactivity": { "detect_on": "canvas" }
+        "move": { "enable": true, "speed": 0.8 }
+    }
 });
-
 function googleTranslateElementInit() {
     new google.translate.TranslateElement({
         pageLanguage: 'it',
@@ -165,33 +173,25 @@ function googleTranslateElementInit() {
         autoDisplay: false,
         multilanguagePage: true
     }, 'google_translate_element');
-
     const googleTranslateElement = document.querySelector('.goog-te-gadget');
-    if (googleTranslateElement) {
-        googleTranslateElement.style.fontSize = '0';
-    }
+    if (googleTranslateElement) googleTranslateElement.style.fontSize = '0';
 }
-
-const quotes = [
-    "Sapienza è sapere di non sapere",
-    "Il logos guida il tutto",
-    "Essere è pensare",
-    "L'anima è immortale",
-    "Conosci te stesso",
-    "Il divenire è l'essenza",
-    "La verità è nell'Idea"
-];
-
+const quotes = ["Sapienza è sapere di non sapere", "Il logos guida il tutto", "Essere è pensare", "L'anima è immortale", "Conosci te stesso", "Il divenire è l'essenza", "La verità è nell'Idea"];
 let quoteIndex = 0;
 setInterval(() => {
     quoteIndex = (quoteIndex + 1) % quotes.length;
     document.getElementById("quote-display").innerText = quotes[quoteIndex];
 }, 6000);
-
-// GSAP Titolo
 window.onload = () => {
-    gsap.from("#animated-title", {duration: 3, y: -200, opacity: 0, ease: "bounce.out"});
+    gsap.fromTo("#animated-title", {opacity: 0, y: -300, rotation: -360}, {duration: 3.5, opacity: 1, y: 0, rotation: 0, ease: "elastic.out(1, 0.3)"});
+    gsap.to("#animated-title", {repeat: -1, yoyo: true, duration: 3, scale: 1.02, ease: "sine.inOut"});
 };
+function acceptCookies() {
+    document.getElementById("cookie-banner").style.display = "none";
+}
+function rejectCookies() {
+    document.getElementById("cookie-banner").style.display = "none";
+}
 </script>
 </body>
 </html>
