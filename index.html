@@ -448,6 +448,35 @@ nvenuto<!DOCTYPE html>
     background: #e06a62;
     outline: none;
   }
+ <style>
+  /* La tua classe sottotitolo esistente */
+  .sottotitolo {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    color: #a8d5ba;
+    margin-top: 12px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  /* Aggiungo effetto typewriter delicato */
+  .sottotitolo.typewriter {
+    font-family: 'Segoe UI Mono', Consolas, monospace; /* font monospace pulito */
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid #4caf50; /* cursore verde */
+    animation: blink-caret 0.8s step-end infinite;
+    max-width: 90%;
+    margin: 12px auto 0;
+    outline-offset: 3px;
+  }
+
+  @keyframes blink-caret {
+    0%, 100% { border-color: transparent; }
+    50% { border-color: #4caf50; }
+  }
+</style>
+
 </style>
 
 
@@ -891,5 +920,21 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
+ <script>
+  const text = "La filosofia non cerca nella creazione o nella sapienza divina l'ideale ultimo, capace di farci sentire davvero a casa propria in questo mondo, ma riconosce che è l'uomo, con la sua ragione e il suo interrogare, la misura di tutte le cose.";
+  const elem = document.querySelector('.sottotitolo.typewriter');
+  let i = 0;
+
+  function typeWriter() {
+    if (i < text.length) {
+      elem.textContent += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, 40);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', typeWriter);
+</script>
+
 </body>
 </html>
