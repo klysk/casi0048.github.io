@@ -595,7 +595,61 @@ body {
 
     </div>
   </div>
+  <nav class="menu-desktop">
+    <!-- Menu -->
+  </nav>
 </header>
+
+<style>
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    background: #1a1c22;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.8);
+  }
+
+  .translate-container {
+    display: flex;
+    align-items: center;
+  }
+
+  #google_translate_element {
+    position: relative;
+    z-index: 10000;
+  }
+
+  .goog-te-banner-frame.skiptranslate {
+    display: none !important;
+  }
+  body {
+    top: 0px !important;
+  }
+  .goog-te-gadget {
+    font-size: 0 !important;
+  }
+  .goog-te-combo {
+    font-size: 1rem !important;
+    background: #1a1c22;
+    color: #a8d5ba;
+    border: 1px solid #4caf50;
+    border-radius: 6px;
+  }
+</style>
+
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'it',
+      includedLanguages: 'en,fr,de,es,ru,zh-CN,ja',
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+    }, 'google_translate_element');
+  }
+</script>
+
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 
   <nav class="menu-desktop" aria-label="Menu principale">
