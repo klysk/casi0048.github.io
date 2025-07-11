@@ -448,6 +448,29 @@ nvenuto<!DOCTYPE html>
     background: #e06a62;
     outline: none;
   }
+ .translate-container {
+  display: flex;
+  align-items: center;
+}
+
+#google_translate_element {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+.goog-te-gadget {
+  color: inherit !important;
+}
+
+.goog-te-combo {
+  background: #1a1c22;
+  color: #a8d5ba;
+  border: 1px solid #4caf50;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
  <style>
   /* La tua classe sottotitolo esistente */
   .sottotitolo {
@@ -544,7 +567,9 @@ nvenuto<!DOCTYPE html>
       </div>
 
       <div class="translate-container">
-        <button id="translateBtn" title="Traduci 🌐" aria-label="Traduci sito">🌐</button>
+        <div class="translate-container">
+  <div id="google_translate_element"></div>
+</div>
         <div id="google_translate_element" style="display: none;"></div>
       </div>
 
@@ -893,26 +918,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Ricerca semplice che usa Google CSE se caricato
-  const searchInput = document.getElementById('searchInput');
-  const searchButton = document.getElementById('searchButton');
-
-  function startSearch() {
-    const query = searchInput.value.trim();
-    if (!query) return;
-    // Apri ricerca google (cambia con il tuo motore personalizzato o pagina interna)
-    window.open('https://www.google.com/search?q=site:echidisofia.org+' + encodeURIComponent(query), '_blank');
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'it',
+      includedLanguages: 'en,fr,de,es,ru,zh-CN,ja',
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+    }, 'google_translate_element');
   }
-  searchButton.addEventListener('click', startSearch);
-  searchInput.addEventListener('keydown', e => {
-    if (e.key === 'Enter') startSearch();
-  });
+</script>
 
-  // Pulsante traduci (apre Google Translate in nuova tab per il sito)
-  const translateBtn = document.getElementById('translateBtn');
-  translateBtn.addEventListener('click', () => {
-    window.open('https://translate.google.com/translate?sl=auto&tl=it&u=' + encodeURIComponent(window.location.href), '_blank');
-  });
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 
   // Cookie banner (molto semplice)
   const cookieBanner = document.getElementById('cookie-banner');
