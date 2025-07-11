@@ -712,6 +712,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 </script>
+<!-- Banner Cookie con GSAP -->
+<div id="cookie-banner" style="
+  position: fixed; 
+  bottom: 20px; 
+  left: 20px; 
+  right: 20px; 
+  max-width: 600px; 
+  margin: auto; 
+  background: rgba(20, 20, 20, 0.95); 
+  color: #f0f0f0; 
+  padding: 20px; 
+  border-radius: 12px; 
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5); 
+  z-index: 9999; 
+  display: none; 
+  font-family: sans-serif;">
+  <p style="margin: 0 0 10px;">Usiamo i cookie per migliorare l’esperienza di navigazione. Puoi accettare, rifiutare o personalizzare le tue preferenze.</p>
+  <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+    <button id="cookie-accept" style="flex: 1; padding: 10px; background: #4caf50; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Accetta</button>
+    <button id="cookie-customize" style="flex: 1; padding: 10px; background: #f0ad4e; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Personalizza</button>
+    <button id="cookie-reject" style="flex: 1; padding: 10px; background: #d9534f; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Rifiuta</button>
+  </div>
+</div>
+
+<!-- Importa GSAP -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+
+<script>
+// Banner cookie autosufficiente con GSAP
+(function() {
+  const banner = document.getElementById("cookie-banner");
+  const accepted = localStorage.getItem("cookie-consent");
+
+  if (!accepted) {
+    banner.style.display = "block";
+    gsap.fromTo(banner, { y: 100, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: "power2.out" });
+  }
+
+  function closeBanner() {
+    gsap.to(banner, { y: 100, opacity: 0, duration: 0.8, ease: "power2.in", onComplete: () => banner.style.display = "none" });
+  }
+
+  document.getElementById("cookie-accept").onclick = () => {
+    localStorage.setItem("cookie-consent", "accepted");
+    closeBanner();
+  };
+
+  document.getElementById("cookie-reject").onclick = () => {
+    localStorage.setItem("cookie-consent", "rejected");
+    closeBanner();
+  };
+
+  document.getElementById("cookie-customize").onclick = () => {
+    alert("Opzioni personalizzate non implementate in questo esempio.");
+  };
+})();
+</script>
 
 </body>
 </html>
