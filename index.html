@@ -22,108 +22,132 @@ nvenuto<!DOCTYPE html>
   <!-- Stili tuoi -->
   <link rel="stylesheet" href="stile.css">
 <style>
+  /* Reset e corpo pagina */
   body {
-    margin:0; padding:0;
+    margin: 0; 
+    padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: #121318;
-    color: #eee;
+    color: #e6e6e6;
     overflow-x: hidden;
     position: relative;
     min-height: 100vh;
     padding-bottom: 100px;
   }
+
+  /* Sfondo particelle */
   #particles-js {
     position: fixed;
-    top:0; left:0;
+    top: 0; left: 0;
     width: 100vw;
     height: 100vh;
     z-index: -2;
     pointer-events: none;
   }
 
-  /* Filosophy floating elements */
+  /* Elementi filosofici fluttuanti */
   .philo-element {
     position: fixed;
-    color: #4caf50aa;
-    font-weight: 700;
+    color: rgba(76, 175, 80, 0.4);
+    font-weight: 600;
     user-select: none;
     pointer-events: none;
     font-family: "Georgia", serif;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     will-change: transform;
     z-index: -1;
-    text-shadow: 0 0 4px #4caf50bb;
+    text-shadow: 0 0 6px rgba(76,175,80,0.3);
   }
 
-  /* Light flashes */
+  /* Flash di luce delicati */
   .light-flash {
     position: fixed;
-    top: 0;
-    left: 0;
+    top: 0; left: 0;
     width: 100%;
     height: 2px;
-    background: linear-gradient(90deg, rgba(76,175,80,0), rgba(76,175,80,0.8), rgba(76,175,80,0));
+    background: linear-gradient(90deg, transparent, rgba(76,175,80,0.6), transparent);
     z-index: 10;
     opacity: 0;
     transform: translateY(-100px);
     pointer-events: none;
   }
 
-  /* HEADER */
+  /* HEADER fisso */
   header {
     position: fixed;
-    width: 100%;
     top: 0; left: 0;
-    background: #1a1c22;
+    width: 100%;
+    background: #1a1c22cc;
+    backdrop-filter: saturate(180%) blur(10px);
     z-index: 10000;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.8);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.7);
   }
+
+  /* Barra superiore con Cerca e Traduci */
   .top-bar {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding: 8px 20px;
-    gap: 15px;
-    font-size: 1.1rem;
-    background: #162018;
+    padding: 8px 22px;
+    gap: 18px;
+    font-size: 1.05rem;
+    background: #17221a;
+    font-weight: 500;
+    color: #cdd9d2;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
+
   .search-translate-container {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 14px;
   }
+
   .search-container input {
-    padding: 6px 12px;
+    padding: 7px 14px;
     font-size: 1rem;
-    border-radius: 5px;
-    border: none;
-    width: 220px;
-    transition: box-shadow 0.3s ease;
+    border-radius: 8px;
+    border: 1.5px solid #4caf5088;
+    width: 230px;
+    background: #1f2720;
+    color: #d6e8d6;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-weight: 400;
+  }
+  .search-container input::placeholder {
+    color: #8a9a88;
+    font-style: italic;
   }
   .search-container input:focus {
     outline: none;
-    box-shadow: 0 0 8px #4caf50;
+    border-color: #4caf50;
+    box-shadow: 0 0 8px #4caf50aa;
+    background: #223322;
+    color: #e0f2e9;
   }
+
   #searchButton {
-    background-color: #2a4b3a;
-    color: #eee;
+    background-color: #3e6b52;
+    color: #e6e6e6;
     border: none;
-    padding: 7px 14px;
-    border-radius: 5px;
+    padding: 8px 18px;
+    border-radius: 8px;
     cursor: pointer;
     font-weight: 600;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     transition: background-color 0.3s ease;
   }
   #searchButton:hover, #searchButton:focus {
-    background-color: #3e6b52;
+    background-color: #54a05c;
     outline: none;
   }
+
   .translate-container button {
     background: none;
     border: none;
     font-size: 1.6rem;
     cursor: pointer;
-    color: #a8d5ba;
+    color: #9fc9a6;
     transition: color 0.3s ease;
   }
   .translate-container button:hover, .translate-container button:focus {
@@ -131,12 +155,12 @@ nvenuto<!DOCTYPE html>
     outline: none;
   }
 
-  /* HAMBURGER */
+  /* HAMBURGER (mobile) */
   .hamburger {
     display: none;
     position: absolute;
     top: 16px;
-    right: 20px;
+    right: 22px;
     width: 30px;
     height: 22px;
     cursor: pointer;
@@ -147,8 +171,8 @@ nvenuto<!DOCTYPE html>
   .hamburger div {
     width: 100%;
     height: 4px;
-    background: #eee;
-    border-radius: 2px;
+    background: #d9e6d9;
+    border-radius: 3px;
     transition: all 0.3s ease;
   }
   @media (max-width: 900px) {
@@ -159,7 +183,7 @@ nvenuto<!DOCTYPE html>
       justify-content: flex-start;
     }
     .search-container input {
-      width: 140px;
+      width: 150px;
     }
   }
 
@@ -171,9 +195,10 @@ nvenuto<!DOCTYPE html>
     display: flex;
     background: #1a1c22;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 1.05rem;
     user-select: none;
     position: relative;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
   nav.menu-desktop > ul > li {
     position: relative;
@@ -181,50 +206,56 @@ nvenuto<!DOCTYPE html>
   nav.menu-desktop a,
   nav.menu-desktop button.menu-btn {
     display: block;
-    padding: 15px 22px;
-    color: #eee;
+    padding: 15px 24px;
+    color: #d9e6d9;
     text-decoration: none;
     background: none;
     border: none;
     cursor: pointer;
     font-family: inherit;
     font-weight: 600;
+    letter-spacing: 0.03em;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
   nav.menu-desktop a:hover,
   nav.menu-desktop button.menu-btn:hover,
   nav.menu-desktop a:focus,
   nav.menu-desktop button.menu-btn:focus {
-    background-color: #2a4b3a;
+    background-color: #3c6e4f;
+    color: #e0f2e9;
     outline: none;
   }
 
   /* FRECCIA MENU */
   .menu-btn .arrow {
     margin-left: 6px;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     transition: transform 0.3s ease;
     display: inline-block;
+    color: #7da68c;
   }
   .dropdown:hover > button.menu-btn .arrow {
     transform: rotate(180deg);
+    color: #a8d5ba;
   }
 
-  /* MEGA MENU - OPAQUE BACKGROUND */
+  /* MEGA MENU */
   .mega-menu {
     position: absolute;
     top: 100%;
     left: 0;
-    background: rgba(34, 36, 42, 0.98) !important;
-    padding: 20px 30px;
+    background: rgba(34, 36, 42, 0.95);
+    padding: 22px 34px;
     display: none;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.7);
-    border-radius: 8px;
-    color: #ddd;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.85);
+    border-radius: 10px;
+    color: #c9d4ca;
     z-index: 9999;
-    max-width: 900px;
+    max-width: 920px;
     white-space: nowrap;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.35s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
   .dropdown:hover .mega-menu {
     display: block;
@@ -233,94 +264,101 @@ nvenuto<!DOCTYPE html>
   .mega-menu > div {
     display: inline-block;
     vertical-align: top;
-    margin-right: 30px;
-    min-width: 150px;
+    margin-right: 36px;
+    min-width: 160px;
   }
   .mega-menu h4 {
-  font-family: 'Playfair Display', 'DM Serif Display', Georgia, serif;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-}
+    font-family: 'Playfair Display', 'DM Serif Display', Georgia, serif;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    font-size: 1.15rem;
+    color: #81b58a;
+    margin-bottom: 12px;
+  }
   .mega-menu a {
     display: block;
-    padding: 5px 0;
-    color: #ccc;
+    padding: 6px 0;
+    color: #b8c5b6;
     font-weight: 400;
+    font-size: 0.95rem;
+    letter-spacing: 0.01em;
+    transition: color 0.3s ease;
   }
   .mega-menu a:hover,
   .mega-menu a:focus {
     color: #4caf50;
     outline: none;
   }
-  .columns-2 > div {
-    width: 45%;
-  }
-  .columns-3 > div {
-    width: 30%;
-  }
-  .columns-4 > div {
-    width: 22%;
-  }
 
-  /* MOBILE MENU */
+  /* Layout colonne */
+  .columns-2 > div { width: 48%; }
+  .columns-3 > div { width: 31%; }
+  .columns-4 > div { width: 23%; }
+
+  /* MENU MOBILE */
   @media (max-width: 900px) {
     nav.menu-desktop > ul {
       flex-direction: column;
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.4s ease;
+      transition: max-height 0.5s ease;
       background: #1a1c22;
+      font-weight: 600;
+      font-size: 1.1rem;
     }
     nav.menu-desktop.open > ul {
       max-height: 1000px;
     }
     nav.menu-desktop > ul > li {
-      border-bottom: 1px solid #333;
+      border-bottom: 1px solid #2f3a2d;
     }
     .mega-menu {
       position: static;
       max-height: 0;
       overflow: hidden;
       box-shadow: none;
-      padding: 10px 20px;
+      padding: 14px 24px;
       white-space: normal;
-      transition: max-height 0.3s ease;
+      transition: max-height 0.35s ease;
+      border-radius: 0 0 10px 10px;
     }
     .dropdown:hover > .mega-menu,
     .dropdown.open > .mega-menu {
-      max-height: 1000px;
+      max-height: 1200px;
       display: block;
+      opacity: 1;
     }
     .menu-btn {
       width: 100%;
       text-align: left;
+      letter-spacing: 0.02em;
     }
   }
 
   /* SEZIONE BENVENUTO */
   #benvenuto {
-    padding: 80px 20px 60px;
+    padding: 90px 20px 60px;
     text-align: center;
     background: transparent;
     position: relative;
     z-index: 1;
-    margin-top: 70px;
+    margin-top: 80px;
   }
-   #benvenuto .titolo {
-  font-family: 'Playfair Display', 'DM Serif Display', Georgia, serif;
-  font-weight: 700;
-}
-    font-size: clamp(3rem, 8vw, 6rem);
+  #benvenuto .titolo {
+    font-family: 'Playfair Display', 'DM Serif Display', Georgia, serif;
     font-weight: 900;
-    color: #4caf50;
-    letter-spacing: 0.1em;
+    font-size: clamp(3.5rem, 7vw, 5.5rem);
+    color: #66bb6a;
+    letter-spacing: 0.12em;
     user-select: none;
     background: linear-gradient(90deg, #4caf50, #a8d5ba, #4caf50);
     background-size: 200% auto;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    animation: shine 5s linear infinite;
+    animation: shine 6s linear infinite;
+    text-shadow: 0 0 8px rgba(102, 187, 106, 0.5);
+    margin-bottom: 8px;
   }
   @keyframes shine {
     to {
@@ -328,22 +366,25 @@ nvenuto<!DOCTYPE html>
     }
   }
   #benvenuto .sottotitolo {
-    font-size: clamp(1.2rem, 3vw, 1.8rem);
-    color: #a8d5ba;
-    margin-top: 12px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: clamp(1.3rem, 3vw, 1.9rem);
+    color: #a8c1a0;
+    margin-top: 14px;
     font-weight: 500;
+    letter-spacing: 0.03em;
   }
 
   /* FOOTER */
   footer {
     background: #1a1c22;
     text-align: center;
-    padding: 25px 20px;
-    font-size: 0.9rem;
-    color: #777;
+    padding: 28px 20px;
+    font-size: 0.95rem;
+    color: #7d8c7d;
     position: absolute;
     bottom: 0;
     width: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
 
   /* COOKIE BANNER */
@@ -352,44 +393,63 @@ nvenuto<!DOCTYPE html>
     bottom: 20px;
     left: 20px;
     right: 20px;
-    max-width: 600px;
+    max-width: 620px;
     margin: auto;
-    background: rgba(20, 20, 20, 0.95);
-    color: #f0f0f0;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    background: rgba(24, 28, 26, 0.96);
+    color: #e8eee8;
+    padding: 22px 24px;
+    border-radius: 14px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.55);
     z-index: 9999;
     display: none;
-    font-family: sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.4;
   }
   #cookie-banner p {
-    margin: 0 0 10px;
+    margin: 0 0 14px;
   }
   #cookie-buttons {
     display: flex;
-    gap: 10px;
+    gap: 14px;
     flex-wrap: wrap;
   }
   #cookie-banner button {
     flex: 1;
-    padding: 10px;
-    color: #fff;
+    padding: 12px 0;
+    color: #f1f1f1;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
-    min-width: 100px;
+    min-width: 110px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
   #cookie-accept {
     background: #4caf50;
   }
+  #cookie-accept:hover, #cookie-accept:focus {
+    background: #66bb6a;
+    outline: none;
+  }
   #cookie-customize {
     background: #f0ad4e;
+    color: #2f2f2f;
+  }
+  #cookie-customize:hover, #cookie-customize:focus {
+    background: #e6b75a;
+    outline: none;
   }
   #cookie-reject {
     background: #d9534f;
   }
+  #cookie-reject:hover, #cookie-reject:focus {
+    background: #e06a62;
+    outline: none;
+  }
 </style>
+
 
 <!-- GSAP CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
