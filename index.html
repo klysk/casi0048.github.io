@@ -1,197 +1,815 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Echi di Sofia - Filosofia attraverso i secoli</title>
-    <link rel="icon" href="favicon_io/favicon.ico" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Libre+Baskerville&display=swap" rel="stylesheet">
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            background: #0a0a0a;
-            color: #f0f0f0;
-            font-family: 'Libre Baskerville', serif;
-            overflow-x: hidden;
-        }
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-        header {
-            text-align: center;
-            padding-top: 150px;
-            position: relative;
-            z-index: 1;
-        }
-        h1 {
-            font-size: 5rem;
-            margin: 0;
-            color: #e0dada;
-            text-shadow: 0 0 20px rgba(255,255,255,0.5);
-            font-family: 'Playfair Display', serif;
-        }
-        .philosophy-quote {
-            margin-top: 20px;
-            font-size: 1.7rem;
-            opacity: 0.7;
-            text-shadow: 0 0 10px rgba(255,255,255,0.2);
-        }
-        .menu-desktop {
-            position: sticky;
-            top: 0;
-            background: rgba(10, 10, 10, 0.95);
-            z-index: 999;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 20px;
-        }
-        .menu-desktop ul {
-            display: flex;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .menu-desktop ul li {
-            position: relative;
-            padding: 10px 20px;
-        }
-        .menu-desktop ul li a, .menu-btn {
-            color: #fff;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .mega-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            display: none;
-            background: rgba(20, 20, 20, 0.95);
-            padding: 20px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-        }
-        .dropdown:hover .mega-menu {
-            display: flex;
-        }
-        .mega-menu div {
-            margin: 0 20px;
-        }
-        .search-translate-container {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-        footer {
-            background: rgba(10, 10, 10, 0.95);
-            color: #ccc;
-            text-align: center;
-            padding: 20px;
-            margin-top: 100px;
-        }
-        #cookie-banner {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(20, 20, 20, 0.95);
-            color: #fff;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 9999;
-        }
-        #cookie-banner button {
-            margin-left: 10px;
-            padding: 5px 10px;
-            background: #444;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Echi di Sofia - Filosofia attraverso i secoli</title>
+<link rel="icon" href="favicon_io/favicon.ico" />
+
+<!-- Stili base -->
+<style>
+  body {
+    margin:0; padding:0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #121318;
+    color: #eee;
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+    padding-bottom: 100px;
+  }
+  #particles-js {
+    position: fixed;
+    top:0; left:0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -2;
+    pointer-events: none;
+  }
+
+  /* Filosophy floating elements */
+  .philo-element {
+    position: fixed;
+    color: #4caf50aa;
+    font-weight: 700;
+    user-select: none;
+    pointer-events: none;
+    font-family: "Georgia", serif;
+    font-size: 1.4rem;
+    will-change: transform;
+    z-index: -1;
+    text-shadow: 0 0 4px #4caf50bb;
+  }
+
+  /* Light flashes */
+  .light-flash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(76,175,80,0), rgba(76,175,80,0.8), rgba(76,175,80,0));
+    z-index: 10;
+    opacity: 0;
+    transform: translateY(-100px);
+    pointer-events: none;
+  }
+
+  /* HEADER */
+  header {
+    position: fixed;
+    width: 100%;
+    top: 0; left: 0;
+    background: #1a1c22;
+    z-index: 10000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.8);
+  }
+  .top-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 8px 20px;
+    gap: 15px;
+    font-size: 1.1rem;
+    background: #162018;
+  }
+  .search-translate-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .search-container input {
+    padding: 6px 12px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    width: 220px;
+    transition: box-shadow 0.3s ease;
+  }
+  .search-container input:focus {
+    outline: none;
+    box-shadow: 0 0 8px #4caf50;
+  }
+  #searchButton {
+    background-color: #2a4b3a;
+    color: #eee;
+    border: none;
+    padding: 7px 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+  }
+  #searchButton:hover, #searchButton:focus {
+    background-color: #3e6b52;
+    outline: none;
+  }
+  .translate-container button {
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    cursor: pointer;
+    color: #a8d5ba;
+    transition: color 0.3s ease;
+  }
+  .translate-container button:hover, .translate-container button:focus {
+    color: #4caf50;
+    outline: none;
+  }
+
+  /* HAMBURGER */
+  .hamburger {
+    display: none;
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    width: 30px;
+    height: 22px;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 11000;
+  }
+  .hamburger div {
+    width: 100%;
+    height: 4px;
+    background: #eee;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+  @media (max-width: 900px) {
+    .hamburger {
+      display: flex;
+    }
+    .top-bar {
+      justify-content: flex-start;
+    }
+    .search-container input {
+      width: 140px;
+    }
+  }
+
+  /* MENU DESKTOP */
+  nav.menu-desktop ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    background: #1a1c22;
+    font-weight: 600;
+    font-size: 1rem;
+    user-select: none;
+    position: relative;
+  }
+  nav.menu-desktop > ul > li {
+    position: relative;
+  }
+  nav.menu-desktop a,
+  nav.menu-desktop button.menu-btn {
+    display: block;
+    padding: 15px 22px;
+    color: #eee;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 600;
+  }
+  nav.menu-desktop a:hover,
+  nav.menu-desktop button.menu-btn:hover,
+  nav.menu-desktop a:focus,
+  nav.menu-desktop button.menu-btn:focus {
+    background-color: #2a4b3a;
+    outline: none;
+  }
+
+  /* FRECCIA MENU */
+  .menu-btn .arrow {
+    margin-left: 6px;
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+    display: inline-block;
+  }
+  .dropdown:hover > button.menu-btn .arrow {
+    transform: rotate(180deg);
+  }
+
+  /* MEGA MENU - OPAQUE BACKGROUND */
+  .mega-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(34, 36, 42, 0.98) !important;
+    padding: 20px 30px;
+    display: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.7);
+    border-radius: 8px;
+    color: #ddd;
+    z-index: 9999;
+    max-width: 900px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .dropdown:hover .mega-menu {
+    display: block;
+    opacity: 1;
+  }
+  .mega-menu > div {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 30px;
+    min-width: 150px;
+  }
+  .mega-menu h4 {
+    margin-bottom: 14px;
+    font-size: 1.1rem;
+    color: #a8d5ba;
+  }
+  .mega-menu a {
+    display: block;
+    padding: 5px 0;
+    color: #ccc;
+    font-weight: 400;
+  }
+  .mega-menu a:hover,
+  .mega-menu a:focus {
+    color: #4caf50;
+    outline: none;
+  }
+  .columns-2 > div {
+    width: 45%;
+  }
+  .columns-3 > div {
+    width: 30%;
+  }
+  .columns-4 > div {
+    width: 22%;
+  }
+
+  /* MOBILE MENU */
+  @media (max-width: 900px) {
+    nav.menu-desktop > ul {
+      flex-direction: column;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      background: #1a1c22;
+    }
+    nav.menu-desktop.open > ul {
+      max-height: 1000px;
+    }
+    nav.menu-desktop > ul > li {
+      border-bottom: 1px solid #333;
+    }
+    .mega-menu {
+      position: static;
+      max-height: 0;
+      overflow: hidden;
+      box-shadow: none;
+      padding: 10px 20px;
+      white-space: normal;
+      transition: max-height 0.3s ease;
+    }
+    .dropdown:hover > .mega-menu,
+    .dropdown.open > .mega-menu {
+      max-height: 1000px;
+      display: block;
+    }
+    .menu-btn {
+      width: 100%;
+      text-align: left;
+    }
+  }
+
+  /* SEZIONE BENVENUTO */
+  #benvenuto {
+    padding: 80px 20px 60px;
+    text-align: center;
+    background: transparent;
+    position: relative;
+    z-index: 1;
+    margin-top: 70px;
+  }
+  #benvenuto .titolo {
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 900;
+    color: #4caf50;
+    letter-spacing: 0.1em;
+    user-select: none;
+    background: linear-gradient(90deg, #4caf50, #a8d5ba, #4caf50);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shine 5s linear infinite;
+  }
+  @keyframes shine {
+    to {
+      background-position: 200% center;
+    }
+  }
+  #benvenuto .sottotitolo {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    color: #a8d5ba;
+    margin-top: 12px;
+    font-weight: 500;
+  }
+
+  /* FOOTER */
+  footer {
+    background: #1a1c22;
+    text-align: center;
+    padding: 25px 20px;
+    font-size: 0.9rem;
+    color: #777;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+
+  /* COOKIE BANNER */
+  #cookie-banner {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    max-width: 600px;
+    margin: auto;
+    background: rgba(20, 20, 20, 0.95);
+    color: #f0f0f0;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    z-index: 9999;
+    display: none;
+    font-family: sans-serif;
+  }
+  #cookie-banner p {
+    margin: 0 0 10px;
+  }
+  #cookie-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  #cookie-banner button {
+    flex: 1;
+    padding: 10px;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    min-width: 100px;
+  }
+  #cookie-accept {
+    background: #4caf50;
+  }
+  #cookie-customize {
+    background: #f0ad4e;
+  }
+  #cookie-reject {
+    background: #d9534f;
+  }
+</style>
+
+<!-- GSAP CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+
+<!-- Font Awesome per icone -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous" defer></script>
+
 </head>
 <body>
+
 <div id="particles-js"></div>
-<nav class="menu-desktop">
-    <img src="immagini/logo-filosofia.svg" alt="Logo Echi di Sofia" style="height: 50px;">
+
+<!-- Light flashes elements -->
+<div class="light-flash" id="light-flash-1"></div>
+<div class="light-flash" id="light-flash-2"></div>
+<div class="light-flash" id="light-flash-3"></div>
+
+<header>
+  <div class="top-bar">
     <div class="search-translate-container">
-        <div class="gcse-search"></div>
-        <div id="google_translate_element"></div>
+      <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Cerca filosofi, concetti..." aria-label="Cerca nel sito" />
+        <button id="searchButton" aria-label="Avvia ricerca">🔍</button>
+      </div>
+      <div class="translate-container">
+        <button id="translateBtn" title="Traduci 🌐" aria-label="Traduci sito">🌐</button>
+      </div>
+    </div>
+  </div>
+
+  <nav class="menu-desktop" aria-label="Menu principale">
+    <div class="hamburger" aria-label="Apri menu" aria-expanded="false" role="button" tabindex="0">
+      <div></div><div></div><div></div>
     </div>
     <ul>
-        <!-- Inserire qui il menu già preparato -->
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Articoli</a></li>
+      <li><a href="#">Contatti</a></li>
+
+      <!-- Filosofia antica -->
+      <li role="none" class="dropdown">
+        <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
+          Filosofia antica <span class="arrow">▼</span>
+        </button>
+        <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia antica">
+          <div>
+            <h4>Scuola ionica</h4>
+            <a href="/Presocratici/talete.html" role="menuitem">Talete</a>
+            <a href="Presocratici/anassimandro.html" role="menuitem">Anassimandro</a>
+            <a href="Presocratici/anassimene.html" role="menuitem">Anassimene</a>
+          </div>
+          <div>
+            <h4>Scuola eleatica</h4>
+            <a href="Presocratici/senofane.html" role="menuitem">Senofane</a>
+            <a href="/Presocratici/parmenide.html" role="menuitem">Parmenide</a>
+            <a href="articoli/zenone.html" role="menuitem">Zenone</a>
+            <a href="articoli/zenone.html" role="menuitem">Melisso</a>
+          </div>
+          <div>
+            <h4>Altri</h4>
+            <a href="articoli/eraclito.html" role="menuitem">Eraclito</a>
+            <a href="/Presocratici/anassagora.html" role="menuitem">Anassagora</a>
+            <a href="/articoli/empedocle.html" role="menuitem">Empedocle</a>
+          </div>
+          <div>
+            <h4>Pitagorici</h4>
+            <a href="/articoli/pitagora.html" role="menuitem">Pitagora</a>
+            <a href="/articoli/filolao.html" role="menuitem">Filolao</a>
+            <a href="/articoli/alcmeone.html" role="menuitem">Alcmeone</a>
+            <a href="articoli/archita.html" role="menuitem">Archita</a>
+            <a href="/articoli/ippaso.html" role="menuitem">Ippaso</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Filosofia classica -->
+      <li role="none" class="dropdown">
+        <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
+          Filosofia classica <span class="arrow">▼</span>
+        </button>
+        <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia classica">
+          <div>
+            <h4>Classici</h4>
+            <a href="articoli/socrate.html" role="menuitem">Socrate</a>
+            <a href="articoli/platone.html" role="menuitem">Platone</a>
+            <a href="articoli/aristotele.html" role="menuitem">Aristotele</a>
+          </div>
+          <div>
+            <h4>Platonici</h4>
+            <a href="articoli/senofonte.html" role="menuitem">Senofonte</a>
+            <a href="articoli/antistene.html" role="menuitem">Antistene</a>
+            <a href="#" role="menuitem">Aristippo</a>
+          </div>
+          <div>
+            <h4>Stoici</h4>
+            <a href="articoli/zenone.html" role="menuitem">Zenone</a>
+            <a href="#" role="menuitem">Epitteto</a>
+            <a href="#" role="menuitem">Seneca</a>
+          </div>
+          <div>
+            <h4>Epicurei</h4>
+            <a href="#" role="menuitem">Epicuro</a>
+            <a href="#" role="menuitem">Lucrezio</a>
+            <a href="#" role="menuitem">Cicerone</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Filosofia medievale -->
+      <li role="none" class="dropdown">
+        <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
+          Medievale/Patristica <span class="arrow">▼</span>
+        </button>
+        <div class="mega-menu columns-2" role="menu" aria-label="Sottomenu Filosofia medievale">
+          <div>
+            <h4>Medievale</h4>
+            <a href="#" role="menuitem">Tommaso d'Aquino</a>
+            <a href="#" role="menuitem">Anselmo</a>
+            <a href="#" role="menuitem">Guglielmo di Ockham</a>
+            <a href="#" role="menuitem">Duns Scoto</a>
+          </div>
+          <div>
+            <h4>Patristica</h4>
+            <a href="#" role="menuitem">Agostino</a>
+            <a href="#" role="menuitem">Origene</a>
+            <a href="#" role="menuitem">Gregorio di Nissa</a>
+            <a href="#" role="menuitem">Tertulliano</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Filosofia moderna -->
+      <li role="none" class="dropdown">
+        <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
+          Filosofia moderna <span class="arrow">▼</span>
+        </button>
+        <div class="mega-menu columns-3" role="menu" aria-label="Sottomenu Filosofia moderna">
+          <div>
+            <h4>Razionalisti</h4>
+            <a href="#" role="menuitem">Cartesio</a>
+            <a href="#" role="menuitem">Spinoza</a>
+            <a href="#" role="menuitem">Leibniz</a>
+          </div>
+          <div>
+            <h4>Empiristi</h4>
+            <a href="#" role="menuitem">Locke</a>
+            <a href="#" role="menuitem">Hume</a>
+            <a href="#" role="menuitem">Berkeley</a>
+          </div>
+          <div>
+            <h4>Kant e oltre</h4>
+            <a href="#" role="menuitem">Kant</a>
+            <a href="#" role="menuitem">Fichte</a>
+            <a href="#" role="menuitem">Schelling</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Filosofia contemporanea -->
+      <li role="none" class="dropdown">
+        <button class="menu-btn" role="menuitem" aria-haspopup="true" aria-expanded="false">
+          Contemporanea <span class="arrow">▼</span>
+        </button>
+        <div class="mega-menu columns-3" role="menu" aria-label="Sottomenu Filosofia contemporanea">
+          <div>
+            <h4>Ottocento</h4>
+            <a href="#" role="menuitem">Hegel</a>
+            <a href="#" role="menuitem">Schopenhauer</a>
+            <a href="#" role="menuitem">Nietzsche</a>
+          </div>
+          <div>
+            <h4>Fenomenologia</h4>
+            <a href="#" role="menuitem">Husserl</a>
+            <a href="#" role="menuitem">Heidegger</a>
+            <a href="#" role="menuitem">Merleau-Ponty</a>
+          </div>
+          <div>
+            <h4>Postmoderni</h4>
+            <a href="#" role="menuitem">Sartre</a>
+            <a href="#" role="menuitem">Foucault</a>
+            <a href="#" role="menuitem">Derrida</a>
+          </div>
+        </div>
+      </li>
     </ul>
-</nav>
-<header>
-    <h1 id="animated-title">ECHI DI SOFIA</h1>
-    <div class="philosophy-quote" id="quote-display">Sapienza e Verità</div>
+  </nav>
 </header>
-<footer>
-    &copy; 2025 Echi di Sofia. Tutti i diritti riservati.
+
+<section id="benvenuto" role="main" aria-label="Benvenuto">
+  <h1 class="titolo" tabindex="0">Echi di Sofia</h1>
+  <p class="sottotitolo" tabindex="0">Filosofia attraverso i secoli, dal Presocratici ai Classici</p>
+</section>
+
+<!-- CITAZIONI -->
+<section id="citazioni" aria-label="Citazioni filosofiche" style="padding: 0 20px 40px; max-width: 900px; margin: auto;">
+  <blockquote tabindex="0" style="font-style: italic; font-size: 1.3rem; margin: 20px 0;">«La sapienza comincia nella meraviglia.» – Socrate</blockquote>
+  <blockquote tabindex="0" style="font-style: italic; font-size: 1.3rem; margin: 20px 0;">«Conosci te stesso.» – Iscrizione del Tempio di Delfi</blockquote>
+  <blockquote tabindex="0" style="font-style: italic; font-size: 1.3rem; margin: 20px 0;">«Panta rei.» – Eraclito</blockquote>
+</section>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+  &copy; 2025 Echi di Sofia. Tutti i diritti riservati. <a href="privacy.html" style="color:#4caf50;">Privacy Policy</a>.
 </footer>
-<div id="cookie-banner">
-    Questo sito utilizza cookie. <a href="#">Leggi di più</a>
-    <div>
-        <button onclick="acceptCookies()">Accetta</button>
-        <button onclick="rejectCookies()">Rifiuta</button>
-    </div>
+
+<!-- BANNER COOKIE -->
+<div id="cookie-banner" role="alert" aria-live="assertive" aria-atomic="true">
+  <p>Usiamo i cookie per migliorare l'esperienza di navigazione. Puoi accettare, rifiutare o personalizzare le tue preferenze.</p>
+  <div id="cookie-buttons">
+    <button id="cookie-accept">Accetta</button>
+    <button id="cookie-customize">Personalizza</button>
+    <button id="cookie-reject">Rifiuta</button>
+  </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script async src="https://cse.google.com/cse.js?cx=87b07564ab3cb462a"></script>
-<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-<script>
-particlesJS("particles-js", {
+
+<!-- SCRIPTS -->
+
+<!-- particles.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js" defer></script>
+
+<script defer>
+document.addEventListener('DOMContentLoaded', () => {
+
+  // Particles.js init con config inline
+  particlesJS('particles-js', {
     "particles": {
-        "number": { "value": 180 },
-        "shape": {
-            "type": "char",
-            "character": {
-                "value": ["Φ", "Ψ", "Λ", "Δ", "∞", "∀", "∃", "∴", "⊕", "⊗", "Logos", "Fenomeno", "Mito", "Essere", "Divenire", "Idee"],
-                "font": "Playfair Display",
-                "style": "normal",
-                "weight": "400",
-                "fill": true
+      "number": { "value": 80, "density": { "enable": true, "value_area": 800 }},
+      "color": { "value": "#4caf50" },
+      "shape": { "type": "circle", "stroke": { "width": 0, "color": "#000000" }},
+      "opacity": { "value": 0.5, "random": false, "anim": { "enable": false }},
+      "size": { "value": 3, "random": true, "anim": { "enable": false }},
+      "line_linked": { "enable": true, "distance": 150, "color": "#4caf50", "opacity": 0.3, "width": 1 },
+      "move": { "enable": true, "speed": 4, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false, "attract": { "enable": false }}
+    },
+    "interactivity": {
+      "detect_on": "canvas",
+      "events": {
+        "onhover": { "enable": true, "mode": "grab" },
+        "onclick": { "enable": true, "mode": "push" }
+      },
+      "modes": {
+        "grab": { "distance": 130, "line_linked": { "opacity": 0.5 }},
+        "push": { "particles_nb": 4 }
+      }
+    },
+    "retina_detect": true
+  });
+
+  // GSAP animazione titolo
+  gsap.from(".titolo", { duration: 1.5, y: -50, opacity: 0, ease: "power3.out", delay: 0.5 });
+
+  // Creazione elementi filosofici fluttuanti
+  const elements = [
+    "Φ", "Ψ", "Λ", "Δ", "∞", "∀", "∃", "∴", "⊕", "⊗",
+    "Σ", "Ω", "Θ", "π", "∅", "∇", "≡", "≈", "⊥", "⇔",
+    "↔", "ℵ", "ℜ", "ℑ", "ℓ", "℘", "∂", "∫", "∑", "∏",
+    "Sapienza", "Verità", "Logos", "Mito", "Essere", "Divenire", "Idee",
+    "Areté", "Metafisica", "Anima", "Etica", "Politica", "Dialettica", "Sublime", "Pathos", "Noûs"
+  ];
+
+  function createPhilosophyElements() {
+    const container = document.body;
+    elements.forEach((el, i) => {
+      const span = document.createElement('span');
+      span.className = 'philo-element';
+      span.textContent = el;
+      // posizione random sul viewport
+      span.style.top = (Math.random() * 80 + 10) + 'vh';
+      span.style.left = (Math.random() * 90 + 5) + 'vw';
+      // dimensione random (tra 1rem e 2.2rem)
+      span.style.fontSize = (Math.random() * 1.2 + 1) + 'rem';
+      container.appendChild(span);
+
+      // animazione lenta oscillante con GSAP
+      gsap.to(span, {
+        duration: 6 + Math.random() * 8,
+        y: "+=" + (10 + Math.random() * 15),
+        x: "+=" + (10 + Math.random() * 10),
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        delay: Math.random() * 3
+      });
+    });
+  }
+
+  createPhilosophyElements();
+
+  // Light flashes animation
+  function animateLightFlashes() {
+    const flashes = [
+      document.getElementById('light-flash-1'),
+      document.getElementById('light-flash-2'),
+      document.getElementById('light-flash-3')
+    ];
+    
+    // Random flash timing
+    flashes.forEach((flash, i) => {
+      const delay = i * 3 + Math.random() * 5;
+      const duration = 0.8 + Math.random() * 0.5;
+      const yPos = Math.random() * window.innerHeight;
+      
+      gsap.to(flash, {
+        y: yPos,
+        opacity: 1,
+        duration: 0.1,
+        delay: delay,
+        onComplete: () => {
+          gsap.to(flash, {
+            x: window.innerWidth,
+            duration: duration,
+            ease: "power2.out",
+            onComplete: () => {
+              flash.style.opacity = '0';
+              flash.style.transform = 'translateY(-100px) translateX(0)';
             }
-        },
-        "color": { "value": "#ffffff" },
-        "opacity": { "value": 0.5 },
-        "size": { "value": 16, "random": true },
-        "move": { "enable": true, "speed": 0.8 }
+          });
+        }
+      });
+    });
+    
+    // Repeat the animation
+    setTimeout(animateLightFlashes, 10000);
+  }
+  
+  // Start light flashes animation
+  setTimeout(animateLightFlashes, 2000);
+
+  // Toggle menu hamburger e dropdown
+  const hamburger = document.querySelector('.hamburger');
+  const menuDesktop = document.querySelector('nav.menu-desktop');
+  const dropdowns = document.querySelectorAll('.dropdown');
+
+  hamburger.addEventListener('click', () => {
+    const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+    hamburger.setAttribute('aria-expanded', String(!expanded));
+    menuDesktop.classList.toggle('open');
+  });
+  hamburger.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      hamburger.click();
     }
+  });
+
+  // Menu hover effect
+  dropdowns.forEach(dropdown => {
+    const btn = dropdown.querySelector('.menu-btn');
+    
+    dropdown.addEventListener('mouseenter', () => {
+      dropdown.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+    });
+    
+    dropdown.addEventListener('mouseleave', () => {
+      dropdown.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    });
+    
+    // Mobile click behavior
+    btn.addEventListener('click', () => {
+      if (window.innerWidth <= 900) {
+        const isOpen = dropdown.classList.contains('open');
+        dropdown.classList.toggle('open');
+        btn.setAttribute('aria-expanded', String(!isOpen));
+      }
+    });
+  });
+
+  // Ricerca semplice che usa Google CSE se caricato
+  const searchInput = document.getElementById('searchInput');
+  const searchButton = document.getElementById('searchButton');
+
+  function startSearch() {
+    const query = searchInput.value.trim();
+    if (!query) return;
+    // Apri ricerca google (cambia con il tuo motore personalizzato o pagina interna)
+    window.open('https://www.google.com/search?q=site:echidisofia.org+' + encodeURIComponent(query), '_blank');
+  }
+  searchButton.addEventListener('click', startSearch);
+  searchInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') startSearch();
+  });
+
+  // Pulsante traduci (apre Google Translate in nuova tab per il sito)
+  const translateBtn = document.getElementById('translateBtn');
+  translateBtn.addEventListener('click', () => {
+    window.open('https://translate.google.com/translate?sl=auto&tl=it&u=' + encodeURIComponent(window.location.href), '_blank');
+  });
+
+  // Cookie banner (molto semplice)
+  const cookieBanner = document.getElementById('cookie-banner');
+  const cookieAccept = document.getElementById('cookie-accept');
+  const cookieReject = document.getElementById('cookie-reject');
+  const cookieSettings = document.getElementById('cookie-customize');
+
+  function setCookie(name, value, days) {
+    const d = new Date();
+    d.setTime(d.getTime() + (days*24*60*60*1000));
+    document.cookie = `${name}=${value};path=/;expires=${d.toUTCString()}`;
+  }
+  function getCookie(name) {
+    const v = document.cookie.match('(^|;)\\s*'+name+'\\s*=\\s*([^;]+)');
+    return v ? v.pop() : '';
+  }
+  function hideCookieBanner() {
+    gsap.to(cookieBanner, {
+      opacity: 0,
+      y: 20,
+      duration: 0.5,
+      ease: "power2.in",
+      onComplete: () => cookieBanner.style.display = 'none'
+    });
+  }
+
+  if(!getCookie('cookieConsent')) {
+    cookieBanner.style.display = 'block';
+    gsap.from(cookieBanner, {
+      opacity: 0,
+      y: 20,
+      duration: 0.5,
+      ease: "power2.out"
+    });
+  }
+
+  cookieAccept.addEventListener('click', () => {
+    setCookie('cookieConsent', 'accepted', 365);
+    hideCookieBanner();
+  });
+  cookieReject.addEventListener('click', () => {
+    setCookie('cookieConsent', 'rejected', 365);
+    hideCookieBanner();
+  });
+  cookieSettings.addEventListener('click', () => {
+    alert('Funzionalità personalizza cookie non ancora implementata.');
+  });
 });
-function googleTranslateElementInit() {
-    new google.translate.TranslateElement({
-        pageLanguage: 'it',
-        includedLanguages: 'it,en,es,fr,de,pt,ru,zh-CN,ja,ar,hi,bn,ko,vi,th,pl,tr,nl,sv,fi,he',
-        layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
-        autoDisplay: false,
-        multilanguagePage: true
-    }, 'google_translate_element');
-    const googleTranslateElement = document.querySelector('.goog-te-gadget');
-    if (googleTranslateElement) googleTranslateElement.style.fontSize = '0';
-}
-const quotes = ["Sapienza è sapere di non sapere", "Il logos guida il tutto", "Essere è pensare", "L'anima è immortale", "Conosci te stesso", "Il divenire è l'essenza", "La verità è nell'Idea"];
-let quoteIndex = 0;
-setInterval(() => {
-    quoteIndex = (quoteIndex + 1) % quotes.length;
-    document.getElementById("quote-display").innerText = quotes[quoteIndex];
-}, 6000);
-window.onload = () => {
-    gsap.fromTo("#animated-title", {opacity: 0, y: -300, rotation: -360}, {duration: 3.5, opacity: 1, y: 0, rotation: 0, ease: "elastic.out(1, 0.3)"});
-    gsap.to("#animated-title", {repeat: -1, yoyo: true, duration: 3, scale: 1.02, ease: "sine.inOut"});
-};
-function acceptCookies() {
-    document.getElementById("cookie-banner").style.display = "none";
-}
-function rejectCookies() {
-    document.getElementById("cookie-banner").style.display = "none";
-}
 </script>
 </body>
 </html>
