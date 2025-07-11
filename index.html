@@ -934,6 +934,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.addEventListener('DOMContentLoaded', typeWriter);
 </script>
+<script>
+  const text = "La filosofia non cerca nella creazione o nella sapienza divina l'ideale ultimo, capace di farci sentire davvero a casa propria in questo mondo, ma riconosce che è l'uomo, con la sua ragione e il suo interrogare, la misura di tutte le cose.";
+  const elem = document.querySelector('.sottotitolo.typewriter');
+  let i = 0;
+  let forward = true; // scrittura avanti o cancellazione
+
+  function typeWriterLoop() {
+    if (forward) {
+      if (i < text.length) {
+        elem.textContent += text.charAt(i);
+        i++;
+        setTimeout(typeWriterLoop, 40);
+      } else {
+        // testo completo, aspetta 2s poi cancella
+        forward = false;
+        setTimeout(typeWriterLoop, 2000);
+      }
+    } else {
+      if (i > 0) {
+        elem.textContent = elem.textContent.slice(0, -1);
+        i--;
+        setTimeout(typeWriterLoop, 25);
+      } else {
+        // cancellato tutto, ricomincia a scrivere
+        forward = true;
+        setTimeout(typeWriterLoop, 500);
+      }
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', typeWriterLoop);
+</script>
 
 </body>
 </html>
