@@ -505,6 +505,18 @@ nvenuto<!DOCTYPE html>
 .goog-te-combo:hover {
     background: #2a4b3a;
 }
+ .sottotitolo.typewriter {
+  font-family: 'Segoe UI Mono', Consolas, monospace;
+  white-space: normal; /* Permette ritorno a capo automatico */
+  word-wrap: break-word;
+  border-right: 2px solid #4caf50;
+  animation: blink-caret 0.8s step-end infinite;
+  max-width: 90%;
+  margin: 12px auto;
+  font-size: 1.2rem;
+  color: #a8d5ba;
+}
+
 </style>
 <!-- GSAP CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
@@ -699,7 +711,7 @@ nvenuto<!DOCTYPE html>
 
 <section id="benvenuto" role="main" aria-label="Benvenuto">
   <h1 class="titolo" tabindex="0">Benvenuto in Echi di Sofia</h1>
- <p class="sottotitolo typewriter" tabindex="0"></p>
+<p class="sottotitolo typewriter" tabindex="0"></p>
 
 
 </section>
@@ -953,7 +965,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const text = "La filosofia non cerca nella creazione o nella sapienza divina l'ideale ultimo, capace di farci sentire davvero a casa propria in questo mondo, ma riconosce che è l'uomo, con la sua ragione e il suo interrogare, la misura di tutte le cose.";
   const elem = document.querySelector('.sottotitolo.typewriter');
   let i = 0;
-  let forward = true; // scrittura avanti o cancellazione
+  let forward = true;
 
   function typeWriterLoop() {
     if (forward) {
@@ -979,6 +991,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.addEventListener('DOMContentLoaded', typeWriterLoop);
 </script>
+
 
 </body>
 </html>
