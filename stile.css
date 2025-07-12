@@ -276,4 +276,132 @@ nav.menu-desktop ul li a.underline-effect:hover::after,
 .menu-btn.underline-effect:hover::after {
   width: 100%;
 }
+/* ======= Menu Desktop ======= */
+.menu-desktop {
+  display: flex;
+  justify-content: center;
+  padding: 10px 20px;
+  background: rgba(18, 19, 24, 0.8);
+  backdrop-filter: blur(8px);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.menu-desktop ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.menu-desktop ul li {
+  position: relative;
+}
+
+/* Link e bottoni menu */
+.menu-desktop ul li a,
+.menu-btn {
+  color: #f8f4e9;
+  padding: 10px 15px;
+  display: block;
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 16px;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+/* Sottolineatura animata */
+.menu-desktop ul li a.underline-effect::after,
+.menu-btn.underline-effect::after {
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #4caf50;
+  transition: width 0.3s ease;
+}
+
+.menu-desktop ul li a.underline-effect:hover,
+.menu-btn.underline-effect:hover {
+  color: #4caf50;
+}
+
+.menu-desktop ul li a.underline-effect:hover::after,
+.menu-btn.underline-effect:hover::after {
+  width: 100%;
+}
+
+/* ======= Mega Menu ======= */
+.mega-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: rgba(18, 19, 24, 0.95);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  padding: 20px;
+  display: grid;
+  gap: 20px;
+  min-width: 600px;
+  z-index: 1000;
+}
+
+/* Mostra mega menu al hover o focus */
+.menu-desktop ul li:hover > .mega-menu,
+.menu-desktop ul li:focus-within > .mega-menu {
+  display: grid;
+}
+
+/* Griglie per colonne */
+.mega-menu.columns-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.mega-menu.columns-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.mega-menu.columns-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Titoli sezioni mega menu */
+.mega-menu h4 {
+  margin: 0 0 8px 0;
+  color: #4caf50;
+  font-size: 14px;
+}
+
+/* Link mega menu */
+.mega-menu a {
+  display: block;
+  padding: 6px 0;
+  font-size: 14px;
+  color: #f8f4e9;
+  transition: color 0.3s ease;
+  white-space: nowrap;
+}
+
+.mega-menu a:hover {
+  color: #4caf50;
+}
+
+/* Freccia dropdown */
+.arrow {
+  font-size: 12px;
+  margin-left: 5px;
+}
 
