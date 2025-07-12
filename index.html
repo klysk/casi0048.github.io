@@ -3,54 +3,180 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Echi di Sofia - Versione Semplificata</title>
+  <title>Echi di Sofia - Filosofia attraverso i secoli</title>
   <link rel="stylesheet" href="stile.css">
-  <link rel="stylesheet" href="layout.css">
-  <link rel="icon" href="favicon_io/favicon.ico">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <link rel="icon" type="image/png" href="favicon_io/favicon.ico">
+  <style>
+    body { margin: 0; background: #121318; color: #f8f4e9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    header { background: rgba(18, 19, 24, 0.8); backdrop-filter: blur(8px); position: fixed; width: 100%; top: 0; z-index: 999; }
+    nav.menu-desktop { display: flex; justify-content: center; padding: 10px 20px; }
+    nav.menu-desktop ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; }
+    nav.menu-desktop ul li { position: relative; }
+    nav.menu-desktop ul li a, .menu-btn { color: #f8f4e9; padding: 10px 15px; display: block; text-decoration: none; }
+    nav.menu-desktop ul li .mega-menu { display: none; position: absolute; left: 0; top: 100%; background: rgba(18, 19, 24, 0.95); display: grid; gap: 10px; padding: 10px; }
+    nav.menu-desktop ul li:hover .mega-menu { display: grid; }
+    .mega-menu h4 { margin: 0; font-weight: bold; font-size: 16px; color: #4caf50; }
+    .mega-menu a { padding: 5px 0; white-space: nowrap; }
+  </style>
 </head>
 <body>
+  <div id="particles-js"></div>
   <header>
-    <h1 class="welcome-title">ECHI DI SOFIA</h1>
+    <nav class="menu-desktop">
+      <ul role="menu">
+        <li><a href="#" role="menuitem" class="underline-effect">Home</a></li>
+        <!-- Filosofia antica -->
+        <li role="none" class="dropdown">
+          <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">Filosofia antica <span class="arrow">▼</span></button>
+          <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia antica">
+            <div>
+              <h4>Scuola ionica</h4>
+              <a href="/Presocratici/talete.html" role="menuitem">Talete</a>
+              <a href="Presocratici/anassimandro.html" role="menuitem">Anassimandro</a>
+              <a href="Presocratici/anassimene.html" role="menuitem">Anassimene</a>
+            </div>
+            <div>
+              <h4>Scuola eleatica</h4>
+              <a href="Presocratici/senofane.html" role="menuitem">Senofane</a>
+              <a href="/Presocratici/parmenide.html" role="menuitem">Parmenide</a>
+              <a href="articoli/zenone.html" role="menuitem">Zenone</a>
+              <a href="articoli/zenone.html" role="menuitem">Melisso</a>
+            </div>
+            <div>
+              <h4>Altri</h4>
+              <a href="articoli/eraclito.html" role="menuitem">Eraclito</a>
+              <a href="/Presocratici/anassagora.html" role="menuitem">Anassagora</a>
+              <a href="/articoli/empedocle.html" role="menuitem">Empedocle</a>
+            </div>
+            <div>
+              <h4>Pitagorici</h4>
+              <a href="/articoli/pitagora.html" role="menuitem">Pitagora</a>
+              <a href="/articoli/filolao.html" role="menuitem">Filolao</a>
+              <a href="/articoli/alcmeone.html" role="menuitem">Alcmeone</a>
+              <a href="articoli/archita.html" role="menuitem">Archita</a>
+              <a href="/articoli/ippaso.html" role="menuitem">Ippaso</a>
+            </div>
+          </div>
+        </li>
+        <!-- Filosofia classica -->
+        <li role="none" class="dropdown">
+          <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">Filosofia classica <span class="arrow">▼</span></button>
+          <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia classica">
+            <div>
+              <h4>Classici</h4>
+              <a href="articoli/socrate.html" role="menuitem">Socrate</a>
+              <a href="articoli/platone.html" role="menuitem">Platone</a>
+              <a href="articoli/aristotele.html" role="menuitem">Aristotele</a>
+            </div>
+            <div>
+              <h4>Platonici</h4>
+              <a href="articoli/senofonte.html" role="menuitem">Senofonte</a>
+              <a href="articoli/antistene.html" role="menuitem">Antistene</a>
+              <a href="#" role="menuitem">Aristippo</a>
+            </div>
+            <div>
+              <h4>Stoici</h4>
+              <a href="articoli/zenone.html" role="menuitem">Zenone</a>
+              <a href="#" role="menuitem">Epitteto</a>
+              <a href="#" role="menuitem">Seneca</a>
+            </div>
+            <div>
+              <h4>Epicurei</h4>
+              <a href="#" role="menuitem">Epicuro</a>
+              <a href="#" role="menuitem">Lucrezio</a>
+              <a href="#" role="menuitem">Cicerone</a>
+            </div>
+          </div>
+        </li>
+        <!-- Filosofia medievale -->
+        <li role="none" class="dropdown">
+          <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">Medievale/Patristica <span class="arrow">▼</span></button>
+          <div class="mega-menu columns-2" role="menu" aria-label="Sottomenu Filosofia medievale">
+            <div>
+              <h4>Medievale</h4>
+              <a href="#" role="menuitem">Tommaso d'Aquino</a>
+              <a href="#" role="menuitem">Anselmo</a>
+              <a href="#" role="menuitem">Guglielmo di Ockham</a>
+              <a href="#" role="menuitem">Duns Scoto</a>
+            </div>
+            <div>
+              <h4>Patristica</h4>
+              <a href="#" role="menuitem">Agostino</a>
+              <a href="#" role="menuitem">Origene</a>
+              <a href="#" role="menuitem">Gregorio di Nissa</a>
+              <a href="#" role="menuitem">Tertulliano</a>
+            </div>
+          </div>
+        </li>
+        <!-- Filosofia moderna -->
+        <li role="none" class="dropdown">
+          <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">Filosofia moderna <span class="arrow">▼</span></button>
+          <div class="mega-menu columns-3" role="menu" aria-label="Sottomenu Filosofia moderna">
+            <div>
+              <h4>Razionalisti</h4>
+              <a href="#" role="menuitem">Cartesio</a>
+              <a href="#" role="menuitem">Spinoza</a>
+              <a href="#" role="menuitem">Leibniz</a>
+            </div>
+            <div>
+              <h4>Empiristi</h4>
+              <a href="#" role="menuitem">Locke</a>
+              <a href="#" role="menuitem">Hume</a>
+              <a href="#" role="menuitem">Berkeley</a>
+            </div>
+            <div>
+              <h4>Kant e oltre</h4>
+              <a href="#" role="menuitem">Kant</a>
+              <a href="#" role="menuitem">Fichte</a>
+              <a href="#" role="menuitem">Schelling</a>
+            </div>
+          </div>
+        </li>
+        <!-- Filosofia contemporanea -->
+        <li role="none" class="dropdown">
+          <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">Contemporanea <span class="arrow">▼</span></button>
+          <div class="mega-menu columns-3" role="menu" aria-label="Sottomenu Filosofia contemporanea">
+            <div>
+              <h4>Ottocento</h4>
+              <a href="#" role="menuitem">Hegel</a>
+              <a href="#" role="menuitem">Schopenhauer</a>
+              <a href="#" role="menuitem">Nietzsche</a>
+            </div>
+            <div>
+              <h4>Fenomenologia</h4>
+              <a href="#" role="menuitem">Husserl</a>
+              <a href="#" role="menuitem">Heidegger</a>
+              <a href="#" role="menuitem">Merleau-Ponty</a>
+            </div>
+            <div>
+              <h4>Postmoderni</h4>
+              <a href="#" role="menuitem">Sartre</a>
+              <a href="#" role="menuitem">Foucault</a>
+              <a href="#" role="menuitem">Derrida</a>
+            </div>
+          </div>
+        </li>
+        <!-- Altre sezioni -->
+        <li><a href="contatti.html" role="menuitem" class="underline-effect">Contatti</a></li>
+      </ul>
+    </nav>
   </header>
-
-  <section class="welcome-section">
-    <div class="quote-text" id="citazione"></div>
-  </section>
-
-  <div id="cookie-banner" style="display:none; position:fixed; bottom:0; left:0; right:0; background:#222; color:white; padding:15px; text-align:center; z-index:10000;">
-    Questo sito utilizza cookie per migliorare l'esperienza.
-    <button id="cookie-accept">Accetta</button>
-    <button id="cookie-reject">Rifiuta</button>
-  </div>
-
+  <main style="padding-top: 80px;">
+    <section>
+      <h1>Benvenuti su Echi di Sofia</h1>
+      <p>Citazioni animate, menu raffinato, traduttore e ricerca integrati.</p>
+    </section>
+  </main>
+  <footer style="text-align: center; padding: 20px;">
+    © 2025 Echi di Sofia
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
   <script>
-    const citazioni = [
-      "Conosci te stesso e conoscerai l'universo e gli dei. — Socrate",
-      "Il sapere è l'unico bene che aumenta condividendolo. — Pitagora",
-      "La meraviglia è il principio di ogni conoscenza. — Aristotele",
-      "Penso, dunque sono. — Cartesio",
-      "L'uomo è condannato ad essere libero. — Jean-Paul Sartre"
-    ];
-    let i = 0;
-    function mostraCitazione() {
-      document.getElementById("citazione").textContent = citazioni[i];
-      i = (i + 1) % citazioni.length;
-    }
-    window.onload = function() {
-      mostraCitazione();
-      setInterval(mostraCitazione, 6000);
-      if (!localStorage.getItem("cookie_consent")) {
-        document.getElementById("cookie-banner").style.display = "block";
-      }
-      document.getElementById("cookie-accept").onclick = () => {
-        localStorage.setItem("cookie_consent", "accepted");
-        document.getElementById("cookie-banner").style.display = "none";
-      };
-      document.getElementById("cookie-reject").onclick = () => {
-        localStorage.setItem("cookie_consent", "rejected");
-        document.getElementById("cookie-banner").style.display = "none";
-      };
-    }
+    particlesJS.load('particles-js', 'particles.json', function() { console.log('Particles.js config loaded'); });
+    function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'it'}, 'google_translate_element'); }
   </script>
+  <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
