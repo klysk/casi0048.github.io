@@ -1,54 +1,148 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Echi di Sofia - Filosofia attraverso i secoli</title>
-  <link rel="stylesheet" href="stile.css">
+  <link rel="stylesheet" href="stile.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <link rel="icon" type="image/png" href="favicon_io/favicon.ico">
+  <link rel="icon" type="image/png" href="favicon_io/favicon.ico" />
   <style>
-    body { margin: 0; background: #121318; color: #f8f4e9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    header { background: rgba(18, 19, 24, 0.8); backdrop-filter: blur(8px); position: fixed; width: 100%; top: 0; z-index: 999; }
-    nav.menu-desktop { display: flex; justify-content: center; padding: 10px 20px; }
-    nav.menu-desktop ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; }
-    nav.menu-desktop ul li { position: relative; }
-    nav.menu-desktop ul li a, .menu-btn { color: #f8f4e9; padding: 10px 15px; display: block; text-decoration: none; }
-    nav.menu-desktop ul li .mega-menu { display: none; position: absolute; left: 0; top: 100%; background: rgba(18, 19, 24, 0.95); display: grid; gap: 10px; padding: 10px; }
-    nav.menu-desktop ul li:hover .mega-menu { display: grid; }
-    .mega-menu h4 { margin: 0; font-weight: bold; font-size: 16px; color: #4caf50; }
-    .mega-menu a { padding: 5px 0; white-space: nowrap; }
+    body {
+      margin: 0;
+      background: #121318;
+      color: #f8f4e9;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    header {
+      background: rgba(18, 19, 24, 0.8);
+      backdrop-filter: blur(8px);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 999;
+    }
+    nav.menu-desktop {
+      display: flex;
+      justify-content: center;
+      padding: 10px 20px;
+    }
+    nav.menu-desktop ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    nav.menu-desktop ul li {
+      position: relative;
+    }
+    nav.menu-desktop ul li a,
+    .menu-btn {
+      color: #f8f4e9;
+      padding: 10px 15px;
+      display: block;
+      text-decoration: none;
+      font-weight: 500;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-size: 16px;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+    nav.menu-desktop ul li a.underline-effect::after,
+    .menu-btn.underline-effect::after {
+      content: '';
+      position: absolute;
+      bottom: 5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #4caf50;
+      transition: width 0.3s ease;
+    }
+    nav.menu-desktop ul li a.underline-effect:hover,
+    .menu-btn.underline-effect:hover {
+      color: #4caf50;
+    }
+    nav.menu-desktop ul li a.underline-effect:hover::after,
+    .menu-btn.underline-effect:hover::after {
+      width: 100%;
+    }
+    .mega-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: rgba(18, 19, 24, 0.95);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      border-radius: 8px;
+      padding: 20px;
+      display: grid;
+      gap: 20px;
+      min-width: 600px;
+      z-index: 1000;
+    }
+    nav.menu-desktop ul li:hover > .mega-menu {
+      display: grid;
+    }
+    .mega-menu.columns-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .mega-menu.columns-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .mega-menu.columns-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .mega-menu h4 {
+      margin: 0 0 8px 0;
+      color: #4caf50;
+      font-size: 14px;
+    }
+    .mega-menu a {
+      display: block;
+      padding: 6px 0;
+      font-size: 14px;
+      color: #f8f4e9;
+      transition: color 0.3s ease;
+      white-space: nowrap;
+    }
+    .mega-menu a:hover {
+      color: #4caf50;
+    }
   </style>
 </head>
 <body>
   <div id="particles-js"></div>
+
   <header>
-  <nav class="menu-desktop">
-    <ul role="menu">
-      <li><a href="#" role="menuitem" class="underline-effect">Home</a></li>
+    <nav class="menu-desktop" role="navigation" aria-label="Menu principale">
+      <ul role="menubar">
+        <li role="none"><a href="#" role="menuitem" class="underline-effect">Home</a></li>
 
-      <!-- Filosofia antica -->
-      <li role="none" class="dropdown">
-        <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
-          Filosofia antica <span class="arrow">▼</span>
-        </button>
-        <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia antica">
-          <div>
-            <h4>Scuola ionica</h4>
-            <a href="/Presocratici/talete.html" role="menuitem">Talete</a>
-            <a href="Presocratici/anassimandro.html" role="menuitem">Anassimandro</a>
-            <a href="Presocratici/anassimene.html" role="menuitem">Anassimene</a>
-          </div>
-        </div>
-      </li>
-
+        <!-- Filosofia antica -->
+        <li role="none" class="dropdown">
+          <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
+            Filosofia antica <span class="arrow">▼</span>
+          </button>
+          <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia antica">
+            <div>
+              <h4>Scuola ionica</h4>
+              <a href="/Presocratici/talete.html" role="menuitem">Talete</a>
+              <a href="Presocratici/anassimandro.html" role="menuitem">Anassimandro</a>
+              <a href="Presocratici/anassimene.html" role="menuitem">Anassimene</a>
+            </div>
             <div>
               <h4>Scuola eleatica</h4>
               <a href="Presocratici/senofane.html" role="menuitem">Senofane</a>
               <a href="/Presocratici/parmenide.html" role="menuitem">Parmenide</a>
               <a href="articoli/zenone.html" role="menuitem">Zenone</a>
-              <a href="articoli/zenone.html" role="menuitem">Melisso</a>
+              <a href="articoli/melisso.html" role="menuitem">Melisso</a>
             </div>
             <div>
               <h4>Altri</h4>
@@ -66,9 +160,12 @@
             </div>
           </div>
         </li>
+
         <!-- Filosofia classica -->
         <li role="none" class="dropdown">
-          <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">Filosofia classica <span class="arrow">▼</span></button>
+          <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
+            Filosofia classica <span class="arrow">▼</span>
+          </button>
           <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia classica">
             <div>
               <h4>Classici</h4>
@@ -96,9 +193,12 @@
             </div>
           </div>
         </li>
+
         <!-- Filosofia medievale -->
         <li role="none" class="dropdown">
-          <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">Medievale/Patristica <span class="arrow">▼</span></button>
+          <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
+            Medievale/Patristica <span class="arrow">▼</span>
+          </button>
           <div class="mega-menu columns-2" role="menu" aria-label="Sottomenu Filosofia medievale">
             <div>
               <h4>Medievale</h4>
@@ -116,9 +216,12 @@
             </div>
           </div>
         </li>
+
         <!-- Filosofia moderna -->
         <li role="none" class="dropdown">
-          <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">Filosofia moderna <span class="arrow">▼</span></button>
+          <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
+            Filosofia moderna <span class="arrow">▼</span>
+          </button>
           <div class="mega-menu columns-3" role="menu" aria-label="Sottomenu Filosofia moderna">
             <div>
               <h4>Razionalisti</h4>
@@ -140,9 +243,12 @@
             </div>
           </div>
         </li>
+
         <!-- Filosofia contemporanea -->
         <li role="none" class="dropdown">
-          <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">Contemporanea <span class="arrow">▼</span></button>
+          <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
+            Contemporanea <span class="arrow">▼</span>
+          </button>
           <div class="mega-menu columns-3" role="menu" aria-label="Sottomenu Filosofia contemporanea">
             <div>
               <h4>Ottocento</h4>
@@ -164,24 +270,33 @@
             </div>
           </div>
         </li>
+
         <!-- Altre sezioni -->
-        <li><a href="contatti.html" role="menuitem" class="underline-effect">Contatti</a></li>
+        <li role="none"><a href="contatti.html" role="menuitem" class="underline-effect">Contatti</a></li>
       </ul>
     </nav>
   </header>
+
   <main style="padding-top: 80px;">
     <section>
       <h1>Benvenuti su Echi di Sofia</h1>
       <p>Citazioni animate, menu raffinato, traduttore e ricerca integrati.</p>
     </section>
   </main>
+
   <footer style="text-align: center; padding: 20px;">
     © 2025 Echi di Sofia
   </footer>
+
   <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
   <script>
-    particlesJS.load('particles-js', 'particles.json', function() { console.log('Particles.js config loaded'); });
-    function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'it'}, 'google_translate_element'); }
+    particlesJS.load('particles-js', 'particles.json', function() {
+      console.log('Particles.js config loaded');
+    });
+
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({ pageLanguage: 'it' }, 'google_translate_element');
+    }
   </script>
   <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
