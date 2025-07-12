@@ -1,3 +1,35 @@
+// menu.js
+
+document.querySelectorAll('.menu-btn').forEach(button => {
+  button.addEventListener('click', () => {
+    const parentLi = button.parentElement;
+
+    // Chiudo tutti i dropdown aperti tranne questo
+    document.querySelectorAll('.dropdown.open').forEach(openLi => {
+      if (openLi !== parentLi) {
+        openLi.classList.remove('open');
+        openLi.querySelector('.menu-btn').setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Toggle dropdown corrente
+    const isOpen = parentLi.classList.toggle('open');
+    button.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+});
+
+// Chiudo menu se clicco fuori
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.dropdown')) {
+    document.querySelectorAll('.dropdown.open').forEach(openLi => {
+      openLi.classList.remove('open');
+      openLi.querySelector('.menu-btn').setAttribute('aria-expanded', 'false');
+    });
+  }
+});
+
+
+
 <script>
   // Toggle mobile menu
   const menuToggle = document.getElementById('menu-toggle');
