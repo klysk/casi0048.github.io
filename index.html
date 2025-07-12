@@ -12,272 +12,141 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
-  <style>
-    body {
-      margin: 0;
-      background: #121318;
-      color: #f8f4e9;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    header {
-      background: rgba(18, 19, 24, 0.8);
-      backdrop-filter: blur(8px);
-      position: fixed;
-      width: 100%;
-      top: 0;
-      z-index: 999;
-    }
-    nav.menu-desktop {
-      display: flex;
-      justify-content: center;
-      padding: 10px 20px;
-    }
-    nav.menu-desktop ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    nav.menu-desktop ul li {
-      position: relative;
-    }
-    nav.menu-desktop ul li a,
-    .menu-btn {
-      color: #f8f4e9;
-      padding: 10px 15px;
-      display: block;
-      text-decoration: none;
-      font-weight: 500;
-      cursor: pointer;
-      background: none;
-      border: none;
-      font-family: inherit;
-      font-size: 16px;
-      position: relative;
-      transition: color 0.3s ease;
-    }
-    nav.menu-desktop ul li a.underline-effect::after,
-    .menu-btn.underline-effect::after {
-      content: '';
-      position: absolute;
-      bottom: 5px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: #4caf50;
-      transition: width 0.3s ease;
-    }
-    nav.menu-desktop ul li a.underline-effect:hover,
-    .menu-btn.underline-effect:hover {
-      color: #4caf50;
-    }
-    nav.menu-desktop ul li a.underline-effect:hover::after,
-    .menu-btn.underline-effect:hover::after {
-      width: 100%;
-    }
-    .mega-menu {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background: rgba(18, 19, 24, 0.95);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-      border-radius: 8px;
-      padding: 20px;
-      display: grid;
-      gap: 20px;
-      min-width: 600px;
-      z-index: 1000;
-    }
-    nav.menu-desktop ul li:hover > .mega-menu {
-      display: grid;
-    }
-    .mega-menu.columns-2 {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .mega-menu.columns-3 {
-      grid-template-columns: repeat(3, 1fr);
-    }
-    .mega-menu.columns-4 {
-      grid-template-columns: repeat(4, 1fr);
-    }
-    .mega-menu h4 {
-      margin: 0 0 8px 0;
-      color: #4caf50;
-      font-size: 14px;
-    }
-    .mega-menu a {
-      display: block;
-      padding: 6px 0;
-      font-size: 14px;
-      color: #f8f4e9;
-      transition: color 0.3s ease;
-      white-space: nowrap;
-    }
-    .mega-menu a:hover {
-      color: #4caf50;
-    }
-  </style>
 </head>
 <body>
   <div id="particles-js"></div>
 
   <header>
     <nav class="menu-desktop" role="navigation" aria-label="Menu principale">
-      <ul role="menubar">
-        <li role="none"><a href="#" role="menuitem" class="underline-effect">Home</a></li>
-
-        <!-- Filosofia antica -->
-        <li role="none" class="dropdown">
-          <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
-            Filosofia antica <span class="arrow">▼</span>
-          </button>
-          <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia antica">
+      <ul class="main-menu">
+        <li><a href="#">Home</a></li>
+        <li class="dropdown">
+          <button class="menu-btn">Filosofia antica</button>
+          <div class="mega-menu columns-4">
             <div>
               <h4>Scuola ionica</h4>
-              <a href="/Presocratici/talete.html" role="menuitem">Talete</a>
-              <a href="Presocratici/anassimandro.html" role="menuitem">Anassimandro</a>
-              <a href="Presocratici/anassimene.html" role="menuitem">Anassimene</a>
+              <a href="/Presocratici/talete.html">Talete</a>
+              <a href="Presocratici/anassimandro.html">Anassimandro</a>
+              <a href="Presocratici/anassimene.html">Anassimene</a>
             </div>
             <div>
               <h4>Scuola eleatica</h4>
-              <a href="Presocratici/senofane.html" role="menuitem">Senofane</a>
-              <a href="/Presocratici/parmenide.html" role="menuitem">Parmenide</a>
-              <a href="articoli/zenone.html" role="menuitem">Zenone</a>
-              <a href="articoli/melisso.html" role="menuitem">Melisso</a>
+              <a href="Presocratici/senofane.html">Senofane</a>
+              <a href="/Presocratici/parmenide.html">Parmenide</a>
+              <a href="articoli/zenone.html">Zenone</a>
+              <a href="articoli/melisso.html">Melisso</a>
             </div>
             <div>
               <h4>Altri</h4>
-              <a href="articoli/eraclito.html" role="menuitem">Eraclito</a>
-              <a href="/Presocratici/anassagora.html" role="menuitem">Anassagora</a>
-              <a href="/articoli/empedocle.html" role="menuitem">Empedocle</a>
+              <a href="articoli/eraclito.html">Eraclito</a>
+              <a href="/Presocratici/anassagora.html">Anassagora</a>
+              <a href="/articoli/empedocle.html">Empedocle</a>
             </div>
             <div>
               <h4>Pitagorici</h4>
-              <a href="/articoli/pitagora.html" role="menuitem">Pitagora</a>
-              <a href="/articoli/filolao.html" role="menuitem">Filolao</a>
-              <a href="/articoli/alcmeone.html" role="menuitem">Alcmeone</a>
-              <a href="articoli/archita.html" role="menuitem">Archita</a>
-              <a href="/articoli/ippaso.html" role="menuitem">Ippaso</a>
+              <a href="/articoli/pitagora.html">Pitagora</a>
+              <a href="/articoli/filolao.html">Filolao</a>
+              <a href="/articoli/alcmeone.html">Alcmeone</a>
+              <a href="articoli/archita.html">Archita</a>
+              <a href="/articoli/ippaso.html">Ippaso</a>
             </div>
           </div>
         </li>
-
-        <!-- Filosofia classica -->
-        <li role="none" class="dropdown">
-          <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
-            Filosofia classica <span class="arrow">▼</span>
-          </button>
-          <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia classica">
+        <li class="dropdown">
+          <button class="menu-btn">Filosofia classica</button>
+          <div class="mega-menu columns-4">
             <div>
               <h4>Classici</h4>
-              <a href="articoli/socrate.html" role="menuitem">Socrate</a>
-              <a href="articoli/platone.html" role="menuitem">Platone</a>
-              <a href="articoli/aristotele.html" role="menuitem">Aristotele</a>
+              <a href="articoli/socrate.html">Socrate</a>
+              <a href="articoli/platone.html">Platone</a>
+              <a href="articoli/aristotele.html">Aristotele</a>
             </div>
             <div>
               <h4>Platonici</h4>
-              <a href="articoli/senofonte.html" role="menuitem">Senofonte</a>
-              <a href="articoli/antistene.html" role="menuitem">Antistene</a>
-              <a href="#" role="menuitem">Aristippo</a>
+              <a href="articoli/senofonte.html">Senofonte</a>
+              <a href="articoli/antistene.html">Antistene</a>
+              <a href="#">Aristippo</a>
             </div>
             <div>
               <h4>Stoici</h4>
-              <a href="articoli/zenone.html" role="menuitem">Zenone</a>
-              <a href="#" role="menuitem">Epitteto</a>
-              <a href="#" role="menuitem">Seneca</a>
+              <a href="articoli/zenone.html">Zenone</a>
+              <a href="#">Epitteto</a>
+              <a href="#">Seneca</a>
             </div>
             <div>
               <h4>Epicurei</h4>
-              <a href="#" role="menuitem">Epicuro</a>
-              <a href="#" role="menuitem">Lucrezio</a>
-              <a href="#" role="menuitem">Cicerone</a>
+              <a href="#">Epicuro</a>
+              <a href="#">Lucrezio</a>
+              <a href="#">Cicerone</a>
             </div>
           </div>
         </li>
-
-        <!-- Filosofia medievale -->
-        <li role="none" class="dropdown">
-          <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
-            Medievale/Patristica <span class="arrow">▼</span>
-          </button>
-          <div class="mega-menu columns-2" role="menu" aria-label="Sottomenu Filosofia medievale">
+        <li class="dropdown">
+          <button class="menu-btn">Medievale/Patristica</button>
+          <div class="mega-menu columns-2">
             <div>
               <h4>Medievale</h4>
-              <a href="#" role="menuitem">Tommaso d'Aquino</a>
-              <a href="#" role="menuitem">Anselmo</a>
-              <a href="#" role="menuitem">Guglielmo di Ockham</a>
-              <a href="#" role="menuitem">Duns Scoto</a>
+              <a href="#">Tommaso d'Aquino</a>
+              <a href="#">Anselmo</a>
+              <a href="#">Guglielmo di Ockham</a>
+              <a href="#">Duns Scoto</a>
             </div>
             <div>
               <h4>Patristica</h4>
-              <a href="#" role="menuitem">Agostino</a>
-              <a href="#" role="menuitem">Origene</a>
-              <a href="#" role="menuitem">Gregorio di Nissa</a>
-              <a href="#" role="menuitem">Tertulliano</a>
+              <a href="#">Agostino</a>
+              <a href="#">Origene</a>
+              <a href="#">Gregorio di Nissa</a>
+              <a href="#">Tertulliano</a>
             </div>
           </div>
         </li>
-
-        <!-- Filosofia moderna -->
-        <li role="none" class="dropdown">
-          <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
-            Filosofia moderna <span class="arrow">▼</span>
-          </button>
-          <div class="mega-menu columns-3" role="menu" aria-label="Sottomenu Filosofia moderna">
+        <li class="dropdown">
+          <button class="menu-btn">Filosofia moderna</button>
+          <div class="mega-menu columns-3">
             <div>
               <h4>Razionalisti</h4>
-              <a href="#" role="menuitem">Cartesio</a>
-              <a href="#" role="menuitem">Spinoza</a>
-              <a href="#" role="menuitem">Leibniz</a>
+              <a href="#">Cartesio</a>
+              <a href="#">Spinoza</a>
+              <a href="#">Leibniz</a>
             </div>
             <div>
               <h4>Empiristi</h4>
-              <a href="#" role="menuitem">Locke</a>
-              <a href="#" role="menuitem">Hume</a>
-              <a href="#" role="menuitem">Berkeley</a>
+              <a href="#">Locke</a>
+              <a href="#">Hume</a>
+              <a href="#">Berkeley</a>
             </div>
             <div>
               <h4>Kant e oltre</h4>
-              <a href="#" role="menuitem">Kant</a>
-              <a href="#" role="menuitem">Fichte</a>
-              <a href="#" role="menuitem">Schelling</a>
+              <a href="#">Kant</a>
+              <a href="#">Fichte</a>
+              <a href="#">Schelling</a>
             </div>
           </div>
         </li>
-
-        <!-- Filosofia contemporanea -->
-        <li role="none" class="dropdown">
-          <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
-            Contemporanea <span class="arrow">▼</span>
-          </button>
-          <div class="mega-menu columns-3" role="menu" aria-label="Sottomenu Filosofia contemporanea">
+        <li class="dropdown">
+          <button class="menu-btn">Contemporanea</button>
+          <div class="mega-menu columns-3">
             <div>
               <h4>Ottocento</h4>
-              <a href="#" role="menuitem">Hegel</a>
-              <a href="#" role="menuitem">Schopenhauer</a>
-              <a href="#" role="menuitem">Nietzsche</a>
+              <a href="#">Hegel</a>
+              <a href="#">Schopenhauer</a>
+              <a href="#">Nietzsche</a>
             </div>
             <div>
               <h4>Fenomenologia</h4>
-              <a href="#" role="menuitem">Husserl</a>
-              <a href="#" role="menuitem">Heidegger</a>
-              <a href="#" role="menuitem">Merleau-Ponty</a>
+              <a href="#">Husserl</a>
+              <a href="#">Heidegger</a>
+              <a href="#">Merleau-Ponty</a>
             </div>
             <div>
               <h4>Postmoderni</h4>
-              <a href="#" role="menuitem">Sartre</a>
-              <a href="#" role="menuitem">Foucault</a>
-              <a href="#" role="menuitem">Derrida</a>
+              <a href="#">Sartre</a>
+              <a href="#">Foucault</a>
+              <a href="#">Derrida</a>
             </div>
           </div>
         </li>
-
-        <!-- Altre sezioni -->
-        <li role="none"><a href="contatti.html" role="menuitem" class="underline-effect">Contatti</a></li>
+        <li><a href="contatti.html">Contatti</a></li>
       </ul>
     </nav>
   </header>
