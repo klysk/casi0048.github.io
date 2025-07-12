@@ -587,6 +587,74 @@
                         <li><a href="contatti.html" role="menuitem" class="underline-effect">Contatti</a></li>
                     </ul>
                 </nav>
+<!---iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii-->
+<div id="quotes-container" style="margin-top: 60px; min-height: 80px; text-align:center;">
+    <div class="quote active">«Conosci te stesso.» – Socrate</div>
+    <div class="quote">«Tutto scorre.» – Eraclito</div>
+    <div class="quote">«Il mondo è la mia rappresentazione.» – Schopenhauer</div>
+    <div class="quote">«L'uomo è condannato ad essere libero.» – Sartre</div>
+<div class="quote">«La vita non esaminata non è degna di essere vissuta.» – Socrate</div>
+<div class="quote">«Non si può scendere due volte nello stesso fiume.» – Eraclito</div>
+<div class="quote">«Ciò che è razionale è reale; ciò che è reale è razionale.» – Hegel</div>
+<div class="quote">«Dio è morto.» – Nietzsche</div>
+<div class="quote">«L'esistenza precede l'essenza.» – Sartre</div>
+<div class="quote">«La felicità è il significato e lo scopo della vita, l'intero scopo e fine dell'esistenza umana.» – Aristotele</div>
+<div class="quote">«Non c'è niente nella mente che prima non sia stato nei sensi.» – Locke</div>
+<div class="quote">«L'uomo è un animale politico.» – Aristotele</div>
+<div class="quote">«La storia è maestra di vita.» – Cicerone</div>
+<div class="quote">«Sapere aude!» (Osa sapere!) – Kant</div>
+<div class="quote">«Dal dubbio nasce la conoscenza.» – Bacone</div>
+<div class="quote">«Ogni uomo è causa della sua propria felicità o infelicità.» – Buddha</div>
+<div class="quote">«Sii il cambiamento che vuoi vedere nel mondo.» – Gandhi</div>
+<div class="quote">«La vera saggezza sta nel riconoscere la propria ignoranza.» – Socrate</div>
+<div class="quote">«La filosofia è una battaglia contro l'incantamento della nostra intelligenza per mezzo del linguaggio.» – Wittgenstein</div>
+<div class="quote">«La ragione è schiava delle passioni.» – Hume</div>
+<div class="quote">«L'inferno sono gli altri.» – Sartre</div>
+<div class="quote">«La vita deve essere compresa all'indietro, ma deve essere vissuta in avanti.» – Kierkegaard</div>
+<div class="quote">«L'individuo è la misura di tutte le cose.» – Protagora</div>
+<div class="quote">«Due cose riempiono l'animo di ammirazione e venerazione sempre nuove e crescenti: il cielo stellato sopra di me e la legge morale in me.» – Kant</div>
+<div class="quote">«L'unica vera saggezza sta nel sapere di non sapere.» – Socrate</div>
+<div class="quote">«Tutto ciò che so è che non so nulla.» – Socrate</div>
+<div class="quote">«L'uomo è la misura di tutte le cose: di quelle che sono in quanto sono, e di quelle che non sono in quanto non sono.» – Protagora</div>
+<div class="quote">«Non è la più forte delle specie che sopravvive, né la più intelligente, ma quella più reattiva ai cambiamenti.» – Darwin (sebbene non filosofo in senso stretto, la sua influenza è immensa)</div>
+<div class="quote">«Là dove finisce la conoscenza inizia la fede.» – Agostino d'Ippona</div>
+<div class="quote">«La pace non è assenza di guerra, è una virtù, uno stato d'animo, una disposizione alla benevolenza, alla fiducia, alla giustizia.» – Spinoza</div>
+<div class="quote">«La religione è l'oppio dei popoli.» – Marx</div>
+<div class="quote">«Se non sai dove stai andando, qualsiasi strada ti ci porterà.» – Seneca</div>
+<div class="quote">«Il desiderio è l'essenza stessa dell'uomo.» – Spinoza</div>
+  </div>
+<script>
+    function toggleMenu() {
+      const menu = document.getElementById('main-menu');
+      menu.classList.toggle('show');
+      if (menu.classList.contains('show')) {
+        gsap.fromTo(menu, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.5 });
+      }
+    }
+
+    const quotes = document.querySelectorAll('.quote');
+    let index = 0;
+    setInterval(() => {
+      quotes[index].classList.remove('active');
+      index = (index + 1) % quotes.length;
+      quotes[index].classList.add('active');
+    }, 5000);
+
+    window.addEventListener('load', () => {
+      gsap.from(".logo img", { opacity: 0, y: -20, duration: 1 });
+      gsap.from(".logo strong", { opacity: 0, y: -20, duration: 1, delay: 0.2 });
+      gsap.from("#quotes-container", { opacity: 0, scale: 0.8, duration: 1, delay: 1 });
+      gsap.from("#benvenuto h2", { opacity: 0, y: 50, duration: 1.2, delay: 1.5 });
+      gsap.from("#benvenuto p", { opacity: 0, y: 50, duration: 1.4, delay: 1.7 });
+    });
+  </script>
+
+
+    <!--FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF-->
+
+
+
+                
             </div>
         </div>
     </header>
