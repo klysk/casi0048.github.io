@@ -1,3 +1,155 @@
+<style>
+  body {
+    margin: 0; background: #121318; color: #f8f4e9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  header {
+    background: rgba(18,19,24,0.9);
+    position: fixed; width: 100%; top: 0; z-index: 999;
+    backdrop-filter: blur(8px);
+  }
+  nav.menu-desktop {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 20px;
+  }
+  nav.menu-desktop ul {
+    list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 20px;
+  }
+  nav.menu-desktop ul li {
+    position: relative;
+  }
+  nav.menu-desktop ul li a,
+  nav.menu-desktop ul li button.menu-btn {
+    background: none;
+    border: none;
+    color: #f8f4e9;
+    cursor: pointer;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
+  nav.menu-desktop ul li a:hover,
+  nav.menu-desktop ul li button.menu-btn:hover {
+    color: #4caf50;
+  }
+  .arrow {
+    margin-left: 5px;
+    font-size: 12px;
+  }
+  .mega-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(18,19,24,0.95);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    border-radius: 8px;
+    padding: 20px;
+    gap: 20px;
+    grid-gap: 20px;
+    z-index: 1000;
+  }
+  .columns-2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(150px, 1fr));
+  }
+  .columns-3 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(150px, 1fr));
+  }
+  .columns-4 {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(150px, 1fr));
+  }
+  .mega-menu h4 {
+    margin: 0 0 10px 0;
+    color: #4caf50;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .mega-menu a {
+    display: block;
+    padding: 6px 0;
+    color: #f8f4e9;
+    font-size: 14px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.3s ease;
+  }
+  .mega-menu a:hover {
+    color: #4caf50;
+  }
+  /* Show mega-menu when dropdown has class 'open' */
+  li.dropdown.open > .mega-menu {
+    display: grid;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    nav.menu-desktop ul {
+      flex-direction: column;
+      gap: 0;
+      background: rgba(18,19,24,0.95);
+      position: fixed;
+      top: 60px;
+      left: 0;
+      right: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      border-bottom: 1px solid #4caf50;
+    }
+    nav.menu-desktop ul.open {
+      max-height: 500px; /* enough to show menu */
+    }
+    nav.menu-desktop ul li {
+      border-bottom: 1px solid #4caf50;
+    }
+    nav.menu-desktop ul li a,
+    nav.menu-desktop ul li button.menu-btn {
+      padding: 15px 20px;
+      font-size: 18px;
+    }
+    .mega-menu {
+      position: static;
+      padding-left: 20px;
+      background: transparent;
+      box-shadow: none;
+      border-radius: 0;
+      grid-template-columns: 1fr !important;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    li.dropdown.open > .mega-menu {
+      max-height: 1000px;
+    }
+  }
+
+  /* Mobile menu toggle button */
+  #menu-toggle {
+    display: none;
+    position: fixed;
+    top: 10px;
+    right: 20px;
+    background: #4caf50;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 20px;
+    color: #121318;
+    border-radius: 4px;
+    z-index: 1100;
+  }
+  @media (max-width: 768px) {
+    #menu-toggle {
+      display: block;
+    }
+  }
+</style>
 body {
   margin: 0;
   font-family: sans-serif;
