@@ -35,4 +35,36 @@
       });
     }
   });
+// Seleziona tutti i bottoni dropdown del menu
+const menuButtons = document.querySelectorAll('.menu-btn');
+
+menuButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    // Toggle aria-expanded true/false
+    const isExpanded = button.getAttribute('aria-expanded') === 'true';
+    button.setAttribute('aria-expanded', !isExpanded);
+
+    // Chiudi tutti gli altri menu aperti (imposta aria-expanded false)
+    menuButtons.forEach(btn => {
+      if (btn !== button) {
+        btn.setAttribute('aria-expanded', false);
+      }
+    });
+  });
+});
+
+// Chiude i dropdown se si clicca fuori dal menu
+document.addEventListener('click', (event) => {
+  menuButtons.forEach(button => {
+    const megaMenu = button.nextElementSibling;
+    if (
+      !button.contains(event.target) &&
+      megaMenu &&
+      !megaMenu.contains(event.target)
+    ) {
+      button.setAttribute('aria-expanded', false);
+    }
+  });
+});
+
 </script>
