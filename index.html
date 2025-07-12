@@ -1989,6 +1989,20 @@
     `;
     document.head.appendChild(style);
 })();
+    <script>
+  const quotes = document.querySelectorAll('.quote');
+  let index = 0;
+  setInterval(() => {
+    quotes[index].classList.remove('active');
+    index = (index + 1) % quotes.length;
+    quotes[index].classList.add('active');
+  }, 5000);
+
+  window.addEventListener('load', () => {
+    gsap.from("#quotes-container", { opacity: 0, scale: 0.8, duration: 1 });
+  });
+</script>
+
 </script>
 </body>
 </html>
