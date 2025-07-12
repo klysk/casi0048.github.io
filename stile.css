@@ -1,4 +1,106 @@
 <style>
+/* menu.css */
+nav.menu-desktop {
+  display: flex;
+  justify-content: center;
+  background: rgba(18, 19, 24, 0.8);
+  backdrop-filter: blur(8px);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+  padding: 10px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+nav.menu-desktop ul {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  margin: 0;
+  padding: 0;
+}
+
+nav.menu-desktop ul li {
+  position: relative;
+}
+
+.menu-btn,
+nav.menu-desktop ul li a {
+  color: #f8f4e9;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 10px 15px;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.menu-btn:hover,
+nav.menu-desktop ul li a:hover {
+  color: #4caf50;
+}
+
+.menu-btn::after {
+  content: " ▼";
+  font-size: 12px;
+  vertical-align: middle;
+}
+
+.mega-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: rgba(18, 19, 24, 0.95);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  grid-gap: 20px;
+  z-index: 1000;
+  min-width: 600px;
+  display: grid;
+}
+
+.mega-menu.columns-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.mega-menu.columns-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.mega-menu.columns-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.mega-menu h4 {
+  margin: 0 0 8px 0;
+  color: #4caf50;
+  font-size: 14px;
+}
+
+.mega-menu a {
+  display: block;
+  color: #f8f4e9;
+  padding: 6px 0;
+  font-size: 14px;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+.mega-menu a:hover {
+  color: #4caf50;
+}
+
+/* Per aprire il mega-menu via JS */
+.dropdown.open > .mega-menu {
+  display: grid !important;
+}
+
   body {
     margin: 0; background: #121318; color: #f8f4e9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
