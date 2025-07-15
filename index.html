@@ -187,15 +187,23 @@
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         
-        .menu-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0.7rem 2rem 0.1rem 2rem; /* top right bottom left */
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
+     .menu-container {
+    max-width: 1600px;
+    margin: 0;
+    padding: 0.7rem 2rem 0.1rem 3rem; /* left da 1rem → 3rem */
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+    .menu-desktop > ul > li > a {
+    display: inline-block;
+    text-align: center;
+}
+.menu-desktop .arrow {
+    display: block;
+    font-size: 0.7rem;
+    margin-top: 0.2rem;
+}
         .logo {
             font-family: 'Cormorant Garamond', serif;
             font-weight: 500;
@@ -212,11 +220,16 @@
         }
 
         /* STILI DEL MENU */
-        .menu-desktop ul {
+       .menu-desktop ul {
             display: flex;
             list-style: none;
         }
-
+.menu-desktop ul {
+    display: flex;
+    list-style: none;
+    flex-wrap: nowrap; /* Importante per non far andare a capo */
+    justify-content: center; /* o space-between se preferisci */
+}
         .menu-desktop > ul > li {
             position: relative;
             margin-left: 1.5rem;
@@ -227,8 +240,8 @@
             border: none;
             color: #e0e0e0;
             font-family: 'Cormorant Garamond', serif;
-            font-weight: 400;
-            font-size: 1.1rem;
+            font-weight: 600;
+            font-size: 1.4rem;
             cursor: pointer;
             padding: 0.5rem 0;
             text-decoration: none;
@@ -253,7 +266,7 @@
 
         .dropdown:hover .arrow {
             transform: rotate(180deg);
-        }
+        }-->
 
       /* MEGA MENU FLUIDO */
 .mega-menu {
@@ -296,12 +309,13 @@
 .mega-menu h4 {
     color: #ffd700;
     font-family: 'Cormorant Garamond', serif;
-    font-weight: 500;
+    font-weight: 700;
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
     border-bottom: 3px solid rgba(255, 215, 0, 0.2);
-    font-size: 1.1rem;
+    font-size: 1.2rem;
 }
+
 
 .mega-menu a {
     display: block;
