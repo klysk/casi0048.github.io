@@ -14,8 +14,6 @@
       position: relative;
       user-select: none;
     }
-
-    /* Nebulose sfumate dietro tutto */
     #nebula1, #nebula2 {
       position: fixed;
       top: -20%;
@@ -39,8 +37,6 @@
       0% { transform: translate(0,0); }
       100% { transform: translate(40px,30px); }
     }
-
-    /* Canvas stelle */
     #starfield, #comets {
       position: fixed;
       top: 0; left: 0;
@@ -49,8 +45,6 @@
       background: transparent;
       z-index: 1;
     }
-
-    /* Container contenuti */
     .container {
       position: relative;
       z-index: 10;
@@ -63,14 +57,12 @@
       padding: 40px;
       pointer-events: auto;
     }
-
     h1 {
       font-size: 3em;
       margin-bottom: 0.5em;
       opacity: 0;
       text-shadow: 0 0 10px #aadeff, 0 0 20px #5bb8ff;
     }
-
     .subtitle {
       font-size: 1.5em;
       font-style: italic;
@@ -79,15 +71,14 @@
       opacity: 0;
       text-shadow: 0 0 6px #99bbcc;
     }
-
     .intro-text {
       max-width: 700px;
       font-size: 1.2em;
       line-height: 1.6;
       opacity: 0;
       text-shadow: 0 0 4px #445566;
+      margin-bottom: 1rem;
     }
-
     .back-button {
       margin-top: 3em;
       padding: 10px 20px;
@@ -101,7 +92,6 @@
       user-select: none;
       box-shadow: 0 0 10px #2a4b3a;
     }
-
     .back-button:hover {
       background: #3a6d52;
       box-shadow: 0 0 20px #3a6d52;
@@ -109,45 +99,36 @@
   </style>
 </head>
 <body>
-
   <div id="nebula1"></div>
   <div id="nebula2"></div>
   <canvas id="starfield"></canvas>
   <canvas id="comets"></canvas>
-
   <div class="container">
     <h1 id="main-title">Benvenuto negli Echi di Sofia</h1>
     <div class="subtitle" id="subtitle">Un viaggio attraverso la filosofia, i secoli e le stelle</div>
     <p class="intro-text" id="intro">
-      Echi di Sofia è uno spazio dedicato alla riflessione, alla meraviglia e alla saggezza.  
-      Un portale dove il pensiero filosofico antico e moderno risuona ancora oggi, tra presocratici, platonici, concetti e domande che attraversano il tempo.  
- «Dall'oscurità del non-sapere, una scintilla: il primo perché che illuminò la coscienza umana.»
-                     Prima delle parole, prima degli dei, esisteva quel momento sospeso in cui l'uomo si fermò a contemplare il cielo notturno. Fu allora che il pensiero prese forma - non come risposta, ma come vibrazione pura di meraviglia.
-                     Questo spazio non è una collezione di concetti. È un campo magnetico dove le domande dei nostri antenati filosofi continuano a risuonare, invitandoci a ripercorrere quel primo, rivoluzionario atto di curiosità.
-Infatti, la filosofia non cerca nella creazione o nella sapienza divina l'ideale ultimo,
-capace di farci sentire davvero a casa propria in questo mondo,
-ma riconosce che è l'uomo, con la sua ragione e il suo interrogare, la misura di tutte le cose.
-
-    </p>
+      
+    <p class="intro-text" id="intro">
+  Echi di Sofia è uno spazio dedicato alla riflessione, alla meraviglia e alla saggezza.  
+  Un portale dove il pensiero filosofico antico e moderno risuona ancora oggi, tra presocratici, platonici, concetti e domande che attraversano il tempo.  
+  «Dall'oscurità del non-sapere, una scintilla: il primo perché che illuminò la coscienza umana.»  
+  Prima delle parole, prima degli dei, esisteva quel momento sospeso in cui l'uomo si fermò a contemplare il cielo notturno. Fu allora che il pensiero prese forma – non come risposta, ma come vibrazione pura di meraviglia.  
+  Questo spazio non è una collezione di concetti. È un campo magnetico dove le domande dei nostri antenati filosofi continuano a risuonare, invitandoci a ripercorrere quel primo, rivoluzionario atto di curiosità.  
+  Infatti, la filosofia non cerca nella creazione o nella sapienza divina l'ideale ultimo, capace di farci sentire davvero a casa propria in questo mondo, ma riconosce che è l'uomo, con la sua ragione e il suo interrogare, la misura di tutte le cose.
+</p>
 
     <a href="/index.html" class="back-button">🏠 Torna a Incipit</a>
-
   </div>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script>
-    // --- Stelle animate pulsanti ---
     const canvas = document.getElementById('starfield');
     const ctx = canvas.getContext('2d');
     let stars = [];
     const maxStars = 150;
-
-    // --- Comete ---
     const cometCanvas = document.getElementById('comets');
     const cometCtx = cometCanvas.getContext('2d');
     let comets = [];
     const maxComets = 5;
-
     function resize() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -156,12 +137,9 @@ ma riconosce che è l'uomo, con la sua ragione e il suo interrogare, la misura d
     }
     window.addEventListener('resize', resize);
     resize();
-
     function randomRange(min, max) {
       return Math.random() * (max - min) + min;
     }
-
-    // --- Classe Stella ---
     class Star {
       constructor() {
         this.reset();
@@ -178,7 +156,6 @@ ma riconosce che è l'uomo, con la sua ragione e il suo interrogare, la misura d
       update() {
         this.y += this.speedY;
         if (this.y > canvas.height) this.y = 0;
-
         this.opacity += this.pulseSpeed * this.pulseDir;
         if (this.opacity >= 1) this.pulseDir = -1;
         if (this.opacity <= 0.2) this.pulseDir = 1;
@@ -192,8 +169,6 @@ ma riconosce che è l'uomo, con la sua ragione e il suo interrogare, la misura d
         ctx.fill();
       }
     }
-
-    // --- Classe Cometa ---
     class Comet {
       constructor() {
         this.reset();
@@ -222,18 +197,14 @@ ma riconosce che è l'uomo, con la sua ragione e il suo interrogare, la misura d
         const grad = cometCtx.createLinearGradient(this.x, this.y, this.x - this.length, this.y);
         grad.addColorStop(0, `rgba(255, 255, 255, ${this.opacity})`);
         grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
-
         cometCtx.strokeStyle = grad;
         cometCtx.lineWidth = 2;
         cometCtx.shadowColor = 'white';
         cometCtx.shadowBlur = 10;
-
         cometCtx.beginPath();
         cometCtx.moveTo(this.x, this.y);
         cometCtx.lineTo(this.x - this.length, this.y);
         cometCtx.stroke();
-
-        // Piccola palla luminosa davanti alla scia
         cometCtx.beginPath();
         cometCtx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
         cometCtx.shadowColor = 'white';
@@ -242,27 +213,21 @@ ma riconosce che è l'uomo, con la sua ragione e il suo interrogare, la misura d
         cometCtx.fill();
       }
     }
-
-    // --- Inizializzazione ---
     function initStars() {
       stars = [];
       for (let i = 0; i < maxStars; i++) {
         stars.push(new Star());
       }
     }
-
     function initComets() {
       comets = [];
       for (let i = 0; i < maxComets; i++) {
         comets.push(new Comet());
       }
     }
-
-    // --- Animazioni ---
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       cometCtx.clearRect(0, 0, cometCanvas.width, cometCanvas.height);
-
       for (const star of stars) {
         star.update();
         star.draw();
@@ -271,15 +236,11 @@ ma riconosce che è l'uomo, con la sua ragione e il suo interrogare, la misura d
         comet.update();
         comet.draw();
       }
-
       requestAnimationFrame(animate);
     }
-
     initStars();
     initComets();
     animate();
-
-    // --- Animazioni testo GSAP ---
     window.addEventListener("DOMContentLoaded", () => {
       gsap.timeline()
         .to("#main-title", { opacity: 1, y: -10, duration: 1, ease: "power3.out" })
@@ -287,6 +248,5 @@ ma riconosce che è l'uomo, con la sua ragione e il suo interrogare, la misura d
         .to("#intro", { opacity: 1, y: -10, duration: 1.5, ease: "power2.out" }, "-=0.4");
     });
   </script>
-
 </body>
 </html>
