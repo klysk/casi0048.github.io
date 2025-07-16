@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+  <!-- Tutto il contenuto già presente nel tuo <head> -->
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Echi di Sofia - Filosofia attraverso i secoli</title>
@@ -21,14 +24,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/TextPlugin.min.js"></script>
 
     <style>
-        * { 
+
+       * { 
             margin: 0; 
             padding: 0; 
             box-sizing: border-box;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
-        
+        main {
+  min-height: 800px; /* O valore che vuoi, es. 2000px */
+}
         body {
            font-family: 'Crimson Pro', serif;
             font-weight: 400;
@@ -179,37 +185,75 @@
         }
 
         /* HEADER E MENU */
-        header {
-            background: rgba(10, 10, 30, 0.95);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
-            top: 60px;
-            z-index: 100;
-            border-bottom: 0px solid rgba(255, 215, 0, 0.15);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        
-     .menu-container {
-    max-width: 1600px;
-    margin: 0;
-    padding: 0.7rem 2rem 0.1rem 3rem; /* left da 1rem → 3rem */
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+  
+   header {
+      top: 120px;
+      left: 0;
+      right: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      z-index: 103;
+    }
+  .menu-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.7rem 2rem 0.1rem 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: nowrap;
+      gap: 1px;
+    }
+.menu-desktop ul li {
+  margin-right: 10px;
 }
-.menu-container {
-    position: relative;
-    top: 5px; /* Aggiungi o aumenta questo valore */
-}
-.menu-container {
-    padding-bottom: 0.5rem; /* Riducilo oppure impostalo a 0 */
+    .menu-desktop ul {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: center;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      white-space: normal;
+    }
+
+
+/* MODIFICHE SPECIFICHE PER SUBMENU STRETTI */
+.mega-menu {
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); /* Riduci da 120px a 80px */
+  gap: 5px; /* Spazio tra colonne più stretto */
 }
 
-    .menu-desktop > ul > li > a {
-    display: inline-block;
-    text-align: center;
+.mega-menu ul {
+  width: 80px !important; /* Forza larghezza stretta */
+  flex: 0 0 80px !important; /* Override per flexbox */
+  padding: 0.3rem; /* Padding ridotto */
 }
+
+.mega-menu li {
+  font-size: 0.8rem; /* Testo più compatto */
+  line-height: 1.2; /* Interlinea ridotta */
+  padding: 0.2rem 0; /* Spaziatura verticale minima */
+}
+  .mega-menu {
+      z-index: 104 !important;
+      position: absolute;
+      top: 100%;
+      transform: translateX(-50%) translateY(5px);
+    }
+.mega-menu ul {
+  width: 120px; /* riduci questo valore a piacere */
+}
+  
+.mega-menu ul {
+  width: 80px !important; /* Forza larghezza stretta */
+  flex: 0 0 80px !important; /* Override per flexbox */
+  padding: 0.3rem; /* Padding ridotto */
+}
+      position: fixed;
+      z-index: 99;
+    }
 .menu-desktop .arrow {
     display: block;
     font-size: 0.7rem;
@@ -243,16 +287,30 @@
     margin: 0;                    /* reset margini */
     padding: 0;                   /* reset padding */
 }
+.menu-desktop ul {
+  display: flex;
+  justify-content: center;
+}
 
+.menu-desktop ul li {
+  flex: 0 0 auto;
+  padding: 0 5px;
+}
 .menu-desktop > ul > li {
     position: relative;
     margin-left: 1.5rem;
 }
 
 .menu-desktop ul li {
-    margin: 0 15px;               /* spazio orizzontale tra i link */
+  margin-right: 5px;
 }
 
+.menu-desktop ul li:last-child {
+  margin-right: 0;
+}
+.mega-menu ul {
+  border: 1px dashed red; /* Solo per debug */
+}
 .menu-btn, 
 .menu-desktop > ul > li > a {
     background: none;
@@ -331,8 +389,16 @@
     border-bottom: 3px solid rgba(255, 215, 0, 0.2);
     font-size: 1.2rem;
 }
-
-
+.mega-menu {
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); /* Riduci da 120px a 80px */
+  gap: 5px; /* Spazio tra colonne più stretto */
+}
+.mega-menu {
+  grid-template-columns: repeat(4, 120px); /* 4 colonne da 80px l'una */
+  width: max-content; /* Adatta la griglia al contenuto */
+  left: 50%;
+  transform: translateX(-50%); /* Centra rispetto al menu padre */
+}
 .mega-menu a {
     display: block;
     color: #e0e0e0;
@@ -366,7 +432,7 @@
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 .quotes-carousel {
-    top: 130px; /* o anche meno, prova 80px, 90px, ecc. */
+    top: 150px; /* o anche meno, prova 80px, 90px, ecc. */
 }
        .quote-slide {
     position: absolute;
@@ -412,21 +478,19 @@
 
         /* SEZIONE BENVENUTO */
 /* SEZIONE BENVENUTO */
-.welcome-section {
-  position: relative;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  background: transparent;
-}
+
+
 .welcome-title {
   margin-bottom: 2rem;
-  margin-top: -5rem; /* solleva il titolo */
+  margin-top: 7rem; /* solleva il titolo */
 }
-
+.welcome-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
 
 .welcome-mask {
   position: absolute;
@@ -633,7 +697,9 @@
 }
    </style>
 </head>
-<body>
+  <!-- Inserisci qui i link, stili e script già esistenti -->
+</head>
+<body><body>
     <!-- SFONDO STELLATO -->
     <div class="starfield" id="starfield"></div>
     
@@ -686,7 +752,7 @@
     <h3 style="color: #2a4b3a; margin-bottom: 20px; font-family: 'Cormorant Garamond', serif;">
       I Filosofi che hanno cambiato il paradigma
     </h3>
-    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px;">
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 51px;">
 
       <div style="text-align: center;">
         <img src="immagini per sito/Socrates_Louvre.jpg" alt="Socrate" style="width: 100%; max-width: 80px; border-radius: 50%; border: 3px solid #8B5A2B;">
@@ -1985,11 +2051,70 @@
 
        </body>
 </html>
+  <!-- Tutto il contenuto già presente nel tuo <body> -->
 
+  <!-- Box Ultimi Articoli -->
+  <div id="ultimi-articoli-box">
+    <h3>📝 Ultimi Articoli</h3>
+    <ul>
+      <li><a href="articoli/platonici.html">Il pensiero platonico</a></li>
+      <li><a href="articoli/presocratici.html">Presocratici: introduzione</a></li>
+      <li><a href="articoli/socrate_oscillante.html">Il metodo socratico</a></li>
+      <li><a href="articoli/talete.html">Talete e l’archè</a></li>
+    </ul>
+  </div>
 
-  
+  <style>
+   #ultimi-articoli-box {
+      position: fixed;
+      top: 400px;
+      right: 20px;
+      width: 220px;
+      background: rgba(15, 15, 25, 0.9);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 15px;
+      color: #fff;
+      z-index: 98;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
 
+    #ultimi-articoli-box h3 {
+      font-size: 18px;
+      color: gold;
+      margin-bottom: 10px;
+    }
 
+    #ultimi-articoli-box ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
 
-      
-            
+    #ultimi-articoli-box li {
+      margin-bottom: 8px;
+    }
+
+    #ultimi-articoli-box a {
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    #ultimi-articoli-box a:hover {
+      color: gold;
+    }
+  </style>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script>
+    gsap.from("#ultimi-articoli-box", {
+      opacity: 0,
+      x: 100,
+      duration: 1.2,
+      ease: "power2.out"
+    });
+  </script>
+</body>
+</html>
