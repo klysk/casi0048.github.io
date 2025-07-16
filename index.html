@@ -195,6 +195,14 @@
     justify-content: flex-start;
     align-items: center;
 }
+.menu-container {
+    position: relative;
+    top: 5px; /* Aggiungi o aumenta questo valore */
+}
+.menu-container {
+    padding-bottom: 0.5rem; /* Riducilo oppure impostalo a 0 */
+}
+
     .menu-desktop > ul > li > a {
     display: inline-block;
     text-align: center;
@@ -227,31 +235,36 @@
 .menu-desktop ul {
     display: flex;
     list-style: none;
-    flex-wrap: nowrap; /* Importante per non far andare a capo */
-    justify-content: center; /* o space-between se preferisci */
+    flex-wrap: nowrap;            /* per non andare a capo */
+    justify-content: center;      /* centra i menu item */
+    margin: 0;                    /* reset margini */
+    padding: 0;                   /* reset padding */
 }
-        .menu-desktop > ul > li {
-            position: relative;
-            margin-left: 1.5rem;
-        }
 
-        .menu-btn, .menu-desktop > ul > li > a {
-            background: none;
-            border: none;
-            color: #e0e0e0;
-            font-family: 'Cormorant Garamond', serif;
-            font-weight: 600;
-            font-size: 1.4rem;
-            cursor: pointer;
-            padding: 0.5rem 0;
-            text-decoration: none;
-            transition: all 0.3s ease-out;
-            display: inline-block;
-        }
+.menu-desktop > ul > li {
+    position: relative;
+    margin-left: 1.5rem;
+}
 
-        .menu-desktop > ul > li > a {
-            padding: 0.5rem 1rem;
-        }
+.menu-desktop ul li {
+    margin: 0 15px;               /* spazio orizzontale tra i link */
+}
+
+.menu-btn, 
+.menu-desktop > ul > li > a {
+    background: none;
+    border: none;
+    color: #e0e0e0;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 1.4rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    transition: all 0.3s ease-out;
+    display: inline-block;
+}
+
 
         .menu-btn:hover, .menu-desktop > ul > li > a:hover {
             color: #ffd700;
@@ -343,14 +356,14 @@
             background: rgba(10, 10, 30, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 0px solid rgba(255, 215, 0, 0.1);
-            padding: 0rem 3rem 5.3rem 3rem; /* top right bottom left */
+            padding: 1rem 3rem 5.3rem 3rem; /* top right bottom left */
             z-index: 99;
             overflow: hidden;
             height: auto;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 .quotes-carousel {
-    top: 140px; /* o anche meno, prova 80px, 90px, ecc. */
+    top: 130px; /* o anche meno, prova 80px, 90px, ecc. */
 }
        .quote-slide {
     position: absolute;
@@ -494,7 +507,7 @@
             }
             
             .top-bar {
-                padding: 0.8rem 1rem;
+                padding: 0.1rem 1rem;
             }
             
             .search-container input {
@@ -556,7 +569,7 @@
             }
             
             .quote-text {
-                font-size: 1rem;
+                font-size: 1.2rem;
             }
             
             .quote-author {
@@ -624,6 +637,121 @@
     
     <!-- BARRA SUPERIORE CON RICERCA E TRADUTTORE -->
   <div class="top-bar">
+
+
+<a class="logo" href="https://casi0048.github.io/pagine/benvenuti.html">Φ ECHI DI SOFIA</a>
+
+<!--  inizio 4 filosofi -->
+<!-- Bottone centrato -->
+<div style="text-align: center; margin: 0px 0;">
+  <button id="paradigma-btn" style="
+    padding: 10px 25px;
+    background: #0a0a0a;
+    color: #f8f4e9;
+    border: 1px solid rgba(255, 215, 0, 0.5);
+
+    cursor: pointer;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    border-radius: 4px;
+">
+  Loro hanno cambiato il paradigma
+</button>
+
+</div>
+
+
+<!-- Overlay nascosto con i 4 filosofi -->
+<div id="filosofi-overlay" style="
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+">
+  <div style="
+    background: linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+
+  padding: 1px;
+  border-radius: 10px;
+  max-width: 800px;
+  text-align: center;
+  margin-top: 200px;
+">
+
+    
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
+      <!-- Filosofo 1 -->
+      <div>
+        <img src="immagini per sito/Socrates_Louvre.jpg" alt="Socrate" style="width: 100%; max-width: 120px; border-radius: 50%; border: 3px solid #8B5A2B;">
+        <p style="margin-top: 10px; color: #3e3a36; font-weight: bold;">Socrate</p>
+        <p style="font-style: italic; color: #2a4b3a;">"So di non sapere."</p>
+      </div>
+      <!-- Filosofo 2 -->
+      <div>
+        <img src="immagini per sito/platone.jpg" alt="Platone" style="width: 100%; max-width: 120px; border-radius: 50%; border: 3px solid #8B5A2B;">
+        <p style="margin-top: 10px; color: #3e3a36; font-weight: bold;">Platone</p>
+        <p style="font-style: italic; color: #2a4b3a;">"La realtà è un'ombra delle Idee."</p>
+      </div>
+      <!-- Filosofo 3 -->
+      <div>
+        <img src="immagini per sito/kant.webp" alt="Kant" style="width: 100%; max-width: 120px; border-radius: 50%; border: 3px solid #8B5A2B;">
+        <p style="margin-top: 10px; color: #3e3a36; font-weight: bold;">Kant</p>
+        <p style="font-style: italic; color: #2a4b3a;">"Agisci come se la tua azione diventasse legge universale."</p>
+      </div>
+      <!-- Filosofo 4 -->
+      <div>
+        <img src="immagini%20per%20sito/friedrich-nietzsche.jpg" alt="Nietzsche" style="width: 100%; max-width: 120px; border-radius: 50%; border: 3px solid #8B5A2B;">
+        <p style="margin-top: 10px; color: #3e3a36; font-weight: bold;">Nietzsche</p>
+        <p style="font-style: italic; color: #2a4b3a;">"Dio è morto."</p>
+      </div>
+    </div>
+    <button id="chiudi-overlay" style="
+      margin-top: 20px;
+      padding: 8px 15px;
+      background: #2a4b3a;
+      color: #f8f4e9;
+      border: none;
+      cursor: pointer;
+    ">
+      Chiudi
+    </button>
+  </div>
+</div>
+<style>
+
+#paradigma-btn:hover {
+  background: #3e3a36; /* Diventa grigio scuro al hover */
+}
+</style>
+<script>
+  // Apri overlay
+  document.getElementById("paradigma-btn").addEventListener("click", function() {
+    document.getElementById("filosofi-overlay").style.display = "flex";
+  });
+
+  // Chiudi overlay
+  document.getElementById("chiudi-overlay").addEventListener("click", function() {
+    document.getElementById("filosofi-overlay").style.display = "none";
+  });
+
+  // Chiudi cliccando fuori dal contenuto
+  document.getElementById("filosofi-overlay").addEventListener("click", function(e) {
+    if (e.target === this) {
+      this.style.display = "none";
+    }
+  });
+</script>
+</script>
+<!-- fine 4 folosofi  -->
+
+ 
+
     <div class="search-translate-container">
         <form action="https://www.google.com/search" method="get" target="_blank">
             <div class="search-container">
@@ -638,7 +766,8 @@
     
     <header id="mainHeader">
     <div class="menu-container">
-        <a class="logo" href="https://casi0048.github.io/pagine/benvenuti.html">Φ ECHI DI SOFIA</a>
+<!-- qui il logo  -->
+        
 
         <div style="display: flex; align-items: center;">
             <nav class="menu-desktop">
@@ -879,7 +1008,7 @@
         // CONFIGURAZIONE
         const config = {
             particleCount: 50,
-            minSize: 0.8,
+            minSize: 0.6,
             maxSize: 2,
             repulsionRadius: 100,
             maxRepulsionForce: 30,
@@ -1254,7 +1383,7 @@
                 slides[currentSlide].classList.remove('active');
                 currentSlide = (currentSlide + 1) % slides.length;
                 slides[currentSlide].classList.add('active');
-            }, 5000);
+            }, 6000);
         }
 
         // TRACCIA MOUSE
