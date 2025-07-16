@@ -24,6 +24,139 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/TextPlugin.min.js"></script>
 
     <style>
+/* Echi di Sofia - Stile ottimizzato con palette, tipografia, ombre, hover, transizioni */
+
+body {
+    background: radial-gradient(ellipse at center, #0a0a1e 0%, #050510 100%);
+    color: #ffffffcc;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5 {
+    color: gold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+    margin-top: 0;
+}
+
+a {
+    color: #ffffffcc;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: gold;
+    text-shadow: 0 0 8px gold;
+}
+
+.menu-desktop {
+    background: rgba(10, 10, 30, 0.9);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+
+.menu-desktop .underline-effect::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 2px;
+    background: gold;
+    transition: width 0.3s;
+}
+
+.menu-desktop .underline-effect:hover::after {
+    width: 100%;
+}
+
+/* Box Scopri un concetto */
+.box-concetto {
+    position: fixed;
+    top: 120px;
+    left: 20px;
+    width: 260px;
+    background: linear-gradient(to bottom, rgba(10, 10, 30, 0.95), rgba(10, 10, 30, 0.8));
+    color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.box-concetto h3 {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+    color: gold;
+    text-align: center;
+}
+
+.box-concetto input[type="radio"] {
+    display: none;
+}
+
+.box-concetto .contenuto-concetto {
+    min-height: 120px;
+}
+
+.box-concetto .concetto {
+    display: none;
+}
+
+#concetto1:checked ~ .contenuto-concetto #c1,
+#concetto2:checked ~ .contenuto-concetto #c2,
+#concetto3:checked ~ .contenuto-concetto #c3,
+#concetto4:checked ~ .contenuto-concetto #c4,
+#concetto5:checked ~ .contenuto-concetto #c5 {
+    display: block;
+}
+
+.box-concetto .concetto p {
+    margin: 5px 0;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.box-concetto .selettori-concetto {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.box-concetto .selettori-concetto label {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin: 0 4px;
+    background: #ffffff;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.5;
+}
+
+#concetto1:checked ~ .selettori-concetto label[for="concetto1"],
+#concetto2:checked ~ .selettori-concetto label[for="concetto2"],
+#concetto3:checked ~ .selettori-concetto label[for="concetto3"],
+#concetto4:checked ~ .selettori-concetto label[for="concetto4"],
+#concetto5:checked ~ .selettori-concetto label[for="concetto5"] {
+    opacity: 1;
+    background: gold;
+}
+
+/* Animazione fade-in solo CSS */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
        * { 
             margin: 0; 
