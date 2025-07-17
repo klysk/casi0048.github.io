@@ -1346,10 +1346,37 @@ document.addEventListener("DOMContentLoaded", function() {
         </div>
     </div>
 <!--      iiiiiiiiii foto   -->
-<div class="foto-commento" style="margin: 20px 0 10px 0;">
-  <img id="immagine-filosofi" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Socrates_Louvre.jpg" alt="Filosofo" style="max-height: 120px; border-radius: 8px;">
-  <p id="commento-filosofi" style="color: #ccc; margin-top: 5px;">Socrate - Maestro del dialogo</p>
+<div class="slider-container" style="overflow: hidden; margin: 20px 0;">
+  <div class="slider" style="display: flex; gap: 20px; transition: transform 0.5s ease;">
+    <div class="slide" style="min-width: 200px; flex-shrink: 0; text-align: center; color: #ccc;">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Socrates_Louvre.jpg" alt="Socrate" style="max-height: 120px; border-radius: 8px; width: 100%;">
+      <p>Socrate - Maestro del dialogo</p>
+    </div>
+    <div class="slide" style="min-width: 200px; flex-shrink: 0; text-align: center; color: #ccc;">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/platone.png" alt="Platone" style="max-height: 120px; border-radius: 8px; width: 100%;">
+      <p>Platone - Il Mito delle Idee</p>
+    </div>
+    <div class="slide" style="min-width: 200px; flex-shrink: 0; text-align: center; color: #ccc;">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Aristotle_.jpg" alt="Aristotele" style="max-height: 120px; border-radius: 8px; width: 100%;">
+      <p>Aristotele - Logica e Etica</p>
+    </div>
+  </div>
 </div>
+
+document.addEventListener("DOMContentLoaded", () => {
+  const slider = document.querySelector('.slider');
+  const slides = document.querySelectorAll('.slide');
+  const slideWidth = slides[0].offsetWidth + 20; // larghezza + gap
+  let position = 0;
+
+  setInterval(() => {
+    position -= slideWidth;
+    if (Math.abs(position) >= slideWidth * slides.length) {
+      position = 0;
+    }
+    slider.style.transform = `translateX(${position}px)`;
+  }, 3000);
+});
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
@@ -1390,6 +1417,52 @@ document.addEventListener("DOMContentLoaded", () => {
   }, 4000);
 });
 </script>
+  <style>
+.slider-container {
+  width: 100%;
+  overflow: hidden;
+  margin: 20px 0;
+  background: #1f2740; /* o il colore che vuoi */
+  padding: 10px 0;
+  border-radius: 8px;
+}
+
+.slider {
+  display: flex;
+  width: max-content;
+  animation: slideAnim 12s linear infinite;
+}
+
+.slide {
+  flex: 0 0 200px;
+  margin-right: 20px;
+  text-align: center;
+  color: #ccc;
+  user-select: none;
+}
+
+.slide img {
+  max-height: 120px;
+  border-radius: 8px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.slide p {
+  margin-top: 8px;
+  font-size: 0.9rem;
+}
+
+@keyframes slideAnim {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-220px * 3)); /* larghezza+margin * numero immagini */
+  }
+}
+
+    </style>
 <!--    ffff foto -->
 </section>
 
