@@ -2178,7 +2178,7 @@
     });
   </script>
 <!--  iii js typing  -->
-  <script>
+<script>
 document.addEventListener("DOMContentLoaded", () => {
   const phrases = [
     "Φιλοσοφία: l'arte di cercare appigli nel vuoto.",
@@ -2215,52 +2215,37 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   const el = document.getElementById("typing");
-  let phraseIndex = 0;
-  let charIndex = 0;
-  let isDeleting = false;
-  let lastTime = 0;
-  let typingDelay = 240;
-  let deletingDelay = 120;
-  let pauseAfterComplete = 4000;
-  let pauseTime = 0;
 
-  function typeLoop(timestamp) {
-    if (!lastTime) lastTime = timestamp;
-    const delta = timestamp - lastTime;
-
-    if (pauseTime > 0) {
-      pauseTime -= delta;
-      lastTime = timestamp;
-      requestAnimationFrame(typeLoop);
-      return;
-    }
-
-    if (delta >= (isDeleting ? deletingDelay : typingDelay)) {
-      const currentPhrase = phrases[phraseIndex];
-
-      if (isDeleting) {
-        charIndex--;
-      } else {
-        charIndex++;
-      }
-
-      el.textContent = currentPhrase.substring(0, charIndex);
-
-      if (!isDeleting && charIndex === currentPhrase.length) {
-        pauseTime = pauseAfterComplete;
-        isDeleting = true;
-      } else if (isDeleting && charIndex === 0) {
-        isDeleting = false;
-        phraseIndex = (phraseIndex + 1) % phrases.length;
-      }
-
-      lastTime = timestamp;
-    }
-
-    requestAnimationFrame(typeLoop);
+  function wait(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  requestAnimationFrame(typeLoop);
+  async function typeWriterEffect() {
+    let phraseIndex = 0;
+
+    while (true) {
+      const phrase = phrases[phraseIndex];
+
+      // Scrittura
+      for (let i = 1; i <= phrase.length; i++) {
+        el.textContent = phrase.substring(0, i);
+        await wait(120);
+      }
+
+      await wait(1500); // Pausa dopo scrittura completa
+
+      // Cancellazione
+      for (let i = phrase.length; i >= 0; i--) {
+        el.textContent = phrase.substring(0, i);
+        await wait(60);
+      }
+
+      phraseIndex = (phraseIndex + 1) % phrases.length;
+      await wait(500); // Piccola pausa tra una frase e l’altra
+    }
+  }
+
+  typeWriterEffect();
 });
 </script>
 
