@@ -1086,7 +1086,7 @@
 
     gsap.to(".welcome-subtitle", {
         duration: 3,
-        text: "Φ Pensare, dunque è ancora possibile Φ",
+        text: "Φιλοσοφία: l'arte di cercare appigli nel vuoto e trovare, invece, ali...",
         ease: "none",
     });
 
@@ -2090,7 +2090,7 @@
 
       tl.to(".welcome-subtitle", {
         duration: 4,
-        text: "Φιλοσοφία: l'arte di cercare appigli nel vuoto e trovare, invece, ali...",
+        text: "Φ Pensare, dunque è ancora possibile...Φ",
         ease: "none",
       }, 0)
 
@@ -2178,77 +2178,70 @@
     });
   </script>
 <!--  iii js typing  -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const phrases = [
-    "La filosofia è sete, non possesso.",
-    "Pensare è camminare senza mappa.",
-    "Ogni risposta nasconde un'altra domanda.",
-    "Il dubbio è già inizio di sapere.",
-    "La verità abita tra due errori.",
-    "Il sapere inizia con il non sapere.",
-    "Filosofare è guardare oltre l'ovvio.",
-    "La mente inquieta è sempre viva.",
-    "Il pensiero non ha confini.",
-    "Nulla è più certo del dubbio.",
-    "La sapienza si nutre di incertezza.",
-    "Il silenzio è una forma di pensiero.",
-    "Domandare è respirare con la mente.",
-    "La logica è poesia con regole.",
-    "La libertà comincia nel pensiero.",
-    "Ogni passo è già metà del cammino.",
-    "La verità è un equilibrio mobile.",
-    "Non esiste ultima parola.",
-    "Il filosofo abita il paradosso.",
-    "Tutto è relativo, tranne la relatività.",
-    "Il tempo è un'illusione persistente.",
-    "La realtà è più sottile del pensiero.",
-    "La mente è uno specchio incrinato.",
-    "Ogni concetto è una gabbia dorata.",
-    "Chi sa, tace; chi parla, dubita.",
-    "Il sapere pesa meno del non sapere.",
-    "Ogni idea porta con sé la sua ombra.",
-    "Il pensiero è un labirinto senza uscita.",
-    "Sapere è saper di non sapere.",
-    "Ogni filosofia è autobiografia nascosta."
-  ];
+  <script>
+    const phrases = [
+  "Φιλοσοφία: l'arte di cercare appigli nel vuoto.",
+  "La filosofia è sete, non possesso.",
+  "Pensare è camminare senza mappa.",
+  "Ogni risposta nasconde un'altra domanda.",
+  "Il dubbio è già inizio di sapere.",
+  "La verità abita tra due errori.",
+  "Il sapere inizia con il non sapere.",
+  "Filosofare è guardare oltre l'ovvio.",
+  "La mente inquieta è sempre viva.",
+  "Il pensiero non ha confini.",
+  "Nulla è più certo del dubbio.",
+  "La sapienza si nutre di incertezza.",
+  "Il silenzio è una forma di pensiero.",
+  "Domandare è respirare con la mente.",
+  "La logica è poesia con regole.",
+  "La libertà comincia nel pensiero.",
+  "Ogni passo è già metà del cammino.",
+  "La verità è un equilibrio mobile.",
+  "Non esiste ultima parola.",
+  "Il filosofo abita il paradosso.",
+  "Tutto è relativo, tranne la relatività.",
+  "Il tempo è un'illusione persistente.",
+  "La realtà è più sottile del pensiero.",
+  "La mente è uno specchio incrinato.",
+  "Ogni concetto è una gabbia dorata.",
+  "Chi sa, tace; chi parla, dubita.",
+  "Il sapere pesa meno del non sapere.",
+  "Ogni idea porta con sé la sua ombra.",
+  "Il pensiero è un labirinto senza uscita.",
+  "Sapere è saper di non sapere.",
+  "Ogni filosofia è autobiografia nascosta."
+];
 
-  const el = document.getElementById("typing");
-
-  function wait(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
-  async function typeWriterEffect() {
+    const el = document.getElementById("typing");
     let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let speed = 140;
+    let pause = 2000;
 
-    while (true) {
-      const phrase = phrases[phraseIndex];
-
-      // Scrittura
-      for (let i = 1; i <= phrase.length; i++) {
-        el.textContent = phrase.substring(0, i);
-        await wait(120);
+    function typeLoop() {
+      const currentPhrase = phrases[phraseIndex];
+      if (isDeleting) {
+        charIndex--;
+      } else {
+        charIndex++;
       }
 
-      await wait(1500); // Pausa dopo scrittura completa
+      el.textContent = currentPhrase.substring(0, charIndex);
 
-      // Cancellazione
-      for (let i = phrase.length; i >= 0; i--) {
-        el.textContent = phrase.substring(0, i);
-        await wait(60);
+      if (!isDeleting && charIndex === currentPhrase.length) {
+        setTimeout(() => isDeleting = true, pause);
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
       }
 
-      phraseIndex = (phraseIndex + 1) % phrases.length;
-      await wait(500); // Piccola pausa tra una frase e l’altra
+      setTimeout(typeLoop, isDeleting ? speed / 2 : speed);
     }
-  }
 
-  typeWriterEffect();
-});
-</script>
-
-
+    document.addEventListener("DOMContentLoaded", typeLoop);
+  </script>
 <!-- fffffffff typing -->
 </body>
 </html>
