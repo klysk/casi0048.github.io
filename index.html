@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+  
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Menu Esempio Completo</title>
@@ -1126,14 +1127,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-<!--  fff scrittura a macchina   -->
 
-
-
-
-
-
- 
 
     <div class="search-translate-container">
         <form action="https://www.google.com/search" method="get" target="_blank">
@@ -1151,8 +1145,8 @@ document.addEventListener("DOMContentLoaded", function() {
     <div class="menu-container">
 <!-- qui il logo  -->
         
-
-  <div style="display: flex; align-items: center;">
+<div style="display: flex; align-items: center;">
+  
   <nav class="menu-desktop">
     <ul role="menu">
       <li class="dropdown">
@@ -1351,6 +1345,51 @@ document.addEventListener("DOMContentLoaded", function() {
             <span class="quote-author"></span>
         </div>
     </div>
+<!--      iiiiiiiiii foto   -->
+<div class="foto-commento" style="margin: 20px 0 10px 0;">
+  <img id="immagine-filosofi" src="immagini/filosofo1.jpg" alt="Filosofo" style="max-height: 120px; border-radius: 8px;">
+  <p id="commento-filosofi" style="color: #ccc; margin-top: 5px;">Socrate - Maestro del dialogo</p>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const immagini = [
+    {
+      src: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Socrates_Louvre.jpg",
+      commento: "Socrate - Maestro del dialogo"
+    },
+    {
+      src: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/platone.png",
+      commento: "Platone - Il Mito delle Idee"
+    },
+    {
+      src: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Aristotle_.jpg",
+      commento: "Aristotele - Logica e Etica"
+    }
+  ];
+
+  let index = 0;
+  const imgEl = document.getElementById("immagine-filosofi");
+  const commentoEl = document.getElementById("commento-filosofi");
+
+  setInterval(() => {
+    index = (index + 1) % immagini.length;
+    imgEl.src = immagini[index].src;
+    commentoEl.textContent = immagini[index].commento;
+  }, 4000);
+});
+
+  let index = 0;
+  const imgEl = document.getElementById("immagine-filosofi");
+  const commentoEl = document.getElementById("commento-filosofi");
+
+  setInterval(() => {
+    index = (index + 1) % immagini.length;
+    imgEl.src = immagini[index].src;
+    commentoEl.textContent = immagini[index].commento;
+  }, 4000);
+});
+</script>
+<!--    ffff foto -->
 </section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
