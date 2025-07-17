@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <!-- Tutto il contenuto già presente nel tuo <head> -->
+  <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Menu Esempio Completo</title>
+<!-- Tutto il contenuto già presente nel tuo <head> -->
 
 
     <meta charset="UTF-8">
@@ -23,323 +27,492 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/TextPlugin.min.js"></script>
 
-    <style>
-
-       * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        main {
-  min-height: 800px; /* O valore che vuoi, es. 2000px */
+<style>
+/* CORREZIONE CSS */
+.dropdown {
+  position: relative;
+  padding-bottom: 5px; /* Crea area sicura per il passaggio del cursore */
 }
-        body {
-           font-family: 'Crimson Pro', serif;
-            font-weight: 400;
-            color: #e0e0e0;
-            background: #0a0a1a;
-            overflow-x: hidden;
-            cursor: default;
-            min-height: 100vh;
-            line-height: 1.6;
-        }
 
-        /* BARRA SUPERIORE CON RICERCA E TRADUTTORE */
-        .top-bar {
-  display: flex;
-  justify-content: center; /* Centra orizzontalmente */
-  align-items: center;     /* Centra verticalmente */
-  padding: 10px;
-  background: rgba(0, 0, 0, 0.5);
-  gap: 10px; /* Distanza tra elementi */
+.mega-menu {
+  top: calc(100% - 10px); /* Sovrappone leggermente il bottone padre */
+  left: 50%;
+  transform: translateX(-50%);
+  padding-top: 15px; /* Area di sicurezza superiore */
+}
+
+/* Aggiungi un pseudo-elemento invisibile per colmare il gap */
+.dropdown::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  background: transparent;
+  z-index: 999;
+}
+
+/* Animazione più lenta */
+.mega-menu {
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* Mantieni visibile durante l'hover su tutto il dropdown */
+.dropdown:hover .mega-menu,
+.dropdown:focus-within .mega-menu,
+.mega-menu:hover {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+</style>
+<style>
+  /* Reset base */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 20px;
+    background-color: #12182b;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: #e0e6f3;
+  }
+
+  .menu-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+nav.menu-desktop {
+    background-color: #1f2740;
+    padding: 10px 20px;
+    border-radius: 6px;
+    min-width: 850px;
+    position: relative;
+    top: -20px; /* Alza il menu */
+    z-index: 999;
+}
+
+ 
+  nav.menu-desktop ul[role="menu"] {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+  }
+
+  nav.menu-desktop > ul > li.dropdown {
+    position: relative;
+  }
+
+  nav.menu-desktop > ul > li > a,
+  nav.menu-desktop > ul > li > button.menu-btn {
+    background: none;
+    border: none;
+    color: #c8d0e7;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 8px 10px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  nav.menu-desktop > ul > li > a:hover,
+  nav.menu-desktop > ul > li > button.menu-btn:hover,
+  nav.menu-desktop > ul > li > a:focus,
+  nav.menu-desktop > ul > li > button.menu-btn:focus {
+    background-color: #4866ff;
+    color: white;
+    outline: none;
+  }
+
+  .arrow {
+    font-size: 0.7rem;
+    user-select: none;
+  }
+nav.menu-desktop > ul > li > a,
+nav.menu-desktop > ul > li > button.menu-btn {
+  display: inline-block;
+  color: #e0e0e0;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  line-height: 1.2; /* Uniforma il testo */
+}
+
+* MEGA MENU FIX */
+  .dropdown {
+    position: relative;
+  }
+  .mega-menu {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.dropdown.active > .mega-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+  .mega-menu {
+    display: none; /* Inizialmente nascosto */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    max-width: 90vw;
+    background: rgba(10, 10, 30, 0.98);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    padding: 1rem;
+    z-index: 1000;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .dropdown:hover .mega-menu,
+  .dropdown:focus-within .mega-menu {
+    display: grid;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
+
+  /* Responsive */
+  @media (max-width: 992px) {
+    .mega-menu {
+      width: 95vw;
+      left: 2.5vw;
+      transform: none;
+    }
+  }
+  /* Mega menu */
+/* Mega Menu Base Styles */
+.dropdown {
+  position: relative;
+}
+
+.mega-menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  max-width: 90vw;
+  background: rgba(10, 10, 30, 0.98);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  padding: 1rem;
+  z-index: 1000;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  
+  /* Initial hidden state */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  
+  /* Smooth transition */
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Show menu on hover/focus */
+.dropdown:hover .mega-menu,
+.dropdown:focus-within .mega-menu,
+.mega-menu:hover {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .mega-menu {
+    width: 95vw;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 768px) {
+  .mega-menu {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+  /* Stabile: mega-menu visibile se hover su li.dropdown O mega-menu stesso */
+  li.dropdown:hover > .mega-menu,
+  li.dropdown:focus-within > .mega-menu,
+  li.dropdown .mega-menu:hover {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  nav.menu-desktop a:focus,
+  nav.menu-desktop button.menu-btn:focus,
+  .mega-menu a:focus {
+    outline: none;
+    box-shadow: 0 0 5px 2px #7b9aff;
+    border-radius: 3px;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    nav.menu-desktop {
+      min-width: auto;
+    }
+    nav.menu-desktop ul[role="menu"] {
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .mega-menu.columns-4 {
+      min-width: 320px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px 20px;
+      position: static;
+      box-shadow: none;
+      padding: 10px 15px;
+      border-radius: 0 0 6px 6px;
+
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
+    li.dropdown:hover > .mega-menu,
+    li.dropdown:focus-within > .mega-menu,
+    li.dropdown .mega-menu:hover {
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+      display: grid !important;
+    }
+  }
+</style>
+<style>
+  * { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+main {
+    min-height: 800px; /* O valore che vuoi, es. 2000px */
+}
+
+body {
+    font-family: 'Crimson Pro', serif;
+    font-weight: 400;
+    color: #e0e0e0;
+    background: #0a0a1a;
+    overflow-x: hidden;
+    cursor: default;
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+/* BARRA SUPERIORE CON RICERCA E TRADUTTORE */
+.top-bar {
+    display: flex;
+    justify-content: center; /* Centra orizzontalmente */
+    align-items: center;     /* Centra verticalmente */
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    gap: 10px; /* Distanza tra elementi */
 }
 
 .top-bar input {
-  padding: 5px 10px;
+    padding: 5px 10px;
 }
 
 .top-bar button {
-  padding: 5px 15px;
+    padding: 5px 15px;
 }
 
-
-        .search-translate-container {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .search-container {
-            display: flex;
-            align-items: center;
-            position: relative;
-        }
-
-        .search-container input {
-            padding: 0.6rem 1rem 0.6rem 2.5rem;
-            background: rgba(20, 20, 40, 0.7);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            border-radius: 4px;
-            color: #e0e0e0;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 300;
-            font-size: 0.95rem;
-            transition: all 0.4s ease-out;
-            width: 250px;
-        }
-
-        .search-container input:focus {
-            outline: none;
-            border-color: rgba(255, 215, 0, 0.5);
-            box-shadow: 0 0 12px rgba(255, 215, 0, 0.2);
-            background: rgba(20, 20, 40, 0.9);
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 1rem;
-            color: rgba(255, 215, 0, 0.6);
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .search-container input:focus + .search-icon {
-            color: rgba(255, 215, 0, 0.9);
-            transform: scale(1.1);
-        }
-
-        /* Stile per il traduttore Google */
-        #google_translate_element {
-            display: inline-block;
-        }
-
-        .goog-te-combo {
-            font-family: 'Montserrat', sans-serif !important;
-            font-weight: 300 !important;
-            background: rgba(20, 20, 40, 0.7) !important;
-            color: #e0e0e0 !important;
-            border: 1px solid rgba(255, 215, 0, 0.2) !important;
-            border-radius: 4px !important;
-            padding: 8px 15px !important;
-            cursor: pointer !important;
-            height: 40px;
-            transition: all 0.4s ease-out !important;
-        }
-
-        .goog-te-combo:hover {
-            background: rgba(20, 20, 40, 0.9) !important;
-            border-color: rgba(255, 215, 0, 0.5) !important;
-        }
-
-        .goog-te-banner-frame {
-            display: none !important;
-        }
-
-        .goog-te-gadget {
-            color: transparent !important;
-        }
-
-        /* SFONDO STELLATO */
-        .starfield {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-        }
-        
-        .star {
-            position: absolute;
-            background-color: #fff;
-            border-radius: 50%;
-            animation: twinkle var(--duration) infinite ease-in-out;
-            will-change: opacity;
-        }
-        
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 1; }
-        }
-
-        /* PARTICELLE INTERATTIVE */
-        .philo-particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-            overflow: hidden;
-        }
-        
-        .particle {
-            position: absolute;
-            font-family: 'Arial Unicode MS';
-            will-change: transform;
-            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-            text-shadow: 0 0 10px rgba(255,215,0,0.4);
-        }
-
-.typing-effect {
-  font-family: 'Courier New', monospace;
-  font-size: 1.6rem;
-  color: gold;
-  white-space: nowrap;
-  overflow: hidden;
-  border-right: 2px solid gold;
-  width: 0;
-  animation: typing 4s steps(30) infinite alternate, blink 0.7s step-end infinite;
+.search-translate-container {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
 }
 
-@keyframes typing {
-  from {
-    width: 0;
-  }
-  to {
+.search-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.search-container input {
+    padding: 0.6rem 1rem 0.6rem 2.5rem;
+    background: rgba(20, 20, 40, 0.7);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 4px;
+    color: #e0e0e0;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.95rem;
+    transition: all 0.4s ease-out;
+    width: 250px;
+}
+
+.search-container input:focus {
+    outline: none;
+    border-color: rgba(255, 215, 0, 0.5);
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.2);
+    background: rgba(20, 20, 40, 0.9);
+}
+
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    color: rgba(255, 215, 0, 0.6);
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.search-container input:focus + .search-icon {
+    color: rgba(255, 215, 0, 0.9);
+    transform: scale(1.1);
+}
+
+/* Stile per il traduttore Google */
+#google_translate_element {
+    display: inline-block;
+}
+
+.goog-te-combo {
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 300 !important;
+    background: rgba(20, 20, 40, 0.7) !important;
+    color: #e0e0e0 !important;
+    border: 1px solid rgba(255, 215, 0, 0.2) !important;
+    border-radius: 4px !important;
+    padding: 8px 15px !important;
+    cursor: pointer !important;
+    height: 40px;
+    transition: all 0.4s ease-out !important;
+}
+
+.goog-te-combo:hover {
+    background: rgba(20, 20, 40, 0.9) !important;
+    border-color: rgba(255, 215, 0, 0.5) !important;
+}
+
+.goog-te-banner-frame {
+    display: none !important;
+}
+
+.goog-te-gadget {
+    color: transparent !important;
+}
+
+/* SFONDO STELLATO */
+.starfield {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-  }
+    height: 100%;
+    z-index: -2;
 }
 
-@keyframes blink {
-  from, to {
-    border-color: transparent;
-  }
-  50% {
-    border-color: gold;
-  }
-}
-        /* HEADER E MENU */
-  
-   header {
-      top: 120px;
-      left: 0;
-      right: 0;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      z-index: 103;
-    }
-  .menu-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0.7rem 2rem 0.1rem 2rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: nowrap;
-      gap: 1px;
-    }
-.menu-desktop ul li {
-  margin-right: 10px;
-}
-    .menu-desktop ul {
-      display: flex;
-      flex-wrap: nowrap;
-      justify-content: center;
-      gap: 10px;
-      margin: 0;
-      padding: 0;
-      white-space: normal;
-    }
-
-
-/* MODIFICHE SPECIFICHE PER SUBMENU STRETTI */
-.mega-menu {
-  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); /* Riduci da 120px a 80px */
-  gap: 5px; /* Spazio tra colonne più stretto */
+.star {
+    position: absolute;
+    background-color: #fff;
+    border-radius: 50%;
+    animation: twinkle var(--duration) infinite ease-in-out;
+    will-change: opacity;
 }
 
-.mega-menu ul {
-  width: 80px !important; /* Forza larghezza stretta */
-  flex: 0 0 80px !important; /* Override per flexbox */
-  padding: 0.3rem; /* Padding ridotto */
+@keyframes twinkle {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 1; }
 }
 
-.mega-menu li {
-  font-size: 0.8rem; /* Testo più compatto */
-  line-height: 1.2; /* Interlinea ridotta */
-  padding: 0.2rem 0; /* Spaziatura verticale minima */
+/* PARTICELLE INTERATTIVE */
+.philo-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
 }
-  .mega-menu {
-      z-index: 104 !important;
-      position: absolute;
-      top: 100%;
-      transform: translateX(-50%) translateY(5px);
-    }
-.mega-menu ul {
-  width: 120px; /* riduci questo valore a piacere */
-}
-  
-.mega-menu ul {
-  width: 80px !important; /* Forza larghezza stretta */
-  flex: 0 0 80px !important; /* Override per flexbox */
-  padding: 0.3rem; /* Padding ridotto */
-}
-      position: fixed;
-      z-index: 99;
-    }
-.menu-desktop .arrow {
-    display: block;
-    font-size: 0.7rem;
-    margin-top: 0.2rem;
-}
-        .logo {
-            font-family: 'Cormorant Garamond', serif;
-            font-weight: 500;
-            font-size: 1.4rem;
-            color: #ffd700;
-            text-decoration: none;
-            letter-spacing: 1.5px;
-            transition: all 0.4s ease-out;
-        }
 
-        .logo:hover {
-            text-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
-            transform: translateY(-1px);
-        }
+.particle {
+    position: absolute;
+    font-family: 'Arial Unicode MS';
+    will-change: transform;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    text-shadow: 0 0 10px rgba(255,215,0,0.4);
+}
 
-        /* STILI DEL MENU */
-       .menu-desktop ul {
-            display: flex;
-            list-style: none;
-        }
+/* HEADER E MENU */
+header {
+    top: 120px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 103;
+}
+
+/* CONTENITORE PRINCIPALE MENU */
+.menu-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.7rem 2rem 0.1rem 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 1px;
+}
+
+/* INIZIO SEZIONE MENU E MEGA-MENU */
+
 .menu-desktop ul {
     display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
     list-style: none;
-    flex-wrap: nowrap;            /* per non andare a capo */
-    justify-content: center;      /* centra i menu item */
-    margin: 0;                    /* reset margini */
-    padding: 0;                   /* reset padding */
-}
-.menu-desktop ul {
-  display: flex;
-  justify-content: center;
+    white-space: nowrap;
 }
 
 .menu-desktop ul li {
-  flex: 0 0 auto;
-  padding: 0 5px;
-}
-.menu-desktop > ul > li {
+    flex: 0 0 auto;
+    margin-right: 10px;
+    padding: 0 5px;
     position: relative;
-    margin-left: 1.5rem;
-}
-
-.menu-desktop ul li {
-  margin-right: 5px;
 }
 
 .menu-desktop ul li:last-child {
-  margin-right: 0;
+    margin-right: 0;
 }
-.mega-menu ul {
-  border: 1px dashed red; /* Solo per debug */
-}
-.menu-btn, 
+
+.menu-btn,
 .menu-desktop > ul > li > a {
     background: none;
     border: none;
@@ -354,122 +527,223 @@
     display: inline-block;
 }
 
+.menu-btn:hover,
+.menu-desktop > ul > li > a:hover {
+    color: #ffd700;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+}
 
-        .menu-btn:hover, .menu-desktop > ul > li > a:hover {
+.menu-desktop .arrow {
+    display: inline-block;
+    font-size: 0.7rem;
+    margin-left: 0.5rem;
+    margin-top: 0.2rem;
+    transition: transform 0.3s ease-out;
+}
+
+.dropdown {
+    position: relative;
+}
+.logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            font-size: 1.4rem;
             color: #ffd700;
-            text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+            text-decoration: none;
+            letter-spacing: 1.5px;
+            transition: all 0.4s ease-out;
         }
 
-        .arrow {
-            font-size: 0.7rem;
-            margin-left: 0.5rem;
-            transition: transform 0.3s ease-out;
+        .logo:hover {
+            text-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
+            transform: translateY(-1px);
         }
-
-        .dropdown:hover .arrow {
-            transform: rotate(180deg);
-        }-->
-
-      /* MEGA MENU FLUIDO */
 .mega-menu {
-    opacity: 0;
-    visibility: hidden;
     position: absolute;
+    top: 100%; /* subito sotto il bottone */
     left: 50%;
     transform: translateX(-50%) translateY(10px);
-    width: 900px;
     background: rgba(10, 10, 30, 0.98);
-    border:3px solid rgba(255, 215, 0, 0.2);
-    border-top: 0px solid rgba(255, 215, 0, 0.6);
+    border: 3px solid rgba(255, 215, 0, 0.2);
+    border-top: 0;
     padding: 1rem;
-    z-index: 10;
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(10px);
-    will-change: transform, opacity;
-    transition: opacity 0.4s ease, transform 0.4s ease;
+    z-index: 10;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    will-change: transform, opacity;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-/* ATTIVAZIONE */
-.dropdown:hover .mega-menu {
+/* Attivazione visibilità stabile hover e focus */
+.dropdown:hover > .mega-menu,
+.dropdown:focus-within > .mega-menu,
+.dropdown .mega-menu:hover {
     opacity: 1;
     visibility: visible;
+    pointer-events: auto;
     transform: translateX(-50%) translateY(0);
 }
+.menu-desktop ul ul {
+  position: absolute;
+  top: 100%;
+  left: 0;
+}
+.menu-desktop ul ul {
+  margin-top: -2px;
+}
 
-/* COLONNE */
-.columns-2 { grid-template-columns: repeat(2, 1fr); }
-.columns-3 { grid-template-columns: repeat(3, 1fr); }
-.columns-4 { grid-template-columns: repeat(4, 1fr); }
-
-/* CONTENUTO */
-.mega-menu > div {
-    padding: 0 0.1rem;
+/* Link e titoli nel mega-menu */
+.mega-menu a {
+    display: block;
+    font-size: 0.8rem;
+    line-height: 1.2;
+    color: #e0e0e0;
+    padding: 0.2rem 0;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+.mega-menu {
+    z-index: 999;
+}
+.mega-menu a:hover,
+.mega-menu a:focus {
+    color: #ffd700;
+    outline: none;
 }
 
 .mega-menu h4 {
     color: #ffd700;
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 3px solid rgba(255, 215, 0, 0.2);
-    font-size: 1.2rem;
-}
-.mega-menu {
-  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); /* Riduci da 120px a 80px */
-  gap: 5px; /* Spazio tra colonne più stretto */
-}
-.mega-menu {
-  grid-template-columns: repeat(4, 120px); /* 4 colonne da 80px l'una */
-  width: max-content; /* Adatta la griglia al contenuto */
-  left: 50%;
-  transform: translateX(-50%); /* Centra rispetto al menu padre */
-}
-.mega-menu a {
-    display: block;
-    color: #e0e0e0;
-    text-decoration: none;
-    padding: 0.5rem 0;
-    transition: all 0.3s ease-out;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
     font-size: 1rem;
-    font-weight: 300;
 }
 
-.mega-menu a:hover {
-    color: #ffd700;
-    padding-left: 0.5rem;
-    text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+/* RESPONSIVE */
+@media (max-width: 992px) {
+    .mega-menu {
+        width: 95vw;
+        left: 2.5vw;
+        transform: none !important;
+        grid-template-columns: repeat(4, 1fr);
+    }
 }
 
- 
-        /* CAROSELLO CITAZIONI */
-        .quotes-carousel {
-            position: fixed;
-            top: 100px;
-            left: 0;
-            width: 100%;
-            background: rgba(10, 10, 30, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 0px solid rgba(255, 215, 0, 0.1);
-            padding: 1rem 3rem 5.3rem 3rem; /* top right bottom left */
-            z-index: 99;
-            overflow: hidden;
-            height: auto;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+@media (max-width: 768px) {
+    .menu-desktop {
+        display: none;
+    }
+    
+    .top-bar {
+        justify-content: center;
+        padding: 0.8rem;
+    }
+    
+    .search-translate-container {
+        width: 100%;
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    
+    .search-container {
+        width: 100%;
+    }
+    
+    .search-container input {
+        width: 100%;
+    }
+    
+    .translate-container {
+        width: 100%;
+    }
+    
+    .goog-te-combo {
+        width: 100%;
+    }
+    
+    main {
+        padding-top: 140px;
+    }
+    
+    .welcome-title {
+        font-size: 2.5rem;
+        line-height: 1.2;
+    }
+    
+    .welcome-quote {
+        font-size: 1.3rem;
+        padding: 1rem;
+        border-left: none;
+        padding-left: 0;
+    }
+
+    .quotes-carousel {
+        top: 120px;
+        padding: 1rem;
+    }
+    
+    .quote-text {
+        font-size: 1.2rem;
+    }
+    
+    .quote-author {
+        font-size: 0.9rem;
+    }
+
+    .footer-columns {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    footer h3 {
+        font-size: 1.2rem;
+    }
+    
+    .footer-legal {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+
+/* CAROSELLO CITAZIONI */
+.quotes-carousel {
+    position: fixed;
+    top: 140px;
+    left: 0;
+    width: 100%;
+    background: rgba(10, 10, 30, 0.3);
+    backdrop-filter: blur(10px);
+    border-bottom: 0px solid rgba(255, 255, 255, 0.2);
+    padding: 20px 0;
+    color: #ffffffcc;
+    text-align: center;
+    z-index: 900;
+}
+
 .quotes-carousel {
     top: 150px; /* o anche meno, prova 80px, 90px, ecc. */
 }
-       .quote-slide {
+
+.quote-slide {
     position: absolute;
     width: 100%;
     text-align: center;
     opacity: 0;
-    transform: translateY(15px);
+    transform: translateY(1px);
     transition: transform 1.8s ease, opacity 1.2s ease;
     will-change: transform, opacity;
+}
+
+.quotes-carousel .author {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: gold;
 }
 
 .quote-slide.active {
@@ -477,12 +751,7 @@
     transform: translateY(0);
 }
 
-        .quote-slide.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .quote-text {
+.quote-text {
     font-family: 'EB Garamond', serif;
     font-weight: 400;
     font-style: italic;
@@ -503,15 +772,12 @@
     padding-top: 0; /* togli padding */
 }
 
-
-        /* SEZIONE BENVENUTO */
 /* SEZIONE BENVENUTO */
-
-
 .welcome-title {
-  margin-bottom: 2rem;
-  margin-top: 7rem; /* solleva il titolo */
+    margin-bottom: 2rem;
+    margin-top: 7rem; /* solleva il titolo */
 }
+
 .welcome-section {
     display: flex;
     flex-direction: column;
@@ -521,212 +787,116 @@
 }
 
 .welcome-mask {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #0a0a1a;
-  z-index: 1;
-  will-change: height;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0a0a1a;
+    z-index: 1;
+    will-change: height;
 }
 
 .welcome-content {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  opacity: 0;
-  transform: scale(0.9);
-  will-change: transform, opacity;
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    opacity: 0;
+    transform: scale(0.9);
+    will-change: transform, opacity;
 }
 
 .welcome-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-weight: 500;
-  font-size: 3.5rem;
-  color: transparent;
-  background: linear-gradient(90deg, #ffd700, #ffaa00, #ffd700);
-  -webkit-background-clip: text;
-  background-clip: text;
-  text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-  margin-bottom: 2rem;
-  letter-spacing: 2px;
-  line-height: 1.3;
-  animation: titlePulse 6s infinite ease-in-out;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 3.5rem;
+    color: transparent;
+    background: linear-gradient(90deg, #ffd700, #ffaa00, #ffd700);
+    -webkit-background-clip: text;
+    background-clip: text;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    margin-bottom: 2rem;
+    letter-spacing: 2px;
+    line-height: 1.3;
+    animation: titlePulse 6s infinite ease-in-out;
 }
 
 @keyframes titlePulse {
-  0% { 
-    transform: scale(1); 
-    text-shadow: 0 0 20px rgba(255, 215, 0, 0.3); 
-  }
-  50% { 
-    transform: scale(1.03); 
-    text-shadow: 0 0 30px rgba(255, 215, 0, 0.5); 
-  }
-  100% { 
-    transform: scale(1); 
-    text-shadow: 0 0 20px rgba(255, 215, 0, 0.3); 
-  }
+    0% { 
+        transform: scale(1); 
+        text-shadow: 0 0 20px rgba(255, 215, 0, 0.3); 
+    }
+    50% { 
+        transform: scale(1.03); 
+        text-shadow: 0 0 30px rgba(255, 215, 0, 0.5); 
+    }
+    100% { 
+        transform: scale(1); 
+        text-shadow: 0 0 20px rgba(255, 215, 0, 0.3); 
+    }
 }
 
-       
-        .welcome-quote {
-            font-family: 'EB Garamond', serif;
-            font-weight: 400;
-            font-size: 1.8rem;
-            color: rgba(255,255,255,0.85);
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-            border-left: 2px solid rgba(255, 215, 0, 0.5);
-        }
-        
-        .quote-author {
-            display: block;
-            font-style: italic;
-            margin-top: 1.5rem;
-            color: rgba(255, 215, 0, 0.8);
-            font-size: 1.4rem;
-            font-weight: 500;
-        }
+.welcome-quote {
+    font-family: 'EB Garamond', serif;
+    font-weight: 400;
+    font-size: 1.8rem;
+    color: rgba(255,255,255,0.85);
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    border-left: 2px solid rgba(255, 215, 0, 0.5);
+}
 
-        
+.quote-author {
+    display: block;
+    font-style: italic;
+    margin-top: 1.5rem;
+    color: rgba(255, 215, 0, 0.8);
+    font-size: 1.4rem;
+    font-weight: 500;
+}
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
 
-        /* RESPONSIVE */
-        @media (max-width: 992px) {
-            .mega-menu {
-                width: 95vw;
-                left: 2.5vw;
-                transform: none;
-            }
-            
-            .top-bar {
-                padding: 0.1rem 1rem;
-            }
-            
-            .search-container input {
-                width: 200px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .menu-desktop {
-                display: none;
-            }
-            
-            .top-bar {
-                justify-content: center;
-                padding: 0.8rem;
-            }
-            
-            .search-translate-container {
-                width: 100%;
-                flex-direction: column;
-                gap: 0.8rem;
-            }
-            
-            .search-container {
-                width: 100%;
-            }
-            
-            .search-container input {
-                width: 100%;
-            }
-            
-            .translate-container {
-                width: 100%;
-            }
-            
-            .goog-te-combo {
-                width: 100%;
-            }
-            
-            main {
-                padding-top: 140px;
-            }
-            
-            .welcome-title {
-                font-size: 2.5rem;
-                line-height: 1.2;
-            }
-            
-            .welcome-quote {
-                font-size: 1.3rem;
-                padding: 1rem;
-                border-left: none;
-                padding-left: 0;
-            }
-
-            .quotes-carousel {
-                top: 120px;
-                padding: 1rem;
-            }
-            
-            .quote-text {
-                font-size: 1.2rem;
-            }
-            
-            .quote-author {
-                font-size: 0.9rem;
-            }
-
-            .footer-columns {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-            
-            footer h3 {
-                font-size: 1.2rem;
-            }
-            
-            .footer-legal {
-                flex-direction: column;
-                gap: 10px;
-            }
-        }
+/* SLIDER */
 .slider-wrapper {
-  overflow: hidden;
-  position: relative;
-  width: 100%;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
 }
 
 .slider-track {
-  display: flex;
-  transition: transform 0.6s ease-in-out;
-  will-change: transform;
+    display: flex;
+    transition: transform 0.6s ease-in-out;
+    will-change: transform;
 }
 
 .slide {
-  flex: 0 0 100%;
-  opacity: 1;
-  transition: opacity 0.6s ease-in-out;
+    flex: 0 0 100%;
+    opacity: 1;
+    transition: opacity 0.6s ease-in-out;
 }
-<!--   iiii  -->
+
+/* SOTTOTITOLO BENVENUTO */
 .welcome-subtitle {
     color: #ffd700; /* Oro brillante */
     font-family: 'EB Garamond', serif;
     font-style: italic;
-    font-weight: 00;
-    
+    font-weight: 400;
     text-shadow: 0 0 6px rgba(255, 215, 0, 0.3), 0 0 10px rgba(255, 215, 0, 0.2);
     white-space: nowrap;
     overflow: hidden;
     display: inline-block;
+    font-size: 22px;
 }
-
-.welcome-subtitle {
-  font-size: 22px;
-}
-   </style>
+ 
+</style>
 </head>
   <!-- Inserisci qui i link, stili e script già esistenti -->
-</head>
+
 <body><body>
     <!-- SFONDO STELLATO -->
     <div class="starfield" id="starfield"></div>
@@ -833,10 +1003,134 @@
     document.getElementById("filosofi-overlay").style.display = "none";
   });
 </script>
-
-
-
 <!-- fine 4 folosofi  -->
+<!---iiii scrittura a macchina -->
+<style>
+.typing-effect {
+    font-size: 1.4rem;
+    color: gold;
+    font-family: 'Poppins', sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid gold;
+    width: fit-content;
+    margin: 20px auto;
+    padding-right: 5px;
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const el = document.querySelector(".typing-effect");
+    const texts = [
+    "Φιλοσοφία: l'arte di cercare appigli nel vuoto.",
+    "La filosofia è sete, non possesso.",
+    "Pensare è camminare senza mappa.",
+    "Ogni risposta nasconde un'altra domanda.",
+    "Il dubbio è già inizio di sapere.",
+    "Domandare è respirare con la mente.",
+    "Il silenzio è una forma di pensiero.",
+    "La verità abita tra due errori.",
+    "Il sapere inizia con il non sapere.",
+    "Filosofare è guardare oltre l'ovvio.",
+    "La mente inquieta è sempre viva.",
+    "Il pensiero non ha confini.",
+    "Nulla è più certo del dubbio.",
+    "La sapienza si nutre di incertezza.",
+    "La filosofia non promette risposte.",
+    "Ogni passo è già metà del cammino.",
+    "La logica è poesia con regole.",
+    "La libertà comincia nel pensiero.",
+    "La verità è un equilibrio mobile.",
+    "Non esiste ultima parola.",
+    "Il pensiero è un viaggio senza ritorno.",
+    "Ogni idea è un ponte tra due silenzi.",
+    "La ragione è un faro in un mare scuro.",
+    "Ogni filosofia è un tentativo fallito che illumina.",
+    "Pensare è sfidare l'invisibile.",
+    "Il filosofo ascolta ciò che non si dice.",
+    "L'eterno ritorno è anche dell'errore.",
+    "Dubitare di sé è il primo passo per conoscersi.",
+    "Non sapere è già sapere qualcosa.",
+    "Ogni teoria è una mappa mai definitiva.",
+    "La filosofia è musica muta.",
+    "La parola è solo l'ombra del pensiero.",
+    "Il tempo è il filosofo silenzioso.",
+    "Cercare senso è già crearlo.",
+    "Non c'è verità senza rischio.",
+    "La mente che si ferma muore.",
+    "Il pensiero abita tra desiderio e paura.",
+    "Ogni concetto è una prigione e una chiave.",
+    "L'ignoto è la vera patria del filosofo.",
+    "La domanda giusta vale più di mille risposte.",
+    "Pensare è disfare i propri stessi pensieri.",
+    "L'essere si nasconde dietro il nulla.",
+    "Ogni parola è già un'interpretazione.",
+    "Il pensiero puro è un abisso.",
+    "La conoscenza è sempre provvisoria.",
+    "Ogni certezza è figlia di un compromesso.",
+    "Il filosofo è un eterno esiliato.",
+    "Dubitare è una forma di fedeltà alla verità.",
+    "Il sapere divide, il mistero unisce.",
+    "L’inquietudine è il motore della ricerca."
+];
+
+
+    
+    let textIndex = 0;
+    let index = 0;
+    let forward = true;
+    let delay = 0;
+    let stepCounter = 0;
+    const writeSpeed = 3;
+    const deleteSpeed = 2;
+
+    function animate() {
+        if (!el) return;
+
+        stepCounter++;
+        const speed = forward ? writeSpeed : deleteSpeed;
+
+        if (stepCounter >= speed) {
+            stepCounter = 0;
+
+            if (delay > 0) {
+                delay--;
+            } else {
+                const currentText = texts[textIndex];
+
+                if (forward) {
+                    index++;
+                    if (index > currentText.length) {
+                        forward = false;
+                        delay = 60;
+                    }
+                } else {
+                    index--;
+                    if (index < 0) {
+                        forward = true;
+                        textIndex = (textIndex + 1) % texts.length;
+                        delay = 20;
+                    }
+                }
+
+                el.textContent = currentText.substring(0, index);
+            }
+        }
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+});
+</script>
+
+
+
+<!--  fff scrittura a macchina   -->
+
+
+
 
 
 
@@ -859,201 +1153,183 @@
 <!-- qui il logo  -->
         
 
-        <div style="display: flex; align-items: center;">
-            <nav class="menu-desktop">
-                <ul role="menu">
-                    <li>
-                        <a href="https://casi0048.github.io/pagine/benvenuti.html" role="menuitem" class="underline-effect">Incipit</a>
-                    </li>
-
-                    <!-- Filosofia antica -->
-                    <li role="none" class="dropdown">
-                        <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
-                            Filosofia antica <span class="arrow">▼</span>
-                        </button>
-                        <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia antica">
-                            <div>
-                                <h4>Scuola ionica</h4>
-                                <a href="/Presocratici/talete.html" role="menuitem">Talete</a>
-                                <a href="Presocratici/anassimandro.html" role="menuitem">Anassimandro</a>
-                                <a href="Presocratici/anassimene.html" role="menuitem">Anassimene</a>
-                            </div>
-                            <div>
-                                    <h4>Scuola eleatica</h4>
-                                    <a href="Presocratici/senofane.html" role="menuitem">Senofane</a>
-                                    <a href="/Presocratici/parmenide.html" role="menuitem">Parmenide</a>
-                                    <a href="articoli/zenone.html" role="menuitem">Zenone</a>
-                                    <a href="articoli/zenone.html" role="menuitem">Melisso</a>
-                                </div>
-                                <div>
-                                    <h4>Altri</h4>
-                                    <a href="articoli/eraclito.html" role="menuitem">Eraclito</a>
-                                    <a href="/Presocratici/anassagora.html" role="menuitem">Anassagora</a>
-                                    <a href="/articoli/empedocle.html" role="menuitem">Empedocle</a>
-                                </div>
-                                <div>
-                                    <h4>Pitagorici</h4>
-                                    <a href="/articoli/pitagora.html" role="menuitem">Pitagora</a>
-                                    <a href="/articoli/filolao.html" role="menuitem">Filolao</a>
-                                    <a href="/articoli/alcmeone.html" role="menuitem">Alcmeone</a>
-                                    <a href="articoli/archita.html" role="menuitem">Archita</a>
-                                    <a href="/articoli/ippaso.html" role="menuitem">Ippaso</a>
-                                </div>
-                            </div>
-                        </li>
-                        
-                        <!-- Filosofia classica -->
-                        <li role="none" class="dropdown">
-                            <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
-                                Filosofia classica <span class="arrow">▼</span>
-                            </button>
-                            <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia classica">
-                                <div>
-                                    <h4>Classici</h4>
-                                    <a href="articoli/socrate.html" role="menuitem">Socrate</a>
-                                    <a href="articoli/platone.html" role="menuitem">Platone</a>
-                                    <a href="articoli/aristotele.html" role="menuitem">Aristotele</a>
-                                </div>
-                                <div>
-                                    <h4>Platonici</h4>
-                                    <a href="articoli/senofonte.html" role="menuitem">Senofonte</a>
-                                    <a href="articoli/antistene.html" role="menuitem">Antistene</a>
-                                    <a href="#" role="menuitem">Aristippo</a>
-                                </div>
-                                <div>
-                                    <h4>Stoici</h4>
-                                    <a href="articoli/zenone.html" role="menuitem">Zenone</a>
-                                    <a href="#" role="menuitem">Epitteto</a>
-                                    <a href="#" role="menuitem">Seneca</a>
-                                </div>
-                                <div>
-                                    <h4>Epicurei</h4>
-                                    <a href="#" role="menuitem">Epicuro</a>
-                                    <a href="#" role="menuitem">Lucrezio</a>
-                                    <a href="#" role="menuitem">Cicerone</a>
-                                </div>
-                            </div>
-                        </li>
-                        
-                        <!-- Filosofia medievale -->
-                        <li role="none" class="dropdown">
-    <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
-        Medievale/Patristica <span class="arrow">▼</span>
-    </button>
-    <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia medievale">
-        <div>
-            <h4>Filosofia Medievale</h4>
+  <div style="display: flex; align-items: center;">
+  <nav class="menu-desktop">
+    <ul role="menu">
+      <li class="dropdown">
+        <a href="https://casi0048.github.io/pagine/benvenuti.html" role="menuitem" class="menu-btn underline-effect">INCIPIT</a>
+      </li>
+      <li class="dropdown">
+        <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
+          Filosofia antica <span class="arrow">▼</span>
+        </button>
+        <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia antica">
+          <div>
+            <h4>Scuola ionica</h4>
+            <a href="/Presocratici/talete.html" role="menuitem">Talete</a>
+            <a href="Presocratici/anassimandro.html" role="menuitem">Anassimandro</a>
+            <a href="Presocratici/anassimene.html" role="menuitem">Anassimene</a>
+          </div>
+          <div>
+            <h4>Scuola eleatica</h4>
+            <a href="Presocratici/senofane.html" role="menuitem">Senofane</a>
+            <a href="/Presocratici/parmenide.html" role="menuitem">Parmenide</a>
+            <a href="articoli/zenone.html" role="menuitem">Zenone</a>
+            <a href="articoli/melisso.html" role="menuitem">Melisso</a>
+          </div>
+          <div>
+            <h4>Altri</h4>
+            <a href="articoli/eraclito.html" role="menuitem">Eraclito</a>
+            <a href="/Presocratici/anassagora.html" role="menuitem">Anassagora</a>
+            <a href="/articoli/empedocle.html" role="menuitem">Empedocle</a>
+          </div>
+          <div>
+            <h4>Pitagorici</h4>
+            <a href="/articoli/pitagora.html" role="menuitem">Pitagora</a>
+            <a href="/articoli/filolao.html" role="menuitem">Filolao</a>
+            <a href="/articoli/alcmeone.html" role="menuitem">Alcmeone</a>
+            <a href="articoli/archita.html" role="menuitem">Archita</a>
+            <a href="/articoli/ippaso.html" role="menuitem">Ippaso</a>
+          </div>
+        </div>
+      </li>
+      <li class="dropdown">
+        <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
+          Filosofia classica <span class="arrow">▼</span>
+        </button>
+        <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia classica">
+          <div>
+            <h4>Classici</h4>
+            <a href="articoli/socrate.html" role="menuitem">Socrate</a>
+            <a href="articoli/platone.html" role="menuitem">Platone</a>
+            <a href="articoli/aristotele.html" role="menuitem">Aristotele</a>
+          </div>
+          <div>
+            <h4>Platonici</h4>
+            <a href="articoli/senofonte.html" role="menuitem">Senofonte</a>
+            <a href="articoli/antistene.html" role="menuitem">Antistene</a>
+            <a href="#" role="menuitem">Aristippo</a>
+          </div>
+          <div>
+            <h4>Stoici</h4>
+            <a href="articoli/zenone.html" role="menuitem">Zenone</a>
+            <a href="#" role="menuitem">Epitteto</a>
+            <a href="#" role="menuitem">Seneca</a>
+          </div>
+          <div>
+            <h4>Epicurei</h4>
+            <a href="#" role="menuitem">Epicuro</a>
+            <a href="#" role="menuitem">Lucrezio</a>
+            <a href="#" role="menuitem">Cicerone</a>
+          </div>
+        </div>
+      </li>
+      <li class="dropdown">
+        <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
+          Filosofia medievale <span class="arrow">▼</span>
+        </button>
+        <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia medievale">
+          <div>
+            <h4>Medievale</h4>
             <a href="#" role="menuitem">Tommaso d'Aquino</a>
             <a href="#" role="menuitem">Anselmo</a>
             <a href="#" role="menuitem">Guglielmo di Ockham</a>
             <a href="#" role="menuitem">Duns Scoto</a>
-        </div>
-        <div>
-            <h4>Scolastica Patristica</h4>
+          </div>
+          <div>
+            <h4>Patristica</h4>
             <a href="#" role="menuitem">Agostino</a>
             <a href="#" role="menuitem">Origene</a>
             <a href="#" role="menuitem">Gregorio di Nissa</a>
             <a href="#" role="menuitem">Tertulliano</a>
-        </div>
-        <div>
+          </div>
+          <div>
             <h4>Filosofia Islamica</h4>
             <a href="#" role="menuitem">Avicenna</a>
             <a href="#" role="menuitem">Averroè</a>
             <a href="#" role="menuitem">Al-Farabi</a>
             <a href="#" role="menuitem">Al-Ghazali</a>
-        </div>
-        <div>
+          </div>
+          <div>
             <h4>Filosofia Ebraica</h4>
             <a href="#" role="menuitem">Maimonide</a>
             <a href="#" role="menuitem">Saadia Gaon</a>
             <a href="#" role="menuitem">Gersonide</a>
             <a href="#" role="menuitem">Hasdai Crescas</a>
+          </div>
         </div>
-    </div>
-</li>
-                        
-                      <!-- Filosofia moderna -->
-<li role="presentation" class="dropdown">
-    <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false" id="filoModernaBtn">
-        Filosofia moderna <span class="arrow">▼</span>
-    </button>
-    <div class="mega-menu columns-4" role="menu" aria-labelledby="filoModernaBtn">
-        <div>
+      </li>
+      <li class="dropdown">
+        <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
+          Filosofia moderna <span class="arrow">▼</span>
+        </button>
+        <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia moderna">
+          <div>
             <h4>Razionalisti</h4>
             <a href="#" role="menuitem">Cartesio</a>
             <a href="#" role="menuitem">Spinoza</a>
             <a href="#" role="menuitem">Leibniz</a>
-        </div>
-        <div>
+          </div>
+          <div>
             <h4>Empiristi</h4>
             <a href="#" role="menuitem">Locke</a>
             <a href="#" role="menuitem">Hume</a>
             <a href="#" role="menuitem">Berkeley</a>
-        </div>
-        <div>
-            <h4>Idealismo</h4>
+          </div>
+          <div>
+            <h4>Idealisti</h4>
             <a href="#" role="menuitem">Kant</a>
             <a href="#" role="menuitem">Fichte</a>
             <a href="#" role="menuitem">Schelling</a>
+          </div>
+          <div>
+            <h4>Altri</h4>
             <a href="#" role="menuitem">Hegel</a>
+          </div>
         </div>
-        <div>
-            <h4>Illuminismo</h4>
-            <a href="#" role="menuitem">Voltaire</a>
-            <a href="#" role="menuitem">Rousseau</a>
-            <a href="#" role="menuitem">Diderot</a>
-            <a href="#" role="menuitem">Condorcet</a>
-        </div>
-    </div>
-</li>
-
-<!-- Filosofia contemporanea -->
-<li role="presentation" class="dropdown">
-    <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false" id="filoContemporaneaBtn">
-        Contemporanea <span class="arrow">▼</span>
-    </button>
-    <div class="mega-menu columns-4" role="menu" aria-labelledby="filoContemporaneaBtn">
-        <div>
+      </li>
+      <li class="dropdown">
+        <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
+          Filosofia contemporanea <span class="arrow">▼</span>
+        </button>
+        <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia contemporanea">
+          <div>
             <h4>Ottocento</h4>
             <a href="#" role="menuitem">Schopenhauer</a>
-            <a href="#" role="menuitem">Kierkegaard</a>
             <a href="#" role="menuitem">Nietzsche</a>
             <a href="#" role="menuitem">Marx</a>
-        </div>
-        <div>
+          </div>
+          <div>
             <h4>Fenomenologia</h4>
             <a href="#" role="menuitem">Husserl</a>
             <a href="#" role="menuitem">Heidegger</a>
             <a href="#" role="menuitem">Merleau-Ponty</a>
+          </div>
+          <div>
+            <h4>Postmoderni</h4>
             <a href="#" role="menuitem">Sartre</a>
-        </div>
-        <div>
-            <h4>Analitica</h4>
-            <a href="#" role="menuitem">Wittgenstein</a>
-            <a href="#" role="menuitem">Quine</a>
-            <a href="#" role="menuitem">Russell</a>
-            <a href="#" role="menuitem">Frege</a>
-        </div>
-        <div>
-            <h4>Strutturalismo</h4>
             <a href="#" role="menuitem">Foucault</a>
             <a href="#" role="menuitem">Derrida</a>
-            <a href="#" role="menuitem">Baudrillard</a>
-            <a href="#" role="menuitem">Deleuze</a>
+          </div>
+          <div>
+            <h4>Analitici</h4>
+            <a href="#" role="menuitem">Wittgenstein</a>
+            <a href="#" role="menuitem">Quine</a>
+          </div>
         </div>
-    </div>
-</li>
-
+      </li>
+      <li class="dropdown">
+        <a href="https://casi0048.github.io/pagine/pagina%20CONTATTI.html" class="menu-btn underline-effect" role="menuitem">
+          Contatti
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+   
                         <!-- Altre sezioni -->
                         <!-- Altre sezioni -->
-<li>
-    <a href="https://casi0048.github.io/pagine/pagina%20CONTATTI.html" role="menuitem" class="underline-effect">Contatti</a>
-</li>
 
-                    </ul>
-                </nav>
-            </div>
-        </div>
    
     </header>
 
@@ -1076,7 +1352,6 @@
             <span class="quote-author"></span>
         </div>
     </div>
-<div class="typing-effect" id="typing"></div>
 </section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -1086,7 +1361,7 @@
 
     gsap.to(".welcome-subtitle", {
         duration: 3,
-        text: "Φιλοσοφία: l'arte di cercare appigli nel vuoto e trovare, invece, ali...",
+        text: "Φ Il vuoto è pieno di domande",
         ease: "none",
     });
 
@@ -1101,7 +1376,7 @@
 
 
     <main>
-        <!-- Il tuo contenuto qui -->
+      <h2 class="typing-effect"></h2>  <!-- Il tuo contenuto qui -->
     </main>
 
     <footer>
@@ -1118,10 +1393,10 @@
             '⊖', '⊙', '⊘', '⊚', '⊛', '⊜', '⊝', '⊞', '⊟', '⊠',
             '⊡', '⊢', '⊣', '⊤', '⊥', '⊧', '⊨', '⊩', '⊪', '⊫',
             'Σ', 'Δ', 'Θ', 'Ξ', 'ℵ', '∂', '∇', '∫', '∬', '∭',
-            'Sapienza', 'Verità', 's', 'Eros', 'Mito', 'Essere',
+            'Sapienza', 'Verità', 'Logos', 'Eros', 'Mito', 'Essere',
             'Divenire', 'Idee', 'Armonia', 'Principio', 'Destino',
             'Libertà', 'Giustizia', 'Virtù', 'Pensiero', 'Domanda',
-            'Risposta', 'Silenzio', 'Dia', 'Socratico', 'Platone',
+            'Risposta', 'Silenzio', 'Dialogo', 'Socratico', 'Platone',
             'Aristotele', 'Epicuro', 'Stoà', 'Atomos', 'Nous',
             'Anima', 'Cosmo', 'Apeiron', 'Arché', 'Physis', 'Ethos',
             'Stoicismo', 'Epicureismo', 'Platonismo', 'Aristotelismo',
@@ -2090,7 +2365,7 @@
 
       tl.to(".welcome-subtitle", {
         duration: 4,
-        text: "Φ Pensare, dunque è ancora possibile...Φ",
+        text: "Φ Il vuoto è pieno di domande...Φ",
         ease: "none",
       }, 0)
 
@@ -2167,81 +2442,97 @@
       color: gold;
     }
   </style>
+<!--inizio script x megamenu -->
+    
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script>
-    gsap.from("#ultimi-articoli-box", {
-      opacity: 0,
-      x: 100,
-      duration: 1.2,
-      ease: "power2.out"
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // MENU DROPDOWN UNIFICATO
+  document.querySelectorAll(".dropdown").forEach(dropdown => {
+    const button = dropdown.querySelector(".menu-btn");
+    const menu = dropdown.querySelector(".mega-menu");
+    let menuTimeout;
+
+    dropdown.addEventListener("mouseenter", () => {
+      clearTimeout(menuTimeout);
+      menu.style.display = "grid";
+      menu.style.opacity = "1";
+      menu.style.visibility = "visible";
+      menu.style.pointerEvents = "auto";
     });
-  </script>
-<!--  iii js typing  -->
-  <script>
-    const phrases = [
-  "Φιλοσοφία: l'arte di cercare appigli nel vuoto.",
-  "La filosofia è sete, non possesso.",
-  "Pensare è camminare senza mappa.",
-  "Ogni risposta nasconde un'altra domanda.",
-  "Il dubbio è già inizio di sapere.",
-  "La verità abita tra due errori.",
-  "Il sapere inizia con il non sapere.",
-  "Filosofare è guardare oltre l'ovvio.",
-  "La mente inquieta è sempre viva.",
-  "Il pensiero non ha confini.",
-  "Nulla è più certo del dubbio.",
-  "La sapienza si nutre di incertezza.",
-  "Il silenzio è una forma di pensiero.",
-  "Domandare è respirare con la mente.",
-  "La logica è poesia con regole.",
-  "La libertà comincia nel pensiero.",
-  "Ogni passo è già metà del cammino.",
-  "La verità è un equilibrio mobile.",
-  "Non esiste ultima parola.",
-  "Il filosofo abita il paradosso.",
-  "Tutto è relativo, tranne la relatività.",
-  "Il tempo è un'illusione persistente.",
-  "La realtà è più sottile del pensiero.",
-  "La mente è uno specchio incrinato.",
-  "Ogni concetto è una gabbia dorata.",
-  "Chi sa, tace; chi parla, dubita.",
-  "Il sapere pesa meno del non sapere.",
-  "Ogni idea porta con sé la sua ombra.",
-  "Il pensiero è un labirinto senza uscita.",
-  "Sapere è saper di non sapere.",
-  "Ogni filosofia è autobiografia nascosta."
-];
 
-    const el = document.getElementById("typing");
-    let phraseIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-    let speed = 140;
-    let pause = 2000;
-
-    function typeLoop() {
-      const currentPhrase = phrases[phraseIndex];
-      if (isDeleting) {
-        charIndex--;
-      } else {
-        charIndex++;
+    dropdown.addEventListener("mouseleave", (e) => {
+      if (!dropdown.contains(e.relatedTarget) && !menu.contains(e.relatedTarget)) {
+        menuTimeout = setTimeout(() => {
+          menu.style.opacity = "0";
+          menu.style.visibility = "hidden";
+          menu.style.pointerEvents = "none";
+        }, 300);
       }
+    });
 
-      el.textContent = currentPhrase.substring(0, charIndex);
+    menu.addEventListener("mouseenter", () => {
+      clearTimeout(menuTimeout);
+    });
 
-      if (!isDeleting && charIndex === currentPhrase.length) {
-        setTimeout(() => isDeleting = true, pause);
-      } else if (isDeleting && charIndex === 0) {
-        isDeleting = false;
-        phraseIndex = (phraseIndex + 1) % phrases.length;
+    menu.addEventListener("mouseleave", () => {
+      menuTimeout = setTimeout(() => {
+        menu.style.opacity = "0";
+        menu.style.visibility = "hidden";
+        menu.style.pointerEvents = "none";
+      }, 200);
+    });
+
+    button?.addEventListener("focus", () => {
+      menu.style.display = "grid";
+      menu.style.opacity = "1";
+      menu.style.visibility = "visible";
+      menu.style.pointerEvents = "auto";
+    });
+
+    dropdown.addEventListener("focusout", (e) => {
+      if (!dropdown.contains(e.relatedTarget)) {
+        menu.style.opacity = "0";
+        menu.style.visibility = "hidden";
+        menu.style.pointerEvents = "none";
       }
+    });
+  });
 
-      setTimeout(typeLoop, isDeleting ? speed / 2 : speed);
+  // EFFETTO SCRITTURA LETTERA PER LETTERA CON CANCELLAZIONE
+  const phrases = [
+    "Pensare è ancora possibile.",
+    "Il sapere inizia con il non sapere.",
+    "Ogni risposta nasconde un'altra domanda.",
+    "La filosofia è sete, non possesso.",
+    "Domandare è respirare con la mente."
+  ];
+
+  const el = document.getElementById("welcome-subtitle");
+  let index = 0;
+  let charIndex = 0;
+  let isDeleting = false;
+
+  function typeEffect() {
+    const current = phrases[index];
+    el.textContent = isDeleting
+      ? current.substring(0, charIndex--)
+      : current.substring(0, charIndex++);
+
+    let delay = isDeleting ? 60 : 120;
+
+    if (!isDeleting && charIndex === current.length + 1) {
+      delay = 1500;
+      isDeleting = true;
+    } else if (isDeleting && charIndex === 0) {
+      isDeleting = false;
+      index = (index + 1) % phrases.length;
+      delay = 500;
     }
 
-    document.addEventListener("DOMContentLoaded", typeLoop);
-  </script>
-<!-- fffffffff typing -->
-</body>
-</html>
+    setTimeout(typeEffect, delay);
+  }
+
+  typeEffect();
+});
+</script>
