@@ -897,7 +897,24 @@ header {
 </head>
   <!-- Inserisci qui i link, stili e script già esistenti -->
 
-<body><body>
+<body>
+  <!--     iiiiiii slider verticale -->
+<div class="slider-vertical">
+  <div class="slide-vertical">
+    <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Socrates_Louvre.jpg" alt="Socrate">
+    <p>Socrate</p>
+  </div>
+  <div class="slide-vertical">
+    <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/platone.png" alt="Platone">
+    <p>Platone</p>
+  </div>
+  <div class="slide-vertical">
+    <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Aristotle_.jpg" alt="Aristotele">
+    <p>Aristotele</p>
+  </div>
+</div>
+
+  <!--            fffffffff slider verticale -->
     <!-- SFONDO STELLATO -->
     <div class="starfield" id="starfield"></div>
     
@@ -1460,6 +1477,50 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   100% {
     transform: translateX(calc(-220px * 3)); /* aggiorna 3 con numero immagini */
+  }
+}
+.slider-vertical {
+  position: fixed;
+  top: 80px; /* Regola per abbassarlo sotto la barra menu */
+  left: 0;
+  width: 150px;
+  height: 300px;
+  overflow: hidden;
+  background: #0b0e14;
+  border-radius: 8px;
+  z-index: 999;
+}
+
+.slider-vertical .slide-vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+.slider-vertical img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+.slider-vertical p {
+  color: #ccc;
+  font-size: 0.8rem;
+  margin-top: 5px;
+}
+
+/* Animazione verticale */
+.slider-vertical {
+  animation: scrollVertical 12s linear infinite;
+}
+
+@keyframes scrollVertical {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(calc(-110% * 3)); /* 3 = numero di slide */
   }
 }
 
