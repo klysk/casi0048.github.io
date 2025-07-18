@@ -1017,7 +1017,20 @@ header {
   }
 </style>
 
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const sliderInner = document.querySelector(".slider-inner");
+    const slides = document.querySelectorAll(".slide-vertical");
+    const slideHeight = slides[0].offsetHeight;
+    let index = 0;
 
+    setInterval(() => {
+      index++;
+      if (index >= slides.length) index = 0;
+      sliderInner.style.transform = `translateY(-${index * slideHeight}px)`;
+    }, 3000);
+  });
+</script>
 
 
   <!--     fffffffff slider verticale -->
@@ -1033,10 +1046,48 @@ header {
 
 <a class="logo" href="https://casi0048.github.io/pagine/benvenuti.html">Φ ECHI DI SOFIA</a>
 
-<!-- Inizio 4 filosofi -->
 
+<!--  inizio 4 filosofi --
+<!-- Contenitore con posizione relativa per l'overlay -->
+<div style="position: relative; display: inline-block;">
 
-<!-- fff aggiunta bottone-->
+  <!-- Bottone che apre l'overlay -->
+  <button id="paradigma-btn" style="
+    padding: 8px 15px;
+    background: #0a0a0a; 
+    color: #f8f4e9;
+ border: 1px solid; /* spessore bordo */
+  border-image: linear-gradient(45deg, rgba(255,215,0,0.2), rgba(255,170,0,0.2), rgba(255,215,0,0.2)) 1;
+
+    border: ;
+    cursor: pointer;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    border-radius: 4px;
+  ">
+    Loro hanno cambiato il paradigma
+  </button>
+
+  <!-- Overlay nascosto, posizionato subito sotto il bottone -->
+  <div id="filosofi-overlay" style="
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 5px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+    border-radius: 10px;
+    max-width: 800px;
+    width: 600px;
+    padding: 15px 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    z-index: 1000;
+  ">
+    <h3 style="color: #2a4b3a; margin-bottom: 20px; font-family: 'Cormorant Garamond', serif;">
+      I Filosofi che hanno cambiato il paradigma
+    </h3>
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 51px;">
+
       <div style="text-align: center;">
         <img src="immagini per sito/Socrates_Louvre.jpg" alt="Socrate" style="width: 100%; max-width: 80px; border-radius: 50%; border: 3px solid #8B5A2B;">
         <p style="margin-top: 10px; color: #3e3a36; font-weight: bold;">Socrate</p>
@@ -1231,12 +1282,12 @@ document.addEventListener("DOMContentLoaded", function() {
 <!-- qui il logo  -->
         
 <div style="display: flex; align-items: center;">
+  
   <nav class="menu-desktop">
     <ul role="menu">
-      <li>
+      <li class="dropdown">
         <a href="https://casi0048.github.io/pagine/benvenuti.html" role="menuitem" class="menu-btn underline-effect">INCIPIT</a>
       </li>
-
       <li class="dropdown">
         <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
           Filosofia antica <span class="arrow">▼</span>
@@ -1410,11 +1461,10 @@ document.addEventListener("DOMContentLoaded", function() {
           </div>
         </div>
       </li>
-      <li>
-  <a href="https://casi0048.github.io/pagine/pagina%20CONTATTI.html" class="menu-btn underline-effect" role="menuitem">
-    Contatti
-  </a>
-</li>
+      <li class="dropdown">
+        <a href="https://casi0048.github.io/pagine/pagina%20CONTATTI.html" class="menu-btn underline-effect" role="menuitem">
+          Contatti
+        </a>
       </li>
     </ul>
   </nav>
