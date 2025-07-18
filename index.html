@@ -765,7 +765,7 @@ header {
 }
 
 .quotes-carousel {
-    top: 150px; /* o anche meno, prova 80px, 90px, ecc. */
+    top: 100px; /* o anche meno, prova 80px, 90px, ecc. */
 }
 
 .quote-slide {
@@ -951,58 +951,88 @@ header {
       <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Aristotle_.jpg" alt="Aristotele">
       <p>Aristotele</p>
     </div>
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/MT2.png" alt="Maria Teresa">
+      <p>Maria Teresa</p>
+    </div>
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/cartesio.jpg" alt="Cartesio">
+      <p>Cartesio</p>
+    </div>
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/kant.webp" alt="Kant">
+      <p>Kant</p>
+    </div>
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/s.Tommaso.jpg" alt="Tommaso">
+      <p>Tommaso</p>
+    </div>
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/friedrich-nietzsche.jpg" alt="Nietzsche">
+      <p>Nietzsche</p>
+    </div>
+  </div>
 </div>
-</div>
-
 
 <style>
- .slider-vertical {
-  position: fixed;
-  top: 350px;
-  left: 0;
-  width: 150px;
-  height: 320px; /* Aumentato per accogliere immagini + testo */
-  overflow: hidden;
-  background: #0b0e14;
-  border-radius: 8px;
-  z-index: 999;
-}
-
-.slider-inner {
-  display: flex;
-  flex-direction: column;
-  animation: scrollVertical 18s linear infinite;
-}
-
-.slide-vertical {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-}
-
-.slider-vertical img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 6px;
-}
-
-.slider-vertical p {
-  color: #ccc;
-  font-size: 0.8rem;
-  margin-top: 5px;
-}
-
-@keyframes scrollVertical {
-  0% {
-    transform: translateY(0);
+  .slider-vertical {
+    position: fixed;
+    top: 300px;
+    left: 20px;
+    width: 160px;
+    height: 320px;
+    overflow: hidden;
+    background: #0a0a20;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.6);
+    padding: 8px 0;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    z-index: 9999;
   }
-  100% {
-    transform: translateY(calc(-340px * 3)); /* Adattare in base all'altezza reale delle slide */
+  .slider-inner {
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.6s ease-in-out;
   }
-}
-
+  .slide-vertical {
+    flex-shrink: 0;
+    width: 160px;
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #eee;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 5px 10px;
+  }
+  .slide-vertical img {
+    max-width: 120px;
+    max-height: 90px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 6px;
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.7);
+  }
 </style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const sliderInner = document.querySelector(".slider-inner");
+    const slides = document.querySelectorAll(".slide-vertical");
+    const slideHeight = slides[0].offsetHeight;
+    let index = 0;
+
+    setInterval(() => {
+      index++;
+      if (index >= slides.length) index = 0;
+      sliderInner.style.transform = `translateY(-${index * slideHeight}px)`;
+    }, 3000);
+  });
+</script>
+
+
   <!--     fffffffff slider verticale -->
     <!-- SFONDO STELLATO -->
     <div class="starfield" id="starfield"></div>
