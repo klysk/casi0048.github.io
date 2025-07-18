@@ -167,6 +167,9 @@ nav.menu-desktop > ul > li > button.menu-btn {
   visibility: visible;
   pointer-events: auto;
 }
+.mega-menu {
+  background: rgba(20, 20, 30, 0.95);
+}
 
   .mega-menu {
     display: none; /* Inizialmente nascosto */
@@ -208,6 +211,10 @@ nav.menu-desktop > ul > li > button.menu-btn {
   position: relative;
 }
 
+<!--  i aggiunta animazione submenu -->
+
+
+<!--  ff aggiunta animazione submenu-->
 .mega-menu {
   position: absolute;
   top: 100%;
@@ -303,8 +310,8 @@ nav.menu-desktop > ul > li > button.menu-btn {
       display: grid !important;
     }
   }
-</style>
-<style>
+
+
   * { 
     margin: 0; 
     padding: 0; 
@@ -616,7 +623,38 @@ header {
     color: #ffd700;
     outline: none;
 }
+.mega-menu a {
+  font-family: 'Georgia', serif; /* Cambia con il font che vuoi */
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+}
+<style>
+.mega-menu a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #e0e0e0;
+  text-decoration: none;
+  padding: 8px 12px;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
 
+.mega-menu a::after {
+  content: "→";
+  margin-left: 8px;
+  transition: transform 0.3s ease;
+}
+
+.mega-menu a:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateX(4px);
+}
+
+.mega-menu a:hover::after {
+  transform: translateX(4px) rotate(15deg);
+}
+
+<!-- bbbb--->
 .mega-menu h4 {
     color: #ffd700;
     font-weight: 600;
@@ -898,23 +936,74 @@ header {
   <!-- Inserisci qui i link, stili e script già esistenti -->
 
 <body>
-  <!--     iiiiiii slider verticale -->
+ <!--    iiiiii slider verticale  -->
 <div class="slider-vertical">
-  <div class="slide-vertical">
-    <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Socrates_Louvre.jpg" alt="Socrate">
-    <p>Socrate</p>
-  </div>
-  <div class="slide-vertical">
-    <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/platone.png" alt="Platone">
-    <p>Platone</p>
-  </div>
-  <div class="slide-vertical">
-    <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Aristotle_.jpg" alt="Aristotele">
-    <p>Aristotele</p>
-  </div>
+  <div class="slider-inner">
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Socrates_Louvre.jpg" alt="Socrate">
+      <p>Socrate</p>
+    </div>
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/platone.png" alt="Platone">
+      <p>Platone</p>
+    </div>
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Aristotle_.jpg" alt="Aristotele">
+      <p>Aristotele</p>
+    </div>
+</div>
 </div>
 
-  <!--            fffffffff slider verticale -->
+
+<style>
+ .slider-vertical {
+  position: fixed;
+  top: 350px;
+  left: 0;
+  width: 150px;
+  height: 320px; /* Aumentato per accogliere immagini + testo */
+  overflow: hidden;
+  background: #0b0e14;
+  border-radius: 8px;
+  z-index: 999;
+}
+
+.slider-inner {
+  display: flex;
+  flex-direction: column;
+  animation: scrollVertical 18s linear infinite;
+}
+
+.slide-vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+.slider-vertical img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+.slider-vertical p {
+  color: #ccc;
+  font-size: 0.8rem;
+  margin-top: 5px;
+}
+
+@keyframes scrollVertical {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(calc(-340px * 3)); /* Adattare in base all'altezza reale delle slide */
+  }
+}
+
+</style>
+  <!--     fffffffff slider verticale -->
     <!-- SFONDO STELLATO -->
     <div class="starfield" id="starfield"></div>
     
@@ -1362,171 +1451,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <span class="quote-author"></span>
         </div>
     </div>
-<!--      iiiiiiiiii foto   -->
-<div class="slider-container" style="overflow: hidden; margin: 20px 0;">
-  <div class="slider" style="display: flex; gap: 20px; transition: transform 0.5s ease;">
-    <div class="slide" style="min-width: 200px; flex-shrink: 0; text-align: center; color: #ccc;">
-      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Socrates_Louvre.jpg" alt="Socrate" style="max-height: 120px; border-radius: 8px; width: 100%;">
-      <p>Socrate - Maestro del dialogo</p>
-    </div>
-    <div class="slide" style="min-width: 200px; flex-shrink: 0; text-align: center; color: #ccc;">
-      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/platone.png" alt="Platone" style="max-height: 120px; border-radius: 8px; width: 100%;">
-      <p>Platone - Il Mito delle Idee</p>
-    </div>
-    <div class="slide" style="min-width: 200px; flex-shrink: 0; text-align: center; color: #ccc;">
-      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Aristotle_.jpg" alt="Aristotele" style="max-height: 120px; border-radius: 8px; width: 100%;">
-      <p>Aristotele - Logica e Etica</p>
-    </div>
-  </div>
-</div>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const slider = document.querySelector('.slider');
-  const slides = document.querySelectorAll('.slide');
-  const slideWidth = slides[0].offsetWidth + 20; // larghezza + gap
-  let position = 0;
 
-  setInterval(() => {
-    position -= slideWidth;
-    if (Math.abs(position) >= slideWidth * slides.length) {
-      position = 0;
-    }
-    slider.style.transform = `translateX(${position}px)`;
-  }, 3000);
-});
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const immagini = [
-    {
-      src: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Socrates_Louvre.jpg",
-      commento: "Socrate - Maestro del dialogo"
-    },
-    {
-      src: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/platone.png",
-      commento: "Platone - Il Mito delle Idee"
-    },
-    {
-      src: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Aristotle_.jpg",
-      commento: "Aristotele - Logica e Etica"
-    }
-  ];
-
-  let index = 0;
-  const imgEl = document.getElementById("immagine-filosofi");
-  const commentoEl = document.getElementById("commento-filosofi");
-
-  setInterval(() => {
-    index = (index + 1) % immagini.length;
-    imgEl.src = immagini[index].src;
-    commentoEl.textContent = immagini[index].commento;
-  }, 4000);
-});
-
-  let index = 0;
-  const imgEl = document.getElementById("immagine-filosofi");
-  const commentoEl = document.getElementById("commento-filosofi");
-
-  setInterval(() => {
-    index = (index + 1) % immagini.length;
-    imgEl.src = immagini[index].src;
-    commentoEl.textContent = immagini[index].commento;
-  }, 4000);
-});
-  
-</script>
-  <style>
-..slider-container {
-  width: 100%;
-  overflow: hidden;
-  margin: 20px 0;
-  background: #0b0e14; /* grigio molto scuro */
-  padding: 10px 0;
-  border-radius: 8px;
-}
-
-.slider {
-  display: flex;
-  width: max-content;
-  animation: slideAnim 12s linear infinite;
-}
-
-.slide {
-  flex: 0 0 200px;
-  margin-right: 20px;
-  text-align: center;
-  color: #ccc;
-  user-select: none;
-}
-
-.slide img {
-  max-height: 130px;
-  border-radius: 8px;
-  width: 100%;
-  object-fit: cover;
-}
-
-.slide p {
-  margin-top: 8px;
-  font-size: 0.9rem;
-}
-
-@keyframes slideAnim {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(calc(-220px * 3)); /* aggiorna 3 con numero immagini */
-  }
-}
-.slider-vertical {
-  position: fixed;
-  top: 80px; /* Regola per abbassarlo sotto la barra menu */
-  left: 0;
-  width: 150px;
-  height: 300px;
-  overflow: hidden;
-  background: #0b0e14;
-  border-radius: 8px;
-  z-index: 999;
-}
-
-.slider-vertical .slide-vertical {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-}
-
-.slider-vertical img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 6px;
-}
-
-.slider-vertical p {
-  color: #ccc;
-  font-size: 0.8rem;
-  margin-top: 5px;
-}
-
-/* Animazione verticale */
-.slider-vertical {
-  animation: scrollVertical 12s linear infinite;
-}
-
-@keyframes scrollVertical {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(calc(-110% * 3)); /* 3 = numero di slide */
-  }
-}
-
-
-    </style>
-<!--    ffff foto -->
 </section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
