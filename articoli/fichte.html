@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Johann Gottlieb Fichte - L'Idealismo Attivo</title>
+    <style>
+        :root {
+            --primary-color: #1a237e;
+            --secondary-color: #303f9f;
+            --accent-color: #ff5722;
+            --light-bg: #e8eaf6;
+            --dark-text: #1a237e;
+            --light-text: #e8eaf6;
+            --ego-color: #303f9f;
+            --non-ego-color: #ff5722;
+            --synthesis-color: #4caf50;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            color: var(--dark-text);
+            background-color: var(--light-bg);
+            background-image: linear-gradient(to bottom, #ffffff, var(--light-bg));
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 15px;
+            margin-bottom: 40px;
+            font-weight: normal;
+            font-size: 2.5rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-top: 40px;
+            font-weight: normal;
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .section {
+            background-color: white;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            border: 1px solid #c5cae9;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .section-content {
+            display: none;
+            padding-top: 20px;
+            animation: fadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-content.show {
+            display: block;
+        }
+        
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            font-size: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 25%, rgba(255,255,255,0.3) 50%, transparent 75%);
+            background-size: 400% 400%;
+            opacity: 0;
+            transition: all 0.6s ease;
+            z-index: -1;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+        }
+        
+        .btn:hover:after {
+            opacity: 1;
+            animation: shine 1.5s infinite;
+        }
+        
+        @keyframes shine {
+            0% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .btn-style {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .btn-style:hover {
+            background-color: #e64a19;
+        }
+        
+        .btn-alt {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-alt:hover {
+            background-color: #000051;
+        }
+        
+        .fichte-style {
+            background-color: #f5f5f5;
+            border-left: 6px solid var(--secondary-color);
+            box-shadow: 0 8px 25px rgba(48, 63, 159, 0.15);
+            transform: translateY(-5px);
+        }
+        
+        .fichte-style h2 {
+            color: var(--secondary-color);
+            border-left-color: var(--secondary-color);
+        }
+        
+        .ego-style {
+            background-color: #e8eaf6;
+            border-left: 6px solid var(--ego-color);
+        }
+        
+        .non-ego-style {
+            background-color: #fbe9e7;
+            border-left: 6px solid var(--non-ego-color);
+        }
+        
+        .action-style {
+            background-color: #e8f5e9;
+            border-left: 6px solid var(--synthesis-color);
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 35px auto;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border: 3px solid white;
+            transform: rotate(-1deg);
+            transition: all 0.4s ease;
+        }
+        
+        img:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+        
+        .quote {
+            font-style: italic;
+            color: var(--primary-color);
+            border-left: 4px solid var(--accent-color);
+            padding: 20px;
+            margin: 30px 0;
+            background-color: white;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        .quote:before {
+            content: """;
+            font-size: 80px;
+            color: var(--secondary-color);
+            position: absolute;
+            left: 10px;
+            top: -20px;
+            opacity: 0.1;
+            font-family: serif;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #c5cae9 0%, #d1d9ff 100%);
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: var(--dark-text);
+            font-weight: bold;
+        }
+        
+        ul {
+            padding-left: 30px;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            position: relative;
+            line-height: 1.6;
+            padding-left: 25px;
+        }
+        
+        li:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 12px;
+            height: 12px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+        }
+        
+        .icon {
+            font-size: 20px;
+        }
+        
+        .ego-icon {
+            color: var(--ego-color);
+            margin-right: 8px;
+        }
+        
+        .non-ego-icon {
+            color: var(--non-ego-color);
+            margin-right: 8px;
+        }
+        
+        .action-icon {
+            color: var(--synthesis-color);
+            margin-right: 8px;
+        }
+        
+        .dialectical-process {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .dialectical-step {
+            flex: 1;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 0 5px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .ego-step {
+            background-color: var(--ego-color);
+        }
+        
+        .non-ego-step {
+            background-color: var(--non-ego-color);
+        }
+        
+        .action-step {
+            background-color: var(--synthesis-color);
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .btn {
+                padding: 10px 18px;
+                font-size: 14px;
+            }
+            
+            .dialectical-process {
+                flex-direction: column;
+            }
+            
+            .dialectical-step {
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Johann Gottlieb Fichte: L'Io Assoluto e l'Azione</h1>
+    
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Johann_Gottlieb_Fichte.jpg/440px-Johann_Gottlieb_Fichte.jpg" alt="Ritratto di Fichte" width="400">
+    
+    <div class="section">
+        <h2>Vita e Opere</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">📜</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">💪</span> Stile Fichtiano
+            </button>
+            <button class="btn btn-alt ego-btn">
+                <span class="icon">👁️</span> Io
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Johann Gottlieb Fichte (1762-1814) è stato il primo grande esponente dell'<span class="highlight">idealismo tedesco</span> dopo Kant, noto per la sua filosofia dell'azione e la dottrina dell'Io assoluto.</p>
+            
+            <p>Principali tappe biografiche:</p>
+            
+            <ul>
+                <li><span class="ego-icon">🎓</span> Nato in Sassonia da una famiglia povera, studiò teologia</li>
+                <li><span class="ego-icon">📚</span> Scoprì Kant nel 1790, che rivoluzionò il suo pensiero</li>
+                <li><span class="non-ego-icon">🏛️</span> Insegnò a Jena (1794-1799) e poi a Berlino</li>
+                <li><span class="action-icon">🇩🇪</span> Durante le guerre napoleoniche tenne i famosi <em>Discorsi alla nazione tedesca</em></li>
+                <li><span class="ego-icon">⚕️</span> Morì di tifo contratto dalla moglie che curava soldati feriti</li>
+            </ul>
+            
+            <p>Opere fondamentali:</p>
+            
+            <ul>
+                <li><em>Fondamenti dell'intera dottrina della scienza</em> (1794/95)</li>
+                <li><em>La missione del dotto</em> (1794)</li>
+                <li><em>Lo Stato commerciale chiuso</em> (1800)</li>
+                <li><em>Discorsi alla nazione tedesca</em> (1808)</li>
+            </ul>
+            
+            <div class="quote">
+                "Che specie di filosofia si scelga dipende da che specie di uomo si è."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>La Dottrina della Scienza</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">🔬</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">💪</span> Stile Fichtiano
+            </button>
+            <button class="btn btn-alt non-ego-btn">
+                <span class="icon">🌍</span> Non-Io
+            </button>
+        </div>
+        <div class="section-content">
+            <p>La <span class="highlight">Dottrina della Scienza</span> (Wissenschaftslehre) è il sistema filosofico di Fichte che parte dall'<span class="highlight">Io assoluto</span> come principio primo:</p>
+            
+            <div class="dialectical-process">
+                <div class="dialectical-step ego-step">
+                    <h3>Io</h3>
+                    <p>L'autoposizione assoluta</p>
+                </div>
+                <div class="dialectical-step non-ego-step">
+                    <h3>Non-Io</h3>
+                    <p>La negazione necessaria</p>
+                </div>
+                <div class="dialectical-step action-step">
+                    <h3>Azioine</h3>
+                    <p>Sintesi dialettica</p>
+                </div>
+            </div>
+            
+            <p>I tre principi fondamentali:</p>
+            
+            <ul>
+                <li><span class="ego-icon">1️⃣</span> L'Io pone se stesso (tesi)</li>
+                <li><span class="non-ego-icon">2️⃣</span> L'Io oppone a sé un Non-Io (antitesi)</li>
+                <li><span class="action-icon">3️⃣</span> L'Io oppone nell'Io un Io divisibile e un Non-Io divisibile (sintesi)</li>
+            </ul>
+            
+            <p>Caratteristiche principali:</p>
+            
+            <ul>
+                <li>L'Io non è sostanza ma attività pura (Tathandlung)</li>
+                <li>Il Non-Io è il limite necessario per l'autocoscienza</li>
+                <li>L'infinito sforzo morale come essenza dell'Io</li>
+                <li>L'intersoggettività come condizione della coscienza</li>
+            </ul>
+            
+            <div class="quote">
+                "L'Io pone originariamente, assolutamente e senza alcuna ragione se stesso."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Etica e Libertà</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">⚖️</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">💪</span> Stile Fichtiano
+            </button>
+            <button class="btn btn-alt action-btn">
+                <span class="icon">🏃</span> Azione
+            </button>
+        </div>
+        <div class="section-content">
+            <p>L'<span class="highlight">etica fichtiana</span> è una filosofia dell'azione e dell'impegno morale:</p>
+            
+            <ul>
+                <li><span class="action-icon">💪</span> La libertà è l'essenza dell'Io</li>
+                <li><span class="action-icon">🎯</span> L'azione morale come realizzazione dell'autonomia</li>
+                <li><span class="non-ego-icon">🌍</span> Il mondo è il materiale del dovere</li>
+                <li><span class="ego-icon">👥</span> Riconoscimento reciproco come base della società</li>
+            </ul>
+            
+            <p>La missione del dotto:</p>
+            
+            <ul>
+                <li>Il filosofo ha il compito di guidare l'umanità verso la libertà</li>
+                <li>Educazione come strumento di emancipazione</li>
+                <li>La cultura deve servire il progresso morale</li>
+                <li>Nazione come comunità etica (anticipando Hegel)</li>
+            </ul>
+            
+            <div class="quote">
+                "Agisci! Agisci! Questo è ciò per cui esistiamo."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Filosofia Politica</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">🏛️</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">💪</span> Stile Fichtiano
+            </button>
+            <button class="btn btn-alt ego-btn">
+                <span class="icon">👁️</span> Io
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Fichte sviluppa una <span class="highlight">filosofia politica</span> originale che evolve nel tempo:</p>
+            
+            <ul>
+                <li><span class="ego-icon">🗽</span> Primo periodo: liberalismo radicale (ispirato alla Rivoluzione francese)</li>
+                <li><span class="non-ego-icon">🛡️</span> Secondo periodo: Stato commerciale chiuso (socialismo di Stato ante litteram)</li>
+                <li><span class="action-icon">🇩🇪</span> Ultimo periodo: nazionalismo culturale (nei <em>Discorsi alla nazione tedesca</em>)</li>
+            </ul>
+            
+            <p>Idee principali:</p>
+            
+            <ul>
+                <li>Il contratto originario come fondamento dello Stato</li>
+                <li>Proprietà come diritto assoluto ma regolato socialmente</li>
+                <li>Educazione nazionale obbligatoria</li>
+                <li>Economia pianificata nello Stato commerciale chiuso</li>
+            </ul>
+            
+            <div class="quote">
+                "Lo Stato deve rendere impossibile la povertà assoluta."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Eredita e Influenza</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">🌍</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">💪</span> Stile Fichtiano
+            </button>
+            <button class="btn btn-alt non-ego-btn">
+                <span class="icon">🌍</span> Non-Io
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Fichte ha influenzato profondamente:</p>
+            
+            <ul>
+                <li><span class="ego-icon">👨‍🎓</span> L'idealismo tedesco (Schelling, Hegel)</li>
+                <li><span class="action-icon">🎓</span> La pedagogia moderna (concezione attiva dell'educazione)</li>
+                <li><span class="non-ego-icon">🏛️</span> Il nazionalismo tedesco (soprattutto con i <em>Discorsi</em>)</li>
+                <li><span class="ego-icon">🧠</span> La fenomenologia (Husserl, Sartre)</li>
+            </ul>
+            
+            <p>Critiche principali:</p>
+            
+            <ul>
+                <li>Schelling: critica all'Io assoluto come principio unico</li>
+                <li>Hegel: l'Io fichtiano sarebbe ancora finito</li>
+                <li>Schopenhauer: eccessivo attivismo e volontarismo</li>
+            </ul>
+            
+            <p>Attualità del pensiero fichtiano:</p>
+            
+            <ul>
+                <li>Teorie del riconoscimento (Honneth)</li>
+                <li>Filosofia dell'azione</li>
+                <li>Studi sull'intersoggettività</li>
+            </ul>
+            
+            <div class="quote">
+                "Solo colui che considera se stesso come fine può assimilare a sé tutta la realtà."
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Toggle per mostrare/nascondere i contenuti
+        document.querySelectorAll('.toggle-btn').forEach(button => {
+            // Salva l'icona originale come attributo data
+            const icon = button.querySelector('.icon');
+            button.setAttribute('data-original-icon', icon.textContent);
+            
+            button.addEventListener('click', function() {
+                const content = this.parentElement.nextElementSibling;
+                content.classList.toggle('show');
+                
+                // Cambia l'icona e il testo
+                const icon = this.querySelector('.icon');
+                if (content.classList.contains('show')) {
+                    icon.textContent = '📕';
+                    this.innerHTML = this.innerHTML.replace('Mostra', 'Nascondi');
+                } else {
+                    const originalIcon = this.getAttribute('data-original-icon');
+                    icon.textContent = originalIcon;
+                    this.innerHTML = this.innerHTML.replace('Nascondi', 'Mostra');
+                }
+            });
+        });
+        
+        // Cambia stile delle sezioni (tema Fichte)
+        document.querySelectorAll('.style-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.parentElement.parentElement;
+                section.classList.toggle('fichte-style');
+                
+                // Cambia l'icona e il testo
+                const icon = this.querySelector('.icon');
+                if (section.classList.contains('fichte-style')) {
+                    icon.textContent = '✏️';
+                    this.innerHTML = this.innerHTML.replace('Stile Fichtiano', 'Stile Normale');
+                } else {
+                    icon.textContent = '💪';
+                    this.innerHTML = this.innerHTML.replace('Stile Normale', 'Stile Fichtiano');
+                }
+            });
+        });
+        
+        // Bottoni tema Io
+        document.querySelectorAll('.ego-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.parentElement.parentElement;
+                section.classList.toggle('ego-style');
+                
+                // Rimuovi altri stili tematici
+                section.classList.remove('non-ego-style', 'action-style');
+            });
+        });
+        
+        // Bottoni tema Non-Io
+        document.querySelectorAll('.non-ego-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.parentElement.parentElement;
+                section.classList.toggle('non-ego-style');
+                
+                // Rimuovi altri stili tematici
+                section.classList.remove('ego-style', 'action-style');
+            });
+        });
+        
+        // Bottoni tema Azione
+        document.querySelectorAll('.action-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.parentElement.parentElement;
+                section.classList.toggle('action-style');
+                
+                // Rimuovi altri stili tematici
+                section.classList.remove('ego-style', 'non-ego-style');
+            });
+        });
+    </script>
+</body>
+</html>

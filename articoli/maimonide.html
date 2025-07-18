@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maimonide - Filosofo e Medico Ebraico</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            line-height: 1.7;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 25px;
+            color: #333;
+            background-color: #f8f4e9;
+        }
+        
+        h1 {
+            color: #6b4e2f;
+            text-align: center;
+            border-bottom: 2px solid #6b4e2f;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #8a6d3b;
+            margin-top: 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .image-container {
+            text-align: center;
+            margin: 25px 0;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 1px solid #ddd;
+        }
+        
+        .quote {
+            font-style: italic;
+            border-left: 4px solid #6b4e2f;
+            padding: 15px 20px;
+            margin: 25px 0;
+            background-color: #f1e8d6;
+            color: #555;
+        }
+        
+        .toggle-btn {
+            background-color: #6b4e2f;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: all 0.3s ease;
+            margin-left: 15px;
+        }
+        
+        .toggle-btn:hover {
+            background-color: #8a6d3b;
+            transform: translateY(-2px);
+        }
+        
+        .collapsible {
+            display: none;
+            overflow: hidden;
+            background-color: #f9f5ec;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 3px solid #8a6d3b;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .footer {
+            margin-top: 50px;
+            font-size: 0.9em;
+            text-align: center;
+            color: #777;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 700px;
+            margin: 30px auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background-color: #8a6d3b;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1px;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #f8f4e9;
+            border: 3px solid #6b4e2f;
+            border-radius: 50%;
+            top: 15px;
+            z-index: 1;
+        }
+        
+        .left {
+            left: 0;
+            text-align: right;
+        }
+        
+        .right {
+            left: 50%;
+            text-align: left;
+        }
+        
+        .left::after {
+            right: -10px;
+        }
+        
+        .right::after {
+            left: -10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mosè Maimonide: Filosofo, Medico e Guida dei Perplessi</h1>
+    
+    <div class="image-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Maimonides-2.jpg/220px-Maimonides-2.jpg" alt="Ritratto di Maimonide">
+        <p><em>Ritratto di Mosè Maimonide (1135-1204)</em></p>
+    </div>
+    
+    <section>
+        <h2>Introduzione <button class="toggle-btn" data-section="intro">Mostra</button></h2>
+        <div id="intro" class="collapsible">
+            <p>Mosè Maimonide (in ebraico: משה בן מימון, Moshe ben Maimon; in arabo: موسى بن ميمون, Mūsā ibn Maymūn), noto anche con l'acronimo Rambam, fu un rabbino, filosofo, medico e giurista ebraico medievale. Nacque a Cordova nel 1135 e morì al Cairo nel 1204.</p>
+            
+            <p>Considerato una delle figure più importanti della storia del pensiero ebraico, Maimonide cercò di riconciliare la filosofia aristotelica con la teologia ebraica, influenzando profondamente sia il pensiero ebraico successivo che quello cristiano e islamico.</p>
+        </div>
+    </section>
+    
+    <div class="quote">
+        "Insegna alla tua lingua a dire 'non so' e ti eviterai molti guai." - Maimonide
+    </div>
+    
+    <section>
+        <h2>Biografia <button class="toggle-btn" data-section="bio">Mostra</button></h2>
+        <div id="bio" class="collapsible">
+            <div class="timeline">
+                <div class="timeline-item left">
+                    <h3>1135</h3>
+                    <p>Nasce a Cordova, in Al-Andalus (Spagna islamica), in una famiglia di studiosi e giudici ebraici.</p>
+                </div>
+                <div class="timeline-item right">
+                    <h3>1148</h3>
+                    <p>La famiglia è costretta a fuggire da Cordova a causa dell'invasione degli Almohadi che perseguitano le minoranze religiose.</p>
+                </div>
+                <div class="timeline-item left">
+                    <h3>1160</h3>
+                    <p>Si stabilisce a Fez, in Marocco, dove studia medicina e continua la sua formazione ebraica.</p>
+                </div>
+                <div class="timeline-item right">
+                    <h3>1165</h3>
+                    <p>Si trasferisce in Terra Santa e poi in Egitto, stabilendosi infine a Fustat (vicino al Cairo).</p>
+                </div>
+                <div class="timeline-item left">
+                    <h3>1171</h3>
+                    <p>Diventa il capo della comunità ebraica del Cairo (Nagid).</p>
+                </div>
+                <div class="timeline-item right">
+                    <h3>1185</h3>
+                    <p>Diventa medico personale del visir al-Fadil, alto funzionario del sultano Saladino.</p>
+                </div>
+                <div class="timeline-item left">
+                    <h3>1204</h3>
+                    <p>Muore al Cairo e viene sepolto a Tiberiade, in Terra Santa.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section>
+        <h2>Opere Principali <button class="toggle-btn" data-section="works">Mostra</button></h2>
+        <div id="works" class="collapsible">
+            <h3>Commentario alla Mishnah (1168)</h3>
+            <p>Scritto in arabo, è un'opera enciclopedica che spiega e sistematizza la Mishnah, la prima grande raccolta della legge orale ebraica.</p>
+            
+            <h3>Mishneh Torah (1180)</h3>
+            <p>Una codificazione completa e sistematica della legge ebraica (Halakhah), scritta in ebraico chiaro e conciso. Rivoluzionaria per la sua organizzazione logica e per l'omissione delle fonti e delle controversie.</p>
+            
+            <h3>Guida dei Perplessi (1190)</h3>
+            <p>Scritta in arabo, è la sua opera filosofica più importante, che cerca di riconciliare la filosofia aristotelica con la teologia ebraica. Rivolta agli ebrei colti che sentivano la tensione tra fede e ragione.</p>
+            
+            <h3>Trattati Medici</h3>
+            <p>Scrisse numerosi trattati medici in arabo, tra cui "Gli Aforismi di Mosè" (una sintesi delle conoscenze mediche del tempo) e trattati specifici su asma, emorroidi, veleni e loro antidoti.</p>
+        </div>
+    </section>
+    
+    <section>
+        <h2>Pensiero Filosofico <button class="toggle-btn" data-section="philosophy">Mostra</button></h2>
+        <div id="philosophy" class="collapsible">
+            <h3>Rapporto tra Fede e Ragione</h3>
+            <p>Maimonide sosteneva che la verità religiosa e la verità filosofica non possono contraddirsi perché entrambe derivano da Dio. Quando sembrano in conflitto, è necessario reinterpretare il testo sacro in modo allegorico.</p>
+            
+            <h3>I 13 Principi di Fede</h3>
+            <p>Formulò i tredici principi fondamentali dell'ebraismo, che includono l'unità di Dio, la sua incorporeità, l'eternità della Torah e la venuta del Messia. Questi principi furono poi incorporati in molte liturgie ebraiche.</p>
+            
+            <h3>Etica e Psicologia</h3>
+            <p>Sviluppò una teoria etica basata sulla "via di mezzo" aristotelica, sostenendo che le virtù stanno nel giusto mezzo tra due estremi. La sua analisi delle passioni umane anticipa alcune concezioni moderne della psicologia.</p>
+            
+            <h3>Conoscenza di Dio</h3>
+            <p>Insegnava che Dio può essere conosciuto solo attraverso i suoi attributi negativi (ciò che Dio non è), poiché la sua essenza è al di là della comprensione umana.</p>
+        </div>
+    </section>
+    
+    <section>
+        <h2>Influenza e Eredità <button class="toggle-btn" data-section="legacy">Mostra</button></h2>
+        <div id="legacy" class="collapsible">
+            <h3>Nell'Ebraismo</h3>
+            <p>Maimonide è considerato forse il più grande pensatore ebraico medievale. Il suo Mishneh Torah rimane una delle codificazioni più autorevoli della legge ebraica, e i suoi 13 principi sono accettati da molti ebrei come definizioni fondamentali della fede ebraica.</p>
+            
+            <h3>Nel Cristianesimo</h3>
+            <p>Tommaso d'Aquino fece ampio riferimento alle opere di Maimonide nella sua Summa Theologica, anche se spesso per confutarne le posizioni. La sua influenza è evidente nello sviluppo della scolastica medievale.</p>
+            
+            <h3>Nell'Islam</h3>
+            <p>Sebbene meno conosciuto nel mondo islamico, alcuni suoi scritti medici furono tradotti in arabo e influenzarono la medicina islamica. La sua metodologia filosofica mostra anche l'influenza di pensatori islamici come al-Farabi e Avicenna.</p>
+            
+            <h3>Nella Medicina</h3>
+            <p>I suoi scritti medici furono tradotti in latino e influenzarono la medicina europea medievale. Il suo approccio razionale e osservazionale anticipò alcuni aspetti del metodo scientifico moderno.</p>
+            
+            <div class="quote">
+                "Dalla Mosè a Mosè, non ci fu mai uno come Mosè." - Epitaffio sulla tomba di Maimonide
+            </div>
+        </div>
+    </section>
+    
+    <div class="footer">
+        <p>© 2023 Articolo su Maimonide - Tutti i diritti riservati</p>
+        <p>Fonti: Enciclopedia Treccani, Stanford Encyclopedia of Philosophy, Jewish Virtual Library</p>
+    </div>
+
+    <script>
+        // Inizializza tutte le sezioni come chiuse
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.collapsible').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Aggiungi event listener a tutti i bottoni
+            document.querySelectorAll('.toggle-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const sectionId = this.getAttribute('data-section');
+                    const section = document.getElementById(sectionId);
+                    const isHidden = section.style.display === 'none';
+                    
+                    // Chiudi tutte le sezioni
+                    document.querySelectorAll('.collapsible').forEach(sec => {
+                        sec.style.display = 'none';
+                    });
+                    
+                    // Aggiorna tutti i bottoni
+                    document.querySelectorAll('.toggle-btn').forEach(btn => {
+                        btn.textContent = 'Mostra';
+                    });
+                    
+                    // Apri/chiudi la sezione corrente
+                    if (isHidden) {
+                        section.style.display = 'block';
+                        this.textContent = 'Nascondi';
+                    } else {
+                        section.style.display = 'none';
+                        this.textContent = 'Mostra';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

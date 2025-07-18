@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>René Descartes (Cartesio) - Il Padre della Filosofia Moderna</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            border-bottom: 3px solid var(--secondary-color);
+            position: relative;
+        }
+        
+        h1:after {
+            content: "";
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+        
+        h2 {
+            color: var(--dark-color);
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #ccc;
+        }
+        
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border: 1px solid #ddd;
+            max-height: 450px;
+            transition: transform 0.3s ease;
+        }
+        
+        img:hover {
+            transform: scale(1.02);
+        }
+        
+        .quote {
+            font-style: italic;
+            border-left: 4px solid var(--secondary-color);
+            padding: 20px;
+            margin: 30px 0;
+            background-color: white;
+            color: #555;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        
+        .quote:before {
+            content: """;
+            font-size: 60px;
+            color: var(--light-color);
+            position: absolute;
+            left: 10px;
+            top: -15px;
+            line-height: 1;
+            z-index: 0;
+        }
+        
+        .toggle-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            margin-left: 15px;
+            display: inline-flex;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .toggle-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .toggle-btn:active {
+            transform: translateY(0);
+        }
+        
+        .toggle-btn:after {
+            content: "↓";
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .toggle-btn.active:after {
+            transform: rotate(180deg);
+            content: "↑";
+        }
+        
+        .collapsible {
+            display: none;
+            overflow: hidden;
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid var(--accent-color);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .footer {
+            margin-top: 60px;
+            font-size: 0.9em;
+            text-align: center;
+            color: #777;
+            border-top: 1px solid #eee;
+            padding-top: 30px;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 750px;
+            margin: 40px auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--secondary-color), var(--accent-color));
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1.5px;
+        }
+        
+        .timeline-item {
+            padding: 20px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background-color: white;
+            border: 4px solid var(--secondary-color);
+            border-radius: 50%;
+            top: 20px;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-item:hover::after {
+            transform: scale(1.1);
+            border-color: var(--accent-color);
+        }
+        
+        .left {
+            left: 0;
+            text-align: right;
+        }
+        
+        .right {
+            left: 50%;
+            text-align: left;
+        }
+        
+        .left::after {
+            right: -12.5px;
+        }
+        
+        .right::after {
+            left: -12.5px;
+        }
+        
+        .timeline-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        ul.works-list {
+            columns: 2;
+            column-gap: 40px;
+            padding-left: 20px;
+        }
+        
+        ul.works-list li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 25px;
+            break-inside: avoid;
+        }
+        
+        ul.works-list li:before {
+            content: "•";
+            color: var(--accent-color);
+            font-size: 24px;
+            position: absolute;
+            left: 0;
+            top: -3px;
+        }
+        
+        @media (max-width: 700px) {
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item::after {
+                left: 18.5px;
+            }
+            
+            .left, .right {
+                left: 0;
+                text-align: left;
+            }
+            
+            .left::after, .right::after {
+                left: 18.5px;
+            }
+            
+            ul.works-list {
+                columns: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>René Descartes (Cartesio)<br>Il Padre della Filosofia Moderna</h1>
+    
+    <div class="image-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Frans_Hals_-_Portret_van_Ren%C3%A9_Descartes.jpg/800px-Frans_Hals_-_Portret_van_Ren%C3%A9_Descartes.jpg" alt="Ritratto di Cartesio">
+        <p><em>Ritratto di René Descartes (Cartesio) di Frans Hals, 1649</em></p>
+    </div>
+    
+    <section>
+        <h2>Introduzione <button class="toggle-btn" data-section="intro">Mostra Sezione</button></h2>
+        <div id="intro" class="collapsible">
+            <p>René Descartes (1596-1650), latinizzato in Renatus Cartesius e noto in Italia come Cartesio, è considerato il fondatore della filosofia moderna e uno dei più importanti matematici e scienziati del XVII secolo.</p>
+            
+            <p>Nato in Francia ma vissuto per gran parte della sua vita nei Paesi Bassi, Cartesio rivoluzionò il pensiero filosofico con il suo metodo del dubbio sistematico e il celebre principio "<em>Cogito, ergo sum</em>" (Penso, dunque sono). Il suo approccio razionalista influenzò profondamente lo sviluppo della filosofia occidentale e del metodo scientifico.</p>
+        </div>
+    </section>
+    
+    <div class="quote">
+        "Dubitare è pensare, pensare è esistere. Dunque: <em>Cogito, ergo sum</em> (Penso, dunque sono)."<br>- Cartesio, <em>Discorso sul metodo</em>
+    </div>
+    
+    <section>
+        <h2>Biografia <button class="toggle-btn" data-section="bio">Mostra Sezione</button></h2>
+        <div id="bio" class="collapsible">
+            <div class="timeline">
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>31 marzo 1596</h3>
+                        <p>Nasce a La Haye en Touraine (oggi Descartes), in Francia, da una famiglia della piccola nobiltà.</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h3>1606-1614</h3>
+                        <p>Studia al collegio gesuita di La Flèche, dove riceve un'educazione umanistica e scientifica.</p>
+                    </div>
+                </div>
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>1618-1619</h3>
+                        <p>Si arruola nell'esercito olandese e inizia a sviluppare le sue idee matematiche e filosofiche.</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h3>10 novembre 1619</h3>
+                        <p>La "notte dei sogni" a Neuburg, dove ha una serie di visioni che lo convincono della sua missione filosofica.</p>
+                    </div>
+                </div>
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>1628</h3>
+                        <p>Si trasferisce nei Paesi Bassi, dove vivrà per 20 anni dedicandosi agli studi.</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h3>1637</h3>
+                        <p>Pubblica anonimo il <em>Discorso sul metodo</em>, la sua opera più celebre.</p>
+                    </div>
+                </div>
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>1641</h3>
+                        <p>Pubblica le <em>Meditazioni metafisiche</em>, fondamentale testo filosofico.</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h3>1649</h3>
+                        <p>Accetta l'invito della regina Cristina di Svezia e si trasferisce a Stoccolma.</p>
+                    </div>
+                </div>
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>11 febbraio 1650</h3>
+                        <p>Muore a Stoccolma, probabilmente di polmonite, all'età di 53 anni.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section>
+        <h2>Opere Principali <button class="toggle-btn" data-section="works">Mostra Sezione</button></h2>
+        <div id="works" class="collapsible">
+            <ul class="works-list">
+                <li><strong>Discorso sul metodo</strong> (1637) - Esposizione del suo metodo filosofico e scientifico</li>
+                <li><strong>La geometria</strong> (1637) - Fondamento della geometria analitica</li>
+                <li><strong>Meditazioni metafisiche</strong> (1641) - Sviluppo della metafisica cartesiana</li>
+                <li><strong>Principi di filosofia</strong> (1644) - Esposizione sistematica del suo pensiero</li>
+                <li><strong>Le passioni dell'anima</strong> (1649) - Studio delle emozioni e della psicologia</li>
+                <li><strong>Regole per la direzione della mente</strong> (postumo) - Metodologia della ricerca</li>
+                <li><strong>Il mondo</strong> (postumo) - Cosmologia e fisica cartesiana</li>
+                <li><strong>Corrispondenza</strong> - Oltre 700 lettere con i maggiori intellettuali dell'epoca</li>
+            </ul>
+        </div>
+    </section>
+    
+    <section>
+        <h2>Pensiero Filosofico <button class="toggle-btn" data-section="philosophy">Mostra Sezione</button></h2>
+        <div id="philosophy" class="collapsible">
+            <h3>Il Dubbio Metodico</h3>
+            <p>Cartesio sviluppò un metodo di dubbio sistematico per raggiungere verità indubitabili:
+            <ul>
+                <li>Dubitare di tutto ciò che può essere messo in dubbio</li>
+                <li>Considerare temporaneamente false tutte le conoscenze sensibili</li>
+                <li>Arrivare alla prima certezza: l'esistenza del soggetto pensante</li>
+            </ul></p>
+            
+            <h3>Il Cogito</h3>
+            <p>Dal dubbio scaturisce la prima verità assoluta:
+            <ul>
+                <li>"<em>Cogito, ergo sum</em>" (Penso, dunque sono)</li>
+                <li>L'esistenza come conseguenza necessaria del pensiero</li>
+                <li>Fondamento di ogni altra conoscenza</li>
+            </ul></p>
+            
+            <h3>Dualismo Cartesiano</h3>
+            <p>Distinzione radicale tra:
+            <ul>
+                <li><strong>Res cogitans</strong> (sostanza pensante) - La mente, immateriale</li>
+                <li><strong>Res extensa</strong> (sostanza estesa) - Il corpo e il mondo fisico</li>
+            </ul>
+            Questo dualismo mente-corpo ha influenzato profondamente la filosofia successiva.</p>
+            
+            <h3>Prove dell'Esistenza di Dio</h3>
+            <p>Cartesio sviluppò diverse prove razionali:
+            <ul>
+                <li>Prova ontologica (dall'idea di perfezione)</li>
+                <li>Prova causale (dalla causa delle nostre idee)</li>
+                <li>Prova dalla conservazione dell'esistenza</li>
+            </ul></p>
+        </div>
+    </section>
+    
+    <section>
+        <h2>Contributi Scientifici <button class="toggle-btn" data-section="science">Mostra Sezione</button></h2>
+        <div id="science" class="collapsible">
+            <h3>Geometria Analitica</h3>
+            <p>Cartesio rivoluzionò la matematica:
+            <ul>
+                <li>Unificazione di algebra e geometria</li>
+                <li>Sistema di coordinate cartesiane</li>
+                <li>Equazioni per rappresentare curve geometriche</li>
+            </ul></p>
+            
+            <h3>Fisica</h3>
+            <p>Nonostante alcuni errori, contribuì con:
+            <ul>
+                <li>Legge della conservazione del moto</li>
+                <li>Teoria dei vortici per spiegare il sistema solare</li>
+                <li>Studio della rifrazione della luce</li>
+            </ul></p>
+            
+            <h3>Fisiologia</h3>
+            <p>Pionieristici studi su:
+            <ul>
+                <li>Funzionamento del cuore e circolazione</li>
+                <li>Riflessi automatici (arco riflesso)</li>
+                <li>Relazione tra corpo e mente</li>
+            </ul></p>
+        </div>
+    </section>
+    
+    <section>
+        <h2>Influenza e Critiche <button class="toggle-btn" data-section="legacy">Mostra Sezione</button></h2>
+        <div id="legacy" class="collapsible">
+            <h3>Eredità Filosofica</h3>
+            <p>Cartesio influenzò:
+            <ul>
+                <li>Il razionalismo continentale (Spinoza, Leibniz)</li>
+                <li>L'empirismo britannico (reazione a Cartesio)</li>
+                <li>Kant e la filosofia moderna</li>
+                <li>La fenomenologia e l'esistenzialismo</li>
+            </ul></p>
+            
+            <h3>Critiche</h3>
+            <p>Le principali obiezioni al suo pensiero:
+            <ul>
+                <li>Problema del dualismo mente-corpo</li>
+                <li>Circolarità nelle prove dell'esistenza di Dio</li>
+                <li>Eccessiva fiducia nella ragione astratta</li>
+                <li>Trascurare il ruolo dell'esperienza</li>
+            </ul></p>
+            
+            <h3>Attualità</h3>
+            <p>Cartesio rimane rilevante per:
+            <ul>
+                <li>Filosofia della mente</li>
+                <li>Epistemologia</li>
+                <li>Intelligenza artificiale</li>
+                <li>Neuroscienze</li>
+            </ul></p>
+            
+            <div class="quote">
+                "Cartesio è il punto di partenza obbligato della filosofia moderna, colui che ha posto le domande a cui ancora oggi cerchiamo risposta."<br>- Edmund Husserl
+            </div>
+        </div>
+    </section>
+    
+    <div class="footer">
+        <p>© 2023 Articolo su René Descartes (Cartesio) - Tutti i diritti riservati</p>
+        <p>Fonti: Stanford Encyclopedia of Philosophy, Cambridge Companion to Descartes, Descartes' Opere Complete</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inizializza tutte le sezioni come chiuse
+            document.querySelectorAll('.collapsible').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Aggiungi event listener a tutti i bottoni
+            document.querySelectorAll('.toggle-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const sectionId = this.getAttribute('data-section');
+                    const section = document.getElementById(sectionId);
+                    const isHidden = section.style.display === 'none';
+                    
+                    // Chiudi tutte le sezioni
+                    document.querySelectorAll('.collapsible').forEach(sec => {
+                        sec.style.display = 'none';
+                    });
+                    
+                    // Aggiorna tutti i bottoni
+                    document.querySelectorAll('.toggle-btn').forEach(btn => {
+                        btn.textContent = 'Mostra Sezione';
+                        btn.classList.remove('active');
+                    });
+                    
+                    // Apri/chiudi la sezione corrente
+                    if (isHidden) {
+                        section.style.display = 'block';
+                        this.textContent = 'Nascondi Sezione';
+                        this.classList.add('active');
+                    } else {
+                        section.style.display = 'none';
+                        this.textContent = 'Mostra Sezione';
+                        this.classList.remove('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

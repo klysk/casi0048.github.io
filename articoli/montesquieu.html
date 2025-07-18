@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Montesquieu - Il Filosofo della Separazione dei Poteri</title>
+    <style>
+        :root {
+            --primary-color: #273c75;
+            --secondary-color: #40739e;
+            --accent-color: #e84118;
+            --light-bg: #f5f6fa;
+            --dark-text: #2f3640;
+            --light-text: #f5f6fa;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.7;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            color: var(--dark-text);
+            background-color: var(--light-bg);
+            background-image: linear-gradient(to bottom, #ffffff, #f5f6fa);
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 15px;
+            margin-bottom: 40px;
+            font-weight: normal;
+            font-size: 2.5rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-top: 40px;
+            font-weight: normal;
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .section {
+            background-color: white;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            border: 1px solid #dfe6e9;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .section-content {
+            display: none;
+            padding-top: 20px;
+            animation: fadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-content.show {
+            display: block;
+        }
+        
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            font-size: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 25%, rgba(255,255,255,0.3) 50%, transparent 75%);
+            background-size: 400% 400%;
+            opacity: 0;
+            transition: all 0.6s ease;
+            z-index: -1;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+        }
+        
+        .btn:hover:after {
+            opacity: 1;
+            animation: shine 1.5s infinite;
+        }
+        
+        @keyframes shine {
+            0% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .btn-style {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .btn-style:hover {
+            background-color: #c23616;
+        }
+        
+        .btn-alt {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-alt:hover {
+            background-color: #192a56;
+        }
+        
+        .montesquieu-style {
+            background-color: #f8f9fa;
+            border-left: 6px solid var(--secondary-color);
+            box-shadow: 0 8px 25px rgba(64, 115, 158, 0.15);
+            transform: translateY(-5px);
+        }
+        
+        .montesquieu-style h2 {
+            color: var(--secondary-color);
+            border-left-color: var(--secondary-color);
+        }
+        
+        .law-style {
+            background-color: #e8f4fd;
+            border-left: 6px solid var(--secondary-color);
+        }
+        
+        .power-style {
+            background-color: #ffece8;
+            border-left: 6px solid var(--accent-color);
+        }
+        
+        .climate-style {
+            background-color: #e8f8f5;
+            border-left: 6px solid #00b894;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 35px auto;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border: 3px solid white;
+            transform: rotate(-1deg);
+            transition: all 0.4s ease;
+        }
+        
+        img:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+        
+        .quote {
+            font-style: italic;
+            color: var(--primary-color);
+            border-left: 4px solid var(--accent-color);
+            padding: 20px;
+            margin: 30px 0;
+            background-color: white;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        .quote:before {
+            content: """;
+            font-size: 80px;
+            color: var(--secondary-color);
+            position: absolute;
+            left: 10px;
+            top: -20px;
+            opacity: 0.1;
+            font-family: serif;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #dcdde1 0%, #f5f6fa 100%);
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: var(--dark-text);
+            font-weight: bold;
+        }
+        
+        ul {
+            padding-left: 30px;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            position: relative;
+            line-height: 1.6;
+            padding-left: 25px;
+        }
+        
+        li:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 12px;
+            height: 12px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+        }
+        
+        .icon {
+            font-size: 20px;
+        }
+        
+        .law-icon {
+            color: var(--secondary-color);
+            margin-right: 8px;
+        }
+        
+        .power-icon {
+            color: var(--accent-color);
+            margin-right: 8px;
+        }
+        
+        .climate-icon {
+            color: #00b894;
+            margin-right: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .btn {
+                padding: 10px 18px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Montesquieu: Il Pensatore della Libertà Politica</h1>
+    
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Montesquieu_1.png/440px-Montesquieu_1.png" alt="Ritratto di Montesquieu" width="400">
+    
+    <div class="section">
+        <h2>Vita e Opere</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">📜</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">⚖️</span> Stile Montesquieu
+            </button>
+            <button class="btn btn-alt law-btn">
+                <span class="icon">📚</span> Tema Legge
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Charles-Louis de Secondat, barone di Montesquieu (1689-1755), è stato un filosofo, giurista e pensatore politico francese, figura centrale dell'<span class="highlight">Illuminismo</span> e padre della teoria della separazione dei poteri.</p>
+            
+            <p>Principali tappe biografiche:</p>
+            
+            <ul>
+                <li><span class="law-icon">🏛️</span> Nato nel castello di La Brède vicino a Bordeaux</li>
+                <li><span class="law-icon">🎓</span> Studiò diritto e divenne presidente del Parlamento di Bordeaux</li>
+                <li><span class="power-icon">✈️</span> Viaggiò in Europa studiando i diversi sistemi politici</li>
+                <li><span class="law-icon">📖</span> Si ritirò a vita privata per dedicarsi agli studi</li>
+            </ul>
+            
+            <p>Opere fondamentali:</p>
+            
+            <ul>
+                <li><em>Lettere persiane</em> (1721) - Satira sociale e politica</li>
+                <li><em>Considerazioni sulle cause della grandezza dei Romani e della loro decadenza</em> (1734)</li>
+                <li><em>Lo spirito delle leggi</em> (1748) - Capolavoro di filosofia politica</li>
+            </ul>
+            
+            <div class="quote">
+                "Perché un governo sia buono, è necessario che il potere freni il potere."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>La Separazione dei Poteri</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">🏛️</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">⚖️</span> Stile Montesquieu
+            </button>
+            <button class="btn btn-alt power-btn">
+                <span class="icon">⚡</span> Tema Potere
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Montesquieu elabora la teoria della <span class="highlight">separazione dei poteri</span>, pilastro del costituzionalismo moderno:</p>
+            
+            <ul>
+                <li><span class="power-icon">👑</span> Potere legislativo: fare le leggi (Parlamento)</li>
+                <li><span class="power-icon">⚖️</span> Potere esecutivo: applicare le leggi (Governo)</li>
+                <li><span class="power-icon">👨‍⚖️</span> Potere giudiziario: giudicare secondo le leggi (Magistratura)</li>
+                <li><span class="law-icon">🔒</span> Necessità di equilibrio e controllo reciproco</li>
+            </ul>
+            
+            <p>Vantaggi del sistema:</p>
+            
+            <ul>
+                <li>Previene l'abuso di potere e il dispotismo</li>
+                <li>Garantisce la libertà individuale</li>
+                <li>Favorisce l'efficienza dello Stato</li>
+                <li>Ispirò le costituzioni moderne (USA, Francia)</li>
+            </ul>
+            
+            <div class="quote">
+                "Tutto sarebbe perduto se lo stesso uomo, o lo stesso corpo di maggiorenti, esercitasse questi tre poteri: quello di fare le leggi, quello di eseguire le risoluzioni pubbliche e quello di giudicare i delitti o le controversie tra privati."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Tipi di Governo</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">🌐</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">⚖️</span> Stile Montesquieu
+            </button>
+            <button class="btn btn-alt climate-btn">
+                <span class="icon">🌍</span> Tema Clima
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Montesquieu classifica i <span class="highlight">governi</span> secondo la loro natura e principio:</p>
+            
+            <ul>
+                <li><span class="power-icon">👑</span> Repubblica: virtù (democrazia e aristocrazia)</li>
+                <li><span class="power-icon">🏰</span> Monarchia: onore (potere del re limitato da leggi)</li>
+                <li><span class="power-icon">☠️</span> Dispotismo: paura (arbitrio di un solo uomo)</li>
+                <li><span class="climate-icon">🌡️</span> Influenza del clima e geografia sulle forme di governo</li>
+            </ul>
+            
+            <p>Teoria dei climi:</p>
+            
+            <ul>
+                <li>Climi caldi favoriscono il dispotismo</li>
+                <li>Climi temperati favoriscono la libertà</li>
+                <li>Relazione tra ambiente fisico e carattere dei popoli</li>
+                <li>Anticipa concetti di geografia politica</li>
+            </ul>
+            
+            <div class="quote">
+                "Le leggi devono essere relative al fisico del paese, al clima, alla qualità del terreno, alla situazione, all'estensione, al genere di vita dei popoli."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Lo Spirito delle Leggi</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">📖</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">⚖️</span> Stile Montesquieu
+            </button>
+            <button class="btn btn-alt law-btn">
+                <span class="icon">🧠</span> Tema Spirito
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Nello <span class="highlight">Spirito delle leggi</span>, Montesquieu analizza i fattori che determinano le legislazioni:</p>
+            
+            <ul>
+                <li><span class="law-icon">🧩</span> Le leggi devono adattarsi al popolo per cui sono fatte</li>
+                <li><span class="climate-icon">🌧️</span> Influenza di geografia, clima, religione, commercio</li>
+                <li><span class="law-icon">⚖️</span> Relatività delle istituzioni politiche</li>
+                <li><span class="power-icon">🔄</span> Importanza dei "corpi intermedi" tra popolo e sovrano</li>
+            </ul>
+            
+            <p>Metodo comparativo:</p>
+            
+            <ul>
+                <li>Analisi storica delle istituzioni</li>
+                <li>Confronto tra sistemi giuridici diversi</li>
+                <li>Approccio scientifico allo studio della politica</li>
+                <li>Pioniere della sociologia politica</li>
+            </ul>
+            
+            <div class="quote">
+                "La libertà è il diritto di fare tutto ciò che le leggi permettono."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Eredita e Influenza</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">🌍</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">⚖️</span> Stile Montesquieu
+            </button>
+            <button class="btn btn-alt power-btn">
+                <span class="icon">🏆</span> Tema Eredità
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Montesquieu ha influenzato profondamente:</p>
+            
+            <ul>
+                <li><span class="power-icon">🇺🇸</span> I padri fondatori degli Stati Uniti (Madison, Jefferson)</li>
+                <li><span class="power-icon">🇫🇷</span> La Rivoluzione Francese e la Dichiarazione dei diritti</li>
+                <li><span class="law-icon">🏛️</span> Il costituzionalismo moderno</li>
+                <li><span class="climate-icon">🎓</span> La sociologia politica e la geografia umana</li>
+            </ul>
+            
+            <p>Concetti montesquieuiani fondamentali per:</p>
+            
+            <ul>
+                <li>La struttura degli stati democratici</li>
+                <li>La protezione delle libertà individuali</li>
+                <li>Lo studio comparato dei sistemi politici</li>
+                <li>La relazione tra ambiente e istituzioni</li>
+            </ul>
+            
+            <p>Critiche e sviluppi successivi:</p>
+            
+            <ul>
+                <li>Rousseau: critica alla monarchia costituzionale</li>
+                <li>Tocqueville: sviluppo dell'analisi democratica</li>
+                <li>Weber: approfondimento del rapporto società-politica</li>
+            </ul>
+            
+            <div class="quote">
+                "Per conservare la libertà, bisogna che il governo sia costituito in modo che un cittadino non possa temere un altro cittadino."
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Toggle per mostrare/nascondere i contenuti
+        document.querySelectorAll('.toggle-btn').forEach(button => {
+            // Salva l'icona originale come attributo data
+            const icon = button.querySelector('.icon');
+            button.setAttribute('data-original-icon', icon.textContent);
+            
+            button.addEventListener('click', function() {
+                const content = this.parentElement.nextElementSibling;
+                content.classList.toggle('show');
+                
+                // Cambia l'icona e il testo
+                const icon = this.querySelector('.icon');
+                if (content.classList.contains('show')) {
+                    icon.textContent = '📕';
+                    this.innerHTML = this.innerHTML.replace('Mostra', 'Nascondi');
+                } else {
+                    const originalIcon = this.getAttribute('data-original-icon');
+                    icon.textContent = originalIcon;
+                    this.innerHTML = this.innerHTML.replace('Nascondi', 'Mostra');
+                }
+            });
+        });
+        
+        // Cambia stile delle sezioni (tema Montesquieu)
+        document.querySelectorAll('.style-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.parentElement.parentElement;
+                section.classList.toggle('montesquieu-style');
+                
+                // Cambia l'icona e il testo
+                const icon = this.querySelector('.icon');
+                if (section.classList.contains('montesquieu-style')) {
+                    icon.textContent = '✏️';
+                    this.innerHTML = this.innerHTML.replace('Stile Montesquieu', 'Stile Normale');
+                } else {
+                    icon.textContent = '⚖️';
+                    this.innerHTML = this.innerHTML.replace('Stile Normale', 'Stile Montesquieu');
+                }
+            });
+        });
+        
+        // Bottoni tema legge
+        document.querySelectorAll('.law-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.parentElement.parentElement;
+                section.classList.toggle('law-style');
+                
+                // Rimuovi altri stili tematici
+                section.classList.remove('power-style', 'climate-style');
+            });
+        });
+        
+        // Bottoni tema potere
+        document.querySelectorAll('.power-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.parentElement.parentElement;
+                section.classList.toggle('power-style');
+                
+                // Rimuovi altri stili tematici
+                section.classList.remove('law-style', 'climate-style');
+            });
+        });
+        
+        // Bottoni tema clima
+        document.querySelectorAll('.climate-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.parentElement.parentElement;
+                section.classList.toggle('climate-style');
+                
+                // Rimuovi altri stili tematici
+                section.classList.remove('law-style', 'power-style');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Georg Wilhelm Friedrich Hegel - Il Sistema Dialettico</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #e74c3c;
+            --light-bg: #ecf0f1;
+            --dark-text: #2c3e50;
+            --light-text: #ecf0f1;
+            --dialectical-thesis: #3498db;
+            --dialectical-antithesis: #e74c3c;
+            --dialectical-synthesis: #2ecc71;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            color: var(--dark-text);
+            background-color: var(--light-bg);
+            background-image: linear-gradient(to bottom, #ffffff, var(--light-bg));
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 15px;
+            margin-bottom: 40px;
+            font-weight: normal;
+            font-size: 2.5rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-top: 40px;
+            font-weight: normal;
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .section {
+            background-color: white;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            border: 1px solid #dfe6e9;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .section-content {
+            display: none;
+            padding-top: 20px;
+            animation: fadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-content.show {
+            display: block;
+        }
+        
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            font-size: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 25%, rgba(255,255,255,0.3) 50%, transparent 75%);
+            background-size: 400% 400%;
+            opacity: 0;
+            transition: all 0.6s ease;
+            z-index: -1;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+        }
+        
+        .btn:hover:after {
+            opacity: 1;
+            animation: shine 1.5s infinite;
+        }
+        
+        @keyframes shine {
+            0% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .btn-style {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .btn-style:hover {
+            background-color: #c0392b;
+        }
+        
+        .btn-alt {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-alt:hover {
+            background-color: #1a252f;
+        }
+        
+        .hegel-style {
+            background-color: #f8f9fa;
+            border-left: 6px solid var(--secondary-color);
+            box-shadow: 0 8px 25px rgba(52, 73, 94, 0.15);
+            transform: translateY(-5px);
+        }
+        
+        .hegel-style h2 {
+            color: var(--secondary-color);
+            border-left-color: var(--secondary-color);
+        }
+        
+        .dialectical-thesis {
+            background-color: #ebf5fb;
+            border-left: 6px solid var(--dialectical-thesis);
+        }
+        
+        .dialectical-antithesis {
+            background-color: #fdedec;
+            border-left: 6px solid var(--dialectical-antithesis);
+        }
+        
+        .dialectical-synthesis {
+            background-color: #e8f8f5;
+            border-left: 6px solid var(--dialectical-synthesis);
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 35px auto;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border: 3px solid white;
+            transform: rotate(-1deg);
+            transition: all 0.4s ease;
+        }
+        
+        img:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+        
+        .quote {
+            font-style: italic;
+            color: var(--primary-color);
+            border-left: 4px solid var(--accent-color);
+            padding: 20px;
+            margin: 30px 0;
+            background-color: white;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        .quote:before {
+            content: """;
+            font-size: 80px;
+            color: var(--secondary-color);
+            position: absolute;
+            left: 10px;
+            top: -20px;
+            opacity: 0.1;
+            font-family: serif;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #d6eaf8 0%, #ebf5fb 100%);
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: var(--dark-text);
+            font-weight: bold;
+        }
+        
+        ul {
+            padding-left: 30px;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            position: relative;
+            line-height: 1.6;
+            padding-left: 25px;
+        }
+        
+        li:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 12px;
+            height: 12px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+        }
+        
+        .icon {
+            font-size: 20px;
+        }
+        
+        .dialectic-icon {
+            color: var(--secondary-color);
+            margin-right: 8px;
+        }
+        
+        .spirit-icon {
+            color: var(--primary-color);
+            margin-right: 8px;
+        }
+        
+        .history-icon {
+            color: var(--accent-color);
+            margin-right: 8px;
+        }
+        
+        .dialectical-process {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .dialectical-step {
+            flex: 1;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 0 5px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .thesis-step {
+            background-color: var(--dialectical-thesis);
+        }
+        
+        .antithesis-step {
+            background-color: var(--dialectical-antithesis);
+        }
+        
+        .synthesis-step {
+            background-color: var(--dialectical-synthesis);
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .btn {
+                padding: 10px 18px;
+                font-size: 14px;
+            }
+            
+            .dialectical-process {
+                flex-direction: column;
+            }
+            
+            .dialectical-step {
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Georg Wilhelm Friedrich Hegel: La Dialettica dello Spirito</h1>
+    
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Hegel_portrait_by_Schlesinger_1831.jpg/440px-Hegel_portrait_by_Schlesinger_1831.jpg" alt="Ritratto di Hegel" width="400">
+    
+    <div class="section">
+        <h2>Vita e Opere</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">📜</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🔄</span> Stile Hegeliano
+            </button>
+            <button class="btn btn-alt thesis-btn">
+                <span class="icon">🔵</span> Tesi
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Georg Wilhelm Friedrich Hegel (1770-1831) è stato il massimo esponente dell'<span class="highlight">idealismo tedesco</span> e uno dei filosofi più influenti della storia del pensiero occidentale.</p>
+            
+            <p>Principali tappe biografiche:</p>
+            
+            <ul>
+                <li><span class="spirit-icon">🎓</span> Nato a Stoccarda, studiò teologia a Tubinga con Schelling e Hölderlin</li>
+                <li><span class="spirit-icon">🏛️</span> Insegnò a Jena, Heidelberg e Berlino</li>
+                <li><span class="history-icon">📚</span> Rettore dell'Università di Berlino dal 1830</li>
+                <li><span class="spirit-icon">⚕️</span> Morì durante un'epidemia di colera a Berlino</li>
+            </ul>
+            
+            <p>Opere fondamentali:</p>
+            
+            <ul>
+                <li><em>Fenomenologia dello spirito</em> (1807) - Prima grande opera sistematica</li>
+                <li><em>Scienza della logica</em> (1812-1816)</li>
+                <li><em>Enciclopedia delle scienze filosofiche</em> (1817) - Sintesi del sistema</li>
+                <li><em>Lineamenti di filosofia del diritto</em> (1821)</li>
+                <li><em>Lezioni sulla filosofia della storia</em> (postume)</li>
+            </ul>
+            
+            <div class="quote">
+                "Il reale è razionale e il razionale è reale."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>La Dialettica Hegeliana</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">🔄</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🔄</span> Stile Hegeliano
+            </button>
+            <button class="btn btn-alt antithesis-btn">
+                <span class="icon">🔴</span> Antitesi
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Il metodo dialettico di Hegel rappresenta il <span class="highlight">motore del divenire</span> della realtà:</p>
+            
+            <div class="dialectical-process">
+                <div class="dialectical-step thesis-step">
+                    <h3>Tesi</h3>
+                    <p>Affermazione iniziale</p>
+                </div>
+                <div class="dialectical-step antithesis-step">
+                    <h3>Antitesi</h3>
+                    <p>Negazione della tesi</p>
+                </div>
+                <div class="dialectical-step synthesis-step">
+                    <h3>Sintesi</h3>
+                    <p>Superamento e conservazione</p>
+                </div>
+            </div>
+            
+            <p>Caratteristiche della dialettica:</p>
+            
+            <ul>
+                <li><span class="dialectic-icon">🔄</span> Processo triadico che avviene a tutti i livelli della realtà</li>
+                <li><span class="dialectic-icon">⚡</span> La contraddizione è il motore del movimento</li>
+                <li><span class="dialectic-icon">📈</span> Progressiva elevazione a livelli più complessi</li>
+                <li><span class="dialectic-icon">🌍</span> Applicabile alla natura, alla storia e allo spirito</li>
+            </ul>
+            
+            <div class="quote">
+                "La filosofia è il proprio tempo appreso con il pensiero."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Filosofia dello Spirito</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">👁️</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🔄</span> Stile Hegeliano
+            </button>
+            <button class="btn btn-alt synthesis-btn">
+                <span class="icon">🟢</span> Sintesi
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Hegel sviluppa una complessa <span class="highlight">filosofia dello spirito</span> in tre momenti:</p>
+            
+            <ul>
+                <li><span class="spirit-icon">💭</span> <strong>Spirito soggettivo</strong>: individualità psichica e coscienza</li>
+                <li><span class="spirit-icon">🏛️</span> <strong>Spirito oggettivo</strong>: diritto, moralità, eticità (famiglia, società civile, Stato)</li>
+                <li><span class="spirit-icon">🎨</span> <strong>Spirito assoluto</strong>: arte, religione, filosofia come forme di autocomprensione</li>
+            </ul>
+            
+            <p>Lo Stato hegeliano:</p>
+            
+            <ul>
+                <li>Rappresenta la massima realizzazione dello spirito oggettivo</li>
+                <li>"La realtà dell'idea morale"</li>
+                <li>Organismo razionale che supera gli interessi particolari</li>
+                <li>Monarchia costituzionale come forma più avanzata</li>
+            </ul>
+            
+            <div class="quote">
+                "Lo Stato è la sostanza etica consapevole di sé."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Filosofia della Storia</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">🌍</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🔄</span> Stile Hegeliano
+            </button>
+            <button class="btn btn-alt thesis-btn">
+                <span class="icon">🔵</span> Tesi
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Per Hegel la storia è il <span class="highlight">processo di realizzazione</span> dello spirito nel mondo:</p>
+            
+            <ul>
+                <li><span class="history-icon">🔄</span> La storia ha un senso e una direzione (teleologia)</li>
+                <li><span class="history-icon">⚡</span> La "ragione" (Vernunft) governa il processo storico</li>
+                <li><span class="history-icon">👑</span> Gli "individui cosmico-storici" (Alessandro, Cesare, Napoleone) incarnano lo spirito del tempo</li>
+                <li><span class="history-icon">🏛️</span> Lo Stato prussiano rappresenta il culmine (controversa)</li>
+            </ul>
+            
+            <p>Fasi dello sviluppo storico:</p>
+            
+            <ul>
+                <li>Oriente: uno solo è libero (il despota)</li>
+                <li>Greco-romana: alcuni sono liberi (i cittadini)</li>
+                <li>Germanica: tutti sono liberi (nello Stato razionale)</li>
+            </ul>
+            
+            <div class="quote">
+                "La storia del mondo è il progresso nella coscienza della libertà."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Eredita e Influenza</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">🏛️</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🔄</span> Stile Hegeliano
+            </button>
+            <button class="btn btn-alt antithesis-btn">
+                <span class="icon">🔴</span> Antitesi
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Hegel ha influenzato profondamente:</p>
+            
+            <ul>
+                <li><span class="dialectic-icon">👨‍🎓</span> La sinistra hegeliana (Feuerbach, Marx)</li>
+                <li><span class="dialectic-icon">📚</span> L'esistenzialismo (Kierkegaard, Sartre)</li>
+                <li><span class="dialectic-icon">🌍</span> Lo storicismo (Croce, Gentile)</li>
+                <li><span class="dialectic-icon">🧠</span> La filosofia continentale del XX secolo</li>
+            </ul>
+            
+            <p>Critiche principali:</p>
+            
+            <ul>
+                <li>Schopenhauer: "Hegel è un ciarlatano"</li>
+                <li>Kierkegaard: eccesso di sistema a scapito dell'individuo</li>
+                <li>Popper: accusato di totalitarismo</li>
+                <li>Marx: "messo su testa" il metodo dialettico</li>
+            </ul>
+            
+            <p>Attualità del pensiero hegeliano:</p>
+            
+            <ul>
+                <li>Teorie della riconoscimento (Honneth)</li>
+                <li>Filosofia politica contemporanea</li>
+                <li>Studi sull'idealismo tedesco</li>
+            </ul>
+            
+            <div class="quote">
+                "La filosofia hegeliana è l'espressione più compiuta della modernità."
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Toggle per mostrare/nascondere i contenuti
+        document.querySelectorAll('.toggle-btn').forEach(button => {
+            // Salva l'icona originale come attributo data
+            const icon = button.querySelector('.icon');
+            button.setAttribute('data-original-icon', icon.textContent);
+            
+            button.addEventListener('click', function() {
+                const content = this.parentElement.nextElementSibling;
+                content.classList.toggle('show');
+                
+                // Cambia l'icona e il testo
+                const icon = this.querySelector('.icon');
+                if (content.classList.contains('show')) {
+                    icon.textContent = '📕';
+                    this.innerHTML = this.innerHTML.replace('Mostra', 'Nascondi');
+                } else {
+                    const originalIcon = this.getAttribute('data-original-icon');
+                    icon.textContent = originalIcon;
+                    this.innerHTML = this.innerHTML.replace('Nascondi', 'Mostra');
+                }
+            });
+        });
+        
+        // Cambia stile delle sezioni (tema Hegel)
+        document.querySelectorAll('.style-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.parentElement.parentElement;
+                section.classList.toggle('hegel-style');
+                
+                // Cambia l'icona e il testo
+                const icon = this.querySelector('.icon');
+                if (section.classList.contains('hegel-style')) {
+                    icon.textContent = '✏️';
+                    this.innerHTML = this.innerHTML.replace('Stile Hegeliano', 'Stile Normale');
+                } else {
+                    icon.textContent = '🔄';
+                    this.innerHTML = this.innerHTML.replace('Stile Normale', 'Stile Hegeliano');
+                }
+            });
+        });
+        
+        // Bottoni tema tesi
+        document.querySelectorAll('.thesis-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.parentElement.parentElement;
+                section.classList.toggle('dialectical-thesis');
+                
+                // Rimuovi altri stili tematici
+                section.classList.remove('dialectical-antithesis', 'dialectical-synthesis');
+            });
+        });
+        
+        // Bottoni tema antitesi
+        document.querySelectorAll('.antithesis-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.parentElement.parentElement;
+                section.classList.toggle('dialectical-antithesis');
+                
+                // Rimuovi altri stili tematici
+                section.classList.remove('dialectical-thesis', 'dialectical-synthesis');
+            });
+        });
+        
+        // Bottoni tema sintesi
+        document.querySelectorAll('.synthesis-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.parentElement.parentElement;
+                section.classList.toggle('dialectical-synthesis');
+                
+                // Rimuovi altri stili tematici
+                section.classList.remove('dialectical-thesis', 'dialectical-antithesis');
+            });
+        });
+    </script>
+</body>
+</html>

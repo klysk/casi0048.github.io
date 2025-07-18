@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theodor W. Adorno - Teoria Critica e Dialettica Negativa</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #7f8c8d;
+            --accent: #e74c3c;
+            --text: #2c3e50;
+            --light-bg: #ecf0f1;
+            --highlight: #f9f9f9;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            color: var(--text);
+            background-color: #ffffff;
+        }
+
+        h1 {
+            color: var(--primary);
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 15px;
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-top: 40px;
+            font-weight: 600;
+            border-left: 4px solid var(--accent);
+            padding-left: 15px;
+        }
+
+        h3 {
+            color: var(--secondary);
+            margin-top: 30px;
+            font-weight: 550;
+        }
+
+        .section {
+            border: 1px solid #dfe6e9;
+            border-radius: 8px;
+            padding: 0;
+            margin-bottom: 35px;
+            transition: all 0.4s ease;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 20px;
+            background-color: var(--light-bg);
+            transition: all 0.3s;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .section-header:hover {
+            background-color: #e0e6e9;
+        }
+
+        .section-content {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s ease, padding 0.4s ease;
+        }
+
+        .section-content.open {
+            padding: 25px;
+            max-height: 5000px;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: all 0.3s;
+            min-width: 140px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        button:hover {
+            background-color: #1a252f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .style-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 35px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .highlighted {
+            border-color: var(--accent);
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.1);
+        }
+
+        .highlighted .section-header {
+            background-color: var(--highlight);
+            color: var(--primary);
+        }
+
+        .frankfurt-style {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f5f7fa;
+            border-left: 5px solid #34495e;
+        }
+
+        .frankfurt-style .section-header {
+            background-color: #d6dbdf;
+            font-style: italic;
+        }
+
+        .dark-mode {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+
+        .dark-mode .section {
+            background-color: #252525;
+            border-color: #3a3a3a;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .dark-mode h1 {
+            color: #e74c3c;
+            border-color: #7f8c8d;
+        }
+
+        .dark-mode h2 {
+            color: #bdc3c7;
+            border-color: #e74c3c;
+        }
+
+        .dark-mode h3 {
+            color: #95a5a6;
+        }
+
+        .dark-mode .section-header {
+            background-color: #2a2a2a;
+            color: #ecf0f1;
+        }
+
+        .dark-mode .section-header:hover {
+            background-color: #3a3a3a;
+        }
+
+        .quote {
+            font-style: italic;
+            border-left: 4px solid var(--accent);
+            padding: 15px 25px;
+            margin: 25px 0;
+            background-color: var(--light-bg);
+            border-radius: 0 6px 6px 0;
+            font-size: 1.05em;
+            line-height: 1.8;
+        }
+
+        .dark-mode .quote {
+            background-color: #2a2a2a;
+            color: #d0d0d0;
+            border-left-color: var(--secondary);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+            margin: 30px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--secondary);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+            padding-left: 20px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -40px;
+            top: 8px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 3px solid var(--accent);
+        }
+
+        .concept-box {
+            background-color: #e8f4f8;
+            border: 1px solid #c5d9e8;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .dark-mode .concept-box {
+            background-color: #2a3138;
+            border-color: #3a4750;
+        }
+
+        .term-definition {
+            font-weight: bold;
+            color: var(--primary);
+            cursor: help;
+            border-bottom: 1px dotted var(--secondary);
+        }
+
+        .dark-mode .term-definition {
+            color: var(--accent);
+            border-bottom-color: var(--secondary);
+        }
+
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .work-card {
+            border: 1px solid #dfe6e9;
+            border-radius: 6px;
+            padding: 15px;
+            transition: all 0.3s;
+            background-color: white;
+        }
+
+        .work-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .dark-mode .work-card {
+            border-color: #3a3a3a;
+            background-color: #303030;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            border-radius: 6px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border: 1px solid #dfe6e9;
+        }
+
+        .dark-mode .image-container img {
+            filter: brightness(0.8);
+            border-color: #3a3a3a;
+        }
+
+        .tab-container {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #dfe6e9;
+        }
+
+        .dark-mode .tab-container {
+            border-bottom-color: #3a3a3a;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            margin-right: 10px;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            border-bottom: 3px solid var(--accent);
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .dark-mode .tab.active {
+            color: var(--accent);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Theodor W. Adorno: Dialettica Negativa e Teoria Critica</h1>
+    
+    <div class="style-buttons">
+        <button onclick="toggleAllSections()">Apri/Chiudi Tutto</button>
+        <button onclick="changeStyle('highlight')">Stile Critico</button>
+        <button onclick="changeStyle('frankfurt')">Stile Francofortese</button>
+        <button onclick="toggleDarkMode()">Modalità Dialettica</button>
+        <button onclick="resetStyles()">Stile Originale</button>
+    </div>
+    
+    <div class="section">
+        <div class="section-header" onclick="toggleSection('biografia')">
+            <h2>Biografia Intellettuale</h2>
+            <button>Mostra Sezione</button>
+        </div>
+        <div class="section-content" id="biografia">
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>1903: Nascita a Francoforte</h3>
+                    <p>Theodor Wiesengrund Adorno nasce l'11 settembre in una famiglia borghese di origine ebraica.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>1924: Dottorato in filosofia</h3>
+                    <p>Si laurea con una tesi su Husserl sotto la guida di Hans Cornelius.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>1931: Ingresso all'Istituto per la Ricerca Sociale</h3>
+                    <p>Inizia la collaborazione con la Scuola di Francoforte e Max Horkheimer.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>1934-1949: Esilio negli USA</h3>
+                    <p>Fugge dal nazismo, prima a Oxford poi a New York e Los Angeles.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>1949: Ritorno a Francoforte</h3>
+                    <p>Riprende l'insegnamento e la direzione dell'Istituto per la Ricerca Sociale.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>1966: Pubblica Dialettica Negativa</h3>
+                    <p>Opera fondamentale che riassume il suo pensiero maturo.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>1969: Morte in Svizzera</h3>
+                    <p>Muore il 6 agosto a Visp durante un soggiorno di vacanza.</p>
+                </div>
+            </div>
+            
+            <div class="image-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Bundesarchiv_B_145_Bild-F078072-0004%2C_Theodor_W._Adorno.jpg/220px-Bundesarchiv_B_145_Bild-F078072-0004%2C_Theodor_W._Adorno.jpg" alt="Theodor W. Adorno">
+                <p><em>Theodor W. Adorno (1903-1969)</em></p>
+            </div>
+            
+            <div class="quote">
+                "Non c'è vita giusta nella falsa."<br>
+                - Minima Moralia
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="section-header" onclick="toggleSection('teoria')">
+            <h2>Teoria Critica</h2>
+            <button>Mostra Sezione</button>
+        </div>
+        <div class="section-content" id="teoria">
+            <div class="concept-box">
+                <h3>La Scuola di Francoforte</h3>
+                <p>Adorno è tra i principali esponenti di questo movimento interdisciplinare che unisce filosofia, sociologia e psicoanalisi per criticare la società capitalistica.</p>
+            </div>
+            
+            <h3>Dialettica negativa</h3>
+            <p>Metodo che rifiuta ogni sintesi positiva, mantenendo la tensione critica tra concetto e oggetto.</p>
+            
+            <h3>Industria culturale</h3>
+            <p>Concetto sviluppato con Horkheimer per descrivere come la cultura di massa standardizzi i bisogni e annulli il pensiero critico.</p>
+            
+            <div class="quote">
+                "Scrivere una poesia dopo Auschwitz è barbaro."<br>
+                - Critica della cultura e società
+            </div>
+            
+            <h3>Razionalità strumentale</h3>
+            <p>Critica alla ragione che si riduce a mero calcolo e dominio sulla natura e sull'uomo.</p>
+            
+            <h3>Non identità</h3>
+            <p>L'oggetto non è mai completamente riducibile al concetto che lo pensa.</p>
+            
+            <div class="concept-box">
+                <h3>Influenze filosofiche</h3>
+                <p>Adorno attinge da:
+                    <ul>
+                        <li>Hegel (dialettica)</li>
+                        <li>Marx (critica del capitalismo)</li>
+                        <li>Freud (psicoanalisi)</li>
+                        <li>Kierkegaard (critica della società)</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="section-header" onclick="toggleSection('aree')">
+            <h2>Aree di Ricerca</h2>
+            <button>Mostra Sezione</button>
+        </div>
+        <div class="section-content" id="aree">
+            <div class="tab-container">
+                <div class="tab active" onclick="openTab(event, 'filosofia')">Filosofia</div>
+                <div class="tab" onclick="openTab(event, 'sociologia')">Sociologia</div>
+                <div class="tab" onclick="openTab(event, 'musica')">Musica</div>
+                <div class="tab" onclick="openTab(event, 'letteratura')">Letteratura</div>
+            </div>
+            
+            <div id="filosofia" class="tab-content active">
+                <h3>Dialettica dell'Illuminismo</h3>
+                <p>Scritto con Horkheimer, analizza come la ragione illuminista si rovesci nel suo contrario: il mito e la barbarie.</p>
+                
+                <h3>Critica della ragione strumentale</h3>
+                <p>La razionalità moderna diventa strumento di dominio anziché di emancipazione.</p>
+                
+                <div class="quote">
+                    "Il tutto è il falso."<br>
+                    - Minima Moralia
+                </div>
+            </div>
+            
+            <div id="sociologia" class="tab-content">
+                <h3>Studi sull'autoritarismo</h3>
+                <p>Ricerca empirica sulle personalità autoritarie che spiega l'ascesa del fascismo.</p>
+                
+                <h3>Critica della società capitalistica</h3>
+                <p>Analisi della reificazione e della mercificazione delle relazioni umane.</p>
+            </div>
+            
+            <div id="musica" class="tab-content">
+                <h3>Filosofia della musica</h3>
+                <p>Analisi critica della musica come fenomeno sociale e culturale.</p>
+                
+                <h3>La musica nuova</h3>
+                <p>Difesa dell'avanguardia musicale (Schoenberg) contro il kitsch e la standardizzazione.</p>
+                
+                <div class="quote">
+                    "La musica è la storia segreta dell'umanità."<br>
+                    - Introduzione alla sociologia della musica
+                </div>
+            </div>
+            
+            <div id="letteratura" class="tab-content">
+                <h3>Teoria estetica</h3>
+                <p>L'arte come forma di resistenza alla logica del dominio.</p>
+                
+                <h3>Critica letteraria</h3>
+                <p>Analisi di Kafka, Beckett e altri autori che rappresentano la crisi della modernità.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="section-header" onclick="toggleSection('opere')">
+            <h2>Opere Principali</h2>
+            <button>Mostra Sezione</button>
+        </div>
+        <div class="section-content" id="opere">
+            <div class="works-grid">
+                <div class="work-card">
+                    <h3>Dialettica dell'Illuminismo (1947)</h3>
+                    <p>Scritto con Horkheimer, analizza il rovesciamento della ragione in mito.</p>
+                </div>
+                
+                <div class="work-card">
+                    <h3>Minima Moralia (1951)</h3>
+                    <p>Aforismi e riflessioni sulla vita nel capitalismo avanzato.</p>
+                </div>
+                
+                <div class="work-card">
+                    <h3>Prismi (1955)</h3>
+                    <p>Saggi di critica culturale su arte e società.</p>
+                </div>
+                
+                <div class="work-card">
+                    <h3>Dialettica Negativa (1966)</h3>
+                    <p>Opera filosofica fondamentale che sviluppa il suo metodo critico.</p>
+                </div>
+                
+                <div class="work-card">
+                    <h3>Teoria Estetica (1970)</h3>
+                    <p>Pubblicato postumo, sintetizza il suo pensiero sull'arte.</p>
+                </div>
+                
+                <div class="work-card">
+                    <h3>Introduzione alla sociologia della musica (1962)</h3>
+                    <p>Analisi critica del ruolo sociale della musica.</p>
+                </div>
+            </div>
+            
+            <div class="quote">
+                "La libertà non sta nella scelta tra bianco e nero, ma nel sottrarsi a questa scelta prescritta."<br>
+                - Minima Moralia
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="section-header" onclick="toggleSection('eredita')">
+            <h2>Eredità e Critiche</h2>
+            <button>Mostra Sezione</button>
+        </div>
+        <div class="section-content" id="eredita">
+            <h3>Influenze</h3>
+            <p>Adorno ha influenzato:
+                <ul>
+                    <li>La teoria critica contemporanea (Habermas, Honneth)</li>
+                    <li>Gli studi culturali e la critica dei media</li>
+                    <li>La filosofia post-strutturalista</li>
+                    <li>La sociologia della cultura</li>
+                </ul>
+            </p>
+            
+            <h3>Critiche principali</h3>
+            <div class="concept-box">
+                <p>Le obiezioni più comuni al suo pensiero:
+                    <ul>
+                        <li>Pessimismo eccessivo (Marcuse)</li>
+                        <li>Elitismo culturale (Bourdieu)</li>
+                        <li>Astrazione eccessiva (scuola pragmatista)</li>
+                        <li>Difficoltà stilistica</li>
+                    </ul>
+                </p>
+            </div>
+            
+            <div class="quote">
+                "Adorno è il filosofo che meglio ha capito come la libertà possa sopravvivere nella società totalmente amministrata."<br>
+                - Jürgen Habermas
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Inizializza tutte le sezioni come chiuse
+        document.querySelectorAll('.section-content').forEach(content => {
+            content.classList.remove('open');
+        });
+        
+        // Funzione per aprire/chiudere singole sezioni
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const button = section.parentNode.querySelector('.section-header button');
+            
+            section.classList.toggle('open');
+            
+            if (section.classList.contains('open')) {
+                button.textContent = 'Nascondi Sezione';
+            } else {
+                button.textContent = 'Mostra Sezione';
+            }
+        }
+        
+        // Funzione per aprire/chiudere tutte le sezioni
+        function toggleAllSections() {
+            const allContents = document.querySelectorAll('.section-content');
+            const allOpen = Array.from(allContents).every(content => content.classList.contains('open'));
+            
+            allContents.forEach(content => {
+                const button = content.parentNode.querySelector('.section-header button');
+                
+                if (allOpen) {
+                    content.classList.remove('open');
+                    button.textContent = 'Mostra Sezione';
+                } else {
+                    content.classList.add('open');
+                    button.textContent = 'Nascondi Sezione';
+                }
+            });
+        }
+        
+        // Funzione per cambiare stile
+        function changeStyle(style) {
+            const sections = document.querySelectorAll('.section');
+            
+            sections.forEach(section => {
+                section.classList.remove('highlighted', 'frankfurt-style');
+                
+                if (style === 'highlight') {
+                    section.classList.add('highlighted');
+                } else if (style === 'frankfurt') {
+                    section.classList.add('frankfurt-style');
+                }
+            });
+        }
+        
+        // Funzione per resettare gli stili
+        function resetStyles() {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('highlighted', 'frankfurt-style');
+            });
+            document.body.classList.remove('dark-mode');
+        }
+        
+        // Funzione per la modalità scura
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+        
+        // Funzione per i tab
+        function openTab(evt, tabName) {
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+            
+            const tabs = document.getElementsByClassName('tab');
+            for (let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+            
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+        
+        // Aggiungi event listener per i pulsanti
+        document.querySelectorAll('.section-header button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const header = this.parentNode;
+                const content = header.nextElementSibling;
+                content.classList.toggle('open');
+                
+                if (content.classList.contains('open')) {
+                    this.textContent = 'Nascondi Sezione';
+                } else {
+                    this.textContent = 'Mostra Sezione';
+                }
+            });
+        });
+        
+        // Tooltip per i termini filosofici
+        document.querySelectorAll('.term-definition').forEach(term => {
+            term.addEventListener('mouseover', function(e) {
+                const title = this.getAttribute('title');
+                if (title) {
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'tooltip';
+                    tooltip.textContent = title;
+                    tooltip.style.position = 'absolute';
+                    tooltip.style.backgroundColor = 'rgba(0,0,0,0.8)';
+                    tooltip.style.color = 'white';
+                    tooltip.style.padding = '5px 10px';
+                    tooltip.style.borderRadius = '4px';
+                    tooltip.style.zIndex = '100';
+                    tooltip.style.maxWidth = '300px';
+                    
+                    const rect = this.getBoundingClientRect();
+                    tooltip.style.left = `${rect.left}px`;
+                    tooltip.style.top = `${rect.bottom + 5}px`;
+                    
+                    document.body.appendChild(tooltip);
+                    
+                    this.addEventListener('mouseout', function handler() {
+                        document.body.removeChild(tooltip);
+                        this.removeEventListener('mouseout', handler);
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

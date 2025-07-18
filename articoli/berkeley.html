@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>George Berkeley - L'idealista empirista</title>
+    <style>
+        :root {
+            --primary-color: #1e3799;
+            --secondary-color: #4a69bd;
+            --accent-color: #f6b93b;
+            --light-bg: #f1f5f8;
+            --dark-text: #1e272e;
+            --light-text: #f1f5f8;
+        }
+        
+        body {
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            line-height: 1.7;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            color: var(--dark-text);
+            background-color: var(--light-bg);
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 15px;
+            margin-bottom: 40px;
+            font-weight: normal;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-top: 40px;
+            font-weight: normal;
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 15px;
+        }
+        
+        .section {
+            background-color: white;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            border: 1px solid #dae1e7;
+        }
+        
+        .section-content {
+            display: none;
+            padding-top: 20px;
+            animation: fadeIn 0.6s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-content.show {
+            display: block;
+        }
+        
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn:hover {
+            background-color: #3c56a0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        .btn-style {
+            background-color: var(--accent-color);
+            color: var(--dark-text);
+        }
+        
+        .btn-style:hover {
+            background-color: #e6a92b;
+        }
+        
+        .berkeley-style {
+            background-color: #f8fafc;
+            border-left: 6px solid var(--secondary-color);
+            box-shadow: 0 6px 16px rgba(74, 105, 189, 0.2);
+        }
+        
+        .berkeley-style h2 {
+            color: var(--secondary-color);
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 35px auto;
+            border-radius: 8px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+            border: 2px solid white;
+        }
+        
+        .quote {
+            font-style: italic;
+            color: var(--primary-color);
+            border-left: 4px solid var(--accent-color);
+            padding: 15px 25px;
+            margin: 30px 0;
+            background-color: #f8fafc;
+            border-radius: 0 8px 8px 0;
+            position: relative;
+        }
+        
+        .quote:before {
+            content: """;
+            font-size: 60px;
+            color: var(--secondary-color);
+            position: absolute;
+            left: 10px;
+            top: -15px;
+            opacity: 0.2;
+        }
+        
+        .highlight {
+            background-color: #e8f0fe;
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        ul {
+            padding-left: 30px;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            position: relative;
+            line-height: 1.6;
+        }
+        
+        li:before {
+            content: "◆";
+            color: var(--accent-color);
+            display: inline-block;
+            width: 1em;
+            margin-left: -1.5em;
+        }
+        
+        .icon {
+            font-size: 20px;
+        }
+        
+        .mind-icon {
+            color: var(--secondary-color);
+            margin-right: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>George Berkeley: L'idealismo immaterialista</h1>
+    
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/George_Berkeley_by_John_Smibert.jpg/440px-George_Berkeley_by_John_Smibert.jpg" alt="Ritratto di George Berkeley" width="400">
+    
+    <div class="section">
+        <h2>Vita e Opere</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">📖</span> Mostra/Nascondi
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🎨</span> Stile Berkeleyano
+            </button>
+        </div>
+        <div class="section-content">
+            <p>George Berkeley (1685-1753) è stato un filosofo irlandese, vescovo anglicano e rappresentante dell'<span class="highlight">empirismo idealista</span>. La sua filosofia radicale sostiene che la realtà è costituita esclusivamente da menti e dalle loro idee.</p>
+            
+            <p>Principali tappe biografiche:</p>
+            
+            <ul>
+                <li><span class="mind-icon">🧠</span> Nato in Irlanda, studiò al Trinity College di Dublino</li>
+                <li><span class="mind-icon">🧠</span> Viaggiò in Europa e trascorse tre anni in America</li>
+                <li><span class="mind-icon">🧠</span> Divenne vescovo di Cloyne nel 1734</li>
+                <li><span class="mind-icon">🧠</span> Fondò il progetto di un college alle Bermuda (mai realizzato)</li>
+            </ul>
+            
+            <p>Opere fondamentali:</p>
+            
+            <ul>
+                <li><em>Trattato sui principi della conoscenza umana</em> (1710)</li>
+                <li><em>Tre dialoghi tra Hylas e Philonous</em> (1713) - Versione divulgativa</li>
+                <li><em>Alcifrone</em> (1732) - Difesa della religione</li>
+                <li><em>Siris</em> (1744) - Riflessioni filosofiche e scientifiche</li>
+            </ul>
+            
+            <div class="quote">
+                "Essere è essere percepiti o percepire."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>L'immaterialismo</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">🔮</span> Mostra/Nascondi
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🎨</span> Stile Berkeleyano
+            </button>
+        </div>
+        <div class="section-content">
+            <p>La filosofia di Berkeley, chiamata <span class="highlight">immaterialismo</span> o idealismo soggettivo, nega l'esistenza della materia:</p>
+            
+            <ul>
+                <li><span class="mind-icon">👁️</span> Gli oggetti esistono solo in quanto percepiti (esse est percipi)</li>
+                <li><span class="mind-icon">💡</span> La materia è un concetto inconsistente e inutile</li>
+                <li><span class="mind-icon">🌌</span> La realtà è costituita da menti (finite e infinite) e dalle loro idee</li>
+                <li><span class="mind-icon">🔄</span> Le leggi di natura sono regolarità stabilite da Dio nella percezione</li>
+            </ul>
+            
+            <p>Argomenti principali:</p>
+            
+            <ul>
+                <li>Impossibilità di concepire un oggetto non percepito</li>
+                <li>Critica alla distinzione lockeana tra qualità primarie e secondarie</li>
+                <li>La materia è un supporto inutile per le qualità</li>
+                <li>Dio come percezione permanente che garantisce la continuità del mondo</li>
+            </ul>
+            
+            <div class="quote">
+                "Tutti i corpi che compongono la potente struttura del mondo non hanno una sostanza al di fuori della mente."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Teoria della Percezione</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">👁️</span> Mostra/Nascondi
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🎨</span> Stile Berkeleyano
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Berkeley sviluppa una <span class="highlight">teoria della percezione</span> radicale:</p>
+            
+            <ul>
+                <li><span class="mind-icon">🖐️</span> Non esiste differenza tra percezione e oggetto percepito</li>
+                <li><span class="mind-icon">🌈</span> Le qualità sensibili sono l'unica realtà</li>
+                <li><span class="mind-icon">🧩</span> La distanza e la tridimensionalità sono apprese attraverso l'esperienza</li>
+                <li><span class="mind-icon">✋</span> Il tatto è fondamentale per la percezione dello spazio</li>
+            </ul>
+            
+            <p>Conseguenze filosofiche:</p>
+            
+            <ul>
+                <li>Rifiuto dello scetticismo: la realtà coincide con ciò che percepiamo</li>
+                <li>Critica al rappresentazionalismo (l'idea che percepiamo rappresentazioni del mondo)</li>
+                <li>La visione è un linguaggio divino che comunica idee tattili</li>
+            </ul>
+            
+            <div class="quote">
+                "La luce e i colori, caldo e freddo, estensione e figure - in una parola le cose che vediamo e tocchiamo - sono soltanto sensazioni o idee."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Filosofia della Scienza</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">🔬</span> Mostra/Nascondi
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🎨</span> Stile Berkeleyano
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Berkeley applica il suo immaterialismo alla <span class="highlight">scienza naturale</span>:</p>
+            
+            <ul>
+                <li><span class="mind-icon">⚛️</span> Critica alla nozione newtoniana di spazio assoluto</li>
+                <li><span class="mind-icon">♾️</span> Il movimento è relativo al sistema di riferimento</li>
+                <li><span class="mind-icon">💧</span> Sviluppa una teoria alternativa del calcolo infinitesimale</li>
+                <li><span class="mind-icon">🌡️</span> Anticipa alcune idee della termodinamica</li>
+            </ul>
+            
+            <p>La visione berkeleyana della scienza:</p>
+            
+            <ul>
+                <li>La scienza descrive regolarità nelle percezioni</li>
+                <li>Le cause efficienti sono sostituite da segni e correlazioni</li>
+                <li>Dio è la causa ultima delle regolarità naturali</li>
+                <li>La matematica è un linguaggio utile per prevedere fenomeni</li>
+            </ul>
+            
+            <div class="quote">
+                "Le leggi della natura sono le regole secondo cui lo Spirito Supremo produce in noi le idee dei sensi."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Influenza e Attualità</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">🌍</span> Mostra/Nascondi
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🎨</span> Stile Berkeleyano
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Berkeley ha influenzato profondamente:</p>
+            
+            <ul>
+                <li><span class="mind-icon">🧠</span> Hume e l'empirismo scozzese</li>
+                <li><span class="mind-icon">🔄</span> Kant (sebbene criticato nella Critica della ragion pura)</li>
+                <li><span class="mind-icon">💻</span> L'idealismo tedesco (Fichte, Schelling)</li>
+                <li><span class="mind-icon">🔍</span> La fenomenologia (Husserl)</li>
+            </ul>
+            
+            <p>Attualità del pensiero berkeleyano:</p>
+            
+            <ul>
+                <li>Discussioni in filosofia della mente e percezione</li>
+                <li>Problema del realismo vs. antirealismo scientifico</li>
+                <li>Teorie dell'idealismo in fisica quantistica</li>
+                <li>Realtà virtuale e simulazione</li>
+            </ul>
+            
+            <p>Critiche e sviluppi successivi:</p>
+            
+            <ul>
+                <li>Kant: la "cosa in sé" come risposta a Berkeley</li>
+                <li>Realisti scientifici: difesa dell'esistenza indipendente della materia</li>
+                <li>Neo-berkeleyani nella filosofia contemporanea</li>
+            </ul>
+            
+            <div class="quote">
+                "Noi siamo embrioni di divinità, fatti per percepire l'universo che Dio ha creato."
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Toggle per mostrare/nascondere i contenuti
+        document.querySelectorAll('.toggle-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const content = this.parentElement.nextElementSibling;
+                content.classList.toggle('show');
+                
+                // Cambia l'icona e il testo
+                const icon = this.querySelector('.icon');
+                if (content.classList.contains('show')) {
+                    icon.textContent = '📕';
+                    this.innerHTML = this.innerHTML.replace('Mostra', 'Nascondi');
+                } else {
+                    icon.textContent = '📖';
+                    this.innerHTML = this.innerHTML.replace('Nascondi', 'Mostra');
+                }
+            });
+        });
+        
+        // Cambia stile delle sezioni
+        document.querySelectorAll('.style-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.parentElement.parentElement;
+                section.classList.toggle('berkeley-style');
+                
+                // Cambia l'icona e il testo
+                const icon = this.querySelector('.icon');
+                if (section.classList.contains('berkeley-style')) {
+                    icon.textContent = '✏️';
+                    this.innerHTML = this.innerHTML.replace('Stile Berkeleyano', 'Stile Normale');
+                } else {
+                    icon.textContent = '🎨';
+                    this.innerHTML = this.innerHTML.replace('Stile Normale', 'Stile Berkeleyano');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

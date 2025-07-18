@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Al-Farabi - Il Secondo Maestro</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.7;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 25px;
+            color: #333;
+            background-color: #f5f5f0;
+        }
+        
+        h1 {
+            color: #5d4037;
+            text-align: center;
+            border-bottom: 2px solid #5d4037;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #8d6e63;
+            margin-top: 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .image-container {
+            text-align: center;
+            margin: 25px 0;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 1px solid #ddd;
+            max-height: 400px;
+        }
+        
+        .quote {
+            font-style: italic;
+            border-left: 4px solid #8d6e63;
+            padding: 15px 20px;
+            margin: 25px 0;
+            background-color: #efebe9;
+            color: #555;
+        }
+        
+        .toggle-btn {
+            background-color: #5d4037;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            margin-left: 15px;
+        }
+        
+        .toggle-btn:hover {
+            background-color: #8d6e63;
+            transform: translateY(-2px);
+        }
+        
+        .collapsible {
+            display: none;
+            overflow: hidden;
+            background-color: #efebe9;
+            padding: 0 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 3px solid #8d6e63;
+        }
+        
+        .active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .footer {
+            margin-top: 50px;
+            font-size: 0.9em;
+            text-align: center;
+            color: #777;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 750px;
+            margin: 30px auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background-color: #8d6e63;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1px;
+        }
+        
+        .timeline-item {
+            padding: 15px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #f5f5f0;
+            border: 3px solid #5d4037;
+            border-radius: 50%;
+            top: 15px;
+            z-index: 1;
+        }
+        
+        .left {
+            left: 0;
+            text-align: right;
+        }
+        
+        .right {
+            left: 50%;
+            text-align: left;
+        }
+        
+        .left::after {
+            right: -10px;
+        }
+        
+        .right::after {
+            left: -10px;
+        }
+        
+        ul.works-list {
+            columns: 2;
+            column-gap: 40px;
+        }
+        
+        @media (max-width: 600px) {
+            ul.works-list {
+                columns: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Al-Farabi: Il Secondo Maestro</h1>
+    
+    <div class="image-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Al-Farabi.jpg/220px-Al-Farabi.jpg" alt="Ritratto di Al-Farabi">
+        <p><em>Rappresentazione di Al-Farabi (872-950 d.C.)</em></p>
+    </div>
+    
+    <section>
+        <h2>Introduzione <button class="toggle-btn" data-section="intro">Mostra</button></h2>
+        <div id="intro" class="collapsible">
+            <p>Abū Naṣr Muḥammad ibn Muḥammad al-Fārābī, conosciuto in Occidente come Alpharabius o semplicemente Al-Farabi, fu uno dei più importanti filosofi e scienziati del mondo islamico medievale. Nato attorno all'872 d.C. a Farab (nell'attuale Kazakistan) e morto a Damasco nel 950 d.C., è ricordato come "il Secondo Maestro" dopo Aristotele.</p>
+            
+            <p>Al-Farabi fu un pensatore enciclopedico che contribuì a numerosi campi del sapere: filosofia, logica, musica, matematica, cosmologia e scienze politiche. Il suo lavoro fu fondamentale per la trasmissione della filosofia greca al mondo islamico e successivamente all'Europa medievale.</p>
+        </div>
+    </section>
+    
+    <div class="quote">
+        "La conoscenza è l'identità tra l'intelletto e l'intelligibile." - Al-Farabi
+    </div>
+    
+    <section>
+        <h2>Biografia <button class="toggle-btn" data-section="bio">Mostra</button></h2>
+        <div id="bio" class="collapsible">
+            <div class="timeline">
+                <div class="timeline-item left">
+                    <h3>872 d.C.</h3>
+                    <p>Nasce a Farab, nella Transoxiana (attuale Kazakistan), in una famiglia di origine turca.</p>
+                </div>
+                <div class="timeline-item right">
+                    <h3>900 d.C.</h3>
+                    <p>Si trasferisce a Baghdad, centro culturale del mondo islamico, per completare la sua formazione.</p>
+                </div>
+                <div class="timeline-item left">
+                    <h3>910 d.C.</h3>
+                    <p>Studia logica e filosofia con il cristiano nestoriano Yuhanna ibn Haylan.</p>
+                </div>
+                <div class="timeline-item right">
+                    <h3>920 d.C.</h3>
+                    <p>Si stabilisce a Damasco, dove approfondisce gli studi filosofici e musicali.</p>
+                </div>
+                <div class="timeline-item left">
+                    <h3>930 d.C.</h3>
+                    <p>Scrive le sue opere maggiori, tra cui "La città virtuosa" e "L'armonia delle opinioni dei due saggi".</p>
+                </div>
+                <div class="timeline-item right">
+                    <h3>940 d.C.</h3>
+                    <p>Diventa tutore del principe Sayf al-Dawla ad Aleppo.</p>
+                </div>
+                <div class="timeline-item left">
+                    <h3>950 d.C.</h3>
+                    <p>Muore a Damasco all'età di circa 78 anni.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section>
+        <h2>Opere Principali <button class="toggle-btn" data-section="works">Mostra</button></h2>
+        <div id="works" class="collapsible">
+            <ul class="works-list">
+                <li><strong>La città virtuosa (Al-Madina al-Fadila)</strong>: Trattato di filosofia politica che descrive la società ideale</li>
+                <li><strong>L'armonia delle opinioni dei due saggi</strong>: Tentativo di conciliare Platone e Aristotele</li>
+                <li><strong>Catalogo delle scienze (Ihsa' al-'ulum)</strong>: Classificazione sistematica di tutte le scienze conosciute</li>
+                <li><strong>Grande libro della musica (Kitab al-Musiqa al-Kabir)</strong>: Trattato completo di teoria musicale</li>
+                <li><strong>Commentari ad Aristotele</strong>: Soprattutto all'Organon e alla Metafisica</li>
+                <li><strong>Il libro delle lettere (Kitab al-Huruf)</strong>: Sulla filosofia del linguaggio</li>
+                <li><strong>Le opinioni degli abitanti della città virtuosa</strong>: Esposizione della sua metafisica</li>
+                <li><strong>L'acquisto della felicità</strong>: Sull'etica e la vita virtuosa</li>
+            </ul>
+        </div>
+    </section>
+    
+    <section>
+        <h2>Pensiero Filosofico <button class="toggle-btn" data-section="philosophy">Mostra</button></h2>
+        <div id="philosophy" class="collapsible">
+            <h3>Metafisica ed Epistemologia</h3>
+            <p>Al-Farabi sviluppò una complessa teoria dell'emanazione, influenzata dal neoplatonismo, che descrive come dall'Uno (Dio) emanino successivamente l'Intelletto Primo, gli intelletti delle sfere celesti e infine il mondo sublunare. Distinse tra intelletto potenziale, attuale, acquisito e agente.</p>
+            
+            <h3>Filosofia Politica</h3>
+            <p>Nella sua opera più famosa, "La città virtuosa", Al-Farabi descrive una società ideale modellata sullo Stato platonico, governata da un filosofo-re che conosce la verità e guida il popolo verso la felicità. Distinse tra società perfette (virtuose) e imperfette (ignoranti, devianti o errate).</p>
+            
+            <h3>Logica</h3>
+            <p>Considerato il fondatore della logica islamica, Al-Farabi scrisse ampi commentari sull'Organon di Aristotele. Sostenne che la logica è uno strumento universale per raggiungere la verità, indipendente dalla lingua o dalla religione.</p>
+            
+            <h3>Etica</h3>
+            <p>La felicità suprema, secondo Al-Farabi, consiste nella congiunzione dell'intelletto umano con l'Intelletto Agente, raggiungibile attraverso la conoscenza e la virtù. Distinse tra virtù teoriche (saggezza) e pratiche (giustizia, coraggio, temperanza).</p>
+        </div>
+    </section>
+    
+    <section>
+        <h2>Contributi Scientifici <button class="toggle-btn" data-section="science">Mostra</button></h2>
+        <div id="science" class="collapsible">
+            <h3>Musica</h3>
+            <p>Il "Grande libro della musica" di Al-Farabi è considerato il più importante trattato di teoria musicale del medioevo islamico. Descrive sistematicamente gli intervalli, i ritmi, gli strumenti musicali e la loro costruzione, influenzando sia la musica araba che quella occidentale.</p>
+            
+            <h3>Matematica</h3>
+            <p>Scrisse commentari alle opere di Euclide e contribuì alla teoria dei numeri. Il suo approccio matematico influenzò il pensiero scientifico successivo.</p>
+            
+            <h3>Linguistica</h3>
+            <p>Nel "Libro delle lettere" analizzò la relazione tra linguaggio, logica e realtà, anticipando temi della filosofia del linguaggio moderna.</p>
+            
+            <h3>Psicologia</h3>
+            <p>La sua teoria dell'intelletto e della conoscenza influenzò profondamente Avicenna e la psicologia medievale.</p>
+        </div>
+    </section>
+    
+    <section>
+        <h2>Influenza e Eredità <button class="toggle-btn" data-section="legacy">Mostra</button></h2>
+        <div id="legacy" class="collapsible">
+            <h3>Sul Pensiero Islamico</h3>
+            <p>Al-Farabi è considerato il padre della filosofia islamica (falsafa). Il suo sistema filosofico influenzò profondamente Avicenna (Ibn Sina), Averroè (Ibn Rushd) e molti altri pensatori islamici.</p>
+            
+            <h3>Sul Pensiero Europeo</h3>
+            <p>Attraverso le traduzioni latine, le sue opere influenzarono il pensiero medievale europeo, specialmente nell'Università di Parigi. La sua logica e metafisica furono studiate da Alberto Magno e Tommaso d'Aquino.</p>
+            
+            <h3>Nella Storia della Filosofia</h3>
+            <p>Al-Farabi rappresenta un ponte fondamentale tra la filosofia greca antica e il pensiero medievale. La sua sintesi di platonismo e aristotelismo divenne un modello per i filosofi successivi.</p>
+            
+            <h3>Nel Mondo Moderno</h3>
+            <p>Oggi Al-Farabi è celebrato in Kazakistan come figura nazionale. L'Università Nazionale Kazaka e molti istituti culturali portano il suo nome. Le sue opere continuano a essere studiate per la loro profondità e originalità.</p>
+            
+            <div class="quote">
+                "Al-Farabi fu il fondatore della filosofia islamica nel senso vero e proprio." - Majid Fakhry, storico della filosofia
+            </div>
+        </div>
+    </section>
+    
+    <div class="footer">
+        <p>© 2023 Articolo su Al-Farabi - Tutti i diritti riservati</p>
+        <p>Fonti: Encyclopedia Britannica, Stanford Encyclopedia of Philosophy, The Oxford Encyclopedia of Philosophy</p>
+    </div>
+
+    <script>
+        // Inizializza tutte le sezioni come chiuse
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.collapsible').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Aggiungi event listener a tutti i bottoni
+            document.querySelectorAll('.toggle-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const sectionId = this.getAttribute('data-section');
+                    const section = document.getElementById(sectionId);
+                    const isHidden = section.style.display === 'none';
+                    
+                    // Chiudi tutte le sezioni
+                    document.querySelectorAll('.collapsible').forEach(sec => {
+                        sec.style.display = 'none';
+                    });
+                    
+                    // Aggiorna tutti i bottoni
+                    document.querySelectorAll('.toggle-btn').forEach(btn => {
+                        btn.textContent = 'Mostra';
+                    });
+                    
+                    // Apri/chiudi la sezione corrente
+                    if (isHidden) {
+                        section.style.display = 'block';
+                        this.textContent = 'Nascondi';
+                    } else {
+                        section.style.display = 'none';
+                        this.textContent = 'Mostra';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

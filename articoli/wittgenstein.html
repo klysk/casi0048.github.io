@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ludwig Wittgenstein - Filosofo del Linguaggio</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #8e44ad;
+            padding-bottom: 10px;
+            text-align: center;
+        }
+        
+        h2 {
+            color: #8e44ad;
+            margin-top: 30px;
+        }
+        
+        .section {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 25px;
+            transition: all 0.4s ease;
+            background-color: white;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        .section-content {
+            margin-top: 15px;
+            padding: 10px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        button {
+            background-color: #8e44ad;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background-color: #732d91;
+            transform: translateY(-2px);
+        }
+        
+        .style-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .highlighted {
+            background-color: #f5e6ff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-color: #8e44ad;
+        }
+        
+        .custom-style {
+            font-family: 'Courier New', monospace;
+            background-color: #edf7ff;
+            border-left: 5px solid #3498db;
+        }
+        
+        .dark-mode {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+        }
+        
+        .dark-mode .section {
+            background-color: #34495e;
+            color: #ecf0f1;
+            border-color: #4a627a;
+        }
+        
+        .dark-mode h1, .dark-mode h2 {
+            color: #9b59b6;
+        }
+        
+        .quote {
+            font-style: italic;
+            border-left: 3px solid #8e44ad;
+            padding-left: 15px;
+            margin: 15px 0;
+            color: #555;
+        }
+        
+        .dark-mode .quote {
+            color: #bdc3c7;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ludwig Wittgenstein: Il Filosofo del Linguaggio</h1>
+    
+    <div class="style-buttons">
+        <button onclick="toggleSection('all')">Apri/Chiudi Tutto</button>
+        <button onclick="changeSectionStyle('highlight')">Stile Evidenziato</button>
+        <button onclick="changeSectionStyle('custom')">Stile Monospace</button>
+        <button onclick="toggleDarkMode()">Modalità Scura</button>
+        <button onclick="changeSectionStyle('reset')">Stile Originale</button>
+    </div>
+    
+    <div class="section">
+        <div class="section-header" onclick="toggleSection('bio')">
+            <h2>Biografia</h2>
+            <button>Mostra/Nascondi</button>
+        </div>
+        <div class="section-content hidden" id="bio">
+            <p>Ludwig Josef Johann Wittgenstein (1889-1951) è stato uno dei più influenti filosofi del XX secolo, noto principalmente per i suoi lavori sulla filosofia del linguaggio, la logica e la filosofia della mente.</p>
+            
+            <p>Nato a Vienna in una ricca famiglia industriale, Wittgenstein inizialmente studiò ingegneria aeronautica a Berlino e Manchester, prima di dedicarsi alla filosofia sotto la guida di Bertrand Russell a Cambridge.</p>
+            
+            <div class="quote">
+                "I limiti del mio linguaggio significano i limiti del mio mondo."<br>
+                - Tractatus Logico-Philosophicus
+            </div>
+            
+            <p>Dopo aver combattuto nella prima guerra mondiale e aver pubblicato il suo capolavoro "Tractatus Logico-Philosophicus", Wittgenstein abbandonò la filosofia per alcuni anni, lavorando come insegnante di scuola elementare, giardiniere e architetto. Tornò a Cambridge nel 1929, sviluppando una nuova filosofia che avrebbe rivoluzionato il pensiero contemporaneo.</p>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="section-header" onclick="toggleSection('tractatus')">
+            <h2>Il Tractatus Logico-Philosophicus</h2>
+            <button>Mostra/Nascondi</button>
+        </div>
+        <div class="section-content hidden" id="tractatus">
+            <h3>La prima filosofia di Wittgenstein</h3>
+            <p>Pubblicato nel 1921, il Tractatus è l'unica opera filosofica pubblicata da Wittgenstein durante la sua vita. Il libro, scritto in una serie di aforismi numerati, cerca di delineare i rapporti tra linguaggio, pensiero e realtà.</p>
+            
+            <h3>Teoria raffigurativa del linguaggio</h3>
+            <p>Wittgenstein sosteneva che il linguaggio "raffigura" la realtà attraverso proposizioni che condividono la stessa forma logica con gli stati di cose che rappresentano. Le proposizioni significative sono quelle che possono essere verificate empiricamente.</p>
+            
+            <h3>Ciò di cui non si può parlare</h3>
+            <p>Una delle tesi più celebri del Tractatus è la distinzione tra ciò che può essere detto (il dominio della scienza) e ciò che può solo essere mostrato (l'etica, l'estetica, il mistico). La filosofia stessa, secondo Wittgenstein, deve limitarsi a chiarire i pensieri piuttosto che produrre nuove teorie.</p>
+            
+            <div class="quote">
+                "Su ciò, di cui non si può parlare, si deve tacere."<br>
+                - Ultima proposizione del Tractatus
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="section-header" onclick="toggleSection('later')">
+            <h2>Il Secondo Wittgenstein: Le Ricerche Filosofiche</h2>
+            <button>Mostra/Nascondi</button>
+        </div>
+        <div class="section-content hidden" id="later">
+            <h3>La svolta filosofica</h3>
+            <p>Negli anni '30, Wittgenstein sviluppò una nuova concezione del linguaggio che rappresentava un radicale allontanamento dalle idee del Tractatus. Queste riflessioni furono pubblicate postume come "Ricerche filosofiche" (1953).</p>
+            
+            <h3>Giochi linguistici e forme di vita</h3>
+            <p>Wittgenstein propose l'idea che il significato delle parole non sia fisso, ma emerga dal loro uso in specifici "giochi linguistici" all'interno di diverse "forme di vita". Il linguaggio è visto come uno strumento con molteplici funzioni, non solo quella raffigurativa.</p>
+            
+            <h3>Critica al linguaggio privato</h3>
+            <p>Un altro contributo fondamentale fu la sua critica alla possibilità di un linguaggio puramente privato. Wittgenstein sosteneva che il linguaggio è essenzialmente un fenomeno sociale e pubblico, e che non può esistere un linguaggio comprensibile solo a un singolo individuo.</p>
+            
+            <div class="quote">
+                "Per una grande classe di casi - anche se non per tutti - in cui usiamo la parola 'significato', essa può essere così definita: il significato di una parola è il suo uso nel linguaggio."<br>
+                - Ricerche filosofiche
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="section-header" onclick="toggleSection('legacy')">
+            <h2>Eredita e Influenza</h2>
+            <button>Mostra/Nascondi</button>
+        </div>
+        <div class="section-content hidden" id="legacy">
+            <h3>Filosofia analitica</h3>
+            <p>Wittgenstein è considerato uno dei padri della filosofia analitica. Il suo lavoro ha influenzato profondamente pensatori come Gilbert Ryle, J.L. Austin e John Searle.</p>
+            
+            <h3>Scienze cognitive e intelligenza artificiale</h3>
+            <p>Le sue idee sui giochi linguistici e la natura del significato hanno avuto un impatto significativo sulle scienze cognitive e sullo sviluppo dell'intelligenza artificiale.</p>
+            
+            <h3>Altre discipline</h3>
+            <p>L'influenza di Wittgenstein si estende alla psicologia, alla linguistica, alla semiotica, all'antropologia e alla teologia. Il suo approccio terapeutico alla filosofia ha anche ispirato metodi in psicoterapia.</p>
+            
+            <div class="quote">
+                "I problemi filosofici sorgono quando il linguaggio va in vacanza."<br>
+                - Ricerche filosofiche
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="section-header" onclick="toggleSection('works')">
+            <h2>Opere Principali</h2>
+            <button>Mostra/Nascondi</button>
+        </div>
+        <div class="section-content hidden" id="works">
+            <ul>
+                <li><strong>Tractatus Logico-Philosophicus</strong> (1921) - La sua prima opera fondamentale</li>
+                <li><strong>Ricerche filosofiche</strong> (pubblicato postumo nel 1953) - Rappresenta il suo pensiero maturo</li>
+                <li><strong>Osservazioni sui fondamenti della matematica</strong> (1956)</li>
+                <li><strong>Libro blu e Libro marrone</strong> (1958) - Appunti dettati agli studenti</li>
+                <li><strong>Della certezza</strong> (1969) - Riflessioni sulla natura della conoscenza</li>
+                <li><strong>Zettel</strong> (1967) - Raccolta di frammenti</li>
+            </ul>
+            
+            <h3>Opere pubblicate postume</h3>
+            <p>La maggior parte delle opere di Wittgenstein furono pubblicate dopo la sua morte. I suoi manoscritti e appunti sono stati curati e pubblicati in numerosi volumi, rivelando la profondità e l'ampiezza del suo pensiero.</p>
+        </div>
+    </div>
+    
+    <script>
+        // Funzione per mostrare/nascondere le sezioni
+        function toggleSection(sectionId) {
+            if (sectionId === 'all') {
+                // Apri/chiudi tutte le sezioni
+                const allContents = document.querySelectorAll('.section-content');
+                const allHidden = Array.from(allContents).every(content => content.classList.contains('hidden'));
+                
+                allContents.forEach(content => {
+                    if (allHidden) {
+                        content.classList.remove('hidden');
+                    } else {
+                        content.classList.add('hidden');
+                    }
+                });
+            } else {
+                const section = document.getElementById(sectionId);
+                section.classList.toggle('hidden');
+            }
+        }
+        
+        // Funzione per cambiare lo stile delle sezioni
+        function changeSectionStyle(style) {
+            const sections = document.querySelectorAll('.section');
+            
+            sections.forEach(section => {
+                // Rimuovi tutti gli stili precedenti
+                section.classList.remove('highlighted', 'custom-style');
+                
+                // Applica il nuovo stile
+                if (style === 'highlight') {
+                    section.classList.add('highlighted');
+                } else if (style === 'custom') {
+                    section.classList.add('custom-style');
+                }
+                // Se style è 'reset', non aggiungere nessuna classe extra
+            });
+        }
+        
+        // Funzione per la modalità scura
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+        
+        // Aggiungi event listener per i pulsanti dentro gli header
+        document.querySelectorAll('.section-header button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation(); // Evita che l'evento si propaghi all'header
+                const header = this.parentNode;
+                const content = header.nextElementSibling;
+                content.classList.toggle('hidden');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jean-Paul Sartre - Esistenzialismo e Libertà</title>
+    <style>
+        :root {
+            --primary: #8B0000;
+            --secondary: #B22222;
+            --accent: #FFD700;
+            --text: #2F4F4F;
+            --light-bg: #FFF8DC;
+            --highlight: #FFE4E1;
+        }
+
+        body {
+            font-family: 'Times New Roman', serif;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            color: var(--text);
+            background-color: #FFFFFF;
+        }
+
+        h1 {
+            color: var(--primary);
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 15px;
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-top: 40px;
+            font-weight: 600;
+            border-left: 4px solid var(--accent);
+            padding-left: 15px;
+        }
+
+        h3 {
+            color: var(--secondary);
+            margin-top: 30px;
+            font-weight: 550;
+        }
+
+        .section {
+            border: 2px solid #D3D3D3;
+            border-radius: 5px;
+            padding: 0;
+            margin-bottom: 35px;
+            transition: all 0.4s ease;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 20px;
+            background-color: var(--light-bg);
+            transition: all 0.3s;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .section-header:hover {
+            background-color: #FFEBCD;
+        }
+
+        .section-content {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s ease, padding 0.4s ease;
+        }
+
+        .section-content.open {
+            padding: 25px;
+            max-height: 5000px;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: all 0.3s;
+            min-width: 140px;
+            text-align: center;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .style-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 35px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .highlighted {
+            border-color: var(--accent);
+            box-shadow: 0 4px 15px rgba(139, 0, 0, 0.2);
+        }
+
+        .highlighted .section-header {
+            background-color: var(--highlight);
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .bohemian-style {
+            font-family: 'Garamond', serif;
+            background-color: #F5F5F5;
+            border-left: 5px solid #8B4513;
+        }
+
+        .bohemian-style .section-header {
+            background-color: #DEB887;
+            color: #800000;
+            font-style: italic;
+        }
+
+        .dark-mode {
+            background-color: #121212;
+            color: #E0E0E0;
+        }
+
+        .dark-mode .section {
+            background-color: #1E1E1E;
+            border-color: #3E3E3E;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .dark-mode h1 {
+            color: #FFD700;
+            border-color: #B22222;
+        }
+
+        .dark-mode h2 {
+            color: #FF6347;
+            border-color: #FFD700;
+        }
+
+        .dark-mode h3 {
+            color: #FFA07A;
+        }
+
+        .dark-mode .section-header {
+            background-color: #2F2F2F;
+            color: #FFD700;
+        }
+
+        .dark-mode .section-header:hover {
+            background-color: #3D3D3D;
+        }
+
+        .quote {
+            font-style: italic;
+            border-left: 4px solid var(--accent);
+            padding: 15px 25px;
+            margin: 25px 0;
+            background-color: var(--light-bg);
+            border-radius: 0 6px 6px 0;
+            font-size: 1.05em;
+            line-height: 1.8;
+        }
+
+        .dark-mode .quote {
+            background-color: #2A2A2A;
+            color: #F0E68C;
+            border-left-color: var(--secondary);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+            margin: 30px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--secondary);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+            padding-left: 20px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -40px;
+            top: 8px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 3px solid var(--accent);
+        }
+
+        .concept-box {
+            background-color: #FAF0E6;
+            border: 1px solid #D2B48C;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .dark-mode .concept-box {
+            background-color: #2A2A2A;
+            border-color: #5D4037;
+        }
+
+        .term-definition {
+            font-weight: bold;
+            color: var(--primary);
+            cursor: help;
+            border-bottom: 1px dotted var(--secondary);
+        }
+
+        .dark-mode .term-definition {
+            color: var(--accent);
+            border-bottom-color: var(--secondary);
+        }
+
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .work-card {
+            border: 1px solid #D3D3D3;
+            border-radius: 6px;
+            padding: 15px;
+            transition: all 0.3s;
+            background-color: white;
+        }
+
+        .work-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .dark-mode .work-card {
+            border-color: #444;
+            background-color: #252525;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            border-radius: 6px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            border: 2px solid var(--accent);
+        }
+
+        .dark-mode .image-container img {
+            filter: sepia(0.3) brightness(0.8);
+            border-color: var(--secondary);
+        }
+
+        .tab-container {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #EEE;
+            border: 1px solid #DDD;
+            border-bottom: none;
+            border-radius: 5px 5px 0 0;
+            margin-right: 5px;
+        }
+
+        .tab.active {
+            background-color: white;
+            font-weight: bold;
+        }
+
+        .dark-mode .tab {
+            background-color: #333;
+            border-color: #444;
+        }
+
+        .dark-mode .tab.active {
+            background-color: #1E1E1E;
+        }
+    </style>
+</head>
+<body>
+    <h1>Jean-Paul Sartre: Esistenzialismo e Libertà</h1>
+    
+    <div class="style-buttons">
+        <button onclick="toggleAllSections()">Apri/Chiudi Tutto</button>
+        <button onclick="changeStyle('highlight')">Stile Esistenzialista</button>
+        <button onclick="changeStyle('bohemian')">Stile Bohemien</button>
+        <button onclick="toggleDarkMode()">Modalità Café</button>
+        <button onclick="resetStyles()">Stile Originale</button>
+    </div>
+    
+    <div class="section">
+        <div class="section-header" onclick="toggleSection('biografia')">
+            <h2>Biografia: Una Vita Impegnata</h2>
+            <button>Mostra Sezione</button>
+        </div>
+        <div class="section-content" id="biografia">
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>1905: Nascita a Parigi</h3>
+                    <p>Jean-Paul Sartre nasce il 21 giugno in una famiglia borghese. Il padre muore quando ha solo 15 mesi.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>1924-1929: Formazione</h3>
+                    <p>Studia alla École Normale Supérieure dove incontra Simone de Beauvoir, sua compagna per tutta la vita.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>1938: La Nausea</h3>
+                    <p>Pubblica il suo primo romanzo filosofico, manifesto dell'esistenzialismo.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>1943: L'essere e il nulla</h3>
+                    <p>Opera filosofica fondamentale che sviluppa il suo esistenzialismo ateo.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>1945: Fondazione di Les Temps Modernes</h3>
+                    <p>Crea la rivista che diventerà voce dell'intellettuale impegnato.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>1964: Rifiuta il Nobel</h3>
+                    <p>Rifiuta il Premio Nobel per la Letteratura per coerenza con le sue idee.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>1980: Morte a Parigi</h3>
+                    <p>Muore il 15 aprile, seguito al funerale da una folla di 50.000 persone.</p>
+                </div>
+            </div>
+            
+            <div class="image-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Sartre_1967_crop.jpg/220px-Sartre_1967_crop.jpg" alt="Jean-Paul Sartre">
+                <p><em>Jean-Paul Sartre (1905-1980)</em></p>
+            </div>
+            
+            <div class="quote">
+                "L'uomo è condannato a essere libero."<br>
+                - L'esistenzialismo è un umanismo
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="section-header" onclick="toggleSection('filosofia')">
+            <h2>Filosofia Esistenzialista</h2>
+            <button>Mostra Sezione</button>
+        </div>
+        <div class="section-content" id="filosofia">
+            <div class="concept-box">
+                <h3>Esistenza precede l'essenza</h3>
+                <p>Principio fondamentale: l'uomo prima esiste, si trova, sorge nel mondo, e poi si definisce.</p>
+            </div>
+            
+            <h3>L'essere-in-sé e l'essere-per-sé</h3>
+            <p>Distinzione ontologica tra:
+                <ul>
+                    <li><span class="term-definition" title="L'essere delle cose, che semplicemente 'sono', senza coscienza">Essere-in-sé</span>: le cose come sono</li>
+                    <li><span class="term-definition" title="L'essere della coscienza umana, che è sempre proiettata verso possibilità">Essere-per-sé</span>: la coscienza umana</li>
+                </ul>
+            </p>
+            
+            <h3>La libertà radicale</h3>
+            <p>L'uomo è condannato a essere libero e deve assumersi la responsabilità delle sue scelte senza scuse.</p>
+            
+            <div class="quote">
+                "Siamo soli, senza scuse. Questo è ciò che intendo quando dico che l'uomo è condannato a essere libero."<br>
+                - L'esistenzialismo è un umanismo
+            </div>
+            
+            <h3>La mala fede (mauvaise foi)</h3>
+            <p>Meccanismo con cui l'uomo cerca di sfuggire alla sua libertà e responsabilità fingendo di essere determinato.</p>
+            
+            <h3>Lo sguardo dell'Altro</h3>
+            <p>Nell'incontro con l'Altro, sperimentiamo la nostra oggettivazione e la perdita della nostra libertà.</p>
+            
+            <div class="concept-box">
+                <h3>Influenze filosofiche</h3>
+                <p>Sartre attinge da:
+                    <ul>
+                        <li>Husserl (fenomenologia)</li>
+                        <li>Heidegger (analitica esistenziale)</li>
+                        <li>Hegel (dialettica servo-padrone)</li>
+                        <li>Marx (materialismo storico)</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="section-header" onclick="toggleSection('impegno')">
+            <h2>Impegno Politico e Letterario</h2>
+            <button>Mostra Sezione</button>
+        </div>
+        <div class="section-content" id="impegno">
+            <div class="tab-container">
+                <div class="tab active" onclick="openTab(event, 'politico')">Politico</div>
+                <div class="tab" onclick="openTab(event, 'letterario')">Letterario</div>
+                <div class="tab" onclick="openTab(event, 'teatro')">Teatro</div>
+            </div>
+            
+            <div id="politico" class="tab-content" style="display: block;">
+                <h3>Socialismo e libertà</h3>
+                <p>Sartre sviluppa un socialismo libertario che rifiuta sia il capitalismo che lo stalinismo.</p>
+                
+                <h3>Guerra d'Algeria</h3>
+                <p>Si schiera contro il colonialismo francese, rischiando attentati dell'OAS.</p>
+                
+                <h3>Maggio '68</h3>
+                <p>Appoggia gli studenti in rivolta, diventando simbolo della protesta.</p>
+                
+                <div class="quote">
+                    "Ogni parola ha conseguenze. Ogni silenzio anche."<br>
+                    - Sartre sul ruolo dell'intellettuale
+                </div>
+            </div>
+            
+            <div id="letterario" class="tab-content" style="display: none;">
+                <h3>Che cos'è la letteratura?</h3>
+                <p>Saggio che teorizza la letteratura come impegno e atto di libertà.</p>
+                
+                <h3>Le parole</h3>
+                <p>Autobiografia che analizza il suo rapporto con la scrittura.</p>
+                
+                <h3>Critica della ragione dialettica</h3>
+                <p>Tentativo di conciliare esistenzialismo e marxismo.</p>
+            </div>
+            
+            <div id="teatro" class="tab-content" style="display: none;">
+                <h3>Teatro esistenzialista</h3>
+                <p>Opere come "Le mosche" e "A porte chiuse" mettono in scena i temi filosofici.</p>
+                
+                <h3>"L'inferno sono gli Altri"</h3>
+                <p>Frase celebre da "A porte chiuse" che riassume la relazione conflittuale con l'Altro.</p>
+                
+                <div class="quote">
+                    "L'inferno sono gli Altri."<br>
+                    - A porte chiuse
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="section-header" onclick="toggleSection('opere')">
+            <h2>Opere Principali</h2>
+            <button>Mostra Sezione</button>
+        </div>
+        <div class="section-content" id="opere">
+            <div class="works-grid">
+                <div class="work-card">
+                    <h3>La nausea (1938)</h3>
+                    <p>Romanzo che esprime l'assurdità dell'esistenza attraverso la storia di Roquentin.</p>
+                </div>
+                
+                <div class="work-card">
+                    <h3>L'essere e il nulla (1943)</h3>
+                    <p>Trattato filosofico fondamentale dell'esistenzialismo francese.</p>
+                </div>
+                
+                <div class="work-card">
+                    <h3>Le mosche (1943)</h3>
+                    <p>Dramma che rilegge il mito di Oreste come metafora della libertà.</p>
+                </div>
+                
+                <div class="work-card">
+                    <h3>A porte chiuse (1944)</h3>
+                    <p>Famoso dramma che mette in scena le relazioni umane come conflitto.</p>
+                </div>
+                
+                <div class="work-card">
+                    <h3>L'esistenzialismo è un umanismo (1946)</h3>
+                    <p>Conferenza che difende l'esistenzialismo dalle critiche.</p>
+                </div>
+                
+                <div class="work-card">
+                    <h3>Critica della ragione dialettica (1960)</h3>
+                    <p>Tentativo di sintesi tra esistenzialismo e marxismo.</p>
+                </div>
+            </div>
+            
+            <div class="quote">
+                "Non importa ciò che hanno fatto di noi, ciò che importa è ciò che facciamo di ciò che hanno fatto di noi."<br>
+                - Saint Genet, commediante e martire
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="section-header" onclick="toggleSection('eredita')">
+            <h2>Eredità e Critiche</h2>
+            <button>Mostra Sezione</button>
+        </div>
+        <div class="section-content" id="eredita">
+            <h3>Influenze</h3>
+            <p>Sartre ha influenzato:
+                <ul>
+                    <li>La filosofia continentale post-esistenzialista</li>
+                    <li>I movimenti di liberazione del XX secolo</li>
+                    <li>La critica letteraria e teatrale</li>
+                    <li>La psicologia esistenziale</li>
+                </ul>
+            </p>
+            
+            <h3>Critiche principali</h3>
+            <div class="concept-box">
+                <p>Le obiezioni più comuni al suo pensiero:
+                    <ul>
+                        <li>Eccessivo volontarismo (Merleau-Ponty)</li>
+                        <li>Negazione della natura umana (Lévi-Strauss)</li>
+                        <li>Incoerenza tra esistenzialismo e marxismo (Camus)</li>
+                        <li>Maschilismo (femministe)</li>
+                    </ul>
+                </p>
+            </div>
+            
+            <div class="quote">
+                "Sartre è l'ultimo filosofo che ha creduto di poter cambiare il mondo con i suoi libri."<br>
+                - Bernard-Henri Lévy
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Inizializza tutte le sezioni come chiuse
+        document.querySelectorAll('.section-content').forEach(content => {
+            content.classList.remove('open');
+        });
+        
+        // Funzione per aprire/chiudere singole sezioni
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const button = section.parentNode.querySelector('.section-header button');
+            
+            section.classList.toggle('open');
+            
+            if (section.classList.contains('open')) {
+                button.textContent = 'Nascondi Sezione';
+            } else {
+                button.textContent = 'Mostra Sezione';
+            }
+        }
+        
+        // Funzione per aprire/chiudere tutte le sezioni
+        function toggleAllSections() {
+            const allContents = document.querySelectorAll('.section-content');
+            const allOpen = Array.from(allContents).every(content => content.classList.contains('open'));
+            
+            allContents.forEach(content => {
+                const button = content.parentNode.querySelector('.section-header button');
+                
+                if (allOpen) {
+                    content.classList.remove('open');
+                    button.textContent = 'Mostra Sezione';
+                } else {
+                    content.classList.add('open');
+                    button.textContent = 'Nascondi Sezione';
+                }
+            });
+        }
+        
+        // Funzione per cambiare stile
+        function changeStyle(style) {
+            const sections = document.querySelectorAll('.section');
+            
+            sections.forEach(section => {
+                section.classList.remove('highlighted', 'bohemian-style');
+                
+                if (style === 'highlight') {
+                    section.classList.add('highlighted');
+                } else if (style === 'bohemian') {
+                    section.classList.add('bohemian-style');
+                }
+            });
+        }
+        
+        // Funzione per resettare gli stili
+        function resetStyles() {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('highlighted', 'bohemian-style');
+            });
+            document.body.classList.remove('dark-mode');
+        }
+        
+        // Funzione per la modalità scura
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+        
+        // Funzione per i tab
+        function openTab(evt, tabName) {
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].style.display = 'none';
+            }
+            
+            const tabs = document.getElementsByClassName('tab');
+            for (let i = 0; i < tabs.length; i++) {
+                tabs[i].className = tabs[i].className.replace(' active', '');
+            }
+            
+            document.getElementById(tabName).style.display = 'block';
+            evt.currentTarget.className += ' active';
+        }
+        
+        // Aggiungi event listener per i pulsanti
+        document.querySelectorAll('.section-header button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const header = this.parentNode;
+                const content = header.nextElementSibling;
+                content.classList.toggle('open');
+                
+                if (content.classList.contains('open')) {
+                    this.textContent = 'Nascondi Sezione';
+                } else {
+                    this.textContent = 'Mostra Sezione';
+                }
+            });
+        });
+        
+        // Tooltip per i termini filosofici
+        document.querySelectorAll('.term-definition').forEach(term => {
+            term.addEventListener('mouseover', function(e) {
+                const title = this.getAttribute('title');
+                if (title) {
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'tooltip';
+                    tooltip.textContent = title;
+                    tooltip.style.position = 'absolute';
+                    tooltip.style.backgroundColor = 'rgba(0,0,0,0.8)';
+                    tooltip.style.color = 'white';
+                    tooltip.style.padding = '5px 10px';
+                    tooltip.style.borderRadius = '4px';
+                    tooltip.style.zIndex = '100';
+                    tooltip.style.maxWidth = '300px';
+                    
+                    const rect = this.getBoundingClientRect();
+                    tooltip.style.left = `${rect.left}px`;
+                    tooltip.style.top = `${rect.bottom + 5}px`;
+                    
+                    document.body.appendChild(tooltip);
+                    
+                    this.addEventListener('mouseout', function handler() {
+                        document.body.removeChild(tooltip);
+                        this.removeEventListener('mouseout', handler);
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

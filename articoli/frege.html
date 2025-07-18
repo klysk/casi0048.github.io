@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gottlob Frege - Padre della Logica Moderna</title>
+    <style>
+        :root {
+            --primary-color: #3f51b5;
+            --secondary-color: #5c6bc0;
+            --accent-color: #ff7043;
+            --light-bg: #e8eaf6;
+            --dark-text: #1a237e;
+            --light-text: #e8eaf6;
+            --sense-color: #5c6bc0;
+            --reference-color: #ff7043;
+            --logic-color: #66bb6a;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            color: var(--dark-text);
+            background-color: var(--light-bg);
+            background-image: linear-gradient(to bottom, #ffffff, var(--light-bg));
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 15px;
+            margin-bottom: 40px;
+            font-weight: normal;
+            font-size: 2.5rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-top: 40px;
+            font-weight: normal;
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .section {
+            background-color: white;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            border: 1px solid #c5cae9;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .section-content {
+            display: none;
+            padding-top: 20px;
+            animation: fadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-content.show {
+            display: block;
+        }
+        
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            font-size: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 25%, rgba(255,255,255,0.3) 50%, transparent 75%);
+            background-size: 400% 400%;
+            opacity: 0;
+            transition: all 0.6s ease;
+            z-index: -1;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+        }
+        
+        .btn:hover:after {
+            opacity: 1;
+            animation: shine 1.5s infinite;
+        }
+        
+        @keyframes shine {
+            0% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .btn-style {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .btn-style:hover {
+            background-color: #f4511e;
+        }
+        
+        .btn-alt {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-alt:hover {
+            background-color: #303f9f;
+        }
+        
+        .frege-style {
+            background-color: #f5f5f5;
+            border-left: 6px solid var(--secondary-color);
+            box-shadow: 0 8px 25px rgba(92, 107, 192, 0.15);
+            transform: translateY(-5px);
+        }
+        
+        .frege-style h2 {
+            color: var(--secondary-color);
+            border-left-color: var(--secondary-color);
+        }
+        
+        .sense-style {
+            background-color: #e8eaf6;
+            border-left: 6px solid var(--sense-color);
+        }
+        
+        .reference-style {
+            background-color: #fbe9e7;
+            border-left: 6px solid var(--reference-color);
+        }
+        
+        .logic-style {
+            background-color: #e8f5e9;
+            border-left: 6px solid var(--logic-color);
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 35px auto;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border: 3px solid white;
+            transform: rotate(-1deg);
+            transition: all 0.4s ease;
+        }
+        
+        img:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+        
+        .quote {
+            font-style: italic;
+            color: var(--primary-color);
+            border-left: 4px solid var(--accent-color);
+            padding: 20px;
+            margin: 30px 0;
+            background-color: white;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        .quote:before {
+            content: """;
+            font-size: 80px;
+            color: var(--secondary-color);
+            position: absolute;
+            left: 10px;
+            top: -20px;
+            opacity: 0.1;
+            font-family: serif;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #c5cae9 0%, #d1d9ff 100%);
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: var(--dark-text);
+            font-weight: bold;
+        }
+        
+        ul {
+            padding-left: 30px;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            position: relative;
+            line-height: 1.6;
+            padding-left: 25px;
+        }
+        
+        li:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 12px;
+            height: 12px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+        }
+        
+        .icon {
+            font-size: 20px;
+        }
+        
+        .sense-icon {
+            color: var(--sense-color);
+            margin-right: 8px;
+        }
+        
+        .reference-icon {
+            color: var(--reference-color);
+            margin-right: 8px;
+        }
+        
+        .logic-icon {
+            color: var(--logic-color);
+            margin-right: 8px;
+        }
+        
+        .distinction-container {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .distinction {
+            flex: 1;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 0 5px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .sense-distinction {
+            background-color: var(--sense-color);
+        }
+        
+        .reference-distinction {
+            background-color: var(--reference-color);
+        }
+        
+        .logic-distinction {
+            background-color: var(--logic-color);
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .btn {
+                padding: 10px 18px;
+                font-size: 14px;
+            }
+            
+            .distinction-container {
+                flex-direction: column;
+            }
+            
+            .distinction {
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Gottlob Frege: Fondamenti della Logica Moderna</h1>
+    
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Frege1891_cropped.jpg/440px-Frege1891_cropped.jpg" alt="Ritratto di Gottlob Frege" width="400">
+    
+    <div class="section">
+        <h2>Vita e Opere</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">📜</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🔍</span> Stile Fregeano
+            </button>
+            <button class="btn btn-alt sense-btn">
+                <span class="icon">💡</span> Senso
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Friedrich Ludwig Gottlob Frege (1848-1925) è considerato il <span class="highlight">padre della logica matematica</span> e della filosofia analitica, nonché uno dei più importanti logici della storia.</p>
+            
+            <p>Principali tappe biografiche:</p>
+            
+            <ul>
+                <li><span class="sense-icon">🎓</span> Nato a Wismar, studiò a Jena e Gottinga</li>
+                <li><span class="reference-icon">🏫</span> Professore di matematica a Jena per tutta la vita</li>
+                <li><span class="logic-icon">📚</span> Lavorò in relativo isolamento, poco riconosciuto in vita</li>
+                <li><span class="sense-icon">💔</span> La sua opera fondamentale fu ignorata dai contemporanei</li>
+                <li><span class="reference-icon">👨‍🎓</span> Scoperto da Russell e Wittgenstein dopo la morte</li>
+            </ul>
+            
+            <p>Opere fondamentali:</p>
+            
+            <ul>
+                <li><em>Begriffsschrift</em> (1879) - Nascita della logica moderna</li>
+                <li><em>I fondamenti dell'aritmetica</em> (1884)</li>
+                <li><em>Senso e denotazione</em> (1892) - Articolo rivoluzionario</li>
+                <li><em>Le leggi fondamentali dell'aritmetica</em> (1893-1903)</li>
+            </ul>
+            
+            <div class="quote">
+                "Un matematico che non sia anche un po' filosofo non sarà mai un matematico completo."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Senso e Riferimento</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">🔤</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🔍</span> Stile Fregeano
+            </button>
+            <button class="btn btn-alt reference-btn">
+                <span class="icon">📍</span> Riferimento
+            </button>
+        </div>
+        <div class="section-content">
+            <p>La distinzione tra <span class="highlight">senso e riferimento</span> è una delle più influenti teorie di Frege:</p>
+            
+            <div class="distinction-container">
+                <div class="distinction sense-distinction">
+                    <h3>Senso</h3>
+                    <p>Il modo in cui l'oggetto è dato</p>
+                </div>
+                <div class="distinction reference-distinction">
+                    <h3>Riferimento</h3>
+                    <p>L'oggetto stesso</p>
+                </div>
+            </div>
+            
+            <p>Esempi chiave:</p>
+            
+            <ul>
+                <li><span class="sense-icon">🌅</span> "Stella del mattino" e "Stella della sera" hanno stesso riferimento (Venere) ma sensi diversi</li>
+                <li><span class="reference-icon">0</span> "0" e "1-1" hanno lo stesso riferimento ma sensi diversi</li>
+                <li><span class="sense-icon">👑</span> Le proposizioni hanno come riferimento un valore di verità</li>
+            </ul>
+            
+            <p>Conseguenze filosofiche:</p>
+            
+            <ul>
+                <li>Critica alla teoria puramente referenziale del significato</li>
+                <li>Importanza del contesto linguistico</li>
+                <li>Distinzione tra contenuto cognitivo e oggetto referenziale</li>
+            </ul>
+            
+            <div class="quote">
+                "La ricerca del significato delle parole ci conduce al senso e al riferimento."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Logica e Fondamenti della Matematica</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">🧮</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🔍</span> Stile Fregeano
+            </button>
+            <button class="btn btn-alt logic-btn">
+                <span class="icon">🔢</span> Logica
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Frege rivoluzionò la <span class="highlight">logica formale</span> con il suo sistema concettuale:</p>
+            
+            <ul>
+                <li><span class="logic-icon">📜</span> <em>Begriffsschrift</em> (1879): primo sistema di logica dei predicati</li>
+                <li><span class="logic-icon">➗</span> Introduzione dei quantificatori ∀ e ∃</li>
+                <li><span class="logic-icon">⚖️</span> Distinzione tra funzione e argomento</li>
+                <li><span class="logic-icon">🏗️</span> Progetto logicista: ridurre la matematica alla logica</li>
+            </ul>
+            
+            <p>Innovazioni principali:</p>
+            
+            <ul>
+                <li>Superamento della logica aristotelica</li>
+                <li>Sistema formale completo per esprimere relazioni complesse</li>
+                <li>Analisi della struttura logica del linguaggio</li>
+                <li>Approccio funzionale alla logica (anticipando l'informatica)</li>
+            </ul>
+            
+            <p>Paradosso di Russell:</p>
+            
+            <ul>
+                <li>Scoperto nel 1902, minò il sistema di Frege</li>
+                <li>Mostrò un'antinomia nella teoria fregeana degli insiemi</li>
+                <li>Frege riconobse il problema ma non trovò soluzione</li>
+            </ul>
+            
+            <div class="quote">
+                "La logica è lo studio delle leggi più generali della verità."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Filosofia del Linguaggio</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">💬</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🔍</span> Stile Fregeano
+            </button>
+            <button class="btn btn-alt sense-btn">
+                <span class="icon">💡</span> Senso
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Frege sviluppò una <span class="highlight">filosofia del linguaggio</span> rigorosa e innovativa:</p>
+            
+            <ul>
+                <li><span class="sense-icon">🔠</span> Principio del contesto: "Cerca il significato delle parole nel contesto della proposizione"</li>
+                <li><span class="reference-icon">🚫</span> Distinzione tra concetto e oggetto</li>
+                <li><span class="sense-icon">🎭</span> Teoria della predicazione come saturazione di funzioni</li>
+                <li><span class="reference-icon">👻</span> Critica al psicologismo in logica</li>
+            </ul>
+            
+            <p>Influenze successive:</p>
+            
+            <ul>
+                <li>Wittgenstein: <em>Tractatus Logico-Philosophicus</em></li>
+                <li>Filosofia analitica del '900 (Russell, Carnap, Quine)</li>
+                <li>Semantica formale contemporanea</li>
+                <li>Teorie del riferimento diretto (Kripke, Putnam)</li>
+            </ul>
+            
+            <div class="quote">
+                "Solo nel contesto di una proposizione le parole hanno un significato."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Eredita e Influenza</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">🌍</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🔍</span> Stile Fregeano
+            </button>
+            <button class="btn btn-alt reference-btn">
+                <span class="icon">📍</span> Riferimento
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Frege ha influenzato profondamente:</p>
+            
+            <ul>
+                <li><span class="logic-icon">🧠</span> La filosofia analitica (Russell, Wittgenstein, Carnap)</li>
+                <li><span class="sense-icon">💻</span> L'informatica teorica (sistema formale anticipa la programmazione)</li>
+                <li><span class="reference-icon">📚</span> La linguistica (semantica formale)</li>
+                <li><span class="logic-icon">🔢</span> La fondazione della matematica (nonostante il paradosso)</li>
+            </ul>
+            
+            <p>Riscoperta e riconoscimento:</p>
+            
+            <ul>
+                <li>In vita fu quasi completamente ignorato</li>
+                <li>Russell e Wittgenstein lo riscoprirono nei primi del '900</li>
+                <li>Oggi è considerato tra i più grandi logici della storia</li>
+            </ul>
+            
+            <p>Attualità del pensiero fregeano:</p>
+            
+            <ul>
+                <li>Teorie del riferimento e del significato</li>
+                <li>Filosofia della matematica</li>
+                <li>Semantica formale in linguistica</li>
+                <li>Fondamenti dell'intelligenza artificiale</li>
+            </ul>
+            
+            <div class="quote">
+                "Il lavoro di Frege è la base su cui poggia tutta la filosofia analitica."
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Toggle per mostrare/nascondere i contenuti
+        document.querySelectorAll('.toggle-btn').forEach(button => {
+            // Salva l'icona originale come attributo data
+            const icon = button.querySelector('.icon');
+            button.setAttribute('data-original-icon', icon.textContent);
+            
+            button.addEventListener('click', function() {
+                const content = this.parentElement.nextElementSibling;
+                content.classList.toggle('show');
+                
+                // Cambia l'icona e il testo
+                const icon = this.querySelector('.icon');
+                if (content.classList.contains('show')) {
+                    icon.textContent = '📕';
+                    this.innerHTML = this.innerHTML.replace('Mostra', 'Nascondi');
+                } else {
+                    const originalIcon = this.getAttribute('data-original-icon');
+                    icon.textContent = originalIcon;
+                    this.innerHTML = this.innerHTML.replace('Nascondi', 'Mostra');
+                }
+            });
+        });
+        
+        // Cambia stile delle sezioni (tema Frege)
+        document.querySelectorAll('.style-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.parentElement.parentElement;
+                section.classList.toggle('frege-style');
+                
+                // Cambia l'icona e il testo
+                const icon = this.querySelector('.icon');
+                if (section.classList.contains('frege-style')) {
+                    icon.textContent = '✏️';
+                    this.innerHTML = this.innerHTML.replace('Stile Fregeano', 'Stile Normale');
+                } else {
+                    icon.textContent = '🔍';
+                    this.innerHTML = this.innerHTML.replace('Stile Normale', 'Stile Fregeano');
+                }
+            });
+        });
+        
+        // Bottoni tema senso
+        document.querySelectorAll('.sense-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.parentElement.parentElement;
+                section.classList.toggle('sense-style');
+                
+                // Rimuovi altri stili tematici
+                section.classList.remove('reference-style', 'logic-style');
+            });
+        });
+        
+        // Bottoni tema riferimento
+        document.querySelectorAll('.reference-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.parentElement.parentElement;
+                section.classList.toggle('reference-style');
+                
+                // Rimuovi altri stili tematici
+                section.classList.remove('sense-style', 'logic-style');
+            });
+        });
+        
+        // Bottoni tema logica
+        document.querySelectorAll('.logic-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.parentElement.parentElement;
+                section.classList.toggle('logic-style');
+                
+                // Rimuovi altri stili tematici
+                section.classList.remove('sense-style', 'reference-style');
+            });
+        });
+    </script>
+</body>
+</html>

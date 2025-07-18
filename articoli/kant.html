@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Immanuel Kant - Il Filosofo della Ragione</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-bg: #ecf0f1;
+            --dark-text: #2c3e50;
+            --light-text: #ecf0f1;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.7;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            color: var(--dark-text);
+            background-color: var(--light-bg);
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 15px;
+            margin-bottom: 40px;
+            font-weight: normal;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-top: 40px;
+            font-weight: normal;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 15px;
+        }
+        
+        .section {
+            background-color: white;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            border: 1px solid #dfe6e9;
+        }
+        
+        .section-content {
+            display: none;
+            padding-top: 20px;
+            animation: fadeIn 0.6s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-content.show {
+            display: block;
+        }
+        
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        .btn-style {
+            background-color: var(--accent-color);
+        }
+        
+        .btn-style:hover {
+            background-color: #c0392b;
+        }
+        
+        .kant-style {
+            background-color: #f5f9fc;
+            border-left: 6px solid var(--secondary-color);
+            box-shadow: 0 6px 16px rgba(52, 152, 219, 0.2);
+        }
+        
+        .kant-style h2 {
+            color: var(--secondary-color);
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 35px auto;
+            border-radius: 8px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+            border: 2px solid white;
+        }
+        
+        .quote {
+            font-style: italic;
+            color: var(--primary-color);
+            border-left: 4px solid var(--accent-color);
+            padding: 15px 25px;
+            margin: 30px 0;
+            background-color: #f5f9fc;
+            border-radius: 0 8px 8px 0;
+            position: relative;
+        }
+        
+        .quote:before {
+            content: """;
+            font-size: 60px;
+            color: var(--secondary-color);
+            position: absolute;
+            left: 10px;
+            top: -15px;
+            opacity: 0.2;
+        }
+        
+        .highlight {
+            background-color: #e3f2fd;
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        ul {
+            padding-left: 30px;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            position: relative;
+            line-height: 1.6;
+        }
+        
+        li:before {
+            content: "→";
+            color: var(--accent-color);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1.5em;
+        }
+        
+        .icon {
+            font-size: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Immanuel Kant: La Rivoluzione Copernicana della Filosofia</h1>
+    
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Kant_gemaelde_3.jpg/440px-Kant_gemaelde_3.jpg" alt="Ritratto di Immanuel Kant" width="400">
+    
+    <div class="section">
+        <h2>Vita e Opere</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">📖</span> Mostra/Nascondi
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🎨</span> Stile Kantiano
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Immanuel Kant (1724-1804) è il più importante filosofo dell'Illuminismo tedesco e uno dei pensatori più influenti della storia occidentale. Nato e vissuto a Königsberg (oggi Kaliningrad), la sua vita fu straordinariamente regolare e dedita allo studio.</p>
+            
+            <p>Principali tappe biografiche:</p>
+            
+            <ul>
+                <li>Nato in una famiglia pietista, studiò teologia e filosofia</li>
+                <li>Fu professore all'Università di Königsberg per oltre 40 anni</li>
+                <li>Vita estremamente metodica (la passeggiata delle 15:30 diventata proverbiale)</li>
+                <li>Pubblicò le opere principali dopo i 57 anni</li>
+            </ul>
+            
+            <p>Opere fondamentali:</p>
+            
+            <ul>
+                <li><em>Critica della ragion pura</em> (1781) - Teoria della conoscenza</li>
+                <li><em>Critica della ragion pratica</em> (1788) - Etica</li>
+                <li><em>Critica del giudizio</em> (1790) - Estetica e teleologia</li>
+                <li><em>Fondazione della metafisica dei costumi</em> (1785)</li>
+            </ul>
+            
+            <div class="quote">
+                "Il cielo stellato sopra di me, la legge morale dentro di me."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>La Rivoluzione Copernicana</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">🔄</span> Mostra/Nascondi
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🎨</span> Stile Kantiano
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Nella <span class="highlight">Critica della ragion pura</span>, Kant opera una rivoluzione nel modo di concepire la conoscenza, paragonabile alla rivoluzione copernicana in astronomia:</p>
+            
+            <ul>
+                <li>Non è la mente che si conforma agli oggetti, ma gli oggetti che si conformano alle strutture della mente</li>
+                <li>Distinzione tra fenomeno (come le cose ci appaiono) e noumeno (la cosa in sé)</li>
+                <li>Le forme a priori della sensibilità (spazio e tempo) strutturano ogni esperienza</li>
+                <li>Le categorie dell'intelletto (causalità, sostanza, etc.) organizzano il mondo fenomenico</li>
+            </ul>
+            
+            <p>Questa rivoluzione:</p>
+            
+            <ul>
+                <li>Supera l'empirismo (Hume) e il razionalismo (Leibniz)</li>
+                <li>Fonda la possibilità delle scienze matematiche della natura</li>
+                <li>Limita la conoscenza al campo dell'esperienza possibile</li>
+                <li>Rende impossibile la metafisica come scienza</li>
+            </ul>
+            
+            <div class="quote">
+                "Senza sensibilità nessun oggetto ci sarebbe dato, senza intelletto nessun oggetto sarebbe pensato."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Etica dell'Imperativo Categorico</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">⚖️</span> Mostra/Nascondi
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🎨</span> Stile Kantiano
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Nella <span class="highlight">filosofia morale</span>, Kant sviluppa un'etica deontologica basata sull'imperativo categorico:</p>
+            
+            <ul>
+                <li>Agisci solo secondo quella massima che puoi volere divenga legge universale</li>
+                <li>Tratta l'umanità, nella tua come nell'altrui persona, sempre come fine e mai semplicemente come mezzo</li>
+                <li>L'unico bene incondizionato è la buona volontà</li>
+                <li>Autonomia della volontà come fondamento della dignità umana</li>
+            </ul>
+            
+            <p>Caratteristiche dell'etica kantiana:</p>
+            
+            <ul>
+                <li>Razionalità: la legge morale è razionale e universale</li>
+                <li>Formalità: non prescrive azioni concrete ma la forma della moralità</li>
+                <li>Autonomia: la legge morale è autoimposta dalla ragione</li>
+                <li>Doverosità: il dovere per il dovere, non per conseguenze</li>
+            </ul>
+            
+            <div class="quote">
+                "Agisci in modo che la massima della tua volontà possa sempre valere in ogni tempo come principio di una legislazione universale."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Estetica e Giudizio Teleologico</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">🎭</span> Mostra/Nascondi
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🎨</span> Stile Kantiano
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Nella <span class="highlight">Critica del giudizio</span>, Kant unifica il sistema filosofico esaminando:</p>
+            
+            <ul>
+                <li>Giudizio estetico: il bello e il sublime</li>
+                <li>Giudizio teleologico: finalità nella natura</li>
+            </ul>
+            
+            <p>Il bello secondo Kant:</p>
+            
+            <ul>
+                <li>Disinteressato: non legato a desideri o concetti</li>
+                <li>Universale: pretesa di validità per tutti</li>
+                <li>Senza scopo: fine senza scopo determinato</li>
+                <li>Necessario: legato a un sentimento comune</li>
+            </ul>
+            
+            <p>Il sublime:</p>
+            
+            <ul>
+                <li>Matematico: grandezza assoluta (oceano, montagne)</li>
+                <li>Dinamico: potenza della natura (tempeste, vulcani)</li>
+                <li>Mostra la superiorità della ragione sulla natura</li>
+            </ul>
+            
+            <div class="quote">
+                "Il bello è il simbolo del bene morale."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Influenza e Attualità</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">🌍</span> Mostra/Nascondi
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🎨</span> Stile Kantiano
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Kant ha influenzato profondamente:</p>
+            
+            <ul>
+                <li>L'idealismo tedesco (Fichte, Schelling, Hegel)</li>
+                <li>La fenomenologia (Husserl)</li>
+                <li>La filosofia analitica (Wittgenstein, Strawson)</li>
+                <li>L'etica contemporanea (Rawls, Habermas)</li>
+            </ul>
+            
+            <p>Concetti kantiani fondamentali per:</p>
+            
+            <ul>
+                <li>Diritti umani e dignità della persona</li>
+                <li>Pace perpetua e cosmopolitismo</li>
+                <li>Autonomia individuale e società democratica</li>
+                <li>Limiti della conoscenza scientifica</li>
+            </ul>
+            
+            <p>Critiche e sviluppi successivi:</p>
+            
+            <ul>
+                <li>Hegel: critica alla cosa in sé e all'etica formale</li>
+                <li>Schopenhauer: reinterpretazione del noumeno</li>
+                <li>Heidegger: Kant come precursore dell'ontologia</li>
+            </ul>
+            
+            <div class="quote">
+                "L'illuminismo è l'uscita dell'uomo dallo stato di minorità che egli deve imputare a se stesso."
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Toggle per mostrare/nascondere i contenuti
+        document.querySelectorAll('.toggle-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const content = this.parentElement.nextElementSibling;
+                content.classList.toggle('show');
+                
+                // Cambia l'icona e il testo
+                const icon = this.querySelector('.icon');
+                if (content.classList.contains('show')) {
+                    icon.textContent = '📕';
+                    this.innerHTML = this.innerHTML.replace('Mostra', 'Nascondi');
+                } else {
+                    icon.textContent = '📖';
+                    this.innerHTML = this.innerHTML.replace('Nascondi', 'Mostra');
+                }
+            });
+        });
+        
+        // Cambia stile delle sezioni
+        document.querySelectorAll('.style-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.parentElement.parentElement;
+                section.classList.toggle('kant-style');
+                
+                // Cambia l'icona e il testo
+                const icon = this.querySelector('.icon');
+                if (section.classList.contains('kant-style')) {
+                    icon.textContent = '✏️';
+                    this.innerHTML = this.innerHTML.replace('Stile Kantiano', 'Stile Normale');
+                } else {
+                    icon.textContent = '🎨';
+                    this.innerHTML = this.innerHTML.replace('Stile Normale', 'Stile Kantiano');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

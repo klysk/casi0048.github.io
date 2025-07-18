@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edmund Husserl - Fondatore della Fenomenologia</title>
+    <style>
+        :root {
+            --primary-color: #2c7873;
+            --secondary-color: #6fb98f;
+            --accent-color: #004445;
+            --text-color: #333;
+            --light-bg: #f5f5f5;
+        }
+        
+        body {
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            line-height: 1.7;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 25px;
+            color: var(--text-color);
+            background-color: #fff;
+        }
+        
+        h1 {
+            color: var(--accent-color);
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 12px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-top: 35px;
+            font-weight: 600;
+        }
+        
+        h3 {
+            color: var(--accent-color);
+            margin-top: 25px;
+        }
+        
+        .section {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 0;
+            margin-bottom: 30px;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            overflow: hidden;
+            background-color: white;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 18px;
+            background-color: var(--light-bg);
+            transition: background-color 0.3s;
+        }
+        
+        .section-header:hover {
+            background-color: #e9f4ee;
+        }
+        
+        .section-content {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.3s ease;
+        }
+        
+        .section-content.open {
+            padding: 20px;
+            max-height: 2000px;
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: all 0.3s;
+            min-width: 120px;
+            text-align: center;
+        }
+        
+        button:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .style-buttons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .highlighted {
+            border-color: var(--secondary-color);
+            box-shadow: 0 4px 15px rgba(110, 185, 143, 0.2);
+        }
+        
+        .highlighted .section-header {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .scholarly-style {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f8f5f0;
+            border-left: 5px solid #8c7b75;
+        }
+        
+        .scholarly-style .section-header {
+            background-color: #e8e3d8;
+            font-variant: small-caps;
+            letter-spacing: 1px;
+        }
+        
+        .dark-mode {
+            background-color: #2a2a2a;
+            color: #e0e0e0;
+        }
+        
+        .dark-mode .section {
+            background-color: #333;
+            border-color: #444;
+        }
+        
+        .dark-mode h1 {
+            color: #6fb98f;
+            border-color: #2c7873;
+        }
+        
+        .dark-mode h2 {
+            color: #6fb98f;
+        }
+        
+        .dark-mode h3 {
+            color: #2c7873;
+        }
+        
+        .dark-mode .section-header {
+            background-color: #3a3a3a;
+            color: #f0f0f0;
+        }
+        
+        .quote {
+            font-style: italic;
+            border-left: 3px solid var(--secondary-color);
+            padding: 12px 20px;
+            margin: 20px 0;
+            background-color: var(--light-bg);
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .dark-mode .quote {
+            background-color: #3a3a3a;
+            color: #d0d0d0;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin: 25px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--secondary-color);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            border: 2px solid var(--secondary-color);
+        }
+        
+        .concept-box {
+            background-color: #f0f7f4;
+            border: 1px solid #cce2d9;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .dark-mode .concept-box {
+            background-color: #3a4a44;
+            border-color: #2c3e33;
+        }
+    </style>
+</head>
+<body>
+    <h1>Edmund Husserl: Fondatore della Fenomenologia</h1>
+    
+    <div class="style-buttons">
+        <button onclick="toggleAllSections()">Apri/Chiudi Tutto</button>
+        <button onclick="changeStyle('highlight')">Stile Accademico</button>
+        <button onclick="changeStyle('scholarly')">Stile Classico</button>
+        <button onclick="toggleDarkMode()">Modalità Scura</button>
+        <button onclick="resetStyles()">Stile Originale</button>
+    </div>
+    
+    <div class="section">
+        <div class="section-header" onclick="toggleSection('biografia')">
+            <h2>Biografia Intellettuale</h2>
+            <button>Mostra Sezione</button>
+        </div>
+        <div class="section-content" id="biografia">
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>1859: Nascita</h3>
+                    <p>Edmund Gustav Albrecht Husserl nasce l'8 aprile a Proßnitz, Moravia (nell'attuale Repubblica Ceca), allora parte dell'Impero austriaco.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>1876-1887: Formazione</h3>
+                    <p>Studia astronomia, matematica, fisica e filosofia a Lipsia, Berlino e Vienna. Ottiene il dottorato in matematica con una tesi sul calcolo delle variazioni.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>1887: Conversione alla filosofia</h3>
+                    <p>Sotto l'influenza di Franz Brentano, Husserl abbandona la matematica per dedicarsi alla filosofia. Inizia a sviluppare i fondamenti della fenomenologia.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>1900-1901: Ricerche logiche</h3>
+                    <p>Pubblica le "Ricerche logiche", opera fondamentale che segna la nascita della fenomenologia come metodo filosofico.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>1916-1928: Periodo di Friburgo</h3>
+                    <p>Insegna all'Università di Friburgo, dove sviluppa la fenomenologia trascendentale. Tra i suoi allievi figura Martin Heidegger.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>1938: Morte</h3>
+                    <p>Husserl muore a Friburgo il 27 aprile, lasciando circa 45.000 pagine di manoscritti in stenografia.</p>
+                </div>
+            </div>
+            
+            <div class="quote">
+                "Tornare alle cose stesse!"<br>
+                - Il motto della fenomenologia husserliana
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="section-header" onclick="toggleSection('fenomenologia')">
+            <h2>La Fenomenologia Husserliana</h2>
+            <button>Mostra Sezione</button>
+        </div>
+        <div class="section-content" id="fenomenologia">
+            <div class="concept-box">
+                <h3>Cos'è la fenomenologia?</h3>
+                <p>La fenomenologia è un metodo filosofico che si propone di descrivere le strutture dell'esperienza così come si presentano alla coscienza, senza presupposti teorici o spiegazioni causali.</p>
+            </div>
+            
+            <h3>L'epoché e la riduzione fenomenologica</h3>
+            <p>Husserl introduce il concetto di <em>epoché</em> (sospensione del giudizio) come momento fondamentale del metodo fenomenologico. Attraverso la "riduzione fenomenologica", il filosofo mette tra parentesi (bracketing) le credenze sul mondo naturale per concentrarsi sull'analisi delle esperienze pure della coscienza.</p>
+            
+            <h3>L'intenzionalità</h3>
+            <p>Concetto centrale ripreso da Brentano: "Ogni coscienza è coscienza di qualcosa". L'intenzionalità designa la proprietà fondamentale della coscienza di essere sempre diretta verso un oggetto.</p>
+            
+            <div class="quote">
+                "Tutta la coscienza è intenzionale, tutta la coscienza è coscienza di qualcosa."<br>
+                - Idee per una fenomenologia pura
+            </div>
+            
+            <h3>La noema-noesi</h3>
+            <p>Husserl distingue tra:
+                <ul>
+                    <li><strong>Noema</strong>: l'oggetto così come è inteso dalla coscienza</li>
+                    <li><strong>Noesi</strong>: l'atto del pensiero che intende l'oggetto</li>
+                </ul>
+            </p>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="section-header" onclick="toggleSection('evoluzione')">
+            <h2>Evoluzione del Pensiero</h2>
+            <button>Mostra Sezione</button>
+        </div>
+        <div class="section-content" id="evoluzione">
+            <h3>Periodo psicologico (1891-1900)</h3>
+            <p>Influenzato da Brentano e dalla psicologia descrittiva, Husserl cerca di fondare la matematica e la logica sull'esperienza psicologica.</p>
+            
+            <h3>Svolta trascendentale (1901-1913)</h3>
+            <p>Con le "Ricerche logiche" e "Idee per una fenomenologia pura", Husserl sviluppa la fenomenologia come filosofia trascendentale, superando lo psicologismo.</p>
+            
+            <h3>Fenomenologia genetica (1918-1928)</h3>
+            <p>Interesse per la genesi delle esperienze nella coscienza temporale. Opere principali: "Lezioni sulla coscienza interna del tempo" e "Analisi passive".</p>
+            
+            <h3>Fenomenologia costitutiva (1929-1938)</h3>
+            <p>Approfondimento della Lebenswelt (mondo della vita) e critica alla scienza moderna. Opera principale: "La crisi delle scienze europee".</p>
+            
+            <div class="quote">
+                "La filosofia come scienza, come seria, rigorosa, anzi apoditticamente rigorosa scienza - il sogno è finito."<br>
+                - La crisi delle scienze europee
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="section-header" onclick="toggleSection('influenza')">
+            <h2>Influenza e Critica</h2>
+            <button>Mostra Sezione</button>
+        </div>
+        <div class="section-content" id="influenza">
+            <h3>La scuola fenomenologica</h3>
+            <p>Husserl ha influenzato direttamente pensatori come:
+                <ul>
+                    <li>Martin Heidegger (sebbene poi se ne distaccò)</li>
+                    <li>Edith Stein</li>
+                    <li>Roman Ingarden</li>
+                    <li>Max Scheler</li>
+                    <li>Maurice Merleau-Ponty</li>
+                </ul>
+            </p>
+            
+            <h3>Filosofia continentale</h3>
+            <p>La fenomenologia è diventata uno dei movimenti più importanti della filosofia continentale del XX secolo, influenzando l'esistenzialismo, l'ermeneutica e il post-strutturalismo.</p>
+            
+            <h3>Scienze cognitive</h3>
+            <p>Recentemente, c'è stato un rinnovato interesse per Husserl nella filosofia della mente e nelle scienze cognitive, specialmente per i suoi contributi alla comprensione della coscienza e dell'intenzionalità.</p>
+            
+            <div class="concept-box">
+                <h3>Critiche principali</h3>
+                <p>Le principali critiche alla fenomenologia husserliana riguardano:
+                    <ul>
+                        <li>L'idealismo trascendentale</li>
+                        <li>La pretesa di un punto di vista assoluto</li>
+                        <li>La difficoltà metodologica dell'epoché</li>
+                        <li>L'apparente soggettivismo</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="section-header" onclick="toggleSection('opere')">
+            <h2>Opere Principali</h2>
+            <button>Mostra Sezione</button>
+        </div>
+        <div class="section-content" id="opere">
+            <h3>Opere pubblicate da Husserl</h3>
+            <ul>
+                <li><strong>Filosofia dell'aritmetica</strong> (1891)</li>
+                <li><strong>Ricerche logiche</strong> (1900-1901) - Opera fondamentale in due volumi</li>
+                <li><strong>Idee per una fenomenologia pura e per una filosofia fenomenologica</strong> (1913) - Detto anche "Idee I"</li>
+                <li><strong>Lezioni sulla coscienza interna del tempo</strong> (1928)</li>
+                <li><strong>Meditazioni cartesiane</strong> (1931)</li>
+                <li><strong>La crisi delle scienze europee e la fenomenologia trascendentale</strong> (1936, incompleto)</li>
+            </ul>
+            
+            <h3>Opere postume</h3>
+            <p>L'Archivio Husserl di Lovanio ha pubblicato oltre 40 volumi dei suoi manoscritti, tra cui:
+                <ul>
+                    <li>Idee II e III</li>
+                    <li>Analisi passive</li>
+                    <li>Esperienza e giudizio</li>
+                    <li>Lezioni sull'etica</li>
+                </ul>
+            </p>
+            
+            <div class="quote">
+                "Il vero filosofo non può non essere un uomo libero: l'essenza della filosofia è la libertà più radicale."<br>
+                - Meditazioni cartesiane
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Inizializza tutte le sezioni come chiuse
+        document.querySelectorAll('.section-content').forEach(content => {
+            content.classList.remove('open');
+        });
+        
+        // Funzione per aprire/chiudere singole sezioni
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const button = section.parentNode.querySelector('.section-header button');
+            
+            section.classList.toggle('open');
+            
+            if (section.classList.contains('open')) {
+                button.textContent = 'Nascondi Sezione';
+            } else {
+                button.textContent = 'Mostra Sezione';
+            }
+        }
+        
+        // Funzione per aprire/chiudere tutte le sezioni
+        function toggleAllSections() {
+            const allContents = document.querySelectorAll('.section-content');
+            const allOpen = Array.from(allContents).every(content => content.classList.contains('open'));
+            
+            allContents.forEach(content => {
+                const button = content.parentNode.querySelector('.section-header button');
+                
+                if (allOpen) {
+                    content.classList.remove('open');
+                    button.textContent = 'Mostra Sezione';
+                } else {
+                    content.classList.add('open');
+                    button.textContent = 'Nascondi Sezione';
+                }
+            });
+        }
+        
+        // Funzione per cambiare stile
+        function changeStyle(style) {
+            const sections = document.querySelectorAll('.section');
+            
+            sections.forEach(section => {
+                section.classList.remove('highlighted', 'scholarly-style');
+                
+                if (style === 'highlight') {
+                    section.classList.add('highlighted');
+                } else if (style === 'scholarly') {
+                    section.classList.add('scholarly-style');
+                }
+            });
+        }
+        
+        // Funzione per resettare gli stili
+        function resetStyles() {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('highlighted', 'scholarly-style');
+            });
+            document.body.classList.remove('dark-mode');
+        }
+        
+        // Funzione per la modalità scura
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+        
+        // Aggiungi event listener per i pulsanti
+        document.querySelectorAll('.section-header button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const header = this.parentNode;
+                const content = header.nextElementSibling;
+                content.classList.toggle('open');
+                
+                if (content.classList.contains('open')) {
+                    this.textContent = 'Nascondi Sezione';
+                } else {
+                    this.textContent = 'Mostra Sezione';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Origene: Il Genio Alessandrino</title>
+    <style>
+        :root {
+            --porpora-bizantina: #6a1f3d;
+            --oro-bizantino: #c9a227;
+            --papiro-antico: #f3e9d9;
+            --blu-egizio: #1a3a6a;
+            --verde-mosaico: #3a6a1f;
+        }
+        
+        body {
+            font-family: 'Palatino Linotype', 'Book Antiqua', serif;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 2rem;
+            color: #333;
+            line-height: 1.8;
+            background-color: var(--papiro-antico);
+            background-image: url('https://example.com/papyrus-texture.webp');
+            background-attachment: fixed;
+        }
+        
+        h1 {
+            text-align: center;
+            color: var(--porpora-bizantina);
+            margin: 2rem 0;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 1.5rem;
+        }
+        
+        h1:before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 30%;
+            width: 40%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--oro-bizantino), var(--blu-egizio), var(--oro-bizantino));
+            border-radius: 3px;
+        }
+        
+        .tab-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 3rem 0;
+        }
+        
+        .tab-btn {
+            padding: 14px 28px;
+            background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+            border: none;
+            border-radius: 50px;
+            font-family: 'Georgia', serif;
+            font-size: 1.1rem;
+            color: var(--blu-egizio);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.33, 1, 0.68, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border: 1px solid rgba(201, 162, 39, 0.3);
+            z-index: 1;
+        }
+        
+        .tab-btn:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, var(--oro-bizantino), #b38f23);
+            clip-path: circle(0% at 50% 50%);
+            transition: clip-path 0.6s ease;
+            z-index: -1;
+        }
+        
+        .tab-btn:hover {
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+        
+        .tab-btn:hover:before {
+            clip-path: circle(100% at 50% 50%);
+        }
+        
+        .tab-btn.active {
+            background: linear-gradient(145deg, var(--oro-bizantino), #b38f23);
+            color: white;
+            box-shadow: 0 5px 15px rgba(201, 162, 39, 0.4);
+        }
+        
+        .tab-btn.active:before {
+            clip-path: circle(100% at 50% 50%);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 2.5rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            margin: 1rem 0 3rem;
+            border: 1px solid rgba(201, 162, 39, 0.1);
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .illuminated-letter {
+            float: left;
+            font-size: 5rem;
+            line-height: 0.8;
+            margin: 0.5rem 1rem 0 0;
+            color: var(--oro-bizantino);
+            text-shadow: 2px 2px 3px rgba(0,0,0,0.2);
+            font-family: 'Times New Roman', serif;
+        }
+        
+        .quote {
+            font-style: italic;
+            color: var(--porpora-bizantina);
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            background: linear-gradient(to right, rgba(201, 162, 39, 0.1), white);
+            border-left: 4px solid var(--oro-bizantino);
+            position: relative;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .quote:before {
+            content: "❝";
+            font-size: 4rem;
+            position: absolute;
+            left: 10px;
+            top: -10px;
+            color: rgba(201, 162, 39, 0.2);
+            font-family: Georgia, serif;
+        }
+        
+        .doctrine-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 3px solid var(--blu-egizio);
+            transition: transform 0.3s ease;
+        }
+        
+        .doctrine-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin: 2rem 0;
+        }
+        
+        .timeline:before {
+            content: "";
+            position: absolute;
+            left: 7px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--oro-bizantino), var(--blu-egizio));
+        }
+        
+        .timeline-event {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 25px;
+        }
+        
+        .timeline-event:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--porpora-bizantina);
+            border: 3px solid var(--oro-bizantino);
+        }
+        
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .work-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            border-left: 3px solid var(--verde-mosaico);
+            transition: all 0.3s ease;
+        }
+        
+        .work-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Origene Adamanzio<br><span style="font-size:0.7em; font-weight:normal; display:block; margin-top:0.5rem;">Il Faro della Teologia Alessandrina</span></h1>
+    
+    <div class="tab-container">
+        <button class="tab-btn active" data-tab="vita">Vita</button>
+        <button class="tab-btn" data-tab="pensiero">Pensiero</button>
+        <button class="tab-btn" data-tab="opere">Opere</button>
+        <button class="tab-btn" data-tab="controversie">Controversie</button>
+        <button class="tab-btn" data-tab="eredita">Eredità</button>
+    </div>
+    
+    <div id="vita" class="tab-content active">
+        <span class="illuminated-letter">O</span>
+        <h2>Dall'Egitto al Martirio</h2>
+        <p>Origene (185-254 d.C.), nato ad Alessandria d'Egitto, fu uno dei più prolifici scrittori cristiani dell'antichità. Figlio di Leonida, martire cristiano, sviluppò una profonda devozione allo studio delle Scritture.</p>
+        
+        <div class="timeline">
+            <div class="timeline-event">
+                <h3>185 d.C.</h3>
+                <p>Nascita ad Alessandria</p>
+            </div>
+            <div class="timeline-event">
+                <h3>202 d.C.</h3>
+                <p>Martirio del padre Leonida</p>
+            </div>
+            <div class="timeline-event">
+                <h3>215 d.C.</h3>
+                <p>Direzione della Scuola Catechetica</p>
+            </div>
+            <div class="timeline-event">
+                <h3>231 d.C.</h3>
+                <p>Ordinazione controversa in Palestina</p>
+            </div>
+            <div class="timeline-event">
+                <h3>254 d.C.</h3>
+                <p>Morte durante le persecuzioni di Decio</p>
+            </div>
+        </div>
+        
+        <div class="quote">
+            "Quando la Parola di Dio mi chiama, lascio tutto ciò che è terreno, perché nulla sia più prezioso per me della conoscenza di Cristo."
+        </div>
+    </div>
+    
+    <div id="pensiero" class="tab-content">
+        <h2>La Sintesi tra Fede e Ragione</h2>
+        <p>Origene sviluppò un sistema teologico che univa platonismo e cristianesimo, caratterizzato da:</p>
+        
+        <div class="doctrine-card">
+            <h3>Esegesi Allegorica</h3>
+            <p>Interpretazione tripartita della Scrittura (letterale, morale, spirituale)</p>
+        </div>
+        
+        <div class="doctrine-card">
+            <h3>Apocatastasi</h3>
+            <p>Dottrina della riconciliazione finale di tutte le creature con Dio</p>
+        </div>
+        
+        <div class="doctrine-card">
+            <h3>Pre-esistenza delle Anime</h3>
+            <p>Visione influenzata dal platonismo sulla vita spirituale prima della nascita</p>
+        </div>
+        
+        <div class="quote">
+            "La verità è come un diamante con molte facce: la Scrittura va interpretata a diversi livelli, da quello storico a quello mistico."
+        </div>
+    </div>
+    
+    <div id="opere" class="tab-content">
+        <h2>L'Opera Monumentale</h2>
+        <p>Con oltre 6,000 opere (secondo Epifanio), Origene fu forse il più prolifico scrittore antico:</p>
+        
+        <div class="works-grid">
+            <div class="work-item">
+                <h3>Hexapla</h3>
+                <p>Edizione critica della Bibbia in sei colonne parallele</p>
+            </div>
+            <div class="work-item">
+                <h3>De Principiis</h3>
+                <p>Prima sistematica teologia cristiana</p>
+            </div>
+            <div class="work-item">
+                <h3>Contra Celsum</h3>
+                <p>Apologia contro le critiche pagane</p>
+            </div>
+            <div class="work-item">
+                <h3>Commentari</h3>
+                <p>Analisi approfondite di quasi tutti i libri biblici</p>
+            </div>
+        </div>
+        
+        <div class="quote">
+            "Ho scritto non per vincere dispute, ma per illuminare menti e nutrire anime affamate di verità."
+        </div>
+    </div>
+    
+    <div id="controversie" class="tab-content">
+        <h2>Le Polemiche Dottrinali</h2>
+        <p>Nonostante la sua erudizione, diverse dottrine origeniane furono poi condannate:</p>
+        
+        <table style="width:100%; border-collapse: collapse; margin: 2rem 0;">
+            <tr style="background-color: rgba(106, 31, 61, 0.1);">
+                <th style="padding:12px; text-align:left; border-bottom:2px solid var(--porpora-bizantina);">Dottrina</th>
+                <th style="padding:12px; text-align:left; border-bottom:2px solid var(--porpora-bizantina);">Controversia</th>
+            </tr>
+            <tr>
+                <td style="padding:12px; border-bottom:1px solid #eee;">Subordinazionismo</td>
+                <td style="padding:12px; border-bottom:1px solid #eee;">Natura del Figlio rispetto al Padre</td>
+            </tr>
+            <tr style="background-color: rgba(106, 31, 61, 0.05);">
+                <td style="padding:12px; border-bottom:1px solid #eee;">Apocatastasi</td>
+                <td style="padding:12px; border-bottom:1px solid #eee;">Salvezza universale incluso Satana</td>
+            </tr>
+            <tr>
+                <td style="padding:12px; border-bottom:1px solid #eee;">Pre-esistenza</td>
+                <td style="padding:12px; border-bottom:1px solid #eee;">Anime esistenti prima della nascita</td>
+            </tr>
+        </table>
+        
+        <div class="quote">
+            "La ricerca della verità è come scalare una montagna: a volte si devia dal sentiero, ma ogni passo avvicina alla vetta."
+        </div>
+    </div>
+    
+    <div id="eredita" class="tab-content">
+        <h2>L'Influenza Duratura</h2>
+        <p>Nonostante le condanne posteriori, Origene influenzò profondamente la teologia cristiana:</p>
+        
+        <div style="display: flex; gap: 2rem; margin: 2rem 0;">
+            <div style="flex:1;">
+                <h3>Padri della Chiesa</h3>
+                <ul style="list-style-type: none; padding: 0;">
+                    <li>• Basilio il Grande</li>
+                    <li>• Gregorio Nazianzeno</li>
+                    <li>• Evagrio Pontico</li>
+                </ul>
+            </div>
+            <div style="flex:1;">
+                <h3>Movimenti</h3>
+                <ul style="list-style-type: none; padding: 0;">
+                    <li>• Monachesimo orientale</li>
+                    <li>• Mistica cristiana</li>
+                    <li>• Esegesi moderna</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="quote">
+            "I veri discepoli non sono quelli che ripetono le parole del maestro, ma quelli che fanno propria la sua sete di verità."
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Rimuovi active da tutti
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => {
+                        c.classList.remove('active');
+                    });
+                    
+                    // Aggiungi active al selezionato
+                    this.classList.add('active');
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

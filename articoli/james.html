@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>William James - Psicologia e Pragmatismo</title>
+    <style>
+        /* Stili base */
+        :root {
+            --primary: #3498db;
+            --secondary: #2980b9;
+            --accent: #2c3e50;
+            --text: #333;
+            --bg: #f8f9fa;
+            --section-bg: #fff;
+            --quote-bg: #ebf5fb;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 25px;
+            color: var(--text);
+            background-color: var(--bg);
+            transition: all 0.4s ease;
+        }
+        
+        h1 {
+            color: var(--accent);
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-top: 35px;
+        }
+        
+        .section {
+            background-color: var(--section-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--primary);
+        }
+        
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            padding-top: 0;
+            transition: all 0.5s ease;
+        }
+        
+        .section-content.show {
+            max-height: 2000px;
+            padding-top: 15px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px 0;
+        }
+        
+        .toggle-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .toggle-btn:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .style-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 30px 0;
+            justify-content: center;
+        }
+        
+        .style-btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .style-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        .quote {
+            background-color: var(--quote-bg);
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            margin: 15px 0;
+            font-style: italic;
+            border-radius: 0 5px 5px 0;
+            transition: all 0.3s;
+        }
+        
+        /* Stili alternativi */
+        .dark-mode {
+            --primary: #3498db;
+            --secondary: #2980b9;
+            --accent: #ecf0f1;
+            --text: #ecf0f1;
+            --bg: #2c3e50;
+            --section-bg: #34495e;
+            --quote-bg: #1a252f;
+        }
+        
+        .psychology-mode {
+            --primary: #9b59b6;
+            --secondary: #8e44ad;
+            --accent: #2c3e50;
+            --bg: #f5eef8;
+            --section-bg: #fff;
+            --quote-bg: #e8daef;
+        }
+        
+        .pragmatic-mode {
+            --primary: #e74c3c;
+            --secondary: #c0392b;
+            --accent: #2c3e50;
+            --bg: #fdedec;
+            --section-bg: #fff;
+            --quote-bg: #fadbd8;
+        }
+        
+        .vintage-mode {
+            --primary: #8d6e63;
+            --secondary: #6d4c41;
+            --accent: #3e2723;
+            --bg: #efebe9;
+            --section-bg: #fff;
+            --quote-bg: #d7ccc8;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        
+        .functional-mode .section:nth-child(odd) {
+            border-left-color: #3498db;
+        }
+        
+        .functional-mode .section:nth-child(even) {
+            border-left-color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <h1>William James: Fondatore della Psicologia Americana</h1>
+
+    <div class="style-buttons">
+        <button class="style-btn" data-style="">Classico</button>
+        <button class="style-btn" data-style="dark-mode">Dark Mode</button>
+        <button class="style-btn" data-style="psychology-mode">Psicologia</button>
+        <button class="style-btn" data-style="pragmatic-mode">Pragmatismo</button>
+        <button class="style-btn" data-style="vintage-mode">Vintage</button>
+        <button class="style-btn" data-style="functional-mode">Funzionale</button>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Biografia</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <p>William James (1842-1910) è stato un filosofo e psicologo americano, fratello dello scrittore Henry James. Considerato il padre della psicologia americana, ha insegnato ad Harvard e ha scritto una delle opere fondamentali della psicologia: "Principi di psicologia" (1890).</p>
+            
+            <div class="quote">
+                "L'abitudine è il grande volano della società, il suo più prezioso agente conservatore."
+            </div>
+            
+            <h3>Dati biografici:</h3>
+            <ul>
+                <li>Nato a New York nel 1842</li>
+                <li>Studi di medicina ad Harvard</li>
+                <li>Primo a offrire un corso di psicologia negli USA</li>
+                <li>Morto nel 1910 nel New Hampshire</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Contributi alla Psicologia</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>Funzionalismo</h3>
+            <p>James oppose allo strutturalismo di Wundt un approccio funzionalista che studiava come la mente aiuta gli organismi ad adattarsi all'ambiente.</p>
+            
+            <h3>Teoria del flusso di coscienza</h3>
+            <p>Descrive la coscienza come un flusso continuo (stream of consciousness) piuttosto che come elementi discreti.</p>
+            
+            <h3>Teoria James-Lange delle emozioni</h3>
+            <p>Propose che le emozioni siano la percezione dei cambiamenti fisiologici nel corpo, invertendo la concezione comune.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Pragmatismo</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <p>James sviluppò il pragmatismo come metodo filosofico, considerando il valore pratico delle idee come criterio di verità.</p>
+            
+            <div class="quote">
+                "Il valore pragmatico di qualsiasi verità consiste nelle conseguenze che derivano dal crederla vera."
+            </div>
+            
+            <h3>Concetti chiave:</h3>
+            <ul>
+                <li>Verità come ciò che "funziona" nella pratica</li>
+                <li>Volontà di credere in assenza di prove certe</li>
+                <li>Pluralismo contro il monismo assoluto</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Opere Principali</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>Principi di Psicologia (1890)</h3>
+            <p>Opera monumentale che fondò la psicologia come disciplina scientifica.</p>
+            
+            <h3>Le Varietà dell'Esperienza Religiosa (1902)</h3>
+            <p>Studio psicologico della religione come fenomeno personale.</p>
+            
+            <h3>Pragmatismo (1907)</h3>
+            <p>Esposizione sistematica della sua filosofia pragmatista.</p>
+            
+            <div class="quote">
+                "L'atto più rivoluzionario che puoi compiere è vedere le cose come sono, e poi agire di conseguenza."
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Eredità e Influenza</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>In Psicologia</h3>
+            <p>Influenzò il comportamentismo, la psicologia umanistica e la psicologia cognitiva.</p>
+            
+            <h3>In Filosofia</h3>
+            <p>Il suo pragmatismo ispirò John Dewey, Richard Rorty e altri.</p>
+            
+            <h3>In Altri Campi</h3>
+            <p>Le sue idee hanno influenzato educazione, religione, letteratura ed economia comportamentale.</p>
+        </div>
+    </div>
+
+    <script>
+        // Funzione per gestire l'apertura/chiusura delle sezioni
+        function setupSectionToggles() {
+            const headers = document.querySelectorAll('.section-header');
+            
+            headers.forEach(header => {
+                const btn = header.querySelector('.toggle-btn');
+                const content = header.nextElementSibling;
+                
+                // Aggiungi event listener all'header e al pulsante
+                header.addEventListener('click', () => toggleSection(content, btn));
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Evita che l'evento si propaghi all'header
+                    toggleSection(content, btn);
+                });
+            });
+            
+            // Apri la prima sezione di default
+            const firstContent = headers[0].nextElementSibling;
+            const firstBtn = headers[0].querySelector('.toggle-btn');
+            toggleSection(firstContent, firstBtn);
+        }
+        
+        // Funzione per aprire/chiudere una singola sezione
+        function toggleSection(content, btn) {
+            content.classList.toggle('show');
+            btn.textContent = content.classList.contains('show') ? 'Nascondi' : 'Mostra';
+        }
+        
+        // Funzione per gestire il cambio di stile
+        function setupStyleButtons() {
+            const styleBtns = document.querySelectorAll('.style-btn');
+            
+            styleBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const style = btn.dataset.style;
+                    document.body.className = style;
+                });
+            });
+        }
+        
+        // Inizializzazione
+        document.addEventListener('DOMContentLoaded', function() {
+            setupSectionToggles();
+            setupStyleButtons();
+        });
+    </script>
+</body>
+</html>

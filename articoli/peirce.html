@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charles Sanders Peirce - Pragmatismo e Semiotica</title>
+    <style>
+        /* Stili base */
+        :root {
+            --primary: #5D4037;
+            --secondary: #8D6E63;
+            --accent: #3E2723;
+            --text: #212121;
+            --bg: #EFEBE9;
+            --section-bg: #FFFFFF;
+            --quote-bg: #D7CCC8;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.7;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 25px;
+            color: var(--text);
+            background-color: var(--bg);
+            transition: all 0.4s ease;
+        }
+        
+        h1 {
+            color: var(--accent);
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-top: 35px;
+        }
+        
+        .section {
+            background-color: var(--section-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--primary);
+        }
+        
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            padding-top: 0;
+            transition: all 0.5s ease;
+        }
+        
+        .section-content.show {
+            max-height: 2000px;
+            padding-top: 15px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px 0;
+        }
+        
+        .toggle-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .toggle-btn:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .style-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 30px 0;
+            justify-content: center;
+        }
+        
+        .style-btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .style-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        .quote {
+            background-color: var(--quote-bg);
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            margin: 15px 0;
+            font-style: italic;
+            border-radius: 0 5px 5px 0;
+            transition: all 0.3s;
+        }
+        
+        /* Stili alternativi */
+        .dark-mode {
+            --primary: #5D4037;
+            --secondary: #8D6E63;
+            --accent: #D7CCC8;
+            --text: #FAFAFA;
+            --bg: #212121;
+            --section-bg: #424242;
+            --quote-bg: #5D4037;
+        }
+        
+        .pragmatic-mode {
+            --primary: #BF360C;
+            --secondary: #E64A19;
+            --accent: #3E2723;
+            --bg: #FBE9E7;
+            --section-bg: #FFFFFF;
+            --quote-bg: #FFCCBC;
+        }
+        
+        .semiotic-mode {
+            --primary: #6A1B9A;
+            --secondary: #9C27B0;
+            --accent: #4A148C;
+            --bg: #F3E5F5;
+            --section-bg: #FFFFFF;
+            --quote-bg: #E1BEE7;
+        }
+        
+        .triadic-mode .section:nth-child(3n+1) {
+            border-left-color: #E53935;
+        }
+        
+        .triadic-mode .section:nth-child(3n+2) {
+            border-left-color: #1E88E5;
+        }
+        
+        .triadic-mode .section:nth-child(3n+3) {
+            border-left-color: #43A047;
+        }
+    </style>
+</head>
+<body>
+    <h1>Charles Sanders Peirce: Logica e Semiotica</h1>
+
+    <div class="style-buttons">
+        <button class="style-btn" data-style="">Classico</button>
+        <button class="style-btn" data-style="dark-mode">Dark Mode</button>
+        <button class="style-btn" data-style="pragmatic-mode">Pragmatico</button>
+        <button class="style-btn" data-style="semiotic-mode">Semiotico</button>
+        <button class="style-btn" data-style="triadic-mode">Triadico</button>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Biografia</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <p>Charles Sanders Peirce (1839-1914) è stato un filosofo, logico e scienziato americano, considerato il fondatore del pragmatismo e uno dei padri della semiotica moderna. Figlio del matematico Benjamin Peirce, sviluppò importanti contributi in logica, matematica e filosofia.</p>
+            
+            <div class="quote">
+                "Il dubbio reale e vivente è ciò che dà origine all'indagine; mentre il dubbio artificiale, come quello cartesiano, non è che un futile gioco intellettuale."
+            </div>
+            
+            <h3>Dati biografici:</h3>
+            <ul>
+                <li>Nato a Cambridge, Massachusetts nel 1839</li>
+                <li>Studi di chimica e filosofia ad Harvard</li>
+                <li>Lavorò per la U.S. Coast and Geodetic Survey</li>
+                <li>Morto in povertà nel 1914 in Pennsylvania</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Pragmatismo</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>Massima pragmatica</h3>
+            <p>Peirce formulò il principio base del pragmatismo: "Considera quali effetti, che potrebbero concebilmente avere portate pratiche, concepiamo che abbia l'oggetto della nostra concezione. Allora, la nostra concezione di questi effetti è la totalità della nostra concezione dell'oggetto."</p>
+            
+            <h3>Metodi per fissare le credenze</h3>
+            <ol>
+                <li><strong>Tenacia</strong>: aggrapparsi alle proprie convinzioni</li>
+                <li><strong>Autorità</strong>: accettare le credenze di un'autorità</li>
+                <li><strong>A priori</strong>: accettare ciò che è ragionevole</li>
+                <li><strong>Scientifico</strong>: metodo dell'indagine basato su prove</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Semiotica</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <p>Peirce sviluppò una teoria triadica del segno come relazione tra:</p>
+            <ul>
+                <li><strong>Rappresentamen</strong>: il segno in sé</li>
+                <li><strong>Oggetto</strong>: ciò a cui il segno si riferisce</li>
+                <li><strong>Interpretante</strong>: l'effetto del segno sulla mente</li>
+            </ul>
+            
+            <div class="quote">
+                "Il mondo è perfettamente inondato di segni, se solo sappiamo come trovarli."
+            </div>
+            
+            <h3>Classificazione dei segni</h3>
+            <ul>
+                <li><strong>Icona</strong>: somiglia all'oggetto (es. un ritratto)</li>
+                <li><strong>Indice</strong>: ha connessione fisica (es. fumo per il fuoco)</li>
+                <li><strong>Simbolo</strong>: relazione convenzionale (es. le parole)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Opere Principali</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>Scritti fondamentali:</h3>
+            <ul>
+                <li><strong>On a New List of Categories</strong> (1867)</li>
+                <li><strong>The Fixation of Belief</strong> (1877)</li>
+                <li><strong>How to Make Our Ideas Clear</strong> (1878)</li>
+                <li><strong>On the Algebra of Logic</strong> (1880)</li>
+            </ul>
+            
+            <h3>Raccolte postume:</h3>
+            <ul>
+                <li><strong>Collected Papers</strong> (8 volumi)</li>
+                <li><strong>Writings of Charles S. Peirce</strong> (edizione cronologica)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Eredità e Influenza</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>In Filosofia</h3>
+            <p>Il pragmatismo di Peirce influenzò William James, John Dewey e la filosofia contemporanea.</p>
+            
+            <h3>In Semiotica</h3>
+            <p>La sua teoria dei segni è fondamentale per gli studi semiotici moderni.</p>
+            
+            <h3>In Logica</h3>
+            <p>Contribuì allo sviluppo della logica matematica e dei diagrammi esistenziali.</p>
+            
+            <div class="quote">
+                "La logica, nella sua accezione generale, è, come credo, solo un altro nome per la semiotica."
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funzione per gestire l'apertura/chiusura delle sezioni
+        function setupSectionToggles() {
+            const headers = document.querySelectorAll('.section-header');
+            
+            headers.forEach(header => {
+                const btn = header.querySelector('.toggle-btn');
+                const content = header.nextElementSibling;
+                
+                // Aggiungi event listener all'header e al pulsante
+                header.addEventListener('click', () => toggleSection(content, btn));
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Evita che l'evento si propaghi all'header
+                    toggleSection(content, btn);
+                });
+            });
+            
+            // Apri la prima sezione di default
+            const firstContent = headers[0].nextElementSibling;
+            const firstBtn = headers[0].querySelector('.toggle-btn');
+            toggleSection(firstContent, firstBtn);
+        }
+        
+        // Funzione per aprire/chiudere una singola sezione
+        function toggleSection(content, btn) {
+            content.classList.toggle('show');
+            btn.textContent = content.classList.contains('show') ? 'Nascondi' : 'Mostra';
+        }
+        
+        // Funzione per gestire il cambio di stile
+        function setupStyleButtons() {
+            const styleBtns = document.querySelectorAll('.style-btn');
+            
+            styleBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const style = btn.dataset.style;
+                    document.body.className = style;
+                });
+            });
+        }
+        
+        // Inizializzazione
+        document.addEventListener('DOMContentLoaded', function() {
+            setupSectionToggles();
+            setupStyleButtons();
+        });
+    </script>
+</body>
+</html>

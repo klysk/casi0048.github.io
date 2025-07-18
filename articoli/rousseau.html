@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jean-Jacques Rousseau - Filosofo della Natura</title>
+    <style>
+        :root {
+            --primary-color: #2d3436;
+            --secondary-color: #00b894;
+            --accent-color: #e17055;
+            --light-bg: #f5f6fa;
+            --dark-text: #2d3436;
+            --light-text: #f5f6fa;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.7;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            color: var(--dark-text);
+            background-color: var(--light-bg);
+            background-image: linear-gradient(to bottom, #ffffff, #f5f6fa);
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 15px;
+            margin-bottom: 40px;
+            font-weight: normal;
+            font-size: 2.5rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-top: 40px;
+            font-weight: normal;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .section {
+            background-color: white;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            border: 1px solid #dfe6e9;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .section-content {
+            display: none;
+            padding-top: 20px;
+            animation: fadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-content.show {
+            display: block;
+        }
+        
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            font-size: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 25%, rgba(255,255,255,0.3) 50%, transparent 75%);
+            background-size: 400% 400%;
+            opacity: 0;
+            transition: all 0.6s ease;
+            z-index: -1;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+        }
+        
+        .btn:hover:after {
+            opacity: 1;
+            animation: shine 1.5s infinite;
+        }
+        
+        @keyframes shine {
+            0% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .btn-style {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .btn-style:hover {
+            background-color: #d35400;
+        }
+        
+        .btn-alt {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-alt:hover {
+            background-color: #1a1a1a;
+        }
+        
+        .rousseau-style {
+            background-color: #f8f9fa;
+            border-left: 6px solid var(--secondary-color);
+            box-shadow: 0 8px 25px rgba(0, 184, 148, 0.15);
+            transform: translateY(-5px);
+        }
+        
+        .rousseau-style h2 {
+            color: var(--secondary-color);
+            border-left-color: var(--secondary-color);
+        }
+        
+        .nature-style {
+            background-color: #e8f8f5;
+            border-left: 6px solid var(--secondary-color);
+        }
+        
+        .society-style {
+            background-color: #ffeaa7;
+            border-left: 6px solid var(--accent-color);
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 35px auto;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border: 3px solid white;
+            transform: rotate(-1deg);
+            transition: all 0.4s ease;
+        }
+        
+        img:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+        
+        .quote {
+            font-style: italic;
+            color: var(--primary-color);
+            border-left: 4px solid var(--accent-color);
+            padding: 20px;
+            margin: 30px 0;
+            background-color: white;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        .quote:before {
+            content: """;
+            font-size: 80px;
+            color: var(--secondary-color);
+            position: absolute;
+            left: 10px;
+            top: -20px;
+            opacity: 0.1;
+            font-family: serif;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #81ecec 0%, #55efc4 100%);
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: var(--dark-text);
+            font-weight: bold;
+        }
+        
+        ul {
+            padding-left: 30px;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            position: relative;
+            line-height: 1.6;
+            padding-left: 25px;
+        }
+        
+        li:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 12px;
+            height: 12px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+        }
+        
+        .icon {
+            font-size: 20px;
+        }
+        
+        .nature-icon {
+            color: var(--secondary-color);
+            margin-right: 8px;
+        }
+        
+        .society-icon {
+            color: var(--accent-color);
+            margin-right: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .btn {
+                padding: 10px 18px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Jean-Jacques Rousseau: Tra Natura e Società</h1>
+    
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Jean-Jacques_Rousseau_%28painted_portrait%29.jpg/440px-Jean-Jacques_Rousseau_%28painted_portrait%29.jpg" alt="Ritratto di Jean-Jacques Rousseau" width="400">
+    
+    <div class="section">
+        <h2>Vita e Opere</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">📜</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🌿</span> Stile Rousseau
+            </button>
+            <button class="btn btn-alt nature-btn">
+                <span class="icon">🏞️</span> Tema Natura
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Jean-Jacques Rousseau (1712-1778) è stato un filosofo, scrittore e musicista svizzero-francese, figura chiave dell'<span class="highlight">Illuminismo</span> e precursore del Romanticismo. La sua vita fu movimentata e segnata da conflitti con le autorità e altri intellettuali.</p>
+            
+            <p>Principali tappe biografiche:</p>
+            
+            <ul>
+                <li><span class="nature-icon">🌍</span> Nato a Ginevra in una famiglia calvinista</li>
+                <li><span class="nature-icon">🏃</span> Fuggì da giovane e viaggiò in Europa</li>
+                <li><span class="society-icon">📚</span> A Parigi entrò nei circoli illuministi (Diderot, Voltaire)</li>
+                <li><span class="society-icon">⚖️</span> Le sue opere furono spesso condannate e bruciate</li>
+                <li><span class="nature-icon">🌳</span> Passò gli ultimi anni in isolamento, dedicandosi alla botanica</li>
+            </ul>
+            
+            <p>Opere fondamentali:</p>
+            
+            <ul>
+                <li><em>Discorso sulle scienze e le arti</em> (1750) - Prima opera importante</li>
+                <li><em>Discorso sull'origine della disuguaglianza</em> (1755)</li>
+                <li><em>Il contratto sociale</em> (1762) - Opera politica principale</li>
+                <li><em>Emilio o Dell'educazione</em> (1762) - Trattato pedagogico</li>
+                <li><em>Le confessioni</em> (postumo) - Autobiografia rivoluzionaria</li>
+            </ul>
+            
+            <div class="quote">
+                "L'uomo è nato libero, e ovunque è in catene."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Stato di Natura e Società</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">🌲</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🌿</span> Stile Rousseau
+            </button>
+            <button class="btn btn-alt society-btn">
+                <span class="icon">🏛️</span> Tema Società
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Rousseau sviluppa una visione originale dello <span class="highlight">stato di natura</span> e della sua corruzione nella società:</p>
+            
+            <ul>
+                <li><span class="nature-icon">🦍</span> L'uomo naturale è buono, autosufficiente e compassionevole</li>
+                <li><span class="society-icon">🏙️</span> La società corrompe l'uomo introducendo disuguaglianza e vizi</li>
+                <li><span class="society-icon">💵</span> La proprietà privata è all'origine della disuguaglianza</li>
+                <li><span class="nature-icon">❤️</span> L'amor di sé (positivo) si trasforma in amor proprio (negativo)</li>
+            </ul>
+            
+            <p>Fasi della degenerazione:</p>
+            
+            <ul>
+                <li>1. Stato di natura puro (felicità e libertà)</li>
+                <li>2. Prime società (età dell'oro)</li>
+                <li>3. Istituzione della proprietà privata (inizio della disuguaglianza)</li>
+                <li>4. Società civile con leggi che cristallizzano le disuguaglianze</li>
+            </ul>
+            
+            <div class="quote">
+                "Il primo che, avendo recintato un terreno, osò dire 'questo è mio', e trovò persone abbastanza stupide da credergli, fu il vero fondatore della società civile."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Il Contratto Sociale</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">📜</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🌿</span> Stile Rousseau
+            </button>
+            <button class="btn btn-alt nature-btn">
+                <span class="icon">🤝</span> Tema Contratto
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Nel <span class="highlight">Contratto Sociale</span>, Rousseau propone una soluzione al problema della convivenza:</p>
+            
+            <ul>
+                <li><span class="society-icon">👥</span> "Trovare una forma di associazione che difenda e protegga la persona e i beni di ciascuno"</li>
+                <li><span class="society-icon">🗳️</span> La sovranità appartiene al popolo (volontà generale)</li>
+                <li><span class="nature-icon">⚖️</span> Leggi che esprimono la volontà generale, non la somma di volontà particolari</li>
+                <li><span class="society-icon">🏛️</span> Governo come esecutore, non come sovrano</li>
+            </ul>
+            
+            <p>Principi fondamentali:</p>
+            
+            <ul>
+                <li>La sovranità è inalienabile e indivisibile</li>
+                <li>La volontà generale tende all'uguaglianza</li>
+                <li>Necessità di una religione civile</li>
+                <li>Educazione pubblica per formare cittadini</li>
+            </ul>
+            
+            <div class="quote">
+                "La volontà generale è sempre retta e tende sempre all'utilità pubblica: ma non ne consegue che le deliberazioni del popolo abbiano sempre la stessa rettitudine."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Pedagogia e Emilio</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">👶</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🌿</span> Stile Rousseau
+            </button>
+            <button class="btn btn-alt nature-btn">
+                <span class="icon">🌱</span> Tema Educazione
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Nell'<span class="highlight">Emilio</span>, Rousseau rivoluziona la pedagogia:</p>
+            
+            <ul>
+                <li><span class="nature-icon">🌳</span> Educazione negativa: lasciar sviluppare la natura</li>
+                <li><span class="nature-icon">👣</span> Apprendimento attraverso l'esperienza, non i libri</li>
+                <li><span class="society-icon">👔</span> Diverse fasi educative corrispondenti allo sviluppo</li>
+                <li><span class="nature-icon">❤️</span> Importanza dei sentimenti e della moralità naturale</li>
+            </ul>
+            
+            <p>Fasi dell'educazione:</p>
+            
+            <ul>
+                <li>1. Infanzia (0-2 anni): sviluppo fisico</li>
+                <li>2. Fanciullezza (2-12 anni): educazione sensoriale</li>
+                <li>3. Preadolescenza (12-15 anni): educazione intellettuale</li>
+                <li>4. Adolescenza (15-20 anni): educazione morale e sentimentale</li>
+            </ul>
+            
+            <div class="quote">
+                "Tutto è bene uscendo dalle mani dell'autore delle cose; tutto degenera tra le mani dell'uomo."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Eredita e Influenza</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">🌍</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🌿</span> Stile Rousseau
+            </button>
+            <button class="btn btn-alt society-btn">
+                <span class="icon">🎭</span> Tema Influenza
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Rousseau ha influenzato profondamente:</p>
+            
+            <ul>
+                <li><span class="society-icon">⚔️</span> La Rivoluzione Francese (Robespierre lo chiamava "il divino Rousseau")</li>
+                <li><span class="nature-icon">🎨</span> Il Romanticismo (esaltazione della natura e dei sentimenti)</li>
+                <li><span class="society-icon">🏛️</span> La democrazia moderna (sovranità popolare)</li>
+                <li><span class="nature-icon">👩‍🏫</span> La pedagogia moderna (Montessori, Dewey)</li>
+            </ul>
+            
+            <p>Concetti rousseauiani fondamentali per:</p>
+            
+            <ul>
+                <li>Teorie dello sviluppo infantile</li>
+                <li>Ecologia e critica al progresso</li>
+                <li>Democrazia partecipativa</li>
+                <li>Critica sociale alla disuguaglianza</li>
+            </ul>
+            
+            <p>Critiche e sviluppi successivi:</p>
+            
+            <ul>
+                <li>Burke: critica alla visione astratta dell'uomo</li>
+                <li>Marx: sviluppo della critica alla proprietà privata</li>
+                <li>Freud: analisi dei conflitti tra natura e cultura</li>
+            </ul>
+            
+            <div class="quote">
+                "Senza libertà non c'è vera umanità, senza virtù non c'è libertà, senza cittadini non c'è virtù; create cittadini e avrete tutto ciò che vi serve."
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Toggle per mostrare/nascondere i contenuti
+        document.querySelectorAll('.toggle-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const content = this.parentElement.nextElementSibling;
+                content.classList.toggle('show');
+                
+                // Cambia l'icona e il testo
+                const icon = this.querySelector('.icon');
+                if (content.classList.contains('show')) {
+                    icon.textContent = '📕';
+                    this.innerHTML = this.innerHTML.replace('Mostra', 'Nascondi');
+                } else {
+                    const originalIcon = this.getAttribute('data-original-icon') || '📜';
+                    icon.textContent = originalIcon;
+                    this.innerHTML = this.innerHTML.replace('Nascondi', 'Mostra');
+                }
+            });
+        });
+        
+        // Cambia stile delle sezioni (tema Rousseau)
+        document.querySelectorAll('.style-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.parentElement.parentElement;
+                section.classList.toggle('rousseau-style');
+                
+                // Cambia l'icona e il testo
+                const icon = this.querySelector('.icon');
+                if (section.classList.contains('rousseau-style')) {
+                    icon.textContent = '✏️';
+                    this.innerHTML = this.innerHTML.replace('Stile Rousseau', 'Stile Normale');
+                } else {
+                    icon.textContent = '🌿';
+                    this.innerHTML = this.innerHTML.replace('Stile Normale', 'Stile Rousseau');
+                }
+            });
+        });
+        
+        // Bottoni tema natura
+        document.querySelectorAll('.nature-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.parentElement.parentElement;
+                section.classList.toggle('nature-style');
+                
+                if (section.classList.contains('nature-style')) {
+                    section.classList.remove('society-style');
+                }
+            });
+        });
+        
+        // Bottoni tema società
+        document.querySelectorAll('.society-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.parentElement.parentElement;
+                section.classList.toggle('society-style');
+                
+                if (section.classList.contains('society-style')) {
+                    section.classList.remove('nature-style');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

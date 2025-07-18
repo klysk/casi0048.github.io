@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anassagora di Clazomene: Il Nous e le Omeomerie</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Stili Generali e Reset */
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 3.2em;
+            text-align: center;
+            border-bottom: 2px solid #6b5b95; /* Viola per Anassagora */
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 2.4em;
+            color: #6b5b95; /* Viola per Anassagora */
+            margin-top: 30px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: #555;
+            margin-top: 25px;
+        }
+
+        h4 {
+            font-size: 1.3em;
+            color: #444;
+            margin-top: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #e74c3c; /* Rosso per evidenziazioni */
+        }
+
+        .quote {
+            font-style: italic;
+            background-color: #f6f3f9; /* Sfondo chiaro per le citazioni */
+            padding: 18px 25px;
+            border-left: 5px solid #6b5b95; /* Viola per le citazioni */
+            margin: 25px 0;
+            border-radius: 4px;
+            line-height: 1.5;
+        }
+
+        .quote footer {
+            text-align: right;
+            margin-top: 12px;
+            font-size: 0.95em;
+            color: #7f8c8d;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+        }
+
+        .image-container figcaption {
+            font-size: 0.9em;
+            color: #777;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Stili per l'Accordion (Sezioni Espandibili) */
+        .accordion-section {
+            max-width: 900px;
+            margin: 25px auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .accordion-button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 20px 30px;
+            background-color: #6b5b95; /* Viola per il bottone */
+            color: white;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s ease;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .accordion-button:hover {
+            background-color: #5b4b80;
+        }
+
+        .accordion-button h2 {
+            color: white;
+            margin: 0;
+            font-size: 1em;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .accordion-button i {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-button.active i {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 0 30px;
+            background-color: #ffffff;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            box-sizing: border-box;
+        }
+
+        .accordion-content.show {
+            max-height: 3000px; /* Valore grande per accomodare il contenuto esteso */
+            padding: 30px;
+        }
+
+        .accordion-content ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .accordion-content ul li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .accordion-content ul li::before {
+            content: '🧠'; /* Simbolo di cervello/mente per Anassagora */
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                margin: 20px auto;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2.5em;
+            }
+            h2 {
+                font-size: 2em;
+            }
+            .accordion-button {
+                padding: 15px 20px;
+                font-size: 1.5em;
+            }
+            .accordion-content {
+                padding: 0 20px;
+            }
+            .accordion-content.show {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Anassagora di Clazomene: Il Nous e le Omeomerie</h1>
+
+        <div class="image-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Anaxagoras_-_Project_Gutenberg_eText_16696.jpg" alt="Rappresentazione di Anassagora">
+            <figcaption>Anassagora di Clazomene, filosofo presocratico.</figcaption>
+        </div>
+
+        <p>
+            Nel panorama variegato della filosofia presocratica, **Anassagora di Clazomene** (circa 500 – 428 a.C.) emerge come una figura di transizione e innovazione cruciale. Originario dell'Asia Minore, fu il primo filosofo a portare il pensiero ionico ad Atene, diventando un amico e maestro di figure illustri come Pericle ed Euripide. La sua vita fu segnata da successi intellettuali ma anche da accuse di empietà, che lo costrinsero a lasciare la città. Il suo contributo più significativo fu l'introduzione di un principio ordinatore intelligente, il **Nous (Mente o Intelletto)**, e la sua teoria delle **omeomerie**, un tentativo di conciliare la stabilità dell'Essere parmenideo con l'evidenza del divenire eracliteo.
+        </p>
+        <p>
+            Anassagora si confrontò con il problema centrale della sua epoca: come spiegare il cambiamento e la molteplicità nel mondo, senza cadere nelle contraddizioni sollevate da Parmenide e Zenone sull'impossibilità del non-essere? La sua risposta fu elegante e complessa, introducendo una causalità non solo materiale ma anche intelligente.
+        </p>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>Il Problema del Divenire e del Non-Essere</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Anassagora visse in un'epoca in cui il dibattito filosofico era dominato dalle posizioni estreme di **Parmenide** e **Eraclito**.
+            </p>
+            <ul>
+                <li>
+                    <h4>La Sfida Eleatica (Parmenide e Zenone):</h4>
+                    <p>
+                        Parmenide aveva decretato l'immutabilità e l'unità dell'Essere, affermando che il "non-essere non è". Questo implicava che ogni cambiamento, nascita o morte era impossibile, poiché significava che qualcosa verrebbe dal nulla o andrebbe nel nulla. I paradossi di Zenone rafforzavano questa posizione, mostrando le contraddizioni logiche del movimento e della molteplicità.
+                    </p>
+                </li>
+                <li>
+                    <h4>La Realità del Divenire (Eraclito):</h4>
+                    <p>
+                        D'altra parte, l'evidenza quotidiana dimostrava un mondo in continuo mutamento, come sostenuto da Eraclito con il suo "Panta Rhei". Negare il divenire sembrava contraddire l'esperienza sensibile.
+                    </p>
+                </li>
+            </ul>
+            <p>
+                Anassagora si propose di trovare una soluzione che conciliasse queste due posizioni apparentemente inconciliabili. Accettò la premessa parmenidea che "nulla nasce dal nulla e nulla torna nel nulla". Questo significava che gli elementi fondamentali del mondo dovevano essere eterni e immutabili. Tuttavia, voleva anche spiegare la realtà del cambiamento e la diversità delle cose che percepiamo.
+            </p>
+            <div class="quote">
+                <p>«Nulla nasce e nulla perisce, ma da cose già esistenti si compongono e si scompongono.»</p>
+                <footer>— Anassagora (frammento B17 DK)</footer>
+            </div>
+            <p>
+                Per Anassagora, il problema della nascita e della morte non era la creazione o la distruzione della materia, ma piuttosto la sua **aggregazione e disgregazione**. Le cose non "nascono", ma si formano dalla mescolanza di elementi preesistenti; non "periscono", ma si disgregano tornando a tali elementi.
+            </p>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>Le Omeomerie: Semi Infinitamente Divisibili</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Per spiegare la materia del mondo, Anassagora introdusse il concetto di **omeomerie** (ὁμοιομέρειαι), termine coniato successivamente da Aristotele per descrivere la sua teoria. Anassagora stesso le chiamava "semi" (σπέρματα).
+            </p>
+            <ul>
+                <li>
+                    <h4>Natura dei Semi:</h4>
+                    <p>
+                        Le omeomerie sono i principi materiali eterni e immutabili che costituiscono tutta la realtà. Sono in numero infinito e sono **infinitamente divisibili**. Ogni seme contiene in sé piccole porzioni di tutte le qualità esistenti (caldo, freddo, umido, secco, oro, carne, legno, osso, ecc.).
+                    </p>
+                </li>
+                <li>
+                    <h4>"In Ogni Cosa, C'è Una Parte di Ogni Cosa":</h4>
+                    <p>
+                        Questa è la dottrina fondamentale delle omeomerie: in ogni cosa che esiste, c'è una parte di ogni altra cosa. Ciò che vediamo come "oro" è oro perché contiene una prevalenza di particelle d'oro, ma al suo interno ci sono anche, in misura minore, particelle di legno, carne, pietra, ecc.
+                    </p>
+                    <div class="quote">
+                        <p>«In ogni cosa c'è una parte di ogni cosa, tranne che nel Nous; ma il Nous c'è in ogni cosa.»</p>
+                        <footer>— Anassagora (frammento B11 DK)</footer>
+                    </div>
+                </li>
+                <li>
+                    <h4>Spiegazione del Cambiamento:</h4>
+                    <p>
+                        Il cambiamento e la nascita delle cose non sono la creazione di qualcosa dal nulla, ma la **separazione e l'aggregazione** di queste omeomerie. Quando mangiamo pane, non lo trasformiamo in carne "dal nulla"; piuttosto, le particelle di carne già presenti nel pane (in minima quantità) si separano e si aggregano per formare la carne del nostro corpo, mentre le altre particelle vengono espulse. Questo salva il principio parmenideo di conservazione dell'Essere.
+                    </p>
+                </li>
+            </ul>
+            <p>
+                Questa teoria risolveva il problema del non-essere: la materia non nasce e non perisce, ma si riorganizza. Ogni cosa esiste già in forma infinitesimale in ogni altra cosa. La differenza tra le cose è solo una questione di **predominanza** delle varie omeomerie.
+            </p>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>Il Nous: La Mente Ordinatrice</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                L'aspetto più rivoluzionario della filosofia di Anassagora è l'introduzione del **Nous** (νοῦς), che si può tradurre come Mente, Intelletto o Ragione. Prima del Nous, tutte le omeomerie erano mescolate insieme in una massa indistinta e caotica.
+            </p>
+            <ul>
+                <li>
+                    <h4>Natura del Nous:</h4>
+                    <p>
+                        Il Nous è un principio **esterno, separato e puro** dalla materia. Non è fatto di omeomerie, non è mescolato con nulla, ed è quindi libero di agire. È <span class="highlight">onnisciente</span> (conosce tutto) e <span class="highlight">onnipotente</span> (ha il potere su tutte le cose). È il più sottile e puro di tutti gli esseri.
+                    </p>
+                    <div class="quote">
+                        <p>«Il Nous è infinito e autonomo e non è mescolato a nulla, ma è solo in sé stesso.»</p>
+                        <footer>— Anassagora (frammento B12 DK)</footer>
+                    </div>
+                </li>
+                <li>
+                    <h4>La Funzione del Nous:</h4>
+                    <p>
+                        Il ruolo primario del Nous è quello di **dare inizio al movimento e all'ordine** nel cosmo. Dalla massa originaria indifferenziata, il Nous imprime un movimento rotatorio che, tramite la forza centrifuga, separa e aggrega le omeomerie simili tra loro, formando così i diversi corpi e il mondo che conosciamo. Non è una divinità personale, ma una forza intelligente e meccanica.
+                    </p>
+                </li>
+                <li>
+                    <h4>Critica Platonica e Aristotelica:</h4>
+                    <p>
+                        Sebbene l'introduzione di una Mente intelligente fosse un passo avanti rispetto alle cause puramente materiali dei presocratici, sia **Platone** che **Aristotele** criticarono Anassagora. Platone (nel *Fedone*) lo biasimò perché, dopo aver introdotto il Nous, non lo usò come causa finale o morale, ma solo come un "deus ex machina" che avviava il movimento, senza spiegare il perché delle cose nel miglior modo possibile. Aristotele lodò Anassagora per aver intuito una causa intelligente, ma lo criticò per non averla sviluppata pienamente come causa efficiente e finale, lasciandola piuttosto come un mero motore iniziale.
+                    </p>
+                </li>
+            </ul>
+            <p>
+                Nonostante le critiche, l'introduzione del Nous fu un'innovazione fondamentale, poiché per la prima volta si postulava un principio non materiale e intelligente all'origine dell'ordine cosmico. Questo aprì la strada a future concezioni teleologiche (finalistiche) e spiritualistiche della realtà.
+            </p>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>L'Astronomia e la Conoscenza in Anassagora</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Anassagora fu anche un pioniere dell'astronomia e della meteorologia. Le sue teorie rivoluzionarie lo portarono però a confrontarsi con le credenze religiose del suo tempo.
+            </p>
+            <ul>
+                <li>
+                    <h4>Corpi Celesti:</h4>
+                    <p>
+                        Affermò che il Sole era una massa infuocata di pietra molto più grande del Peloponneso, e che la Luna rifletteva la luce del Sole e aveva montagne e valli. Predisse la caduta di meteoriti e spiegò le eclissi. Queste idee erano in netto contrasto con la visione divina dei corpi celesti.
+                    </p>
+                    <div class="quote">
+                        <p>«Il Sole è una massa incandescente, e la Luna è di terra e ha su di sé pianure e gole.»</p>
+                        <footer>— Anassagora (riferito da Diogene Laerzio)</footer>
+                    </div>
+                </li>
+                <li>
+                    <h4>Accusa di Empietà:</h4>
+                    <p>
+                        Le sue teorie "demitizzanti" sull'astronomia, insieme alla sua associazione con Pericle, lo portarono a essere accusato di empietà (ἀσέβεια) ad Atene. Si dice che sia stato salvato dall'intervento di Pericle, ma dovette comunque lasciare Atene e si ritirò a Lampsaco, dove morì. Questo episodio evidenzia la tensione tra la nascente indagine razionale e le tradizioni religiose.
+                    </p>
+                </li>
+                <li>
+                    <h4>La Conoscenza attraverso i Sensi:</h4>
+                    <p>
+                        Anassagora riconobbe l'importanza dei sensi per la conoscenza, ma con una precisazione: i sensi, da soli, sono deboli e non possono cogliere la complessità delle omeomerie. Essi ci mostrano solo la prevalenza di una qualità, non la presenza di tutte le altre. La vera comprensione, quindi, richiede l'intervento della ragione per interpretare i dati sensoriali e comprendere la legge del Nous.
+                    </p>
+                </li>
+            </ul>
+            <p>
+                La sua audacia nel proporre spiegazioni naturalistiche per fenomeni prima attribuiti agli dei lo rese una figura controversa ma fondamentale per l'avanzamento del pensiero scientifico.
+            </p>
+        </div>
+    </div>
+
+    ---
+
+    <div class="accordion-section">
+        <button class="accordion-button">
+            <h2>L'Eredità e l'Influenza di Anassagora</h2>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="accordion-content">
+            <p>
+                Nonostante la sua vita tormentata, l'eredità filosofica di Anassagora è significativa e ha avuto un impatto duraturo:
+            </p>
+            <ul>
+                <li>
+                    <h4>Il Precursore dell'Atomismo:</h4>
+                    <p>
+                        La sua teoria delle omeomerie anticipa in qualche modo l'atomismo di Leucippo e Democrito, sebbene le omeomerie di Anassagora siano infinitamente divisibili e non particelle indivisibili. Entrambi, però, cercarono di spiegare la realtà come aggregazione di elementi immutabili.
+                    </p>
+                </li>
+                <li>
+                    <h4>Ponte tra Fisica e Metafisica:</h4>
+                    <p>
+                        Con l'introduzione del Nous, Anassagora fu il primo a postulare un principio non materiale e intelligente come causa dell'ordine cosmico, segnando un passaggio cruciale dalle spiegazioni puramente materialistiche (tipo Talete o Eraclito) a una visione che includeva una forma di razionalità trascendente.
+                    </p>
+                </li>
+                <li>
+                    <h4>Influenza su Platone e Aristotele:</h4>
+                    <p>
+                        Anche se lo criticarono per l'uso limitato del Nous, Platone e Aristotele riconobbero la sua importanza per aver aperto la strada a una causa intelligente e per aver tentato di superare le difficoltà delle filosofie precedenti. Il Nous anassagoreo può essere visto come un antenato delle Idee platoniche e del Motore Immobile aristotelico.
+                    </p>
+                </li>
+                <li>
+                    <h4>Scientificità:</h4>
+                    <p>
+                        Le sue intuizioni astronomiche e meteorologiche, seppur a volte imperfette, dimostrano un approccio empirico e razionale allo studio della natura, distinguendolo da spiegazioni mitologiche.
+                    </p>
+                </li>
+            </ul>
+            <p>
+                Anassagora, con la sua combinazione di un'infinità di elementi materiali e una mente cosmica ordinatrice, offrì una delle più sofisticate cosmologie presocratiche. Fu un ponte tra la filosofia naturalistica ionica e le successive speculazioni metafisiche ateniesi, aprendo nuove vie di indagine sul rapporto tra materia, ordine e intelligenza nell'universo.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const content = this.nextElementSibling; // Seleziona il div con il contenuto
+                    
+                    // Opzionale: Chiudi tutti gli altri pannelli aperti
+                    accordionButtons.forEach(otherButton => {
+                        if (otherButton !== this && otherButton.classList.contains('active')) {
+                            otherButton.classList.remove('active');
+                            otherButton.nextElementSibling.classList.remove('show');
+                        }
+                    });
+
+                    // Apri/chiudi il pannello cliccato
+                    this.classList.toggle('active');
+                    content.classList.toggle('show');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

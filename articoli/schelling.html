@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friedrich Schelling - Filosofia della Natura e dell'Assoluto</title>
+    <style>
+        :root {
+            --primary-color: #00695c;
+            --secondary-color: #00897b;
+            --accent-color: #ff8f00;
+            --light-bg: #e0f2f1;
+            --dark-text: #004d40;
+            --light-text: #e0f2f1;
+            --nature-color: #00897b;
+            --spirit-color: #6a1b9a;
+            --absolute-color: #ff8f00;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            color: var(--dark-text);
+            background-color: var(--light-bg);
+            background-image: linear-gradient(to bottom, #ffffff, var(--light-bg));
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 15px;
+            margin-bottom: 40px;
+            font-weight: normal;
+            font-size: 2.5rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-top: 40px;
+            font-weight: normal;
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .section {
+            background-color: white;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            border: 1px solid #b2dfdb;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .section-content {
+            display: none;
+            padding-top: 20px;
+            animation: fadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-content.show {
+            display: block;
+        }
+        
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            font-size: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 25%, rgba(255,255,255,0.3) 50%, transparent 75%);
+            background-size: 400% 400%;
+            opacity: 0;
+            transition: all 0.6s ease;
+            z-index: -1;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+        }
+        
+        .btn:hover:after {
+            opacity: 1;
+            animation: shine 1.5s infinite;
+        }
+        
+        @keyframes shine {
+            0% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .btn-style {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .btn-style:hover {
+            background-color: #e65100;
+        }
+        
+        .btn-alt {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-alt:hover {
+            background-color: #003d33;
+        }
+        
+        .schelling-style {
+            background-color: #f5f5f5;
+            border-left: 6px solid var(--secondary-color);
+            box-shadow: 0 8px 25px rgba(0, 137, 123, 0.15);
+            transform: translateY(-5px);
+        }
+        
+        .schelling-style h2 {
+            color: var(--secondary-color);
+            border-left-color: var(--secondary-color);
+        }
+        
+        .nature-style {
+            background-color: #e0f2f1;
+            border-left: 6px solid var(--nature-color);
+        }
+        
+        .spirit-style {
+            background-color: #f3e5f5;
+            border-left: 6px solid var(--spirit-color);
+        }
+        
+        .absolute-style {
+            background-color: #fff3e0;
+            border-left: 6px solid var(--absolute-color);
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 35px auto;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border: 3px solid white;
+            transform: rotate(-1deg);
+            transition: all 0.4s ease;
+        }
+        
+        img:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+        
+        .quote {
+            font-style: italic;
+            color: var(--primary-color);
+            border-left: 4px solid var(--accent-color);
+            padding: 20px;
+            margin: 30px 0;
+            background-color: white;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        .quote:before {
+            content: """;
+            font-size: 80px;
+            color: var(--secondary-color);
+            position: absolute;
+            left: 10px;
+            top: -20px;
+            opacity: 0.1;
+            font-family: serif;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #b2dfdb 0%, #e0f2f1 100%);
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: var(--dark-text);
+            font-weight: bold;
+        }
+        
+        ul {
+            padding-left: 30px;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            position: relative;
+            line-height: 1.6;
+            padding-left: 25px;
+        }
+        
+        li:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 12px;
+            height: 12px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+        }
+        
+        .icon {
+            font-size: 20px;
+        }
+        
+        .nature-icon {
+            color: var(--nature-color);
+            margin-right: 8px;
+        }
+        
+        .spirit-icon {
+            color: var(--spirit-color);
+            margin-right: 8px;
+        }
+        
+        .absolute-icon {
+            color: var(--absolute-color);
+            margin-right: 8px;
+        }
+        
+        .phases-container {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .phase {
+            flex: 1;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 0 5px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .nature-phase {
+            background-color: var(--nature-color);
+        }
+        
+        .spirit-phase {
+            background-color: var(--spirit-color);
+        }
+        
+        .absolute-phase {
+            background-color: var(--absolute-color);
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .btn {
+                padding: 10px 18px;
+                font-size: 14px;
+            }
+            
+            .phases-container {
+                flex-direction: column;
+            }
+            
+            .phase {
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Friedrich Schelling: L'Identità di Natura e Spirito</h1>
+    
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Friedrich_Wilhelm_Joseph_Schelling.jpg/440px-Friedrich_Wilhelm_Joseph_Schelling.jpg" alt="Ritratto di Schelling" width="400">
+    
+    <div class="section">
+        <h2>Vita e Opere</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">📜</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🌌</span> Stile Schellinghiano
+            </button>
+            <button class="btn btn-alt nature-btn">
+                <span class="icon">🌿</span> Natura
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Friedrich Wilhelm Joseph Schelling (1775-1854) è stato uno dei massimi esponenti dell'<span class="highlight">idealismo tedesco</span>, noto per la sua filosofia della natura e la teoria dell'assoluto.</p>
+            
+            <p>Principali tappe biografiche:</p>
+            
+            <ul>
+                <li><span class="nature-icon">🎓</span> Prodigio, entrò all'università a 15 anni</li>
+                <li><span class="spirit-icon">👬</span> Amico di Hegel e Hölderlin al seminario di Tubinga</li>
+                <li><span class="absolute-icon">🏛️</span> Professore a Jena, Würzburg, Erlangen, Monaco e Berlino</li>
+                <li><span class="nature-icon">📚</span> Il suo pensiero ebbe diverse fasi evolutive</li>
+                <li><span class="spirit-icon">⚔️</span> Rivalità con Hegel dopo la loro amicizia giovanile</li>
+            </ul>
+            
+            <p>Opere fondamentali:</p>
+            
+            <ul>
+                <li><em>Idee per una filosofia della natura</em> (1797)</li>
+                <li><em>Sistema dell'idealismo trascendentale</em> (1800)</li>
+                <li><em>Bruno o sul principio divino e naturale delle cose</em> (1802)</li>
+                <li><em>Filosofia della rivelazione</em> (1841-42)</li>
+                <li><em>Lezioni di Monaco</em> (postume)</li>
+            </ul>
+            
+            <div class="quote">
+                "La natura è lo spirito visibile, lo spirito è la natura invisibile."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Filosofia della Natura</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">🌍</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🌌</span> Stile Schellinghiano
+            </button>
+            <button class="btn btn-alt spirit-btn">
+                <span class="icon">👁️</span> Spirito
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Schelling sviluppa una <span class="highlight">filosofia della natura</span> rivoluzionaria:</p>
+            
+            <div class="phases-container">
+                <div class="phase nature-phase">
+                    <h3>Natura</h3>
+                    <p>Spirito inconscio</p>
+                </div>
+                <div class="phase spirit-phase">
+                    <h3>Spirito</h3>
+                    <p>Natura consapevole</p>
+                </div>
+                <div class="phase absolute-phase">
+                    <h3>Assoluto</h3>
+                    <p>Identità originaria</p>
+                </div>
+            </div>
+            
+            <p>Principi fondamentali:</p>
+            
+            <ul>
+                <li><span class="nature-icon">⚛️</span> La natura è spirito in divenire</li>
+                <li><span class="nature-icon">🔋</span> Polarità e dinamismo come caratteri fondamentali</li>
+                <li><span class="nature-icon">🌱</span> Organismo vs. meccanicismo</li>
+                <li><span class="nature-icon">⚡</span> Forze opposte in tensione (espansione/contrazione)</li>
+            </ul>
+            
+            <p>Innovazioni:</p>
+            
+            <ul>
+                <li>Superamento della visione meccanicistica</li>
+                <li>Anticipa concetti dell'ecologia moderna</li>
+                <li>Influenza sul romanticismo scientifico</li>
+                <li>Approccio olistico alla realtà naturale</li>
+            </ul>
+            
+            <div class="quote">
+                "L'intera natura, non solo una parte, deve essere spiegata dallo spirito."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Filosofia dell'Identità</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">🔄</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🌌</span> Stile Schellinghiano
+            </button>
+            <button class="btn btn-alt absolute-btn">
+                <span class="icon">☯️</span> Assoluto
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Nel periodo dell'<span class="highlight">identità</span>, Schelling elabora la nozione di Assoluto:</p>
+            
+            <ul>
+                <li><span class="absolute-icon">☯️</span> L'Assoluto come indifferenza di soggetto e oggetto</li>
+                <li><span class="absolute-icon">🎨</span> L'arte come organo della filosofia</li>
+                <li><span class="absolute-icon">🔭</span> Intelletto intuitivo come strumento conoscitivo</li>
+                <li><span class="absolute-icon">⚖️</span> Identità di reale e ideale, natura e spirito</li>
+            </ul>
+            
+            <p>Caratteristiche:</p>
+            
+            <ul>
+                <li>Superamento della contrapposizione kantiana</li>
+                <li>L'arte rivela l'identità assoluta</li>
+                <li>Contemplazione estetica come accesso all'Assoluto</li>
+                <li>Critica al razionalismo astratto</li>
+            </ul>
+            
+            <div class="quote">
+                "L'arte è il documento della filosofia e ciò che la conferma."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Filosofia della Libertà</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">🗽</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🌌</span> Stile Schellinghiano
+            </button>
+            <button class="btn btn-alt nature-btn">
+                <span class="icon">🌿</span> Natura
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Nella fase della <span class="highlight">filosofia della libertà</span>, Schelling approfondisce:</p>
+            
+            <ul>
+                <li><span class="spirit-icon">⚡</span> Distinzione tra fondamento ed esistenza</li>
+                <li><span class="spirit-icon">😈</span> Il male come possibilità della libertà</li>
+                <li><span class="absolute-icon">🙏</span> Filosofia positiva vs. negativa</li>
+                <li><span class="nature-icon">🌑</span> Il lato oscuro della natura e di Dio</li>
+            </ul>
+            
+            <p>Idee principali:</p>
+            
+            <ul>
+                <li>La libertà umana è reale solo se include la possibilità del male</li>
+                <li>Dio non è solo ragione ma anche volontà</li>
+                <li>Mitologia come processo di autocoscienza divina</li>
+                <li>Rivelazione come automanifestazione di Dio</li>
+            </ul>
+            
+            <div class="quote">
+                "L'essenza dell'uomo è la sua propria azione."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Eredita e Influenza</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">🌍</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🌌</span> Stile Schellinghiano
+            </button>
+            <button class="btn btn-alt spirit-btn">
+                <span class="icon">👁️</span> Spirito
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Schelling ha influenzato profondamente:</p>
+            
+            <ul>
+                <li><span class="nature-icon">🎨</span> Il romanticismo tedesco (Novalis, Schlegel)</li>
+                <li><span class="spirit-icon">🧠</span> L'esistenzialismo (Kierkegaard)</li>
+                <li><span class="absolute-icon">⚛️</span> La filosofia della natura (Whitehead)</li>
+                <li><span class="nature-icon">🌱</span> L'ecologia filosofica contemporanea</li>
+            </ul>
+            
+            <p>Critiche principali:</p>
+            
+            <ul>
+                <li>Hegel: accuse di irrazionalismo</li>
+                <li>Kierkegaard: critica alla filosofia dell'identità</li>
+                <li>Heidegger: interesse per il suo ultimo periodo</li>
+            </ul>
+            
+            <p>Attualità del pensiero schellinghiano:</p>
+            
+            <ul>
+                <li>Ecologia e filosofia ambientale</li>
+                <li>Studi sulla libertà e il male</li>
+                <li>Filosofia della religione</li>
+                <li>Critica al razionalismo assoluto</li>
+            </ul>
+            
+            <div class="quote">
+                "La natura non è altro che l'intelligenza pietrificata."
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Toggle per mostrare/nascondere i contenuti
+        document.querySelectorAll('.toggle-btn').forEach(button => {
+            // Salva l'icona originale come attributo data
+            const icon = button.querySelector('.icon');
+            button.setAttribute('data-original-icon', icon.textContent);
+            
+            button.addEventListener('click', function() {
+                const content = this.parentElement.nextElementSibling;
+                content.classList.toggle('show');
+                
+                // Cambia l'icona e il testo
+                const icon = this.querySelector('.icon');
+                if (content.classList.contains('show')) {
+                    icon.textContent = '📕';
+                    this.innerHTML = this.innerHTML.replace('Mostra', 'Nascondi');
+                } else {
+                    const originalIcon = this.getAttribute('data-original-icon');
+                    icon.textContent = originalIcon;
+                    this.innerHTML = this.innerHTML.replace('Nascondi', 'Mostra');
+                }
+            });
+        });
+        
+        // Cambia stile delle sezioni (tema Schelling)
+        document.querySelectorAll('.style-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.parentElement.parentElement;
+                section.classList.toggle('schelling-style');
+                
+                // Cambia l'icona e il testo
+                const icon = this.querySelector('.icon');
+                if (section.classList.contains('schelling-style')) {
+                    icon.textContent = '✏️';
+                    this.innerHTML = this.innerHTML.replace('Stile Schellinghiano', 'Stile Normale');
+                } else {
+                    icon.textContent = '🌌';
+                    this.innerHTML = this.innerHTML.replace('Stile Normale', 'Stile Schellinghiano');
+                }
+            });
+        });
+        
+        // Bottoni tema natura
+        document.querySelectorAll('.nature-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.parentElement.parentElement;
+                section.classList.toggle('nature-style');
+                
+                // Rimuovi altri stili tematici
+                section.classList.remove('spirit-style', 'absolute-style');
+            });
+        });
+        
+        // Bottoni tema spirito
+        document.querySelectorAll('.spirit-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.parentElement.parentElement;
+                section.classList.toggle('spirit-style');
+                
+                // Rimuovi altri stili tematici
+                section.classList.remove('nature-style', 'absolute-style');
+            });
+        });
+        
+        // Bottoni tema assoluto
+        document.querySelectorAll('.absolute-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.parentElement.parentElement;
+                section.classList.toggle('absolute-style');
+                
+                // Rimuovi altri stili tematici
+                section.classList.remove('nature-style', 'spirit-style');
+            });
+        });
+    </script>
+</body>
+</html>

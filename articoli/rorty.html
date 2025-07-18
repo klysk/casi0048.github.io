@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Richard Rorty - Neopragmatismo e Filosofia Contemporanea</title>
+    <style>
+        /* Stili base */
+        :root {
+            --primary: #5E35B1;
+            --secondary: #7E57C2;
+            --accent: #4527A0;
+            --text: #212121;
+            --bg: #EDE7F6;
+            --section-bg: #FFFFFF;
+            --quote-bg: #D1C4E9;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.7;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 25px;
+            color: var(--text);
+            background-color: var(--bg);
+            transition: all 0.4s ease;
+        }
+        
+        h1 {
+            color: var(--accent);
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-top: 35px;
+        }
+        
+        .section {
+            background-color: var(--section-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--primary);
+        }
+        
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            padding-top: 0;
+            transition: all 0.5s ease;
+        }
+        
+        .section-content.show {
+            max-height: 2000px;
+            padding-top: 15px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px 0;
+        }
+        
+        .toggle-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .toggle-btn:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .style-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 30px 0;
+            justify-content: center;
+        }
+        
+        .style-btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .style-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        .quote {
+            background-color: var(--quote-bg);
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            margin: 15px 0;
+            font-style: italic;
+            border-radius: 0 5px 5px 0;
+            transition: all 0.3s;
+        }
+        
+        /* Stili alternativi */
+        .dark-mode {
+            --primary: #7E57C2;
+            --secondary: #9575CD;
+            --accent: #D1C4E9;
+            --text: #EDE7F6;
+            --bg: #311B92;
+            --section-bg: #4527A0;
+            --quote-bg: #5E35B1;
+        }
+        
+        .pragmatic-mode {
+            --primary: #E53935;
+            --secondary: #EF5350;
+            --accent: #C62828;
+            --bg: #FFEBEE;
+            --section-bg: #FFFFFF;
+            --quote-bg: #FFCDD2;
+        }
+        
+        .postmodern-mode {
+            --primary: #00897B;
+            --secondary: #26A69A;
+            --accent: #00695C;
+            --bg: #E0F2F1;
+            --section-bg: #FFFFFF;
+            --quote-bg: #B2DFDB;
+        }
+        
+        .liberal-mode {
+            --primary: #3949AB;
+            --secondary: #5C6BC0;
+            --accent: #283593;
+            --bg: #E8EAF6;
+            --section-bg: #FFFFFF;
+            --quote-bg: #C5CAE9;
+        }
+        
+        .ironist-mode .section:nth-child(odd) {
+            border-left-color: #AB47BC;
+        }
+        
+        .ironist-mode .section:nth-child(even) {
+            border-left-color: #7E57C2;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>Richard Rorty: Neopragmatismo e Ironismo Liberale</h1>
+
+    <div class="style-buttons">
+        <button class="style-btn" data-style="">Classico</button>
+        <button class="style-btn" data-style="dark-mode">Dark Mode</button>
+        <button class="style-btn" data-style="pragmatic-mode">Pragmatico</button>
+        <button class="style-btn" data-style="postmodern-mode">Postmoderno</button>
+        <button class="style-btn" data-style="liberal-mode">Liberale</button>
+        <button class="style-btn" data-style="ironist-mode">Ironista</button>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Biografia</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <p>Richard Rorty (1931-2007) è stato uno dei più influenti filosofi americani del XX secolo, principale esponente del neopragmatismo. Nato a New York, sviluppò una filosofia originale che univa pragmatismo, ermeneutica e filosofia analitica.</p>
+            
+            <div class="quote">
+                "La verità è ciò che i tuoi contemporanei ti lasciano farla franca a dire."
+            </div>
+            
+            <h3>Cronologia essenziale:</h3>
+            <ul>
+                <li>1931: Nascita a New York</li>
+                <li>1956: Dottorato a Yale</li>
+                <li>1961-1982: Insegnamento a Princeton</li>
+                <li>1982-1998: Università della Virginia</li>
+                <li>1998-2005: Stanford University</li>
+                <li>2007: Morte a Palo Alto</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Filosofia Neopragmatista</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>Critica alla filosofia tradizionale</h3>
+            <p>Rorty rifiuta l'idea che la filosofia possa scoprire verità assolute o rappresentare accuratamente la realtà. Propone invece una concezione della filosofia come conversazione continua.</p>
+            
+            <h3>Principi fondamentali:</h3>
+            <ul>
+                <li>Antirappresentazionalismo: il linguaggio non "rappresenta" la realtà</li>
+                <li>Contingenza del linguaggio e del sé</li>
+                <li>Filosofia come genere letterario</li>
+                <li>Importanza della solidarietà rispetto all'oggettività</li>
+            </ul>
+            
+            <div class="quote">
+                "La speranza sociale, piuttosto che la conoscenza, è la principale virtù intellettuale."
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Ironismo Liberale</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>Concetto di ironismo</h3>
+            <p>L'ironista rortiano dubita radicalmente del vocabolario finale che usa per descrivere se stesso, riconoscendone la contingenza storica.</p>
+            
+            <h3>Liberalismo</h3>
+            <p>Rorty combina il pragmatismo con un liberalismo che privilegia la riduzione della crudeltà e l'aumento della solidarietà umana.</p>
+            
+            <div class="quote">
+                "I liberali ironici sono quelli che includono tra le cose non crudeli fare soffrire gli altri usando parole non familiari e offensive."
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Opere Principali</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>Scritti filosofici:</h3>
+            <ul>
+                <li><strong>La filosofia e lo specchio della natura</strong> (1979)</li>
+                <li><strong>Conseguenze del pragmatismo</strong> (1982)</li>
+                <li><strong>Contingenza, ironia e solidarietà</strong> (1989)</li>
+                <li><strong>Verità e progresso</strong> (1998)</li>
+            </ul>
+            
+            <h3>Saggi politici:</h3>
+            <ul>
+                <li><strong>Filosofia e futuro sociale</strong> (1999)</li>
+                <li><strong>La sinistra dopo il trionfo della destra</strong> (2004)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Eredità e Critiche</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>Influenza</h3>
+            <p>Rorty ha influenzato profondamente la filosofia contemporanea, gli studi letterari, la teoria politica e la pedagogia.</p>
+            
+            <h3>Critiche principali</h3>
+            <ul>
+                <li>Relativismo eccessivo</li>
+                <li>Scetticismo verso la verità scientifica</li>
+                <li>Ambivalenza politica</li>
+                <li>Rifiuto della filosofia sistematica</li>
+            </ul>
+            
+            <div class="quote">
+                "La filosofia non è una disciplina che fornisce conoscenze, ma una pratica che aiuta a crescere."
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funzione per gestire l'apertura/chiusura delle sezioni
+        function setupSectionToggles() {
+            const headers = document.querySelectorAll('.section-header');
+            
+            headers.forEach(header => {
+                const btn = header.querySelector('.toggle-btn');
+                const content = header.nextElementSibling;
+                
+                // Aggiungi event listener all'header e al pulsante
+                header.addEventListener('click', () => toggleSection(content, btn));
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Evita che l'evento si propaghi all'header
+                    toggleSection(content, btn);
+                });
+            });
+            
+            // Apri la prima sezione di default
+            const firstContent = headers[0].nextElementSibling;
+            const firstBtn = headers[0].querySelector('.toggle-btn');
+            toggleSection(firstContent, firstBtn);
+        }
+        
+        // Funzione per aprire/chiudere una singola sezione
+        function toggleSection(content, btn) {
+            content.classList.toggle('show');
+            btn.textContent = content.classList.contains('show') ? 'Nascondi' : 'Mostra';
+        }
+        
+        // Funzione per gestire il cambio di stile
+        function setupStyleButtons() {
+            const styleBtns = document.querySelectorAll('.style-btn');
+            
+            styleBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const style = btn.dataset.style;
+                    document.body.className = style;
+                });
+            });
+        }
+        
+        // Inizializzazione
+        document.addEventListener('DOMContentLoaded', function() {
+            setupSectionToggles();
+            setupStyleButtons();
+        });
+    </script>
+</body>
+</html>

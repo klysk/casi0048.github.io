@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>David Hume - Filosofo dell'Empirismo</title>
+    <style>
+        :root {
+            --primary-color: #6d214f;
+            --secondary-color: #b33771;
+            --accent-color: #f97f51;
+            --light-bg: #f8efed;
+            --dark-text: #2c3a47;
+            --light-text: #f8efed;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.7;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            color: var(--dark-text);
+            background-color: var(--light-bg);
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 15px;
+            margin-bottom: 40px;
+            font-weight: normal;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-top: 40px;
+            font-weight: normal;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 15px;
+        }
+        
+        .section {
+            background-color: white;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            border: 1px solid #e7d5d1;
+        }
+        
+        .section-content {
+            display: none;
+            padding-top: 20px;
+            animation: fadeIn 0.6s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-content.show {
+            display: block;
+        }
+        
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn:hover {
+            background-color: #8e2e5d;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        .btn-style {
+            background-color: var(--accent-color);
+        }
+        
+        .btn-style:hover {
+            background-color: #e6673b;
+        }
+        
+        .hume-style {
+            background-color: #fdf6f5;
+            border-left: 6px solid var(--secondary-color);
+            box-shadow: 0 6px 16px rgba(179, 55, 113, 0.2);
+        }
+        
+        .hume-style h2 {
+            color: var(--secondary-color);
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 35px auto;
+            border-radius: 8px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+            border: 2px solid white;
+        }
+        
+        .quote {
+            font-style: italic;
+            color: var(--primary-color);
+            border-left: 4px solid var(--accent-color);
+            padding: 15px 25px;
+            margin: 30px 0;
+            background-color: #fdf6f5;
+            border-radius: 0 8px 8px 0;
+            position: relative;
+        }
+        
+        .quote:before {
+            content: """;
+            font-size: 60px;
+            color: var(--secondary-color);
+            position: absolute;
+            left: 10px;
+            top: -15px;
+            opacity: 0.2;
+        }
+        
+        .highlight {
+            background-color: #f8e5e5;
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        ul {
+            padding-left: 30px;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            position: relative;
+            line-height: 1.6;
+        }
+        
+        li:before {
+            content: "•";
+            color: var(--accent-color);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1.5em;
+            font-size: 1.2em;
+        }
+        
+        .icon {
+            font-size: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>David Hume: L'Empirista Radicale</h1>
+    
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/David_Hume.jpg/440px-David_Hume.jpg" alt="Ritratto di David Hume" width="400">
+    
+    <div class="section">
+        <h2>Vita e Opere</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">📖</span> Mostra/Nascondi
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🎨</span> Stile Humeano
+            </button>
+        </div>
+        <div class="section-content">
+            <p>David Hume (1711-1776) è il più importante filosofo scozzese e una delle figure centrali dell'<span class="highlight">empirismo britannico</span> insieme a Locke e Berkeley. Nato a Edimburgo, sviluppò un sistema filosofico radicale che influenzò profondamente il pensiero successivo.</p>
+            
+            <p>Principali tappe biografiche:</p>
+            
+            <ul>
+                <li>Studiò legge ma si dedicò alla filosofia e alla storia</li>
+                <li>Viaggiò in Francia dove scrisse il <em>Trattato sulla natura umana</em></li>
+                <li>Fu bibliotecario e diplomatico</li>
+                <li>Amico di Adam Smith, influenzò l'economia politica</li>
+            </ul>
+            
+            <p>Opere fondamentali:</p>
+            
+            <ul>
+                <li><em>Trattato sulla natura umana</em> (1739-40) - Opera principale</li>
+                <li><em>Ricerca sull'intelletto umano</em> (1748) - Versione divulgativa</li>
+                <li><em>Ricerca sui principi della morale</em> (1751)</li>
+                <li><em>Dialoghi sulla religione naturale</em> (pubblicati postumi)</li>
+            </ul>
+            
+            <div class="quote">
+                "La ragione è, e deve solo essere, schiava delle passioni."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Teoria della Conoscenza</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">🔍</span> Mostra/Nascondi
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🎨</span> Stile Humeano
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Hume sviluppa un <span class="highlight">empirismo radicale</span> che mette in discussione i fondamenti della conoscenza:</p>
+            
+            <ul>
+                <li>Tutte le idee derivano da impressioni sensoriali precedenti</li>
+                <li>Distinzione tra relazioni di idee (verità analitiche) e questioni di fatto (verità empiriche)</li>
+                <li>Critica al concetto di causalità: è solo abitudine psicologica</li>
+                <li>Lo scetticismo humeano limita la conoscenza all'esperienza immediata</li>
+            </ul>
+            
+            <p>La "forchetta humeana" divide:</p>
+            
+            <ul>
+                <li>Relazioni di idee: matematica, logica (certe ma non informative sul mondo)</li>
+                <li>Questioni di fatto: scienze empiriche (informative ma non certe)</li>
+                <li>Metafisica tradizionale: cade fuori da questa divisione</li>
+            </ul>
+            
+            <div class="quote">
+                "Se prendiamo in mano un libro qualsiasi [...] chiediamoci: 'Contiene qualche ragionamento astratto sulla quantità o sul numero?' No. 'Contiene qualche ragionamento sperimentale su questioni di fatto e di esistenza?' No. Allora gettatelo nel fuoco, perché non può contenere che sofisticheria e inganno."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Filosofia Morale</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">⚖️</span> Mostra/Nascondi
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🎨</span> Stile Humeano
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Nella <span class="highlight">filosofia morale</span>, Hume sviluppa una teoria sentimentalista:</p>
+            
+            <ul>
+                <li>La morale si basa sul sentimento, non sulla ragione</li>
+                <li>La simpatia è il fondamento della vita morale</li>
+                <li>L'utilità è il criterio della virtù</li>
+                <li>Critica al dovere kantiano ante litteram</li>
+            </ul>
+            
+            <p>Caratteristiche dell'etica humeana:</p>
+            
+            <ul>
+                <li>Anti-razionalista: la ragione non motiva all'azione</li>
+                <li>Naturalista: la morale emerge dalla natura umana</li>
+                <li>Sociale: la virtù è approvata socialmente</li>
+                <li>Utilitarista ante litteram: anticipa Bentham e Mill</li>
+            </ul>
+            
+            <div class="quote">
+                "Non è contrario alla ragione preferire la distruzione del mondo intero alla scalfittura del mio dito."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Filosofia della Religione</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">🕯️</span> Mostra/Nascondi
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🎨</span> Stile Humeano
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Hume sviluppa una <span class="highlight">critica radicale</span> alla religione tradizionale:</p>
+            
+            <ul>
+                <li>Critica ai miracoli: violano le leggi di natura</li>
+                <li>La teologia razionale non può dimostrare l'esistenza di Dio</li>
+                <li>Il problema del male mina l'idea di Dio benevolente</li>
+                <li>La religione nasce dalla paura e dall'ignoranza</li>
+            </ul>
+            
+            <p>Nei <em>Dialoghi sulla religione naturale</em>:</p>
+            
+            <ul>
+                <li>Critica all'argomento del disegno intelligente</li>
+                <li>L'ipotesi dell'universo come organismo più che come macchina</li>
+                <li>Lo scetticismo come atteggiamento più ragionevole</li>
+            </ul>
+            
+            <div class="quote">
+                "Un miracolo è una violazione delle leggi di natura; e poiché una ferma e inalterabile esperienza ha stabilito queste leggi, la prova contro il miracolo è completa quanto qualsiasi argomento tratto dall'esperienza possa immaginarsi."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Influenza e Attualità</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">🌍</span> Mostra/Nascondi
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">🎨</span> Stile Humeano
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Hume ha influenzato profondamente:</p>
+            
+            <ul>
+                <li>Kant (che affermò di essere stato svegliato dal "sonno dogmatico" da Hume)</li>
+                <li>L'utilitarismo (Bentham, Mill)</li>
+                <li>Il positivismo logico (Ayer, Carnap)</li>
+                <li>La filosofia analitica (Quine, Strawson)</li>
+            </ul>
+            
+            <p>Concetti humeani fondamentali per:</p>
+            
+            <ul>
+                <li>La filosofia della scienza (problema dell'induzione)</li>
+                <li>L'economia (teoria dei sentimenti morali di Smith)</li>
+                <li>La psicologia (associazionismo)</li>
+                <li>La filosofia della religione contemporanea</li>
+            </ul>
+            
+            <p>Critiche e sviluppi successivi:</p>
+            
+            <ul>
+                <li>Kant: risposta allo scetticismo humeano</li>
+                <li>Popper: falsificazionismo come soluzione al problema dell'induzione</li>
+                <li>Neo-humeani nella filosofia contemporanea</li>
+            </ul>
+            
+            <div class="quote">
+                "La bellezza delle cose esiste nello spirito di chi le contempla."
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Toggle per mostrare/nascondere i contenuti
+        document.querySelectorAll('.toggle-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const content = this.parentElement.nextElementSibling;
+                content.classList.toggle('show');
+                
+                // Cambia l'icona e il testo
+                const icon = this.querySelector('.icon');
+                if (content.classList.contains('show')) {
+                    icon.textContent = '📕';
+                    this.innerHTML = this.innerHTML.replace('Mostra', 'Nascondi');
+                } else {
+                    icon.textContent = '📖';
+                    this.innerHTML = this.innerHTML.replace('Nascondi', 'Mostra');
+                }
+            });
+        });
+        
+        // Cambia stile delle sezioni
+        document.querySelectorAll('.style-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.parentElement.parentElement;
+                section.classList.toggle('hume-style');
+                
+                // Cambia l'icona e il testo
+                const icon = this.querySelector('.icon');
+                if (section.classList.contains('hume-style')) {
+                    icon.textContent = '✏️';
+                    this.innerHTML = this.innerHTML.replace('Stile Humeano', 'Stile Normale');
+                } else {
+                    icon.textContent = '🎨';
+                    this.innerHTML = this.innerHTML.replace('Stile Normale', 'Stile Humeano');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

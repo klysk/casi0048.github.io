@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voltaire - Il Filosofo dell'Illuminismo</title>
+    <style>
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #a29bfe;
+            --accent-color: #fd79a8;
+            --light-bg: #f9f9f9;
+            --dark-text: #2d3436;
+            --light-text: #f9f9f9;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.7;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            color: var(--dark-text);
+            background-color: var(--light-bg);
+            background-image: linear-gradient(to bottom, #ffffff, #f9f9f9);
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 15px;
+            margin-bottom: 40px;
+            font-weight: normal;
+            font-size: 2.5rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-top: 40px;
+            font-weight: normal;
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .section {
+            background-color: white;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            border: 1px solid #dfe6e9;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .section-content {
+            display: none;
+            padding-top: 20px;
+            animation: fadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-content.show {
+            display: block;
+        }
+        
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            font-size: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 25%, rgba(255,255,255,0.3) 50%, transparent 75%);
+            background-size: 400% 400%;
+            opacity: 0;
+            transition: all 0.6s ease;
+            z-index: -1;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+        }
+        
+        .btn:hover:after {
+            opacity: 1;
+            animation: shine 1.5s infinite;
+        }
+        
+        @keyframes shine {
+            0% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .btn-style {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .btn-style:hover {
+            background-color: #e84393;
+        }
+        
+        .btn-alt {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-alt:hover {
+            background-color: #5d4ac9;
+        }
+        
+        .voltaire-style {
+            background-color: #f8f9fa;
+            border-left: 6px solid var(--secondary-color);
+            box-shadow: 0 8px 25px rgba(162, 155, 254, 0.15);
+            transform: translateY(-5px);
+        }
+        
+        .voltaire-style h2 {
+            color: var(--secondary-color);
+            border-left-color: var(--secondary-color);
+        }
+        
+        .reason-style {
+            background-color: #f0e6ff;
+            border-left: 6px solid var(--secondary-color);
+        }
+        
+        .satire-style {
+            background-color: #ffe6f2;
+            border-left: 6px solid var(--accent-color);
+        }
+        
+        .tolerance-style {
+            background-color: #e6f9ff;
+            border-left: 6px solid #00cec9;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 35px auto;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border: 3px solid white;
+            transform: rotate(-1deg);
+            transition: all 0.4s ease;
+        }
+        
+        img:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+        
+        .quote {
+            font-style: italic;
+            color: var(--primary-color);
+            border-left: 4px solid var(--accent-color);
+            padding: 20px;
+            margin: 30px 0;
+            background-color: white;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        .quote:before {
+            content: """;
+            font-size: 80px;
+            color: var(--secondary-color);
+            position: absolute;
+            left: 10px;
+            top: -20px;
+            opacity: 0.1;
+            font-family: serif;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #e0c4fd 0%, #d0b0ff 100%);
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: var(--dark-text);
+            font-weight: bold;
+        }
+        
+        ul {
+            padding-left: 30px;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            position: relative;
+            line-height: 1.6;
+            padding-left: 25px;
+        }
+        
+        li:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 12px;
+            height: 12px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+        }
+        
+        .icon {
+            font-size: 20px;
+        }
+        
+        .reason-icon {
+            color: var(--secondary-color);
+            margin-right: 8px;
+        }
+        
+        .satire-icon {
+            color: var(--accent-color);
+            margin-right: 8px;
+        }
+        
+        .tolerance-icon {
+            color: #00cec9;
+            margin-right: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .btn {
+                padding: 10px 18px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Voltaire: Il Portavoce dell'Illuminismo</h1>
+    
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Voltaire_-_Jean-Antoine_Houdon.jpg/440px-Voltaire_-_Jean-Antoine_Houdon.jpg" alt="Ritratto di Voltaire" width="400">
+    
+    <div class="section">
+        <h2>Vita e Opere</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">📜</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">✒️</span> Stile Voltaire
+            </button>
+            <button class="btn btn-alt reason-btn">
+                <span class="icon">💡</span> Tema Ragione
+            </button>
+        </div>
+        <div class="section-content">
+            <p>François-Marie Arouet, noto come Voltaire (1694-1778), è stato uno dei più importanti filosofi e scrittori dell'<span class="highlight">Illuminismo francese</span>, noto per il suo spirito critico e la difesa della libertà di pensiero.</p>
+            
+            <p>Principali tappe biografiche:</p>
+            
+            <ul>
+                <li><span class="reason-icon">🎓</span> Nato a Parigi in una famiglia borghese</li>
+                <li><span class="satire-icon">⚔️</span> Imprigionato alla Bastiglia per satire contro il regime</li>
+                <li><span class="reason-icon">🏰</span> Soggiornò alla corte di Federico II di Prussia</li>
+                <li><span class="tolerance-icon">🏡</span> Si stabilì a Ferney, vicino al confine svizzero</li>
+                <li><span class="satire-icon">⚖️</span> Impegnato in numerose battaglie per la giustizia</li>
+            </ul>
+            
+            <p>Opere fondamentali:</p>
+            
+            <ul>
+                <li><em>Lettere filosofiche</em> (1734) - Manifesto dell'Illuminismo</li>
+                <li><em>Candido o l'ottimismo</em> (1759) - Romanzo filosofico</li>
+                <li><em>Trattato sulla tolleranza</em> (1763)</li>
+                <li><em>Dizionario filosofico</em> (1764)</li>
+                <li>Oltre 20.000 lettere e innumerevoli opere teatrali</li>
+            </ul>
+            
+            <div class="quote">
+                "Non sono d'accordo con quello che dici, ma darei la vita perché tu lo possa dire."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Filosofia e Ragione</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">💡</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">✒️</span> Stile Voltaire
+            </button>
+            <button class="btn btn-alt satire-btn">
+                <span class="icon">🎭</span> Tema Satira
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Voltaire fu un campione della <span class="highlight">ragione</span> e dello spirito critico:</p>
+            
+            <ul>
+                <li><span class="reason-icon">🔍</span> Fiducia nella ragione e nel metodo scientifico</li>
+                <li><span class="reason-icon">⚛️</span> Influenza di Newton e Locke</li>
+                <li><span class="reason-icon">🚫</span> Critica alla metafisica e al dogmatismo</li>
+                <li><span class="reason-icon">🌍</span> Deismo: Dio come "grande orologiaio" dell'universo</li>
+            </ul>
+            
+            <p>Principi filosofici:</p>
+            
+            <ul>
+                <li>Dubbio metodico come strumento di conoscenza</li>
+                <li>Empirismo contro il razionalismo cartesiano</li>
+                <li>Progresso attraverso la scienza e l'educazione</li>
+                <li>Utilitarismo ante litteram: "Il bene pubblico deve essere la legge suprema"</li>
+            </ul>
+            
+            <div class="quote">
+                "Il dubbio è scomodo, ma la certezza è ridicola."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Satira e Critica Sociale</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">🎭</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">✒️</span> Stile Voltaire
+            </button>
+            <button class="btn btn-alt tolerance-btn">
+                <span class="icon">🕊️</span> Tema Tolleranza
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Voltaire utilizzò la <span class="highlight">satira</span> come arma contro l'ingiustizia:</p>
+            
+            <ul>
+                <li><span class="satire-icon">🤴</span> Attacco all'assolutismo e ai privilegi nobiliari</li>
+                <li><span class="satire-icon">⛪</span> Critica all'intolleranza religiosa e al fanatismo</li>
+                <li><span class="satire-icon">👨‍⚖️</span> Denuncia degli errori giudiziari (caso Calas)</li>
+                <li><span class="satire-icon">📚</span> Uso dell'ironia e del paradosso</li>
+            </ul>
+            
+            <p>Opere satiriche principali:</p>
+            
+            <ul>
+                <li><em>Candido</em>: critica all'ottimismo leibniziano</li>
+                <li><em>Zadig</em>: satira del destino e della giustizia</li>
+                <li><em>Micromega</em>: critica alla presunzione umana</li>
+                <li><em>L'ingenuo</em>: satira dei costumi francesi</li>
+            </ul>
+            
+            <div class="quote">
+                "Il segreto per essere noiosi è dire tutto quello che si sa."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Tolleranza e Diritti</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">🕊️</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">✒️</span> Stile Voltaire
+            </button>
+            <button class="btn btn-alt reason-btn">
+                <span class="icon">⚖️</span> Tema Diritti
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Voltaire fu un paladino della <span class="highlight">tolleranza</span> e dei diritti:</p>
+            
+            <ul>
+                <li><span class="tolerance-icon">⚖️</span> Difesa della libertà di pensiero e di stampa</li>
+                <li><span class="tolerance-icon">🤝</span> Rispetto per tutte le religioni (pur criticandone gli eccessi)</li>
+                <li><span class="tolerance-icon">🙅</span> Opposizione alla tortura e alla pena di morte</li>
+                <li><span class="tolerance-icon">🌍</span> Cosmopolitismo: "Sono cittadino del mondo"</li>
+            </ul>
+            
+            <p>Battaglie importanti:</p>
+            
+            <ul>
+                <li>Cas Calas: commerciante protestante ingiustamente giustiziato</li>
+                <li>Cas Sirven: altra vittima dell'intolleranza religiosa</li>
+                <li>Cas La Barre: giovane giustiziato per blasfemia</li>
+                <li>Critica alla schiavitù e al colonialismo</li>
+            </ul>
+            
+            <div class="quote">
+                "La tolleranza è un'applicazione particolare dell'umanità."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Eredita e Influenza</h2>
+        <div class="btn-container">
+            <button class="btn toggle-btn">
+                <span class="icon">🌍</span> Mostra Contenuto
+            </button>
+            <button class="btn btn-style style-btn">
+                <span class="icon">✒️</span> Stile Voltaire
+            </button>
+            <button class="btn btn-alt satire-btn">
+                <span class="icon">🏆</span> Tema Influenza
+            </button>
+        </div>
+        <div class="section-content">
+            <p>Voltaire ha influenzato profondamente:</p>
+            
+            <ul>
+                <li><span class="reason-icon">🇫🇷</span> La Rivoluzione Francese (considerato precursore)</li>
+                <li><span class="tolerance-icon">🇺🇸</span> I padri fondatori degli Stati Uniti</li>
+                <li><span class="satire-icon">📚</span> La letteratura illuminista e romantica</li>
+                <li><span class="reason-icon">⚖️</span> Lo sviluppo dei diritti umani</li>
+            </ul>
+            
+            <p>Concetti voltairiani fondamentali per:</p>
+            
+            <ul>
+                <li>La libertà di espressione moderna</li>
+                <li>La separazione tra Stato e Chiesa</li>
+                <li>La giustizia penale</li>
+                <li>La critica sociale attraverso la letteratura</li>
+            </ul>
+            
+            <p>Critiche e sviluppi successivi:</p>
+            
+            <ul>
+                <li>Rousseau: critica al suo elitismo</li>
+                <li>Marx: sviluppo della critica sociale</li>
+                <li>Diritti umani: sviluppo delle sue battaglie</li>
+            </ul>
+            
+            <div class="quote">
+                "I libri dominano il mondo, o almeno quei paesi in cui si scrivono e si leggono."
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Toggle per mostrare/nascondere i contenuti
+        document.querySelectorAll('.toggle-btn').forEach(button => {
+            // Salva l'icona originale come attributo data
+            const icon = button.querySelector('.icon');
+            button.setAttribute('data-original-icon', icon.textContent);
+            
+            button.addEventListener('click', function() {
+                const content = this.parentElement.nextElementSibling;
+                content.classList.toggle('show');
+                
+                // Cambia l'icona e il testo
+                const icon = this.querySelector('.icon');
+                if (content.classList.contains('show')) {
+                    icon.textContent = '📕';
+                    this.innerHTML = this.innerHTML.replace('Mostra', 'Nascondi');
+                } else {
+                    const originalIcon = this.getAttribute('data-original-icon');
+                    icon.textContent = originalIcon;
+                    this.innerHTML = this.innerHTML.replace('Nascondi', 'Mostra');
+                }
+            });
+        });
+        
+        // Cambia stile delle sezioni (tema Voltaire)
+        document.querySelectorAll('.style-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.parentElement.parentElement;
+                section.classList.toggle('voltaire-style');
+                
+                // Cambia l'icona e il testo
+                const icon = this.querySelector('.icon');
+                if (section.classList.contains('voltaire-style')) {
+                    icon.textContent = '✏️';
+                    this.innerHTML = this.innerHTML.replace('Stile Voltaire', 'Stile Normale');
+                } else {
+                    icon.textContent = '✒️';
+                    this.innerHTML = this.innerHTML.replace('Stile Normale', 'Stile Voltaire');
+                }
+            });
+        });
+        
+        // Bottoni tema ragione
+        document.querySelectorAll('.reason-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.parentElement.parentElement;
+                section.classList.toggle('reason-style');
+                
+                // Rimuovi altri stili tematici
+                section.classList.remove('satire-style', 'tolerance-style');
+            });
+        });
+        
+        // Bottoni tema satira
+        document.querySelectorAll('.satire-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.parentElement.parentElement;
+                section.classList.toggle('satire-style');
+                
+                // Rimuovi altri stili tematici
+                section.classList.remove('reason-style', 'tolerance-style');
+            });
+        });
+        
+        // Bottoni tema tolleranza
+        document.querySelectorAll('.tolerance-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.parentElement.parentElement;
+                section.classList.toggle('tolerance-style');
+                
+                // Rimuovi altri stili tematici
+                section.classList.remove('reason-style', 'satire-style');
+            });
+        });
+    </script>
+</body>
+</html>
