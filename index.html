@@ -941,86 +941,65 @@ header {
   
 <!--   INIZIO AGGIUNTA PER RENDERE CLICCABILE INTERA AREA DEL PULSANTE-->
 <style>
-/* AGGIUNGI QUESTI STILI AL TUO CSS ESISTENTE */
-
-.tab-buttons {
-    /* Mantieni i tuoi stili esistenti */
-    display: flex;
-    border-bottom: 1px solid #ddd;
-}
-
+/* SOLO QUESTE REGOLE CSS DA AGGIUNGERE */
 .tab-btn {
-    /* Rendi l'intera area cliccabile */
-    padding: 12px 24px; /* Aumenta il padding per area più grande */
     position: relative;
-    cursor: pointer;
-    
-    /* Centra il testo meglio */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    /* Mantieni i tuoi stili esistenti */
-    background: none;
-    border: none;
-    font-size: 16px;
-    color: #333;
-    transition: all 0.2s;
+    /* Area cliccabile più grande */
+    padding: 16px 24px !important;
+    margin: 0 5px !important;
 }
 
-/* Estendi l'area cliccabile con pseudo-elemento */
-.tab-btn::after {
-    content: '';
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    bottom: -10px;
-    left: -10px;
-    z-index: 1;
-}
-
-/* Migliora il feedback visivo */
+/* Effetto hover su tutta l'area */
 .tab-btn:hover {
-    background-color: #f5f5f5;
+    background: rgba(0, 0, 0, 0.05) !important;
+    border-radius: 4px 4px 0 0 !important;
 }
 
+/* Stile attivo migliorato */
 .tab-btn.active {
-    font-weight: bold;
-    color: #0066cc;
+    font-weight: bold !important;
+    background: rgba(0, 102, 204, 0.1) !important;
+    border-bottom: 3px solid #0066cc !important;
 }
 
-/* Sottolineatura per l'elemento attivo */
-.tab-btn.active::before {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 10px;
-    right: 10px;
-    height: 3px;
-    background-color: #0066cc;
+/* Aggiungi transizione fluida */
+.tab-btn {
+    transition: all 0.2s ease !important;
 }
 </style>
 
 <script>
-// MODIFICA MINIMA AL TUO JS ESISTENTE
-function openTab(tabName) {
-    // Aggiungi questo per gestire meglio i click
-    event.stopPropagation();
+// SOSTITUISCI COMPLETAMENTE LA TUA FUNZIONE openTab CON QUESTA
+function openTab(tabName, event) {
+    // Previeni comportamenti indesiderati
+    if(event) event.preventDefault();
     
-    // Il resto del tuo codice esistente
-    const tabContents = document.getElementsByClassName('tab-content');
-    for (let i = 0; i < tabContents.length; i++) {
-        tabContents[i].classList.remove('active');
-    }
+    // Nascondi tutti i contenuti
+    document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+    });
     
-    const tabButtons = document.getElementsByClassName('tab-btn');
-    for (let i = 0; i < tabButtons.length; i++) {
-        tabButtons[i].classList.remove('active');
-    }
+    // Disattiva tutti i pulsanti
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
     
+    // Attiva il contenuto corretto
     document.getElementById(tabName).classList.add('active');
-    event.currentTarget.classList.add('active');
+    
+    // Attiva il pulsante cliccato
+    const clickedBtn = event ? event.currentTarget : document.querySelector(`[onclick*="${tabName}"]`);
+    if(clickedBtn) clickedBtn.classList.add('active');
 }
+
+// Inizializza il menu al caricamento
+document.addEventListener('DOMContentLoaded', function() {
+    // Attiva la prima tab se nessuna è attiva
+    if(!document.querySelector('.tab-btn.active')) {
+        const firstTab = document.querySelector('.tab-content').id;
+        openTab(firstTab);
+    }
+});
 </script>
 <!--   FINE AGGIUNTA PER RENDERE CLICCABILE INTERA AREA DEL PULSANTE-->
 </head>
