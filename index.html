@@ -2742,9 +2742,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
   <!-- Tutto il contenuto già presente nel tuo <body> -->
 
-  <!-- Box Ultimi Articoli -->
-  <!-- Box Ultimi Articoli -->
-<section class="ultimi-articoli">
+  <!-- inizio Box Ultimi Articoli -->
+ <section class="ultimi-articoli">
   <h2>Ultimi Articoli</h2>
   <ul>
     <li><a href="articoli/tommaso-d'aquino.html">Tommaso d'Aquino</a></li>
@@ -2758,22 +2757,30 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <style>
 .ultimi-articoli {
+  position: fixed;         /* Fisso in pagina */
+  top: 400px;             /* distanza verticale da cima */
+  left: 0;                /* parte dal bordo sinistro */
   background: #111;
   color: gold;
-  max-width: 350px;
-  margin: 40px auto;
+  width: 350px;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 20px #aa8e35;
+  z-index: 1000;          /* sopra altri elementi */
   
-  /* inizialmente spostato a sinistra fuori schermo */
   transform: translateX(-100%);
   opacity: 0;
-  
-  /* animazione per scivolare dentro */
   animation: slideInFromLeft 1s forwards ease-out;
 }
 
+@keyframes slideInFromLeft {
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Stili interni */
 .ultimi-articoli h2 {
   font-family: 'Cormorant Garamond', serif;
   margin-bottom: 15px;
@@ -2785,6 +2792,7 @@ document.addEventListener("DOMContentLoaded", function() {
 .ultimi-articoli ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .ultimi-articoli li {
@@ -2802,15 +2810,8 @@ document.addEventListener("DOMContentLoaded", function() {
   color: #ffdd00;
   text-decoration: underline;
 }
-
-/* Keyframes animazione */
-@keyframes slideInFromLeft {
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
 </style>
+
 
   <!-- fine box ultimia rticoli  -->
 <!--inizio script x megamenu -->
