@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jacques Derrida - Filosofia della Decostruzione</title>
+    <style>
+        /* Stili base */
+        :root {
+            --primary: #5D4037;
+            --secondary: #8D6E63;
+            --accent: #3E2723;
+            --text: #212121;
+            --bg: #EFEBE9;
+            --section-bg: #FFFFFF;
+            --quote-bg: #D7CCC8;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            color: var(--text);
+            background-color: var(--bg);
+            transition: all 0.4s ease;
+        }
+        
+        h1 {
+            color: var(--accent);
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 15px;
+            text-align: center;
+            margin-bottom: 35px;
+            font-size: 2.2rem;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-top: 40px;
+            font-size: 1.6rem;
+        }
+        
+        .section {
+            background-color: var(--section-bg);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-left: 6px solid var(--primary);
+        }
+        
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .section-content.show {
+            max-height: 3000px;
+            padding-top: 20px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 12px 0;
+            user-select: none;
+        }
+        
+        .toggle-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .toggle-btn:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .style-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 40px 0;
+            justify-content: center;
+        }
+        
+        .style-btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            flex: 1 0 auto;
+            max-width: 200px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .style-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .quote {
+            background-color: var(--quote-bg);
+            border-left: 5px solid var(--primary);
+            padding: 20px;
+            margin: 25px 0;
+            font-style: italic;
+            border-radius: 0 8px 8px 0;
+            position: relative;
+            font-size: 1.1rem;
+        }
+        
+        .quote::before {
+            content: '"';
+            font-size: 60px;
+            color: var(--primary);
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            line-height: 0;
+            opacity: 0.3;
+        }
+        
+        ul, ol {
+            padding-left: 30px;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        
+        /* Stili alternativi */
+        .dark-mode {
+            --primary: #8D6E63;
+            --secondary: #A1887F;
+            --accent: #D7CCC8;
+            --text: #EFEBE9;
+            --bg: #3E2723;
+            --section-bg: #5D4037;
+            --quote-bg: #8D6E63;
+            --shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        
+        .deconstruction-mode {
+            --primary: #5D4037;
+            --secondary: #8D6E63;
+            --accent: #3E2723;
+            --bg: #EFEBE9;
+            --section-bg: #FFFFFF;
+            --quote-bg: #D7CCC8;
+        }
+        
+        .difference-mode {
+            --primary: #006064;
+            --secondary: #00838F;
+            --accent: #004D40;
+            --bg: #E0F7FA;
+            --section-bg: #FFFFFF;
+            --quote-bg: #B2EBF2;
+        }
+        
+        .postmodern-mode {
+            --primary: #6A1B9A;
+            --secondary: #9C27B0;
+            --accent: #4A148C;
+            --bg: #F3E5F5;
+            --section-bg: #FFFFFF;
+            --quote-bg: #E1BEE7;
+        }
+        
+        .textual-mode .section:nth-child(odd) {
+            border-left-color: #5D4037;
+        }
+        
+        .textual-mode .section:nth-child(even) {
+            border-left-color: #006064;
+        }
+    </style>
+</head>
+<body>
+    <h1>Jacques Derrida: Filosofia della Decostruzione</h1>
+
+    <div class="style-buttons">
+        <button class="style-btn" data-style="">Classico</button>
+        <button class="style-btn" data-style="dark-mode">Dark Mode</button>
+        <button class="style-btn" data-style="deconstruction-mode">Decostruzione</button>
+        <button class="style-btn" data-style="difference-mode">Differenza</button>
+        <button class="style-btn" data-style="postmodern-mode">Postmoderno</button>
+        <button class="style-btn" data-style="textual-mode">Testuale</button>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Vita e Contesto Storico</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <p>Jacques Derrida (1930-2004) è stato un filosofo francese di origine algerina, fondatore della decostruzione. Nato a El Biar in Algeria, divenne una delle figure più influenti della filosofia del XX secolo.</p>
+            
+            <div class="quote">
+                "Non c'è fuori-testo."
+            </div>
+            
+            <h3>Cronologia essenziale:</h3>
+            <ul>
+                <li><strong>1930</strong>: Nascita a El Biar, Algeria</li>
+                <li><strong>1952</strong>: Studi alla École Normale Supérieure di Parigi</li>
+                <li><strong>1967</strong>: Pubblicazione di "Della grammatologia", "La scrittura e la differenza" e "La voce e il fenomeno"</li>
+                <li><strong>1980</strong>: Fondazione del Collège International de Philosophie</li>
+                <li><strong>2004</strong>: Morte a Parigi</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>La Decostruzione</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>Concetti fondamentali</h3>
+            <p>La decostruzione derridiana è un metodo di analisi testuale che:</p>
+            
+            <ul>
+                <li>Mette in luce le opposizioni concettuali nascoste</li>
+                <li>Mostra come i significati siano instabili e differiti</li>
+                <li>Rivela le gerarchie implicite nel linguaggio</li>
+            </ul>
+            
+            <div class="quote">
+                "La decostruzione non è un metodo, e non può essere trasformata in un metodo."
+            </div>
+            
+            <h3>Applicazioni</h3>
+            <p>La decostruzione è stata applicata a:</p>
+            <ul>
+                <li>Filosofia</li>
+                <li>Letteratura</li>
+                <li>Diritto</li>
+                <li>Architettura</li>
+                <li>Studi culturali</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Differance</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>Il concetto chiave</h3>
+            <p>Derrida conia il termine "différance" (con la 'a') per indicare:</p>
+            
+            <ul>
+                <li>La differenza tra i segni</li>
+                <li>Il rinvio temporale del significato</li>
+                <li>La natura non originaria del senso</li>
+            </ul>
+            
+            <div class="quote">
+                "La différance è ciò per cui il movimento della significazione è reso possibile."
+            </div>
+            
+            <h3>Implicazioni</h3>
+            <p>Questo concetto sfida le nozioni tradizionali di presenza e identità nella filosofia occidentale.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Opere Principali</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>Testi fondamentali:</h3>
+            <ul>
+                <li><strong>Della grammatologia</strong> (1967)</li>
+                <li><strong>La scrittura e la differenza</strong> (1967)</li>
+                <li><strong>La voce e il fenomeno</strong> (1967)</li>
+                <li><strong>Margini della filosofia</strong> (1972)</li>
+                <li><strong>Spettri di Marx</strong> (1993)</li>
+            </ul>
+            
+            <div class="quote">
+                "Non c'è nulla al di fuori del testo [Il n'y a pas de hors-texte]."
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Influenza e Critiche</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>Eredita culturale</h3>
+            <ul>
+                <li>Fondamentale per gli studi post-strutturalisti</li>
+                <li>Influenza sui cultural studies e i gender studies</li>
+                <li>Impatto sull'architettura decostruttivista</li>
+            </ul>
+            
+            <div class="quote">
+                "L'avenir vient à la fois de ce qui est arrivé et de ce qui n'est pas arrivé."
+            </div>
+            
+            <h3>Critiche</h3>
+            <p>Derrida è stato criticato per:</p>
+            <ul>
+                <li>L'oscurità del suo stile</li>
+                <li>Il presunto relativismo</li>
+                <li>L'eccessivo focus sul linguaggio</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Inizializza le sezioni al caricamento della pagina
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.section');
+            
+            // Aggiungi event listener a tutte le sezioni
+            sections.forEach((section, index) => {
+                const header = section.querySelector('.section-header');
+                const content = section.querySelector('.section-content');
+                const button = section.querySelector('.toggle-btn');
+                
+                header.addEventListener('click', () => toggleSection(content, button));
+                button.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    toggleSection(content, button);
+                });
+                
+                // Apri la prima sezione di default
+                if(index === 0) toggleSection(content, button);
+            });
+            
+            // Configura i pulsanti di stile
+            const styleButtons = document.querySelectorAll('.style-btn');
+            styleButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    document.body.className = button.dataset.style;
+                });
+            });
+        });
+        
+        // Funzione per aprire/chiudere le sezioni
+        function toggleSection(content, button) {
+            content.classList.toggle('show');
+            button.textContent = content.classList.contains('show') ? 'Nascondi' : 'Mostra';
+            
+            // Animazione smooth scroll per la sezione aperta
+            if(content.classList.contains('show')) {
+                setTimeout(() => {
+                    content.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 50);
+            }
+        }
+    </script>
+</body>
+</html>
