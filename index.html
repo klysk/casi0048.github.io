@@ -994,9 +994,10 @@ function openTab(tabName, event) {
 
 // Inizializza il menu al caricamento
 document.addEventListener('DOMContentLoaded', function() {
-    const firstTab = document.querySelector('.tab-content');
-    if(firstTab && !document.querySelector('.tab-btn.active')) {
-        openTab(firstTab.id);
+    // Attiva la prima tab se nessuna è attiva
+    if(!document.querySelector('.tab-btn.active')) {
+        const firstTab = document.querySelector('.tab-content').id;
+        openTab(firstTab);
     }
 });
 </script>
