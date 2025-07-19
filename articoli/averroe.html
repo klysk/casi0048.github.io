@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Averroè - Filosofo e Giurista Islamico</title>
+    <style>
+        /* Stili base */
+        :root {
+            --primary: #006064;
+            --secondary: #00838F;
+            --accent: #004D40;
+            --text: #212121;
+            --bg: #E0F7FA;
+            --section-bg: #FFFFFF;
+            --quote-bg: #B2EBF2;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            color: var(--text);
+            background-color: var(--bg);
+            transition: all 0.4s ease;
+        }
+        
+        h1 {
+            color: var(--accent);
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 15px;
+            text-align: center;
+            margin-bottom: 35px;
+            font-size: 2.2rem;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-top: 40px;
+            font-size: 1.6rem;
+        }
+        
+        .section {
+            background-color: var(--section-bg);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-left: 6px solid var(--primary);
+        }
+        
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .section-content.show {
+            max-height: 3000px;
+            padding-top: 20px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 12px 0;
+            user-select: none;
+        }
+        
+        .toggle-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .toggle-btn:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .style-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 40px 0;
+            justify-content: center;
+        }
+        
+        .style-btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            flex: 1 0 auto;
+            max-width: 200px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .style-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .quote {
+            background-color: var(--quote-bg);
+            border-left: 5px solid var(--primary);
+            padding: 20px;
+            margin: 25px 0;
+            font-style: italic;
+            border-radius: 0 8px 8px 0;
+            position: relative;
+            font-size: 1.1rem;
+        }
+        
+        .quote::before {
+            content: '"';
+            font-size: 60px;
+            color: var(--primary);
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            line-height: 0;
+            opacity: 0.3;
+        }
+        
+        ul, ol {
+            padding-left: 30px;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        
+        /* Stili alternativi */
+        .dark-mode {
+            --primary: #00838F;
+            --secondary: #4FB3BF;
+            --accent: #B2EBF2;
+            --text: #E0F7FA;
+            --bg: #006064;
+            --section-bg: #00838F;
+            --quote-bg: #006064;
+            --shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        
+        .islamic-mode {
+            --primary: #004D40;
+            --secondary: #00796B;
+            --accent: #00251A;
+            --bg: #E8F5E9;
+            --section-bg: #FFFFFF;
+            --quote-bg: #C8E6C9;
+        }
+        
+        .aristotelian-mode {
+            --primary: #5D4037;
+            --secondary: #8D6E63;
+            --accent: #3E2723;
+            --bg: #EFEBE9;
+            --section-bg: #FFFFFF;
+            --quote-bg: #D7CCC8;
+        }
+        
+        .medieval-mode {
+            --primary: #6A1B9A;
+            --secondary: #9C27B0;
+            --accent: #4A148C;
+            --bg: #F3E5F5;
+            --section-bg: #FFFFFF;
+            --quote-bg: #E1BEE7;
+        }
+        
+        .commentator-mode .section:nth-child(odd) {
+            border-left-color: #006064;
+        }
+        
+        .commentator-mode .section:nth-child(even) {
+            border-left-color: #5D4037;
+        }
+    </style>
+</head>
+<body>
+    <h1>Averroè: Il Ponte tra Filosofia Greca e Islamica</h1>
+
+    <div class="style-buttons">
+        <button class="style-btn" data-style="">Classico</button>
+        <button class="style-btn" data-style="dark-mode">Dark Mode</button>
+        <button class="style-btn" data-style="islamic-mode">Islamico</button>
+        <button class="style-btn" data-style="aristotelian-mode">Aristotelico</button>
+        <button class="style-btn" data-style="medieval-mode">Medievale</button>
+        <button class="style-btn" data-style="commentator-mode">Commentatore</button>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Vita e Contesto Storico</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <p>Abū l-Walīd Muḥammad ibn Aḥmad ibn Rušd (1126-1198), noto in Occidente come Averroè, fu un filosofo, giurista e medico arabo-andaluso. Nacque a Cordova, in al-Andalus (Spagna islamica), e divenne il più importante commentatore di Aristotele nel mondo islamico.</p>
+            
+            <div class="quote">
+                "La conoscenza è l'accordo dell'oggetto e dell'intelletto."
+            </div>
+            
+            <h3>Cronologia essenziale:</h3>
+            <ul>
+                <li><strong>1126</strong>: Nascita a Cordova</li>
+                <li><strong>1169</strong>: Nominato giudice a Siviglia</li>
+                <li><strong>1182</strong>: Diventa medico di corte a Marrakech</li>
+                <li><strong>1195</strong>: Esiliato per le sue idee filosofiche</li>
+                <li><strong>1198</strong>: Morte a Marrakech</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Commentari ad Aristotele</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>L'opera monumentale</h3>
+            <p>Averroè scrisse tre tipi di commentari alle opere di Aristotele:</p>
+            
+            <ul>
+                <li><strong>Commentari brevi</strong> (jawāmiʿ): riassunti</li>
+                <li><strong>Commentari medi</strong> (talkhīṣ): parafrasi</li>
+                <li><strong>Commentari lunghi</strong> (tafsīr): analisi dettagliate</li>
+            </ul>
+            
+            <div class="quote">
+                "Aristotele stabilì i principi e completò la logica, la fisica e la metafisica, tanto che non lasciò nulla di incompleto per chi venne dopo di lui."
+            </div>
+            
+            <h3>Metodo interpretativo</h3>
+            <p>Averroè cercò di ricostruire il "vero" Aristotele, liberandolo dalle interpretazioni neoplatoniche.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Filosofia e Teologia</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>L'armonia tra ragione e fede</h3>
+            <p>Averroè sosteneva che:</p>
+            
+            <ul>
+                <li>La filosofia e la religione conducono alla stessa verità</li>
+                <li>Esistono diversi livelli di comprensione della verità</li>
+                <li>La dimostrazione filosofica è superiore alla persuasione retorica</li>
+            </ul>
+            
+            <div class="quote">
+                "La verità non contraddice la verità, ma concorda con essa e ne testimonia."
+            </div>
+            
+            <h3>L'intelletto unico</h3>
+            <p>La controversa teoria secondo cui esiste un unico intelletto attivo condiviso da tutta l'umanità.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Opere Principali</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>Scritti filosofici:</h3>
+            <ul>
+                <li><strong>Commentari ad Aristotele</strong> (sull'anima, fisica, metafisica)</li>
+                <li><strong>L'incoerenza dell'incoerenza</strong> (Tahāfut al-Tahāfut)</li>
+                <li><strong>Il trattato decisivo</strong> (Faṣl al-Maqāl)</li>
+            </ul>
+            
+            <h3>Scritti giuridici e medici:</h3>
+            <div class="quote">
+                "Lo scopo della medicina è preservare la salute e curare la malattia."
+            </div>
+            
+            <ul>
+                <li><strong>Bidāyat al-Mujtahid</strong> (giurisprudenza comparata)</li>
+                <li><strong>Al-Kulliyyāt fī l-Ṭibb</strong> (principi generali di medicina)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Influenza e Ricezione</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>Nel mondo islamico:</h3>
+            <ul>
+                <li>Influenza limitata a causa delle critiche dei teologi</li>
+                <li>Riscoperto nel XIX secolo dai riformisti islamici</li>
+            </ul>
+            
+            <div class="quote">
+                "L'ignoranza conduce al timore, il timore conduce all'odio, e l'odio conduce alla violenza."
+            </div>
+            
+            <h3>In Europa:</h3>
+            <ul>
+                <li>Enorme influenza sulla scolastica latina</li>
+                <li>Formazione dell'averroismo latino</li>
+                <li>Condanne ecclesiastiche delle sue tesi (1270, 1277)</li>
+                <li>Influenza su pensatori come Tommaso d'Aquino e Dante</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Inizializza le sezioni al caricamento della pagina
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.section');
+            
+            // Aggiungi event listener a tutte le sezioni
+            sections.forEach((section, index) => {
+                const header = section.querySelector('.section-header');
+                const content = section.querySelector('.section-content');
+                const button = section.querySelector('.toggle-btn');
+                
+                header.addEventListener('click', () => toggleSection(content, button));
+                button.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    toggleSection(content, button);
+                });
+                
+                // Apri la prima sezione di default
+                if(index === 0) toggleSection(content, button);
+            });
+            
+            // Configura i pulsanti di stile
+            const styleButtons = document.querySelectorAll('.style-btn');
+            styleButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    document.body.className = button.dataset.style;
+                });
+            });
+        });
+        
+        // Funzione per aprire/chiudere le sezioni
+        function toggleSection(content, button) {
+            content.classList.toggle('show');
+            button.textContent = content.classList.contains('show') ? 'Nascondi' : 'Mostra';
+            
+            // Animazione smooth scroll per la sezione aperta
+            if(content.classList.contains('show')) {
+                setTimeout(() => {
+                    content.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 50);
+            }
+        }
+    </script>
+</body>
+</html>
