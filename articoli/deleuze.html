@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gilles Deleuze - Filosofia Differenziale</title>
+    <style>
+        :root {
+            --primary: #7b1fa2;
+            --secondary: #9c27b0;
+            --accent: #4a148c;
+            --text: #212121;
+            --bg: #f3e5f5;
+            --section-bg: #ffffff;
+            --quote-bg: #e1bee7;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: var(--text);
+            background-color: var(--bg);
+            transition: all 0.3s ease;
+        }
+        
+        h1 {
+            color: var(--accent);
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+            text-align: center;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-top: 30px;
+        }
+        
+        .section {
+            background-color: var(--section-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.3s ease;
+            padding: 0 15px;
+        }
+        
+        .section-content.show {
+            max-height: 2000px;
+            padding: 15px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px 0;
+        }
+        
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background-color: var(--secondary);
+        }
+        
+        .style-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+        
+        .style-btn {
+            font-size: 14px;
+            padding: 8px 12px;
+        }
+        
+        .quote {
+            background-color: var(--quote-bg);
+            border-left: 3px solid var(--primary);
+            padding: 12px;
+            margin: 15px 0;
+            font-style: italic;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        /* Stili alternativi */
+        .dark-mode {
+            --primary: #9c27b0;
+            --secondary: #ba68c8;
+            --accent: #7b1fa2;
+            --text: #f3e5f5;
+            --bg: #4a148c;
+            --section-bg: #6a1b9a;
+            --quote-bg: #8e24aa;
+        }
+        
+        .rhizome-mode {
+            --primary: #2e7d32;
+            --secondary: #388e3c;
+            --accent: #1b5e20;
+            --bg: #e8f5e9;
+            --section-bg: #ffffff;
+            --quote-bg: #c8e6c9;
+        }
+        
+        .difference-mode {
+            --primary: #1565c0;
+            --secondary: #1976d2;
+            --accent: #0d47a1;
+            --bg: #e3f2fd;
+            --section-bg: #ffffff;
+            --quote-bg: #bbdefb;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gilles Deleuze: Filosofia della Differenza</h1>
+    
+    <div class="style-buttons">
+        <button class="style-btn" onclick="changeStyle('')">Default</button>
+        <button class="style-btn" onclick="changeStyle('dark-mode')">Dark</button>
+        <button class="style-btn" onclick="changeStyle('rhizome-mode')">Rizoma</button>
+        <button class="style-btn" onclick="changeStyle('difference-mode')">Differenza</button>
+    </div>
+    
+    <div class="section">
+        <div class="section-header">
+            <h2>Introduzione</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <p>Gilles Deleuze (1925-1995) è stato uno dei filosofi francesi più influenti del XX secolo. Il suo pensiero, spesso in dialogo con Félix Guattari, ha rivoluzionato campi come la filosofia, la psicanalisi, la teoria politica e gli studi cinematografici.</p>
+            
+            <div class="quote">
+                "Il pensiero non è ciò che illumina un soggetto già dato, ma ciò che permette al soggetto di venire alla luce."
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="section-header">
+            <h2>Concetti Chiave</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>Rizoma</h3>
+            <p>Il concetto di rizoma, sviluppato con Guattari in "Mille piani", descrive una struttura non gerarchica e non lineare della conoscenza e dell'essere.</p>
+            
+            <h3>Divenire</h3>
+            <p>Deleuze sostituisce l'essere con il divenire come categoria fondamentale, inteso come movimento continuo di differenziazione.</p>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="section-header">
+            <h2>Opere Principali</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <ul>
+                <li><strong>Differenza e ripetizione</strong> (1968)</li>
+                <li><strong>Logica del senso</strong> (1969)</li>
+                <li><strong>L'Anti-Edipo</strong> (con Félix Guattari, 1972)</li>
+                <li><strong>Mille piani</strong> (con Félix Guattari, 1980)</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="section-header">
+            <h2>Influenza</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <p>Deleuze ha influenzato numerosi campi del sapere, dalla filosofia continentale alla teoria letteraria, dagli studi culturali alla teoria queer.</p>
+        </div>
+    </div>
+
+    <script>
+        // Funzione per aprire/chiudere le sezioni
+        function setupToggleButtons() {
+            const headers = document.querySelectorAll('.section-header');
+            
+            headers.forEach(header => {
+                const btn = header.querySelector('.toggle-btn');
+                const content = header.nextElementSibling;
+                
+                header.addEventListener('click', () => {
+                    content.classList.toggle('show');
+                    btn.textContent = content.classList.contains('show') ? 'Nascondi' : 'Mostra';
+                });
+                
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    content.classList.toggle('show');
+                    btn.textContent = content.classList.contains('show') ? 'Nascondi' : 'Mostra';
+                });
+            });
+        }
+        
+        // Funzione per cambiare lo stile
+        function changeStyle(style) {
+            document.body.className = style;
+        }
+        
+        // Inizializzazione
+        document.addEventListener('DOMContentLoaded', function() {
+            setupToggleButtons();
+            
+            // Apri la prima sezione di default
+            const firstContent = document.querySelector('.section-content');
+            const firstBtn = document.querySelector('.toggle-btn');
+            firstContent.classList.add('show');
+            firstBtn.textContent = 'Nascondi';
+        });
+    </script>
+</body>
+</html>
