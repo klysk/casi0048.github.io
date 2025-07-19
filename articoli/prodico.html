@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prodico di Ceo - Il Maestro della Retorica Morale</title>
+    <style>
+        /* Stili base */
+        :root {
+            --primary: #5D4037;
+            --secondary: #8D6E63;
+            --accent: #3E2723;
+            --text: #212121;
+            --bg: #EFEBE9;
+            --section-bg: #FFFFFF;
+            --quote-bg: #D7CCC8;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        body {
+            font-family: 'Garamond', serif;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            color: var(--text);
+            background-color: var(--bg);
+            transition: all 0.4s ease;
+        }
+        
+        h1 {
+            color: var(--accent);
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 15px;
+            text-align: center;
+            margin-bottom: 35px;
+            font-size: 2.2rem;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-top: 40px;
+            font-size: 1.6rem;
+        }
+        
+        .section {
+            background-color: var(--section-bg);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-left: 6px solid var(--primary);
+        }
+        
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .section-content.show {
+            max-height: 3000px;
+            padding-top: 20px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 12px 0;
+            user-select: none;
+        }
+        
+        .toggle-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .toggle-btn:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .style-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 40px 0;
+            justify-content: center;
+        }
+        
+        .style-btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            flex: 1 0 auto;
+            max-width: 200px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .style-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .quote {
+            background-color: var(--quote-bg);
+            border-left: 5px solid var(--primary);
+            padding: 20px;
+            margin: 25px 0;
+            font-style: italic;
+            border-radius: 0 8px 8px 0;
+            position: relative;
+            font-size: 1.1rem;
+        }
+        
+        .quote::before {
+            content: '"';
+            font-size: 60px;
+            color: var(--primary);
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            line-height: 0;
+            opacity: 0.3;
+        }
+        
+        ul, ol {
+            padding-left: 30px;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        
+        /* Stili alternativi */
+        .dark-mode {
+            --primary: #8D6E63;
+            --secondary: #A1887F;
+            --accent: #D7CCC8;
+            --text: #EFEBE9;
+            --bg: #3E2723;
+            --section-bg: #5D4037;
+            --quote-bg: #8D6E63;
+            --shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        
+        .moral-mode {
+            --primary: #2E7D32;
+            --secondary: #388E3C;
+            --accent: #1B5E20;
+            --bg: #E8F5E9;
+            --section-bg: #FFFFFF;
+            --quote-bg: #C8E6C9;
+        }
+        
+        .linguistic-mode {
+            --primary: #1565C0;
+            --secondary: #1976D2;
+            --accent: #0D47A1;
+            --bg: #E3F2FD;
+            --section-bg: #FFFFFF;
+            --quote-bg: #BBDEFB;
+        }
+        
+        .sophist-mode {
+            --primary: #6A1B9A;
+            --secondary: #9C27B0;
+            --accent: #4A148C;
+            --bg: #F3E5F5;
+            --section-bg: #FFFFFF;
+            --quote-bg: #E1BEE7;
+        }
+        
+        .choice-mode .section:nth-child(odd) {
+            border-left-color: #2E7D32;
+        }
+        
+        .choice-mode .section:nth-child(even) {
+            border-left-color: #1565C0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Prodico di Ceo: Il Sofista della Scelta Morale</h1>
+
+    <div class="style-buttons">
+        <button class="style-btn" data-style="">Classico</button>
+        <button class="style-btn" data-style="dark-mode">Dark Mode</button>
+        <button class="style-btn" data-style="moral-mode">Morale</button>
+        <button class="style-btn" data-style="linguistic-mode">Linguistico</button>
+        <button class="style-btn" data-style="sophist-mode">Sofistico</button>
+        <button class="style-btn" data-style="choice-mode">Scelta</button>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Vita e Contesto Storico</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <p>Prodico di Ceo (465-395 a.C. circa) fu un sofista greco originario dell'isola di Ceo, noto per i suoi studi sul linguaggio e l'etica. Fu contemporaneo di Socrate e insegnò ad Atene come retore e filosofo.</p>
+            
+            <div class="quote">
+                "Gli dei che gli uomini onorano non sono che personificazioni di ciò che è utile alla vita."
+            </div>
+            
+            <h3>Cronologia essenziale:</h3>
+            <ul>
+                <li><strong>465 a.C.</strong>: Nascita a Ceo, isola delle Cicladi</li>
+                <li><strong>440 a.C.</strong>: Inizia a insegnare ad Atene</li>
+                <li><strong>431 a.C.</strong>: Ambasciata ad Atene durante la guerra del Peloponneso</li>
+                <li><strong>395 a.C.</strong>: Morte (data approssimativa)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>La Teoria della Scelta di Eracle</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>L'allegoria morale</h3>
+            <p>Prodico è celebre per il suo racconto "La Scelta di Eracle", in cui il giovane eroe deve scegliere tra:</p>
+            
+            <ul>
+                <li><strong>La Virtù</strong>: strada impervia ma gloriosa</li>
+                <li><strong>Il Vizio</strong>: percorso agevole ma degradante</li>
+            </ul>
+            
+            <div class="quote">
+                "La Virtù si presenta ad Eracle come una donna austera, che promette fatica ma anche vera felicità."
+            </div>
+            
+            <h3>Significato filosofico</h3>
+            <p>Questa allegoria rappresenta una delle prime riflessioni sistematiche sull'etica della scelta e sul concetto di responsabilità individuale.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Studi Linguistici</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>Sinonimica</h3>
+            <p>Prodico sviluppò un'analisi pionieristica dei sinonimi, distinguendo tra:</p>
+            
+            <ul>
+                <li>Parole con significati apparentemente simili</li>
+                <li>Sfumature semantiche precise</li>
+                <li>Corretto uso contestuale</li>
+            </ul>
+            
+            <div class="quote">
+                "Non esistono veri sinonimi; ogni parola porta con sé una diversa sfumatura di significato."
+            </div>
+            
+            <h3>Influenza sulla retorica</h3>
+            <p>Le sue analisi linguistiche influenzarono profondamente lo sviluppo dell'arte oratoria greca.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Etica e Religione</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>Teoria naturalistica della religione</h3>
+            <p>Prodico propose una spiegazione razionale dell'origine della religione:</p>
+            
+            <ol>
+                <li>Gli uomini primitivi veneravano ciò che era loro utile (sole, luna, fiumi)</li>
+                <li>Successivamente divinizzarono i benefattori dell'umanità</li>
+                <li>Infine crearono divinità antropomorfe</li>
+            </ol>
+            
+            <div class="quote">
+                "Gli dei nacquero dalla gratitudine degli uomini verso le forze della natura che li beneficiavano."
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Eredità e Influenza</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>Nella filosofia antica</h3>
+            <ul>
+                <li>Precursore dell'analisi linguistica</li>
+                <li>Influenza sull'etica socratica</li>
+                <li>Anticipazione di temi stoici</li>
+            </ul>
+            
+            <div class="quote">
+                "La saggezza non sta nel conoscere molte cose, ma nel discernere il vero valore di ciascuna."
+            </div>
+            
+            <h3>Nella cultura moderna</h3>
+            <p>La sua allegoria di Eracle ha ispirato numerose riflessioni sull'etica della scelta nella filosofia morale.</p>
+        </div>
+    </div>
+
+    <script>
+        // Inizializza le sezioni al caricamento della pagina
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.section');
+            
+            // Aggiungi event listener a tutte le sezioni
+            sections.forEach((section, index) => {
+                const header = section.querySelector('.section-header');
+                const content = section.querySelector('.section-content');
+                const button = section.querySelector('.toggle-btn');
+                
+                header.addEventListener('click', () => toggleSection(content, button));
+                button.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    toggleSection(content, button);
+                });
+                
+                // Apri la prima sezione di default
+                if(index === 0) toggleSection(content, button);
+            });
+            
+            // Configura i pulsanti di stile
+            const styleButtons = document.querySelectorAll('.style-btn');
+            styleButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    document.body.className = button.dataset.style;
+                });
+            });
+        });
+        
+        // Funzione per aprire/chiudere le sezioni
+        function toggleSection(content, button) {
+            content.classList.toggle('show');
+            button.textContent = content.classList.contains('show') ? 'Nascondi' : 'Mostra';
+            
+            // Animazione smooth scroll per la sezione aperta
+            if(content.classList.contains('show')) {
+                setTimeout(() => {
+                    content.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 50);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gorgia di Leontini - Retorica e Sofistica</title>
+    <style>
+        /* Stili base */
+        :root {
+            --primary: #8E24AA;
+            --secondary: #AB47BC;
+            --accent: #6A1B9A;
+            --text: #212121;
+            --bg: #F3E5F5;
+            --section-bg: #FFFFFF;
+            --quote-bg: #E1BEE7;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.7;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 25px;
+            color: var(--text);
+            background-color: var(--bg);
+            transition: all 0.4s ease;
+        }
+        
+        h1 {
+            color: var(--accent);
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-top: 35px;
+        }
+        
+        .section {
+            background-color: var(--section-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--primary);
+        }
+        
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            padding-top: 0;
+            transition: all 0.5s ease;
+        }
+        
+        .section-content.show {
+            max-height: 2000px;
+            padding-top: 15px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px 0;
+        }
+        
+        .toggle-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .toggle-btn:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .style-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 30px 0;
+            justify-content: center;
+        }
+        
+        .style-btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .style-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        .quote {
+            background-color: var(--quote-bg);
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            margin: 15px 0;
+            font-style: italic;
+            border-radius: 0 5px 5px 0;
+            transition: all 0.3s;
+        }
+        
+        /* Stili alternativi */
+        .dark-mode {
+            --primary: #AB47BC;
+            --secondary: #BA68C8;
+            --accent: #E1BEE7;
+            --text: #F3E5F5;
+            --bg: #4A148C;
+            --section-bg: #6A1B9A;
+            --quote-bg: #8E24AA;
+        }
+        
+        .sophistic-mode {
+            --primary: #5D4037;
+            --secondary: #8D6E63;
+            --accent: #3E2723;
+            --bg: #EFEBE9;
+            --section-bg: #FFFFFF;
+            --quote-bg: #D7CCC8;
+        }
+        
+        .rhetoric-mode {
+            --primary: #AD1457;
+            --secondary: #D81B60;
+            --accent: #880E4F;
+            --bg: #FCE4EC;
+            --section-bg: #FFFFFF;
+            --quote-bg: #F8BBD0;
+        }
+        
+        .skeptic-mode {
+            --primary: #0277BD;
+            --secondary: #0288D1;
+            --accent: #01579B;
+            --bg: #E1F5FE;
+            --section-bg: #FFFFFF;
+            --quote-bg: #B3E5FC;
+        }
+        
+        .trilemma-mode .section:nth-child(3n+1) {
+            border-left-color: #8E24AA;
+        }
+        
+        .trilemma-mode .section:nth-child(3n+2) {
+            border-left-color: #AD1457;
+        }
+        
+        .trilemma-mode .section:nth-child(3n+3) {
+            border-left-color: #0277BD;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gorgia di Leontini: Il Potere della Retorica</h1>
+
+    <div class="style-buttons">
+        <button class="style-btn" data-style="">Classico</button>
+        <button class="style-btn" data-style="dark-mode">Dark Mode</button>
+        <button class="style-btn" data-style="sophistic-mode">Sofistico</button>
+        <button class="style-btn" data-style="rhetoric-mode">Retorico</button>
+        <button class="style-btn" data-style="skeptic-mode">Scettico</button>
+        <button class="style-btn" data-style="trilemma-mode">Trilemma</button>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Vita e Contesto Storico</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <p>Gorgia (483-375 a.C. circa) fu un filosofo sofista originario di Leontini in Sicilia. Fu uno dei più celebri maestri di retorica dell'antichità e figura chiave del movimento sofistico.</p>
+            
+            <div class="quote">
+                "L'essere è inapprensibile; se anche fosse comprensibile, sarebbe inesprimibile; se anche fosse esprimibile, sarebbe incomprensibile per gli altri."
+            </div>
+            
+            <h3>Dati biografici:</h3>
+            <ul>
+                <li>Nato a Leontini (Sicilia) nel 483 a.C. circa</li>
+                <li>Ambasciatore ad Atene nel 427 a.C.</li>
+                <li>Maestro di retorica in tutta la Grecia</li>
+                <li>Morto ultracentenario in Tessaglia</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Filosofia e Teoria della Conoscenza</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>Il trilemma di Gorgia</h3>
+            <p>Nel suo trattato "Sul Non-essere", Gorgia sostiene tre tesi radicali:
+                <ol>
+                    <li>Niente esiste</li>
+                    <li>Se anche qualcosa esistesse, non sarebbe conoscibile</li>
+                    <li>Se anche fosse conoscibile, non sarebbe comunicabile</li>
+                </ol>
+            </p>
+            
+            <h3>Scetticismo linguistico</h3>
+            <p>Gorgia mette in discussione la capacità del linguaggio di rappresentare la realtà, anticipando temi moderni della filosofia del linguaggio.</p>
+            
+            <div class="quote">
+                "La parola è un potente signore che con piccolissimo corpo e invisibilissimo riesce a compiere opere divinissime."
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Retorica e Tecniche Persuasive</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>L'arte della persuasione</h3>
+            <p>Gorgia sviluppò tecniche retoriche innovative basate su:
+                <ul>
+                    <li>Parallelismi e antitesi</li>
+                    <li>Metafore audaci</li>
+                    <li>Ritmo e musicalità del discorso</li>
+                    <li>Uso psicologico delle emozioni</li>
+                </ul>
+            </p>
+            
+            <h3>L'encomio di Elena</h3>
+            <p>In questo celebre discorso, Gorgia dimostra la sua abilità nel difendere l'indifendibile, assolvendo Elena di Troia da ogni colpa.</p>
+            
+            <div class="quote">
+                "La parola persuase e ingannò l'anima di Elena: persuase con la sua arte, ingannò con la sua falsità."
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Opere e Frammenti</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>Opere principali:</h3>
+            <ul>
+                <li><strong>Sul Non-essere o Sulla Natura</strong> (trattato filosofico)</li>
+                <li><strong>Encomio di Elena</strong> (esempio di discorso retorico)</li>
+                <li><strong>Difesa di Palamede</strong> (altro modello retorico)</li>
+                <li><strong>Epitaffio</strong> (discorso funebre)</li>
+            </ul>
+            
+            <h3>Stile letterario:</h3>
+            <p>Gorgia sviluppò uno stile oratorio ricco di figure retoriche che influenzò profondamente la prosa greca successiva.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Influenza e Critiche</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>Eredità culturale</h3>
+            <p>Gorgia influenzò:
+                <ul>
+                    <li>La retorica greca classica (Isocrate, Demostene)</li>
+                    <li>La filosofia scettica</li>
+                    <li>Gli studi sul linguaggio e la comunicazione</li>
+                    <li>La sofistica successiva</li>
+                </ul>
+            </p>
+            
+            <h3>Critiche</h3>
+            <p>Platone nel "Gorgia" lo critica per aver separato la retorica dalla ricerca della verità, riducendola a mera tecnica di persuasione.</p>
+            
+            <div class="quote">
+                "La tragedia è un inganno in cui chi inganna è più giusto di chi non inganna, e chi è ingannato è più sapiente di chi non è ingannato."
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funzione per gestire l'apertura/chiusura delle sezioni
+        function setupSectionToggles() {
+            const headers = document.querySelectorAll('.section-header');
+            
+            headers.forEach(header => {
+                const btn = header.querySelector('.toggle-btn');
+                const content = header.nextElementSibling;
+                
+                // Aggiungi event listener all'header e al pulsante
+                header.addEventListener('click', () => toggleSection(content, btn));
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Evita che l'evento si propaghi all'header
+                    toggleSection(content, btn);
+                });
+            });
+            
+            // Apri la prima sezione di default
+            const firstContent = headers[0].nextElementSibling;
+            const firstBtn = headers[0].querySelector('.toggle-btn');
+            toggleSection(firstContent, firstBtn);
+        }
+        
+        // Funzione per aprire/chiudere una singola sezione
+        function toggleSection(content, btn) {
+            content.classList.toggle('show');
+            btn.textContent = content.classList.contains('show') ? 'Nascondi' : 'Mostra';
+        }
+        
+        // Funzione per gestire il cambio di stile
+        function setupStyleButtons() {
+            const styleBtns = document.querySelectorAll('.style-btn');
+            
+            styleBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const style = btn.dataset.style;
+                    document.body.className = style;
+                });
+            });
+        }
+        
+        // Inizializzazione
+        document.addEventListener('DOMContentLoaded', function() {
+            setupSectionToggles();
+            setupStyleButtons();
+        });
+    </script>
+</body>
+</html>
