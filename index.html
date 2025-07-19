@@ -29,44 +29,42 @@
 
 <!-- INIZIO AGGIUNTA PER MODIGFICA AREA CLICCABILE-->
   <style>
+./* Migliora l'area cliccabile */
 .tab-btn {
     position: relative;
-    padding: 16px 0 !important; /* Allarga area click verticale */
-    margin: 0 10px !important; /* Allarga area click orizzontale */
-    min-width: 80px; /* Larghezza minima garantita */
+    padding: 12px 24px !important; /* Area più grande */
+    margin: 0 -1px !important; /* Sovrapposizione controllata */
+    z-index: 1;
+    transition: all 0.2s;
 }
 
-/* Effetto hover visibile */
-.tab-btn:hover::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -10px;
-    right: -10px;
-    bottom: 0;
-    background: rgba(0,0,0,0.05);
-    border-radius: 4px;
+/* Effetto hover su tutta l'area */
+.tab-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05) !important;
 }
 
-/* Sottolineatura attiva più evidente */
+/* Stile attivo migliorato */
 .tab-btn.active {
     font-weight: bold !important;
+    color: #0066cc !important;
+    background-color: white !important;
+    border-bottom: 3px solid #0066cc !important;
 }
 
-.tab-btn.active::after {
-    content: "";
+/* Linea di connessione tra pulsanti */
+.tab-buttons {
+    position: relative;
+}
+
+.tab-buttons::after {
+    content: '';
     position: absolute;
-    bottom: -3px;
+    bottom: 0;
     left: 0;
     right: 0;
-    height: 3px;
-    background: #0066cc !important;
-    animation: underline 0.3s ease;
-}
-
-@keyframes underline {
-    from { transform: scaleX(0); }
-    to { transform: scaleX(1); }
+    height: 1px;
+    background-color: #ddd;
+    z-index: 0;
 }
 <!-- FINE AGGIUNTA PER MODIGFICA AREA CLICCABILE-->
 <style>
@@ -2779,6 +2777,10 @@ document.addEventListener("DOMContentLoaded", function() {
   <!-- INIZIO AGGIUNTA PER MODIGFICA AREA CLICCABILE-->/
 // Sostituisci la tua funzione openTab con questa versione migliorata
 <script>
+  document.querySelectorAll('.dropdown').forEach(dropdown => {
+  const menu = dropdown.querySelector('.menu');
+  if (!menu) return; // ← Questo impedisce l'errore se manca .menu
+
 function openTab(tabName, event) {
     event = event || window.event;
     const tabs = document.querySelectorAll('.tab-content');
