@@ -337,8 +337,42 @@ nav.menu-desktop > ul > li > button.menu-btn {
       display: grid !important;
     }
   }
+   
+   <!--  inizio restringimento colonne submenu-->
+.mega-menu.columns-4 {
+  display: grid;
+  grid-template-columns: repeat(2, 190px);
+  gap: 15px 30px;
+  max-width: 960px;
+  padding: 20px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.15);
+  border-radius: 6px;
+}
+.mega-menu.columns-4 {
+  grid-template-columns: repeat(2, 1fr);
+  min-width: 220px;
+  padding: 10px 15px;
+}
+.mega-menu.columns-4 {
+  max-width: 900px;  /* riduci larghezza totale del blocco */
+  width: auto;       /* lascia che sia fluido sotto il max-width */
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 180px); /* 2 colonne da 150px */
+  gap: 20px 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.15);
+  border-radius: 6px;
+}
+.mega-menu.columns-4 > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centra orizzontalmente il contenuto della colonna */
+  text-align: center;  /* centra testo link e titoli */
+}
 
+<!--  fine restringimento colonne submenu-->
 
+ 
   * { 
     margin: 0; 
     padding: 0; 
@@ -1481,7 +1515,7 @@ document.addEventListener("DOMContentLoaded", function() {
           </div>
           <div>
             <h4>Sofisti</h4>
-            <a href="https://casi0048.github.io/Presocratici/protagora.html" role="menuitem">
+            
             <a href="articoli/gorgia.html" role="menuitem">Gorgia</a>
             <a href="articoli/ippia.html" role="menuitem">Ippia</a>
             <a href="articoli/prodico.html" role="menuitem">Prodico</a>
