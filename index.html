@@ -27,6 +27,47 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/TextPlugin.min.js"></script>
 
+<!-- INIZIO AGGIUNTA PER MODIGFICA AREA CLICCABILE-->/* Rende l'intero pulsante cliccabile */
+.tab-btn {
+    position: relative;
+    padding: 16px 0 !important; /* Allarga area click verticale */
+    margin: 0 10px !important; /* Allarga area click orizzontale */
+    min-width: 80px; /* Larghezza minima garantita */
+}
+
+/* Effetto hover visibile */
+.tab-btn:hover::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -10px;
+    right: -10px;
+    bottom: 0;
+    background: rgba(0,0,0,0.05);
+    border-radius: 4px;
+}
+
+/* Sottolineatura attiva più evidente */
+.tab-btn.active {
+    font-weight: bold !important;
+}
+
+.tab-btn.active::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: #0066cc !important;
+    animation: underline 0.3s ease;
+}
+
+@keyframes underline {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+}
+<!-- FINE AGGIUNTA PER MODIGFICA AREA CLICCABILE-->
 <style>
 
 /* CORREZIONE CSS */
@@ -939,55 +980,7 @@ header {
 
 </style>
   
-<!--   INIZIO AGGIUNTA PER RENDERE CLICCABILE INTERA AREA DEL PULSANTE-->
-<style>
-/* SOLO QUESTE REGOLE CSS DA AGGIUNGERE */
-.tab-btn {
-    position: relative;
-    /* Area cliccabile più grande */
-    padding: 16px 24px !important;
-    margin: 0 5px !important;
-}
 
-/* Effetto hover su tutta l'area */
-.tab-btn:hover {
-    background: rgba(0, 0, 0, 0.05) !important;
-    border-radius: 4px 4px 0 0 !important;
-}
-
-/* Stile attivo migliorato */
-.tab-btn.active {
-    font-weight: bold !important;
-    background: rgba(0, 102, 204, 0.1) !important;
-    border-bottom: 3px solid #0066cc !important;
-}
-
-/* Aggiungi transizione fluida */
-.tab-btn {
-    transition: all 0.2s ease !important;
-}
-</style>
-
-<script>
-function openTab(tabName) {
-    // Rimuovi active da tutti i pulsanti e contenuti
-    document.querySelectorAll('.tab-btn, .tab-content').forEach(el => {
-        el.classList.remove('active');
-    });
-    
-    // Aggiungi active al pulsante cliccato
-    event.currentTarget.classList.add('active');
-    
-    // Mostra il contenuto corretto
-    document.getElementById(tabName).classList.add('active');
-}
-
-// Attiva la prima tab al caricamento
-window.onload = function() {
-    document.querySelector('.tab-btn').click();
-};
-</script>
-<!--   FINE AGGIUNTA PER RENDERE CLICCABILE INTERA AREA DEL PULSANTE-->
 </head>
   <!-- Inserisci qui i link, stili e script già esistenti -->
 
@@ -2782,5 +2775,24 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 });
 </script>  
+  <!-- INIZIO AGGIUNTA PER MODIGFICA AREA CLICCABILE-->/* Rende l'intero pulsante cliccabile */
+// Sostituisci la tua funzione openTab con questa versione migliorata
+<script>
+function openTab(tabName, event) {
+    event = event || window.event;
+    const tabs = document.querySelectorAll('.tab-content');
+    const buttons = document.querySelectorAll('.tab-btn');
+    
+    tabs.forEach(tab => tab.classList.remove('active'));
+    buttons.forEach(btn => btn.classList.remove('active'));
+    
+    document.getElementById(tabName).classList.add('active');
+    event.currentTarget.classList.add('active');
+    
+    // Blocca il comportamento predefinito per sicurezza
+    event.preventDefault();
+    return false;
+</script>
+<!-- FINE AGGIUNTA PER MODIGFICA AREA CLICCABILE-->
        </body>
 </html>
