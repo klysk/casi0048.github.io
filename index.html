@@ -952,6 +952,91 @@ header {
 
 <!-- fine  aggiunta per rendere cliccabile area bottone -->
 </style>
+  
+<!--   INIZIO AGGIUNTA PER RENDERE CLICCABILE INTERA AREA DEL PULSANTE-->
+<style>
+/* AGGIUNGI QUESTI STILI AL TUO CSS ESISTENTE */
+
+.tab-buttons {
+    /* Mantieni i tuoi stili esistenti */
+    display: flex;
+    border-bottom: 1px solid #ddd;
+}
+
+.tab-btn {
+    /* Rendi l'intera area cliccabile */
+    padding: 12px 24px; /* Aumenta il padding per area più grande */
+    position: relative;
+    cursor: pointer;
+    
+    /* Centra il testo meglio */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Mantieni i tuoi stili esistenti */
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: #333;
+    transition: all 0.2s;
+}
+
+/* Estendi l'area cliccabile con pseudo-elemento */
+.tab-btn::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    bottom: -10px;
+    left: -10px;
+    z-index: 1;
+}
+
+/* Migliora il feedback visivo */
+.tab-btn:hover {
+    background-color: #f5f5f5;
+}
+
+.tab-btn.active {
+    font-weight: bold;
+    color: #0066cc;
+}
+
+/* Sottolineatura per l'elemento attivo */
+.tab-btn.active::before {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 10px;
+    right: 10px;
+    height: 3px;
+    background-color: #0066cc;
+}
+</style>
+
+<script>
+// MODIFICA MINIMA AL TUO JS ESISTENTE
+function openTab(tabName) {
+    // Aggiungi questo per gestire meglio i click
+    event.stopPropagation();
+    
+    // Il resto del tuo codice esistente
+    const tabContents = document.getElementsByClassName('tab-content');
+    for (let i = 0; i < tabContents.length; i++) {
+        tabContents[i].classList.remove('active');
+    }
+    
+    const tabButtons = document.getElementsByClassName('tab-btn');
+    for (let i = 0; i < tabButtons.length; i++) {
+        tabButtons[i].classList.remove('active');
+    }
+    
+    document.getElementById(tabName).classList.add('active');
+    event.currentTarget.classList.add('active');
+}
+</script>
+<!--   FINE AGGIUNTA PER RENDERE CLICCABILE INTERA AREA DEL PULSANTE-->
 </head>
   <!-- Inserisci qui i link, stili e script già esistenti -->
 
