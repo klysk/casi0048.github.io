@@ -994,10 +994,9 @@ function openTab(tabName, event) {
 
 // Inizializza il menu al caricamento
 document.addEventListener('DOMContentLoaded', function() {
-    // Attiva la prima tab se nessuna è attiva
-    if(!document.querySelector('.tab-btn.active')) {
-        const firstTab = document.querySelector('.tab-content').id;
-        openTab(firstTab);
+    const firstTab = document.querySelector('.tab-content');
+    if(firstTab && !document.querySelector('.tab-btn.active')) {
+        openTab(firstTab.id);
     }
 });
 </script>
@@ -2697,27 +2696,35 @@ document.addEventListener("DOMContentLoaded", () => {
     const menu = dropdown.querySelector(".mega-menu");
     let menuTimeout;
 
-    dropdown.addEventListener("mouseenter", () => {
-      clearTimeout(menuTimeout);
-      menu.style.display = "grid";
-      menu.style.opacity = "1";
-      menu.style.visibility = "visible";
-      menu.style.pointerEvents = "auto";
-    });
+   document.querySelectorAll('.dropdown').forEach(dropdown => {
+  const menu = dropdown.querySelector('.menu');
+  if (!menu) return;
 
-    dropdown.addEventListener("mouseleave", (e) => {
-      if (!dropdown.contains(e.relatedTarget) && !menu.contains(e.relatedTarget)) {
-        menuTimeout = setTimeout(() => {
-          menu.style.opacity = "0";
-          menu.style.visibility = "hidden";
-          menu.style.pointerEvents = "none";
-        }, 300);
-      }
-    });
+  let menuTimeout;
 
-    menu.addEventListener("mouseenter", () => {
-      clearTimeout(menuTimeout);
-    });
+  dropdown.addEventListener("mouseenter", () => {
+    clearTimeout(menuTimeout);
+    menu.style.display = "grid";
+    menu.style.opacity = "1";
+    menu.style.visibility = "visible";
+    menu.style.pointerEvents = "auto";
+  });
+
+  dropdown.addEventListener("mouseleave", (e) => {
+    if (!dropdown.contains(e.relatedTarget) && !menu.contains(e.relatedTarget)) {
+      menuTimeout = setTimeout(() => {
+        menu.style.opacity = "0";
+        menu.style.visibility = "hidden";
+        menu.style.pointerEvents = "none";
+      }, 300);
+    }
+  });
+
+  menu.addEventListener("mouseenter", () => {
+    clearTimeout(menuTimeout);
+  });
+});
+
 
     menu.addEventListener("mouseleave", () => {
       menuTimeout = setTimeout(() => {
