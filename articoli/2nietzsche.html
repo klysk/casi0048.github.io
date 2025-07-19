@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nietzsche: Il Filosofo Cosmico</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Code+Pro&display=swap');
+        
+        :root {
+            --primary: #6e07f3;
+            --secondary: #5be9b9;
+            --dark: #0f0c24;
+            --light: #f8f9fa;
+            --comet: #ff6bff;
+        }
+        
+        body {
+            font-family: 'Source Code Pro', monospace;
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(123, 31, 162, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 30%, rgba(0, 255, 255, 0.05) 0%, transparent 25%);
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--secondary);
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 10px rgba(91, 233, 185, 0.5);
+            animation: pulse 4s infinite, float 6s ease-in-out infinite;
+            position: relative;
+        }
+        
+        @keyframes pulse {
+            0% { text-shadow: 0 0 10px rgba(91, 233, 185, 0.5); }
+            50% { text-shadow: 0 0 20px rgba(91, 233, 185, 0.8), 0 0 30px rgba(91, 233, 185, 0.3); }
+            100% { text-shadow: 0 0 10px rgba(91, 233, 185, 0.5); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .section {
+            background: rgba(15, 12, 36, 0.7);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: all 0.4s ease;
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section:hover {
+            transform: translateY(-5px) scale(1.005);
+            box-shadow: 0 8px 25px rgba(110, 7, 243, 0.2);
+        }
+        
+        .section:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, 
+                transparent 65%, 
+                rgba(91, 233, 185, 0.05) 75%, 
+                transparent 85%);
+            background-size: 300% 300%;
+            animation: shine 8s infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes shine {
+            0% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+        
+        .toggle-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, #8a2be2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 1.5rem;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            display: block;
+            width: 100%;
+            text-align: left;
+            margin-bottom: 1rem;
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 4px 10px rgba(110, 7, 243, 0.3);
+        }
+        
+        .toggle-btn:after {
+            content: '+';
+            position: absolute;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .toggle-btn.active:after {
+            content: '-';
+        }
+        
+        .toggle-btn:hover {
+            background: linear-gradient(135deg, #5a04d1 0%, #7b1fa2 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(110, 7, 243, 0.4);
+        }
+        
+        .content {
+            display: none;
+            padding: 1rem;
+            animation: fadeIn 0.6s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .quote {
+            font-style: italic;
+            border-left: 3px solid var(--secondary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            color: var(--secondary);
+            position: relative;
+            background: rgba(91, 233, 185, 0.05);
+            border-radius: 0 8px 8px 0;
+            animation: quoteGlow 4s infinite alternate;
+        }
+        
+        @keyframes quoteGlow {
+            from { box-shadow: 0 0 5px rgba(91, 233, 185, 0.1); }
+            to { box-shadow: 0 0 15px rgba(91, 233, 185, 0.2); }
+        }
+        
+        .quote:before {
+            content: '"';
+            font-size: 4rem;
+            position: absolute;
+            left: 0.5rem;
+            top: -0.5rem;
+            opacity: 0.2;
+            line-height: 1;
+        }
+        
+        .quote:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 30px;
+            height: 30px;
+            border-bottom: 2px solid var(--secondary);
+            border-right: 2px solid var(--secondary);
+            opacity: 0.5;
+        }
+        
+        .glow {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 5px var(--secondary); }
+            to { text-shadow: 0 0 15px var(--secondary), 0 0 25px rgba(91, 233, 185, 0.5); }
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+        }
+        
+        /* Comet Styles */
+        .comet {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: var(--comet);
+            border-radius: 50%;
+            box-shadow: 
+                0 0 10px 2px var(--comet),
+                0 0 20px 4px rgba(255, 107, 255, 0.5);
+            opacity: 0.8;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .comet-tail {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, var(--comet) 0%, transparent 100%);
+            transform-origin: left center;
+            pointer-events: none;
+        }
+        
+        /* Stars */
+        .star {
+            position: fixed;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle 5s infinite;
+            z-index: 0;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 0.8; transform: scale(1.2); }
+        }
+        
+        /* Floating Nietzsche */
+        .nietzsche-float {
+            position: fixed;
+            right: 5%;
+            bottom: 5%;
+            font-size: 3rem;
+            opacity: 0.1;
+            animation: floatSlow 15s ease-in-out infinite;
+            z-index: 0;
+            user-select: none;
+        }
+        
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-50px) rotate(5deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Elements -->
+    <div class="nietzsche-float">☄️</div>
+    
+    <div class="container">
+        <h1 class="glow">Nietzsche: Il Filosofo Cosmico</h1>
+        
+        <div class="section">
+            <button class="toggle-btn">🌌 Il Richiamo del Folle</button>
+            <div class="content">
+                <p>Nietzsche non era un filosofo come gli altri. Era un poeta cosmico, un astronomo dell'anima che mappava costellazioni di significato nell'oscurità.</p>
+                
+                <div class="quote">
+                    "In qualche remoto angolo dell'universo scintillante... c'è una stella dove animali intelligenti inventarono la conoscenza."<br>
+                    - Friedrich Nietzsche
+                </div>
+                
+                <p>Il suo annuncio più scandaloso: <strong>"Dio è morto"</strong> risuonò come un'esplosione stellare che illuminò il cielo della filosofia moderna.</p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <button class="toggle-btn">💫 La Volontà di Potenza</button>
+            <div class="content">
+                <p>La <strong>Volontà di Potenza</strong> è la forza che muove le galassie e gli atomi, l'energia primordiale che tutto permea:</p>
+                
+                <div class="quote">
+                    "Il mondo visto dall'interno, il mondo determinato e designato secondo il suo 'carattere intelligibile' — sarebbe appunto la 'volontà di potenza' e nient'altro che questa."<br>
+                    - Friedrich Nietzsche
+                </div>
+                
+                <p>Nell'era digitale questa forza si manifesta come:</p>
+                <ul>
+                    <li>Algoritmi che sfidano i limiti della conoscenza</li>
+                    <li>Reti neurali che imitano il pensiero</li>
+                    <li>Codice che plasma nuove realtà</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="section">
+            <button class="toggle-btn">♾️ L'Eterno Ritorno</button>
+            <div class="content">
+                <p>L'idea più vertiginosa: <strong>l'Eterno Ritorno</strong> è il loop cosmico definitivo, un universo che si ripete in ogni dettaglio:</p>
+                
+                <div class="quote">
+                    "Tutto va, tutto torna indietro; eternamente gira la ruota dell'essere. Tutto muore, tutto torna a fiorire; eternamente corre l'anno dell'essere."<br>
+                    - Friedrich Nietzsche
+                </div>
+                
+                <p>Per il programmatore filosofo:</p>
+                <ul>
+                    <li>Ogni <code>git commit</code> è un istante eterno</li>
+                    <li>Ogni <code>while(true)</code> è un micro-ritorno</li>
+                    <li>Ogni sistema ricorsivo un eco dell'eterno</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="section">
+            <button class="toggle-btn">🚀 Il Superuomo</button>
+            <div class="content">
+                <p>L'<strong>Übermensch</strong> è colui che trasforma la gravità del reale in leggerezza cosmica:</p>
+                
+                <div class="quote">
+                    "L'uomo è una corda tesa tra la bestia e il superuomo — una corda sopra un abisso."<br>
+                    - Friedrich Nietzsche
+                </div>
+                
+                <p>Nell'era spaziale digitale:</p>
+                <ul>
+                    <li>Il Superuomo scrive codice che sfida la mortalità</li>
+                    <li>Trasforma dati in stelle, bit in mondi</li>
+                    <li>Vive come un astronauta metafisico</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="section">
+            <button class="toggle-btn">☄️ La Filosofia come Cometa</button>
+            <div class="content">
+                <p>Il pensiero di Nietzsche è una cometa che attraversa il cielo della ragione, lasciando una scia incandescente:</p>
+                
+                <div class="quote">
+                    "Devi avere caos dentro di te per partorire una stella danzante."<br>
+                    - Friedrich Nietzsche
+                </div>
+                
+                <p>Manifesto per il programmatore cosmico:</p>
+                <ol>
+                    <li>Sii come una supernova — esplodi di creatività</li>
+                    <li>Orbita attorno a problemi mai risolti</li>
+                    <li>Lascia una scia di codice luminoso</li>
+                </ol>
+            </div>
+        </div>
+        
+        <footer>
+            <p>🚀 Creato con <span style="color: var(--comet);">energia cosmica</span> per GitHub</p>
+            <p>Ogni <code>git push</code> è un lancio verso l'infinito</p>
+        </footer>
+    </div>
+
+    <script>
+        // Section toggle logic
+        document.querySelectorAll('.toggle-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                button.classList.toggle('active');
+                const content = button.nextElementSibling;
+                
+                if (content.style.display === 'block') {
+                    content.style.display = 'none';
+                } else {
+                    content.style.display = 'block';
+                    // Create comet effect when opening a section
+                    createComet(button);
+                }
+            });
+        });
+        
+        // Auto-open first section
+        document.querySelector('.toggle-btn').click();
+        
+        // Create stars
+        function createStars() {
+            const starsCount = 100;
+            for (let i = 0; i < starsCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = `${Math.random() * 100}vw`;
+                star.style.top = `${Math.random() * 100}vh`;
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                document.body.appendChild(star);
+            }
+        }
+        
+        // Create comets
+        function createComet(triggerElement) {
+            const rect = triggerElement.getBoundingClientRect();
+            const startX = rect.left + rect.width/2;
+            const startY = rect.top + rect.height/2;
+            
+            // Comet head
+            const comet = document.createElement('div');
+            comet.className = 'comet';
+            comet.style.left = `${startX}px`;
+            comet.style.top = `${startY}px`;
+            document.body.appendChild(comet);
+            
+            // Comet tail
+            const tail = document.createElement('div');
+            tail.className = 'comet-tail';
+            tail.style.left = `${startX}px`;
+            tail.style.top = `${startY + 3}px`;
+            tail.style.width = '0px';
+            document.body.appendChild(tail);
+            
+            // Random end point
+            const endX = Math.random() * window.innerWidth;
+            const endY = Math.random() * window.innerHeight;
+            
+            // Animate comet
+            const duration = 2000 + Math.random() * 1000;
+            const startTime = performance.now();
+            
+            function animateComet(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Calculate current position
+                const currentX = startX + (endX - startX) * progress;
+                const currentY = startY + (endY - startY) * progress;
+                
+                // Update positions
+                comet.style.left = `${currentX}px`;
+                comet.style.top = `${currentY}px`;
+                
+                // Update tail
+                tail.style.left = `${currentX}px`;
+                tail.style.top = `${currentY + 3}px`;
+                tail.style.width = `${50 * (1 - progress)}px`;
+                tail.style.transform = `rotate(${Math.atan2(endY - startY, endX - startX)}rad)`;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(animateComet);
+                } else {
+                    // Fade out
+                    comet.style.transition = 'opacity 0.5s';
+                    tail.style.transition = 'opacity 0.5s';
+                    comet.style.opacity = '0';
+                    tail.style.opacity = '0';
+                    
+                    // Remove elements after fade out
+                    setTimeout(() => {
+                        comet.remove();
+                        tail.remove();
+                    }, 500);
+                }
+            }
+            
+            requestAnimationFrame(animateComet);
+        }
+        
+        // Random comets
+        function createRandomComet() {
+            setTimeout(() => {
+                createComet({
+                    getBoundingClientRect: () => ({
+                        left: Math.random() * window.innerWidth * 0.2,
+                        top: Math.random() * window.innerHeight * 0.2,
+                        width: 0,
+                        height: 0
+                    })
+                });
+                createRandomComet();
+            }, 3000 + Math.random() * 7000);
+        }
+        
+        // Initialize effects
+        createStars();
+        createRandomComet();
+        
+        // Add comet on click anywhere
+        document.addEventListener('click', (e) => {
+            createComet({
+                getBoundingClientRect: () => ({
+                    left: e.clientX,
+                    top: e.clientY,
+                    width: 0,
+                    height: 0
+                })
+            });
+        });
+    </script>
+</body>
+</html>
