@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sant'Agostino - Filosofia e Teologia Cristiana</title>
+    <style>
+        /* Stili base */
+        :root {
+            --primary: #5D4037;
+            --secondary: #8D6E63;
+            --accent: #3E2723;
+            --text: #212121;
+            --bg: #EFEBE9;
+            --section-bg: #FFFFFF;
+            --quote-bg: #D7CCC8;
+        }
+        
+        body {
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            line-height: 1.7;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 25px;
+            color: var(--text);
+            background-color: var(--bg);
+            transition: all 0.4s ease;
+        }
+        
+        h1 {
+            color: var(--accent);
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-top: 35px;
+        }
+        
+        .section {
+            background-color: var(--section-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--primary);
+        }
+        
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            padding-top: 0;
+            transition: all 0.5s ease;
+        }
+        
+        .section-content.show {
+            max-height: 2000px;
+            padding-top: 15px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px 0;
+        }
+        
+        .toggle-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .toggle-btn:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .style-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 30px 0;
+            justify-content: center;
+        }
+        
+        .style-btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .style-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        .quote {
+            background-color: var(--quote-bg);
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            margin: 15px 0;
+            font-style: italic;
+            border-radius: 0 5px 5px 0;
+            transition: all 0.3s;
+        }
+        
+        /* Stili alternativi */
+        .dark-mode {
+            --primary: #5D4037;
+            --secondary: #8D6E63;
+            --accent: #D7CCC8;
+            --text: #FAFAFA;
+            --bg: #212121;
+            --section-bg: #424242;
+            --quote-bg: #5D4037;
+        }
+        
+        .medieval-mode {
+            --primary: #795548;
+            --secondary: #A1887F;
+            --accent: #5D4037;
+            --bg: #EFEBE9;
+            --section-bg: #D7CCC8;
+            --quote-bg: #BCAAA4;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        
+        .christian-mode {
+            --primary: #3F51B5;
+            --secondary: #5C6BC0;
+            --accent: #303F9F;
+            --bg: #E8EAF6;
+            --section-bg: #FFFFFF;
+            --quote-bg: #C5CAE9;
+        }
+        
+        .philosophy-mode {
+            --primary: #00695C;
+            --secondary: #00897B;
+            --accent: #004D40;
+            --bg: #E0F2F1;
+            --section-bg: #FFFFFF;
+            --quote-bg: #B2DFDB;
+        }
+        
+        .confessions-mode .section:nth-child(odd) {
+            border-left-color: #5D4037;
+        }
+        
+        .confessions-mode .section:nth-child(even) {
+            border-left-color: #3F51B5;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sant'Agostino: Filosofia e Teologia Cristiana</h1>
+
+    <div class="style-buttons">
+        <button class="style-btn" data-style="">Classico</button>
+        <button class="style-btn" data-style="dark-mode">Dark Mode</button>
+        <button class="style-btn" data-style="medieval-mode">Medievale</button>
+        <button class="style-btn" data-style="christian-mode">Cristiano</button>
+        <button class="style-btn" data-style="philosophy-mode">Filosofico</button>
+        <button class="style-btn" data-style="confessions-mode">Confessioni</button>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Vita e Conversione</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <p>Sant'Agostino d'Ippona (354-430 d.C.) è stato un filosofo, teologo e vescovo romano di origine nordafricana. La sua conversione al cristianesimo, dopo una gioventù dissoluta, segnò una svolta nella storia del pensiero occidentale.</p>
+            
+            <div class="quote">
+                "Tardi ti ho amato, o Bellezza così antica e così nuova, tardi ti ho amato!"
+            </div>
+            
+            <h3>Tappe biografiche:</h3>
+            <ul>
+                <li>354: Nascita a Tagaste (Algeria)</li>
+                <li>384: Insegna retorica a Milano</li>
+                <li>386: Conversione al cristianesimo</li>
+                <li>387: Battesimo da Sant'Ambrogio</li>
+                <li>395: Diventa vescovo di Ippona</li>
+                <li>430: Morte durante l'assedio di Ippona</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Pensiero Filosofico</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>Filosofia e fede</h3>
+            <p>Agostino sintetizzò il pensiero platonico con la teologia cristiana, creando un sistema filosofico-teologico che avrebbe dominato il Medioevo.</p>
+            
+            <h3>Concetti chiave:</h3>
+            <ul>
+                <li>Interiorità: "Noli foras ire, in te ipsum redi" (Non uscire fuori, rientra in te stesso)</li>
+                <li>Illuminazione divina: la verità viene da Dio</li>
+                <li>Problema del male: il male come privazione di bene</li>
+                <li>Teoria del tempo: distensione dell'anima</li>
+            </ul>
+            
+            <div class="quote">
+                "Ci hai fatti per te, Signore, e il nostro cuore è inquieto finché non riposa in te."
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Opere Principali</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>Opere filosofiche e teologiche:</h3>
+            <ul>
+                <li><strong>Confessioni</strong> (397-398): autobiografia spirituale</li>
+                <li><strong>La Città di Dio</strong> (413-426): filosofia della storia</li>
+                <li><strong>De Trinitate</strong> (400-416): trattato sulla Trinità</li>
+                <li><strong>De libero arbitrio</strong> (388-395): sul libero arbitrio</li>
+            </ul>
+            
+            <h3>Altre opere importanti:</h3>
+            <ul>
+                <li><strong>Contro gli Accademici</strong></li>
+                <li><strong>De magistro</strong></li>
+                <li><strong>De doctrina christiana</strong></li>
+                <li><strong>Le Ritrattazioni</strong></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Teologia Agostiniana</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>Dottrina della Grazia</h3>
+            <p>Agostino sviluppò una teologia della grazia che enfatizzava la totale dipendenza dell'uomo da Dio per la salvezza.</p>
+            
+            <h3>Eredità teologica:</h3>
+            <ul>
+                <li>Peccato originale e necessità del battesimo</li>
+                <li>Predestinazione (interpretazioni diverse)</li>
+                <li>Natura della Chiesa</li>
+                <li>Relazione tra fede e ragione</li>
+            </ul>
+            
+            <div class="quote">
+                "Ama e fa' ciò che vuoi."
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h2>Influenza Storica</h2>
+            <button class="toggle-btn">Mostra</button>
+        </div>
+        <div class="section-content">
+            <h3>Nel Medioevo</h3>
+            <p>Agostino divenne il pensatore più influente del Medioevo, ispirando sia la Scolastica che il monachesimo.</p>
+            
+            <h3>Nella Riforma</h3>
+            <p>Lutero e Calvino si richiamarono alla sua teologia della grazia.</p>
+            
+            <h3>Nella filosofia contemporanea</h3>
+            <p>Pensatori come Heidegger e Arendt hanno ripreso temi agostiniani.</p>
+            
+            <div class="quote">
+                "La misura dell'amore è amare senza misura."
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funzione per gestire l'apertura/chiusura delle sezioni
+        function setupSectionToggles() {
+            const headers = document.querySelectorAll('.section-header');
+            
+            headers.forEach(header => {
+                const btn = header.querySelector('.toggle-btn');
+                const content = header.nextElementSibling;
+                
+                // Aggiungi event listener all'header e al pulsante
+                header.addEventListener('click', () => toggleSection(content, btn));
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Evita che l'evento si propaghi all'header
+                    toggleSection(content, btn);
+                });
+            });
+            
+            // Apri la prima sezione di default
+            const firstContent = headers[0].nextElementSibling;
+            const firstBtn = headers[0].querySelector('.toggle-btn');
+            toggleSection(firstContent, firstBtn);
+        }
+        
+        // Funzione per aprire/chiudere una singola sezione
+        function toggleSection(content, btn) {
+            content.classList.toggle('show');
+            btn.textContent = content.classList.contains('show') ? 'Nascondi' : 'Mostra';
+        }
+        
+        // Funzione per gestire il cambio di stile
+        function setupStyleButtons() {
+            const styleBtns = document.querySelectorAll('.style-btn');
+            
+            styleBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const style = btn.dataset.style;
+                    document.body.className = style;
+                });
+            });
+        }
+        
+        // Inizializzazione
+        document.addEventListener('DOMContentLoaded', function() {
+            setupSectionToggles();
+            setupStyleButtons();
+        });
+    </script>
+</body>
+</html>
