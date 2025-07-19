@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samuel Butler - Scrittore e Filosofo</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --text-color: #333;
+            --bg-color: #fff;
+            --section-bg: #f9f9f9;
+            --border-color: #eee;
+            --quote-color: #7f8c8d;
+            --quote-border: #bdc3c7;
+        }
+
+        /* Tema Notturno */
+        .night-mode {
+            --primary-color: #9b59b6;
+            --secondary-color: #8e44ad;
+            --text-color: #ecf0f1;
+            --bg-color: #2c3e50;
+            --section-bg: #34495e;
+            --border-color: #7f8c8d;
+            --quote-color: #bdc3c7;
+            --quote-border: #95a5a6;
+        }
+
+        /* Tema Medioevale */
+        .medieval-mode {
+            --primary-color: #8B4513;
+            --secondary-color: #A0522D;
+            --text-color: #3E2723;
+            --bg-color: #F5F5DC;
+            --section-bg: #EFEBE9;
+            --border-color: #BCAAA4;
+            --quote-color: #5D4037;
+            --quote-border: #A1887F;
+            font-family: 'Times New Roman', serif;
+        }
+
+        /* Tema Futuristico */
+        .futuristic-mode {
+            --primary-color: #00BCD4;
+            --secondary-color: #0097A7;
+            --text-color: #212121;
+            --bg-color: #ECEFF1;
+            --section-bg: #CFD8DC;
+            --border-color: #B0BEC5;
+            --quote-color: #607D8B;
+            --quote-border: #90A4AE;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 25px;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            transition: all 0.5s ease;
+        }
+        
+        h1 {
+            color: var(--secondary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 12px;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-top: 35px;
+            font-size: 1.8em;
+            border-left: 4px solid var(--primary-color);
+            padding-left: 15px;
+        }
+        
+        h3 {
+            color: var(--secondary-color);
+            font-size: 1.4em;
+            margin-top: 25px;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+            border-left: 3px solid var(--border-color);
+            padding-left: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .section-content {
+            display: none;
+            padding: 15px;
+            background-color: var(--section-bg);
+            border-radius: 8px;
+            margin-top: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .toggle-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .toggle-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .toggle-btn:active {
+            transform: translateY(0);
+        }
+        
+        .active {
+            background-color: var(--secondary-color);
+        }
+        
+        .quote {
+            font-style: italic;
+            color: var(--quote-color);
+            border-left: 3px solid var(--quote-border);
+            padding: 15px;
+            margin: 25px 0;
+            background-color: rgba(0,0,0,0.03);
+            border-radius: 0 8px 8px 0;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 25px auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            max-height: 400px;
+            object-fit: cover;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 30px auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background-color: var(--primary-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1px;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--bg-color);
+            border: 3px solid var(--primary-color);
+            border-radius: 50%;
+            top: 15px;
+            z-index: 1;
+        }
+        
+        .left {
+            left: 0;
+            text-align: right;
+        }
+        
+        .right {
+            left: 50%;
+            text-align: left;
+        }
+        
+        .left::after {
+            right: -10px;
+        }
+        
+        .right::after {
+            left: -10px;
+        }
+        
+        .timeline-content {
+            padding: 15px;
+            background-color: var(--section-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .theme-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .theme-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .default-theme {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .night-theme {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+        }
+        
+        .medieval-theme {
+            background-color: #8B4513;
+            color: #F5F5DC;
+        }
+        
+        .futuristic-theme {
+            background-color: #00BCD4;
+            color: #212121;
+        }
+        
+        .works-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .work-card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .work-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .work-image {
+            height: 150px;
+            background-color: #ddd;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .work-info {
+            padding: 15px;
+            background-color: var(--section-bg);
+        }
+        
+        .tab-buttons {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+        
+        .tab-btn {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-size: 16px;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+        
+        .tab-btn.active {
+            border-bottom: 3px solid var(--primary-color);
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item::after {
+                left: 21px;
+            }
+            
+            .left, .right {
+                left: 0;
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body class="default-theme">
+    <div class="theme-buttons">
+        <button class="theme-btn default-theme" onclick="setTheme('default')">Moderno</button>
+        <button class="theme-btn night-theme" onclick="setTheme('night')">Notturno</button>
+        <button class="theme-btn medieval-theme" onclick="setTheme('medieval')">Medioevo</button>
+        <button class="theme-btn futuristic-theme" onclick="setTheme('futuristic')">Futuristico</button>
+    </div>
+
+    <h1>Samuel Butler (1835-1902)</h1>
+    
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Samuel_Butler_by_Charles_Gogin.jpg/800px-Samuel_Butler_by_Charles_Gogin.jpg" alt="Ritratto di Samuel Butler" title="Samuel Butler">
+    
+    <div class="tab-buttons">
+        <button class="tab-btn active" onclick="openTab('biografia')">Biografia</button>
+        <button class="tab-btn" onclick="openTab('opere')">Opere</button>
+        <button class="tab-btn" onclick="openTab('pensiero')">Pensiero</button>
+        <button class="tab-btn" onclick="openTab('galleria')">Galleria</button>
+        <button class="tab-btn" onclick="openTab('eredita')">Eredità</button>
+    </div>
+    
+    <div id="biografia" class="tab-content active">
+        <div class="section">
+            <button class="toggle-btn" onclick="toggleSection('vita')">
+                <span>▼</span> Vita e Formazione
+            </button>
+            <div id="vita" class="section-content">
+                <h2>Gli Anni Formativi</h2>
+                <p>Samuel Butler nacque il 4 dicembre 1835 a Langar, nel Nottinghamshire, Inghilterra, da una famiglia clericale. Suo padre, Thomas Butler, era un reverendo e suo nonno era stato vescovo di Lichfield. Questa eredità religiosa avrebbe profondamente influenzato il suo pensiero e la sua scrittura.</p>
+                
+                <p>Butler studiò inizialmente alla Shrewsbury School, dove eccelse negli studi classici, per poi iscriversi al St John's College di Cambridge nel 1854. A Cambridge si distinse come studente brillante, laureandosi nel 1858 con un Bachelor of Arts.</p>
+                
+                <div class="quote">
+                    "L'educazione è la sovvenzione che la generazione presente dà a quella futura per i torti che le farà."
+                </div>
+                
+                <p>Dopo la laurea, Butler si preparò a seguire le orme paterne prendendo gli ordini sacri, ma una crisi di fede lo portò a rifiutare questa strada, causando una frattura con la famiglia che avrebbe segnato tutta la sua vita e opera.</p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <button class="toggle-btn" onclick="toggleSection('nuovazelanda')">
+                <span>▼</span> Esperienza in Nuova Zelanda
+            </button>
+            <div id="nuovazelanda" class="section-content">
+                <h2>L'Esilio Volontario</h2>
+                <p>Nel 1859, per allontanarsi dalle pressioni familiari e trovare indipendenza economica, Butler emigrò in Nuova Zelanda, dove acquistò un terreno nella regione di Canterbury e si dedicò all'allevamento di pecore.</p>
+                
+                <p>I cinque anni passati in Nuova Zelanda furono fondamentali per il suo sviluppo intellettuale. Lontano dalle costrizioni della società vittoriana, Butler sviluppò molte delle idee che avrebbero caratterizzato le sue opere successive.</p>
+                
+                <div class="quote">
+                    "La Nuova Zelanda mi ha insegnato a vedere l'Inghilterra con occhi nuovi, e l'Inghilterra mi ha insegnato a vedere la Nuova Zelanda con occhi nuovi."
+                </div>
+                
+                <p>Durante questo periodo scrisse numerosi articoli per il giornale locale "The Press", tra cui il famoso "Darwin Among the Machines" (1863), che sarebbe diventato il nucleo di "Erewhon".</p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <button class="toggle-btn" onclick="toggleSection('ritorno')">
+                <span>▼</span> Ritorno in Inghilterra
+            </button>
+            <div id="ritorno" class="section-content">
+                <h2>La Carriera Letteraria</h2>
+                <p>Rientrato in Inghilterra nel 1864, Butler si stabilì a Londra, dove visse per il resto della sua vita dedicandosi alla scrittura, alla pittura e alla musica. La vendita della sua fattoria neozelandese gli garantì una modesta indipendenza economica.</p>
+                
+                <p>Butler fu una figura poliedrica: oltre che scrittore, fu pittore (espose alla Royal Academy), musicista (compose diversi pezzi e scrisse su teoria musicale) e traduttore (dall'italiano e dal greco antico).</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <h3>1872</h3>
+                            <p>Pubblicazione di "Erewhon", il suo lavoro più famoso, un'utopia satirica che critica la società vittoriana.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <h3>1877</h3>
+                            <p>"La vita e l'abitudine", opera filosofica che sviluppa le sue teorie sull'evoluzione e la memoria ereditaria.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <h3>1901</h3>
+                            <p>Completa "The Way of All Flesh", romanzo semi-autobiografico pubblicato postumo.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <h3>1902</h3>
+                            <p>Muore a Londra il 18 giugno, lasciando un'eredità letteraria significativa.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="opere" class="tab-content">
+        <div class="section">
+            <button class="toggle-btn" onclick="toggleSection('erewhon')">
+                <span>▼</span> Erewhon (1872)
+            </button>
+            <div id="erewhon" class="section-content">
+                <h2>Erewhon: Oltre l'Utopia</h2>
+                <p>"Erewhon" (anagramma di "nowhere", "nessun luogo") è un romanzo satirico che descrive una società immaginaria dove le convenzioni vittoriane sono capovolte o esagerate per evidenziarne l'assurdità.</p>
+                
+                <div class="quote">
+                    "In Erewhon la malattia è considerata un crimine, mentre il crimine è trattato come una malattia."
+                </div>
+                
+                <h3>Temi Principali:</h3>
+                <ul>
+                    <li><strong>Critica alla religione:</strong> La Chiesa Musicale di Erewhon satirizza il formalismo religioso</li>
+                    <li><strong>Paura della tecnologia:</strong> Le macchine sono bandite per timore che possano evolversi</li>
+                    <li><strong>Educazione:</strong> Le "Università dell'Inconscio" ridicolizzano il sistema educativo</li>
+                    <li><strong>Giustizia:</strong> I malati sono puniti, mentre i criminali sono "curati"</li>
+                </ul>
+                
+                <p>L'opera anticipa temi che sarebbero diventati centrali nel XX secolo, dalla psicanalisi alla cibernetica.</p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <button class="toggle-btn" onclick="toggleSection('way')">
+                <span>▼</span> The Way of All Flesh (1903)
+            </button>
+            <div id="way" class="section-content">
+                <h2>L'Autobiografia Spirituale</h2>
+                <p>Pubblicato postumo, "The Way of All Flesh" è un romanzo semi-autobiografico che segue quattro generazioni della famiglia Pontifex, concentrandosi sul rapporto tra il protagonista Ernest e il padre tirannico.</p>
+                
+                <div class="quote">
+                    "I genitori sono i ultimi persone al mondo a cui dovrebbe essere permesso di avere figli."
+                </div>
+                
+                <h3>Innovazioni Narrative:</h3>
+                <ul>
+                    <li>Uso innovativo di un narratore esterno che commenta gli eventi</li>
+                    <li>Analisi psicologica approfondita dei personaggi</li>
+                    <li>Critica spietata dell'ipocrisia familiare e religiosa</li>
+                    <li>Rappresentazione realista dell'infanzia e dell'adolescenza</li>
+                </ul>
+                
+                <p>Considerato un precursore del moderno romanzo psicologico, influenzò profondamente scrittori come D.H. Lawrence e James Joyce.</p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <button class="toggle-btn" onclick="toggleSection('altre')">
+                <span>▼</span> Altre Opere Significative
+            </button>
+            <div id="altre" class="section-content">
+                <h2>La Produzione Minore</h2>
+                
+                <div class="works-gallery">
+                    <div class="work-card">
+                        <div class="work-image" style="background-image: url('https://m.media-amazon.com/images/I/51Y5Z5Z5Z5L._SY425_.jpg')"></div>
+                        <div class="work-info">
+                            <h3>La vita e l'abitudine (1877)</h3>
+                            <p>Trattato filosofico che sviluppa una teoria dell'evoluzione alternativa a quella darwiniana.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="work-card">
+                        <div class="work-image" style="background-image: url('https://m.media-amazon.com/images/I/51Y5Z5Z5Z5L._SY425_.jpg')"></div>
+                        <div class="work-info">
+                            <h3>Erewhon Revisited (1901)</h3>
+                            <p>Seguito di Erewhon che esplora i cambiamenti nella società dopo 20 anni.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="work-card">
+                        <div class="work-image" style="background-image: url('https://m.media-amazon.com/images/I/51Y5Z5Z5Z5L._SY425_.jpg')"></div>
+                        <div class="work-info">
+                            <h3>The Authoress of the Odyssey (1897)</h3>
+                            <p>Controversa teoria che l'Odissea fosse stata scritta da una donna siciliana.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="work-card">
+                        <div class="work-image" style="background-image: url('https://m.media-amazon.com/images/I/51Y5Z5Z5Z5L._SY425_.jpg')"></div>
+                        <div class="work-info">
+                            <h3>Shakespeare's Sonnets Reconsidered (1899)</h3>
+                            <p>Analisi non convenzionale dei sonetti shakespeariani.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="pensiero" class="tab-content">
+        <div class="section">
+            <button class="toggle-btn" onclick="toggleSection('filosofia')">
+                <span>▼</span> Filosofia e Teorie
+            </button>
+            <div id="filosofia" class="section-content">
+                <h2>Un Pensiero Eterodosso</h2>
+                <p>Butler sviluppò un sistema filosofico originale che combinava critica sociale, teorie evolutive e psicologia.</p>
+                
+                <h3>Teoria dell'Evoluzione</h3>
+                <p>Butler accettava l'evoluzione ma criticava il meccanismo della selezione naturale di Darwin, proponendo invece:</p>
+                <ul>
+                    <li>L'ereditarietà della memoria inconscia</li>
+                    <li>L'evoluzione come processo intelligente e finalizzato</li>
+                    <li>L'idea che le macchine fossero un'estensione dell'evoluzione biologica</li>
+                </ul>
+                
+                <div class="quote">
+                    "Il pollice del violinista non è più naturale del violino che suona."
+                </div>
+                
+                <h3>Critica Religiosa</h3>
+                <p>Butler attaccò l'ipocrisia della religione organizzata, pur mantenendo un interesse per le questioni spirituali:</p>
+                <ul>
+                    <li>Distinzione tra cristianesimo autentico e istituzionalizzato</li>
+                    <li>Critica alla moralità convenzionale</li>
+                    <li>Analisi psicologica delle motivazioni religiose</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="section">
+            <button class="toggle-btn" onclick="toggleSection('influenze')">
+                <span>▼</span> Influenze e Anticipazioni
+            </button>
+            <div id="influenze" class="section-content">
+                <h2>Un Precursore del Modernismo</h2>
+                <p>Molte idee di Butler anticiparono sviluppi successivi in vari campi:</p>
+                
+                <h3>Letteratura</h3>
+                <ul>
+                    <li>Psicologia del profondo prima di Freud</li>
+                    <li>Stream of consciousness prima di Joyce</li>
+                    <li>Critica sociale prima di Shaw e Wells</li>
+                </ul>
+                
+                <h3>Scienza</h3>
+                <ul>
+                    <li>Memoria cellulare prima della genetica</li>
+                    <li>Intelligenza artificiale prima della cibernetica</li>
+                    <li>Psicosomatica prima della medicina olistica</li>
+                </ul>
+                
+                <div class="quote">
+                    "Ogni macchina ha in sé il germe di una vita che si svilupperà."
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="galleria" class="tab-content">
+        <div class="section">
+            <button class="toggle-btn" onclick="toggleSection('foto')">
+                <span>▼</span> Fotografie e Ritratti
+            </button>
+            <div id="foto" class="section-content">
+                <h2>Immagini di Samuel Butler</h2>
+                <div class="works-gallery">
+                    <div class="work-card">
+                        <div class="work-image" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/5d/Samuel_Butler_by_Charles_Gogin.jpg')"></div>
+                        <div class="work-info">
+                            <p>Ritratto di Butler da giovane (Charles Gogin)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="work-card">
+                        <div class="work-image" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Samuel_Butler_photo.jpg/800px-Samuel_Butler_photo.jpg')"></div>
+                        <div class="work-info">
+                            <p>Fotografia di Butler in età matura</p>
+                        </div>
+                    </div>
+                    
+                    <div class="work-card">
+                        <div class="work-image" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Samuel_Butler_1870s.jpg/800px-Samuel_Butler_1870s.jpg')"></div>
+                        <div class="work-info">
+                            <p>Butler negli anni 1870</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <button class="toggle-btn" onclick="toggleSection('luoghi')">
+                <span>▼</span> Luoghi Butleriani
+            </button>
+            <div id="luoghi" class="section-content">
+                <h2>I Luoghi della Vita di Butler</h2>
+                <div class="works-gallery">
+                    <div class="work-card">
+                        <div class="work-image" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Langar_Church_-_geograph.org.uk_-_1244982.jpg/800px-Langar_Church_-_geograph.org.uk_-_1244982.jpg')"></div>
+                        <div class="work-info">
+                            <p>La chiesa di Langar dove il padre di Butler era reverendo</p>
+                        </div>
+                    </div>
+                    
+                    <div class="work-card">
+                        <div class="work-image" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/St_John%27s_College_Cambridge.jpg/800px-St_John%27s_College_Cambridge.jpg')"></div>
+                        <div class="work-info">
+                            <p>St John's College, Cambridge, dove Butler studiò</p>
+                        </div>
+                    </div>
+                    
+                    <div class="work-card">
+                        <div class="work-image" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Canterbury_NZ.jpg/800px-Canterbury_NZ.jpg')"></div>
+                        <div class="work-info">
+                            <p>Regione di Canterbury, Nuova Zelanda, dove Butler visse</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="eredita" class="tab-content">
+        <div class="section">
+            <button class="toggle-btn" onclick="toggleSection('influenza')">
+                <span>▼</span> Influenza Culturale
+            </button>
+            <div id="influenza" class="section-content">
+                <h2>L'Eredità di Butler</h2>
+                <p>Sebbene poco riconosciuto in vita, l'influenza di Butler crebbe dopo la sua morte:</p>
+                
+                <h3>Letteratura</h3>
+                <ul>
+                    <li>George Bernard Shaw lo considerava un precursore</li>
+                    <li>E.M. Forster fu influenzato dalla sua critica sociale</li>
+                    <li>James Joyce apprezzava la sua analisi psicologica</li>
+                    <li>Aldous Huxley riprese temi butleriani in "Brave New World"</li>
+                </ul>
+                
+                <h3>Scienza e Filosofia</h3>
+                <ul>
+                    <li>Le sue teorie evolutive anticiparono Lamarck</li>
+                    <li>Le idee sulle macchine prefigurarono la cibernetica</li>
+                    <li>Le intuizioni psicologiche anticiparono Freud</li>
+                </ul>
+                
+                <div class="quote">
+                    "Butler vide chiaramente ciò che altri avrebbero scoperto solo decenni dopo." - George Bernard Shaw
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <button class="toggle-btn" onclick="toggleSection('riconoscimenti')">
+                <span>▼</span> Riconoscimenti
+            </button>
+            <div id="riconoscimenti" class="section-content">
+                <h2>Memoria e Tributi</h2>
+                
+                <h3>Musei e Memoriali</h3>
+                <ul>
+                    <li>Samuel Butler Collection alla St John's College Library, Cambridge</li>
+                    <li>Targa commemorativa a Londra al 15 Clifford's Inn</li>
+                    <li>Archivio nella Biblioteca Nazionale della Nuova Zelanda</li>
+                </ul>
+                
+                <h3>Nella Cultura Popolare</h3>
+                <ul>
+                    <li>Citazioni in opere di Borges e Calvino</li>
+                    <li>Riferimenti in serie TV come "The X-Files"</li>
+                    <li>Influenza sul genere steampunk</li>
+                </ul>
+                
+                <div class="works-gallery">
+                    <div class="work-card">
+                        <div class="work-image" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Samuel_Butler_plaque.jpg/800px-Samuel_Butler_plaque.jpg')"></div>
+                        <div class="work-info">
+                            <p>Targa commemorativa a Londra</p>
+                        </div>
+                    </div>
+                    
+                    <div class="work-card">
+                        <div class="work-image" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/St_John%27s_College_Cambridge_Library.jpg/800px-St_John%27s_College_Cambridge_Library.jpg')"></div>
+                        <div class="work-info">
+                            <p>Biblioteca del St John's College con la collezione Butler</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Funzione per attivare/disattivare sezioni
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const button = section.previousElementSibling;
+            const icon = button.querySelector('span');
+            
+            if (section.style.display === 'block') {
+                section.style.display = 'none';
+                button.classList.remove('active');
+                icon.textContent = '▼';
+            } else {
+                section.style.display = 'block';
+                button.classList.add('active');
+                icon.textContent = '▲';
+            }
+        }
+        
+        // Funzione per cambiare tema
+        function setTheme(theme) {
+            document.body.className = theme + '-mode';
+        }
+        
+        // Funzione per le tab
+        function openTab(tabName) {
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+            
+            const tabButtons = document.getElementsByClassName('tab-btn');
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove('active');
+            }
+            
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+        
+        // Apriamo la prima sezione automaticamente
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleSection('vita');
+        });
+    </script>
+</body>
+</html>
