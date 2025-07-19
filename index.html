@@ -969,37 +969,23 @@ header {
 </style>
 
 <script>
-// SOSTITUISCI COMPLETAMENTE LA TUA FUNZIONE openTab CON QUESTA
-function openTab(tabName, event) {
-    // Previeni comportamenti indesiderati
-    if(event) event.preventDefault();
-    
-    // Nascondi tutti i contenuti
-    document.querySelectorAll('.tab-content').forEach(tab => {
-        tab.classList.remove('active');
+function openTab(tabName) {
+    // Rimuovi active da tutti i pulsanti e contenuti
+    document.querySelectorAll('.tab-btn, .tab-content').forEach(el => {
+        el.classList.remove('active');
     });
     
-    // Disattiva tutti i pulsanti
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.remove('active');
-    });
+    // Aggiungi active al pulsante cliccato
+    event.currentTarget.classList.add('active');
     
-    // Attiva il contenuto corretto
+    // Mostra il contenuto corretto
     document.getElementById(tabName).classList.add('active');
-    
-    // Attiva il pulsante cliccato
-    const clickedBtn = event ? event.currentTarget : document.querySelector(`[onclick*="${tabName}"]`);
-    if(clickedBtn) clickedBtn.classList.add('active');
 }
 
-// Inizializza il menu al caricamento
-document.addEventListener('DOMContentLoaded', function() {
-    // Attiva la prima tab se nessuna è attiva
-    if(!document.querySelector('.tab-btn.active')) {
-        const firstTab = document.querySelector('.tab-content').id;
-        openTab(firstTab);
-    }
-});
+// Attiva la prima tab al caricamento
+window.onload = function() {
+    document.querySelector('.tab-btn').click();
+};
 </script>
 <!--   FINE AGGIUNTA PER RENDERE CLICCABILE INTERA AREA DEL PULSANTE-->
 </head>
