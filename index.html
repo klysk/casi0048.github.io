@@ -2743,33 +2743,20 @@ document.addEventListener("DOMContentLoaded", function() {
   <!-- Tutto il contenuto già presente nel tuo <body> -->
 
   <!-- inizio Box Ultimi Articoli -->
- <section class="ultimi-articoli">
-  <h2>Ultimi Articoli</h2>
-  <ul>
-    <li><a href="articoli/tommaso-d'aquino.html">Tommaso d'Aquino</a></li>
-    <li><a href="articoli/kant.html">Immanuel Kant</a></li>
-    <li><a href="articoli/hegel.html">Georg W. F. Hegel</a></li>
-    <li><a href="articoli/nietzsche.html">Friedrich Nietzsche</a></li>
-    <li><a href="articoli/schopenhauer.html">Arthur Schopenhauer</a></li>
-    <li><a href="articoli/arendt.html">Hannah Arendt</a></li>
-  </ul>
-</section>
-
-<style>
 .ultimi-articoli {
   position: fixed;
-  top: 400px;        /* distanza dall’alto */
-  right: 0;          /* agganciato a destra */
-  width: 300px;      /* o la larghezza che vuoi */
+  top: 400px;
+  right: 0;
+  width: 300px;
   background: #222;
   color: white;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
   border-radius: 8px;
-  transform: translateX(100%); /* parte fuori schermo a destra */
+  transform: translateX(100%);
   opacity: 0;
   animation: slideInFromRight 1s forwards ease-out;
-  z-index: 1000;      /* per stare sopra */
+  z-index: 10; /* più basso del menu */
 }
 
 @keyframes slideInFromRight {
@@ -2779,37 +2766,12 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 }
 
-/* Stili interni */
-.ultimi-articoli h2 {
-  font-family: 'Cormorant Garamond', serif;
-  margin-bottom: 15px;
-  font-size: 1.8em;
-  text-align: center;
-  color: goldenrod;
+nav,
+.menu-desktop,
+.mega-menu {
+  z-index: 100;
+  position: relative;
 }
-
-.ultimi-articoli ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.ultimi-articoli li {
-  margin: 10px 0;
-}
-
-.ultimi-articoli a {
-  text-decoration: none;
-  color: gold;
-  font-weight: 500;
-  transition: color 0.3s;
-}
-
-.ultimi-articoli a:hover {
-  color: #ffdd00;
-  text-decoration: underline;
-}
-</style>
 
 
   <!-- fine box ultimia rticoli  -->
