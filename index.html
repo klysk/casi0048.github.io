@@ -2757,28 +2757,28 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <style>
 .ultimi-articoli {
-  position: fixed;         /* Fisso in pagina */
-  top: 400px;             /* distanza verticale da cima */
-  left: 0;                /* parte dal bordo sinistro */
-  background: #111;
-  color: gold;
-  width: 350px;
+  position: fixed;
+  top: 400px;        /* distanza dall’alto */
+  right: 0;          /* agganciato a destra */
+  width: 300px;      /* o la larghezza che vuoi */
+  background: #222;
+  color: white;
   padding: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
   border-radius: 8px;
-  box-shadow: 0 0 20px #aa8e35;
-  z-index: 1000;          /* sopra altri elementi */
-  
-  transform: translateX(-100%);
+  transform: translateX(100%); /* parte fuori schermo a destra */
   opacity: 0;
-  animation: slideInFromLeft 1s forwards ease-out;
+  animation: slideInFromRight 1s forwards ease-out;
+  z-index: 1000;      /* per stare sopra */
 }
 
-@keyframes slideInFromLeft {
+@keyframes slideInFromRight {
   to {
     transform: translateX(0);
     opacity: 1;
   }
 }
+
 
 /* Stili interni */
 .ultimi-articoli h2 {
