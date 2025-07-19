@@ -2743,22 +2743,68 @@ document.addEventListener("DOMContentLoaded", function() {
   <!-- Tutto il contenuto già presente nel tuo <body> -->
 
   <!-- inizio Box Ultimi Articoli -->
+<div class="ultimi-articoli">
+  <h3>Ultimi Articoli</h3>
+  <ul>
+    <li><a href="articoli/articolo1.html">Il ritorno di Eraclito</a></li>
+    <li><a href="articoli/articolo2.html">Le ombre di Platone</a></li>
+    <li><a href="articoli/articolo3.html">Nietzsche e il divenire</a></li>
+    <li><a href="articoli/articolo4.html">Kant e lo spazio interiore</a></li>
+  </ul>
+</div>
+<style>
 .ultimi-articoli {
   position: fixed;
-  top: 400px;
-  right: 0;
+  top: 400px; /* distanza verticale dalla barra del menu */
+  right: 40px; /* distacco dal lato destro */
   width: 300px;
-  background: #222;
-  color: white;
+  background: rgba(20, 20, 30, 0.95); /* sfondo semi-trasparente coerente col sito */
+  color: #f0f0f0;
   padding: 20px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  border-radius: 8px;
-  transform: translateX(100%);
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  font-family: 'Georgia', serif;
+  z-index: 10; /* più basso del menu per non coprirlo */
+  transform: translateX(120%);
   opacity: 0;
-  animation: slideInFromRight 1s forwards ease-out;
-  z-index: 10; /* più basso del menu */
+  animation: slideInFromRight 1s ease-out forwards;
 }
 
+.ultimi-articoli h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: gold;
+  text-align: center;
+}
+
+.ultimi-articoli ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ultimi-articoli li {
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 6px;
+}
+
+.ultimi-articoli li:last-child {
+  border-bottom: none;
+}
+
+.ultimi-articoli a {
+  text-decoration: none;
+  color: #ddd;
+  transition: color 0.3s;
+}
+
+.ultimi-articoli a:hover {
+  color: gold;
+}
+
+/* ANIMAZIONE DA DESTRA */
 @keyframes slideInFromRight {
   to {
     transform: translateX(0);
@@ -2766,14 +2812,9 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 }
 
-nav,
-.menu-desktop,
-.mega-menu {
-  z-index: 100;
-  position: relative;
-}
 
-
+  </style>
+</style>
   <!-- fine box ultimia rticoli  -->
 <!--inizio script x megamenu -->
     
