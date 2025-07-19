@@ -2673,6 +2673,7 @@ document.addEventListener("DOMContentLoaded", function() {
     gap: 2.5rem;
     margin-bottom: 2rem;
 ">
+             
     <a href="https://casi0048.github.io/pagine/pagina%20CONTATTI.html"
        style="color: #d4af37; text-decoration: none; transition: all 0.3s ease; font-size: 0.9rem; letter-spacing: 1px;"
        onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Contatti</a>
@@ -2742,58 +2743,76 @@ document.addEventListener("DOMContentLoaded", function() {
   <!-- Tutto il contenuto già presente nel tuo <body> -->
 
   <!-- Box Ultimi Articoli -->
-  <div id="ultimi-articoli-box">
-    <h3>📝 Ultimi Articoli</h3>
-    <ul>
-      <li><a href="articoli/platonici.html">Il pensiero platonico</a></li>
-      <li><a href="articoli/presocratici.html">Presocratici: introduzione</a></li>
-      <li><a href="articoli/socrate_oscillante.html">Il metodo socratico</a></li>
-      <li><a href="articoli/talete.html">Talete e l’archè</a></li>
-    </ul>
-  </div>
+  <!-- Box Ultimi Articoli -->
+<section class="ultimi-articoli">
+  <h2>Ultimi Articoli</h2>
+  <ul>
+    <li><a href="articoli/tommaso-d'aquino.html">Tommaso d'Aquino</a></li>
+    <li><a href="articoli/kant.html">Immanuel Kant</a></li>
+    <li><a href="articoli/hegel.html">Georg W. F. Hegel</a></li>
+    <li><a href="articoli/nietzsche.html">Friedrich Nietzsche</a></li>
+    <li><a href="articoli/schopenhauer.html">Arthur Schopenhauer</a></li>
+    <li><a href="articoli/arendt.html">Hannah Arendt</a></li>
+  </ul>
+</section>
 
-  <style>
-   #ultimi-articoli-box {
-      position: fixed;
-      top: 400px;
-      right: 20px;
-      width: 220px;
-      background: rgba(15, 15, 25, 0.9);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 15px;
-      padding: 15px;
-      color: #fff;
-      z-index: 98;
-      box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    }
+<style>
+.ultimi-articoli {
+  background: #111;
+  color: gold;
+  max-width: 350px;
+  margin: 40px auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 20px #aa8e35;
+  
+  /* inizialmente spostato a sinistra fuori schermo */
+  transform: translateX(-100%);
+  opacity: 0;
+  
+  /* animazione per scivolare dentro */
+  animation: slideInFromLeft 1s forwards ease-out;
+}
 
-    #ultimi-articoli-box h3 {
-      font-size: 18px;
-      color: gold;
-      margin-bottom: 10px;
-    }
+.ultimi-articoli h2 {
+  font-family: 'Cormorant Garamond', serif;
+  margin-bottom: 15px;
+  font-size: 1.8em;
+  text-align: center;
+  color: goldenrod;
+}
 
-    #ultimi-articoli-box ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
+.ultimi-articoli ul {
+  list-style: none;
+  padding: 0;
+}
 
-    #ultimi-articoli-box li {
-      margin-bottom: 8px;
-    }
+.ultimi-articoli li {
+  margin: 10px 0;
+}
 
-    #ultimi-articoli-box a {
-      color: #fff;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
+.ultimi-articoli a {
+  text-decoration: none;
+  color: gold;
+  font-weight: 500;
+  transition: color 0.3s;
+}
 
-    #ultimi-articoli-box a:hover {
-      color: gold;
-    }
-  </style>
+.ultimi-articoli a:hover {
+  color: #ffdd00;
+  text-decoration: underline;
+}
+
+/* Keyframes animazione */
+@keyframes slideInFromLeft {
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+</style>
+
+  <!-- fine box ultimia rticoli  -->
 <!--inizio script x megamenu -->
     
 
