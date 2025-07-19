@@ -1,113 +1,102 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Menu Esempio Completo</title>
-<!-- Tutto il contenuto già presente nel tuo <head> -->
+  <title>Echi di Sofia - Filosofia attraverso i secoli</title>
+  <link rel="icon" type="image/png" href="favicon_io/favicon-32x32.png">
+
+  <!-- Google Fonts - Font più leggeri e moderni -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=EB+Garamond:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- GSAP per animazioni fluide -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/TextPlugin.min.js"></script>
 
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Echi di Sofia - Filosofia attraverso i secoli</title>
-    <link rel="icon" type="image/png" href="favicon_io/favicon-32x32.png">
-    
-    <!-- Google Fonts - Font più leggeri e moderni -->
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=EB+Garamond:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- GSAP per animazioni fluide -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/TextPlugin.min.js"></script>
-
-<!-- INIZIO AGGIUNTA PER MODIGFICA AREA CLICCABILE-->
-  <style>
-./* Migliora l'area cliccabile */
-.tab-btn {
+<style>
+  /* CORREZIONE AREA CLICCABILE MENU */
+  .menu-desktop > ul > li > a,
+  .menu-desktop > ul > li > button.menu-btn {
     position: relative;
-    padding: 12px 24px !important; /* Area più grande */
-    margin: 0 -1px !important; /* Sovrapposizione controllata */
-    z-index: 1;
+    padding: 15px 25px !important; /* Area più grande */
+    margin: 0 -5px !important; /* Sovrapposizione controllata */
+    z-index: 10;
     transition: all 0.2s;
-}
+  }
 
-/* Effetto hover su tutta l'area */
-.tab-btn:hover {
-    background-color: rgba(0, 0, 0, 0.05) !important;
-}
+  /* Aumenta area cliccabile con pseudo-elemento */
+  .menu-desktop > ul > li > a::after,
+  .menu-desktop > ul > li > button.menu-btn::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    z-index: -1;
+  }
 
-/* Stile attivo migliorato */
-.tab-btn.active {
+  /* Effetto hover su tutta l'area */
+  .menu-desktop > ul > li > a:hover,
+  .menu-desktop > ul > li > button.menu-btn:hover {
+    background-color: rgba(72, 102, 255, 0.8) !important;
+    color: white !important;
+  }
+
+  /* Stile attivo migliorato */
+  .menu-desktop > ul > li > a.active,
+  .menu-desktop > ul > li > button.menu-btn.active {
     font-weight: bold !important;
-    color: #0066cc !important;
-    background-color: white !important;
-    border-bottom: 3px solid #0066cc !important;
-}
+    color: #ffd700 !important;
+    border-bottom: 3px solid #ffd700 !important;
+  }
 
-/* Linea di connessione tra pulsanti */
-.tab-buttons {
+  /* CORREZIONE CSS ESISTENTE */
+  .dropdown {
     position: relative;
-}
+    padding-bottom: 5px; /* Crea area sicura per il passaggio del cursore */
+  }
 
-.tab-buttons::after {
+  .mega-menu {
+    top: calc(100% - 10px); /* Sovrappone leggermente il bottone padre */
+    left: 50%;
+    transform: translateX(-50%);
+    padding-top: 15px; /* Area di sicurezza superiore */
+  }
+
+  /* Aggiungi un pseudo-elemento invisibile per colmare il gap */
+  .dropdown::after {
     content: '';
     position: absolute;
     bottom: 0;
     left: 0;
-    right: 0;
-    height: 1px;
-    background-color: #ddd;
-    z-index: 0;
-}
-<!-- FINE AGGIUNTA PER MODIGFICA AREA CLICCABILE-->
-<style>
+    width: 100%;
+    height: 20px;
+    background: transparent;
+    z-index: 999;
+  }
 
-/* CORREZIONE CSS */
-.dropdown {
-  position: relative;
-  padding-bottom: 5px; /* Crea area sicura per il passaggio del cursore */
-}
+  /* Animazione più lenta */
+  .mega-menu {
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
 
-.mega-menu {
-  top: calc(100% - 10px); /* Sovrappone leggermente il bottone padre */
-  left: 50%;
-  transform: translateX(-50%);
-  padding-top: 15px; /* Area di sicurezza superiore */
-}
-
-/* Aggiungi un pseudo-elemento invisibile per colmare il gap */
-.dropdown::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 20px;
-  background: transparent;
-  z-index: 999;
-}
-
-/* Animazione più lenta */
-.mega-menu {
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-/* Mantieni visibile durante l'hover su tutto il dropdown */
-.dropdown:hover .mega-menu,
-.dropdown:focus-within .mega-menu,
-.mega-menu:hover {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  transform: translateX(-50%) translateY(0);
-}
+  /* Mantieni visibile durante l'hover su tutto il dropdown */
+  .dropdown:hover .mega-menu,
+  .dropdown:focus-within .mega-menu,
+  .mega-menu:hover {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
 </style>
 <style>
   /* Reset base */
@@ -183,7 +172,7 @@ nav.menu-desktop > ul > li > button.menu-btn {
   color: #e0e0e0;
   background: none;
   border: none;
-  font-size: 1rem;
+  font-size: 1.2rem;
   cursor: pointer;
   text-decoration: none;
   padding: 8px 12px;
@@ -378,7 +367,7 @@ body {
     display: flex;
     justify-content: center; /* Centra orizzontalmente */
     align-items: center;     /* Centra verticalmente */
-    padding: 10px;
+    padding: 7px;
     background: rgba(0, 0, 0, 0.5);
     gap: 10px; /* Distanza tra elementi */
 }
@@ -667,16 +656,8 @@ header {
   font-size: 1rem;
   letter-spacing: 0.5px;
 }
-<style>
-.mega-menu a {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: #e0e0e0;
-  text-decoration: none;
-  padding: 8px 12px;
-  transition: background 0.3s ease, transform 0.3s ease;
-}
+
+
 
 .mega-menu a::after {
   content: "→";
@@ -791,7 +772,7 @@ header {
 /* CAROSELLO CITAZIONI */
 .quotes-carousel {
     position: fixed;
-    top: 100px;
+    top: 80px;
     left: 0;
     width: 100%;
     background: rgba(10, 10, 30, 0.3);
@@ -804,7 +785,7 @@ header {
 }
 
 .quotes-carousel {
-    top: 100px; /* o anche meno, prova 80px, 90px, ecc. */
+    top: 120px; /* o anche meno, prova 80px, 90px, ecc. */
 }
 
 .quote-slide {
@@ -981,9 +962,11 @@ header {
   
 
 </head>
-  <!-- Inserisci qui i link, stili e script già esistenti -->
 
 <body>
+
+
+
  <!--    inizio slider verticale  -->
 <div class="slider-vertical">
   <div class="slider-inner">
@@ -1143,7 +1126,11 @@ header {
     font-size: 1.1rem;
     border-radius: 4px;
   ">
-    Loro hanno cambiato il paradigma
+   <h3 style="color: gold; font-family: 'Cormorant Garamond', serif; font-weight: 600; text-shadow: 0 0 8px #ffd700; display: flex; align-items: center; justify-content: center; gap: 8px;">
+  <span style="font-size: 0.8em;">🔽</span>
+  Loro hanno cambiato il paradigma
+  <span style="font-size: 0.8em;">🔽</span>
+</h3>
   </button>
 
   <!-- Overlay nascosto, posizionato subito sotto il bottone -->
@@ -1152,18 +1139,22 @@ header {
     position: absolute;
     top: 100%;
     left: 0;
-    margin-top: 5px;
+    margin-top: 25px;
     background: linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
     border-radius: 10px;
     max-width: 800px;
     width: 600px;
-    padding: 15px 20px;
+    padding: 15px 15px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     z-index: 1000;
   ">
-    <h3 style="color: #2a4b3a; margin-bottom: 20px; font-family: 'Cormorant Garamond', serif;">
-      I Filosofi che hanno cambiato il paradigma
-    </h3>
+ <h3 style="color: #2a4b3a; margin-bottom: 20px; font-family: 'Cormorant Garamond', serif;">
+  I Filosofi che hanno cambiato il paradigma
+  <span style="font-size: 1.5em; color: goldenrod;">▾</span>
+</h3>
+
+
+
     <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 51px;">
 
       <div style="text-align: center;">
@@ -1529,7 +1520,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <a href="articoli/rorty.html" role="menuitem">R.  Rorty </a>
           </div>
           <div>
-            <h4>Postmoderno</h4>
+            <h4>Filosofia postmoderna</h4>
            <a href="articoli/derrida.html" role="menuitem">Derrida </a>
             <a href="articoli/foucault.html" role="menuitem">Foucault</a>
 <a href="articoli/lyotard.html" role="menuitem">Lyotard</a>
@@ -2774,28 +2765,6 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 });
 </script>  
-  <!-- INIZIO AGGIUNTA PER MODIGFICA AREA CLICCABILE-->/
-// Sostituisci la tua funzione openTab con questa versione migliorata
-<script>
-  document.querySelectorAll('.dropdown').forEach(dropdown => {
-  const menu = dropdown.querySelector('.menu');
-  if (!menu) return; // ← Questo impedisce l'errore se manca .menu
-
-function openTab(tabName, event) {
-    event = event || window.event;
-    const tabs = document.querySelectorAll('.tab-content');
-    const buttons = document.querySelectorAll('.tab-btn');
-    
-    tabs.forEach(tab => tab.classList.remove('active'));
-    buttons.forEach(btn => btn.classList.remove('active'));
-    
-    document.getElementById(tabName).classList.add('active');
-    event.currentTarget.classList.add('active');
-    
-    // Blocca il comportamento predefinito per sicurezza
-    event.preventDefault();
-    return false;
-</script>
-<!-- FINE AGGIUNTA PER MODIGFICA AREA CLICCABILE-->
+ 
        </body>
 </html>
