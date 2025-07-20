@@ -1331,9 +1331,9 @@ header {
     border-radius: 4px;
   ">
    <h3 style="color: gold; font-family: 'Cormorant Garamond', serif; font-weight: 600; text-shadow: 0 0 8px #ffd700; display: flex; align-items: center; justify-content: center; gap: 8px;">
-  <span style="font-size: 0.8em;">🔬</span>
+  <span style="font-size: 0.8em;">🔥 </span>
   Loro hanno cambiato il paradigma
-  <span style="font-size: 0.8em;">⚖️</span>
+  <span style="font-size: 0.8em;">📌 </span>
 </h3>
   </button>
 
@@ -3040,44 +3040,45 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 <!-- inizio script per animare l'ingresso dei sottomenu-->
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".dropdown").forEach(dropdown => {
-    const menu = dropdown.querySelector(".mega-menu");
-
-    dropdown.addEventListener("mouseenter", () => {
-      gsap.to(menu, {
-        opacity: 1,
-        y: 0,
-        duration: 0.4,
-        ease: "power2.out",
-        visibility: "visible",
-        pointerEvents: "auto"
-      });
-    });
-
-    dropdown.addEventListener("mouseleave", () => {
-      gsap.to(menu, {
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const menu = document.querySelector(".menu-desktop");
+    if (menu) {
+      // Anima le voci principali del menu
+      gsap.from(menu.querySelectorAll("ul > li > .menu-btn"), {
         opacity: 0,
         y: 20,
-        duration: 0.3,
-        ease: "power2.in",
-        onComplete: () => {
-          menu.style.pointerEvents = "none";
-          menu.style.visibility = "hidden";
-        }
+        stagger: 0.1,
+        duration: 0.6,
+        ease: "power2.out",
+        delay: 0.5
       });
-    });
+
+      // (Opzionale) anima anche i link dei mega-menu dopo un altro piccolo ritardo
+      gsap.from(menu.querySelectorAll(".mega-menu a"), {
+        opacity: 0,
+        y: 10,
+        stagger: 0.05,
+        duration: 0.4,
+        ease: "power2.out",
+        delay: 1.2
+      });
+    } else {
+      console.warn("Menu non trovato!");
+    }
   });
-});
-gsap.from(menu.querySelectorAll("a"), {
+gsap.from(menu.querySelectorAll("ul > li > .menu-btn"), {
   opacity: 0,
-  y: 10,
-  stagger: 0.05,
-  duration: 0.4,
-  ease: "power2.out"
+  y: 20,
+  rotationX: 20,
+  stagger: 0.1,
+  duration: 0.6,
+  ease: "power2.out",
+  delay: 0.5
 });
 
 </script>
+
 
 <!-- fine script per animare l'ingresso dei sottomenu-->
 
