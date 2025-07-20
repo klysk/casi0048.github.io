@@ -2845,7 +2845,7 @@ document.addEventListener("DOMContentLoaded", function() {
   <!-- fine box ultimia rticoli  -->
 <!--inizio script x megamenu -->
     
-
+<!--
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   // MENU DROPDOWN UNIFICATO
@@ -2907,7 +2907,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
-
+-->
   // EFFETTO SCRITTURA LETTERA PER LETTERA CON CANCELLAZIONE
   const phrases = [
     "Pensare è ancora possibile.",
@@ -2953,6 +2953,51 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 });
 </script>  
- 
+ <script>
+document.addEventListener("DOMContentLoaded", () => {
+  // MENU DROPDOWN UNIFICATO
+  document.querySelectorAll(".dropdown").forEach(dropdown => {
+    const button = dropdown.querySelector(".menu-btn");
+    const menu = dropdown.querySelector(".mega-menu");
+    if (!button || !menu) return; // evita errori se uno dei due manca
+
+    let menuTimeout;
+
+    // Mostra il menu al passaggio del mouse
+    dropdown.addEventListener("mouseenter", () => {
+      clearTimeout(menuTimeout);
+      menu.style.display = "grid";
+      menu.style.opacity = "1";
+      menu.style.visibility = "visible";
+      menu.style.pointerEvents = "auto";
+    });
+
+    // Nasconde il menu quando il mouse esce
+    dropdown.addEventListener("mouseleave", (e) => {
+      if (!dropdown.contains(e.relatedTarget)) {
+        menuTimeout = setTimeout(() => {
+          menu.style.opacity = "0";
+          menu.style.visibility = "hidden";
+          menu.style.pointerEvents = "none";
+        }, 300);
+      }
+    });
+
+    // Previene la chiusura se il mouse rientra nel menu
+    menu.addEventListener("mouseenter", () => {
+      clearTimeout(menuTimeout);
+    });
+
+    menu.addEventListener("mouseleave", () => {
+      menuTimeout = setTimeout(() => {
+        menu.style.opacity = "0";
+        menu.style.visibility = "hidden";
+        menu.style.pointerEvents = "none";
+      }, 300);
+    });
+  });
+});
+</script>
+
        </body>
 </html>
