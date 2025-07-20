@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ipazia: La Luce di Alessandria</title>
+    <style>
+        /* Stile Base */
+        :root {
+            --primary-light: #6a1b9a;
+            --secondary-light: #ab47bc;
+            --accent-light: #7e57c2;
+            --text-light: #333;
+            --bg-light: #f5f5f5;
+            --card-light: #fff;
+
+            --primary-dark: #7b1fa2;
+            --secondary-dark: #ce93d8;
+            --accent-dark: #b39ddb;
+            --text-dark: #f5f5f5;
+            --bg-dark: #121212;
+            --card-dark: #1e1e1e;
+
+            --primary-philo: #3f51b5;
+            --secondary-philo: #7986cb;
+            --accent-philo: #9fa8da;
+            --text-philo: #212121;
+            --bg-philo: #e8eaf6;
+            --card-philo: #c5cae9;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            transition: all 0.5s ease;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Palatino Linotype', 'Book Antiqua', serif;
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            position: relative;
+        }
+
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 3px;
+        }
+
+        /* Stili Tematici */
+        .light-theme {
+            --primary: var(--primary-light);
+            --secondary: var(--secondary-light);
+            --accent: var(--accent-light);
+            --text: var(--text-light);
+            --bg: var(--bg-light);
+            --card: var(--card-light);
+            background-color: var(--bg);
+            color: var(--text);
+        }
+
+        .dark-theme {
+            --primary: var(--primary-dark);
+            --secondary: var(--secondary-dark);
+            --accent: var(--accent-dark);
+            --text: var(--text-dark);
+            --bg: var(--bg-dark);
+            --card: var(--card-dark);
+            background-color: var(--bg);
+            color: var(--text);
+        }
+
+        .philo-theme {
+            --primary: var(--primary-philo);
+            --secondary: var(--secondary-philo);
+            --accent: var(--accent-philo);
+            --text: var(--text-philo);
+            --bg: var(--bg-philo);
+            --card: var(--card-philo);
+            background-color: var(--bg);
+            color: var(--text);
+        }
+
+        /* Applica stile selezionato */
+        body.light-theme h1:after {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        body.dark-theme h1:after {
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+        }
+
+        body.philo-theme h1:after {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        /* Sezioni e Bottoni */
+        .section {
+            background-color: var(--card);
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .toggle-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 1.3rem 2rem;
+            font-family: 'Palatino Linotype', serif;
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .toggle-btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .toggle-btn:hover:before {
+            left: 100%;
+        }
+
+        .toggle-btn:after {
+            content: '+';
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-btn.active:after {
+            content: '-';
+        }
+
+        .content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .content-inner {
+            padding: 0 2rem;
+        }
+
+        .content.active {
+            max-height: 2000px;
+            padding: 1.5rem 2rem;
+        }
+
+        /* Elementi di Contenuto */
+        .quote {
+            background: rgba(0,0,0,0.05);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            position: relative;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .dark-theme .quote {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .quote:before {
+            content: '"';
+            font-size: 4rem;
+            position: absolute;
+            left: 0.5rem;
+            top: -1rem;
+            opacity: 0.2;
+            line-height: 1;
+        }
+
+        .highlight {
+            background-color: rgba(0,0,0,0.1);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .dark-theme .highlight {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        /* Toggle Stili */
+        .style-selector {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+        }
+
+        .style-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .light-btn {
+            background-color: var(--primary-light);
+            color: white;
+        }
+
+        .dark-btn {
+            background-color: var(--primary-dark);
+            color: white;
+        }
+
+        .philo-btn {
+            background-color: var(--primary-philo);
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .toggle-btn {
+                padding: 1rem 1.5rem;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body class="light-theme">
+    <div class="container">
+        <div class="style-selector">
+            <button class="style-btn light-btn" onclick="setTheme('light')">Classico</button>
+            <button class="style-btn dark-btn" onclick="setTheme('dark')">Notte Stellata</button>
+            <button class="style-btn philo-btn" onclick="setTheme('philo')">Accademia</button>
+        </div>
+
+        <h1>Ipazia di Alessandria</h1>
+        <h2 style="text-align: center; color: var(--secondary); margin-top: -1.5rem;">La Filosofa che Illuminò il Mondo Antico</h2>
+        
+        <div class="section">
+            <button class="toggle-btn">🏛️ Vita e Contesto Storico</button>
+            <div class="content">
+                <div class="content-inner">
+                    <p><strong>Ipazia</strong> (370-415 d.C.) fu una matematica, astronoma e filosofa neoplatonica che visse e insegnò ad Alessandria d'Egitto, allora parte dell'Impero Romano d'Oriente. Figlia del matematico <span class="highlight">Teone di Alessandria</span>, ricevette un'educazione eccezionale per una donna del suo tempo.</p>
+                    
+                    <h3>Il Mondo di Ipazia:</h3>
+                    <ul>
+                        <li>Alessandria: centro culturale del mondo antico con la sua famosa Biblioteca</li>
+                        <li>Periodo di transizione tra paganesimo e cristianesimo</li>
+                        <li>Tensioni tra scienza, filosofia e religione</li>
+                    </ul>
+                    
+                    <div class="quote">
+                        "Rivestì il mantello dei filosofi e si fece avanti in mezzo alla città, spiegando pubblicamente a chiunque volesse ascoltarla le opere di Platone, Aristotele o di qualsiasi altro filosofo."
+                        <br>- Socrate Scolastico
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <button class="toggle-btn">🔬 Contributi Scientifici</button>
+            <div class="content">
+                <div class="content-inner">
+                    <p>Ipazia eccelse in molte discipline scientifiche, lasciando un'impronta indelebile nella storia del pensiero:</p>
+                    
+                    <h3>Matematica:</h3>
+                    <ul>
+                        <li>Commentò e migliorò l'<span class="highlight">Aritmetica</span> di Diofanto</li>
+                        <li>Lavorò sulle <span class="highlight">sezioni coniche</span> di Apollonio</li>
+                        <li>Sviluppò nuovi metodi di calcolo</li>
+                    </ul>
+                    
+                    <h3>Astronomia:</h3>
+                    <ul>
+                        <li>Progettò un <span class="highlight">astrolabio</span> perfezionato</li>
+                        <li>Creò un <span class="highlight">planisfero</span> per calcoli celesti</li>
+                        <li>Scrisse commentari sull'opera astronomica di Tolomeo</li>
+                    </ul>
+                    
+                    <div class="quote">
+                        "La geometria è conoscenza di ciò che sempre è. Collega l'anima alla verità e produce un pensiero filosofico."
+                        <br>- Ipazia (attribuito)
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <button class="toggle-btn">🧠 Filosofia Neoplatonica</button>
+            <div class="content">
+                <div class="content-inner">
+                    <p>Come capo della scuola neoplatonica di Alessandria, Ipazia sviluppò una filosofia che univa ragione e spiritualità:</p>
+                    
+                    <h3>Principi Fondamentali:</h3>
+                    <ol>
+                        <li><strong>L'Uno</strong> - Realtà ultima e ineffabile</li>
+                        <li><strong>L'Intelletto Divino</strong> (Nous) - Contiene le Forme Platoniche</li>
+                        <li><strong>L'Anima del Mondo</strong> - Media tra intelligibile e sensibile</li>
+                    </ol>
+                    
+                    <h3>Metodo Filosofico:</h3>
+                    <ul>
+                        <li>Approccio razionale alla verità</li>
+                        <li>Dialogo socratico come strumento didattico</li>
+                        <li>Sintesi tra matematica e metafisica</li>
+                    </ul>
+                    
+                    <div class="quote">
+                        "Tutto ciò che è oscuro può essere illuminato dalla luce della ragione. Conservate il vostro diritto a pensare, perché anche pensare erroneamente è meglio che non pensare affatto."
+                        <br>- Ipazia (attribuito)
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <button class="toggle-btn">🔥 Morte e Leggenda</button>
+            <div class="content">
+                <div class="content-inner">
+                    <p>La tragica fine di Ipazia divenne simbolo del conflitto tra ragione e fanatismo:</p>
+                    
+                    <h3>Gli Eventi:</h3>
+                    <ul>
+                        <li>Marzo 415 d.C.: assassinata da una folla di fanatici cristiani</li>
+                        <li>Coinvolgimento del vescovo Cirillo (mai provato storicamente)</li>
+                        <li>Morte brutale: lapidata e smembrata</li>
+                    </ul>
+                    
+                    <h3>Eredità:</h3>
+                    <ol>
+                        <li>Martire della libertà di pensiero</li>
+                        <li>Icona femminista ante litteram</li>
+                        <li>Simbolo della scienza perseguitata</li>
+                    </ol>
+                    
+                    <div class="quote">
+                        "La sua morte segnò il declino di Alessandria come centro del sapere. Con lei morì non solo una filosofa, ma lo spirito stesso della libera ricerca."
+                        <br>- Edward Gibbon
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <button class="toggle-btn">📚 Influenza Storica</button>
+            <div class="content">
+                <div class="content-inner">
+                    <p>L'impatto di Ipazia si estende ben oltre la sua vita terrena:</p>
+                    
+                    <h3>Nella Cultura:</h3>
+                    <ul>
+                        <li>Ispirò opere letterarie (es. "Hypatia" di Charles Kingsley)</li>
+                        <li>Protagonista di film e documentari</li>
+                        <li>Menzionata in opere di Carl Sagan e Umberto Eco</li>
+                    </ul>
+                    
+                    <h3>Nella Scienza Moderna:</h3>
+                    <ul>
+                        <li>Crateri lunari e asteroidi a suo nome</li>
+                        <li>Premi e borse di studio intitolate a lei</li>
+                        <li>Icona per le donne nella scienza</li>
+                    </ul>
+                    
+                    <div class="quote">
+                        "Ricordare Ipazia significa ricordare ciò che perdiamo quando la superstizione e l'intolleranza prevalgono sulla ragione e sull'inclusione."
+                        <br>- Maria Dzielska
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer style="text-align: center; margin-top: 3rem; padding: 2rem; border-top: 1px solid var(--secondary); opacity: 0.8;">
+            <p>«Conosci te stesso e conoscerai l'universo»</p>
+            <p>© 2023 - Tributo a Ipazia di Alessandria</p>
+        </footer>
+    </div>
+
+    <script>
+        // Gestione Toggle Sezioni
+        document.querySelectorAll('.toggle-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                button.classList.toggle('active');
+                content.classList.toggle('active');
+            });
+        });
+        
+        // Apri prima sezione
+        document.querySelector('.toggle-btn').click();
+        
+        // Cambio Tema
+        function setTheme(theme) {
+            document.body.className = theme + '-theme';
+            
+            // Aggiorna stile titolo
+            const h1 = document.querySelector('h1');
+            if (theme === 'dark') {
+                h1.style.textShadow = '0 0 10px rgba(206, 147, 216, 0.5)';
+            } else {
+                h1.style.textShadow = 'none';
+            }
+        }
+        
+        // Effetto Parallax per sfondo (solo tema dark)
+        function updateParallax() {
+            if (document.body.classList.contains('dark-theme')) {
+                const yPos = window.scrollY;
+                document.body.style.backgroundPosition = 'center ' + (yPos * 0.5) + 'px';
+            }
+        }
+        
+        window.addEventListener('scroll', updateParallax);
+    </script>
+</body>
+</html>
