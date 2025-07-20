@@ -27,6 +27,26 @@
 
 
 <style>
+<!--inizio base per fluidità e visibilità-->
+.mega-menu {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+  position: absolute;
+  background: rgba(20, 20, 40, 0.95);
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(255,255,255,0.1);
+  display: grid;
+  gap: 0.5rem;
+}
+.dropdown:hover .mega-menu {
+  pointer-events: auto;
+}
+
+<!--fine base per fluidità e visibilità-->
   /* CORREZIONE AREA CLICCABILE MENU */
   .menu-desktop > ul > li > a,
   .menu-desktop > ul > li > button.menu-btn {
@@ -1013,7 +1033,27 @@ header {
 </style>
   </head>
 <body>
+<!--  inizio aggiunta per far apparire le voci in sequenza con effetto elegante e fluido-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Seleziona tutte le voci di menu (aggiusta il selettore al tuo markup)
+    const menuItems = document.querySelectorAll(".menu-desktop > ul > li");
 
+    // Applica animazione GSAP con ritardo incrementale
+    menuItems.forEach((item, index) => {
+      gsap.from(item, {
+        opacity: 0,
+        y: -20,
+        duration: 0.6,
+        delay: index * 0.1, // ritardo progressivo
+        ease: "power2.out"
+      });
+    });
+  });
+</script>
+
+<!--  fine aggiunta per far apparire le voci in sequenza con effetto elegante e fluido-->
 <!-- inizio slider verticale -->
 <div class="slider-vertical">
   <div class="slider-inner">
@@ -2998,6 +3038,48 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+<!-- inizio script per animare l'ingresso dei sottomenu-->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".dropdown").forEach(dropdown => {
+    const menu = dropdown.querySelector(".mega-menu");
+
+    dropdown.addEventListener("mouseenter", () => {
+      gsap.to(menu, {
+        opacity: 1,
+        y: 0,
+        duration: 0.4,
+        ease: "power2.out",
+        visibility: "visible",
+        pointerEvents: "auto"
+      });
+    });
+
+    dropdown.addEventListener("mouseleave", () => {
+      gsap.to(menu, {
+        opacity: 0,
+        y: 20,
+        duration: 0.3,
+        ease: "power2.in",
+        onComplete: () => {
+          menu.style.pointerEvents = "none";
+          menu.style.visibility = "hidden";
+        }
+      });
+    });
+  });
+});
+gsap.from(menu.querySelectorAll("a"), {
+  opacity: 0,
+  y: 10,
+  stagger: 0.05,
+  duration: 0.4,
+  ease: "power2.out"
+});
+
+</script>
+
+<!-- fine script per animare l'ingresso dei sottomenu-->
 
        </body>
 </html>
