@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G.E. Moore: Filosofia del Senso Comune</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Open+Sans:wght@400;600&display=swap');
+        
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Merriweather', serif;
+            color: var(--primary);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 3px solid var(--secondary);
+            padding-bottom: 1rem;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .toggle-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            padding: 1.2rem 1.5rem;
+            font-family: 'Merriweather', serif;
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .toggle-btn:hover {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+        }
+        
+        .toggle-btn:after {
+            content: '+';
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .toggle-btn.active:after {
+            content: '-';
+        }
+        
+        .content {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.3s ease;
+        }
+        
+        .content-inner {
+            padding: 1.5rem 0;
+        }
+        
+        .quote {
+            background: rgba(52, 152, 219, 0.1);
+            border-left: 4px solid var(--secondary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            position: relative;
+        }
+        
+        .quote:before {
+            content: '"';
+            font-size: 4rem;
+            position: absolute;
+            left: 0.5rem;
+            top: -1rem;
+            opacity: 0.2;
+            line-height: 1;
+        }
+        
+        .highlight {
+            background: rgba(231, 76, 60, 0.1);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            border-top: 1px solid #ddd;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>G.E. Moore: Il Filosofo del Senso Comune</h1>
+        
+        <div class="section">
+            <button class="toggle-btn">📜 Vita e Opere</button>
+            <div class="content">
+                <div class="content-inner">
+                    <p><strong>George Edward Moore (1873-1958)</strong> è stato uno dei più influenti filosofi analitici del XX secolo. Nato a Londra, studiò e insegnò a Cambridge, dove divenne collega di <span class="highlight">Bertrand Russell</span> e <span class="highlight">Ludwig Wittgenstein</span>.</p>
+                    
+                    <h3>Opere Principali:</h3>
+                    <ul>
+                        <li><em>Principia Ethica</em> (1903) - Fondamento dell'etica non-naturalista</li>
+                        <li><em>Philosophical Studies</em> (1922) - Raccolta di saggi</li>
+                        <li><em>Some Main Problems of Philosophy</em> (1953) - Esposizione del suo metodo</li>
+                    </ul>
+                    
+                    <div class="quote">
+                        "Se mi chiedessero 'Cos'è il bene?', risponderei che il bene è il bene, e questo è tutto ciò che posso dire."
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <button class="toggle-btn">🔍 La Difesa del Senso Comune</button>
+            <div class="content">
+                <div class="content-inner">
+                    <p>Moore è celebre per la sua <span class="highlight">difesa del senso comune</span> contro lo scetticismo e l'idealismo. Nel saggio <em>A Defence of Common Sense</em> (1925), elenca proposizioni che considera indubitabili:</p>
+                    
+                    <ol>
+                        <li>Esiste un mondo esterno</li>
+                        <li>Gli oggetti fisici esistono indipendentemente dalla nostra percezione</li>
+                        <li>Io ho un corpo che è nato in un certo momento e morirà</li>
+                    </ol>
+                    
+                    <p>La sua famosa <strong>"prova delle due mani"</strong> contro l'idealismo:</p>
+                    
+                    <div class="quote">
+                        "Ecco una mano [alzando la mano destra], ed eccone un'altra [alzando la sinistra]. Dunque, esistono almeno due oggetti esterni nel mondo. Pertanto, l'idealismo è falso."
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <button class="toggle-btn">⚖️ Etica: Principia Ethica</button>
+            <div class="content">
+                <div class="content-inner">
+                    <p>In <em>Principia Ethica</em>, Moore sviluppa la sua teoria etica basata sull'<span class="highlight">intuizionismo</span> e la <span class="highlight">fallacia naturalistica</span>.</p>
+                    
+                    <h3>Punti Chiave:</h3>
+                    <ul>
+                        <li><strong>Il bene è indefinibile</strong> - È una nozione semplice e non analizzabile</li>
+                        <li><strong>Fallacia naturalistica</strong> - Errore di identificare il bene con proprietà naturali</li>
+                        <li><strong>Intuizionismo</strong> - Conosciamo il bene attraverso l'intuizione</li>
+                    </ul>
+                    
+                    <div class="quote">
+                        "Il bene è una nozione semplice, proprio come 'giallo' è una nozione semplice; come non puoi spiegare a chiunque non lo sappia già che cos'è il giallo, così non puoi spiegare che cos'è il bene."
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <button class="toggle-btn">🔬 Metodo Filosofico</button>
+            <div class="content">
+                <div class="content-inner">
+                    <p>Moore rivoluzionò il metodo filosofico con il suo approccio <span class="highlight">analitico</span> e <span class="highlight">chiarificatore</span>:</p>
+                    
+                    <h3>Caratteristiche del Metodo Mooreano:</h3>
+                    <ol>
+                        <li><strong>Analisi concettuale</strong> - Scomposizione delle idee complesse</li>
+                        <li><strong>Chiarezza linguistica</strong> - Attenzione al linguaggio ordinario</li>
+                        <li><strong>Argomentazione dettagliata</strong> - Confutazione punto per punto</li>
+                    </ol>
+                    
+                    <p>La sua influenza sul <span class="highlight">neorealismo</span> e la <span class="highlight">filosofia analitica</span> fu enorme, ponendo le basi per il lavoro di filosofi successivi come Wittgenstein e Austin.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <button class="toggle-btn">💡 Eredità e Critiche</button>
+            <div class="content">
+                <div class="content-inner">
+                    <h3>Influenza:</h3>
+                    <ul>
+                        <li>Fondamento della filosofia analitica</li>
+                        <li>Ispirazione per il neorealismo</li>
+                        <li>Anticipazione della filosofia del linguaggio ordinario</li>
+                    </ul>
+                    
+                    <h3>Critiche:</h3>
+                    <ul>
+                        <li>Accusa di <span class="highlight">banalità</span> (Russell)</li>
+                        <li>Difficoltà nel fondare l'etica sull'intuizione</li>
+                        <li>Limiti del metodo analitico</li>
+                    </ul>
+                    
+                    <div class="quote">
+                        "Moore ci ha insegnato che il compito della filosofia non è risolvere problemi, ma dissolverli mostrando che nascono da incomprensioni linguistiche."
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 Filosofia Analitica | Articolo su G.E. Moore</p>
+        </footer>
+    </div>
+
+    <script>
+        document.querySelectorAll('.toggle-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                button.classList.toggle('active');
+                
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                    content.style.padding = '0 1.5rem';
+                } else {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    content.style.padding = '0 1.5rem';
+                    setTimeout(() => {
+                        content.style.padding = '0 1.5rem 1.5rem';
+                    }, 10);
+                }
+            });
+        });
+        
+        // Apri la prima sezione
+        document.querySelector('.toggle-btn').click();
+    </script>
+</body>
+</html>
