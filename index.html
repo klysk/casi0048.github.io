@@ -27,27 +27,7 @@
 
 
 <style>
-<!--inizio base per fluidità e visibilità-->
-.mega-menu {
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(20px);
-  transition: all 0.3s ease;
-  pointer-events: none;
-  position: absolute;
-  background: rgba(20, 20, 40, 0.95);
-  padding: 1rem;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(255,255,255,0.1);
-  display: grid;
-  gap: 0.5rem;
-}
-.dropdown:hover .mega-menu {
-  pointer-events: auto;
-}
-
-<!--fine base per fluidità e visibilità-->
-  /* CORREZIONE AREA CLICCABILE MENU */
+  /* CORREZIONE AREA CLICCABILE a href="" role="menuitem">Massimo Cacciari </a>*/
   .menu-desktop > ul > li > a,
   .menu-desktop > ul > li > button.menu-btn {
     position: relative;
@@ -186,6 +166,7 @@ nav.menu-desktop {
     gap: 5px;
   }
 
+
   nav.menu-desktop > ul > li > a:hover,
   nav.menu-desktop > ul > li > button.menu-btn:hover,
   nav.menu-desktop > ul > li > a:focus,
@@ -292,7 +273,7 @@ nav {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
-  
+ 
   /* Initial hidden state */
   opacity: 0;
   visibility: hidden;
@@ -407,6 +388,34 @@ nav {
 }
 
 <!--  fine restringimento colonne submenu-->
+.mega-menu {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(180px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  background: #0b0b2a;
+  border: 1px solid gold;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 9999;
+}
+
+/* Limite di altezza SOLO per le colonne lunghe */
+.mega-menu .column {
+  max-height: 350px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+/* Scrollbar elegante */
+.mega-menu .column::-webkit-scrollbar {
+  width: 6px;
+}
+.mega-menu .column::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
 
  
   * { 
@@ -629,6 +638,16 @@ header {
     text-decoration: none;
     transition: all 0.3s ease-out;
     display: inline-block;
+}
+
+
+/* Per una scrollbar più elegante */
+.mega-menu::-webkit-scrollbar {
+  width: 6px;
+}
+.mega-menu::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 3px;
 }
 
 .menu-btn:hover,
@@ -1033,27 +1052,7 @@ header {
 </style>
   </head>
 <body>
-<!--  inizio aggiunta per far apparire le voci in sequenza con effetto elegante e fluido-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    // Seleziona tutte le voci di menu (aggiusta il selettore al tuo markup)
-    const menuItems = document.querySelectorAll(".menu-desktop > ul > li");
 
-    // Applica animazione GSAP con ritardo incrementale
-    menuItems.forEach((item, index) => {
-      gsap.from(item, {
-        opacity: 0,
-        y: -20,
-        duration: 0.6,
-        delay: index * 0.1, // ritardo progressivo
-        ease: "power2.out"
-      });
-    });
-  });
-</script>
-
-<!--  fine aggiunta per far apparire le voci in sequenza con effetto elegante e fluido-->
 <!-- inizio slider verticale -->
 <div class="slider-vertical">
   <div class="slider-inner">
@@ -1100,7 +1099,7 @@ header {
 
     <div class="slide-vertical">
       <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Livia.jpeg" alt="Livia">
-      <p>⚖️Livia dea egizia🏛️</p>
+      <p>Livia dea egizia</p>
     </div>
 
     <div class="slide-vertical">
@@ -1110,7 +1109,7 @@ header {
 
     <div class="slide-vertical">
       <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/vattimo.png" alt="Vattimo">
-      <p>Gianni Vattimo</p>
+      <p>Vattimo</p>
     </div>
 
     <div class="slide-vertical">
@@ -1331,9 +1330,9 @@ header {
     border-radius: 4px;
   ">
    <h3 style="color: gold; font-family: 'Cormorant Garamond', serif; font-weight: 600; text-shadow: 0 0 8px #ffd700; display: flex; align-items: center; justify-content: center; gap: 8px;">
-  <span style="font-size: 0.8em;">🔥 </span>
+  <span style="font-size: 0.6em;">🔽</span>
   Loro hanno cambiato il paradigma
-  <span style="font-size: 0.8em;">📌 </span>
+  <span style="font-size: 0.6em;">🔽</span>
 </h3>
   </button>
 
@@ -1611,7 +1610,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <h4>Platonismo</h4>
             <a href="articoli/senofonte.html" role="menuitem">Senofonte</a>
             <a href="articoli/antistene.html" role="menuitem">Antistene</a>
-            <a href="articoli/aristippo.html" role="menuitem">Aristippo</a>
+            <a href="#" role="menuitem">Aristippo</a>
           </div>
           <div>
             <h4>Stoicismo</h4>
@@ -1693,6 +1692,17 @@ document.addEventListener("DOMContentLoaded", function() {
             <a href="articoli/schelling.html" role="menuitem">Schelling</a>
             
           </div>
+<div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia contemporanea">
+          <div>
+            <h4>Filosofia russa</h4>
+<a href="articoli/dostoevskij.html" role="menuitem">Fëdor Dostoevskij</a>
+<a href="articoli/solov'%C3%ABv.html" role="menuitem">Vladimir Solov'ëv </a>
+<a href="articoli/rozanov.html" role="menuitem">Vasilij Rozanov </a>
+<a href="articoli/sestov.html" role="menuitem">Lev Šestov</a>
+<a href="articoli/bulgakov.html" role="menuitem">Sergej Bulgakov</a>
+
+        </div>
+ 
         </div>
       </li>
       <li class="dropdown">
@@ -1732,20 +1742,28 @@ document.addEventListener("DOMContentLoaded", function() {
 <a href="articoli/deleuze.html" role="menuitem">Deleuze</a>
 <a href="articoli/butler.html" role="menuitem">Butler</a>
           </div>
-        </div>
-      </li>
-      <li class="dropdown">
-       <a href="https://casi0048.github.io/pagine/pagina%20contatti.html" class="menu-btn underline-effect" role="menuitem">
-  Contatti
-</a>
+<div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia contemporanea">
+          <div>
 
-        
-        </a>
-      </li>
-    </ul>
-  </nav>
+           <h4>Filosofia italiana</h4>
+<a href="articoli/severino.html" role="menuitem">Emmanuele Severino</a>
+<a href="articoli/eco.html" role="menuitem">Umberto Eco</a>
+<a href="articoli/vattimo.html
+" role="menuitem">Gianni Vattimo </a>
+<a href="articoli/bodei.html" role="menuitem">Remo Bodei</a>
+<a href="articoli/cacciari.html" role="menuitem">Massimo Cacciari </a>
+<a href="articoli/galimberti.html" role="menuitem">Umberto Galimberti</a>
+
+
+      </div>
+    </div>
 </div>
-   
+<li class="dropdown">
+  <a href="https://casi0048.github.io/pagine/pagina%20contatti.html"
+     class="menu-btn underline-effect" role="menuitem">
+     Contatti
+  </a>
+</li>
                         <!-- Altre sezioni -->
                         <!-- Altre sezioni -->
 
@@ -2786,7 +2804,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
       tl.to(".welcome-subtitle", {
         duration: 4,
-        text: "Φ Il vuoto è pieno di domande... ♾️ ",
+        text: "Φ Il vuoto è pieno di domande...Φ",
         ease: "none",
       }, 0)
 
@@ -2885,7 +2903,7 @@ document.addEventListener("DOMContentLoaded", function() {
   <!-- fine box ultimia rticoli  -->
 <!--inizio script x megamenu -->
     
-<!--
+
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   // MENU DROPDOWN UNIFICATO
@@ -2947,7 +2965,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
--->
+
   // EFFETTO SCRITTURA LETTERA PER LETTERA CON CANCELLAZIONE
   const phrases = [
     "Pensare è ancora possibile.",
@@ -2993,94 +3011,6 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 });
 </script>  
- <script>
-document.addEventListener("DOMContentLoaded", () => {
-  // MENU DROPDOWN UNIFICATO
-  document.querySelectorAll(".dropdown").forEach(dropdown => {
-    const button = dropdown.querySelector(".menu-btn");
-    const menu = dropdown.querySelector(".mega-menu");
-    if (!button || !menu) return; // evita errori se uno dei due manca
-
-    let menuTimeout;
-
-    // Mostra il menu al passaggio del mouse
-    dropdown.addEventListener("mouseenter", () => {
-      clearTimeout(menuTimeout);
-      menu.style.display = "grid";
-      menu.style.opacity = "1";
-      menu.style.visibility = "visible";
-      menu.style.pointerEvents = "auto";
-    });
-
-    // Nasconde il menu quando il mouse esce
-    dropdown.addEventListener("mouseleave", (e) => {
-      if (!dropdown.contains(e.relatedTarget)) {
-        menuTimeout = setTimeout(() => {
-          menu.style.opacity = "0";
-          menu.style.visibility = "hidden";
-          menu.style.pointerEvents = "none";
-        }, 300);
-      }
-    });
-
-    // Previene la chiusura se il mouse rientra nel menu
-    menu.addEventListener("mouseenter", () => {
-      clearTimeout(menuTimeout);
-    });
-
-    menu.addEventListener("mouseleave", () => {
-      menuTimeout = setTimeout(() => {
-        menu.style.opacity = "0";
-        menu.style.visibility = "hidden";
-        menu.style.pointerEvents = "none";
-      }, 300);
-    });
-  });
-});
-</script>
-<!-- inizio script per animare l'ingresso dei sottomenu-->
-<script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const menu = document.querySelector(".menu-desktop");
-    if (menu) {
-      // Anima le voci principali del menu
-      gsap.from(menu.querySelectorAll("ul > li > .menu-btn"), {
-        opacity: 0,
-        y: 20,
-        stagger: 0.1,
-        duration: 0.6,
-        ease: "power2.out",
-        delay: 0.5
-      });
-
-      // (Opzionale) anima anche i link dei mega-menu dopo un altro piccolo ritardo
-      gsap.from(menu.querySelectorAll(".mega-menu a"), {
-        opacity: 0,
-        y: 10,
-        stagger: 0.05,
-        duration: 0.4,
-        ease: "power2.out",
-        delay: 1.2
-      });
-    } else {
-      console.warn("Menu non trovato!");
-    }
-  });
-gsap.from(menu.querySelectorAll("ul > li > .menu-btn"), {
-  opacity: 0,
-  y: 20,
-  rotationX: 20,
-  stagger: 0.1,
-  duration: 0.6,
-  ease: "power2.out",
-  delay: 0.5
-});
-
-</script>
-
-
-<!-- fine script per animare l'ingresso dei sottomenu-->
-
+ 
        </body>
 </html>
