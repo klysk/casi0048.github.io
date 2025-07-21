@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rozanov: Il Filosofo dell'Intimità</title>
+    <style>
+        /* Font e variabili */
+        @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700&family=Cormorant+Garamond:wght@600&family=Open+Sans:wght@400;600&family=UnifrakturMaguntia&display=swap');
+        
+        :root {
+            /* Tema Letterario (default) */
+            --lit-bg: #f8f4e9;
+            --lit-text: #3a3226;
+            --lit-primary: #8b5a2b;
+            --lit-secondary: #c19a6b;
+            --lit-accent: #6b4f3a;
+            --lit-card: #fffcf5;
+            --lit-font: 'Cormorant Garamond', serif;
+            
+            /* Tema Notturno */
+            --night-bg: #0a0a12;
+            --night-text: #e0d7c3;
+            --night-primary: #c19a6b;
+            --night-secondary: #8b5a2b;
+            --night-accent: #d4af37;
+            --night-card: #1a1a2e;
+            --night-font: 'EB Garamond', serif;
+            
+            /* Tema Avanguardia */
+            --avant-bg: #121212;
+            --avant-text: #e0e0e0;
+            --avant-primary: #ff5555;
+            --avant-secondary: #55ffff;
+            --avant-accent: #ffff55;
+            --avant-card: #222222;
+            --avant-font: 'Open Sans', sans-serif;
+            
+            /* Tema Manoscritto */
+            --manus-bg: #f0e6d2;
+            --manus-text: #3a3226;
+            --manus-primary: #6b4f3a;
+            --manus-secondary: #8b5a2b;
+            --manus-accent: #5c3b21;
+            --manus-card: #f8f4e9;
+            --manus-font: 'UnifrakturMaguntia', cursive;
+            
+            /* Variabili correnti */
+            --current-bg: var(--lit-bg);
+            --current-text: var(--lit-text);
+            --current-primary: var(--lit-primary);
+            --current-secondary: var(--lit-secondary);
+            --current-accent: var(--lit-accent);
+            --current-card: var(--lit-card);
+            --current-font: var(--lit-font);
+        }
+        
+        body {
+            font-family: var(--current-font);
+            background-color: var(--current-bg);
+            color: var(--current-text);
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            transition: all 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+            background-image: url('https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            background-blend-mode: overlay;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 4rem auto;
+            padding: 3rem;
+            background-color: var(--current-card);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            border-radius: 16px;
+            transition: all 0.7s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(139,69,19,0.05) 0%, rgba(0,0,0,0) 100%);
+            z-index: 0;
+        }
+        
+        h1, h2, h3 {
+            font-family: var(--current-font);
+            color: var(--current-primary);
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            animation: fadeInDown 1.2s ease;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 250px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--current-accent), transparent);
+            border-radius: 3px;
+        }
+        
+        /* Sezioni avanzate */
+        .section {
+            margin-bottom: 3rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            z-index: 1;
+            background-color: var(--current-card);
+            animation: fadeIn 0.8s ease;
+        }
+        
+        .section:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Bottoni rivoluzionari */
+        .toggle-btn {
+            background: linear-gradient(135deg, var(--current-primary), var(--current-secondary));
+            color: white;
+            border: none;
+            padding: 1.8rem 2.5rem;
+            font-family: var(--current-font);
+            font-size: 1.4rem;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .toggle-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.6s;
+        }
+        
+        .toggle-btn:hover::before {
+            left: 100%;
+        }
+        
+        .toggle-btn::after {
+            content: '↓';
+            font-size: 1.8rem;
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transform-origin: center;
+        }
+        
+        .toggle-btn.active::after {
+            content: '↑';
+            transform: rotate(180deg);
+        }
+        
+        /* Contenuto animato */
+        .content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 1s cubic-bezier(0.65, 0, 0.35, 1), padding 0.7s ease;
+            background-color: var(--current-card);
+        }
+        
+        .content-inner {
+            padding: 0 3rem;
+            position: relative;
+        }
+        
+        .content.active {
+            max-height: 4000px;
+            padding: 2.5rem 3rem;
+            animation: fadeInExpand 1s ease both;
+        }
+        
+        /* Elementi speciali */
+        .quote {
+            font-style: italic;
+            border-left: 4px solid var(--current-accent);
+            padding: 2rem;
+            margin: 2.5rem 0;
+            background-color: rgba(0,0,0,0.03);
+            position: relative;
+            border-radius: 0 12px 12px 0;
+            animation: fadeIn 1.2s ease;
+            box-shadow: inset 5px 0 15px -5px rgba(0,0,0,0.1);
+        }
+        
+        .quote::before {
+            content: '"';
+            font-size: 6rem;
+            position: absolute;
+            left: 1rem;
+            top: -1.5rem;
+            opacity: 0.15;
+            line-height: 1;
+            color: var(--current-accent);
+            font-family: 'Times New Roman', serif;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, rgba(139,69,19,0.1) 0%, rgba(0,0,0,0) 80%);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-weight: 600;
+            color: var(--current-accent);
+            transition: all 0.4s ease;
+            border-bottom: 1px dashed var(--current-accent);
+        }
+        
+        /* Toggle temi */
+        .theme-selector {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 3.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .theme-btn {
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.8rem;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .theme-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+        
+        .theme-btn:hover::before {
+            left: 100%;
+        }
+        
+        .lit-btn {
+            background: var(--lit-primary);
+            color: white;
+        }
+        
+        .night-btn {
+            background: var(--night-primary);
+            color: white;
+        }
+        
+        .avant-btn {
+            background: var(--avant-primary);
+            color: white;
+        }
+        
+        .manus-btn {
+            background: var(--manus-primary);
+            color: white;
+        }
+        
+        /* Animazioni */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInExpand {
+            0% { opacity: 0; transform: scaleY(0.9); }
+            60% { opacity: 1; }
+            100% { transform: scaleY(1); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .container {
+                padding: 2rem;
+                margin: 2rem auto;
+            }
+            
+            h1 {
+                font-size: 3rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+                margin: 1.5rem auto;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .toggle-btn {
+                padding: 1.4rem 2rem;
+                font-size: 1.2rem;
+            }
+            
+            .content-inner {
+                padding: 0 1.5rem;
+            }
+            
+            .content.active {
+                padding: 1.8rem;
+            }
+            
+            .theme-selector {
+                gap: 1rem;
+            }
+            
+            .theme-btn {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="theme-selector">
+            <button class="theme-btn lit-btn" onclick="setTheme('lit')">Letterario</button>
+            <button class="theme-btn night-btn" onclick="setTheme('night')">Notturno</button>
+            <button class="theme-btn avant-btn" onclick="setTheme('avant')">Avanguardia</button>
+            <button class="theme-btn manus-btn" onclick="setTheme('manus')">Manoscritto</button>
+        </div>
+        
+        <h1>Vasilij Rozanov</h1>
+        <h2 style="text-align: center; color: var(--current-secondary); margin-bottom: 3rem; animation: fadeIn 1s ease 0.2s both;">Il Filosofo dell'Intimità e del Paradosso</h2>
+        
+        <div class="section" style="animation-delay: 0.3s;">
+            <button class="toggle-btn">📜 Vita e Contraddizioni</button>
+            <div class="content">
+                <div class="content-inner">
+                    <p><strong>Vasilij Vasil'evič Rozanov</strong> (1856-1919) è stato il più <span class="highlight">paradossale</span> e <span class="highlight">intimo</span> pensatore russo, un filosofo che trasformò il diario in arte e la confessione in metodo filosofico.</p>
+                    
+                    <ul>
+                        <li>Nato nel 1856 a Vetluga, orfano di padre a 4 anni</li>
+                        <li>Matrimonio problematico con Apollinarija Suslova (ex-amante di Dostoevskij)</li>
+                        <li>Collaboratore de <em>Il nuovo tempo</em>, poi emarginato</li>
+                        <li>Morte nella povertà e nell'oblio nel 1919</li>
+                    </ul>
+                    
+                    <div class="quote">
+                        "Io sono un uomo fatto di frammenti, e forse proprio per questo sono un uomo vero."<br>
+                        — <em>Foglie cadute</em>
+                    </div>
+                    
+                    <p>Rozanov anticipò la <span class="highlight">decostruzione</span> e l'<span class="highlight">autofiction</span>, mescolando filosofia, giornalismo e confessione in uno stile unico.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section" style="animation-delay: 0.4s;">
+            <button class="toggle-btn">📚 Opere Capitali</button>
+            <div class="content">
+                <div class="content-inner">
+                    <h3>Trilogia Esistenziale</h3>
+                    <ol>
+                        <li><strong>Foglie cadute</strong> (1913-1915) - Aforismi e pensieri sparsi</li>
+                        <li><strong>Solitaria</strong> (1912) - Diario metafisico</li>
+                        <li><strong>L'apocalisse del nostro tempo</strong> (1917-1918) - Riflessioni sulla rivoluzione</li>
+                    </ol>
+                    
+                    <div class="quote">
+                        "La verità non sta nel mezzo, ma nei due estremi contemporaneamente."<br>
+                        — <em>Foglie cadute</em>
+                    </div>
+                    
+                    <h3>Scritti Polemici</h3>
+                    <ul>
+                        <li><em>La leggenda del Grande Inquisitore</em> (1894) - Analisi di Dostoevskij</li>
+                        <li><em>Il volto oscuro di Cristo</em> (1911) - Controversie religiose</li>
+                        <li><em>Nella nebbia della nostra cultura</em> (1909) - Critica sociale</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section" style="animation-delay: 0.5s;">
+            <button class="toggle-btn">💡 Filosofia dell'Intimità</button>
+            <div class="content">
+                <div class="content-inner">
+                    <h3>Concetti Rivoluzionari</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2.5rem;">
+                        <div>
+                            <h4>Filosofia Domestica</h4>
+                            <p>Valorizzazione della vita quotidiana e delle piccole cose</p>
+                        </div>
+                        <div>
+                            <h4>Religione della Vita</h4>
+                            <p>Sacralità del sesso, della famiglia e della procreazione</p>
+                        </div>
+                        <div>
+                            <h4>Scrittura a Frammenti</h4>
+                            <p>Rifiuto dei sistemi chiusi a favore del pensiero fluido</p>
+                        </div>
+                    </div>
+                    
+                    <div class="quote">
+                        "Dio è vicino non quando preghiamo, ma quando facciamo l'amore."<br>
+                        — <em>Foglie cadute</em>
+                    </div>
+                    
+                    <h3>Influenze e Polemiche</h3>
+                    <ul>
+                        <li>Critica al cristianesimo come religione della morte</li>
+                        <li>Influenza su Bataille e la filosofia dell'erotismo</li>
+                        <li>Anticipazione del postmoderno e della scrittura femminile</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section" style="animation-delay: 0.6s;">
+            <button class="toggle-btn">🌍 Eredità e Riscoperta</button>
+            <div class="content">
+                <div class="content-inner">
+                    <h3>Nella Cultura Contemporanea</h3>
+                    <ul>
+                        <li><strong>Letteratura</strong>: Influenza su Cvetaeva, Šalamov, Sokolov</li>
+                        <li><strong>Filosofia</strong>: Precursore di Foucault e della filosofia del corpo</li>
+                        <li><strong>Psicologia</strong>: Approccio olistico alla sessualità</li>
+                    </ul>
+                    
+                    <div class="quote">
+                        "Rozanov è il nostro Nietzsche russo, ma più profondo e più umano."<br>
+                        — Nikolaj Berdjaev
+                    </div>
+                    
+                    <h3>Attualità del Pensiero</h3>
+                    <p>Rozanov oggi ci interroga su:</p>
+                    <ol>
+                        <li>La crisi dell'intimità nell'era digitale</li>
+                        <li>Il rapporto tra spiritualità e corporeità</li>
+                        <li>La ricerca di autenticità nella scrittura</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section" style="animation-delay: 0.7s;">
+            <button class="toggle-btn">✍️ Lo Stile Inconfondibile</button>
+            <div class="content">
+                <div class="content-inner">
+                    <h3>Caratteristiche Uniche</h3>
+                    <ul>
+                        <li><strong>Scrittura aforistica</strong>: Pensieri brevi e folgoranti</li>
+                        <li><strong>Confessione radicale</strong>: Esposizione senza veli della propria vita</li>
+                        <li><strong>Dialogo con se stesso</strong>: Monologhi interiori polifonici</li>
+                    </ul>
+                    
+                    <div class="quote">
+                        "Scrivo come respiro, come vivo - senza sistema, senza piano, come cade."<br>
+                        — <em>Solitaria</em>
+                    </div>
+                    
+                    <h3>Rozanov vs Tolstoj</h3>
+                    <p>Differenze fondamentali:</p>
+                    <table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0;">
+                        <tr>
+                            <th style="text-align: left; padding: 0.5rem; border-bottom: 1px solid var(--current-accent);">Rozanov</th>
+                            <th style="text-align: left; padding: 0.5rem; border-bottom: 1px solid var(--current-accent);">Tolstoj</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.8rem; border-bottom: 1px solid rgba(0,0,0,0.1);">Celebrazione della vita</td>
+                            <td style="padding: 0.8rem; border-bottom: 1px solid rgba(0,0,0,0.1);">Ascetismo</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.8rem; border-bottom: 1px solid rgba(0,0,0,0.1);">Scrittura frammentaria</td>
+                            <td style="padding: 0.8rem; border-bottom: 1px solid rgba(0,0,0,0.1);">Narrazione strutturata</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.8rem;">Religione della famiglia</td>
+                            <td style="padding: 0.8rem;">Critica delle istituzioni</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Gestione toggle sezioni
+        document.querySelectorAll('.toggle-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                button.classList.toggle('active');
+                content.classList.toggle('active');
+                
+                // Scroll animato con ritardo per l'animazione
+                if (content.classList.contains('active')) {
+                    setTimeout(() => {
+                        content.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'nearest',
+                            inline: 'nearest'
+                        });
+                    }, 400);
+                }
+            });
+        });
+        
+        // Cambio tema con animazione
+        function setTheme(theme) {
+            // Animazione di transizione
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.4s ease';
+            
+            setTimeout(() => {
+                switch(theme) {
+                    case 'lit':
+                        document.documentElement.style.setProperty('--current-bg', 'var(--lit-bg)');
+                        document.documentElement.style.setProperty('--current-text', 'var(--lit-text)');
+                        document.documentElement.style.setProperty('--current-primary', 'var(--lit-primary)');
+                        document.documentElement.style.setProperty('--current-secondary', 'var(--lit-secondary)');
+                        document.documentElement.style.setProperty('--current-accent', 'var(--lit-accent)');
+                        document.documentElement.style.setProperty('--current-card', 'var(--lit-card)');
+                        document.documentElement.style.setProperty('--current-font', 'var(--lit-font)');
+                        break;
+                        
+                    case 'night':
+                        document.documentElement.style.setProperty('--current-bg', 'var(--night-bg)');
+                        document.documentElement.style.setProperty('--current-text', 'var(--night-text)');
+                        document.documentElement.style.setProperty('--current-primary', 'var(--night-primary)');
+                        document.documentElement.style.setProperty('--current-secondary', 'var(--night-secondary)');
+                        document.documentElement.style.setProperty('--current-accent', 'var(--night-accent)');
+                        document.documentElement.style.setProperty('--current-card', 'var(--night-card)');
+                        document.documentElement.style.setProperty('--current-font', 'var(--night-font)');
+                        break;
+                        
+                    case 'avant':
+                        document.documentElement.style.setProperty('--current-bg', 'var(--avant-bg)');
+                        document.documentElement.style.setProperty('--current-text', 'var(--avant-text)');
+                        document.documentElement.style.setProperty('--current-primary', 'var(--avant-primary)');
+                        document.documentElement.style.setProperty('--current-secondary', 'var(--avant-secondary)');
+                        document.documentElement.style.setProperty('--current-accent', 'var(--avant-accent)');
+                        document.documentElement.style.setProperty('--current-card', 'var(--avant-card)');
+                        document.documentElement.style.setProperty('--current-font', 'var(--avant-font)');
+                        break;
+                        
+                    case 'manus':
+                        document.documentElement.style.setProperty('--current-bg', 'var(--manus-bg)');
+                        document.documentElement.style.setProperty('--current-text', 'var(--manus-text)');
+                        document.documentElement.style.setProperty('--current-primary', 'var(--manus-primary)');
+                        document.documentElement.style.setProperty('--current-secondary', 'var(--manus-secondary)');
+                        document.documentElement.style.setProperty('--current-accent', 'var(--manus-accent)');
+                        document.documentElement.style.setProperty('--current-card', 'var(--manus-card)');
+                        document.documentElement.style.setProperty('--current-font', 'var(--manus-font)');
+                        break;
+                }
+                
+                document.body.style.opacity = '1';
+            }, 400);
+        }
+        
+        // Apertura iniziale della prima sezione
+        setTimeout(() => {
+            document.querySelector('.toggle-btn').click();
+        }, 800);
+        
+        // Effetto di ingresso differenziato
+        document.querySelectorAll('.section').forEach((section, index) => {
+            section.style.animation = `fadeIn 0.8s ease ${index * 0.15 + 0.3}s both`;
+        });
+    </script>
+</body>
+</html>

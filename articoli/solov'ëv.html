@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vladimir Solov'ëv: Il Platone Russo</title>
+    <style>
+        /* Font e variabili */
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Crimson+Text&family=Fira+Code&display=swap');
+        
+        :root {
+            /* Tema Filosofico (default) */
+            --philo-bg: #f5f1e6;
+            --philo-text: #3a3226;
+            --philo-primary: #8b5a2b;
+            --philo-secondary: #a78a6f;
+            --philo-accent: #6b4f3a;
+            --philo-card: #fffcf5;
+            
+            /* Tema Notturno */
+            --night-bg: #1a1a2e;
+            --night-text: #e0e0e0;
+            --night-primary: #9b59b6;
+            --night-secondary: #8e44ad;
+            --night-accent: #3498db;
+            --night-card: #16213e;
+            
+            /* Tema Moderno */
+            --modern-bg: #f8f9fa;
+            --modern-text: #212529;
+            --modern-primary: #6f42c1;
+            --modern-secondary: #6610f2;
+            --modern-accent: #d63384;
+            --modern-card: #ffffff;
+            
+            /* Tema Mistico */
+            --mystic-bg: #0f0c24;
+            --mystic-text: #d1c4e9;
+            --mystic-primary: #7b1fa2;
+            --mystic-secondary: #4a148c;
+            --mystic-accent: #00bcd4;
+            --mystic-card: #1a237e;
+            
+            /* Variabili correnti */
+            --current-bg: var(--philo-bg);
+            --current-text: var(--philo-text);
+            --current-primary: var(--philo-primary);
+            --current-secondary: var(--philo-secondary);
+            --current-accent: var(--philo-accent);
+            --current-card: var(--philo-card);
+        }
+        
+        body {
+            font-family: 'Crimson Text', serif;
+            background-color: var(--current-bg);
+            color: var(--current-text);
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            transition: all 0.5s ease;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background-color: var(--current-card);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            transition: all 0.5s ease;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--current-primary);
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+            animation: fadeInDown 1s ease;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--current-primary), var(--current-accent));
+            border-radius: 2px;
+        }
+        
+        /* Sezioni avanzate */
+        .section {
+            margin-bottom: 2.5rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        .section:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Bottoni rivisti */
+        .toggle-btn {
+            background: linear-gradient(135deg, var(--current-primary), var(--current-secondary));
+            color: white;
+            border: none;
+            padding: 1.5rem 2rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .toggle-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+        
+        .toggle-btn:hover::before {
+            left: 100%;
+        }
+        
+        .toggle-btn::after {
+            content: '+';
+            font-size: 2rem;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        
+        .toggle-btn.active::after {
+            content: '-';
+            transform: rotate(180deg);
+        }
+        
+        /* Contenuto animato */
+        .content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.8s cubic-bezier(0.65, 0, 0.35, 1), padding 0.6s ease;
+            background-color: var(--current-card);
+        }
+        
+        .content-inner {
+            padding: 0 2.5rem;
+        }
+        
+        .content.active {
+            max-height: 3000px;
+            padding: 2rem 2.5rem;
+            animation: fadeIn 0.8s ease both;
+        }
+        
+        /* Elementi speciali */
+        .quote {
+            font-style: italic;
+            border-left: 4px solid var(--current-accent);
+            padding: 1.8rem;
+            margin: 2rem 0;
+            background-color: rgba(0,0,0,0.03);
+            position: relative;
+            border-radius: 0 8px 8px 0;
+            animation: fadeIn 1s ease;
+        }
+        
+        .quote::before {
+            content: '"';
+            font-size: 5rem;
+            position: absolute;
+            left: 1rem;
+            top: -1rem;
+            opacity: 0.15;
+            line-height: 1;
+            color: var(--current-accent);
+        }
+        
+        .highlight {
+            background-color: rgba(0,0,0,0.05);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            color: var(--current-accent);
+            transition: all 0.3s ease;
+        }
+        
+        /* Toggle temi */
+        .theme-selector {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .theme-btn {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Fira Code', monospace;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .philo-btn {
+            background: var(--philo-primary);
+            color: white;
+        }
+        
+        .night-btn {
+            background: var(--night-primary);
+            color: white;
+        }
+        
+        .modern-btn {
+            background: var(--modern-primary);
+            color: white;
+        }
+        
+        .mystic-btn {
+            background: var(--mystic-primary);
+            color: white;
+        }
+        
+        /* Animazioni */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0,0,0,0.1); }
+            70% { box-shadow: 0 0 0 15px rgba(0,0,0,0); }
+            100% { box-shadow: 0 0 0 0 rgba(0,0,0,0); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+                margin: 1.5rem auto;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .toggle-btn {
+                padding: 1.2rem 1.5rem;
+                font-size: 1.1rem;
+            }
+            
+            .content-inner {
+                padding: 0 1.5rem;
+            }
+            
+            .content.active {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="theme-selector">
+            <button class="theme-btn philo-btn" onclick="setTheme('philo')">Filosofico</button>
+            <button class="theme-btn night-btn" onclick="setTheme('night')">Notturno</button>
+            <button class="theme-btn modern-btn" onclick="setTheme('modern')">Moderno</button>
+            <button class="theme-btn mystic-btn" onclick="setTheme('mystic')">Mistico</button>
+        </div>
+        
+        <h1>Vladimir Sergeevič Solov'ëv</h1>
+        <h2 style="text-align: center; color: var(--current-secondary); margin-bottom: 3rem; animation: fadeIn 1s ease 0.2s both;">Il Platone Russo della Sophia</h2>
+        
+        <div class="section" style="animation-delay: 0.3s;">
+            <button class="toggle-btn">🌌 Vita e Visione</button>
+            <div class="content">
+                <div class="content-inner">
+                    <p><strong>Vladimir Solov'ëv</strong> (1853-1900) è stato il più importante filosofo russo del XIX secolo, fondatore della tradizione filosofico-religiosa russa. La sua vita fu un pellegrinaggio intellettuale:</p>
+                    
+                    <ul>
+                        <li>Nato a Mosca nel 1853, figlio dello storico Sergej Solov'ëv</li>
+                        <li>Studiò scienze naturali prima di dedicarsi alla filosofia</li>
+                        <li>Visioni mistiche della <span class="highlight">Sophia</span> (Divina Sapienza)</li>
+                        <li>Morte prematura a 47 anni, consumato dal suo zelo intellettuale</li>
+                    </ul>
+                    
+                    <div class="quote">
+                        "Il vero progresso consiste nel ritorno alla tradizione originale, alla pienezza della verità rivelata."<br>
+                        — <em>La crisi della filosofia occidentale</em>
+                    </div>
+                    
+                    <p>Il suo sistema unisce <span class="highlight">Platone</span>, <span class="highlight">Schelling</span> e la teologia ortodossa in una sintesi unica che anticipa il personalismo e l'esistenzialismo cristiano.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section" style="animation-delay: 0.4s;">
+            <button class="toggle-btn">📜 Opere Fondamentali</button>
+            <div class="content">
+                <div class="content-inner">
+                    <h3>Trilogia Filosofica</h3>
+                    <ol>
+                        <li><strong>La crisi della filosofia occidentale</strong> (1874) - Critica al razionalismo</li>
+                        <li><strong>Lezioni sulla Divinoumanità</strong> (1878) - Sintesi di filosofia e teologia</li>
+                        <li><strong>La giustificazione del bene</strong> (1897) - Etica metafisica</li>
+                    </ol>
+                    
+                    <div class="quote">
+                        "L'amore è la trasfigurazione dell'individuo nell'unità assoluta."<br>
+                        — <em>Il significato dell'amore</em>
+                    </div>
+                    
+                    <h3>Scritti Profetici</h3>
+                    <ul>
+                        <li><em>Tre dialoghi</em> (1900) - Contro guerra e nazionalismo</li>
+                        <li><em>La Russia e la Chiesa universale</em> - Ecumenismo visionario</li>
+                        <li><em>Racconto dell'Anticristo</em> - Apocalisse spirituale</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section" style="animation-delay: 0.5s;">
+            <button class="toggle-btn">💡 Filosofia della Sophia</button>
+            <div class="content">
+                <div class="content-inner">
+                    <h3>Concetti Chiave</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                        <div>
+                            <h4>Divinoumanità</h4>
+                            <p>Unione di Dio e umanità in Cristo, perfezione della creazione</p>
+                        </div>
+                        <div>
+                            <h4>Sophia</h4>
+                            <p>La Sapienza Divina, mediatrice tra Dio e il mondo</p>
+                        </div>
+                        <div>
+                            <h4>Totalunità</h4>
+                            <p>Realtà come organismo unitario dove tutto è connesso</p>
+                        </div>
+                    </div>
+                    
+                    <div class="quote">
+                        "La bellezza è la Sophia sensibile, la trasfigurazione della materia attraverso l'energia divina."<br>
+                        — <em>La Sophia</em>
+                    </div>
+                    
+                    <h3>Influenze e Polemiche</h3>
+                    <ul>
+                        <li>Platonismo: teoria delle idee e mondo spirituale</li>
+                        <li>Mistica tedesca: Eckhart e Böhme</li>
+                        <li>Critica al positivismo e al materialismo</li>
+                        <li>Conflitto con Tolstoj sul significato del cristianesimo</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section" style="animation-delay: 0.6s;">
+            <button class="toggle-btn">🌍 Eredità e Influenza</button>
+            <div class="content">
+                <div class="content-inner">
+                    <h3>Nella Cultura Russa</h3>
+                    <ul>
+                        <li><strong>Simbolisti</strong>: Blok, Belyj, Ivanov</li>
+                        <li><strong>Filosofi</strong>: Berdjaev, Bulgakov, Florenskij</li>
+                        <li><strong>Teologi</strong>: Losskij, Meyendorff</li>
+                    </ul>
+                    
+                    <div class="quote">
+                        "Solov'ëv è il nostro Platone, colui che ha mostrato la via verso il mondo delle idee divine."<br>
+                        — Pavel Florenskij
+                    </div>
+                    
+                    <h3>Nella Filosofia Occidentale</h3>
+                    <ul>
+                        <li>Anticipa il personalismo (Mounier, Marcel)</li>
+                        <li>Influenza su Jung e la psicologia del profondo</li>
+                        <li>Dialogo con Teilhard de Chardin sul punto Omega</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section" style="animation-delay: 0.7s;">
+            <button class="toggle-btn">🔮 Attualità del Pensiero</button>
+            <div class="content">
+                <div class="content-inner">
+                    <h3>Per il XXI Secolo</h3>
+                    <p>Solov'ëv offre strumenti per:</p>
+                    <ul>
+                        <li>Superare la dicotomia scienza-fede</li>
+                        <li>Ripensare l'ecologia come sacralità della natura</li>
+                        <li>Rispondere alla crisi spirituale dell'Occidente</li>
+                    </ul>
+                    
+                    <div class="quote">
+                        "L'unità dell'umanità non sarà raggiunta attraverso la forza, ma attraverso l'amore che riconosce in ogni volto l'immagine di Dio."<br>
+                        — <em>Tre dialoghi</em>
+                    </div>
+                    
+                    <h3>Critica alla Modernità</h3>
+                    <p>Le sue profezie si sono avverate:</p>
+                    <ol>
+                        <li>Il nichilismo contemporaneo</li>
+                        <li>La mercificazione della cultura</li>
+                        <li>La crisi delle ideologie</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Gestione toggle sezioni
+        document.querySelectorAll('.toggle-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                button.classList.toggle('active');
+                content.classList.toggle('active');
+                
+                // Scroll animato
+                if (content.classList.contains('active')) {
+                    setTimeout(() => {
+                        content.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'nearest'
+                        });
+                    }, 300);
+                }
+            });
+        });
+        
+        // Cambio tema
+        function setTheme(theme) {
+            document.body.style.animation = 'none';
+            
+            switch(theme) {
+                case 'philo':
+                    document.documentElement.style.setProperty('--current-bg', 'var(--philo-bg)');
+                    document.documentElement.style.setProperty('--current-text', 'var(--philo-text)');
+                    document.documentElement.style.setProperty('--current-primary', 'var(--philo-primary)');
+                    document.documentElement.style.setProperty('--current-secondary', 'var(--philo-secondary)');
+                    document.documentElement.style.setProperty('--current-accent', 'var(--philo-accent)');
+                    document.documentElement.style.setProperty('--current-card', 'var(--philo-card)');
+                    break;
+                    
+                case 'night':
+                    document.documentElement.style.setProperty('--current-bg', 'var(--night-bg)');
+                    document.documentElement.style.setProperty('--current-text', 'var(--night-text)');
+                    document.documentElement.style.setProperty('--current-primary', 'var(--night-primary)');
+                    document.documentElement.style.setProperty('--current-secondary', 'var(--night-secondary)');
+                    document.documentElement.style.setProperty('--current-accent', 'var(--night-accent)');
+                    document.documentElement.style.setProperty('--current-card', 'var(--night-card)');
+                    break;
+                    
+                case 'modern':
+                    document.documentElement.style.setProperty('--current-bg', 'var(--modern-bg)');
+                    document.documentElement.style.setProperty('--current-text', 'var(--modern-text)');
+                    document.documentElement.style.setProperty('--current-primary', 'var(--modern-primary)');
+                    document.documentElement.style.setProperty('--current-secondary', 'var(--modern-secondary)');
+                    document.documentElement.style.setProperty('--current-accent', 'var(--modern-accent)');
+                    document.documentElement.style.setProperty('--current-card', 'var(--modern-card)');
+                    break;
+                    
+                case 'mystic':
+                    document.documentElement.style.setProperty('--current-bg', 'var(--mystic-bg)');
+                    document.documentElement.style.setProperty('--current-text', 'var(--mystic-text)');
+                    document.documentElement.style.setProperty('--current-primary', 'var(--mystic-primary)');
+                    document.documentElement.style.setProperty('--current-secondary', 'var(--mystic-secondary)');
+                    document.documentElement.style.setProperty('--current-accent', 'var(--mystic-accent)');
+                    document.documentElement.style.setProperty('--current-card', 'var(--mystic-card)');
+                    break;
+            }
+            
+            // Effetto di transizione
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+                document.body.style.transition = 'opacity 0.5s ease';
+            }, 10);
+        }
+        
+        // Apertura iniziale
+        setTimeout(() => {
+            document.querySelector('.toggle-btn').click();
+        }, 500);
+        
+        // Effetto di ingresso
+        document.querySelectorAll('.section').forEach((section, index) => {
+            section.style.animation = `fadeIn 0.8s ease ${index * 0.1 + 0.3}s both`;
+        });
+    </script>
+</body>
+</html>

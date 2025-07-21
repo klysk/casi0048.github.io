@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Umberto Eco: Il Rinascimento Contemporaneo</title>
+    <style>
+        :root {
+            --primary: #6d4c41;
+            --secondary: #d7ccc8;
+            --accent: #5d4037;
+            --text: #3e2723;
+            --bg: #efebe9;
+            --card-bg: #fff;
+            --transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* Reset e Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Garamond', serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            padding: 20px;
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 30px 0;
+            font-size: 3rem;
+            color: var(--primary);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        h1::after {
+            content: "";
+            display: block;
+            width: 150px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+
+        h2 {
+            color: var(--primary);
+            margin: 25px 0 15px;
+            font-size: 2rem;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        h2::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 5px;
+            height: 80%;
+            width: 5px;
+            background: var(--accent);
+            border-radius: 3px;
+        }
+
+        /* Modalità di Lettura */
+        .mode-selector {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 40px 0;
+        }
+
+        .mode-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            font-size: 1rem;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        #library-btn {
+            background: linear-gradient(135deg, #6d4c41, #5d4037);
+            color: white;
+        }
+
+        #semiotic-btn {
+            background: linear-gradient(135deg, #004d40, #00796b);
+            color: white;
+        }
+
+        #medieval-btn {
+            background: linear-gradient(135deg, #5d4037, #3e2723);
+            color: #d7ccc8;
+        }
+
+        #modern-btn {
+            background: linear-gradient(135deg, #bf360c, #e64a19);
+            color: white;
+        }
+
+        /* Sezioni Accordion */
+        .section {
+            margin-bottom: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            background: var(--card-bg);
+            transition: var(--transition);
+        }
+
+        .section-btn {
+            width: 100%;
+            padding: 20px 30px;
+            text-align: left;
+            border: none;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .section-btn:hover {
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+        }
+
+        .section-btn::after {
+            content: "+";
+            font-size: 1.8rem;
+            transition: transform 0.3s;
+        }
+
+        .section-btn.active::after {
+            content: "-";
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.7s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .section-content-inner {
+            padding: 0 30px;
+        }
+
+        .section-content.show {
+            max-height: 2000px;
+        }
+
+        .section-content.show .section-content-inner {
+            padding: 30px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Elementi Speciali */
+        .bio-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+            margin: 30px 0;
+        }
+
+        .bio-img {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            align-self: center;
+        }
+
+        .bio-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .bio-img:hover img {
+            transform: scale(1.05);
+        }
+
+        .timeline {
+            list-style: none;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+            border-radius: 3px;
+        }
+
+        .timeline li {
+            margin-bottom: 25px;
+            position: relative;
+            padding-left: 30px;
+            opacity: 0;
+            animation: slideIn 0.5s forwards;
+        }
+
+        .timeline li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 3px solid var(--accent);
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .quote-box {
+            background: linear-gradient(135deg, rgba(109, 76, 65, 0.1), rgba(93, 64, 55, 0.1));
+            border-left: 4px solid var(--primary);
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 0 8px 8px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-box::before {
+            content: """;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 5rem;
+            color: rgba(109, 76, 65, 0.1);
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .quote-box p {
+            font-style: italic;
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .quote-box footer {
+            text-align: right;
+            margin-top: 15px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .book-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-top: 5px solid var(--accent);
+            transition: var(--transition);
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 20px;
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        .book-cover {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .book-info h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        /* Modalità Speciali */
+        body.library-mode {
+            --primary: #6d4c41;
+            --secondary: #d7ccc8;
+            --accent: #5d4037;
+            --text: #3e2723;
+            --bg: #efebe9;
+            --card-bg: #fff;
+        }
+
+        body.semiotic-mode {
+            --primary: #004d40;
+            --secondary: #b2dfdb;
+            --accent: #00796b;
+            --text: #004d40;
+            --bg: #e0f2f1;
+            --card-bg: #fff;
+        }
+
+        body.medieval-mode {
+            --primary: #5d4037;
+            --secondary: #d7ccc8;
+            --accent: #3e2723;
+            --text: #3e2723;
+            --bg: #d7ccc8;
+            --card-bg: #efebe9;
+            font-family: 'Times New Roman', serif;
+        }
+
+        body.medieval-mode .section {
+            border: 2px solid #5d4037;
+        }
+
+        body.modern-mode {
+            --primary: #bf360c;
+            --secondary: #ffccbc;
+            --accent: #e64a19;
+            --text: #3e2723;
+            --bg: #fbe9e7;
+            --card-bg: #fff;
+            font-family: 'Helvetica Neue', sans-serif;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .bio-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .book-card {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body class="library-mode">
+    <div class="container">
+        <h1>Umberto Eco</h1>
+        <h2 style="text-align: center; margin-bottom: 0;">Il Rinascimento Contemporaneo</h2>
+        
+        <div class="mode-selector">
+            <button id="library-btn" class="mode-btn">📚 Biblioteca</button>
+            <button id="semiotic-btn" class="mode-btn">🔍 Semiotica</button>
+            <button id="medieval-btn" class="mode-btn">🏰 Medievale</button>
+            <button id="modern-btn" class="mode-btn">🖥️ Moderno</button>
+        </div>
+
+        <!-- Sezione Biografia -->
+        <div class="section">
+            <button class="section-btn">📜 Vita e Opere</button>
+            <div class="section-content">
+                <div class="section-content-inner">
+                    <div class="bio-grid">
+                        <div class="bio-img">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Umberto_Eco_%283%29.jpg/800px-Umberto_Eco_%283%29.jpg" alt="Umberto Eco">
+                        </div>
+                        <div class="bio-text">
+                            <p>Umberto Eco (1932-2016) è stato uno dei più grandi intellettuali del XX secolo: semiotico, filosofo, scrittore, medievista, traduttore e accademico italiano. La sua vastissima produzione spazia dalla saggistica alla narrativa, lasciando un'impronta indelebile nella cultura contemporanea.</p>
+                            
+                            <ul class="timeline">
+                                <li style="animation-delay: 0.1s"><strong>1932:</strong> Nasce ad Alessandria il 5 gennaio</li>
+                                <li style="animation-delay: 0.3s"><strong>1954:</strong> Si laurea in filosofia all'Università di Torino con una tesi su Tommaso d'Aquino</li>
+                                <li style="animation-delay: 0.5s"><strong>1959-1975:</strong> Lavora come editor per Bompiani, pubblicando importanti saggi</li>
+                                <li style="animation-delay: 0.7s"><strong>1980:</strong> Esordio letterario con "Il nome della rosa", romanzo che lo rende celebre in tutto il mondo</li>
+                                <li style="animation-delay: 0.9s"><strong>2007-2016:</strong> Professore emerito all'Università di Bologna</li>
+                                <li style="animation-delay: 1.1s"><strong>2016:</strong> Muore a Milano il 19 febbraio</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="quote-box">
+                        <p>"Il mondo è pieno di libri meravigliosi che nessuno legge."</p>
+                        <footer>— Umberto Eco</footer>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Romanzi -->
+        <div class="section">
+            <button class="section-btn">📖 I Grandi Romanzi</button>
+            <div class="section-content">
+                <div class="section-content-inner">
+                    <h2>Narrativa tra Storia e Simbolo</h2>
+                    <p>Eco ha rivoluzionato il romanzo storico, fondendo erudizione e intrattenimento in opere complesse che sfidano il lettore senza mai annoiarlo.</p>
+                    
+                    <div class="book-card">
+                        <img src="https://m.media-amazon.com/images/I/71Q5h+QyzEL._AC_UF1000,1000_QL80_.jpg" alt="Il nome della rosa" class="book-cover">
+                        <div class="book-info">
+                            <h3>Il nome della rosa (1980)</h3>
+                            <p>Giallo medievale nel monastero benedettino dove frate Guglielmo da Baskerville indaga su una serie di misteriosi omicidi. Capolavoro che fonda semiotica, filosofia e narrativa.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="book-card">
+                        <img src="https://m.media-amazon.com/images/I/81QZQZQZQZL._AC_UF1000,1000_QL80_.jpg" alt="Il pendolo di Foucault" class="book-cover">
+                        <div class="book-info">
+                            <h3>Il pendolo di Foucault (1988)</h3>
+                            <p>Satira dei complottismi esoterici attraverso le vicende di tre editori che inventano un piano segreto dei Templari, finendo per esserne travolti.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="book-card">
+                        <img src="https://m.media-amazon.com/images/I/81QZQZQZQZL._AC_UF1000,1000_QL80_.jpg" alt="L'isola del giorno prima" class="book-cover">
+                        <div class="book-info">
+                            <h3>L'isola del giorno prima (1994)</h3>
+                            <p>Avventura barocca di un nobile piemontese naufragato nel Pacifico, riflessione sul tempo e la memoria.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="quote-box">
+                        <p>"Un romanzo è una macchina per generare interpretazioni."</p>
+                        <footer>— Umberto Eco</footer>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Semiotica -->
+        <div class="section">
+            <button class="section-btn">🔬 La Semiotica</button>
+            <div class="section-content">
+                <div class="section-content-inner">
+                    <h2>Teoria e Interpretazione dei Segni</h2>
+                    <p>Eco ha sviluppato una semiotica originale che studia i processi di significazione e comunicazione, influenzando profondamente le scienze umane.</p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; margin: 40px 0;">
+                        <div style="background: rgba(109, 76, 65, 0.05); padding: 20px; border-radius: 10px; border-left: 4px solid var(--primary);">
+                            <h3 style="color: var(--primary); margin-bottom: 15px;">Opera aperta (1962)</h3>
+                            <p>Teoria sull'interpretazione delle opere d'arte che prevedono la partecipazione attiva del fruitore.</p>
+                        </div>
+                        
+                        <div style="background: rgba(109, 76, 65, 0.05); padding: 20px; border-radius: 10px; border-left: 4px solid var(--primary);">
+                            <h3 style="color: var(--primary); margin-bottom: 15px;">Trattato di semiotica generale (1975)</h3>
+                            <p>Sistemazione teorica della semiotica come disciplina autonoma.</p>
+                        </div>
+                        
+                        <div style="background: rgba(109, 76, 65, 0.05); padding: 20px; border-radius: 10px; border-left: 4px solid var(--primary);">
+                            <h3 style="color: var(--primary); margin-bottom: 15px;">I limiti dell'interpretazione (1990)</h3>
+                            <p>Analisi dei confini tra interpretazione legittima e sovrainterpretazione.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="quote-box">
+                        <p>"La semiotica è la disciplina che studia tutto ciò che può essere usato per mentire."</p>
+                        <footer>— Umberto Eco</footer>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Eredità -->
+        <div class="section">
+            <button class="section-btn">🌟 Eredità Culturale</button>
+            <div class="section-content">
+                <div class="section-content-inner">
+                    <h2>L'Impronta di un Genio Poliedrico</h2>
+                    <p>Eco ha lasciato un segno indelebile in numerosi campi del sapere, dalla letteratura alla filosofia, dalla semiotica alla comunicazione.</p>
+                    
+                    <div style="margin: 30px 0;">
+                        <h3>Influenze e Riconoscimenti</h3>
+                        <ul style="list-style-type: none; margin: 20px 0;">
+                            <li style="margin-bottom: 15px; padding-left: 25px; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--primary);">▸</span>
+                                <strong>Teoria letteraria:</strong> Innovazioni nella narratologia e teoria della ricezione
+                            </li>
+                            <li style="margin-bottom: 15px; padding-left: 25px; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--primary);">▸</span>
+                                <strong>Studi medievali:</strong> Originali interpretazioni della cultura medievale
+                            </li>
+                            <li style="margin-bottom: 15px; padding-left: 25px; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--primary);">▸</span>
+                                <strong>Comunicazione:</strong> Analisi pionieristiche dei mass media e della cultura popolare
+                            </li>
+                        </ul>
+                        
+                        <h3>Premi e Onorificenze</h3>
+                        <ul style="list-style-type: none; margin: 20px 0;">
+                            <li style="margin-bottom: 15px; padding-left: 25px; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--primary);">▸</span>
+                                Medaglia d'oro ai benemeriti della cultura e dell'arte (1997)
+                            </li>
+                            <li style="margin-bottom: 15px; padding-left: 25px; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--primary);">▸</span>
+                                Premio Strega (1981) per "Il nome della rosa"
+                            </li>
+                            <li style="margin-bottom: 15px; padding-left: 25px; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--primary);">▸</span>
+                                Numerose lauree honoris causa in tutto il mondo
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="quote-box">
+                        <p>"La cultura è sapere cosa fare quando non si sa cosa fare."</p>
+                        <footer>— Umberto Eco</footer>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Gestione accordion
+        document.querySelectorAll('.section-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const section = btn.parentElement;
+                const content = btn.nextElementSibling;
+                
+                // Chiudi tutte le altre sezioni
+                document.querySelectorAll('.section-content').forEach(item => {
+                    if (item !== content) {
+                        item.classList.remove('show');
+                        item.previousElementSibling.classList.remove('active');
+                    }
+                });
+                
+                // Apri/chiudi la sezione corrente
+                btn.classList.toggle('active');
+                content.classList.toggle('show');
+                
+                // Animazione timeline quando si apre la sezione biografia
+                if (btn.textContent.includes('Vita e Opere') && content.classList.contains('show')) {
+                    document.querySelectorAll('.timeline li').forEach((item, index) => {
+                        item.style.animation = `slideIn 0.5s ease-out ${index * 0.2}s forwards`;
+                    });
+                }
+            });
+        });
+        
+        // Modalità di lettura
+        document.getElementById('library-btn').addEventListener('click', () => {
+            document.body.className = 'library-mode';
+        });
+        
+        document.getElementById('semiotic-btn').addEventListener('click', () => {
+            document.body.className = 'semiotic-mode';
+        });
+        
+        document.getElementById('medieval-btn').addEventListener('click', () => {
+            document.body.className = 'medieval-mode';
+        });
+        
+        document.getElementById('modern-btn').addEventListener('click', () => {
+            document.body.className = 'modern-mode';
+        });
+        
+        // Apri la prima sezione all'avvio
+        document.querySelector('.section-btn').click();
+    </script>
+</body>
+</html>

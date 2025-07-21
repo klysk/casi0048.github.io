@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lev Isaakovič Šestov: Il Filosofo dell'Assurdo</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            color: #333;
+            background-color: #f9f9f9;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            transition: all 0.5s ease;
+        }
+
+        /* Modalità di lettura */
+        .mode-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+
+        .mode-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        #philosophy-btn {
+            background: linear-gradient(135deg, #3a7bd5, #00d2ff);
+            color: white;
+        }
+
+        #night-btn {
+            background: linear-gradient(135deg, #0f2027, #203a43);
+            color: #eee;
+        }
+
+        #modern-btn {
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            color: white;
+        }
+
+        #mystic-btn {
+            background: linear-gradient(135deg, #8e2de2, #4a00e0);
+            color: white;
+        }
+
+        /* Stili per le sezioni */
+        .section {
+            margin-bottom: 30px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            background-color: white;
+        }
+
+        .section-btn {
+            width: 100%;
+            padding: 18px 25px;
+            text-align: left;
+            border: none;
+            background: linear-gradient(135deg, #6e48aa, #9d50bb);
+            color: white;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .section-btn:hover {
+            background: linear-gradient(135deg, #9d50bb, #6e48aa);
+        }
+
+        .section-btn::after {
+            content: '+';
+            font-size: 1.5em;
+            transition: transform 0.3s;
+        }
+
+        .section-btn.active::after {
+            content: '-';
+        }
+
+        .section-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+        }
+
+        .section-content.show {
+            padding: 25px;
+            max-height: 2000px;
+        }
+
+        h1 {
+            color: #6e48aa;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #9d50bb;
+            margin-top: 0;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+
+        blockquote {
+            border-left: 4px solid #9d50bb;
+            padding: 15px 20px;
+            margin: 20px 0;
+            background-color: #f9f4ff;
+            font-style: italic;
+            color: #555;
+        }
+
+        blockquote footer {
+            text-align: right;
+            font-style: normal;
+            font-weight: bold;
+            color: #6e48aa;
+        }
+
+        .book-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .book {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #6e48aa;
+            transition: transform 0.3s;
+        }
+
+        .book:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .book h3 {
+            margin-top: 0;
+            color: #6e48aa;
+        }
+
+        .animated-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .animated-list li {
+            padding: 12px;
+            margin-bottom: 10px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+            transform: translateX(-20px);
+            opacity: 0;
+            animation: slideIn 0.5s forwards;
+        }
+
+        .animated-list li:nth-child(1) { animation-delay: 0.1s; }
+        .animated-list li:nth-child(2) { animation-delay: 0.3s; }
+        .animated-list li:nth-child(3) { animation-delay: 0.5s; }
+
+        @keyframes slideIn {
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .glow-text {
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px rgba(106, 27, 154, 0.5);
+            }
+            to {
+                text-shadow: 0 0 10px rgba(106, 27, 154, 0.8);
+            }
+        }
+
+        /* Stili per le modalità */
+        body.night-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        body.night-mode .section {
+            background-color: #1e1e1e;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        body.night-mode .section-content {
+            color: #e0e0e0;
+        }
+
+        body.night-mode h2 {
+            color: #bb86fc;
+        }
+
+        body.night-mode blockquote {
+            background-color: #2d2d2d;
+            border-left-color: #bb86fc;
+        }
+
+        body.night-mode .book {
+            background-color: #2d2d2d;
+            border-left-color: #bb86fc;
+        }
+
+        body.philosophy-mode {
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            background-color: #f5f5f5;
+        }
+
+        body.philosophy-mode h1 {
+            font-style: italic;
+        }
+
+        body.philosophy-mode blockquote {
+            font-size: 1.1em;
+        }
+
+        body.modern-mode {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: white;
+        }
+
+        body.modern-mode .section-btn {
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+        }
+
+        body.modern-mode .section-btn:hover {
+            background: linear-gradient(135deg, #ff4b2b, #ff416c);
+        }
+
+        body.mystic-mode {
+            background-color: #1a1a2e;
+            color: #d1d1e0;
+        }
+
+        body.mystic-mode .section {
+            background-color: #16213e;
+        }
+
+        body.mystic-mode h1, 
+        body.mystic-mode h2 {
+            color: #e94560;
+        }
+
+        body.mystic-mode blockquote {
+            background-color: #0f3460;
+            border-left-color: #e94560;
+        }
+
+        body.mystic-mode .book {
+            background-color: #0f3460;
+            border-left-color: #e94560;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lev Isaakovič Šestov: Il Filosofo dell'Assurdo e della Libertà</h1>
+
+    <div class="mode-selector">
+        <button id="philosophy-btn" class="mode-btn">🌌 Modalità Filosofica</button>
+        <button id="night-btn" class="mode-btn">🌙 Modalità Notturna</button>
+        <button id="modern-btn" class="mode-btn">⚡ Modalità Moderna</button>
+        <button id="mystic-btn" class="mode-btn">🔮 Modalità Mistica</button>
+    </div>
+
+    <div class="section">
+        <button class="section-btn">📜 Biografia</button>
+        <div class="section-content">
+            <h2>Vita e Contesto Storico</h2>
+            <p>Lev Isaakovič Šestov (1866-1938), nato <strong>Yehuda Leyb Schwarzmann</strong> a Kiev, fu un filosofo esistenzialista russo di origine ebraica. Visse in un'epoca di grandi sconvolgimenti: la Rivoluzione Russa, l'esilio a Parigi e il confronto con pensatori come <strong>Nietzsche, Dostoevskij e Kierkegaard</strong>.</p>
+            <p>Dopo gli studi in legge, si dedicò alla filosofia, sviluppando un pensiero radicale che sfidava la ragione sistematica in nome della <strong>libertà individuale e del divino</strong>.</p>
+            
+            <blockquote>  
+                <p>«La filosofia non è una scienza, ma un grido disperato dell'uomo davanti all'abisso.»</p>  
+                <footer>— Šestov</footer>  
+            </blockquote>
+        </div>
+    </div>
+
+    <div class="section">
+        <button class="section-btn">🔥 Filosofia</button>
+        <div class="section-content">
+            <h2>Il Pensiero: Rivolta contro la Ragione</h2>
+            <p>Šestov attaccò il razionalismo occidentale, specialmente quello di <strong>Hegel e Spinoza</strong>, sostenendo che la verità ultima non può essere catturata dalla logica, ma solo attraverso l'<strong>esperienza personale e la fede</strong>.</p>
+            
+            <ul class="animated-list">
+                <li>📖 <strong>L'irrazionale come via:</strong> La verità si trova oltre la ragione, nell'assurdo e nel paradosso.</li>
+                <li>⚡ <strong>Libertà assoluta:</strong> L'uomo non deve accettare le "leggi necessarie" della filosofia tradizionale.</li>
+                <li>✝️ <strong>Dio oltre la morale:</strong> Un Dio che non risponde alla logica umana, simile a quello di Kierkegaard.</li>
+            </ul>
+            
+            <blockquote class="glow-text">
+                <p>«La ragione è la grande nemica della fede, perché pretende di spiegare ciò che è inesplicabile.»</p>
+                <footer>— Šestov, <cite>Atene e Gerusalemme</cite></footer>
+            </blockquote>
+        </div>
+    </div>
+
+    <div class="section">
+        <button class="section-btn">📚 Opere Principali</button>
+        <div class="section-content">
+            <h2>Scritti Fondamentali</h2>
+            
+            <div class="book-gallery">
+                <div class="book">
+                    <h3>«La filosofia della tragedia» (1903)</h3>
+                    <p>Analisi di Dostoevskij e Nietzsche come pensatori tragici che rivelano il conflitto tra ragione e esistenza.</p>
+                </div>
+                <div class="book">
+                    <h3>«Sulle rive del Giordano» (1938)</h3>
+                    <p>Riflessioni sul divino e l'impossibilità di conciliare fede e ragione attraverso il pensiero sistematico.</p>
+                </div>
+                <div class="book">
+                    <h3>«Atene e Gerusalemme» (1938)</h3>
+                    <p>Contrapposizione radicale tra la ragione greca (Atene) e la rivelazione biblica (Gerusalemme).</p>
+                </div>
+                <div class="book">
+                    <h3>«Potestas Clavium» (1923)</h3>
+                    <p>Critica alla filosofia tradizionale e affermazione della priorità dell'esperienza personale.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <button class="section-btn">💡 Influenza e Critica</button>
+        <div class="section-content">
+            <h2>Eredità Intellettuale</h2>
+            <p>Šestov influenzò profondamente <strong>l'esistenzialismo francese</strong>, in particolare:</p>
+            
+            <ul class="animated-list">
+                <li>🧠 <strong>Albert Camus:</strong> La sua nozione di assurdo risente del pensiero di Šestov</li>
+                <li>🕊️ <strong>Emmanuel Levinas:</strong> L'idea di un Dio che trascende la comprensione razionale</li>
+                <li>✍️ <strong>Jean Wahl:</strong> Importante divulgatore del pensiero di Šestov in Francia</li>
+            </ul>
+            
+            <p>Tuttavia, la sua radicale opposizione alla filosofia sistematica lo ha mantenuto ai margini del canone filosofico accademico.</p>
+            
+            <blockquote>
+                <p>«Šestov è il filosofo della disperazione che si trasforma in libertà, dell'angoscia che diventa grido di rivolta.»</p>
+                <footer>— Benjamin Fondane, discepolo di Šestov</footer>
+            </blockquote>
+        </div>
+    </div>
+
+    <div class="section">
+        <button class="section-btn">🎭 Šestov Oggi</button>
+        <div class="section-content">
+            <h2>Attualità del Pensiero</h2>
+            <p>In un'epoca di crisi delle grandi narrazioni, il pensiero di Šestov risuona con particolare forza:</p>
+            
+            <div class="book">
+                <h3>Rilevanza Contemporanea</h3>
+                <p>✔️ Critica al positivismo e al scientismo<br>
+                ✔️ Valorizzazione dell'esperienza soggettiva<br>
+                ✔️ Difesa della libertà contro i sistemi totalizzanti<br>
+                ✔️ Dialogo tra filosofia e letteratura</p>
+            </div>
+            
+            <p class="glow-text" style="text-align: center; font-size: 1.2em;">
+                «Il vero pensiero nasce quando la ragione riconosce i suoi limiti»
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Gestione dei bottoni delle sezioni
+        document.querySelectorAll('.section-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const content = btn.nextElementSibling;
+                btn.classList.toggle('active');
+                content.classList.toggle('show');
+            });
+        });
+
+        // Gestione delle modalità di lettura
+        document.getElementById('philosophy-btn').addEventListener('click', () => {
+            document.body.classList.toggle('philosophy-mode');
+        });
+
+        document.getElementById('night-btn').addEventListener('click', () => {
+            document.body.classList.toggle('night-mode');
+        });
+
+        document.getElementById('modern-btn').addEventListener('click', () => {
+            document.body.classList.toggle('modern-mode');
+        });
+
+        document.getElementById('mystic-btn').addEventListener('click', () => {
+            document.body.classList.toggle('mystic-mode');
+        });
+
+        // Apri la prima sezione automaticamente
+        document.querySelector('.section-btn').click();
+    </script>
+</body>
+</html>

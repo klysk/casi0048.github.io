@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dostoevskij: Il Profeta dell'Animo Umano</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Open+Sans:wght@400;600&display=swap');
+        
+        :root {
+            --primary: #5c3b21;
+            --secondary: #a67c52;
+            --accent: #8b4513;
+            --light: #f5f1e8;
+            --dark: #2a2118;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-attachment: fixed;
+            background-size: cover;
+            background-blend-mode: overlay;
+            background-color: rgba(245, 241, 232, 0.9);
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--primary);
+        }
+        
+        h1 {
+            font-size: 3.2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            animation: fadeInDown 1s ease;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .section {
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+        }
+        
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .toggle-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 1.3rem 2rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .toggle-btn:hover {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+        }
+        
+        .toggle-btn::after {
+            content: '+';
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+        }
+        
+        .toggle-btn.active::after {
+            content: '-';
+        }
+        
+        .content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.3s ease;
+            background-color: white;
+        }
+        
+        .content-inner {
+            padding: 0 2rem;
+        }
+        
+        .content.active {
+            max-height: 2000px;
+            padding: 1.5rem 2rem;
+            animation: fadeIn 0.8s ease;
+        }
+        
+        .quote {
+            font-style: italic;
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            background-color: rgba(139, 69, 19, 0.05);
+            position: relative;
+            animation: fadeIn 1s ease;
+        }
+        
+        .quote::before {
+            content: '"';
+            font-size: 4rem;
+            position: absolute;
+            left: 0.5rem;
+            top: -0.5rem;
+            opacity: 0.2;
+            line-height: 1;
+        }
+        
+        .highlight {
+            background-color: rgba(139, 69, 19, 0.1);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+                margin: 1rem auto;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .toggle-btn {
+                padding: 1rem 1.5rem;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Fëdor Dostoevskij</h1>
+        <h2 style="text-align: center; color: var(--secondary); margin-bottom: 2rem;">Il Profeta dell'Animo Umano</h2>
+        
+        <div class="section">
+            <button class="toggle-btn">📜 Vita e Sofferenza</button>
+            <div class="content">
+                <div class="content-inner">
+                    <p><strong>Fëdor Michajlovič Dostoevskij</strong> (1821-1881) è stato uno dei più profondi esploratori dell'animo umano nella letteratura mondiale. Nato a Mosca, visse un'esistenza segnata da:</p>
+                    
+                    <ul>
+                        <li>Epilessia e problemi di salute</li>
+                        <li>Condanna a morte commutata in lavori forzati in Siberia</li>
+                        <li>Debiti e difficoltà finanziarie</li>
+                        <li>Perdita del figlio Aleksej</li>
+                    </ul>
+                    
+                    <div class="quote">
+                        "La bellezza salverà il mondo."<br>
+                        — <em>L'idiota</em>
+                    </div>
+                    
+                    <p>Queste esperienze forgiano la sua visione tragica ma profondamente compassionevole dell'umanità, dove <span class="highlight">sofferenza e redenzione</span> si intrecciano inestricabilmente.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <button class="toggle-btn">📚 Opere Capitali</button>
+            <div class="content">
+                <div class="content-inner">
+                    <h3>I Cinque Grandi Romanzi</h3>
+                    <ol>
+                        <li><strong>Delitto e castigo</strong> (1866) - L'angoscia morale di Raskol'nikov</li>
+                        <li><strong>L'idiota</strong> (1869) - Il principe Myškin, "Cristo fallito"</li>
+                        <li><strong>I demoni</strong> (1872) - Profezia sul nichilismo rivoluzionario</li>
+                        <li><strong>L'adolescente</strong> (1875) - La ricerca dell'identità</li>
+                        <li><strong>I fratelli Karamazov</strong> (1880) - Summa del suo pensiero</li>
+                    </ol>
+                    
+                    <div class="quote">
+                        "Se Dio non esiste, tutto è permesso."<br>
+                        — <em>I fratelli Karamazov</em>
+                    </div>
+                    
+                    <h3>Altri Scritti Fondamentali</h3>
+                    <ul>
+                        <li><em>Memorie dal sottosuolo</em> (1864) - Manifesto dell'irrazionalità umana</li>
+                        <li><em>Umiliati e offesi</em> (1861) - La compassione per gli emarginati</li>
+                        <li><em>Il giocatore</em> (1866) - Scritto in 26 giorni per un debito</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <button class="toggle-btn">💡 Filosofia e Temi</button>
+            <div class="content">
+                <div class="content-inner">
+                    <h3>L'Uomo Dostoevskiano</h3>
+                    <p>Dostoevskij sonda gli abissi della psiche umana, rivelando:</p>
+                    
+                    <ul>
+                        <li>La <span class="highlight">lotta tra ragione e irrazionalità</span></li>
+                        <li>Il bisogno disperato di fede e la tentazione del dubbio</li>
+                        <li>La sofferenza come via di purificazione</li>
+                        <li>Il libero arbitrio come dono e condanna</li>
+                    </ul>
+                    
+                    <div class="quote">
+                        "L'uomo è un mistero. Un mistero che deve essere risolto, e se trascorrerai tutta la vita cercando di risolverlo, non dire che hai perso tempo."<br>
+                        — Lettere
+                    </div>
+                    
+                    <h3>Confronto con Nietzsche</h3>
+                    <p>Mentre Nietzsche proclama "Dio è morto", Dostoevskij mostra l'<span class="highlight">abisso</span> che questa verità apre nell'animo umano, anticipando:</p>
+                    <ul>
+                        <li>L'esistenzialismo</li>
+                        <li>La psicologia del profondo</li>
+                        <li>La crisi dell'uomo moderno</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <button class="toggle-btn">🎭 Personaggi Indimenticabili</button>
+            <div class="content">
+                <div class="content-inner">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                        <div>
+                            <h4>Raskol'nikov</h4>
+                            <p>Lo studente assassino di <em>Delitto e castigo</em>, diviso tra superomismo e rimorso.</p>
+                        </div>
+                        <div>
+                            <h4>Il principe Myškin</h4>
+                            <p>L'"idiota" buono e puro, specchio della figura di Cristo.</p>
+                        </div>
+                        <div>
+                            <h4>Ivan Karamazov</h4>
+                            <p>L'intellettuale tormentato dal problema del male in <em>I fratelli Karamazov</em>.</p>
+                        </div>
+                        <div>
+                            <h4>Stavrogin</h4>
+                            <p>Il nichilista carismatico de <em>I demoni</em>, incarnazione del vuoto morale.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="quote">
+                        "Sono un uomo malato... Sono un uomo cattivo. Un uomo sgradevole."<br>
+                        — <em>Memorie dal sottosuolo</em> (incipit)
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <button class="toggle-btn">🌍 Eredità e Influenza</button>
+            <div class="content">
+                <div class="content-inner">
+                    <h3>Impatto Culturale</h3>
+                    <ul>
+                        <li><strong>Letteratura</strong>: Influenzò Kafka, Sartre, Camus, Faulkner</li>
+                        <li><strong>Filosofia</strong>: Anticipò Freud, Jung, l'esistenzialismo</li>
+                        <li><strong>Psicologia</strong>: Studio pionieristico della colpa e redenzione</li>
+                    </ul>
+                    
+                    <div class="quote">
+                        "Dostoevskij mi ha dato più di qualsiasi scienziato, più di Gauss."<br>
+                        — Albert Einstein
+                    </div>
+                    
+                    <h3>Attualità</h3>
+                    <p>Nell'era della crisi spirituale e del nichilismo contemporaneo, Dostoevskij rimane un <span class="highlight">faro</span> per comprendere:</p>
+                    <ul>
+                        <li>Il terrorismo ideologico</li>
+                        <li>La solitudine dell'uomo moderno</li>
+                        <li>La ricerca disperata di significato</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.toggle-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                button.classList.toggle('active');
+                content.classList.toggle('active');
+                
+                // Scroll smooth per aprire la sezione
+                if (content.classList.contains('active')) {
+                    content.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            });
+        });
+        
+        // Apri la prima sezione
+        document.querySelector('.toggle-btn').click();
+    </script>
+</body>
+</html>

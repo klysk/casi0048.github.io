@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Massimo Cacciari: Filosofia tra Politica e Metropoli</title>
+    <style>
+        :root {
+            --primary: #263238;
+            --secondary: #546E7A;
+            --accent: #B0BEC5;
+            --text: #212121;
+            --bg: #ECEFF1;
+            --card-bg: #FFFFFF;
+            --transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* Reset e Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            padding: 20px;
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 40px 0 20px;
+            font-size: 3.5rem;
+            color: var(--primary);
+            font-weight: 300;
+            letter-spacing: 1px;
+            position: relative;
+        }
+
+        h1::after {
+            content: "";
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), transparent);
+            margin: 25px auto 15px;
+        }
+
+        h2 {
+            color: var(--primary);
+            margin: 35px 0 25px;
+            font-size: 2.4rem;
+            position: relative;
+            padding-bottom: 15px;
+            font-weight: 300;
+        }
+
+        h2::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        /* Modalità di Lettura - Bottoni architettonici */
+        .mode-selector {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin: 60px 0;
+        }
+
+        .mode-btn {
+            padding: 18px 35px;
+            border: none;
+            border-radius: 0;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: var(--transition);
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+            transform: perspective(500px) rotateY(-15deg);
+            transform-style: preserve-3d;
+            font-size: 1.2rem;
+            min-width: 220px;
+            justify-content: center;
+            clip-path: polygon(0 0, 85% 0, 100% 50%, 85% 100%, 0 100%);
+        }
+
+        .mode-btn::before {
+            content: "";
+            position: absolute;
+            right: -15%;
+            top: 0;
+            bottom: 0;
+            width: 15%;
+            background: inherit;
+            transform: skewY(45deg) translateX(15px);
+            opacity: 0.7;
+            filter: brightness(0.8);
+        }
+
+        .mode-btn:hover {
+            transform: perspective(500px) rotateY(-5deg) translateY(-5px);
+            box-shadow: 8px 15px 25px rgba(0,0,0,0.15);
+        }
+
+        #metropolis-btn {
+            background: linear-gradient(145deg, #263238, #37474F);
+            color: #CFD8DC;
+        }
+
+        #negative-btn {
+            background: linear-gradient(145deg, #546E7A, #455A64);
+            color: #ECEFF1;
+        }
+
+        #political-btn {
+            background: linear-gradient(145deg, #B0BEC5, #90A4AE);
+            color: #263238;
+        }
+
+        #modern-btn {
+            background: linear-gradient(145deg, #ECEFF1, #CFD8DC);
+            color: #263238;
+        }
+
+        /* Sezioni Accordion - A forma di edificio */
+        .section {
+            margin-bottom: 50px;
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            background: var(--card-bg);
+            transition: var(--transition);
+            position: relative;
+            border-left: 10px solid var(--primary);
+        }
+
+        .section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -10px;
+            bottom: 0;
+            width: 5px;
+            background: var(--accent);
+        }
+
+        .section-btn {
+            width: 100%;
+            padding: 30px 50px 30px 70px;
+            text-align: left;
+            border: none;
+            background: var(--primary);
+            color: var(--accent);
+            font-size: 1.6rem;
+            font-weight: 300;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+            position: relative;
+            letter-spacing: 1px;
+        }
+
+        .section-btn::before {
+            content: "";
+            position: absolute;
+            left: 35px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--accent);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            transition: var(--transition);
+        }
+
+        .section-btn:hover {
+            background: var(--secondary);
+        }
+
+        .section-btn.active::before {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.9s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .section-content-inner {
+            padding: 0 50px;
+        }
+
+        .section-content.show {
+            max-height: 4000px;
+        }
+
+        .section-content.show .section-content-inner {
+            padding: 50px;
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Elementi Speciali */
+        .bio-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 60px;
+            margin: 50px 0;
+        }
+
+        .bio-img {
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            align-self: center;
+            transition: var(--transition);
+            transform: perspective(1000px) rotateX(5deg);
+            border: 5px solid var(--card-bg);
+        }
+
+        .bio-img:hover {
+            transform: perspective(1000px) rotateX(0deg);
+        }
+
+        .bio-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .bio-img:hover img {
+            transform: scale(1.05);
+        }
+
+        .timeline {
+            list-style: none;
+            position: relative;
+            padding-left: 50px;
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+
+        .timeline li {
+            margin-bottom: 35px;
+            position: relative;
+            padding-left: 40px;
+            opacity: 0;
+            animation: slideIn 0.7s forwards;
+        }
+
+        .timeline li::before {
+            content: "";
+            position: absolute;
+            left: -5px;
+            top: 5px;
+            width: 25px;
+            height: 25px;
+            background: var(--card-bg);
+            border: 4px solid var(--primary);
+            transform: rotate(45deg);
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .quote-box {
+            background: var(--accent);
+            border-left: 5px solid var(--primary);
+            padding: 40px;
+            margin: 50px 0;
+            position: relative;
+            font-style: italic;
+            font-size: 1.3rem;
+            line-height: 1.7;
+            box-shadow: 8px 8px 20px rgba(0,0,0,0.08);
+            clip-path: polygon(0% 0%, 100% 0%, 100% 80%, 80% 100%, 0% 100%);
+        }
+
+        .quote-box::before {
+            content: """;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 6rem;
+            color: rgba(38, 50, 56, 0.1);
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .quote-box footer {
+            text-align: right;
+            margin-top: 25px;
+            font-weight: bold;
+            color: var(--primary);
+            font-style: normal;
+        }
+
+        .book-card {
+            background: var(--card-bg);
+            border-radius: 0;
+            padding: 40px;
+            margin: 40px 0;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            border-top: 5px solid var(--primary);
+            transition: var(--transition);
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 40px;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--secondary);
+        }
+
+        .book-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .book-cover {
+            width: 100%;
+            height: auto;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            transition: var(--transition);
+            position: relative;
+            z-index: 1;
+        }
+
+        .book-card:hover .book-cover {
+            transform: translateY(-10px) rotate(-2deg);
+        }
+
+        .book-info h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            font-weight: 300;
+            position: relative;
+        }
+
+        .book-info h3::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 50px;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        /* Modalità Speciali */
+        body.metropolis-mode {
+            --primary: #263238;
+            --secondary: #37474F;
+            --accent: #CFD8DC;
+            --text: #212121;
+            --bg: #ECEFF1;
+            --card-bg: #FFFFFF;
+        }
+
+        body.negative-mode {
+            --primary: #546E7A;
+            --secondary: #455A64;
+            --accent: #ECEFF1;
+            --text: #212121;
+            --bg: #CFD8DC;
+            --card-bg: #FFFFFF;
+        }
+
+        body.political-mode {
+            --primary: #B0BEC5;
+            --secondary: #90A4AE;
+            --accent: #FFFFFF;
+            --text: #263238;
+            --bg: #ECEFF1;
+            --card-bg: #FFFFFF;
+        }
+
+        body.modern-mode {
+            --primary: #ECEFF1;
+            --secondary: #CFD8DC;
+            --accent: #FFFFFF;
+            --text: #263238;
+            --bg: #FFFFFF;
+            --card-bg: #ECEFF1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .bio-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .book-card {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.8rem;
+            }
+            
+            .mode-btn {
+                clip-path: none;
+                transform: none !important;
+            }
+            
+            .mode-btn::before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="metropolis-mode">
+    <div class="container">
+        <h1>Massimo Cacciari</h1>
+        <h2 style="text-align: center; margin-bottom: 0; border-bottom: none;">Filosofia della Metropoli</h2>
+        
+        <div class="mode-selector">
+            <button id="metropolis-btn" class="mode-btn">🏙️ Metropoli</button>
+            <button id="negative-btn" class="mode-btn">⚫ Negativo</button>
+            <button id="political-btn" class="mode-btn">🏛️ Politico</button>
+            <button id="modern-btn" class="mode-btn">💻 Moderno</button>
+        </div>
+
+        <!-- Sezione Biografia -->
+        <div class="section">
+            <button class="section-btn">Vita e Percorso Intellettuale</button>
+            <div class="section-content">
+                <div class="section-content-inner">
+                    <div class="bio-grid">
+                        <div class="bio-img">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Massimo_Cacciari.jpg/800px-Massimo_Cacciari.jpg" alt="Massimo Cacciari">
+                        </div>
+                        <div class="bio-text">
+                            <p>Massimo Cacciari (1944) è uno dei più importanti filosofi e politici italiani contemporanei. Professore di Estetica all'Università Vita-Salute San Raffaele di Milano, ha unito ricerca filosofica e impegno politico, diventando anche sindaco di Venezia.</p>
+                            
+                            <ul class="timeline">
+                                <li style="animation-delay: 0.1s"><strong>1944:</strong> Nasce a Venezia il 5 giugno</li>
+                                <li style="animation-delay: 0.3s"><strong>1967:</strong> Si laurea in Filosofia all'Università di Padova</li>
+                                <li style="animation-delay: 0.5s"><strong>1976-1983:</strong> Deputato per il Partito di Unità Proletaria</li>
+                                <li style="animation-delay: 0.7s"><strong>1993-2000:</strong> Sindaco di Venezia</li>
+                                <li style="animation-delay: 0.9s"><strong>2002:</strong> Pubblica "L'arcipelago", opera fondamentale</li>
+                                <li style="animation-delay: 1.1s"><strong>Oggi:</strong> Professore emerito e saggista</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="quote-box">
+                        <p>"La città è il luogo dove il conflitto diventa forma, dove la contraddizione si fa architettura."</p>
+                        <footer>— Massimo Cacciari</footer>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Filosofia -->
+        <div class="section">
+            <button class="section-btn">Il Pensiero Filosofico</button>
+            <div class="section-content">
+                <div class="section-content-inner">
+                    <h2>Tra Metropoli e Negativo</h2>
+                    <p>Cacciari ha sviluppato una filosofia originale che unisce riflessione sulla città, teologia negativa e analisi del potere.</p>
+                    
+                    <div class="book-card">
+                        <img src="https://m.media-amazon.com/images/I/71Q5h+QyzEL._AC_UF1000,1000_QL80_.jpg" alt="L'arcipelago" class="book-cover">
+                        <div class="book-info">
+                            <h3>L'arcipelago (2002)</h3>
+                            <p>Analisi filosofica della città contemporanea come spazio di conflitto e pluralità. Cacciari esplora come la metropoli moderna rappresenti la crisi delle forme tradizionali di comunità.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="quote-box">
+                        <p>"Il negativo non è ciò che manca, ma ciò che eccede ogni forma determinata."</p>
+                        <footer>— Massimo Cacciari, Della cosa ultima</footer>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Opere -->
+        <div class="section">
+            <button class="section-btn">Opere Principali</button>
+            <div class="section-content">
+                <div class="section-content-inner">
+                    <h2>Un Percorso Multidisciplinare</h2>
+                    <p>L'opera di Cacciari spazia dalla filosofia politica all'estetica, dalla teologia all'urbanistica.</p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; margin: 40px 0;">
+                        <div style="background: var(--accent); padding: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
+                            <h3 style="color: var(--primary); margin-bottom: 20px;">Krisis (1976)</h3>
+                            <p>Studio sulla crisi del pensiero moderno e sulle figure della razionalità contemporanea.</p>
+                        </div>
+                        
+                        <div style="background: var(--accent); padding: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
+                            <h3 style="color: var(--primary); margin-bottom: 20px;">Della cosa ultima (2004)</h3>
+                            <p>Riflessione sulla teologia negativa e il rapporto tra filosofia e religione.</p>
+                        </div>
+                        
+                        <div style="background: var(--accent); padding: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
+                            <h3 style="color: var(--primary); margin-bottom: 20px;">Labirinto filosofico (2014)</h3>
+                            <p>Raccolta di saggi che attraversano l'intero percorso intellettuale di Cacciari.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Eredità -->
+        <div class="section">
+            <button class="section-btn">Eredità e Attualità</button>
+            <div class="section-content">
+                <div class="section-content-inner">
+                    <h2>L'Influenza di Cacciari</h2>
+                    <p>Il pensiero di Cacciari continua a influenzare la filosofia contemporanea, l'urbanistica e la teoria politica.</p>
+                    
+                    <div style="margin: 30px 0;">
+                        <h3>Contributi Fondamentali</h3>
+                        <ul style="list-style-type: none; margin: 20px 0;">
+                            <li style="margin-bottom: 15px; padding-left: 25px; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--primary);">▸</span>
+                                <strong>Filosofia della città:</strong> Ha ridefinito l'approccio allo spazio urbano
+                            </li>
+                            <li style="margin-bottom: 15px; padding-left: 25px; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--primary);">▸</span>
+                                <strong>Teologia negativa:</strong> Interpretazioni innovative della tradizione apofatica
+                            </li>
+                            <li style="margin-bottom: 15px; padding-left: 25px; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--primary);">▸</span>
+                                <strong>Teoria politica:</strong> Analisi originali del potere e della sovranità
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="quote-box">
+                        <p>"Cacciari ci ha insegnato che pensare la città significa pensare la complessità del vivere contemporaneo."</p>
+                        <footer>— Rem Koolhaas</footer>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Gestione accordion
+        document.querySelectorAll('.section-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const section = btn.parentElement;
+                const content = btn.nextElementSibling;
+                
+                // Chiudi tutte le altre sezioni
+                document.querySelectorAll('.section-content').forEach(item => {
+                    if (item !== content) {
+                        item.classList.remove('show');
+                        item.previousElementSibling.classList.remove('active');
+                    }
+                });
+                
+                // Apri/chiudi la sezione corrente
+                btn.classList.toggle('active');
+                content.classList.toggle('show');
+                
+                // Animazione timeline quando si apre la sezione biografia
+                if (btn.textContent.includes('Vita e Percorso') && content.classList.contains('show')) {
+                    document.querySelectorAll('.timeline li').forEach((item, index) => {
+                        item.style.animation = `slideIn 0.7s ease-out ${index * 0.2}s forwards`;
+                    });
+                }
+            });
+        });
+        
+        // Modalità di lettura
+        document.getElementById('metropolis-btn').addEventListener('click', () => {
+            document.body.className = 'metropolis-mode';
+        });
+        
+        document.getElementById('negative-btn').addEventListener('click', () => {
+            document.body.className = 'negative-mode';
+        });
+        
+        document.getElementById('political-btn').addEventListener('click', () => {
+            document.body.className = 'political-mode';
+        });
+        
+        document.getElementById('modern-btn').addEventListener('click', () => {
+            document.body.className = 'modern-mode';
+        });
+        
+        // Apri la prima sezione all'avvio
+        document.querySelector('.section-btn').click();
+    </script>
+</body>
+</html>
