@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leszek Kołakowski - Filosofo della Libertà</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+            --card-bg: #fff;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --font-heading: 'Georgia', serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-heading);
+            color: var(--primary-color);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+        }
+
+        /* Stili per i bottoni apri/chiudi */
+        .accordion {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .accordion:hover {
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .accordion-btn {
+            width: 100%;
+            padding: 18px 20px;
+            text-align: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            font-family: var(--font-heading);
+            color: white;
+            background-color: var(--secondary-color);
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .accordion-btn:after {
+            content: '+';
+            font-size: 22px;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-btn.active:after {
+            content: '-';
+        }
+
+        .accordion-btn.circle {
+            border-radius: 50px;
+        }
+
+        .accordion-btn.rounded {
+            border-radius: 8px;
+        }
+
+        .accordion-btn.sharp {
+            border-radius: 0;
+        }
+
+        .accordion-btn.primary {
+            background-color: var(--primary-color);
+        }
+
+        .accordion-btn.secondary {
+            background-color: var(--secondary-color);
+        }
+
+        .accordion-btn.accent {
+            background-color: var(--accent-color);
+        }
+
+        .panel {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background-color: var(--card-bg);
+        }
+
+        .panel-content {
+            padding: 20px 0;
+        }
+
+        /* Stili per le modalità di lettura */
+        .reading-modes {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Stili per le diverse modalità */
+        .philosophical-mode {
+            --primary-color: #8e44ad;
+            --secondary-color: #9b59b6;
+            --accent-color: #e67e22;
+            --text-color: #2c3e50;
+            --bg-color: #f5eef8;
+            --card-bg: #fff;
+        }
+
+        .night-mode {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --accent-color: #e74c3c;
+            --text-color: #ecf0f1;
+            --bg-color: #2c3e50;
+            --card-bg: #34495e;
+        }
+
+        .vintage-mode {
+            --primary-color: #8b4513;
+            --secondary-color: #a0522d;
+            --accent-color: #cd853f;
+            --text-color: #5a3921;
+            --bg-color: #f5f5dc;
+            --card-bg: #faebd7;
+        }
+
+        .modern-mode {
+            --primary-color: #2c3e50;
+            --secondary-color: #1abc9c;
+            --accent-color: #e74c3c;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+            --card-bg: #fff;
+        }
+
+        .dialectic-mode {
+            --primary-color: #6a1b9a;
+            --secondary-color: #9c27b0;
+            --accent-color: #ff9800;
+            --text-color: #333;
+            --bg-color: #f3e5f5;
+            --card-bg: #fff;
+        }
+
+        /* Stili per citazioni */
+        blockquote {
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            color: var(--primary-color);
+        }
+
+        /* Stili per immagini */
+        .img-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .img-container img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .img-caption {
+            font-style: italic;
+            margin-top: 10px;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        /* Stili per i bottoni forma */
+        .shape-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .shape-btn {
+            padding: 8px 15px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .shape-btn.active {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        /* Stili per timeline */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 30px auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background-color: var(--secondary-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--card-bg);
+            border: 3px solid var(--secondary-color);
+            border-radius: 50%;
+            top: 15px;
+            z-index: 1;
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        .left::after {
+            right: -10px;
+        }
+
+        .right::after {
+            left: -10px;
+        }
+
+        .timeline-content {
+            padding: 15px;
+            background-color: var(--card-bg);
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Stili per diagrammi */
+        .concept-map {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .concept-node {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            display: inline-block;
+            margin: 5px;
+        }
+
+        .concept-relation {
+            font-style: italic;
+            color: var(--primary-color);
+            text-align: center;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Leszek Kołakowski: Filosofo della Libertà e della Dialettica</h1>
+        
+        <div class="reading-modes">
+            <button class="mode-btn" onclick="setMode('philosophical')">Modalità Filosofica</button>
+            <button class="mode-btn" onclick="setMode('night')">Modalità Notturna</button>
+            <button class="mode-btn" onclick="setMode('vintage')">Modalità Vintage</button>
+            <button class="mode-btn" onclick="setMode('modern')">Modalità Moderna</button>
+            <button class="mode-btn" onclick="setMode('dialectic')">Modalità Dialettica</button>
+        </div>
+        
+        <div class="shape-buttons">
+            <button class="shape-btn" onclick="setShape('rounded')">Angoli Arrotondati</button>
+            <button class="shape-btn" onclick="setShape('circle')">Circolare</button>
+            <button class="shape-btn" onclick="setShape('sharp')">Angoli Vivi</button>
+        </div>
+        
+        <div class="img-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Leszek_Ko%C5%82akowski.jpg/640px-Leszek_Ko%C5%82akowski.jpg" alt="Leszek Kołakowski">
+            <div class="img-caption">Leszek Kołakowski (1927-2009), pensatore polacco tra i più influenti del XX secolo</div>
+        </div>
+        
+        <div class="accordion">
+            <button class="accordion-btn primary rounded">Vita e Percorso Intellettuale</button>
+            <div class="panel">
+                <div class="panel-content">
+                    <p>Leszek Kołakowski nacque il 23 ottobre 1927 a Radom, in Polonia. La sua vita riflette le contraddizioni e i drammi dell'Europa del XX secolo:</p>
+                    
+                    <div class="timeline">
+                        <div class="timeline-item left">
+                            <div class="timeline-content">
+                                <h3>1939-1945</h3>
+                                <p>Vive l'occupazione nazista, perdendo il padre, membro della resistenza</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item right">
+                            <div class="timeline-content">
+                                <h3>1945</h3>
+                                <p>Si iscrive all'Università di Łódź, aderendo al Partito Comunista</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item left">
+                            <div class="timeline-content">
+                                <h3>1953</h3>
+                                <p>Ottiene il dottorato con una tesi su Spinoza</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item right">
+                            <div class="timeline-content">
+                                <h3>1966</h3>
+                                <p>Espulso dal Partito Comunista per le sue critiche al regime</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item left">
+                            <div class="timeline-content">
+                                <h3>1968</h3>
+                                <p>Costretto all'esilio dopo le proteste studentesche</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item right">
+                            <div class="timeline-content">
+                                <h3>1978</h3>
+                                <p>Pubblica "Correnti principali del marxismo", la sua opera magna</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item left">
+                            <div class="timeline-content">
+                                <h3>2009</h3>
+                                <p>Muore il 17 luglio a Oxford, dove insegnava</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <blockquote>"La storia ci insegna che non impara nulla dalla storia."</blockquote>
+                    
+                    <p>Kołakowski rappresenta un raro esempio di intellettuale che seppe evolvere dal marxismo ortodosso a una critica radicale di ogni totalitarismo, senza mai perdere la profondità analitica.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <button class="accordion-btn secondary rounded">Critica del Marxismo</button>
+            <div class="panel">
+                <div class="panel-content">
+                    <p>L'opera più celebre di Kołakowski, "Correnti principali del marxismo" (1976-1978), rappresenta una critica sistematica al pensiero marxista:</p>
+                    
+                    <div class="concept-map">
+                        <div class="concept-node">Utopia marxista</div>
+                        <div class="concept-relation">si trasforma in</div>
+                        <div class="concept-node">Dogma ideologico</div>
+                        <div class="concept-relation">porta a</div>
+                        <div class="concept-node">Totalitarismo</div>
+                        <div class="concept-relation">generando</div>
+                        <div class="concept-node">Fallimento storico</div>
+                    </div>
+                    
+                    <h3>Punti chiave della critica:</h3>
+                    <ul>
+                        <li>Il marxismo come "fantasia escatologica" che promette la fine della storia</li>
+                        <li>La contraddizione tra determinismo storico e attivismo rivoluzionario</li>
+                        <li>La trasformazione del marxismo in religione secolare</li>
+                        <li>L'impossibilità di realizzare l'utopia comunista senza oppressione</li>
+                    </ul>
+                    
+                    <p>Nonostante la critica radicale, Kołakowski riconosceva al marxismo il merito di aver sollevato importanti questioni sociali e filosofiche.</p>
+                    
+                    <blockquote>"Il marxismo è stata la più grande fantasia del nostro secolo... una fantasia che si è trasformata in un mostro."</blockquote>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <button class="accordion-btn accent rounded">Filosofia della Religione</button>
+            <div class="panel">
+                <div class="panel-content">
+                    <p>Kołakowski sviluppò un'originale riflessione sul fenomeno religioso, caratterizzata da:</p>
+                    
+                    <h3>Approccio non riduzionista</h3>
+                    <p>Rifiutava sia la fede dogmatica sia il materialismo ateo, proponendo invece:
+                        <ul>
+                            <li>Una comprensione della religione come bisogno umano fondamentale</li>
+                            <li>L'analisi del sacro come categoria irriducibile</li>
+                            <li>La critica alle "religioni secolari" (nazionalismo, comunismo)</li>
+                        </ul>
+                    </p>
+                    
+                    <h3>Opere principali</h3>
+                    <ul>
+                        <li>"Dio non ci deve nulla" (1995) - Sulla teodicea</li>
+                        <li>"Se Dio non esiste..." (1982) - Sul rapporto tra religione e morale</li>
+                        <li>"La presenza del mito" (1972) - Sulla funzione dei miti nella cultura</li>
+                    </ul>
+                    
+                    <div class="img-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Leszek_Ko%C5%82akowski_2006.jpg/640px-Leszek_Ko%C5%82akowski_2006.jpg" alt="Kołakowski in età avanzata">
+                        <div class="img-caption">Leszek Kołakowski negli ultimi anni di vita</div>
+                    </div>
+                    
+                    <blockquote>"La domanda 'Dio esiste?' è meno importante della domanda 'Che tipo di Dio potrebbe esistere?'"</blockquote>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <button class="accordion-btn primary rounded">Etica e Libertà</button>
+            <div class="panel">
+                <div class="panel-content">
+                    <p>Al centro del pensiero di Kołakowski sta la difesa della libertà individuale contro ogni forma di totalitarismo:</p>
+                    
+                    <h3>Principi etici fondamentali</h3>
+                    <ul>
+                        <li>L'individuo come valore assoluto</li>
+                        <li>Il rifiuto di ogni utopia che sacrifichi il presente al futuro</li>
+                        <li>La responsabilità personale come fondamento della morale</li>
+                        <li>La critica al relativismo etico radicale</li>
+                    </ul>
+                    
+                    <h3>Contributi alla filosofia politica</h3>
+                    <p>Kołakowski analizzò i pericoli delle ideologie totalitarie, sostenendo:
+                        <ul>
+                            <li>La necessità di un pluralismo politico</li>
+                            <li>L'importanza delle istituzioni democratiche</li>
+                            <li>Il valore della tradizione liberale</li>
+                            <li>La critica al fondamentalismo ideologico</li>
+                        </ul>
+                    </p>
+                    
+                    <blockquote>"La libertà è il valore supremo, perché senza libertà non possiamo realizzare nessun altro valore."</blockquote>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <button class="accordion-btn secondary rounded">Stile e Metodo Filosofico</button>
+            <div class="panel">
+                <div class="panel-content">
+                    <p>Kołakowski univa profondità filosofica a una straordinaria chiarezza espositiva:</p>
+                    
+                    <h3>Caratteristiche dello stile</h3>
+                    <ul>
+                        <li>Uso magistrale dell'ironia e del paradosso</li>
+                        <li>Capacità di sintesi tra erudizione e chiarezza</li>
+                        <li>Approccio interdisciplinare (filosofia, storia, teologia)</li>
+                        <li>Rifiuto del gergo tecnico inaccessibile</li>
+                    </ul>
+                    
+                    <h3>Metodo filosofico</h3>
+                    <div class="concept-map">
+                        <div class="concept-node">Analisi storica</div>
+                        <div class="concept-relation">+</div>
+                        <div class="concept-node">Rigore logico</div>
+                        <div class="concept-relation">+</div>
+                        <div class="concept-node">Senso comune</div>
+                        <div class="concept-relation">=</div>
+                        <div class="concept-node">Filosofia accessibile</div>
+                    </div>
+                    
+                    <p>Questa combinazione rende le sue opere apprezzabili sia dagli specialisti che dal pubblico colto.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <button class="accordion-btn accent rounded">Influenza e Riconoscimenti</button>
+            <div class="panel">
+                <div class="panel-content">
+                    <p>Kołakowski è considerato uno dei più importanti pensatori del XX secolo:</p>
+                    
+                    <h3>Riconoscimenti principali</h3>
+                    <ul>
+                        <li>Premio Erasmus (1983)</li>
+                        <li>Premio Kluge (2003) - Considerato il "Nobel" per le scienze umane</li>
+                        <li>Premio Gerusalemme (2007) - Per la difesa della libertà individuale</li>
+                        <li>Membro di numerose accademie scientifiche</li>
+                    </ul>
+                    
+                    <h3>Influenza contemporanea</h3>
+                    <p>Il suo pensiero continua a ispirare:
+                        <ul>
+                            <li>La critica alle ideologie totalitarie</li>
+                            <li>La filosofia della religione</li>
+                            <li>La riflessione sull'etica pubblica</li>
+                            <li>La difesa della libertà intellettuale</li>
+                        </ul>
+                    </p>
+                    
+                    <div class="img-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Leszek_Ko%C5%82akowski_2007.jpg/640px-Leszek_Ko%C5%82akowski_2007.jpg" alt="Kołakowski riceve il premio Gerusalemme">
+                        <div class="img-caption">Kołakowski riceve il Premio Gerusalemme nel 2007</div>
+                    </div>
+                    
+                    <blockquote>"Il compito della filosofia non è rispondere alle domande, ma renderci consapevoli della loro profondità."</blockquote>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funzione per i bottoni apri/chiudi
+        var acc = document.getElementsByClassName("accordion-btn");
+        var i;
+        
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                } 
+            });
+        }
+        
+        // Funzione per cambiare modalità di lettura
+        function setMode(mode) {
+            document.body.className = mode + '-mode';
+        }
+        
+        // Funzione per cambiare forma dei bottoni
+        function setShape(shape) {
+            var buttons = document.getElementsByClassName('accordion-btn');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].className = 'accordion-btn ' + getButtonColorClass(buttons[i]) + ' ' + shape;
+            }
+            
+            // Aggiorna lo stato attivo dei bottoni forma
+            var shapeButtons = document.getElementsByClassName('shape-btn');
+            for (var i = 0; i < shapeButtons.length; i++) {
+                shapeButtons[i].classList.remove('active');
+            }
+            event.target.classList.add('active');
+        }
+        
+        // Funzione helper per ottenere la classe colore del bottone
+        function getButtonColorClass(button) {
+            if (button.classList.contains('primary')) return 'primary';
+            if (button.classList.contains('secondary')) return 'secondary';
+            if (button.classList.contains('accent')) return 'accent';
+            return '';
+        }
+        
+        // Apri il primo pannello all'avvio
+        document.addEventListener('DOMContentLoaded', function() {
+            var firstPanel = document.querySelector('.panel');
+            firstPanel.style.maxHeight = firstPanel.scrollHeight + "px";
+            document.querySelector('.accordion-btn').classList.add('active');
+            
+            // Imposta il bottone forma predefinito come attivo
+            document.querySelector('.shape-btn').classList.add('active');
+        });
+    </script>
+</body>
+</html>
