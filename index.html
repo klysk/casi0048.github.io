@@ -12,6 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <!-- Alternativa classica e filosofica -->
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
 
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,7 +37,9 @@
     z-index: 10;
     transition: all 0.2s;
   }
-
+.menu-btn {
+  font-family: 'Roboto Condensed', sans-serif;
+}
   /* Aumenta area cliccabile con pseudo-elemento */
   .menu-desktop > ul > li > a::after,
   .menu-desktop > ul > li > button.menu-btn::after {
@@ -112,7 +115,9 @@
   body {
     margin: 20px;
     background-color: #12182b;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+font-family: 'Roboto Condensed', sans-serif;
+
+    
     color: #e0e6f3;
   }
 
@@ -150,6 +155,7 @@ nav.menu-desktop {
   nav.menu-desktop > ul > li.dropdown {
     position: relative;
   }
+
 
   nav.menu-desktop > ul > li > a,
   nav.menu-desktop > ul > li > button.menu-btn {
@@ -655,7 +661,26 @@ header {
     color: #ffd700;
     text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
 }
+.arrow {
+  font-size: 10px;
+  display: block;
+  margin-top: 2px;
+}
+<!--  i sposta freccette menu sotto-->
+.menu-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 10px; /* Regola se vuoi meno spazio verticale */
+  line-height: 1.2;
+}
 
+.menu-btn .arrow {
+  font-size: 10px;
+  margin-top: 2px; /* distanza dal testo */
+}
+
+<!--  f sposta freccette menu sotto-->
 
 .menu-desktop .arrow {
     display: inline-block;
@@ -933,7 +958,7 @@ header {
     text-align: center;
 
 
-<!--  iii modifica  >
+<!--  iii modifica  -->
 .welcome-mask {
     position: absolute;
     top: 0;
@@ -1802,11 +1827,45 @@ document.addEventListener("DOMContentLoaded", function() {
 <a href="articoli/bodei.html" role="menuitem">Remo Bodei</a>
 <a href="articoli/cacciari.html" role="menuitem">Massimo Cacciari </a>
 <a href="articoli/galimberti.html" role="menuitem">Umberto Galimberti</a>
+ </div>
 
-
-      </div>
-    </div>
-</div>
+<!-------------------->
+<<li class="dropdown">
+        <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
+          Filosofia polacca <span class="arrow">▼</span>
+        </button>
+        <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia moderna">
+          <div>
+            <h4>Romanticismo</h4>
+            <a href=" articoli/wronski.html" role="menuitem">Józef Hoene-Wroński </a>
+            <a href=" articoli/cieszkowski.html" role="menuitem">August Cieszkowski </a>
+<a href=" articoli/mickiewicz.html" role="menuitem">Adam Mickiewicz </a>
+<a href=" articoli/rzewuski.html" role="menuitem">Henryk Rzewuski </a>
+<a href=" articoli/potocki.html" role="menuitem">Stanisław Kostka Potocki </a>
+           
+          </div>
+ <div>
+            <h4>Logica e Analitica</h4>
+            <a href=" articoli/twardowski.html" role="menuitem">Kazimierz Twardowski</a>
+            <a href=" articoli/lukasiewicz.html" role="menuitem">Jan Łukasiewicz</a>
+            <a href=" articoli/tarski.html" role="menuitem">Alfred Tarski</a>
+<a href=" articoli/kotarbinski.html" role="menuitem">Tadeusz Kotarbiński</a>
+            <a href="articoli/ingarden.html " role="menuitem">Roman Ingarden</a>
+          </div>
+ <div>
+            <h4>Periodo  cumunista</h4>
+            <a href=" articoli/kolakowski.html" role="menuitem">Leszek Kołakowski</a>
+            <a href=" articoli/wojtyla.html" role="menuitem">Karol Wojtyła <br>(Papa Giovanni Paolo II) </a>
+            
+          </div>
+ <div>
+            <h4> Post-Comunista </h4>
+            <a href="articoli/tischner.html " role="menuitem">Józef Tischner </a>
+            <a href="articoli/bauman.html " role="menuitem">Zygmunt Bauman </a>
+            
+          </div>
+</li>
+<!--------------------------------------->
 <li class="dropdown">
   <a href="https://casi0048.github.io/pagine/pagina%20contatti.html"
      class="menu-btn underline-effect" role="menuitem">
@@ -1833,7 +1892,7 @@ document.addEventListener("DOMContentLoaded", function() {
   <div class="welcome-content">
     <h1 class="welcome-title">Benvenuto<br>in Echi di Sofia</h1>
     
-    <p class="welcome-subtitle">Φ Pensare, dunque è ancora possibile Φ</p>
+    <p class="welcome-subtitle"></p>
     
     <div class="welcome-quote">
       <p class="quote-text"></p>
@@ -1848,7 +1907,7 @@ document.addEventListener("DOMContentLoaded", function() {
   <div class="welcome-mask"></div>
   
 <h1 class="welcome-title">Benvenuto<br>in Echi di Sofia</h1>
-<p class="welcome-subtitle">Φ Pensare, dunque è ancora possibile Φ</p>
+<p class="welcome-subtitle">Φ Pensare, dunque è ancora possibile ♾️</p>
 
     <div class="welcome-quote">
       <p class="quote-text"></p>
@@ -2932,8 +2991,8 @@ document.addEventListener("DOMContentLoaded", function() {
     gap: 2.5rem;
     margin-bottom: 2rem;
 ">
-          
-    <a href="pagine/pagina%20contatti.html"
+             
+    <a href="https://casi0048.github.io/pagine/pagina%20CONTATTI.html"
        style="color: #d4af37; text-decoration: none; transition: all 0.3s ease; font-size: 0.9rem; letter-spacing: 1px;"
        onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Contatti</a>
 
@@ -3216,7 +3275,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Testo del sottotitolo se vuoi effetto macchina da scrivere
     const subtitleEl = document.querySelector(".welcome-subtitle");
-    const subtitleText = "🕯️Il vuoto è pieno... di domande ⏳";
+    const subtitleText = "🕯️Il vuoto è pieno... di domande ⏳Φ Pensare, dunque è ancora possibile ♾️";
     let i = 0;
 
     function typeSubtitle() {
