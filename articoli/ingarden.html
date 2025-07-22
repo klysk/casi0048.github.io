@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roman Ingarden - Filosofo dell'Esperienza Estetica</title>
+    <style>
+        :root {
+            --primary-color: #6a1b9a;
+            --secondary-color: #4a148c;
+            --text-color: #212121;
+            --bg-color: #f5f5f5;
+            --card-bg: #ffffff;
+            --border-radius: 12px;
+            --box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            --button-font: 'Arial', sans-serif;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        h1 {
+            text-align: center;
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+            font-size: 2.6em;
+        }
+
+        .reading-modes {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 12px 22px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.4s;
+            font-size: 16px;
+            font-family: var(--button-font);
+            letter-spacing: 0.7px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+
+        #default-btn {
+            background: linear-gradient(135deg, #6a1b9a, #9c27b0);
+            color: white;
+        }
+
+        #aesthetic-btn {
+            background: linear-gradient(135deg, #ad1457, #d81b60);
+            color: white;
+        }
+
+        #night-btn {
+            background: linear-gradient(135deg, #283593, #3949ab);
+            color: white;
+        }
+
+        #phenomeno-btn {
+            background: linear-gradient(135deg, #00695c, #00897b);
+            color: white;
+        }
+
+        #classic-btn {
+            background: linear-gradient(135deg, #5d4037, #8d6e63);
+            color: #ffebee;
+        }
+
+        .toggle-section {
+            margin-bottom: 30px;
+        }
+
+        .toggle-header {
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            cursor: pointer;
+            border-radius: var(--border-radius);
+            position: relative;
+            transition: all 0.4s;
+            font-size: 20px;
+            box-shadow: var(--box-shadow);
+            font-family: var(--button-font);
+            letter-spacing: 0.8px;
+            overflow: hidden;
+        }
+
+        .toggle-header:hover {
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .toggle-header::after {
+            content: '⌄';
+            position: absolute;
+            right: 20px;
+            font-size: 24px;
+            transition: transform 0.4s;
+        }
+
+        .toggle-header.active::after {
+            content: '⌃';
+        }
+
+        .toggle-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: var(--card-bg);
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .toggle-content-inner {
+            padding: 30px;
+        }
+
+        .quote {
+            font-style: italic;
+            border-left: 4px solid var(--primary-color);
+            padding: 20px;
+            margin: 30px 0;
+            color: #555;
+            background-color: rgba(0,0,0,0.03);
+            border-radius: 0 8px 8px 0;
+            position: relative;
+        }
+
+        .quote::before {
+            content: '"';
+            font-size: 4em;
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            color: rgba(0,0,0,0.05);
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            border: 1px solid rgba(0,0,0,0.1);
+            transition: transform 0.4s;
+        }
+
+        .image-container img:hover {
+            transform: scale(1.02);
+        }
+
+        /* Aesthetic mode */
+        body.aesthetic-mode {
+            --primary-color: #ad1457;
+            --secondary-color: #880e4f;
+            --text-color: #4a148c;
+            --bg-color: #fce4ec;
+            --card-bg: #ffffff;
+            font-family: 'Palatino', serif;
+        }
+
+        body.aesthetic-mode .quote {
+            background-color: rgba(173, 20, 87, 0.05);
+        }
+
+        /* Night mode */
+        body.night-mode {
+            --primary-color: #3949ab;
+            --secondary-color: #283593;
+            --text-color: #e0e0e0;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        body.night-mode .quote {
+            color: #b0bec5;
+            background-color: rgba(255,255,255,0.05);
+        }
+
+        /* Phenomenology mode */
+        body.phenomeno-mode {
+            --primary-color: #00695c;
+            --secondary-color: #004d40;
+            --text-color: #263238;
+            --bg-color: #e0f2f1;
+            --card-bg: #ffffff;
+            font-family: 'Times New Roman', serif;
+        }
+
+        body.phenomeno-mode h1 {
+            font-variant: small-caps;
+        }
+
+        /* Classic mode */
+        body.classic-mode {
+            --primary-color: #5d4037;
+            --secondary-color: #3e2723;
+            --text-color: #4e342e;
+            --bg-color: #efebe9;
+            --card-bg: #fff;
+            font-family: 'Georgia', serif;
+        }
+
+        body.classic-mode .toggle-header {
+            font-weight: bold;
+        }
+
+        /* Button shapes */
+        .shape-options {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .shape-btn {
+            padding: 12px 22px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+            background: linear-gradient(135deg, #757575, #9e9e9e);
+            color: white;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+
+        .shape-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        }
+
+        #rounded-btn {
+            border-radius: 30px;
+        }
+
+        #square-btn {
+            border-radius: 0;
+        }
+
+        #pill-btn {
+            border-radius: 50px;
+            padding: 12px 30px;
+        }
+
+        #soft-btn {
+            border-radius: 15px;
+        }
+
+        #sharp-btn {
+            border-radius: 5px;
+        }
+
+        /* Concept boxes */
+        .concept-box {
+            background-color: rgba(106, 27, 154, 0.05);
+            border: 1px solid rgba(106, 27, 154, 0.2);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: var(--border-radius);
+            transition: all 0.4s;
+        }
+
+        .concept-box:hover {
+            background-color: rgba(106, 27, 154, 0.1);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .concept-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 40px auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+
+        .timeline-item {
+            padding: 20px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--card-bg);
+            border: 4px solid var(--primary-color);
+            border-radius: 50%;
+            top: 30px;
+            z-index: 1;
+        }
+
+        .left {
+            left: 0;
+            text-align: right;
+        }
+
+        .right {
+            left: 50%;
+            text-align: left;
+        }
+
+        .left::after {
+            right: -12px;
+        }
+
+        .right::after {
+            left: -12px;
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .timeline-year {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Roman Ingarden: Fenomenologo dell'Arte e dell'Ontologia</h1>
+
+    <div class="image-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Roman_Ingarden.jpg/220px-Roman_Ingarden.jpg" alt="Roman Ingarden">
+        <p><em>Roman Ingarden (1893-1970)</em></p>
+    </div>
+
+    <div class="reading-modes">
+        <button id="default-btn" class="mode-btn">Default</button>
+        <button id="aesthetic-btn" class="mode-btn">Estetico</button>
+        <button id="night-btn" class="mode-btn">Notturno</button>
+        <button id="phenomeno-btn" class="mode-btn">Fenomenologico</button>
+        <button id="classic-btn" class="mode-btn">Classico</button>
+    </div>
+
+    <div class="shape-options">
+        <button id="rounded-btn" class="shape-btn">Arrotondato</button>
+        <button id="square-btn" class="shape-btn">Quadrato</button>
+        <button id="pill-btn" class="shape-btn">Pillola</button>
+        <button id="soft-btn" class="shape-btn">Morbido</button>
+        <button id="sharp-btn" class="shape-btn">Netto</button>
+    </div>
+
+    <div class="toggle-section">
+        <div class="toggle-header">Vita e Formazione</div>
+        <div class="toggle-content">
+            <div class="toggle-content-inner">
+                <p>Roman Witold Ingarden nacque il 5 febbraio 1893 a Cracovia, allora parte dell'Impero Austro-Ungarico, e morì il 14 giugno 1970 nella stessa città. Fu uno dei più importanti filosofi polacchi del XX secolo e principale rappresentante della fenomenologia in Polonia.</p>
+                
+                <p>Studiò filosofia a Leopoli con Kazimierz Twardowski e a Gottinga con Edmund Husserl, di cui divenne allievo prediletto. Nel 1918 conseguì il dottorato sotto la guida di Husserl con una tesi su Henri Bergson. Dopo vari incarichi accademici, divenne professore all'Università di Leopoli nel 1933 e successivamente all'Università Jagellonica di Cracovia dopo la seconda guerra mondiale.</p>
+                
+                <div class="quote">
+                    "Ogni opera d'arte è un tutto organico, una struttura stratificata che richiede un'analisi fenomenologica attenta per essere compresa nella sua essenza."
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toggle-section">
+        <div class="toggle-header">Contributi Filosofici</div>
+        <div class="toggle-content">
+            <div class="toggle-content-inner">
+                <h3>Fenomenologia dell'Arte</h3>
+                <p>Ingarden sviluppò un'originale fenomenologia dell'opera d'arte, analizzando la struttura ontologica delle opere letterarie, pittoriche e musicali. Distinse tra l'opera d'arte come oggetto intenzionale e la sua concretizzazione nella coscienza del fruitore.</p>
+                
+                <div class="concept-box">
+                    <div class="concept-title">Struttura stratificata dell'opera letteraria</div>
+                    <p>1. Strati delle parole e dei suoni<br>
+                    2. Strati dei significati<br>
+                    3. Strati degli oggetti rappresentati<br>
+                    4. Strati degli schematizzati aspetti visualizzati</p>
+                </div>
+
+                <h3>Ontologia</h3>
+                <p>Nella sua opera principale "Il controverso problema dell'esistenza del mondo" (1947-48), Ingarden sviluppò una complessa ontologia che distingue tra diversi modi di esistenza: reale, ideale e puramente intenzionale.</p>
+
+                <h3>Estetica</h3>
+                <p>La sua estetica fenomenologica esplora il rapporto tra l'opera d'arte e la sua concretizzazione da parte del fruitore, introducendo concetti come "luoghi di indeterminazione" e "qualità metafisiche".</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="toggle-section">
+        <div class="toggle-header">Cronologia Intellettuale</div>
+        <div class="toggle-content">
+            <div class="toggle-content-inner">
+                <div class="timeline">
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <div class="timeline-year">1918</div>
+                            <p>Consegue il dottorato sotto la guida di Husserl con una tesi su Bergson</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <div class="timeline-year">1931</div>
+                            <p>Pubblica "Das literarische Kunstwerk" (L'opera d'arte letteraria), fondamento della sua estetica</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <div class="timeline-year">1947-48</div>
+                            <p>Pubblica "Spor o istnienie świata" (Il controverso problema dell'esistenza del mondo), sua opera ontologica principale</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <div class="timeline-year">1956</div>
+                            <p>Inizia a pubblicare i suoi studi sull'ontologia dell'opera musicale</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <div class="timeline-year">1960</div>
+                            <p>Pubblica "Studi di estetica", sintesi del suo pensiero sull'arte</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <div class="timeline-year">1968</div>
+                            <p>Completa la sua analisi fenomenologica dell'architettura</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toggle-section">
+        <div class="toggle-header">Opere Principali</div>
+        <div class="toggle-content">
+            <div class="toggle-content-inner">
+                <ul>
+                    <li><strong>Das literarische Kunstwerk</strong> (1931) - Fondamento della fenomenologia dell'arte letteraria</li>
+                    <li><strong>Der Streit um die Existenz der Welt</strong> (1947-48) - Opera ontologica in tre volumi</li>
+                    <li><strong>Studien zur Ästhetik</strong> (1960) - Raccolta di saggi sull'estetica</li>
+                    <li><strong>Untersuchungen zur Ontologie der Kunst</strong> (1962) - Analisi ontologica delle diverse arti</li>
+                    <li><strong>Erlebnis, Kunstwerk und Wert</strong> (1969) - Riflessioni sull'esperienza estetica</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="toggle-section">
+        <div class="toggle-header">Influenza e Eredità</div>
+        <div class="toggle-content">
+            <div class="toggle-content-inner">
+                <p>L'opera di Ingarden ha avuto un impatto significativo su diverse discipline:</p>
+                
+                <h3>Teoria Letteraria</h3>
+                <p>La sua analisi stratificata dell'opera letteraria ha influenzato la scuola della Ricezione (Iser, Jauss) e la teoria del lettore implicito.</p>
+                
+                <h3>Fenomenologia</h3>
+                <p>Pur critico verso l'idealismo di Husserl, Ingarden sviluppò una versione realista della fenomenologia che influenzò pensatori come Edith Stein e Dietrich von Hildebrand.</p>
+                
+                <h3>Estetica Filosofica</h3>
+                <p>I suoi concetti di "luoghi di indeterminazione" e "concretizzazione" sono diventati strumenti fondamentali per l'analisi dell'esperienza estetica.</p>
+                
+                <div class="quote">
+                    "Ingarden ha dimostrato che l'opera d'arte non è né puramente oggettiva né puramente soggettiva, ma un ponte fenomenologico tra mondo e coscienza."
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toggle-section">
+        <div class="toggle-header">Citazioni Celebri</div>
+        <div class="toggle-content">
+            <div class="toggle-content-inner">
+                <div class="quote">
+                    "L'opera d'arte esiste come schema intenzionale che attende la sua concretizzazione nell'esperienza del fruitore."
+                </div>
+                
+                <div class="quote">
+                    "I luoghi di indeterminazione sono gli spazi vuoti che ogni lettore deve riempire con la propria immaginazione."
+                </div>
+                
+                <div class="quote">
+                    "La qualità metafisica è quell'atmosfera particolare che emana da un'opera d'arte e che ci permette di cogliere il senso profondo dell'esistenza."
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle sections
+        const toggleHeaders = document.querySelectorAll('.toggle-header');
+        
+        toggleHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                header.classList.toggle('active');
+                const content = header.nextElementSibling;
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                }
+            });
+        });
+
+        // Reading modes
+        document.getElementById('default-btn').addEventListener('click', () => {
+            document.body.className = '';
+        });
+
+        document.getElementById('aesthetic-btn').addEventListener('click', () => {
+            document.body.className = 'aesthetic-mode';
+        });
+
+        document.getElementById('night-btn').addEventListener('click', () => {
+            document.body.className = 'night-mode';
+        });
+
+        document.getElementById('phenomeno-btn').addEventListener('click', () => {
+            document.body.className = 'phenomeno-mode';
+        });
+
+        document.getElementById('classic-btn').addEventListener('click', () => {
+            document.body.className = 'classic-mode';
+        });
+
+        // Button shapes
+        document.getElementById('rounded-btn').addEventListener('click', () => {
+            document.documentElement.style.setProperty('--border-radius', '30px');
+            document.querySelectorAll('.toggle-header').forEach(btn => {
+                btn.style.borderRadius = '30px';
+            });
+        });
+
+        document.getElementById('square-btn').addEventListener('click', () => {
+            document.documentElement.style.setProperty('--border-radius', '0');
+            document.querySelectorAll('.toggle-header').forEach(btn => {
+                btn.style.borderRadius = '0';
+            });
+        });
+
+        document.getElementById('pill-btn').addEventListener('click', () => {
+            document.documentElement.style.setProperty('--border-radius', '50px');
+            document.querySelectorAll('.toggle-header').forEach(btn => {
+                btn.style.borderRadius = '50px';
+            });
+        });
+
+        document.getElementById('soft-btn').addEventListener('click', () => {
+            document.documentElement.style.setProperty('--border-radius', '15px');
+            document.querySelectorAll('.toggle-header').forEach(btn => {
+                btn.style.borderRadius = '15px';
+            });
+        });
+
+        document.getElementById('sharp-btn').addEventListener('click', () => {
+            document.documentElement.style.setProperty('--border-radius', '5px');
+            document.querySelectorAll('.toggle-header').forEach(btn => {
+                btn.style.borderRadius = '5px';
+            });
+        });
+
+        // Open first section by default
+        document.querySelector('.toggle-header').click();
+    </script>
+</body>
+</html>

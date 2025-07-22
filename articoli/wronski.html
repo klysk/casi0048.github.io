@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Józef Hoene-Wroński - Genio Polacco</title>
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+            --card-bg: #fff;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        h1 {
+            color: var(--secondary-color);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-style: italic;
+            color: #666;
+            font-size: 1.2rem;
+        }
+
+        .reading-modes {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: bold;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .default {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .philosophical {
+            background-color: #8e6c88;
+            color: white;
+        }
+
+        .night {
+            background-color: #1a1a2e;
+            color: #e6e6e6;
+        }
+
+        .vintage {
+            background-color: #d4b483;
+            color: #3a2d1a;
+        }
+
+        .minimal {
+            background-color: #f0f0f0;
+            color: #333;
+            border: 1px solid #ccc;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .toggle-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            text-align: left;
+            cursor: pointer;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: var(--transition);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--box-shadow);
+        }
+
+        .toggle-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .toggle-btn::after {
+            content: '+';
+            font-size: 1.5rem;
+        }
+
+        .toggle-btn.active::after {
+            content: '-';
+        }
+
+        .content {
+            display: none;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            margin-top: -5px;
+            box-shadow: var(--box-shadow);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--border-radius);
+            margin: 15px 0;
+            display: block;
+        }
+
+        .quote {
+            font-style: italic;
+            border-left: 4px solid var(--primary-color);
+            padding-left: 15px;
+            margin: 20px 0;
+            color: #555;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Philosophical mode */
+        body.philosophical-mode {
+            --primary-color: #6d466b;
+            --secondary-color: #412234;
+            --text-color: #333;
+            --bg-color: #f5f0f6;
+            --card-bg: #fff;
+        }
+
+        .philosophical-mode .toggle-btn {
+            background-color: var(--primary-color);
+            font-family: 'Times New Roman', serif;
+        }
+
+        .philosophical-mode .quote {
+            font-family: 'Palatino', serif;
+            font-size: 1.1rem;
+        }
+
+        /* Night mode */
+        body.night-mode {
+            --primary-color: #4cc9f0;
+            --secondary-color: #4361ee;
+            --text-color: #e6e6e6;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+        }
+
+        .night-mode .toggle-btn {
+            background-color: var(--primary-color);
+            color: #121212;
+        }
+
+        /* Vintage mode */
+        body.vintage-mode {
+            --primary-color: #8b5a2b;
+            --secondary-color: #5d3a1a;
+            --text-color: #3a2d1a;
+            --bg-color: #f0e6d2;
+            --card-bg: #f8f1e5;
+        }
+
+        .vintage-mode {
+            font-family: 'Courier New', monospace;
+        }
+
+        .vintage-mode .toggle-btn {
+            background-color: var(--primary-color);
+            color: #f8f1e5;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Minimal mode */
+        body.minimal-mode {
+            --primary-color: #333;
+            --secondary-color: #666;
+            --text-color: #333;
+            --bg-color: #fff;
+            --card-bg: #f9f9f9;
+            --box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .minimal-mode .toggle-btn {
+            background-color: white;
+            color: #333;
+            border: 1px solid #ccc;
+            box-shadow: none;
+        }
+
+        .minimal-mode .content {
+            box-shadow: none;
+            border: 1px solid #eee;
+            border-top: none;
+        }
+
+        @media (max-width: 768px) {
+            .reading-modes {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .mode-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Józef Maria Hoene-Wroński</h1>
+        <div class="subtitle">(1776-1853) - Filosofo, matematico e visionario polacco</div>
+        
+        <div class="reading-modes">
+            <button class="mode-btn default" onclick="setMode('default')">Default</button>
+            <button class="mode-btn philosophical" onclick="setMode('philosophical')">Filosofico</button>
+            <button class="mode-btn night" onclick="setMode('night')">Notturno</button>
+            <button class="mode-btn vintage" onclick="setMode('vintage')">Vintage</button>
+            <button class="mode-btn minimal" onclick="setMode('minimal')">Minimal</button>
+        </div>
+    </header>
+
+    <div class="button-container">
+        <button class="toggle-btn">Biografia</button>
+        <div class="content">
+            <p>Józef Maria Hoene-Wroński, nato il 23 agosto 1776 a Wolsztyn (allora parte della Confederazione polacco-lituana) e morto il 9 agosto 1853 a Neuilly-sur-Seine (Francia), è stato uno dei pensatori più originali e controversi del XIX secolo.</p>
+            
+            <p>Figlio di un architetto tedesco naturalizzato polacco, Wroński ricevette un'educazione militare a Varsavia. Partecipò alla rivolta di Kościuszko (1794) come ufficiale d'artiglieria. Dopo la spartizione della Polonia, emigrò in Germania dove studiò filosofia e legge.</p>
+            
+            <p>Nel 1800 si trasferì in Francia, dove sviluppò le sue teorie più importanti. Visse tra Parigi e Marsiglia, dedicandosi a studi filosofici, matematici e tecnologici, spesso in condizioni di povertà. Nonostante le difficoltà economiche, pubblicò numerose opere che attirarono l'attenzione di intellettuali e scienziati dell'epoca.</p>
+            
+            <div class="quote">
+                "L'uomo è destinato a scoprire la verità assoluta; questa è la sua missione sulla terra."
+            </div>
+            
+            <p>Wroński morì in relativa oscurità, ma il suo lavoro fu riscoperto alla fine del XIX secolo, influenzando vari campi del sapere.</p>
+        </div>
+
+        <button class="toggle-btn">Contributi Filosofici</button>
+        <div class="content">
+            <h3>La Filosofia Assoluta</h3>
+            <p>Wroński sviluppò un sistema filosofico che chiamò "Filosofia Assoluta", un tentativo di unificare tutta la conoscenza umana in un unico sistema basato su principi razionali. Credeva che la filosofia dovesse rivelare le leggi assolute dell'essere e del pensiero.</p>
+            
+            <h3>Messianismo</h3>
+            <p>Elaborò una forma originale di messianismo filosofico, diverso da quello di Mickiewicz. Per Wroński, la Polonia aveva una missione spirituale speciale: realizzare la sintesi finale tra ragione e fede, scienza e religione.</p>
+            
+            <div class="quote">
+                "La nazione polacca è destinata a compiere la grande sintesi dello spirito umano."
+            </div>
+            
+            <h3>Teoria della Creazione</h3>
+            <p>La sua metafisica si basava su una teoria della creazione come atto continuo, dove Dio e l'uomo collaborano nel processo creativo dell'universo.</p>
+        </div>
+
+        <button class="toggle-btn">Contributi Matematici</button>
+        <div class="content">
+            <h3>La Legge della Creazione</h3>
+            <p>Wroński propose una "Legge della Creazione" che pretendeva di spiegare tutti i fenomeni dell'universo attraverso una formula matematica. Sebbene questa ambiziosa teoria non sia stata accettata dalla comunità scientifica, contiene intuizioni interessanti.</p>
+            
+            <h3>Determinanti e Algebra</h3>
+            <p>Fece contributi significativi alla teoria dei determinanti e all'algebra superiore. Il "wronskiano", un concetto fondamentale nelle equazioni differenziali, prende il nome da lui.</p>
+            
+            <h3>Filosofia della Matematica</h3>
+            <p>Sviluppò una visione unica della matematica come linguaggio universale per esprimere verità metafisiche, anticipando in qualche modo le moderne teorie sul rapporto tra matematica e realtà fisica.</p>
+            
+            <div class="quote">
+                "I numeri sono le note su cui l'armonia dell'universo è scritta."
+            </div>
+        </div>
+
+        <button class="toggle-btn">Invenzioni e Progetti</button>
+        <div class="content">
+            <p>Oltre al lavoro teorico, Wroński fu un prolifico inventore. Tra i suoi progetti:</p>
+            <ul>
+                <li>Macchine calcolatrici avanzate per l'epoca</li>
+                <li>Dispositivi per la navigazione</li>
+                <li>Sistemi di propulsione alternativi</li>
+                <li>Un "progettore universale" che avrebbe dovuto risolvere tutti i problemi scientifici</li>
+            </ul>
+            
+            <p>Purtroppo, molti di questi progetti rimasero sulla carta o non furono completati per mancanza di fondi.</p>
+        </div>
+
+        <button class="toggle-btn">Influenza e Critiche</button>
+        <div class="content">
+            <h3>Ricezione del suo lavoro</h3>
+            <p>Durante la sua vita, Wroński fu una figura controversa. Alcuni lo consideravano un genio incompreso, altri un visionario eccentrico. La complessità e l'oscurità del suo stile contribuirono alla difficoltà di valutare il suo lavoro.</p>
+            
+            <h3>Influenza postuma</h3>
+            <p>Nonostante le critiche, il pensiero di Wroński influenzò:</p>
+            <ul>
+                <li>Il movimento messianico polacco</li>
+                <li>Alcune correnti dello spiritualismo francese</li>
+                <li>Lo sviluppo della filosofia della matematica</li>
+                <li>Pensatori successivi come August Cieszkowski</li>
+            </ul>
+            
+            <div class="quote">
+                "Le idee di Wroński sono come diamanti grezzi: nascoste in una matrice di oscurità, ma di valore inestimabile una volta estratte."
+            </div>
+        </div>
+
+        <button class="toggle-btn">Opere Principali</button>
+        <div class="content">
+            <h3>Pubblicazioni selezionate:</h3>
+            <ul>
+                <li><em>Introduzione alla filosofia della matematica</em> (1811)</li>
+                <li><em>Messianismo, o sistema assoluto definitivo dell'umanità</em> (1847)</li>
+                <li><em>Filosofia assoluta della storia</em> (1852)</li>
+                <li><em>Prodromo del messianismo</em> (1827)</li>
+                <li><em>Riforma del sapere umano</em> (1803)</li>
+            </ul>
+            
+            <p>Scrisse oltre 100 opere tra trattati filosofici, lavori matematici e progetti tecnici, molti dei quali rimasti inediti o perduti.</p>
+        </div>
+
+        <button class="toggle-btn">Curiosità e Aneddoti</button>
+        <div class="content">
+            <h3>Fatti interessanti su Wroński:</h3>
+            <ul>
+                <li>Cambiò il suo cognome tedesco "Höne" in "Hoene-Wroński" per sottolineare la sua identità polacca</li>
+                <li>Fu brevemente imprigionato durante la Rivoluzione Francese per sospetta attività controrivoluzionaria</li>
+                <li>Propose un sistema per vincere alla roulette che attirò l'attenzione di molti, ma che si rivelò fallimentare</li>
+                <li>Spese gran parte della sua vita cercando mecenati per finanziare le sue ricerche</li>
+                <li>La sua tomba a Neuilly-sur-Seine divenne luogo di pellegrinaggio per i suoi seguaci</li>
+            </ul>
+            
+            <div class="quote">
+                "La vita di Wroński è stata essa stessa un'equazione complessa, piena di variabili sconosciute e soluzioni inaspettate."
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2023 Articolo su Józef Hoene-Wroński - Tutti i diritti riservati</p>
+        <p>Fonti: Enciclopedia Treccani, Stanford Encyclopedia of Philosophy, Polskie Towarzystwo Matematyczne</p>
+    </footer>
+
+    <script>
+        // Toggle buttons functionality
+        const toggleButtons = document.querySelectorAll('.toggle-btn');
+        
+        toggleButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                button.classList.toggle('active');
+                const content = button.nextElementSibling;
+                
+                if (content.style.display === 'block') {
+                    content.style.display = 'none';
+                } else {
+                    content.style.display = 'block';
+                }
+            });
+        });
+
+        // Reading modes functionality
+        function setMode(mode) {
+            document.body.className = ''; // Reset all classes
+            if (mode !== 'default') {
+                document.body.classList.add(`${mode}-mode`);
+            }
+            
+            // Change button styles based on mode
+            const buttons = document.querySelectorAll('.toggle-btn');
+            buttons.forEach(btn => {
+                btn.style.transition = 'all 0.3s ease';
+                
+                if (mode === 'night') {
+                    btn.style.backgroundColor = '#4cc9f0';
+                    btn.style.color = '#121212';
+                } else if (mode === 'philosophical') {
+                    btn.style.backgroundColor = '#6d466b';
+                    btn.style.color = 'white';
+                } else if (mode === 'vintage') {
+                    btn.style.backgroundColor = '#8b5a2b';
+                    btn.style.color = '#f8f1e5';
+                } else if (mode === 'minimal') {
+                    btn.style.backgroundColor = 'white';
+                    btn.style.color = '#333';
+                    btn.style.border = '1px solid #ccc';
+                    btn.style.boxShadow = 'none';
+                } else {
+                    btn.style.backgroundColor = '';
+                    btn.style.color = '';
+                    btn.style.border = '';
+                    btn.style.boxShadow = '';
+                }
+            });
+        }
+
+        // Open first section by default
+        document.querySelector('.toggle-btn').click();
+    </script>
+</body>
+</html>

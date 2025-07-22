@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Józef Tischner - Filosofo Polacco</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto Condensed', sans-serif;
+      background-color: #f4f4f4;
+      color: #111;
+      padding: 2rem;
+      transition: all 0.4s ease-in-out;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .accordion {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      margin: 1rem auto;
+      overflow: hidden;
+      width: 90%;
+      max-width: 800px;
+    }
+
+    .accordion-btn {
+      padding: 1rem 1.5rem;
+      background: #c2a27e;
+      border: none;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      font-size: 1.1rem;
+      font-weight: bold;
+      transition: background 0.3s ease;
+      border-bottom: 1px solid #ddd;
+      border-radius: 12px 12px 0 0;
+    }
+
+    .accordion-btn:hover {
+      background: #b1916c;
+    }
+
+    .accordion-content {
+      display: none;
+      padding: 1rem 1.5rem;
+      background: #fafafa;
+    }
+
+    .mode-switch {
+      text-align: center;
+      margin: 2rem auto;
+    }
+
+    .mode-btn {
+      background: #222;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      margin: 0.2rem;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .mode-btn:hover {
+      background: #444;
+    }
+
+    /* Modalità Lettura */
+    .filosofica {
+      background: #fdf6e3;
+      color: #333;
+    }
+
+    .notturna {
+      background: #121212;
+      color: #ddd;
+    }
+
+    .vintage {
+      background: #fffaf0;
+      color: #3e2f1c;
+    }
+
+    .antica {
+      background: #f0e6d6;
+      color: #2a1e12;
+      font-family: Georgia, serif;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Józef Tischner – Filosofo del Dialogo e della Speranza</h1>
+
+  <div class="mode-switch">
+    <strong>Modalità di lettura:</strong><br>
+    <button class="mode-btn" onclick="setMode('')">Classica</button>
+    <button class="mode-btn" onclick="setMode('filosofica')">🧠 Filosofica</button>
+    <button class="mode-btn" onclick="setMode('notturna')">🌙 Notturna</button>
+    <button class="mode-btn" onclick="setMode('vintage')">📜 Vintage</button>
+    <button class="mode-btn" onclick="setMode('antica')">🏺 Carta Antica</button>
+  </div>
+
+  <div class="accordion">
+    <button class="accordion-btn" onclick="toggleSection(this)">📚 Biografia</button>
+    <div class="accordion-content">
+      <p>Józef Tischner (1931–2000) è stato un sacerdote cattolico, filosofo e intellettuale polacco di rilievo. Professore di filosofia e autore prolifico, ha introdotto in Polonia il pensiero fenomenologico e l'esistenzialismo, coniugandoli con la riflessione etica cristiana. La sua voce ha avuto un ruolo chiave nel contesto politico e spirituale della Polonia comunista e post-comunista.</p>
+    </div>
+
+    <button class="accordion-btn" onclick="toggleSection(this)">🧭 Pensiero Filosofico</button>
+    <div class="accordion-content">
+      <p>Il pensiero di Tischner ruota attorno al concetto di "dramma del dialogo umano". Fortemente influenzato da Levinas, Buber e la filosofia del dialogo, ha cercato una filosofia della speranza radicata nella libertà e nella responsabilità dell’uomo verso l’altro.</p>
+      <p>Ha criticato le ideologie che riducono la persona a un ruolo, a un numero o a una funzione sociale, opponendovi la ricchezza della coscienza umana aperta all'altro e a Dio.</p>
+    </div>
+
+    <button class="accordion-btn" onclick="toggleSection(this)">🗣️ Impegno Sociale e Dialogo</button>
+    <div class="accordion-content">
+      <p>Tischner è stato una figura centrale nel movimento Solidarność, contribuendo con il suo pensiero a fondare una visione di società libera, solidale e radicata nei valori cristiani. Il suo concetto di "etica della solidarietà" è stato una bussola morale per molti durante la transizione democratica in Polonia.</p>
+    </div>
+
+    <button class="accordion-btn" onclick="toggleSection(this)">📖 Opere Principali</button>
+    <div class="accordion-content">
+      <ul>
+        <li><em>La filosofia del dramma</em> (Filozofia dramatu)</li>
+        <li><em>Etica della solidarietà</em> (Etyka solidarności)</li>
+        <li><em>La speranza dell'uomo</em> (Nadzieja człowieka)</li>
+        <li><em>Il pensiero del patriota</em> (Myślenie według wartości)</li>
+      </ul>
+    </div>
+
+    <button class="accordion-btn" onclick="toggleSection(this)">🕯️ Eredità e Attualità</button>
+    <div class="accordion-content">
+      <p>La sua eredità continua oggi attraverso la Fondazione Tischner e gli "Incontri di Tischner" a Cracovia. La sua capacità di unire rigore filosofico, apertura al dialogo e profonda umanità lo rendono un autore attuale, capace di ispirare anche al di fuori della Polonia.</p>
+    </div>
+  </div>
+
+  <script>
+    function toggleSection(btn) {
+      const content = btn.nextElementSibling;
+      const isVisible = content.style.display === "block";
+      content.style.display = isVisible ? "none" : "block";
+    }
+
+    function setMode(mode) {
+      document.body.className = mode;
+    }
+  </script>
+</body>
+</html>
+

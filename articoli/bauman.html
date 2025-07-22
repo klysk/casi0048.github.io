@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zygmunt Bauman - Sociologo della Modernità Liquida</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+            --card-bg: #fff;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --font-heading: 'Georgia', serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-heading);
+            color: var(--primary-color);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+        }
+
+        /* Stili per i bottoni apri/chiudi */
+        .accordion {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .accordion:hover {
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .accordion-btn {
+            width: 100%;
+            padding: 18px 20px;
+            text-align: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            font-family: var(--font-heading);
+            color: white;
+            background-color: var(--secondary-color);
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .accordion-btn:after {
+            content: '+';
+            font-size: 22px;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-btn.active:after {
+            content: '-';
+        }
+
+        .accordion-btn.circle {
+            border-radius: 50px;
+        }
+
+        .accordion-btn.rounded {
+            border-radius: 8px;
+        }
+
+        .accordion-btn.sharp {
+            border-radius: 0;
+        }
+
+        .accordion-btn.primary {
+            background-color: var(--primary-color);
+        }
+
+        .accordion-btn.secondary {
+            background-color: var(--secondary-color);
+        }
+
+        .accordion-btn.accent {
+            background-color: var(--accent-color);
+        }
+
+        .panel {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background-color: var(--card-bg);
+        }
+
+        .panel-content {
+            padding: 20px 0;
+        }
+
+        /* Stili per citazioni */
+        blockquote {
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            color: var(--primary-color);
+        }
+
+        /* Stili per immagini */
+        .img-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .img-container img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .img-caption {
+            font-style: italic;
+            margin-top: 10px;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        /* Stili per le modalità di lettura */
+        .reading-modes {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Stili per le diverse modalità */
+        .philosophical-mode {
+            --primary-color: #8e44ad;
+            --secondary-color: #9b59b6;
+            --accent-color: #e67e22;
+            --text-color: #2c3e50;
+            --bg-color: #f5eef8;
+            --card-bg: #fff;
+        }
+
+        .night-mode {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --accent-color: #e74c3c;
+            --text-color: #ecf0f1;
+            --bg-color: #2c3e50;
+            --card-bg: #34495e;
+        }
+
+        .vintage-mode {
+            --primary-color: #8b4513;
+            --secondary-color: #a0522d;
+            --accent-color: #cd853f;
+            --text-color: #5a3921;
+            --bg-color: #f5f5dc;
+            --card-bg: #faebd7;
+        }
+
+        .modern-mode {
+            --primary-color: #2c3e50;
+            --secondary-color: #1abc9c;
+            --accent-color: #e74c3c;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+            --card-bg: #fff;
+        }
+
+        .liquid-mode {
+            --primary-color: #006994;
+            --secondary-color: #00a8e8;
+            --accent-color: #ff6b6b;
+            --text-color: #333;
+            --bg-color: #f0f8ff;
+            --card-bg: #fff;
+        }
+
+        /* Stili per i bottoni forma */
+        .shape-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .shape-btn {
+            padding: 8px 15px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .shape-btn.active {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        /* Stili per timeline */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 30px auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background-color: var(--secondary-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--card-bg);
+            border: 3px solid var(--secondary-color);
+            border-radius: 50%;
+            top: 15px;
+            z-index: 1;
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        .left::after {
+            right: -10px;
+        }
+
+        .right::after {
+            left: -10px;
+        }
+
+        .timeline-content {
+            padding: 15px;
+            background-color: var(--card-bg);
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Zygmunt Bauman: Sociologo della Modernità Liquida</h1>
+        
+        <div class="reading-modes">
+            <button class="mode-btn" onclick="setMode('philosophical')">Modalità Filosofica</button>
+            <button class="mode-btn" onclick="setMode('night')">Modalità Notturna</button>
+            <button class="mode-btn" onclick="setMode('vintage')">Modalità Vintage</button>
+            <button class="mode-btn" onclick="setMode('modern')">Modalità Moderna</button>
+            <button class="mode-btn" onclick="setMode('liquid')">Modalità Liquida</button>
+        </div>
+        
+        <div class="shape-buttons">
+            <button class="shape-btn" onclick="setShape('rounded')">Angoli Arrotondati</button>
+            <button class="shape-btn" onclick="setShape('circle')">Circolare</button>
+            <button class="shape-btn" onclick="setShape('sharp')">Angoli Vivi</button>
+        </div>
+        
+        <div class="img-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Zygmunt_Bauman_-_2016.jpg/640px-Zygmunt_Bauman_-_2016.jpg" alt="Zygmunt Bauman">
+            <div class="img-caption">Zygmunt Bauman (1925-2017), teorico della "modernità liquida"</div>
+        </div>
+        
+        <div class="accordion">
+            <button class="accordion-btn primary rounded">Vita e Contesto Storico</button>
+            <div class="panel">
+                <div class="panel-content">
+                    <p>Zygmunt Bauman nacque il 19 novembre 1925 a Poznań, in Polonia, da una famiglia ebrea. La sua vita fu segnata dagli eventi traumatici del XX secolo:</p>
+                    
+                    <div class="timeline">
+                        <div class="timeline-item left">
+                            <div class="timeline-content">
+                                <h3>1939</h3>
+                                <p>Con l'invasione nazista della Polonia, la famiglia Bauman fugge in Unione Sovietica</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item right">
+                            <div class="timeline-content">
+                                <h3>1943-1945</h3>
+                                <p>Serve nell'esercito polacco filo-sovietico, partecipando alla battaglia di Berlino</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item left">
+                            <div class="timeline-content">
+                                <h3>1953</h3>
+                                <p>Viene espulso dall'esercito durante le purghe antisemite</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item right">
+                            <div class="timeline-content">
+                                <h3>1968</h3>
+                                <p>Nuova ondata di antisemitismo in Polonia lo costringe all'esilio</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item left">
+                            <div class="timeline-content">
+                                <h3>1971</h3>
+                                <p>Si stabilisce definitivamente in Inghilterra, diventando professore all'Università di Leeds</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <blockquote>"L'incertezza è l'unica certezza che abbiamo, e saper vivere nell'incertezza è l'unica competenza che vale la pena acquisire."</blockquote>
+                    
+                    <p>Queste esperienze formative influenzarono profondamente il suo pensiero sociologico, caratterizzato da una costante attenzione alle vittime dei processi storici e sociali.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <button class="accordion-btn secondary rounded">La Modernità Liquida</button>
+            <div class="panel">
+                <div class="panel-content">
+                    <p>Il concetto di "modernità liquida", sviluppato a partire dagli anni '90, rappresenta il contributo più originale di Bauman alla sociologia contemporanea.</p>
+                    
+                    <h3>Caratteristiche della modernità liquida:</h3>
+                    <ul>
+                        <li><strong>Fluidità:</strong> Le strutture sociali perdono la loro solidità e diventano temporanee</li>
+                        <li><strong>Precarizzazione:</strong> L'instabilità diventa la condizione normale dell'esistenza</li>
+                        <li><strong>Individualizzazione:</strong> La responsabilità dei fallimenti viene scaricata sugli individui</li>
+                        <li><strong>Consumismo:</strong> Le relazioni umane vengono reificate come beni di consumo</li>
+                        <li><strong>Paura liquida:</strong> Ansie diffuse senza oggetti precisi</li>
+                    </ul>
+                    
+                    <div class="img-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Liquid_modernity_book_cover.jpg/640px-Liquid_modernity_book_cover.jpg" alt="Copertina Modernità Liquida">
+                        <div class="img-caption">Copertina dell'opera fondamentale "Modernità liquida" (2000)</div>
+                    </div>
+                    
+                    <p>Bauman contrappone la "solida" modernità (con le sue istituzioni stabili e progetti a lungo termine) alla "liquida" postmodernità, dove tutto è volatile e precario.</p>
+                    
+                    <blockquote>"Nella modernità liquida, l'unica costante è il cambiamento, e l'unica certezza è l'incertezza."</blockquote>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <button class="accordion-btn accent rounded">Amor Liquido e Relazioni</button>
+            <div class="panel">
+                <div class="panel-content">
+                    <p>Nel saggio "Amore liquido" (2003), Bauman analizza come la fluidità sociale abbia trasformato le relazioni umane:</p>
+                    
+                    <h3>Caratteristiche delle relazioni liquide:</h3>
+                    <ul>
+                        <li><strong>Connessioni invece di legami:</strong> Relazioni superficiali e facili da interrompere</li>
+                        <li><strong>Paura dell'impegno:</strong> La permanenza viene vista come una trappola</li>
+                        <li><strong>Commodification:</strong> Le persone vengono trattate come prodotti usa e getta</li>
+                        <li><strong>Dating apps:</strong> La ricerca del partner perfetto diventa infinita</li>
+                        <li><strong>Fragilità:</strong> Le relazioni si rompono al primo segno di difficoltà</li>
+                    </ul>
+                    
+                    <p>Bauman critica questa deriva ma non è nostalgico delle vecchie forme di famiglia patriarcale. Piuttosto, invita a reinventare forme di solidarietà adatte alla condizione liquida.</p>
+                    
+                    <blockquote>"Nella società liquido-moderna, l'impegno è diventato una merce rara e costosa, mentre la paura del legame è a buon mercato e abbondante."</blockquote>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <button class="accordion-btn primary rounded">Etica nella Modernità Liquida</button>
+            <div class="panel">
+                <div class="panel-content">
+                    <p>Bauman sviluppa un'originale riflessione etica a partire dalla sua analisi sociologica:</p>
+                    
+                    <h3>Principi dell'etica baumaniana:</h3>
+                    <ul>
+                        <li><strong>Responsabilità per l'Altro:</strong> Influenza da Lévinas, l'etica nasce dal volto dell'Altro</li>
+                        <li><strong>Critica alla razionalità strumentale:</strong> Le soluzioni tecniche spesso ignorano la dimensione umana</li>
+                        <li><strong>Etica senza codice:</strong> Rifiuto dei sistemi morali rigidi e prefabbricati</li>
+                        <li><strong>Dilemmi morali:</strong> Nella complessità liquida, le scelte etiche sono sempre ambigue</li>
+                    </ul>
+                    
+                    <div class="img-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Zygmunt_Bauman_2010b.jpg/640px-Zygmunt_Bauman_2010b.jpg" alt="Bauman in conferenza">
+                        <div class="img-caption">Zygmunt Bauman durante una conferenza nel 2010</div>
+                    </div>
+                    
+                    <p>La sua opera "Modernità e Olocausto" (1989) dimostra come lo sterminio nazista non sia stato un ritorno alla barbarie, ma un prodotto della modernità con la sua razionalità burocratica e divisione del lavoro.</p>
+                    
+                    <blockquote>"La crudeltà più grande è quella indifferente, burocratica, senza odio né passione, il tipo di crudeltà con cui le persone fanno il male senza rendersene conto."</blockquote>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <button class="accordion-btn secondary rounded">Critica alla Globalizzazione</button>
+            <div class="panel">
+                <div class="panel-content">
+                    <p>Bauman analizza la globalizzazione come un processo che produce sia opportunità che nuove forme di disuguaglianza:</p>
+                    
+                    <h3>Effetti della globalizzazione liquida:</h3>
+                    <ul>
+                        <li><strong>Turisti e vagabondi:</strong> Nuove divisioni tra chi può muoversi liberamente e chi è costretto a migrare</li>
+                        <li><strong>Spazi urbani:</strong> Città sempre più divise tra "zone VIP" e ghetti</li>
+                        <li><strong>Capitalismo leggero:</strong> Le imprese si liberano dei vincoli territoriali e delle responsabilità sociali</li>
+                        <li><strong>Rifiuti umani:</strong> Intere popolazioni diventano superflue per il sistema economico</li>
+                    </ul>
+                    
+                    <p>Ne "La società sotto assedio" (2002), Bauman descrive come i poteri globali eludano il controllo democratico, mentre gli stati nazionali diventano sempre più impotenti.</p>
+                    
+                    <blockquote>"La libertà di muoversi, un bene sempre più prezioso e ambito, si sta rapidamente trasformando nel principale fattore di stratificazione sociale del nostro tempo."</blockquote>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <button class="accordion-btn accent rounded">Eredità e Critiche</button>
+            <div class="panel">
+                <div class="panel-content">
+                    <p>Zygmunt Bauman morì il 9 gennaio 2017 a Leeds, lasciando un'eredità intellettuale immensa:</p>
+                    
+                    <h3>Influenze e riconoscimenti:</h3>
+                    <ul>
+                        <li>Oltre 50 libri tradotti in più di 30 lingue</li>
+                        <li>Premio Principe delle Asturie per la Comunicazione e le Scienze Umane (2010)</li>
+                        <li>Influenza su campi che vanno dalla sociologia alla filosofia, scienze politiche e studi culturali</li>
+                        <li>Concetti entrati nel linguaggio comune ("modernità liquida", "amore liquido")</li>
+                    </ul>
+                    
+                    <h3>Critiche al suo pensiero:</h3>
+                    <ul>
+                        <li>Eccessivo pessimismo sulla condizione postmoderna</li>
+                        <li>Scarsa attenzione alle possibilità di resistenza e cambiamento</li>
+                        <li>Stile letterario a volte considerato troppo metaforico</li>
+                        <li>Analisi a volte viste come ripetitive</li>
+                    </ul>
+                    
+                    <div class="img-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Zygmunt_Bauman_2015.jpg/640px-Zygmunt_Bauman_2015.jpg" alt="Bauman anziano">
+                        <div class="img-caption">Zygmunt Bauman negli ultimi anni di vita</div>
+                    </div>
+                    
+                    <p>Nonostante le critiche, Bauman rimane uno dei pensatori più originali e influenti del tardo XX e inizio XXI secolo, la cui opera continua a ispirare riflessioni sulla condizione umana nell'epoca contemporanea.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funzione per i bottoni apri/chiudi
+        var acc = document.getElementsByClassName("accordion-btn");
+        var i;
+        
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                } 
+            });
+        }
+        
+        // Funzione per cambiare modalità di lettura
+        function setMode(mode) {
+            document.body.className = mode + '-mode';
+        }
+        
+        // Funzione per cambiare forma dei bottoni
+        function setShape(shape) {
+            var buttons = document.getElementsByClassName('accordion-btn');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].className = 'accordion-btn ' + getButtonColorClass(buttons[i]) + ' ' + shape;
+            }
+            
+            // Aggiorna lo stato attivo dei bottoni forma
+            var shapeButtons = document.getElementsByClassName('shape-btn');
+            for (var i = 0; i < shapeButtons.length; i++) {
+                shapeButtons[i].classList.remove('active');
+            }
+            event.target.classList.add('active');
+        }
+        
+        // Funzione helper per ottenere la classe colore del bottone
+        function getButtonColorClass(button) {
+            if (button.classList.contains('primary')) return 'primary';
+            if (button.classList.contains('secondary')) return 'secondary';
+            if (button.classList.contains('accent')) return 'accent';
+            return '';
+        }
+        
+        // Apri il primo pannello all'avvio
+        document.addEventListener('DOMContentLoaded', function() {
+            var firstPanel = document.querySelector('.panel');
+            firstPanel.style.maxHeight = firstPanel.scrollHeight + "px";
+            document.querySelector('.accordion-btn').classList.add('active');
+            
+            // Imposta il bottone forma predefinito come attivo
+            document.querySelector('.shape-btn').classList.add('active');
+        });
+    </script>
+</body>
+</html>

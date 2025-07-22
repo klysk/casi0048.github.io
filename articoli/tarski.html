@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alfred Tarski - Rivoluzionario della Logica Matematica</title>
+    <style>
+        :root {
+            --primary-color: #3f51b5;
+            --secondary-color: #303f9f;
+            --text-color: #212121;
+            --bg-color: #f5f5f5;
+            --card-bg: #ffffff;
+            --border-radius: 12px;
+            --box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            --button-font: 'Roboto', sans-serif;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        h1 {
+            text-align: center;
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+            font-size: 2.6em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .reading-modes {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 12px 22px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.4s;
+            font-size: 16px;
+            font-family: var(--button-font);
+            letter-spacing: 0.7px;
+            font-weight: 500;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+
+        #default-btn {
+            background: linear-gradient(135deg, #3f51b5, #5c6bc0);
+            color: white;
+        }
+
+        #semantic-btn {
+            background: linear-gradient(135deg, #00695c, #00897b);
+            color: white;
+        }
+
+        #night-btn {
+            background: linear-gradient(135deg, #0d47a1, #1976d2);
+            color: white;
+        }
+
+        #formal-btn {
+            background: linear-gradient(135deg, #4527a0, #7e57c2);
+            color: white;
+        }
+
+        #vintage-btn {
+            background: linear-gradient(135deg, #5d4037, #8d6e63);
+            color: #ffebee;
+        }
+
+        .toggle-section {
+            margin-bottom: 30px;
+        }
+
+        .toggle-header {
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            cursor: pointer;
+            border-radius: var(--border-radius);
+            position: relative;
+            transition: all 0.4s;
+            font-size: 20px;
+            box-shadow: var(--box-shadow);
+            font-family: var(--button-font);
+            letter-spacing: 0.8px;
+            overflow: hidden;
+        }
+
+        .toggle-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .toggle-header:hover::before {
+            left: 100%;
+        }
+
+        .toggle-header:hover {
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .toggle-header::after {
+            content: '▶';
+            position: absolute;
+            right: 20px;
+            font-size: 18px;
+            transition: all 0.4s;
+        }
+
+        .toggle-header.active::after {
+            content: '▼';
+            transform: rotate(0deg);
+        }
+
+        .toggle-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: var(--card-bg);
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .toggle-content-inner {
+            padding: 30px;
+        }
+
+        .quote {
+            font-style: italic;
+            border-left: 5px solid var(--primary-color);
+            padding: 20px;
+            margin: 30px 0;
+            color: #555;
+            background-color: rgba(0,0,0,0.03);
+            border-radius: 0 8px 8px 0;
+            font-size: 1.1em;
+            position: relative;
+        }
+
+        .quote::before {
+            content: '"';
+            font-size: 4em;
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            color: rgba(0,0,0,0.05);
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            border: 1px solid rgba(0,0,0,0.1);
+            transition: transform 0.4s;
+        }
+
+        .image-container img:hover {
+            transform: scale(1.02);
+        }
+
+        /* Semantic mode */
+        body.semantic-mode {
+            --primary-color: #00695c;
+            --secondary-color: #004d40;
+            --text-color: #263238;
+            --bg-color: #e0f2f1;
+            --card-bg: #ffffff;
+            font-family: 'Merriweather', serif;
+        }
+
+        body.semantic-mode .toggle-header {
+            font-variant: small-caps;
+            letter-spacing: 1px;
+        }
+
+        /* Night mode */
+        body.night-mode {
+            --primary-color: #1976d2;
+            --secondary-color: #0d47a1;
+            --text-color: #e0e0e0;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        body.night-mode .quote {
+            color: #b0bec5;
+            background-color: rgba(255,255,255,0.05);
+        }
+
+        /* Formal mode */
+        body.formal-mode {
+            --primary-color: #4527a0;
+            --secondary-color: #311b92;
+            --text-color: #37474f;
+            --bg-color: #f3e5f5;
+            --card-bg: #ffffff;
+            font-family: 'Palatino', serif;
+        }
+
+        body.formal-mode h1 {
+            text-decoration: underline;
+            text-decoration-color: var(--secondary-color);
+        }
+
+        /* Vintage mode */
+        body.vintage-mode {
+            --primary-color: #5d4037;
+            --secondary-color: #3e2723;
+            --text-color: #4e342e;
+            --bg-color: #efebe9;
+            --card-bg: #fff;
+            font-family: 'Times New Roman', serif;
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path opacity="0.05" d="M0 0h100v100H0z" fill="%235d4037"/></svg>');
+        }
+
+        body.vintage-mode .toggle-header {
+            font-weight: bold;
+            letter-spacing: 1.2px;
+        }
+
+        /* Button shapes */
+        .shape-options {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .shape-btn {
+            padding: 12px 22px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+            background: linear-gradient(135deg, #757575, #9e9e9e);
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+
+        .shape-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        }
+
+        #rounded-btn {
+            border-radius: 30px;
+        }
+
+        #square-btn {
+            border-radius: 0;
+        }
+
+        #pill-btn {
+            border-radius: 50px;
+            padding: 12px 30px;
+        }
+
+        #soft-btn {
+            border-radius: 15px;
+        }
+
+        #sharp-btn {
+            border-radius: 5px;
+        }
+
+        /* Theorem styling */
+        .theorem {
+            background-color: rgba(63, 81, 181, 0.05);
+            border-left: 4px solid var(--primary-color);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .theorem-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        /* Timeline */
+        .timeline-container {
+            position: relative;
+            max-width: 800px;
+            margin: 40px auto;
+        }
+
+        .timeline-line {
+            position: absolute;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .timeline-item {
+            width: 50%;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+            padding-right: 50px;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            text-align: left;
+            padding-left: 50px;
+        }
+
+        .timeline-dot {
+            width: 20px;
+            height: 20px;
+            background-color: var(--card-bg);
+            border: 4px solid var(--primary-color);
+            border-radius: 50%;
+            position: absolute;
+            top: 30px;
+            z-index: 2;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-dot {
+            right: -12px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -12px;
+        }
+
+        .timeline-content {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            position: relative;
+        }
+
+        .timeline-year {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Merriweather:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>Alfred Tarski: Il Architetto della Semantica Moderna</h1>
+
+    <div class="image-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Alfred_Tarski_1968.jpg/220px-Alfred_Tarski_1968.jpg" alt="Alfred Tarski">
+        <p><em>Alfred Tarski (1901-1983)</em></p>
+    </div>
+
+    <div class="reading-modes">
+        <button id="default-btn" class="mode-btn">Default</button>
+        <button id="semantic-btn" class="mode-btn">Semantico</button>
+        <button id="night-btn" class="mode-btn">Notturno</button>
+        <button id="formal-btn" class="mode-btn">Formale</button>
+        <button id="vintage-btn" class="mode-btn">Vintage</button>
+    </div>
+
+    <div class="shape-options">
+        <button id="rounded-btn" class="shape-btn">Arrotondato</button>
+        <button id="square-btn" class="shape-btn">Quadrato</button>
+        <button id="pill-btn" class="shape-btn">Pillola</button>
+        <button id="soft-btn" class="shape-btn">Morbido</button>
+        <button id="sharp-btn" class="shape-btn">Netto</button>
+    </div>
+
+    <div class="toggle-section">
+        <div class="toggle-header">Vita e Formazione</div>
+        <div class="toggle-content">
+            <div class="toggle-content-inner">
+                <p>Alfred Tarski, nato Alfred Teitelbaum il 14 gennaio 1901 a Varsavia (allora parte dell'Impero Russo), è considerato uno dei più grandi logici della storia. Di famiglia ebraica, cambiò il suo nome in Tarski nel 1923 convertendosi al cattolicesimo, probabilmente per ragioni accademiche in un'epoca di crescente antisemitismo.</p>
+                
+                <p>Studiò all'Università di Varsavia sotto la guida di Stanisław Leśniewski, uno dei fondatori della Scuola di Leopoli-Varsavia. Conseguì il dottorato nel 1924 con una tesi sulla teoria degli insiemi. Nel 1939, durante un viaggio negli Stati Uniti, scoppiò la seconda guerra mondiale: essendo ebreo, decise di non tornare in Polonia e ottenne infine una posizione all'Università della California, Berkeley, dove rimase fino alla morte nel 1983.</p>
+                
+                <div class="quote">
+                    "I matematici hanno creato un mondo ideale che supera in perfezione tutto ciò che esiste nel mondo reale."
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toggle-section">
+        <div class="toggle-header">Contributi Fondamentali</div>
+        <div class="toggle-content">
+            <div class="toggle-content-inner">
+                <h3>Teoria Semantica della Verità</h3>
+                <p>Tarski rivoluzionò la filosofia del linguaggio con la sua teoria semantica della verità, formulata nel celebre saggio "Il concetto di verità nei linguaggi formalizzati" (1933). La sua definizione di verità ("'p' è vero se e solo se p") divenne un punto di riferimento per la logica e la filosofia analitica.</p>
+                
+                <div class="theorem">
+                    <div class="theorem-title">Convenzione T (T-schema)</div>
+                    <p>X è una frase vera se e solo se p<br>
+                    dove 'X' è il nome della frase 'p'</p>
+                    <p>Esempio: "La neve è bianca" è vero se e solo se la neve è bianca</p>
+                </div>
+
+                <h3>Geometria e Teoria degli Insiemi</h3>
+                <p>Tarski diede contributi fondamentali alla geometria elementare, dimostrando che la teoria della geometria euclidea è decidibile. Nella teoria degli insiemi, il suo lavoro sugli ultrafiltri e sui cardinali inaccessibili fu pionieristico.</p>
+
+                <h3>Logica Algebrica</h3>
+                <p>Sviluppò la teoria delle algebre di Tarski, strutture algebriche che catturano le proprietà logiche dei calcoli relazionali. Questo lavoro influenzò profondamente lo sviluppo dell'algebra astratta e della teoria dei modelli.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="toggle-section">
+        <div class="toggle-header">Cronologia delle Scoperte</div>
+        <div class="toggle-content">
+            <div class="toggle-content-inner">
+                <div class="timeline-container">
+                    <div class="timeline-line"></div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-year">1924</div>
+                            <p>Consegue il dottorato con una tesi sulla teoria degli insiemi sotto la supervisione di Leśniewski</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-year">1930</div>
+                            <p>Dimostra la decidibilità della geometria euclidea elementare</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-year">1933</div>
+                            <p>Pubblica la sua rivoluzionaria teoria semantica della verità</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-year">1939</div>
+                            <p>Emigra negli Stati Uniti a causa dello scoppio della seconda guerra mondiale</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-year">1942</div>
+                            <p>Si unisce alla facoltà di Berkeley, dove costruirà una delle più importanti scuole di logica al mondo</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-year">1948</div>
+                            <p>Pubblica "A Decision Method for Elementary Algebra and Geometry"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toggle-section">
+        <div class="toggle-header">Opere Principali</div>
+        <div class="toggle-content">
+            <div class="toggle-content-inner">
+                <ul>
+                    <li><strong>Introduction to Logic and to the Methodology of Deductive Sciences</strong> (1936) - Manuale che influenzò generazioni di logici</li>
+                    <li><strong>Der Wahrheitsbegriff in den formalisierten Sprachen</strong> (1933) - Fondamento della teoria semantica della verità</li>
+                    <li><strong>A Decision Method for Elementary Algebra and Geometry</strong> (1948) - Sulla decidibilità di teorie matematiche</li>
+                    <li><strong>Logic, Semantics, Metamathematics</strong> (1956) - Raccolta di saggi fondamentali</li>
+                    <li><strong>Undecidable Theories</strong> (1953, con Andrzej Mostowski e Raphael Robinson) - Studio sulle teorie indecidibili</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="toggle-section">
+        <div class="toggle-header">Influenza e Eredità</div>
+        <div class="toggle-content">
+            <div class="toggle-content-inner">
+                <p>L'opera di Tarski ha avuto un impatto profondo su numerosi campi:</p>
+                
+                <h3>Filosofia del Linguaggio</h3>
+                <p>La sua teoria della verità ha influenzato pensatori come Karl Popper, Willard Van Orman Quine e Donald Davidson, diventando un pilastro della filosofia analitica.</p>
+                
+                <h3>Informatica Teorica</h3>
+                <p>I suoi lavori sulla decidibilità e la teoria dei modelli hanno applicazioni fondamentali nell'informatica teorica, specialmente nella verifica formale dei programmi e nella teoria della computabilità.</p>
+                
+                <h3>Matematica</h3>
+                <p>Le sue ricerche in teoria degli insiemi, algebra astratta e geometria hanno aperto nuove direzioni di ricerca. La scuola di logica da lui fondata a Berkeley divenne una delle più prestigiose al mondo.</p>
+                
+                <div class="quote">
+                    "Tarski ha trasformato la logica da disciplina specialistica a fondamento di tutta la matematica e filosofia scientifica. La sua influenza è paragonabile solo a quella di Aristotele o Frege."
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toggle-section">
+        <div class="toggle-header">Citazioni Celebri</div>
+        <div class="toggle-content">
+            <div class="toggle-content-inner">
+                <div class="quote">
+                    "La semantica è la disciplina che studia il rapporto tra le espressioni linguistiche e gli oggetti a cui queste espressioni si riferiscono."
+                </div>
+                
+                <div class="quote">
+                    "In matematica, non capisci le cose. Ti ci abitui soltanto."
+                </div>
+                
+                <div class="quote">
+                    "La nozione di verità è così fondamentale che senza di essa non potremmo fare scienza, né filosofia, né vivere una vita razionale."
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle sections
+        const toggleHeaders = document.querySelectorAll('.toggle-header');
+        
+        toggleHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                header.classList.toggle('active');
+                const content = header.nextElementSibling;
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                }
+            });
+        });
+
+        // Reading modes
+        document.getElementById('default-btn').addEventListener('click', () => {
+            document.body.className = '';
+        });
+
+        document.getElementById('semantic-btn').addEventListener('click', () => {
+            document.body.className = 'semantic-mode';
+        });
+
+        document.getElementById('night-btn').addEventListener('click', () => {
+            document.body.className = 'night-mode';
+        });
+
+        document.getElementById('formal-btn').addEventListener('click', () => {
+            document.body.className = 'formal-mode';
+        });
+
+        document.getElementById('vintage-btn').addEventListener('click', () => {
+            document.body.className = 'vintage-mode';
+        });
+
+        // Button shapes
+        document.getElementById('rounded-btn').addEventListener('click', () => {
+            document.documentElement.style.setProperty('--border-radius', '30px');
+            document.querySelectorAll('.toggle-header').forEach(btn => {
+                btn.style.borderRadius = '30px';
+            });
+        });
+
+        document.getElementById('square-btn').addEventListener('click', () => {
+            document.documentElement.style.setProperty('--border-radius', '0');
+            document.querySelectorAll('.toggle-header').forEach(btn => {
+                btn.style.borderRadius = '0';
+            });
+        });
+
+        document.getElementById('pill-btn').addEventListener('click', () => {
+            document.documentElement.style.setProperty('--border-radius', '50px');
+            document.querySelectorAll('.toggle-header').forEach(btn => {
+                btn.style.borderRadius = '50px';
+            });
+        });
+
+        document.getElementById('soft-btn').addEventListener('click', () => {
+            document.documentElement.style.setProperty('--border-radius', '15px');
+            document.querySelectorAll('.toggle-header').forEach(btn => {
+                btn.style.borderRadius = '15px';
+            });
+        });
+
+        document.getElementById('sharp-btn').addEventListener('click', () => {
+            document.documentElement.style.setProperty('--border-radius', '5px');
+            document.querySelectorAll('.toggle-header').forEach(btn => {
+                btn.style.borderRadius = '5px';
+            });
+        });
+
+        // Open first section by default
+        document.querySelector('.toggle-header').click();
+    </script>
+</body>
+</html>

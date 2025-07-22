@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jan Łukasiewicz - Pioniere della Logica Moderna</title>
+    <style>
+        :root {
+            --primary-color: #5d4037;
+            --secondary-color: #3e2723;
+            --text-color: #333;
+            --bg-color: #f5f5f5;
+            --card-bg: #ffffff;
+            --border-radius: 10px;
+            --box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            --button-font: 'Arial', sans-serif;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 25px;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+            font-weight: normal;
+            letter-spacing: 0.5px;
+        }
+
+        h1 {
+            text-align: center;
+            border-bottom: 3px double var(--secondary-color);
+            padding-bottom: 15px;
+            margin-bottom: 35px;
+            font-size: 2.4em;
+        }
+
+        .reading-modes {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 10px 18px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.4s;
+            font-size: 15px;
+            font-family: var(--button-font);
+            letter-spacing: 0.5px;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        #default-btn {
+            background-color: #5d4037;
+            color: white;
+        }
+
+        #logic-btn {
+            background-color: #455a64;
+            color: white;
+        }
+
+        #night-btn {
+            background-color: #1a237e;
+            color: white;
+        }
+
+        #paper-btn {
+            background-color: #efebe9;
+            color: #5d4037;
+            border: 1px solid #d7ccc8;
+        }
+
+        #academic-btn {
+            background-color: #263238;
+            color: #cfd8dc;
+        }
+
+        .toggle-section {
+            margin-bottom: 25px;
+        }
+
+        .toggle-header {
+            padding: 18px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            cursor: pointer;
+            border-radius: var(--border-radius);
+            position: relative;
+            transition: all 0.4s;
+            font-size: 19px;
+            box-shadow: var(--box-shadow);
+            font-family: var(--button-font);
+            letter-spacing: 0.7px;
+        }
+
+        .toggle-header:hover {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+        .toggle-header::after {
+            content: '↓';
+            position: absolute;
+            right: 20px;
+            font-size: 20px;
+            transition: transform 0.4s;
+        }
+
+        .toggle-header.active::after {
+            content: '↑';
+        }
+
+        .toggle-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            background-color: var(--card-bg);
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .toggle-content-inner {
+            padding: 25px;
+        }
+
+        .quote {
+            font-style: italic;
+            border-left: 4px solid var(--primary-color);
+            padding: 15px 20px;
+            margin: 25px 0;
+            color: #555;
+            background-color: rgba(0,0,0,0.03);
+            border-radius: 0 5px 5px 0;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        /* Logic mode */
+        body.logic-mode {
+            --primary-color: #2c3e50;
+            --secondary-color: #1a252f;
+            --text-color: #34495e;
+            --bg-color: #ecf0f1;
+            --card-bg: #ffffff;
+            font-family: 'Courier New', monospace;
+        }
+
+        body.logic-mode .toggle-header {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+
+        /* Night mode */
+        body.night-mode {
+            --primary-color: #7986cb;
+            --secondary-color: #5c6bc0;
+            --text-color: #e0e0e0;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        body.night-mode .quote {
+            color: #b0bec5;
+            background-color: rgba(255,255,255,0.05);
+        }
+
+        /* Paper mode */
+        body.paper-mode {
+            --primary-color: #6d4c41;
+            --secondary-color: #4e342e;
+            --text-color: #3e2723;
+            --bg-color: #efebe9;
+            --card-bg: #fff;
+            background-image: linear-gradient(to bottom, #efebe9 0%, #fff 100px);
+        }
+
+        body.paper-mode .toggle-content-inner {
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path opacity="0.1" d="M0 0h100v100H0z" fill="%236d4c41"/></svg>');
+            background-size: 100px 100px;
+        }
+
+        /* Academic mode */
+        body.academic-mode {
+            --primary-color: #37474f;
+            --secondary-color: #263238;
+            --text-color: #455a64;
+            --bg-color: #eceff1;
+            --card-bg: #ffffff;
+            font-family: 'Times New Roman', serif;
+        }
+
+        body.academic-mode h1 {
+            font-variant: small-caps;
+        }
+
+        /* Button shapes */
+        .shape-options {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .shape-btn {
+            padding: 10px 18px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 15px;
+            background-color: #d7ccc8;
+            color: #3e2723;
+        }
+
+        #rounded-btn {
+            border-radius: 25px;
+        }
+
+        #square-btn {
+            border-radius: 0;
+        }
+
+        #pill-btn {
+            border-radius: 50px;
+        }
+
+        #soft-btn {
+            border-radius: 12px;
+        }
+
+        #sharp-btn {
+            border-radius: 3px;
+        }
+
+        /* Timeline styling */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 30px auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 3px;
+            background-color: var(--primary-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1.5px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--card-bg);
+            border: 3px solid var(--primary-color);
+            border-radius: 50%;
+            top: 15px;
+            z-index: 1;
+        }
+
+        .left {
+            left: 0;
+            text-align: right;
+        }
+
+        .right {
+            left: 50%;
+            text-align: left;
+        }
+
+        .left::after {
+            right: -13px;
+        }
+
+        .right::after {
+            left: -13px;
+        }
+
+        .timeline-content {
+            padding: 15px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .timeline-date {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <h1>Jan Łukasiewicz: Pioniere della Logica Moderna</h1>
+
+    <div class="image-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Jan_Lukasiewicz.jpg/220px-Jan_Lukasiewicz.jpg" alt="Jan Łukasiewicz">
+        <p><em>Jan Łukasiewicz (1878-1956)</em></p>
+    </div>
+
+    <div class="reading-modes">
+        <button id="default-btn" class="mode-btn">Default</button>
+        <button id="logic-btn" class="mode-btn">Logica</button>
+        <button id="night-btn" class="mode-btn">Notturno</button>
+        <button id="paper-btn" class="mode-btn">Carta</button>
+        <button id="academic-btn" class="mode-btn">Accademico</button>
+    </div>
+
+    <div class="shape-options">
+        <button id="rounded-btn" class="shape-btn">Arrotondato</button>
+        <button id="square-btn" class="shape-btn">Quadrato</button>
+        <button id="pill-btn" class="shape-btn">Pillola</button>
+        <button id="soft-btn" class="shape-btn">Morbido</button>
+        <button id="sharp-btn" class="shape-btn">Netto</button>
+    </div>
+
+    <div class="toggle-section">
+        <div class="toggle-header">Biografia</div>
+        <div class="toggle-content">
+            <div class="toggle-content-inner">
+                <p>Jan Łukasiewicz nacque il 21 dicembre 1878 a Leopoli (allora parte dell'Impero Austro-Ungarico, oggi Ucraina) e morì il 13 febbraio 1956 a Dublino, Irlanda. Fu uno dei più importanti logici del XX secolo e una figura centrale della Scuola di Leopoli-Varsavia.</p>
+                
+                <p>Studiò filosofia all'Università di Leopoli sotto la guida di Kazimierz Twardowski, ottenendo il dottorato nel 1902. Dopo aver insegnato a Leopoli, si trasferì all'Università di Varsavia dove divenne professore ordinario nel 1915.</p>
+                
+                <p>Durante la seconda guerra mondiale, Łukasiewicz fu attivo nella resistenza polacca. Dopo la guerra, temendo il regime comunista, si trasferì in Irlanda dove divenne professore al Royal Irish Academy di Dublino fino alla sua morte.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="toggle-section">
+        <div class="toggle-header">Contributi alla Logica</div>
+        <div class="toggle-content">
+            <div class="toggle-content-inner">
+                <h3>Logica a Tre Valori</h3>
+                <p>Łukasiewicz è famoso per aver sviluppato nel 1920 il primo sistema di <em>logica a tre valori</em>, introducendo un terzo valore di verità oltre al vero e falso: "possibile" o "indeterminato". Questo sistema rivoluzionario aprì la strada alle logiche polivalenti e alla logica fuzzy.</p>
+                
+                <div class="quote">
+                    "La realtà non è bianca o nera, ma contiene infinite sfumature di grigio. La nostra logica deve riflettere questa complessità."
+                </div>
+                
+                <h3>Notazione Polacca</h3>
+                <p>Inventò la <em>notazione polacca</em>, un sistema di rappresentazione delle espressioni logiche che elimina la necessità di parentesi. Questa notazione fu poi adottata in informatica per la valutazione delle espressioni e nella progettazione di linguaggi di programmazione.</p>
+                
+                <h3>Logica Modale</h3>
+                <p>Łukasiewicz compì importanti contributi alla logica modale, sviluppando sistemi formali per trattare i concetti di possibilità e necessità. I suoi lavori influenzarono profondamente lo sviluppo della logica temporale e della logica deontica.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="toggle-section">
+        <div class="toggle-header">Cronologia delle Scoperte</div>
+        <div class="toggle-content">
+            <div class="toggle-content-inner">
+                <div class="timeline">
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1903</div>
+                            <p>Pubblica il suo primo lavoro importante sul principio di non contraddizione in Aristotele</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1910</div>
+                            <p>Sviluppa la sua critica al determinismo logico, ponendo le basi per le logiche non classiche</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1920</div>
+                            <p>Introduce il primo sistema di logica a tre valori</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1924</div>
+                            <p>Pubblica la notazione polacca per la logica proposizionale</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1930</div>
+                            <p>Completa il suo sistema di logica polivalente con valori infiniti</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <div class="timeline-date">1951</div>
+                            <p>Pubblica "Aristotle's Syllogistic from the Standpoint of Modern Formal Logic", sintesi del suo pensiero</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toggle-section">
+        <div class="toggle-header">Opere Principali</div>
+        <div class="toggle-content">
+            <div class="toggle-content-inner">
+                <ul>
+                    <li><strong>On the Principle of Contradiction in Aristotle</strong> (1910) - Analisi critica del principio di non contraddizione</li>
+                    <li><strong>Logical Foundations of Probability Theory</strong> (1913) - Primi tentativi di fondazione logica della probabilità</li>
+                    <li><strong>Elements of Mathematical Logic</strong> (1929) - Manuale che introduce la notazione polacca</li>
+                    <li><strong>Aristotle's Syllogistic from the Standpoint of Modern Formal Logic</strong> (1951) - Riesame della logica aristotelica</li>
+                    <li><strong>On the History of the Logic of Propositions</strong> (1934) - Studio storico sullo sviluppo della logica</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="toggle-section">
+        <div class="toggle-header">Influenza e Eredità</div>
+        <div class="toggle-content">
+            <div class="toggle-content-inner">
+                <p>L'opera di Łukasiewicz ha avuto un impatto profondo su diverse discipline:</p>
+                
+                <h3>Informatica</h3>
+                <p>La notazione polacca inversa (RPN) è utilizzata nelle calcolatrici HP e in linguaggi di programmazione come PostScript e Forth. Le logiche polivalenti hanno applicazioni nell'intelligenza artificiale e nel trattamento dell'incertezza.</p>
+                
+                <h3>Filosofia</h3>
+                <p>I suoi lavori hanno influenzato la filosofia analitica, specialmente nello studio della verità, della modalità e della natura delle proposizioni. La sua critica al determinismo logico rimane un riferimento nel dibattito sul libero arbitrio.</p>
+                
+                <h3>Matematica</h3>
+                <p>I sistemi di logica polivalente hanno aperto nuove strade nella fondazione della matematica e nella teoria dei modelli. Le sue idee sono state sviluppate da logici come Emil Post e Alan Turing.</p>
+                
+                <div class="quote">
+                    "Łukasiewicz ha trasformato la logica da disciplina filosofica a strumento matematico potente, aprendo possibilità che ancora oggi esploriamo."
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toggle-section">
+        <div class="toggle-header">Citazioni Celebri</div>
+        <div class="toggle-content">
+            <div class="toggle-content-inner">
+                <div class="quote">
+                    "La logica è l'etica del pensiero e del discorso, così come l'etica è la logica dell'azione."
+                </div>
+                
+                <div class="quote">
+                    "Nessun sistema logico può pretendere di essere completo: ogni sistema contiene in sé i semi del proprio superamento."
+                </div>
+                
+                <div class="quote">
+                    "La verità matematica è solo un caso particolare della verità logica, che a sua volta è solo un aspetto della verità filosofica."
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle sections
+        const toggleHeaders = document.querySelectorAll('.toggle-header');
+        
+        toggleHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                header.classList.toggle('active');
+                const content = header.nextElementSibling;
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                }
+            });
+        });
+
+        // Reading modes
+        document.getElementById('default-btn').addEventListener('click', () => {
+            document.body.className = '';
+        });
+
+        document.getElementById('logic-btn').addEventListener('click', () => {
+            document.body.className = 'logic-mode';
+        });
+
+        document.getElementById('night-btn').addEventListener('click', () => {
+            document.body.className = 'night-mode';
+        });
+
+        document.getElementById('paper-btn').addEventListener('click', () => {
+            document.body.className = 'paper-mode';
+        });
+
+        document.getElementById('academic-btn').addEventListener('click', () => {
+            document.body.className = 'academic-mode';
+        });
+
+        // Button shapes
+        document.getElementById('rounded-btn').addEventListener('click', () => {
+            document.documentElement.style.setProperty('--border-radius', '25px');
+            document.querySelectorAll('.toggle-header').forEach(btn => {
+                btn.style.borderRadius = '25px';
+            });
+        });
+
+        document.getElementById('square-btn').addEventListener('click', () => {
+            document.documentElement.style.setProperty('--border-radius', '0');
+            document.querySelectorAll('.toggle-header').forEach(btn => {
+                btn.style.borderRadius = '0';
+            });
+        });
+
+        document.getElementById('pill-btn').addEventListener('click', () => {
+            document.documentElement.style.setProperty('--border-radius', '50px');
+            document.querySelectorAll('.toggle-header').forEach(btn => {
+                btn.style.borderRadius = '50px';
+            });
+        });
+
+        document.getElementById('soft-btn').addEventListener('click', () => {
+            document.documentElement.style.setProperty('--border-radius', '12px');
+            document.querySelectorAll('.toggle-header').forEach(btn => {
+                btn.style.borderRadius = '12px';
+            });
+        });
+
+        document.getElementById('sharp-btn').addEventListener('click', () => {
+            document.documentElement.style.setProperty('--border-radius', '3px');
+            document.querySelectorAll('.toggle-header').forEach(btn => {
+                btn.style.borderRadius = '3px';
+            });
+        });
+
+        // Open first section by default
+        document.querySelector('.toggle-header').click();
+    </script>
+</body>
+</html>

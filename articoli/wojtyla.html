@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karol Wojtyła - Giovanni Paolo II</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+            --card-bg: #fff;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --font-heading: 'Georgia', serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-heading);
+            color: var(--primary-color);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+        }
+
+        /* Stili per i bottoni apri/chiudi */
+        .accordion {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .accordion:hover {
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .accordion-btn {
+            width: 100%;
+            padding: 18px 20px;
+            text-align: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            font-family: var(--font-heading);
+            color: white;
+            background-color: var(--secondary-color);
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .accordion-btn:after {
+            content: '+';
+            font-size: 22px;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-btn.active:after {
+            content: '-';
+        }
+
+        .accordion-btn.circle {
+            border-radius: 50px;
+        }
+
+        .accordion-btn.rounded {
+            border-radius: 8px;
+        }
+
+        .accordion-btn.sharp {
+            border-radius: 0;
+        }
+
+        .accordion-btn.primary {
+            background-color: var(--primary-color);
+        }
+
+        .accordion-btn.secondary {
+            background-color: var(--secondary-color);
+        }
+
+        .accordion-btn.accent {
+            background-color: var(--accent-color);
+        }
+
+        .panel {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background-color: var(--card-bg);
+        }
+
+        .panel-content {
+            padding: 20px 0;
+        }
+
+        /* Stili per le modalità di lettura */
+        .reading-modes {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Stili per le diverse modalità */
+        .philosophical-mode {
+            --primary-color: #8e44ad;
+            --secondary-color: #9b59b6;
+            --accent-color: #e67e22;
+            --text-color: #2c3e50;
+            --bg-color: #f5eef8;
+            --card-bg: #fff;
+        }
+
+        .night-mode {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --accent-color: #e74c3c;
+            --text-color: #ecf0f1;
+            --bg-color: #2c3e50;
+            --card-bg: #34495e;
+        }
+
+        .vintage-mode {
+            --primary-color: #8b4513;
+            --secondary-color: #a0522d;
+            --accent-color: #cd853f;
+            --text-color: #5a3921;
+            --bg-color: #f5f5dc;
+            --card-bg: #faebd7;
+        }
+
+        .modern-mode {
+            --primary-color: #2c3e50;
+            --secondary-color: #1abc9c;
+            --accent-color: #e74c3c;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+            --card-bg: #fff;
+        }
+
+        /* Stili per citazioni */
+        blockquote {
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            color: var(--primary-color);
+        }
+
+        /* Stili per immagini */
+        .img-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .img-container img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .img-caption {
+            font-style: italic;
+            margin-top: 10px;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        /* Stili per i bottoni forma */
+        .shape-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .shape-btn {
+            padding: 8px 15px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .shape-btn.active {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Karol Wojtyła - Giovanni Paolo II</h1>
+        
+        <div class="reading-modes">
+            <button class="mode-btn" onclick="setMode('philosophical')">Modalità Filosofica</button>
+            <button class="mode-btn" onclick="setMode('night')">Modalità Notturna</button>
+            <button class="mode-btn" onclick="setMode('vintage')">Modalità Vintage</button>
+            <button class="mode-btn" onclick="setMode('modern')">Modalità Moderna</button>
+        </div>
+        
+        <div class="shape-buttons">
+            <button class="shape-btn" onclick="setShape('rounded')">Angoli Arrotondati</button>
+            <button class="shape-btn" onclick="setShape('circle')">Circolare</button>
+            <button class="shape-btn" onclick="setShape('sharp')">Angoli Vivi</button>
+        </div>
+        
+        <div class="img-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Johannes_Paulus_II_%28cropped%29.jpg/640px-Johannes_Paulus_II_%28cropped%29.jpg" alt="Papa Giovanni Paolo II">
+            <div class="img-caption">Karol Wojtyła, Papa Giovanni Paolo II (1920-2005)</div>
+        </div>
+        
+        <div class="accordion">
+            <button class="accordion-btn primary rounded">La Giovinezza e la Formazione</button>
+            <div class="panel">
+                <div class="panel-content">
+                    <p>Karol Józef Wojtyła nacque il 18 maggio 1920 a Wadowice, una piccola città polacca a 50 km da Cracovia. Figlio di Karol Wojtyła senior, un sottufficiale dell'esercito, e di Emilia Kaczorowska, che morì quando Karol aveva solo 9 anni.</p>
+                    
+                    <p>Durante gli studi al ginnasio, dimostrò grande passione per la letteratura e il teatro. Nel 1938 si trasferì con il padre a Cracovia per iscriversi all'Università Jagellonica, dove studiò filologia polacca.</p>
+                    
+                    <blockquote>"Non abbiate paura! Aprite, anzi, spalancate le porte a Cristo!"</blockquote>
+                    
+                    <p>L'occupazione nazista della Polonia nel 1939 interruppe i suoi studi. Per evitare la deportazione in Germania, lavorò come operaio in una cava e poi in una fabbrica chimica. In questo periodo maturò la sua vocazione sacerdotale.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <button class="accordion-btn secondary rounded">La Vocazione Sacerdotale</button>
+            <div class="panel">
+                <div class="panel-content">
+                    <p>Nel 1942, durante l'occupazione nazista, Karol entrò nel seminario clandestino di Cracovia diretto dall'arcivescovo Adam Stefan Sapieha. Fu ordinato sacerdote il 1° novembre 1946.</p>
+                    
+                    <div class="img-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Karol_Wojty%C5%82a_1946.jpg/640px-Karol_Wojty%C5%82a_1946.jpg" alt="Karol Wojtyła giovane sacerdote">
+                        <div class="img-caption">Karol Wojtyła nel 1946, anno della sua ordinazione sacerdotale</div>
+                    </div>
+                    
+                    <p>Completò i suoi studi a Roma al Pontificio Ateneo Angelicum (oggi Pontificia Università San Tommaso d'Aquino), dove nel 1948 ottenne il dottorato in teologia con una tesi sul tema della fede nelle opere di San Giovanni della Croce.</p>
+                    
+                    <p>Tornato in Polonia, servì come vicario in diverse parrocchie e come cappellano universitario, dimostrando particolare attenzione ai giovani e al mondo intellettuale.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <button class="accordion-btn accent rounded">Vescovo e Cardinale</button>
+            <div class="panel">
+                <div class="panel-content">
+                    <p>Il 4 luglio 1958, Papa Pio XII nominò Wojtyła vescovo ausiliare di Cracovia. A soli 38 anni, divenne il più giovane membro dell'episcopato polacco. Partecipò al Concilio Vaticano II (1962-1965), contribuendo in particolare alla stesura della costituzione Gaudium et Spes.</p>
+                    
+                    <p>Nel 1964 divenne arcivescovo di Cracovia e nel 1967 fu creato cardinale da Papa Paolo VI. Durante il suo episcopato a Cracovia, si distinse per:</p>
+                    
+                    <ul>
+                        <li>La difesa della libertà religiosa durante il regime comunista</li>
+                        <li>L'attenzione al dialogo con il mondo intellettuale</li>
+                        <li>La promozione del rinnovamento conciliare</li>
+                        <li>La costruzione della chiesa di Nowa Huta, città simbolo del comunismo</li>
+                    </ul>
+                    
+                    <blockquote>"La libertà non consiste nel fare ciò che ci piace, ma nell'avere il diritto di fare ciò che dobbiamo."</blockquote>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <button class="accordion-btn primary rounded">Il Pontificato (1978-2005)</button>
+            <div class="panel">
+                <div class="panel-content">
+                    <p>Il 16 ottobre 1978, dopo il brevissimo pontificato di Giovanni Paolo I, Karol Wojtyła fu eletto papa con il nome di Giovanni Paolo II. A 58 anni, divenne il più giovane pontefice dal 1846 e il primo papa non italiano dopo 455 anni.</p>
+                    
+                    <div class="img-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/John_Paul_II_1978.jpg/640px-John_Paul_II_1978.jpg" alt="Giovanni Paolo II appena eletto">
+                        <div class="img-caption">Giovanni Paolo II poco dopo la sua elezione nel 1978</div>
+                    </div>
+                    
+                    <h3>I principali aspetti del suo pontificato:</h3>
+                    
+                    <h4>Viaggi Apostolici</h4>
+                    <p>Giovanni Paolo II fu definito "il Papa pellegrino" per i suoi 104 viaggi apostolici in tutto il mondo, visitando 129 paesi. Fu il primo papa a visitare:</p>
+                    <ul>
+                        <li>La sinagoga di Roma (1986)</li>
+                        <li>Una moschea (Damasco, 2001)</li>
+                        <li>Molti paesi a maggioranza non cattolica</li>
+                    </ul>
+                    
+                    <h4>Dottrina Sociale</h4>
+                    <p>Il suo insegnamento sociale si concentrò su:</p>
+                    <ul>
+                        <li>La difesa della dignità umana</li>
+                        <li>La promozione della giustizia e della pace</li>
+                        <li>La critica sia al comunismo che al capitalismo sfrenato</li>
+                    </ul>
+                    
+                    <h4>Ecumenismo e Dialogo Interreligioso</h4>
+                    <p>Promosse incontri storici con leader di altre religioni, tra cui:</p>
+                    <ul>
+                        <li>L'incontro di Assisi (1986) con rappresentanti di tutte le religioni mondiali</li>
+                        <li>Il dialogo con l'ebraismo</li>
+                        <li>I tentativi di riavvicinamento con la Chiesa ortodossa</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <button class="accordion-btn secondary rounded">L'Attentato e la Sofferenza</button>
+            <div class="panel">
+                <div class="panel-content">
+                    <p>Il 13 maggio 1981, in piazza San Pietro, Giovanni Paolo II fu gravemente ferito in un attentato dal turco Mehmet Ali Ağca. Dopo l'attentato, il papa visitò in prigione il suo attentatore, perdonandolo pubblicamente.</p>
+                    
+                    <div class="img-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/John_Paul_II_in_hospital_1981.jpg/640px-John_Paul_II_in_hospital_1981.jpg" alt="Giovanni Paolo II dopo l'attentato">
+                        <div class="img-caption">Giovanni Paolo II durante la convalescenza dopo l'attentato del 1981</div>
+                    </div>
+                    
+                    <p>Negli ultimi anni del suo pontificato, la sua salute peggiorò visibilmente a causa del morbo di Parkinson, ma continuò il suo ministero con grande forza d'animo, diventando un esempio di come affrontare la sofferenza con dignità.</p>
+                    
+                    <blockquote>"La sofferenza è presente nel mondo per provocare amore, per far nascere opere di amore verso il prossimo, per trasformare tutta la civiltà umana nella civiltà dell'amore."</blockquote>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <button class="accordion-btn accent rounded">La Morte e la Canonizzazione</button>
+            <div class="panel">
+                <div class="panel-content">
+                    <p>Giovanni Paolo II morì il 2 aprile 2005 alle 21:37, dopo una lunga agonia seguita da milioni di persone in tutto il mondo. Ai suoi funerali parteciparono oltre 4 milioni di pellegrini e rappresentanti di 157 paesi.</p>
+                    
+                    <p>Il processo di beatificazione iniziò immediatamente dopo la sua morte, con una deroga speciale alla norma che impone di attendere 5 anni. Fu beatificato da Benedetto XVI il 1° maggio 2011 e canonizzato da Papa Francesco il 27 aprile 2014.</p>
+                    
+                    <div class="img-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Funeral_of_Pope_John_Paul_II_-_2005.jpg/640px-Funeral_of_Pope_John_Paul_II_-_2005.jpg" alt="Funerali di Giovanni Paolo II">
+                        <div class="img-caption">I funerali di Giovanni Paolo II in piazza San Pietro, aprile 2005</div>
+                    </div>
+                    
+                    <h3>Eredità spirituale e culturale:</h3>
+                    <ul>
+                        <li>14 encicliche e numerosi documenti magisteriali</li>
+                        <li>La promulgazione del Catechismo della Chiesa Cattolica (1992)</li>
+                        <li>La riforma del Codice di Diritto Canonico (1983)</li>
+                        <li>L'istituzione della Giornata Mondiale della Gioventù</li>
+                        <li>1478 beati e 482 santi proclamati</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <button class="accordion-btn primary rounded">Pensiero Filosofico e Teologico</button>
+            <div class="panel">
+                <div class="panel-content">
+                    <p>Karol Wojtyła sviluppò un originale pensiero filosofico-teologico che univa la tradizione tomista con la fenomenologia e l'antropologia personalista. Le sue opere principali includono:</p>
+                    
+                    <h4>Amore e Responsabilità (1960)</h4>
+                    <p>Un'analisi filosofica dell'amore umano che getta le basi per la sua successiva teologia del corpo.</p>
+                    
+                    <h4>Persona e Atto (1969)</h4>
+                    <p>Opera fondamentale della sua antropologia filosofica, che esplora la persona umana attraverso l'analisi dell'azione.</p>
+                    
+                    <h4>Teologia del Corpo</h4>
+                    <p>Una serie di 129 catechesi tenute tra il 1979 e il 1984 che rivoluzionarono la comprensione cristiana della sessualità, del matrimonio e della vocazione dell'uomo.</p>
+                    
+                    <blockquote>"L'uomo non può vivere senza amore. Egli rimane per se stesso un essere incomprensibile, la sua vita è priva di senso, se non gli viene rivelato l'amore, se non s'incontra con l'amore, se non lo sperimenta e non lo fa proprio, se non vi partecipa vivamente."</blockquote>
+                    
+                    <p>Il suo pensiero ha influenzato profondamente la Chiesa cattolica del XX e XXI secolo, specialmente nell'ambito dell'etica sessuale, della bioetica e della filosofia dell'azione.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funzione per i bottoni apri/chiudi
+        var acc = document.getElementsByClassName("accordion-btn");
+        var i;
+        
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                } 
+            });
+        }
+        
+        // Funzione per cambiare modalità di lettura
+        function setMode(mode) {
+            document.body.className = mode + '-mode';
+        }
+        
+        // Funzione per cambiare forma dei bottoni
+        function setShape(shape) {
+            var buttons = document.getElementsByClassName('accordion-btn');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].className = 'accordion-btn ' + getButtonColorClass(buttons[i]) + ' ' + shape;
+            }
+            
+            // Aggiorna lo stato attivo dei bottoni forma
+            var shapeButtons = document.getElementsByClassName('shape-btn');
+            for (var i = 0; i < shapeButtons.length; i++) {
+                shapeButtons[i].classList.remove('active');
+            }
+            event.target.classList.add('active');
+        }
+        
+        // Funzione helper per ottenere la classe colore del bottone
+        function getButtonColorClass(button) {
+            if (button.classList.contains('primary')) return 'primary';
+            if (button.classList.contains('secondary')) return 'secondary';
+            if (button.classList.contains('accent')) return 'accent';
+            return '';
+        }
+        
+        // Apri il primo pannello all'avvio
+        document.addEventListener('DOMContentLoaded', function() {
+            var firstPanel = document.querySelector('.panel');
+            firstPanel.style.maxHeight = firstPanel.scrollHeight + "px";
+            document.querySelector('.accordion-btn').classList.add('active');
+            
+            // Imposta il bottone forma predefinito come attivo
+            document.querySelector('.shape-btn').classList.add('active');
+        });
+    </script>
+</body>
+</html>

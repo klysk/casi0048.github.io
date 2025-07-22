@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>August Cieszkowski - Filosofo Polacco</title>
+    <style>
+        :root {
+            --primary-color: #5a7d7b;
+            --secondary-color: #3a5a5a;
+            --text-color: #333;
+            --bg-color: #f5f5f5;
+            --card-bg: #ffffff;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            background-image: linear-gradient(to right, rgba(90,125,123,0.1), rgba(255,255,255,0.8));
+        }
+
+        h1 {
+            color: var(--secondary-color);
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-style: italic;
+            color: #666;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+        }
+
+        .portrait {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--primary-color);
+            margin: 20px auto;
+            display: block;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .reading-modes {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .default {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .philosophical {
+            background-color: #7d5a7b;
+            color: white;
+        }
+
+        .night {
+            background-color: #2e1a2e;
+            color: #e6e6e6;
+        }
+
+        .vintage {
+            background-color: #c9b18b;
+            color: #3a2d1a;
+            border: 1px solid #8b7d5a;
+        }
+
+        .minimal {
+            background-color: #f0f0f0;
+            color: #555;
+            border: 1px solid #ddd;
+        }
+
+        .romantic {
+            background-color: #d4a5a5;
+            color: #5a1a1a;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .toggle-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 18px 30px;
+            text-align: left;
+            cursor: pointer;
+            border-radius: var(--border-radius);
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: var(--transition);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--box-shadow);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .toggle-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .toggle-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .toggle-btn:hover::before {
+            left: 100%;
+        }
+
+        .toggle-btn::after {
+            content: '↓';
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .toggle-btn.active::after {
+            content: '↑';
+            transform: rotate(180deg);
+        }
+
+        .content {
+            display: none;
+            padding: 30px;
+            background-color: var(--card-bg);
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            margin-top: -5px;
+            box-shadow: var(--box-shadow);
+            animation: fadeIn 0.6s ease;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--border-radius);
+            margin: 20px 0;
+            display: block;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .quote {
+            font-style: italic;
+            border-left: 4px solid var(--primary-color);
+            padding: 15px 20px;
+            margin: 25px 0;
+            color: #555;
+            background-color: rgba(90,125,123,0.05);
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .quote::before, .quote::after {
+            content: '"';
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            color: #666;
+            font-size: 0.95rem;
+            border-top: 1px solid #eee;
+        }
+
+        /* Philosophical mode */
+        body.philosophical-mode {
+            --primary-color: #7d5a7b;
+            --secondary-color: #5a3a5a;
+            --text-color: #333;
+            --bg-color: #f9f5f9;
+            --card-bg: #fff;
+        }
+
+        .philosophical-mode .toggle-btn {
+            font-family: 'Palatino Linotype', 'Book Antiqua', serif;
+        }
+
+        .philosophical-mode .quote {
+            font-family: 'Garamond', serif;
+            font-size: 1.15rem;
+        }
+
+        /* Night mode */
+        body.night-mode {
+            --primary-color: #7aa2a0;
+            --secondary-color: #5a8d8b;
+            --text-color: #e6e6e6;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+        }
+
+        .night-mode .toggle-btn {
+            color: #121212;
+        }
+
+        /* Vintage mode */
+        body.vintage-mode {
+            --primary-color: #8b7d5a;
+            --secondary-color: #5a4a3a;
+            --text-color: #3a2d1a;
+            --bg-color: #f5f0e6;
+            --card-bg: #fff8e8;
+        }
+
+        .vintage-mode {
+            font-family: 'Times New Roman', serif;
+        }
+
+        .vintage-mode header {
+            background-image: url('https://www.transparenttextures.com/patterns/old-map.png');
+        }
+
+        /* Minimal mode */
+        body.minimal-mode {
+            --primary-color: #666;
+            --secondary-color: #444;
+            --text-color: #555;
+            --bg-color: #fff;
+            --card-bg: #f9f9f9;
+            --box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .minimal-mode .toggle-btn {
+            background-color: white;
+            color: #555;
+            border: 1px solid #ddd;
+            box-shadow: none;
+        }
+
+        .minimal-mode .content {
+            box-shadow: none;
+            border: 1px solid #eee;
+            border-top: none;
+        }
+
+        /* Romantic mode */
+        body.romantic-mode {
+            --primary-color: #a57d7b;
+            --secondary-color: #7d5a5a;
+            --text-color: #3a1a1a;
+            --bg-color: #fff5f5;
+            --card-bg: #fff;
+        }
+
+        .romantic-mode header {
+            background-image: linear-gradient(to right, rgba(165,125,123,0.1), rgba(255,245,245,0.8));
+        }
+
+        .romantic-mode .quote {
+            background-color: rgba(165,125,123,0.05);
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 30px auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background-color: var(--primary-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--card-bg);
+            border: 3px solid var(--primary-color);
+            border-radius: 50%;
+            top: 15px;
+            z-index: 1;
+        }
+
+        .left {
+            left: 0;
+            text-align: right;
+        }
+
+        .right {
+            left: 50%;
+            text-align: left;
+        }
+
+        .left::after {
+            right: -10px;
+        }
+
+        .right::after {
+            left: -10px;
+        }
+
+        .timeline-content {
+            padding: 15px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        @media (max-width: 768px) {
+            .reading-modes {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .mode-btn {
+                width: 100%;
+            }
+
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item::after {
+                left: 21px;
+            }
+
+            .left, .right {
+                left: 0;
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>August Cieszkowski</h1>
+        <div class="subtitle">(1814-1894) - Filosofo, economista e pensatore messianico polacco</div>
+        
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/August_Cieszkowski.PNG/220px-August_Cieszkowski.PNG" alt="Ritratto di August Cieszkowski" class="portrait">
+        
+        <div class="reading-modes">
+            <button class="mode-btn default" onclick="setMode('default')">Classico</button>
+            <button class="mode-btn philosophical" onclick="setMode('philosophical')">Filosofico</button>
+            <button class="mode-btn night" onclick="setMode('night')">Notturno</button>
+            <button class="mode-btn vintage" onclick="setMode('vintage')">Vintage</button>
+            <button class="mode-btn minimal" onclick="setMode('minimal')">Minimal</button>
+            <button class="mode-btn romantic" onclick="setMode('romantic')">Romantico</button>
+        </div>
+    </header>
+
+    <div class="button-container">
+        <button class="toggle-btn">Vita e Opere</button>
+        <div class="content">
+            <p>August Cieszkowski (1814-1894) è stato un filosofo, economista e attivista politico polacco, figura chiave del messianismo polacco e pioniere della filosofia della storia. Nacque il 12 settembre 1814 a Nowa Sucha, nella Polonia allora divisa, da una famiglia aristocratica.</p>
+            
+            <div class="timeline">
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>1814</h3>
+                        <p>Nascita a Nowa Sucha, nella Polonia divisa</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h3>1830-1831</h3>
+                        <p>Partecipa alla Rivolta di Novembre contro l'Impero Russo</p>
+                    </div>
+                </div>
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>1838</h3>
+                        <p>Pubblica "Prolegomeni alla Filosofia della Storia", opera fondamentale</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h3>1840-1848</h3>
+                        <p>Viaggi in Europa e attività politica per l'indipendenza polacca</p>
+                    </div>
+                </div>
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>1857-1861</h3>
+                        <p>Fonda la Società Agricola e promuove riforme sociali</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h3>1894</h3>
+                        <p>Muore a Wierzenica, lasciando un'eredità filosofica importante</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="quote">
+                La storia non è solo un racconto del passato, ma una profezia del futuro che dobbiamo realizzare.
+            </div>
+            
+            <p>Cieszkowski studiò a Varsavia, Berlino (dove fu allievo di Hegel) e Parigi. La sua opera più celebre, "Prolegomeni alla Filosofia della Storia" (1838), lo pose tra i pensatori più originali del suo tempo. Oltre all'attività filosofica, fu impegnato politicamente per l'indipendenza polacca e nello sviluppo economico della sua regione.</p>
+        </div>
+
+        <button class="toggle-btn">Filosofia della Storia</button>
+        <div class="content">
+            <h3>La Triade Dialettica Storica</h3>
+            <p>Cieszkowski sviluppò una filosofia della storia basata su una triade dialettica che superava la dialettica hegeliana:</p>
+            
+            <ol>
+                <li><strong>Età del Padre (Antichità)</strong>: Dominio della sostanza, dell'unità immediata con la natura</li>
+                <li><strong>Età del Figlio (Cristianesimo-Medioevo)</strong>: Dominio della soggettività, della separazione e riflessione</li>
+                <li><strong>Età dello Spirito (Futuro)</strong>: Sintesi di sostanza e soggetto, realizzazione del Regno di Dio sulla terra</li>
+            </ol>
+            
+            <div class="quote">
+                L'umanità deve passare dalla contemplazione alla creazione, dalla teoria alla praxis che trasforma il mondo.
+            </div>
+            
+            <h3>Critica a Hegel</h3>
+            <p>Mentre Hegel vedeva la storia come un processo di autocomprensione dello Spirito, Cieszkowski sosteneva che la filosofia successiva a Hegel dovesse essere orientata all'azione, alla trasformazione concreta della realtà.</p>
+            
+            <h3>Messianismo Nazionale</h3>
+            <p>Influenzato dal pensiero di Hoene-Wroński, Cieszkowski sviluppò una versione più storicamente fondata del messianismo polacco, vedendo nella nazione polacca un ruolo speciale nel realizzare l'Età dello Spirito.</p>
+        </div>
+
+        <button class="toggle-btn">Pensiero Economico e Sociale</button>
+        <div class="content">
+            <h3>Filosofia del Lavoro</h3>
+            <p>Cieszkowski elaborò una filosofia del lavoro che anticipava alcuni temi del personalismo cristiano:</p>
+            <ul>
+                <li>Il lavoro come via di realizzazione spirituale dell'uomo</li>
+                <li>Critica allo sfruttamento capitalista e alla disumanizzazione del lavoro</li>
+                <li>Proposta di cooperative e associazioni di lavoratori</li>
+            </ul>
+            
+            <h3>Riforma Agraria</h3>
+            <p>Come proprietario terriero, implementò riforme progressiste nelle sue tenute:</p>
+            <ul>
+                <li>Miglioramento delle condizioni dei contadini</li>
+                <li>Introduzione di nuove tecniche agricole</li>
+                <li>Creazione di scuole rurali</li>
+            </ul>
+            
+            <div class="quote">
+                La vera ricchezza di una nazione non sta nei suoi tesori, ma nella dignità del lavoro dei suoi cittadini.
+            </div>
+            
+            <h3>Influenza sul Solidarismo</h3>
+            <p>Le idee di Cieszkowski sull'armonia sociale e la terza via tra capitalismo e socialismo influenzarono lo sviluppo del solidarismo cattolico in Polonia.</p>
+        </div>
+
+        <button class="toggle-btn">Religione e Spiritualità</button>
+        <div class="content">
+            <h3>Filosofia Cristiana</h3>
+            <p>Cieszkowski sviluppò una filosofia cristiana originale che univa:</p>
+            <ul>
+                <li>Elementi della tradizione mistica</li>
+                <li>Analisi razionale hegeliana</li>
+                <li>Profetismo storico</li>
+            </ul>
+            
+            <h3>L'Orazione Dominicale</h3>
+            <p>La sua opera monumentale "O Pater noster" (incompiuta) è un commentario filosofico-teologico alla preghiera del Padre Nostro, vista come programma per la trasformazione del mondo.</p>
+            
+            <div class="quote">
+                Il Padre Nostro non è solo una preghiera da recitare, ma un progetto divino da realizzare nella storia.
+            </div>
+            
+            <h3>Ecumenismo</h3>
+            <p>Cieszkowski promosse una visione ecumenica del cristianesimo, anticipando il dialogo interreligioso moderno.</p>
+        </div>
+
+        <button class="toggle-btn">Eredità e Influenza</button>
+        <div class="content">
+            <h3>Influenza sul Pensiero Europeo</h3>
+            <p>Le idee di Cieszkowski influenzarono:</p>
+            <ul>
+                <li>Il giovane Marx (attraverso il concetto di praxis)</li>
+                <li>Il personalismo cristiano (Mounier, Maritain)</li>
+                <li>La filosofia della storia russa (Solov'ëv, Berdjaev)</li>
+                <li>Il movimento solidarność in Polonia</li>
+            </ul>
+            
+            <h3>Opere Principali</h3>
+            <ul>
+                <li><em>Prolegomeni alla Filosofia della Storia</em> (1838)</li>
+                <li><em>O Pater noster</em> (1848-1894, incompiuta)</li>
+                <li><em>Dio e Palingenesi</em> (1842)</li>
+                <li><em>Il Credito e la Circolazione</em> (1839, opera economica)</li>
+            </ul>
+            
+            <div class="quote">
+                Cieszkowski è stato un ponte tra l'idealismo tedesco e le filosofie dell'azione del Novecento.
+            </div>
+            
+            <h3>Attualità del Pensiero</h3>
+            <p>Oggi Cieszkowski è riscoperto per:</p>
+            <ul>
+                <li>La sua critica profetica alla società moderna</li>
+                <li>La visione olistica di spiritualità e impegno sociale</li>
+                <li>L'alternativa alla crisi del progresso moderno</li>
+            </ul>
+        </div>
+
+        <button class="toggle-btn">Curiosità e Citazioni</button>
+        <div class="content">
+            <h3>Aneddoti</h3>
+            <ul>
+                <li>Cieszkowski parlava fluentemente 8 lingue</li>
+                <li>Fu il primo a usare il termine "praxis" in filosofia</li>
+                <li>La sua tenuta di Wierzenica divenne un salotto intellettuale</li>
+                <li>Corrispose con importanti pensatori europei</li>
+                <li>Fu deputato al primo parlamento prussiano</li>
+            </ul>
+            
+            <h3>Citazioni Celebri</h3>
+            <div class="quote">
+                La verità non è solo da contemplare, ma da realizzare.
+            </div>
+            
+            <div class="quote">
+                L'avvenire è il vero terreno della filosofia.
+            </div>
+            
+            <div class="quote">
+                La Polonia risorgerà non con le armi, ma con lo spirito.
+            </div>
+            
+            <div class="quote">
+                Ogni uomo è chiamato a essere co-creatore del Regno di Dio sulla terra.
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2023 Articolo su August Cieszkowski - Tutti i diritti riservati</p>
+        <p>Fonti: Enciclopedia Treccani, Stanford Encyclopedia of Philosophy, Polska Akademia Nauk</p>
+    </footer>
+
+    <script>
+        // Toggle buttons functionality
+        const toggleButtons = document.querySelectorAll('.toggle-btn');
+        
+        toggleButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                button.classList.toggle('active');
+                const content = button.nextElementSibling;
+                
+                if (content.style.display === 'block') {
+                    content.style.display = 'none';
+                } else {
+                    content.style.display = 'block';
+                }
+            });
+        });
+
+        // Reading modes functionality
+        function setMode(mode) {
+            document.body.className = ''; // Reset all classes
+            if (mode !== 'default') {
+                document.body.classList.add(`${mode}-mode`);
+            }
+            
+            // Change button styles based on mode
+            const buttons = document.querySelectorAll('.toggle-btn');
+            buttons.forEach(btn => {
+                btn.style.transition = 'all 0.3s ease';
+                
+                if (mode === 'night') {
+                    btn.style.backgroundColor = '#7aa2a0';
+                    btn.style.color = '#121212';
+                } else if (mode === 'philosophical') {
+                    btn.style.backgroundColor = '#7d5a7b';
+                    btn.style.color = 'white';
+                } else if (mode === 'vintage') {
+                    btn.style.backgroundColor = '#8b7d5a';
+                    btn.style.color = '#3a2d1a';
+                } else if (mode === 'minimal') {
+                    btn.style.backgroundColor = 'white';
+                    btn.style.color = '#555';
+                    btn.style.border = '1px solid #ddd';
+                    btn.style.boxShadow = 'none';
+                } else if (mode === 'romantic') {
+                    btn.style.backgroundColor = '#a57d7b';
+                    btn.style.color = '#3a1a1a';
+                } else {
+                    btn.style.backgroundColor = '';
+                    btn.style.color = '';
+                    btn.style.border = '';
+                    btn.style.boxShadow = '';
+                }
+            });
+        }
+
+        // Open first section by default
+        document.querySelector('.toggle-btn').click();
+    </script>
+</body>
+</html>

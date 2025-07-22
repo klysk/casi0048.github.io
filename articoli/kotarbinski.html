@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kazimierz Kotarbiński - Filosofo e Logico Polacco</title>
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+            --card-bg: #fff;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+            font-weight: normal;
+        }
+
+        h1 {
+            text-align: center;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        .reading-modes {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        #default-btn {
+            background-color: #4a6fa5;
+            color: white;
+        }
+
+        #philosophy-btn {
+            background-color: #7d5a5a;
+            color: white;
+        }
+
+        #night-btn {
+            background-color: #2c3e50;
+            color: white;
+        }
+
+        #minimal-btn {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+
+        #vintage-btn {
+            background-color: #8b5a2b;
+            color: #f5deb3;
+        }
+
+        .toggle-section {
+            margin-bottom: 20px;
+        }
+
+        .toggle-header {
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            cursor: pointer;
+            border-radius: var(--border-radius);
+            position: relative;
+            transition: all 0.3s;
+            font-size: 18px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .toggle-header:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .toggle-header::after {
+            content: '+';
+            position: absolute;
+            right: 15px;
+            font-size: 22px;
+            transition: transform 0.3s;
+        }
+
+        .toggle-header.active::after {
+            content: '-';
+        }
+
+        .toggle-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: var(--card-bg);
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .toggle-content-inner {
+            padding: 20px;
+        }
+
+        .quote {
+            font-style: italic;
+            border-left: 3px solid var(--primary-color);
+            padding-left: 15px;
+            margin: 20px 0;
+            color: #555;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        /* Philosophy mode */
+        body.philosophy-mode {
+            --primary-color: #5a3d3d;
+            --secondary-color: #3d2c2c;
+            --text-color: #3d3d3d;
+            --bg-color: #f5f0e6;
+            --card-bg: #fff8ee;
+            font-family: 'Palatino', serif;
+        }
+
+        body.philosophy-mode .toggle-header {
+            font-style: italic;
+        }
+
+        /* Night mode */
+        body.night-mode {
+            --primary-color: #8ab4f8;
+            --secondary-color: #5d8ff0;
+            --text-color: #e0e0e0;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+        }
+
+        body.night-mode .quote {
+            color: #b0b0b0;
+        }
+
+        /* Minimal mode */
+        body.minimal-mode {
+            --primary-color: #555;
+            --secondary-color: #777;
+            --text-color: #444;
+            --bg-color: #fff;
+            --card-bg: #fff;
+            --box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        body.minimal-mode .toggle-header {
+            background-color: #eee;
+            color: #333;
+        }
+
+        body.minimal-mode .toggle-header:hover {
+            background-color: #ddd;
+        }
+
+        /* Vintage mode */
+        body.vintage-mode {
+            --primary-color: #6b4423;
+            --secondary-color: #8b5a2b;
+            --text-color: #4a3520;
+            --bg-color: #f5e7d0;
+            --card-bg: #f8f1e5;
+            font-family: 'Times New Roman', serif;
+        }
+
+        body.vintage-mode .toggle-header {
+            background: linear-gradient(to right, #6b4423, #8b5a2b);
+            font-weight: bold;
+        }
+
+        /* Button shapes */
+        .shape-options {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .shape-btn {
+            padding: 8px 15px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            background-color: #ddd;
+        }
+
+        #rounded-btn {
+            border-radius: 20px;
+        }
+
+        #square-btn {
+            border-radius: 0;
+        }
+
+        #pill-btn {
+            border-radius: 30px;
+        }
+
+        #soft-btn {
+            border-radius: 8px;
+        }
+
+        #sharp-btn {
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kazimierz Kotarbiński: Filosofo e Logico Polacco</h1>
+
+    <div class="image-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Kazimierz_Kotarbinski.jpg/220px-Kazimierz_Kotarbinski.jpg" alt="Kazimierz Kotarbiński">
+        <p><em>Kazimierz Kotarbiński (1886-1981)</em></p>
+    </div>
+
+    <div class="reading-modes">
+        <button id="default-btn" class="mode-btn">Default</button>
+        <button id="philosophy-btn" class="mode-btn">Filosofico</button>
+        <button id="night-btn" class="mode-btn">Notturno</button>
+        <button id="minimal-btn" class="mode-btn">Minimal</button>
+        <button id="vintage-btn" class="mode-btn">Vintage</button>
+    </div>
+
+    <div class="shape-options">
+        <button id="rounded-btn" class="shape-btn">Arrotondato</button>
+        <button id="square-btn" class="shape-btn">Quadrato</button>
+        <button id="pill-btn" class="shape-btn">Pillola</button>
+        <button id="soft-btn" class="shape-btn">Morbido</button>
+        <button id="sharp-btn" class="shape-btn">Netto</button>
+    </div>
+
+    <div class="toggle-section">
+        <div class="toggle-header">Biografia</div>
+        <div class="toggle-content">
+            <div class="toggle-content-inner">
+                <p>Kazimierz Kotarbiński nacque il 31 marzo 1886 a Varsavia, allora parte dell'Impero Russo, e morì il 3 ottobre 1981 a Varsavia, Polonia. Fu un eminente filosofo, logico e uno dei principali rappresentanti della Scuola di Leopoli-Varsavia.</p>
+                
+                <p>Kotarbiński studiò filosofia all'Università di Leopoli sotto la guida di Kazimierz Twardowski, completando il suo dottorato nel 1912. In seguito divenne professore all'Università di Varsavia, dove insegnò per molti anni.</p>
+                
+                <p>Durante la sua lunga carriera accademica, Kotarbiński ricoprì numerosi incarichi prestigiosi, tra cui quello di rettore dell'Università di Łódź (1945-1949) e presidente dell'Accademia Polacca delle Scienze (1957-1962).</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="toggle-section">
+        <div class="toggle-header">Contributi Filosofici</div>
+        <div class="toggle-content">
+            <div class="toggle-content-inner">
+                <h3>Reismo o Concretismo</h3>
+                <p>Kotarbiński è principalmente noto per aver sviluppato la filosofia del <em>reismo</em> (o <em>concretismo</em>), una teoria che sostiene che solo gli oggetti concreti esistono realmente. Secondo questa visione, tutti i termini astratti dovrebbero essere ridotti o tradotti in termini che si riferiscono a oggetti concreti.</p>
+                
+                <div class="quote">
+                    "Ogni enunciato apparentemente riguardante entità astratte può e deve essere tradotto in un enunciato riguardante solo oggetti concreti."
+                </div>
+                
+                <h3>Pansomatismo</h3>
+                <p>Una conseguenza estrema del reismo è il <em>pansomatismo</em>, la tesi che tutto ciò che esiste è corporeo. Kotarbiński sosteneva che anche le menti e gli eventi mentali sono in realtà corporei, sebbene questa posizione sia stata successivamente mitigata.</p>
+                
+                <h3>Praxiologia</h3>
+                <p>Kotarbiński sviluppò anche la <em>praxiologia</em>, una teoria generale dell'azione efficiente che studia i principi dell'agire efficace. Questa disciplina ha avuto applicazioni in economia, management e teoria delle organizzazioni.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="toggle-section">
+        <div class="toggle-header">Opere Principali</div>
+        <div class="toggle-content">
+            <div class="toggle-content-inner">
+                <ul>
+                    <li><strong>Elementy teorii poznania, logiki formalnej i metodologii nauk</strong> (1929) - Un trattato fondamentale sulla teoria della conoscenza, logica formale e metodologia delle scienze</li>
+                    <li><strong>Traktat o dobrej robocie</strong> (1955) - Trattato sul buon lavoro, che espone la sua teoria praxiologica</li>
+                    <li><strong>Gnosiology: The Scientific Approach to the Theory of Knowledge</strong> (1966) - Sviluppo della sua teoria della conoscenza</li>
+                    <li><strong>Lezioni di storia della filosofia</strong> - Un'ampia trattazione storica dello sviluppo del pensiero filosofico</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="toggle-section">
+        <div class="toggle-header">Influenza e Eredità</div>
+        <div class="toggle-content">
+            <div class="toggle-content-inner">
+                <p>Kotarbiński ebbe un'influenza significativa sulla filosofia polacca del XX secolo, formando numerosi studenti che avrebbero poi sviluppato le loro carriere filosofiche. La sua enfasi sulla chiarezza concettuale e sul rigore logico caratterizzò l'approccio analitico della Scuola di Leopoli-Varsavia.</p>
+                
+                <p>Le sue teorie praxiologiche influenzarono notevolmente l'economista e storico dell'economia Oscar Lange, nonché altri teorici dell'organizzazione e del management. La praxiologia di Kotarbiński è considerata un precursore della moderna teoria delle decisioni e dell'analisi organizzativa.</p>
+                
+                <p>Anche se alcune delle sue tesi più radicali (come il pansomatismo) non sono state ampiamente adottate, il suo approccio metodologico e la sua insistenza sulla chiarezza semantica rimangono influenti nella filosofia analitica contemporanea.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="toggle-section">
+        <div class="toggle-header">Citazioni Celebri</div>
+        <div class="toggle-content">
+            <div class="toggle-content-inner">
+                <div class="quote">
+                    "La filosofia dovrebbe essere una disciplina rigorosa, non una collezione di opinioni vaghe o intuizioni misteriose."
+                </div>
+                
+                <div class="quote">
+                    "L'efficienza nell'azione non è questione di fortuna, ma di applicazione corretta di principi razionali."
+                </div>
+                
+                <div class="quote">
+                    "Ogni problema filosofico genuino è, in ultima analisi, un problema linguistico o concettuale."
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle sections
+        const toggleHeaders = document.querySelectorAll('.toggle-header');
+        
+        toggleHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                header.classList.toggle('active');
+                const content = header.nextElementSibling;
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                }
+            });
+        });
+
+        // Reading modes
+        document.getElementById('default-btn').addEventListener('click', () => {
+            document.body.className = '';
+        });
+
+        document.getElementById('philosophy-btn').addEventListener('click', () => {
+            document.body.className = 'philosophy-mode';
+        });
+
+        document.getElementById('night-btn').addEventListener('click', () => {
+            document.body.className = 'night-mode';
+        });
+
+        document.getElementById('minimal-btn').addEventListener('click', () => {
+            document.body.className = 'minimal-mode';
+        });
+
+        document.getElementById('vintage-btn').addEventListener('click', () => {
+            document.body.className = 'vintage-mode';
+        });
+
+        // Button shapes
+        document.getElementById('rounded-btn').addEventListener('click', () => {
+            document.querySelectorAll('.toggle-header').forEach(btn => {
+                btn.style.borderRadius = '20px';
+            });
+        });
+
+        document.getElementById('square-btn').addEventListener('click', () => {
+            document.querySelectorAll('.toggle-header').forEach(btn => {
+                btn.style.borderRadius = '0';
+            });
+        });
+
+        document.getElementById('pill-btn').addEventListener('click', () => {
+            document.querySelectorAll('.toggle-header').forEach(btn => {
+                btn.style.borderRadius = '30px';
+            });
+        });
+
+        document.getElementById('soft-btn').addEventListener('click', () => {
+            document.querySelectorAll('.toggle-header').forEach(btn => {
+                btn.style.borderRadius = '8px';
+            });
+        });
+
+        document.getElementById('sharp-btn').addEventListener('click', () => {
+            document.querySelectorAll('.toggle-header').forEach(btn => {
+                btn.style.borderRadius = '2px';
+            });
+        });
+
+        // Open first section by default
+        document.querySelector('.toggle-header').click();
+    </script>
+</body>
+</html>
