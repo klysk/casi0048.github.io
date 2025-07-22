@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kazimierz Twardowski - Filosofo e Logico Polacco</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+            --card-bg: #fff;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --font-heading: 'Georgia', serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-heading);
+            color: var(--primary-color);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+        }
+
+        /* Stili per i bottoni apri/chiudi */
+        .accordion {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .accordion:hover {
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .accordion-btn {
+            width: 100%;
+            padding: 18px 20px;
+            text-align: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            font-family: var(--font-heading);
+            color: white;
+            background-color: var(--secondary-color);
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .accordion-btn:after {
+            content: '+';
+            font-size: 22px;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-btn.active:after {
+            content: '-';
+        }
+
+        .accordion-btn.circle {
+            border-radius: 50px;
+        }
+
+        .accordion-btn.rounded {
+            border-radius: 8px;
+        }
+
+        .accordion-btn.sharp {
+            border-radius: 0;
+        }
+
+        .accordion-btn.primary {
+            background-color: var(--primary-color);
+        }
+
+        .accordion-btn.secondary {
+            background-color: var(--secondary-color);
+        }
+
+        .accordion-btn.accent {
+            background-color: var(--accent-color);
+        }
+
+        .panel {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background-color: var(--card-bg);
+        }
+
+        .panel-content {
+            padding: 20px 0;
+        }
+
+        /* Stili per le modalità di lettura */
+        .reading-modes {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Stili per le diverse modalità */
+        .philosophical-mode {
+            --primary-color: #8e44ad;
+            --secondary-color: #9b59b6;
+            --accent-color: #e67e22;
+            --text-color: #2c3e50;
+            --bg-color: #f5eef8;
+            --card-bg: #fff;
+        }
+
+        .night-mode {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --accent-color: #e74c3c;
+            --text-color: #ecf0f1;
+            --bg-color: #2c3e50;
+            --card-bg: #34495e;
+        }
+
+        .vintage-mode {
+            --primary-color: #8b4513;
+            --secondary-color: #a0522d;
+            --accent-color: #cd853f;
+            --text-color: #5a3921;
+            --bg-color: #f5f5dc;
+            --card-bg: #faebd7;
+        }
+
+        .modern-mode {
+            --primary-color: #2c3e50;
+            --secondary-color: #1abc9c;
+            --accent-color: #e74c3c;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+            --card-bg: #fff;
+        }
+
+        .logical-mode {
+            --primary-color: #006994;
+            --secondary-color: #005b87;
+            --accent-color: #ff6b6b;
+            --text-color: #333;
+            --bg-color: #f0f8ff;
+            --card-bg: #fff;
+        }
+
+        /* Stili per citazioni */
+        blockquote {
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            color: var(--primary-color);
+        }
+
+        /* Stili per immagini */
+        .img-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .img-container img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .img-caption {
+            font-style: italic;
+            margin-top: 10px;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        /* Stili per i bottoni forma */
+        .shape-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .shape-btn {
+            padding: 8px 15px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .shape-btn.active {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        /* Stili per timeline */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 30px auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background-color: var(--secondary-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--card-bg);
+            border: 3px solid var(--secondary-color);
+            border-radius: 50%;
+            top: 15px;
+            z-index: 1;
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        .left::after {
+            right: -10px;
+        }
+
+        .right::after {
+            left: -10px;
+        }
+
+        .timeline-content {
+            padding: 15px;
+            background-color: var(--card-bg);
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Stili per diagrammi */
+        .diagram {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .diagram-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .diagram-box {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 4px;
+        }
+
+        .diagram-arrow {
+            font-size: 20px;
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Kazimierz Twardowski: Padre della Scuola di Leopoli-Varsavia</h1>
+        
+        <div class="reading-modes">
+            <button class="mode-btn" onclick="setMode('philosophical')">Modalità Filosofica</button>
+            <button class="mode-btn" onclick="setMode('night')">Modalità Notturna</button>
+            <button class="mode-btn" onclick="setMode('vintage')">Modalità Vintage</button>
+            <button class="mode-btn" onclick="setMode('modern')">Modalità Moderna</button>
+            <button class="mode-btn" onclick="setMode('logical')">Modalità Logica</button>
+        </div>
+        
+        <div class="shape-buttons">
+            <button class="shape-btn" onclick="setShape('rounded')">Angoli Arrotondati</button>
+            <button class="shape-btn" onclick="setShape('circle')">Circolare</button>
+            <button class="shape-btn" onclick="setShape('sharp')">Angoli Vivi</button>
+        </div>
+        
+        <div class="img-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Kazimierz_Twardowski.jpg/640px-Kazimierz_Twardowski.jpg" alt="Kazimierz Twardowski">
+            <div class="img-caption">Kazimierz Twardowski (1866-1938), fondatore della Scuola di Leopoli-Varsavia</div>
+        </div>
+        
+        <div class="accordion">
+            <button class="accordion-btn primary rounded">Vita e Contesto Storico</button>
+            <div class="panel">
+                <div class="panel-content">
+                    <p>Kazimierz Jerzy Skrzypna-Twardowski nacque il 20 ottobre 1866 a Vienna, allora capitale dell'Impero Austro-Ungarico. Discendente da una nobile famiglia polacca, crebbe in un ambiente intellettualmente stimolante.</p>
+                    
+                    <div class="timeline">
+                        <div class="timeline-item left">
+                            <div class="timeline-content">
+                                <h3>1885-1889</h3>
+                                <p>Studia filosofia all'Università di Vienna con Franz Brentano</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item right">
+                            <div class="timeline-content">
+                                <h3>1891</h3>
+                                <p>Ottiene il dottorato con una tesi sull'idea e la percezione</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item left">
+                            <div class="timeline-content">
+                                <h3>1895</h3>
+                                <p>Diventa professore all'Università di Leopoli (allora Lemberg, Austria-Ungheria)</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item right">
+                            <div class="timeline-content">
+                                <h3>1904</h3>
+                                <p>Fonda la Società Filosofica Polacca</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item left">
+                            <div class="timeline-content">
+                                <h3>1918</h3>
+                                <p>Con la rinascita della Polonia, organizza la vita accademica nel nuovo stato</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item right">
+                            <div class="timeline-content">
+                                <h3>1938</h3>
+                                <p>Muore l'11 febbraio a Leopoli (oggi Lviv, Ucraina)</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <blockquote>"La chiarezza e la precisione sono virtù filosofiche fondamentali, senza le quali ogni speculazione diventa sterile."</blockquote>
+                    
+                    <p>Twardowski operò in un periodo cruciale per la filosofia polacca, segnato dalla rinascita dello stato polacco dopo 123 anni di divisione. La sua opera gettò le basi per lo sviluppo della filosofia analitica in Polonia.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <button class="accordion-btn secondary rounded">La Scuola di Leopoli-Varsavia</button>
+            <div class="panel">
+                <div class="panel-content">
+                    <p>Twardowski è considerato il fondatore della Scuola di Leopoli-Varsavia, uno dei movimenti filosofici più influenti del XX secolo in Polonia. I suoi principi fondamentali includevano:</p>
+                    
+                    <div class="diagram">
+                        <div class="diagram-title">Caratteristiche della Scuola di Leopoli-Varsavia</div>
+                        <div class="diagram-box">Rigore logico</div>
+                        <div class="diagram-arrow">↓</div>
+                        <div class="diagram-box">Chiarezza concettuale</div>
+                        <div class="diagram-arrow">↓</div>
+                        <div class="diagram-box">Analisi linguistica</div>
+                        <div class="diagram-arrow">↓</div>
+                        <div class="diagram-box">Empirismo scientifico</div>
+                    </div>
+                    
+                    <h3>Allievi illustri di Twardowski:</h3>
+                    <ul>
+                        <li><strong>Jan Łukasiewicz:</strong> Pioniere della logica polivalente</li>
+                        <li><strong>Stanisław Leśniewski:</strong> Fondatore della mereologia</li>
+                        <li><strong>Tadeusz Kotarbiński:</strong> Sviluppatore del reismo</li>
+                        <li><strong>Kazimierz Ajdukiewicz:</strong> Teorico del linguaggio e della conoscenza</li>
+                        <li><strong>Władysław Witwicki:</strong> Psicologo e filosofo</li>
+                    </ul>
+                    
+                    <p>La scuola combinava l'eredità della fenomenologia di Brentano con un approccio analitico e scientifico, anticipando molti sviluppi della filosofia analitica anglo-americana.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <button class="accordion-btn accent rounded">Contributi Filosofici</button>
+            <div class="panel">
+                <div class="panel-content">
+                    <p>Twardowski sviluppò una filosofia originale che influenzò profondamente il pensiero del XX secolo:</p>
+                    
+                    <h3>Teoria delle Azioni e Prodotti</h3>
+                    <p>Distinzione fondamentale tra:
+                        <ul>
+                            <li><strong>Azione:</strong> Il processo psicologico</li>
+                            <li><strong>Prodotto:</strong> Il risultato oggettivato dell'azione</li>
+                        </ul>
+                        Questa distinzione applicata al pensiero portò a separare l'atto mentale dal suo contenuto.
+                    </p>
+                    
+                    <h3>Filosofia della Psicologia</h3>
+                    <p>Twardowski analizzò i fenomeni psichici distinguendo tra:
+                        <ul>
+                            <li>Rappresentazioni</li>
+                            <li>Giudizi</li>
+                            <li>Emozioni</li>
+                        </ul>
+                        anticipando molte idee della psicologia cognitiva.
+                    </p>
+                    
+                    <div class="img-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Twardowski_On_the_Content_and_Object_of_Presentations.jpg/640px-Twardowski_On_the_Content_and_Object_of_Presentations.jpg" alt="Opera di Twardowski">
+                        <div class="img-caption">Copertina dell'opera fondamentale "Sul contenuto e l'oggetto delle rappresentazioni"</div>
+                    </div>
+                    
+                    <blockquote>"Ogni atto mentale è diretto verso un oggetto, ma l'oggetto non deve essere confuso con il contenuto della rappresentazione."</blockquote>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <button class="accordion-btn primary rounded">Logica e Metodologia</button>
+            <div class="panel">
+                <div class="panel-content">
+                    <p>Twardowski rivoluzionò l'insegnamento della filosofia introducendo metodi innovativi:</p>
+                    
+                    <h3>Riforma dell'insegnamento filosofico</h3>
+                    <ul>
+                        <li>Enfasi sull'argomentazione rigorosa</li>
+                        <li>Uso sistematico della logica formale</li>
+                        <li>Attenzione alla chiarezza espositiva</li>
+                        <li>Rifiuto del linguaggio oscuro e metafisico</li>
+                    </ul>
+                    
+                    <h3>Contributi alla logica</h3>
+                    <p>Sebbene non sia stato principalmente un logico, Twardowski:
+                        <ul>
+                            <li>Incoraggiò i suoi studenti a sviluppare la logica matematica</li>
+                            <li>Promosse la separazione tra logica e psicologia</li>
+                            <li>Sviluppò una teoria delle definizioni</li>
+                        </ul>
+                    </p>
+                    
+                    <div class="diagram">
+                        <div class="diagram-title">Metodo filosofico di Twardowski</div>
+                        <div class="diagram-box">Analisi del problema</div>
+                        <div class="diagram-arrow">→</div>
+                        <div class="diagram-box">Chiarezza terminologica</div>
+                        <div class="diagram-arrow">→</div>
+                        <div class="diagram-box">Argomentazione rigorosa</div>
+                        <div class="diagram-arrow">→</div>
+                        <div class="diagram-box">Verifica empirica</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <button class="accordion-btn secondary rounded">Influenza ed Eredità</button>
+            <div class="panel">
+                <div class="panel-content">
+                    <p>L'influenza di Twardowski si estese ben oltre i confini della Polonia:</p>
+                    
+                    <h3>Impatto sulla filosofia del XX secolo</h3>
+                    <ul>
+                        <li>Ponte tra la fenomenologia di Brentano e la filosofia analitica</li>
+                        <li>Anticipazione delle idee di Husserl sulla coscienza intenzionale</li>
+                        <li>Influenza sul Circolo di Vienna attraverso i suoi allievi</li>
+                        <li>Modello per l'insegnamento filosofico universitario</li>
+                    </ul>
+                    
+                    <h3>Eredità contemporanea</h3>
+                    <p>Le idee di Twardowski continuano a influenzare:
+                        <ul>
+                            <li>Filosofia della mente</li>
+                            <li>Teorie dell'intenzionalità</li>
+                            <li>Epistemologia analitica</li>
+                            <li>Semantica filosofica</li>
+                        </ul>
+                    </p>
+                    
+                    <div class="img-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Lw%C3%B3w_Uniwersytet.jpg/640px-Lw%C3%B3w_Uniwersytet.jpg" alt="Università di Leopoli">
+                        <div class="img-caption">Università di Leopoli, dove Twardowski insegnò e formò la sua scuola</div>
+                    </div>
+                    
+                    <blockquote>"La grandezza di Twardowski sta non tanto nelle sue teorie specifiche, quanto nel metodo che ha istituito e nella scuola che ha creato." - Jan Woleński</blockquote>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <button class="accordion-btn accent rounded">Opere Principali</button>
+            <div class="panel">
+                <div class="panel-content">
+                    <p>Le opere di Twardowski, sebbene non numerose, furono estremamente influenti:</p>
+                    
+                    <h3>Scritti fondamentali</h3>
+                    <ul>
+                        <li><strong>Zur Lehre vom Inhalt und Gegenstand der Vorstellungen (1894)</strong> - La sua opera più importante, sulla distinzione tra contenuto e oggetto delle rappresentazioni</li>
+                        <li><strong>O czynnościach i wytworach (1912)</strong> - Sulla teoria delle azioni e prodotti</li>
+                        <li><strong>Rozprawy i artykuły filozoficzne (1927)</strong> - Raccolta di saggi filosofici</li>
+                        <li><strong>O psychologii, jej przedmiocie, zadaniach, metodzie, stosunku do innych nauk (1913)</strong> - Sulla psicologia e il suo metodo</li>
+                    </ul>
+                    
+                    <h3>Stile filosofico</h3>
+                    <p>Twardowski era noto per:
+                        <ul>
+                            <li>Chiarezza espositiva</li>
+                            <li>Rigore argomentativo</li>
+                            <li>Attenzione ai dettagli</li>
+                            <li>Approccio sistematico</li>
+                        </ul>
+                        Il suo stile influenzò generazioni di filosofi polacchi.
+                    </p>
+                    
+                    <blockquote>"In filosofia, non dobbiamo cercare di stupire con parole oscure, ma di illuminare con pensieri chiari."</blockquote>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funzione per i bottoni apri/chiudi
+        var acc = document.getElementsByClassName("accordion-btn");
+        var i;
+        
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                } 
+            });
+        }
+        
+        // Funzione per cambiare modalità di lettura
+        function setMode(mode) {
+            document.body.className = mode + '-mode';
+        }
+        
+        // Funzione per cambiare forma dei bottoni
+        function setShape(shape) {
+            var buttons = document.getElementsByClassName('accordion-btn');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].className = 'accordion-btn ' + getButtonColorClass(buttons[i]) + ' ' + shape;
+            }
+            
+            // Aggiorna lo stato attivo dei bottoni forma
+            var shapeButtons = document.getElementsByClassName('shape-btn');
+            for (var i = 0; i < shapeButtons.length; i++) {
+                shapeButtons[i].classList.remove('active');
+            }
+            event.target.classList.add('active');
+        }
+        
+        // Funzione helper per ottenere la classe colore del bottone
+        function getButtonColorClass(button) {
+            if (button.classList.contains('primary')) return 'primary';
+            if (button.classList.contains('secondary')) return 'secondary';
+            if (button.classList.contains('accent')) return 'accent';
+            return '';
+        }
+        
+        // Apri il primo pannello all'avvio
+        document.addEventListener('DOMContentLoaded', function() {
+            var firstPanel = document.querySelector('.panel');
+            firstPanel.style.maxHeight = firstPanel.scrollHeight + "px";
+            document.querySelector('.accordion-btn').classList.add('active');
+            
+            // Imposta il bottone forma predefinito come attivo
+            document.querySelector('.shape-btn').classList.add('active');
+        });
+    </script>
+</body>
+</html>
