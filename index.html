@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Echi di Sofia - Filosofia attraverso i secoli</title>
   <link rel="icon" type="image/png" href="favicon_io/favicon-32x32.png">
+<script src="https://assets.codepen.io/16327/SplitText3.min.js"></script>
 
   
 <!-- Font elegante e leggibile -->
@@ -361,7 +362,15 @@ nav {
       display: grid !important;
     }
   }
-   
+   .exploding-text {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #d4af37;
+  text-align: center;
+  margin-top: 20px;
+  opacity: 0; /* inizialmente invisibile */
+}
+
    <!--  inizio restringimento colonne submenu-->
 .mega-menu.columns-4 {
   display: grid;
@@ -887,7 +896,7 @@ header {
 /* CAROSELLO CITAZIONI */
 .quotes-carousel {
     position: fixed;
-    top: 80px;
+    top: 140px;
     left: 0;
     width: 100%;
     background: rgba(10, 10, 30, 0.3);
@@ -900,7 +909,7 @@ header {
 }
 
 .quotes-carousel {
-    top: 140px; /* o anche meno, prova 80px, 90px, ecc. */
+    top: 160px; /* o anche meno, prova 80px, 90px, ecc. */
 }
 
 .quote-slide {
@@ -988,18 +997,41 @@ header {
 
 .welcome-title {
   font-family: 'Cinzel Decorative', cursive;
-    font-weight: 500;
-    font-size: 3.5rem;
-    color: transparent;
-    background: linear-gradient(90deg, #ffd700, #ffaa00, #ffd700);
-    -webkit-background-clip: text;
-    background-clip: text;
-    text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-    margin-bottom: 2rem;
-    letter-spacing: 2px;
-    line-height: 1.3;
-    animation: titlePulse 6s infinite ease-in-out;
+  font-weight: 500;
+  font-size: 3.5rem;
+  color: transparent;
+  background: linear-gradient(90deg, #ffd700, #ffaa00, #ffd700);
+  background-size: 300% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  text-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+  margin-bottom: 2rem;
+  letter-spacing: 2px;
+  line-height: 1.3;
+  animation: gradientShift 4s infinite ease-in-out, titlePulse 4s infinite ease-in-out;
 }
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes titlePulse {
+  0% {
+    transform: scale(1);
+    text-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+  }
+  50% {
+    transform: scale(1.06);
+    text-shadow: 0 0 45px rgba(255, 215, 0, 0.8);
+  }
+  100% {
+    transform: scale(1);
+    text-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+  }
+}
+
 @keyframes titlePulse {
     0% { 
         transform: scale(1); 
@@ -1064,17 +1096,43 @@ header {
 }
 
 /* SOTTOTITOLO BENVENUTO */
-.welcome-subtitle {
-    color: #ffd700; /* Oro brillante */
-    font-family: 'EB Garamond', serif;
-    font-style: italic;
-    font-weight: 400;
-    text-shadow: 0 0 6px rgba(255, 215, 0, 0.3), 0 0 10px rgba(255, 215, 0, 0.2);
-    white-space: nowrap;
-    overflow: hidden;
-    display: inline-block;
-    font-size: 22px;
+.welcome-title {
+  font-family: 'Cinzel Decorative', cursive;
+  font-weight: 500;
+  font-size: 3.5rem;
+  color: transparent;
+  background: linear-gradient(90deg, #ffd700, #ffaa00, #ffd700);
+  background-size: 300% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  text-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+  margin-bottom: 2rem;
+  letter-spacing: 2px;
+  line-height: 1.3;
+  animation: gradientShift 4s infinite ease-in-out, titlePulse 4s infinite ease-in-out;
 }
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes titlePulse {
+  0% {
+    transform: scale(1);
+    text-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+  }
+  50% {
+    transform: scale(1.06);
+    text-shadow: 0 0 45px rgba(255, 215, 0, 0.8);
+  }
+  100% {
+    transform: scale(1);
+    text-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+  }
+}
+
 </style>
   </head>
 
@@ -1881,11 +1939,17 @@ document.addEventListener("DOMContentLoaded", function() {
     <!-- SEZIONE BENVENUTO -->
 
 <section class="welcome-section">
-  <div class="welcome-mask"></div>
-  <div class="welcome-content">
-    <h1 class="welcome-title">Benvenuto<br>in Echi di Sofia</h1>
-    
-    <p class="welcome-subtitle"></p>
+ <div class="welcome-content">
+  <h1 class="welcome-title">
+    Benvenuto<br>in Echi di Sofia<br>
+    </h1>
+<p class="welcome-subtitle">Un viaggio tra stelle e pensiero</p>
+
+</div>
+<div class="exploding-text">
+  Φ Pensare, dunque è ancora possibile 🤔 
+</div>
+ 
     
     <div class="welcome-quote">
       <p class="quote-text"></p>
@@ -1895,45 +1959,59 @@ document.addEventListener("DOMContentLoaded", function() {
 </section>
 
 
-<!--
-<section class="welcome-section">
-  <div class="welcome-mask"></div>
-  
-<h1 class="welcome-title">Benvenuto<br>in Echi di Sofia</h1>
-<p class="welcome-subtitle">Φ Pensare, dunque è ancora possibile ♾️</p>
 
-    <div class="welcome-quote">
-      <p class="quote-text"></p>
-      <span class="quote-author"></span>
-    </div>
-  </div>
-</section>
--->
 <style>
+
+
 .welcome-title {
-  font-size: 3em;
-  color: gold;
-  text-align: center;
-  font-weight: bold;
-  opacity: 0;
-  filter: drop-shadow(0 0 8px #ffde7d);
+  font-family: 'Cinzel Decorative', cursive;
+  font-weight: 500;
+  font-size: 3.5rem; /* Grande */
+  color: transparent;
+  background: linear-gradient(90deg, #ffd700, #ffaa00, #ffd700);
+  background-size: 300% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  text-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+  margin-bottom: 1.5rem;
+  letter-spacing: 2px;
+  line-height: 1.3;
+  animation: gradientShift 4s infinite ease-in-out, titlePulse 4s infinite ease-in-out;
 }
 
 .welcome-subtitle {
-  font-size: 1.5rem;
-  color: #ddd;
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem !important;
+  font-weight: 300;
+  color: #dddddd;
+  margin-top: -1rem;
+  letter-spacing: 1px;
   text-align: center;
-  margin-top: 10px;
 }
-.top-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  background: rgba(0, 0, 0, 0.6);
-  position: relative;
-  z-index: 10;
+
+
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
+
+@keyframes titlePulse {
+  0% {
+    transform: scale(1);
+    text-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+  }
+  50% {
+    transform: scale(1.06);
+    text-shadow: 0 0 45px rgba(255, 215, 0, 0.8);
+  }
+  100% {
+    transform: scale(1);
+    text-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+  }
+}
+
 
 .logo-container {
   flex: 1;
@@ -1961,17 +2039,7 @@ document.addEventListener("DOMContentLoaded", function() {
   border-radius: 5px;
 }
 
-.welcome-title {
-  font-size: 3em;
-  opacity: 0;
-  transform: translateY(50px);
-}
-.welcome-subtitle {
-  font-size: 1.5em;
-  color: gold;
-  opacity: 0;
-  transform: translateY(30px);
-}
+.
 
 </style>
 
@@ -2003,22 +2071,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-<!--  FINE NUOVA ANIMAZIONE TITOLO-->
-<!--
-<section class="welcome-section">
-    <div class="welcome-mask"></div>
-    <div class="welcome-content">
-        <h1 class="welcome-title pulse-animation">Benvenuto<br>in Echi di Sofia</h1>
-        <p class="welcome-subtitle"></p>
-
-        <div class="welcome-quote">
-            <p class="quote-text"></p>
-            <span class="quote-author"></span>
-        </div>
-    </div>
-
-</section>
-     -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
 <script>
@@ -3265,37 +3317,6 @@ document.addEventListener("DOMContentLoaded", function() {
       ease: "power2.out"
     });
 
-    // Testo del sottotitolo se vuoi effetto macchina da scrivere
-    const subtitleEl = document.querySelector(".welcome-subtitle");
-    const subtitleText = "🕯️Il vuoto è pieno... di domande ⏳Φ Pensare, dunque è ancora possibile ♾️";
-    let i = 0;
-
-    function typeSubtitle() {
-      if (i < subtitleText.length) {
-        subtitleEl.textContent += subtitleText.charAt(i);
-        i++;
-        setTimeout(typeSubtitle, 60);
-      }
-    }
-
-    setTimeout(typeSubtitle, 1500); // parte dopo l’animazione GSAP
-  });
-gsap.to(".welcome-title", {
-  duration: 3,
-  scale: 1.05,
-  yoyo: true,
-  repeat: -1,
-  ease: "power1.inOut"
-});
-gsap.fromTo(".welcome-subtitle", 
-  { opacity: 0, y: 20 }, 
-  { opacity: 1, y: 0, duration: 2, delay: 1, ease: "power2.out" }
-);
-// Titolo con entrata fade + salita
-gsap.fromTo(".welcome-title", 
-  { opacity: 0, y: 30 },
-  { opacity: 1, y: 0, duration: 2, ease: "power2.out" }
-);
 
 // Animazione loopata sul titolo dopo l'ingresso
 gsap.to(".welcome-title", {
@@ -3385,6 +3406,40 @@ document.addEventListener("DOMContentLoaded", () => {
       opacity: 0,
     }, "-=1"); // parte quasi insieme al titolo, ma dopo 0.5s
   });
+<!-              -->
+gsap.to(".shine-text", {
+  duration: 3,
+  repeat: -1,
+  repeatDelay: 0.5,
+  ease: "power2.inOut",
+  textShadow: "0px 0px 50px #ffd700, 0px 0px 30px #ffaa00",
+  yoyo: true,
+  scale: 1.05
+});
+
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const exploding = document.querySelector(".exploding-text");
+  
+  const split = new SplitText(exploding, { type: "chars" });
+  const chars = split.chars;
+
+  gsap.set(exploding, { opacity: 1 }); // mostra il contenitore
+
+  gsap.from(chars, {
+    duration: 1,
+    opacity: 0,
+    scale: 0,
+    y: 50,
+    rotation: 360,
+    ease: "back.out(2)",
+    stagger: {
+      amount: 1.5,
+      from: "center"
+    }
+  });
+});
 </script>
 
        </body>
