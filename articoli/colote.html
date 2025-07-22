@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colote di Lampsaco - Filosofo Epicureo</title>
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+            --card-bg: #fff;
+            --font-main: 'Georgia', serif;
+            --font-heading: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-heading);
+            color: var(--secondary-color);
+        }
+
+        h1 {
+            text-align: center;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+
+        .article-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        /* Stili per i bottoni */
+        .toggle-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            margin: 10px 0;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: var(--font-heading);
+            font-size: 18px;
+            width: 100%;
+            text-align: left;
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .toggle-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+        }
+
+        .toggle-btn::after {
+            content: '+';
+            position: absolute;
+            right: 20px;
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-btn.active::after {
+            content: '-';
+            transform: rotate(180deg);
+        }
+
+        .toggle-content {
+            display: none;
+            padding: 15px;
+            background-color: rgba(255,255,255,0.8);
+            border-radius: 0 0 8px 8px;
+            margin-top: -5px;
+            border-left: 3px solid var(--primary-color);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Stili per le modalità di lettura */
+        .reading-modes {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mode-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .mode-btn.active {
+            font-weight: bold;
+        }
+
+        /* Stili specifici per le modalità */
+        body.philosophical-mode {
+            --primary-color: #8e6c88;
+            --secondary-color: #6b2d5c;
+            --text-color: #4a3a42;
+            --bg-color: #f5f0f5;
+            --card-bg: #fff9ff;
+            --font-main: 'Times New Roman', Times, serif;
+        }
+
+        body.night-mode {
+            --primary-color: #9bb1ff;
+            --secondary-color: #6b8cff;
+            --text-color: #e0e0e0;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+        }
+
+        body.classic-mode {
+            --primary-color: #8b5a2b;
+            --secondary-color: #5d3a1a;
+            --text-color: #333;
+            --bg-color: #f5f0e8;
+            --card-bg: #fff8ee;
+            --font-main: 'Garamond', serif;
+        }
+
+        body.modern-mode {
+            --primary-color: #2c3e50;
+            --secondary-color: #1abc9c;
+            --text-color: #34495e;
+            --bg-color: #ecf0f1;
+            --card-bg: #ffffff;
+            --font-main: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        /* Stile per citazioni */
+        blockquote {
+            border-left: 4px solid var(--primary-color);
+            padding-left: 15px;
+            margin: 20px 0;
+            font-style: italic;
+            color: var(--secondary-color);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .toggle-btn {
+                padding: 10px 15px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="article-card">
+        <h1>Colote di Lampsaco: Discepolo di Epicuro</h1>
+        
+        <div class="reading-modes">
+            <button class="mode-btn" data-mode="default">Default</button>
+            <button class="mode-btn" data-mode="philosophical">Filosofico</button>
+            <button class="mode-btn" data-mode="night">Notturno</button>
+            <button class="mode-btn" data-mode="classic">Classico</button>
+            <button class="mode-btn" data-mode="modern">Moderno</button>
+        </div>
+
+        <button class="toggle-btn">Introduzione</button>
+        <div class="toggle-content">
+            <p>Colote di Lampsaco (in greco antico: Κολώτης Λαμψακηνός) fu un filosofo greco antico, discepolo di Epicuro e membro della sua scuola filosofica, il Giardino. Visse tra il III e il II secolo a.C. e fu uno dei più fedeli seguaci di Epicuro, difendendo con zelo le dottrine del maestro.</p>
+            <p>Sebbene le sue opere siano andate quasi completamente perdute, le testimonianze antiche ci permettono di ricostruire alcuni aspetti del suo pensiero e del suo ruolo all'interno della scuola epicurea.</p>
+        </div>
+
+        <button class="toggle-btn">Biografia</button>
+        <div class="toggle-content">
+            <h3>Origini e formazione</h3>
+            <p>Colote nacque a Lampsaco, città della Misia (nell'odierna Turchia), che fu anche la patria di altri importanti epicurei come Metrodoro e Idomeneo. Si unì alla scuola di Epicuro probabilmente quando il filosofo si trovava ancora a Lampsaco, prima del trasferimento ad Atene (306 a.C.).</p>
+            
+            <h3>Rapporto con Epicuro</h3>
+            <p>Le fonti antiche descrivono Colote come uno dei discepoli più devoti a Epicuro. Diogene Laerzio racconta che Colote definiva Epicuro "il solo vero filosofo" e che considerava tutti gli altri filosofi come ignoranti e impostori.</p>
+            <blockquote>"Epicuro è l'unico filosofo vero, tutti gli altri sono in errore e ignoranza."<br>- Colote di Lampsaco (citato da Diogene Laerzio)</blockquote>
+            
+            <h3>Morte e eredità</h3>
+            <p>Non conosciamo con precisione la data di morte di Colote, ma dovrebbe essere vissuto fino alla vecchiaia, continuando a insegnare la dottrina epicurea dopo la morte del maestro (270 a.C.).</p>
+        </div>
+
+        <button class="toggle-btn">Opere e Pensiero</button>
+        <div class="toggle-content">
+            <h3>Opere principali</h3>
+            <p>Colote scrisse diverse opere, tutte perdute, ma conosciute attraverso citazioni e riferimenti:</p>
+            <ul>
+                <li><strong>Contro il Lisi di Platone</strong>: Un attacco all'omonimo dialogo platonico</li>
+                <li><strong>Che secondo le dottrine degli altri filosofi non è neppure possibile vivere</strong>: La sua opera più nota, che criticava aspramente le altre scuole filosofiche</li>
+                <li><strong>Sulla natura</strong>: Probabile trattato sulla fisica epicurea</li>
+            </ul>
+            
+            <h3>Posizione filosofica</h3>
+            <p>Colote fu un difensore ortodosso dell'epicureismo, caratterizzato da:</p>
+            <ul>
+                <li>Fedeltà assoluta alle dottrine di Epicuro</li>
+                <li>Polemica contro le altre scuole filosofiche</li>
+                <li>Enfasi sulla praticità della filosofia come via alla felicità</li>
+                <li>Difesa del criterio epicureo della verità (sensazioni, anticipazioni e affezioni)</li>
+            </ul>
+            
+            <h3>Polemica contro le altre scuole</h3>
+            <p>Nella sua opera principale, Colote sosteneva che seguendo le dottrine degli altri filosofi (Platone, Aristotele, gli Stoici, etc.) non sarebbe stato possibile vivere coerentemente. Plutarco scrisse una confutazione a questa tesi, intitolata "Contro Colote", che costituisce una delle nostre principali fonti sul pensiero di Colote.</p>
+        </div>
+
+        <button class="toggle-btn">Influenza e Critiche</button>
+        <div class="toggle-content">
+            <h3>Reazioni contemporanee</h3>
+            <p>L'atteggiamento polemico di Colote suscitò reazioni contrastanti:</p>
+            <ul>
+                <li><strong>Nella scuola epicurea</strong>: Fu apprezzato come difensore ortodosso della dottrina</li>
+                <li><strong>Fuori dalla scuola</strong>: Fu criticato per il suo dogmatismo e la sua intolleranza</li>
+            </ul>
+            
+            <h3>Plutarco contro Colote</h3>
+            <p>Plutarco di Cheronea scrisse un'ampia confutazione delle tesi di Colote, intitolata "Contro Colote". In quest'opera, Plutarco difende i filosofi attaccati da Colote (specialmente Platone) e critica l'epicureismo per il suo rifiuto della tradizione filosofica.</p>
+            <blockquote>"Colote, come un bambino che batte le mani e ride quando crede di aver vinto, così si comporta con i filosofi che attacca."<br>- Plutarco, Contro Colote</blockquote>
+            
+            <h3>Ricezione moderna</h3>
+            <p>Nella storiografia filosofica moderna, Colote è stato spesso visto come un rappresentante dell'epicureismo più dogmatico e meno originale. Tuttavia, recenti studi hanno rivalutato il suo ruolo nella difesa e sistematizzazione della dottrina epicurea.</p>
+        </div>
+
+        <button class="toggle-btn">Curiosità e Aneddoti</button>
+        <div class="toggle-content">
+            <h3>Devozione a Epicuro</h3>
+            <p>Secondo Diogene Laerzio, Colote era così devoto a Epicuro che si prostrava davanti a lui e gli baciava le mani, comportamento insolito per un discepolo greco verso il maestro.</p>
+            
+            <h3>L'episodio della statua</h3>
+            <p>Una tradizione racconta che Colote fece erigere una statua di Epicuro con un'iscrizione che lo celebrava come "il solo vero filosofo", provocando le proteste degli altri filosofi ateniesi.</p>
+            
+            <h3>La morte di Epicuro</h3>
+            <p>Colote sarebbe stato presente al letto di morte di Epicuro e avrebbe partecipato alla stesura della famosa lettera morente in cui il maestro descriveva i suoi ultimi giorni come pieni di gioia nonostante il dolore fisico.</p>
+        </div>
+
+        <button class="toggle-btn">Fonti Antiche</button>
+        <div class="toggle-content">
+            <p>Le principali fonti antiche su Colote sono:</p>
+            <ul>
+                <li><strong>Diogene Laerzio</strong>: "Vite dei filosofi" (libro X su Epicuro)</li>
+                <li><strong>Plutarco</strong>: "Contro Colote" e "Adversus Epicureum"</li>
+                <li><strong>Cicerone</strong>: Alcuni riferimenti nelle opere filosofiche</li>
+                <li><strong>Filodemo</strong>: Frammenti papiracei da Ercolano</li>
+            </ul>
+        </div>
+
+        <button class="toggle-btn">Bibliografia Moderna</button>
+        <div class="toggle-content">
+            <h3>Studi principali</h3>
+            <ul>
+                <li>De Lacy, P. (1941). "Colotes and the Epicurean Refutation of Skepticism". Greek, Roman and Byzantine Studies.</li>
+                <li>Kechagia, E. (2011). "Plutarch Against Colotes: A Lesson in History of Philosophy". Oxford University Press.</li>
+                <li>Masi, F. G. (2013). "Colote di Lampsaco: un epicureo contro i filosofi". Elenchos.</li>
+            </ul>
+            
+            <h3>Traduzioni</h3>
+            <ul>
+                <li>Plutarco, "Contro Colote" (a cura di E. Kechagia, Oxford UP, 2011)</li>
+                <li>I frammenti di Colote sono raccolti in "Epicuro: Opere" (a cura di G. Arrighetti, Einaudi, 1973)</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Funzione per i bottoni toggle
+        document.querySelectorAll('.toggle-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                button.classList.toggle('active');
+                const content = button.nextElementSibling;
+                if (content.style.display === 'block') {
+                    content.style.display = 'none';
+                } else {
+                    content.style.display = 'block';
+                }
+            });
+        });
+
+        // Funzione per le modalità di lettura
+        document.querySelectorAll('.mode-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Rimuovi la classe active da tutti i bottoni
+                document.querySelectorAll('.mode-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Aggiungi la classe active al bottone cliccato
+                button.classList.add('active');
+                
+                // Rimuovi tutte le classi di modalità dal body
+                document.body.className = '';
+                
+                // Aggiungi la classe corrispondente alla modalità selezionata
+                const mode = button.getAttribute('data-mode');
+                if (mode !== 'default') {
+                    document.body.classList.add(`${mode}-mode`);
+                }
+            });
+        });
+
+        // Apri la prima sezione di default
+        document.querySelector('.toggle-btn').click();
+    </script>
+</body>
+</html>

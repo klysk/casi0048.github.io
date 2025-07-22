@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenone di Sidone - Filosofo Epicureo</title>
+    <style>
+        :root {
+            --primary-color: #6d8b74;
+            --secondary-color: #4a6d7c;
+            --text-color: #333;
+            --bg-color: #f5f5f5;
+            --card-bg: #ffffff;
+            --font-main: 'Georgia', serif;
+            --font-heading: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-heading);
+            color: var(--secondary-color);
+        }
+
+        h1 {
+            text-align: center;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        .article-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        /* Stili per i bottoni - Design a foglia */
+        .toggle-btn {
+            background: linear-gradient(135deg, var(--primary-color), #8fb9a8);
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            margin: 15px 0;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: var(--font-heading);
+            font-size: 18px;
+            width: 100%;
+            text-align: left;
+            position: relative;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .toggle-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 12px rgba(0,0,0,0.15);
+            background: linear-gradient(135deg, #5d7a66), var(--primary-color));
+        }
+
+        .toggle-btn::after {
+            content: '↓';
+            position: absolute;
+            right: 25px;
+            font-size: 18px;
+            transition: all 0.4s ease;
+        }
+
+        .toggle-btn.active::after {
+            content: '↑';
+            transform: rotate(180deg);
+        }
+
+        .toggle-content {
+            display: none;
+            padding: 20px;
+            background-color: rgba(255,255,255,0.7);
+            border-radius: 0 0 10px 10px;
+            margin-top: -8px;
+            border-left: 4px solid var(--primary-color);
+            animation: slideDown 0.6s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; max-height: 0; }
+            to { opacity: 1; max-height: 2000px; }
+        }
+
+        /* Stili per le modalità di lettura */
+        .reading-modes {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 10px 18px;
+            border-radius: 25px;
+            border: none;
+            background: #e0e0e0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .mode-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+        }
+
+        .mode-btn.active {
+            font-weight: bold;
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Stili specifici per le modalità */
+        body.philosophical-mode {
+            --primary-color: #7d5a5a;
+            --secondary-color: #5a3e3e;
+            --text-color: #4a3a3a;
+            --bg-color: #f9f5f5;
+            --card-bg: #fffafa;
+            --font-main: 'Times New Roman', Times, serif;
+        }
+
+        body.night-mode {
+            --primary-color: #7a9cc6;
+            --secondary-color: #5a7ba6;
+            --text-color: #e0e0e0;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+        }
+
+        body.classic-mode {
+            --primary-color: #8b7355;
+            --secondary-color: #6b5a45;
+            --text-color: #3a3a3a;
+            --bg-color: #f5f0e8;
+            --card-bg: #fff8ee;
+            --font-main: 'Garamond', serif;
+        }
+
+        body.modern-mode {
+            --primary-color: #3a5a78;
+            --secondary-color: #2c3e50;
+            --text-color: #333;
+            --bg-color: #f0f4f8;
+            --card-bg: #ffffff;
+            --font-main: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body.papyrus-mode {
+            --primary-color: #8c7b6b;
+            --secondary-color: #6b5d4f;
+            --text-color: #3a3229;
+            --bg-color: #f8f4e8;
+            --card-bg: url('https://www.transparenttextures.com/patterns/papyrus.png'), #fff8e8;
+            --font-main: 'Papyrus', 'Garamond', serif;
+        }
+
+        /* Stile per citazioni */
+        blockquote {
+            border-left: 4px solid var(--primary-color);
+            padding: 15px 20px;
+            margin: 25px 0;
+            font-style: italic;
+            color: var(--secondary-color);
+            background-color: rgba(0,0,0,0.03);
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* Stile per liste */
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        li:before {
+            content: '•';
+            color: var(--primary-color);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            .article-card {
+                padding: 20px;
+            }
+            
+            .toggle-btn {
+                padding: 12px 18px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="article-card">
+        <h1>Zenone di Sidone: Filosofo Epicureo</h1>
+        
+        <div class="reading-modes">
+            <button class="mode-btn active" data-mode="default">Default</button>
+            <button class="mode-btn" data-mode="philosophical">Filosofico</button>
+            <button class="mode-btn" data-mode="night">Notturno</button>
+            <button class="mode-btn" data-mode="classic">Classico</button>
+            <button class="mode-btn" data-mode="modern">Moderno</button>
+            <button class="mode-btn" data-mode="papyrus">Papiro</button>
+        </div>
+
+        <button class="toggle-btn">Introduzione</button>
+        <div class="toggle-content">
+            <p>Zenone di Sidone (in greco antico: Ζήνων ὁ Σιδώνιος; 150-75 a.C. circa) fu un importante filosofo epicureo greco, scolarca del Giardino di Epicuro ad Atene verso la fine del II secolo a.C. Fu maestro di Filodemo di Gadara, i cui scritti, conservati nei papiri di Ercolano, costituiscono una delle principali fonti sul suo pensiero.</p>
+            <p>Considerato uno degli epicurei più influenti del suo tempo, Zenone combinò l'ortodossia epicurea con innovazioni in campo logico e scientifico, guadagnandosi il rispetto anche al di fuori della sua scuola filosofica.</p>
+        </div>
+
+        <button class="toggle-btn">Biografia</button>
+        <div class="toggle-content">
+            <h3>Origini e formazione</h3>
+            <p>Zenone nacque a Sidone, nell'odierno Libano, intorno al 150 a.C. Si trasferì ad Atene per studiare filosofia nella scuola epicurea, dove dimostrò un talento eccezionale. Successe a Apollodoro come scolarca del Giardino, probabilmente intorno al 100 a.C.</p>
+            
+            <h3>Attività didattica</h3>
+            <p>Zenone fu un insegnante molto rispettato e influente. Tra i suoi allievi più noti vi furono:</p>
+            <ul>
+                <li>Filodemo di Gadara, i cui scritti ci hanno tramandato molte delle idee di Zenone</li>
+                <li>Lucio Manlio Torquato, politico romano che Cicerone presenta come portavoce dell'epicureismo nel "De finibus"</li>
+                <li>Demetrio Lacone, altro importante epicureo</li>
+            </ul>
+            
+            <h3>Morte e eredità</h3>
+            <p>Zenone morì probabilmente intorno al 75 a.C. Dopo la sua morte, la scuola epicurea continuò a fiorire sotto la guida di Fedro e poi di Patrone.</p>
+        </div>
+
+        <button class="toggle-btn">Pensiero Filosofico</button>
+        <div class="toggle-content">
+            <h3>Epicureismo ortodosso</h3>
+            <p>Zenone rimase fondamentalmente fedele alla dottrina di Epicuro, difendendo:</p>
+            <ul>
+                <li>L'atomismo materialista</li>
+                <li>L'edonismo razionale (il piacere come assenza di dolore)</li>
+                <li>La critica alla religione tradizionale</li>
+                <li>L'empirismo gnoseologico</li>
+            </ul>
+            
+            <h3>Innovazioni e sviluppi</h3>
+            <p>Tuttavia, Zenone introdusse alcune novità nell'epicureismo:</p>
+            <ul>
+                <li><strong>Logica</strong>: Sviluppò una teoria più sofisticata dei segni e dell'inferenza</li>
+                <li><strong>Fisica</strong>: Propose modifiche alla teoria atomica, considerando la possibilità di atomi di grandezza minima</li>
+                <li><strong>Etica</strong>: Affinò la teoria dei piaceri, distinguendo tra piaceri "in movimento" e "statici"</li>
+            </ul>
+            
+            <h3>Critica alle altre scuole</h3>
+            <p>Come molti epicurei, Zenone polemizzò con le altre scuole filosofiche, in particolare:</p>
+            <ul>
+                <li>Contro gli stoici: per la loro teoria della divinazione e del destino</li>
+                <li>Contro i peripatetici: per la loro fisica e teoria della conoscenza</li>
+                <li>Contro i platonici: per la loro teoria delle idee</li>
+            </ul>
+            
+            <blockquote>"Zenone di Sidone, uomo acutissimo e quasi princeps degli Epicurei."<br>- Cicerone, De Natura Deorum</blockquote>
+        </div>
+
+        <button class="toggle-btn">Opere e Frammenti</button>
+        <div class="toggle-content">
+            <h3>Opere perdute</h3>
+            <p>Le opere di Zenone sono andate quasi completamente perdute. Dai riferimenti antichi sappiamo che scrisse:</p>
+            <ul>
+                <li><strong>Sulla natura</strong>: Esposizione sistematica della fisica epicurea</li>
+                <li><strong>Contro i geometri</strong>: Critica ai fondamenti della geometria</li>
+                <li><strong>Sul criterio di verità</strong>: Trattato di epistemologia</li>
+                <li><strong>Contro la retorica</strong>: Polemica contro la retorica tradizionale</li>
+            </ul>
+            
+            <h3>Testimonianze</h3>
+            <p>Le nostre principali fonti su Zenone sono:</p>
+            <ul>
+                <li>I papiri di Filodemo da Ercolano, specialmente "Sulla retorica" e "Sui segni"</li>
+                <li>Cicerone, che lo cita nel "De natura deorum" e nel "De finibus"</li>
+                <li>Sesto Empirico, che riporta le sue critiche alla geometria</li>
+                <li>Plutarco, che discute le sue teorie fisiche</li>
+            </ul>
+        </div>
+
+        <button class="toggle-btn">Contributi Originali</button>
+        <div class="toggle-content">
+            <h3>Teoria della conoscenza</h3>
+            <p>Zenone sviluppò una sofisticata teoria dei segni (semeiotica) per spiegare come possiamo inferire conoscenze su ciò che non percepiamo direttamente. Distinse tra:</p>
+            <ul>
+                <li>Segni commemorativi (che richiamano esperienze passate)</li>
+                <li>Segni indicativi (che rivelano realtà non osservabili)</li>
+            </ul>
+            
+            <h3>Critica alla geometria</h3>
+            <p>Zenone attaccò i fondamenti della geometria euclidea, sostenendo che:</p>
+            <ul>
+                <li>Le definizioni geometriche sono circolari</li>
+                <li>I postulati non sono autoevidenti</li>
+                <li>Le dimostrazioni presuppongono ciò che vogliono provare</li>
+            </ul>
+            <blockquote>"Zenone dimostrò che i geometri sono come chi, entrato in una città sconosciuta di notte, tocca una pietra e dice: 'Questa è la prigione', un'altra e dice: 'Questo è il ginnasio', senza alcun criterio certo."<br>- Filodemo, Sulla retorica</blockquote>
+            
+            <h3>Fisica</h3>
+            <p>In fisica, Zenone propose che:</p>
+            <ul>
+                <li>Gli atomi hanno una grandezza minima, non infinitamente divisibile</li>
+                <li>Il vuoto esiste non solo tra gli atomi ma anche all'interno di essi</li>
+                <li>I fenomeni celesti hanno spiegazioni naturali, non divine</li>
+            </ul>
+        </div>
+
+        <button class="toggle-btn">Influenza e Ricezione</button>
+        <div class="toggle-content">
+            <h3>Nell'antichità</h3>
+            <p>Zenone ebbe un'influenza significativa su:</p>
+            <ul>
+                <li><strong>Filodemo</strong>, che diffuse le sue idee a Roma</li>
+                <li><strong>Lucrezio</strong>, che potrebbe aver conosciuto le sue opere attraverso Filodemo</li>
+                <li><strong>Cicerone</strong>, che lo cita con rispetto pur non condividendone le idee</li>
+            </ul>
+            
+            <h3>Critiche</h3>
+            <p>Le posizioni di Zenone furono criticate da:</p>
+            <ul>
+                <li><strong>Plutarco</strong>, che scrisse contro le sue teorie fisiche</li>
+                <li><strong>Proclo</strong>, che difese la geometria dalle sue critiche</li>
+                <li><strong>Gli stoici</strong>, che respinsero il suo empirismo radicale</li>
+            </ul>
+            
+            <h3>Studi moderni</h3>
+            <p>La riscoperta moderna di Zenone è avvenuta principalmente attraverso:</p>
+            <ul>
+                <li>L'edizione e interpretazione dei papiri di Ercolano</li>
+                <li>Studi sulla trasmissione dell'epicureismo in epoca romana</li>
+                <li>Analisi delle fonti ciceroniane e plutarchee</li>
+            </ul>
+        </div>
+
+        <button class="toggle-btn">Curiosità e Anecdoti</button>
+        <div class="toggle-content">
+            <h3>Zenone e Cicerone</h3>
+            <p>Cicerone, che visitò Atene nel 79 a.C., potrebbe aver incontrato Zenone o i suoi allievi diretti. Nel "De natura deorum", presenta Zenone come un pensatore acuto e rispettabile, pur criticando l'epicureismo in generale.</p>
+            
+            <h3>La scuola di Atene</h3>
+            <p>Sotto la guida di Zenone, il Giardino di Epicuro ad Atene divenne un importante centro di studi, attirando studenti da tutto il Mediterraneo, inclusi molti romani della classe dirigente.</p>
+            
+            <h3>Zenone matematico?</h3>
+            <p>Alcuni studiosi moderni hanno ipotizzato che le critiche di Zenone alla geometria possano aver influenzato lo sviluppo del calcolo infinitesimale in epoca moderna, anticipando alcune intuizioni sui limiti delle definizioni matematiche.</p>
+        </div>
+
+        <button class="toggle-btn">Bibliografia</button>
+        <div class="toggle-content">
+            <h3>Fonti primarie</h3>
+            <ul>
+                <li>Filodemo, "Sulla retorica" (PHerc. 1674/1007)</li>
+                <li>Filodemo, "Sui segni" (PHerc. 1065)</li>
+                <li>Cicerone, "De natura deorum", "De finibus"</li>
+                <li>Plutarco, "Contro Colote", "De latenter vivendo"</li>
+                <li>Sesto Empirico, "Contro i matematici"</li>
+            </ul>
+            
+            <h3>Studi moderni</h3>
+            <ul>
+                <li>Sedley, D. (1976). "Epicurus and His Professional Rivals". Cahiers de Philologie.</li>
+                <li>Barnes, J. (1988). "Epicurean Signs". Oxford Studies in Ancient Philosophy.</li>
+                <li>Angeli, A. (1988). "Filodemo. Agli amici di scuola (PHerc. 1005)". Bibliopolis.</li>
+                <li>Asmis, E. (1984). "Epicurus' Scientific Method". Cornell University Press.</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Funzione per i bottoni toggle
+        document.querySelectorAll('.toggle-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                button.classList.toggle('active');
+                const content = button.nextElementSibling;
+                if (content.style.display === 'block') {
+                    content.style.display = 'none';
+                } else {
+                    content.style.display = 'block';
+                }
+            });
+        });
+
+        // Funzione per le modalità di lettura
+        document.querySelectorAll('.mode-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Rimuovi la classe active da tutti i bottoni
+                document.querySelectorAll('.mode-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Aggiungi la classe active al bottone cliccato
+                button.classList.add('active');
+                
+                // Rimuovi tutte le classi di modalità dal body
+                document.body.className = '';
+                
+                // Aggiungi la classe corrispondente alla modalità selezionata
+                const mode = button.getAttribute('data-mode');
+                if (mode !== 'default') {
+                    document.body.classList.add(`${mode}-mode`);
+                }
+            });
+        });
+
+        // Apri la prima sezione di default
+        document.querySelector('.toggle-btn').click();
+    </script>
+</body>
+</html>

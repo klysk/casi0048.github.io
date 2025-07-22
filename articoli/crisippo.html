@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crisippo di Soli - Il Secondo Fondatore dello Stoicismo</title>
+    <style>
+        :root {
+            --classic-bg: #f9f5f0;
+            --classic-text: #3a3226;
+            --night-bg: #1a1a2e;
+            --night-text: #e6e6fa;
+            --scholar-bg: #fff8e6;
+            --scholar-text: #4e342e;
+            --accent: #6a4c93;
+            --accent-light: #9575cd;
+        }
+
+        body {
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: var(--classic-bg);
+            color: var(--classic-text);
+            transition: all 0.4s ease;
+        }
+
+        h1, h2, h3 {
+            color: var(--accent);
+            border-bottom: 1px solid #d1c4e9;
+            padding-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .night-mode {
+            background-color: var(--night-bg);
+            color: var(--night-text);
+        }
+
+        .night-mode h1, 
+        .night-mode h2, 
+        .night-mode h3 {
+            color: var(--accent-light);
+            border-bottom-color: #4a148c;
+        }
+
+        .scholar-mode {
+            background-color: var(--scholar-bg);
+            color: var(--scholar-text);
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        .scholar-mode h1,
+        .scholar-mode h2,
+        .scholar-mode h3 {
+            font-weight: bold;
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 6px;
+        }
+
+        .toggle-container {
+            margin: 35px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .night-mode .toggle-container {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .toggle-btn {
+            background: linear-gradient(135deg, var(--accent) 0%, #8e24aa 100%);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            font-size: 18px;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            position: relative;
+            transition: all 0.3s;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .night-mode .toggle-btn {
+            background: linear-gradient(135deg, #4a148c 0%, #7b1fa2 100%);
+        }
+
+        .scholar-mode .toggle-btn {
+            background: linear-gradient(135deg, #5d4037 0%, #8d6e63 100%);
+            font-style: italic;
+        }
+
+        .toggle-btn:hover {
+            opacity: 0.9;
+        }
+
+        .toggle-btn:after {
+            content: '↓';
+            position: absolute;
+            right: 25px;
+            font-size: 20px;
+            transition: transform 0.3s;
+        }
+
+        .toggle-btn.active:after {
+            content: '↑';
+            transform: rotate(180deg);
+        }
+
+        .toggle-content {
+            display: none;
+            padding: 25px;
+            background: white;
+            border-left: 5px solid var(--accent);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .night-mode .toggle-content {
+            background: #252540;
+            border-left-color: var(--accent-light);
+        }
+
+        .scholar-mode .toggle-content {
+            background: #fffdf6;
+            border-left: 5px solid #5d4037;
+        }
+
+        .reading-options {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .reading-btn {
+            padding: 10px 20px;
+            border: 2px solid var(--accent);
+            background: transparent;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            min-width: 120px;
+        }
+
+        .reading-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .reading-btn.active {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .night-mode .reading-btn {
+            border-color: var(--accent-light);
+            color: var(--night-text);
+        }
+
+        .night-mode .reading-btn.active {
+            background: var(--accent-light);
+        }
+
+        blockquote {
+            border-left: 4px solid var(--accent);
+            padding: 15px 25px;
+            margin: 25px 0;
+            background: rgba(106, 76, 147, 0.05);
+            font-style: italic;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .night-mode blockquote {
+            border-left-color: var(--accent-light);
+            background: rgba(149, 117, 205, 0.1);
+            color: #d1c4e9;
+        }
+
+        .scholar-mode blockquote {
+            border-left: 4px solid #5d4037;
+            background: rgba(93, 64, 55, 0.05);
+            font-style: normal;
+            font-family: 'Courier New', monospace;
+        }
+
+        .highlight {
+            background-color: rgba(255, 213, 79, 0.3);
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        .night-mode .highlight {
+            background-color: rgba(103, 58, 183, 0.3);
+            color: #b39ddb;
+        }
+
+        .scholar-mode .highlight {
+            background-color: transparent;
+            text-decoration: underline;
+            text-decoration-color: #5d4037;
+            text-underline-offset: 3px;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin: 20px 0;
+        }
+
+        .timeline:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--accent);
+        }
+
+        .night-mode .timeline:before {
+            background: var(--accent-light);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+        }
+
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: -33px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 3px solid white;
+        }
+
+        .night-mode .timeline-item:before {
+            background: var(--accent-light);
+            border-color: var(--night-bg);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .reading-options {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .reading-btn {
+                width: 100%;
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="reading-options">
+        <button class="reading-btn active" onclick="setMode('classic')">Classico</button>
+        <button class="reading-btn" onclick="setMode('night')">Notturno</button>
+        <button class="reading-btn" onclick="setMode('scholar')">Accademico</button>
+    </div>
+
+    <h1>Crisippo di Soli: Il Sistematico dello Stoicismo</h1>
+    <p><em>Il "Secondo Fondatore" che trasformò lo Stoicismo in un sistema filosofico completo</em></p>
+    
+    <div class="toggle-container">
+        <button class="toggle-btn">Vita e Contesto Storico</button>
+        <div class="toggle-content">
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>280/277 a.C.</h3>
+                    <p>Nascita a <span class="highlight">Soli</span>, città della Cilicia (oggi Turchia meridionale)</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>260 a.C. circa</h3>
+                    <p>Trasferimento ad Atene, dove diventa allievo di <span class="highlight">Cleante</span> nella Stoà Poikile</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>232 a.C.</h3>
+                    <p>Successione a Cleante come <span class="highlight">scolarca</span> della scuola stoica</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>206 a.C.</h3>
+                    <p>Morte leggendaria: si dice sia morto dal ridere dopo aver visto un asino mangiare i suoi fichi</p>
+                </div>
+            </div>
+
+            <blockquote>
+                "Se non ci fosse stato Crisippo, non ci sarebbe stata la Stoà."
+                <footer>- Diogene Laerzio, <cite>Vite dei filosofi</cite></footer>
+            </blockquote>
+        </div>
+    </div>
+
+    <div class="toggle-container">
+        <button class="toggle-btn">Contributi Filosofici</button>
+        <div class="toggle-content">
+            <h3>La Sistematizzazione dello Stoicismo</h3>
+            <p>Crisippo trasformò gli insegnamenti di Zenone e Cleante in un <span class="highlight">sistema coerente</span>, articolato in tre parti:</p>
+            
+            <h4>1. Logica</h4>
+            <ul>
+                <li>Sviluppò la teoria del <span class="highlight">lekton</span> (ciò che è significato)</li>
+                <li>Elaborò un sistema di logica proposizionale anticipando la logica moderna</li>
+                <li>Classificò i paradossi logici (come il <span class="highlight">paradosso del mentitore</span>)</li>
+            </ul>
+            
+            <h4>2. Fisica</h4>
+            <ul>
+                <li>Teoria del <span class="highlight">pneuma</span> come principio attivo dell'universo</li>
+                <li>Concezione deterministica con il principio di <span class="highlight">causa simpatetica</span></li>
+                <li>Dottrina dell'<span class="highlight">eterno ritorno</span> dopo l'ecpirosi</li>
+            </ul>
+            
+            <h4>3. Etica</h4>
+            <ul>
+                <li>Formula del <span class="highlight">vivere secondo natura</span></li>
+                <li>Teoria delle <span class="highlight">passioni come giudizi erronei</span></li>
+                <li>Concetto di <span class="highlight">apateia</span> (assenza di passioni turbative)</li>
+            </ul>
+            
+            <blockquote>
+                "Il saggio è colui che vive in accordo con l'esperienza della vita naturale, poiché la nostra natura è parte della natura universale."
+                <footer>- Crisippo, <cite>Sull'estremo fine</cite> (frammento)</footer>
+            </blockquote>
+        </div>
+    </div>
+
+    <div class="toggle-container">
+        <button class="toggle-btn">Opere e Metodo</button>
+        <div class="toggle-content">
+            <h3>Un Prolifico Scrittore</h3>
+            <p>Crisippo scrisse oltre <span class="highlight">700 opere</span>, di cui purtroppo restano solo frammenti. La sua produzione includeva:</p>
+            
+            <ul>
+                <li><strong>Trattati sistematici</strong>: <em>Sulle passioni</em>, <em>Sul dovere</em>, <em>Sul destino</em></li>
+                <li><strong>Opere polemiche</strong>: contro le scuole epicurea e accademica</li>
+                <li><strong>Commentari</strong>: su poeti come Omero ed Esiodo</li>
+            </ul>
+            
+            <h3>Stile e Metodo</h3>
+            <p>Il suo approccio era caratterizzato da:</p>
+            
+            <blockquote>
+                "Una dialettica serrata, un'analisi minuziosa, e una volontà di esaminare ogni possibile obiezione."
+                <footer>- Plutarco, <cite>Sulle contraddizioni degli stoici</cite></footer>
+            </blockquote>
+            
+            <p>Questa metodologia <span class="highlight">polemica e analitica</span> divenne modello per la tradizione stoica successiva.</p>
+        </div>
+    </div>
+
+    <div class="toggle-container">
+        <button class="toggle-btn">Eredità e Influenza</button>
+        <div class="toggle-content">
+            <h3>Impatto sullo Stoicismo Romano</h3>
+            <p>Le sistemazioni teoriche di Crisippo furono fondamentali per:</p>
+            
+            <ul>
+                <li><strong>Panezio</strong> e <strong>Posidonio</strong> che adattarono lo stoicismo alla mentalità romana</li>
+                <li><strong>Cicerone</strong> che ne tradusse molti concetti in latino</li>
+                <li><strong>Seneca</strong>, <strong>Epitteto</strong> e <strong>Marco Aurelio</strong> che svilupparono la pratica stoica</li>
+            </ul>
+            
+            <h3>Ricezione Moderna</h3>
+            <p>Scoperti nuovi legami con:</p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>Logica moderna</h3>
+                    <p>Le sue anticipazioni nella logica proposizionale sono state rivalutate</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Filosofia della mente</h3>
+                    <p>La teoria del <span class="highlight">lekton</span> anticipa discussioni sul significato</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Etica applicata</h3>
+                    <p>La sua analisi delle passioni influisce sulle terapie cognitivo-comportamentali</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toggle-container">
+        <button class="toggle-btn">Lezioni per Oggi</button>
+        <div class="toggle-content">
+            <h3>Crisippo nell'Era Digitale</h3>
+            <p>Il suo pensiero offre strumenti per:</p>
+            
+            <ul>
+                <li><strong>Gestione delle emozioni</strong>: distinguere tra eventi e nostri giudizi</li>
+                <li><strong>Pensiero sistemico</strong>: vedere connessioni tra parti e tutto</li>
+                <li><strong>Resilienza logica</strong>: analizzare problemi da molteplici prospettive</li>
+            </ul>
+            
+            <blockquote>
+                "Non sono le cose in sé a turbare gli uomini, ma le opinioni che essi hanno delle cose."
+                <footer>- Epitteto (riprendendo Crisippo)</footer>
+            </blockquote>
+            
+            <h3>Esercizi Pratici</h3>
+            <ol>
+                <li><strong>Analisi dei giudizi</strong>: distinguere tra fatto e interpretazione</li>
+                <li><strong>Premeditatio malorum</strong>: esercizio di anticipazione razionale</li>
+                <li><strong>Dichotomia del controllo</strong>: focalizzarsi su ciò che dipende da noi</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        // Toggle sections
+        const toggleBtns = document.querySelectorAll('.toggle-btn');
+        toggleBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.classList.toggle('active');
+                const content = btn.nextElementSibling;
+                content.style.display = content.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+
+        // Reading modes
+        function setMode(mode) {
+            document.body.className = '';
+            if (mode === 'night') {
+                document.body.classList.add('night-mode');
+            } else if (mode === 'scholar') {
+                document.body.classList.add('scholar-mode');
+            }
+            
+            // Update active button
+            const buttons = document.querySelectorAll('.reading-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if ((mode === 'classic' && btn.textContent === 'Classico') ||
+                    (mode === 'night' && btn.textContent === 'Notturno') ||
+                    (mode === 'scholar' && btn.textContent === 'Accademico')) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // Open first section by default
+        document.querySelector('.toggle-btn').click();
+    </script>
+</body>
+</html>

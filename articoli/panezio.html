@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panezio di Rodi - Lo Stoicismo Romano</title>
+    <style>
+        :root {
+            --classic-bg: #f8f5f2;
+            --classic-text: #3e3a36;
+            --night-bg: #1e1e2c;
+            --night-text: #e0e0e8;
+            --philo-bg: #fff9f0;
+            --philo-text: #4a3a28;
+            --primary: #6b5b45;
+            --primary-light: #9c8c76;
+            --accent: #8c7b68;
+            --accent-light: #c4b5a5;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: var(--classic-bg);
+            color: var(--classic-text);
+            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        h1, h2, h3 {
+            color: var(--primary);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-top: 1.5em;
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            border-bottom: 2px solid var(--accent-light);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            border-left: 4px solid var(--accent);
+            padding-left: 15px;
+        }
+
+        .night-mode {
+            background-color: var(--night-bg);
+            color: var(--night-text);
+        }
+
+        .night-mode h1,
+        .night-mode h2,
+        .night-mode h3 {
+            color: var(--accent-light);
+        }
+
+        .philo-mode {
+            background-color: var(--philo-bg);
+            color: var(--philo-text);
+            font-family: 'EB Garamond', serif;
+        }
+
+        .philo-mode h1,
+        .philo-mode h2,
+        .philo-mode h3 {
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        /* Bottoni a scheda eleganti */
+        .tab-container {
+            margin: 40px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .night-mode .tab-container {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .tab-btn {
+            background: linear-gradient(to right, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            border: none;
+            padding: 18px 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            position: relative;
+            transition: all 0.4s ease;
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .night-mode .tab-btn {
+            background: linear-gradient(to right, #4a3a28 0%, #6b5b45 100%);
+        }
+
+        .philo-mode .tab-btn {
+            background: linear-gradient(to right, #5d4b32 0%, #8a795d 100%);
+            font-style: italic;
+        }
+
+        .tab-btn:hover {
+            opacity: 0.9;
+            padding-left: 35px;
+        }
+
+        .tab-btn .icon {
+            transition: transform 0.4s ease;
+            font-size: 1.2rem;
+        }
+
+        .tab-btn.active .icon {
+            transform: rotate(180deg);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 30px;
+            background: white;
+            animation: fadeIn 0.6s ease-out;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .night-mode .tab-content {
+            background: #2a2a3a;
+            border-top-color: #3a3a4a;
+        }
+
+        .philo-mode .tab-content {
+            background: #fffdf8;
+            border-top: 1px solid #e8e0d8;
+        }
+
+        /* Opzioni di lettura */
+        .reading-options {
+            display: flex;
+            gap: 15px;
+            margin: 40px 0;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .reading-btn {
+            padding: 12px 24px;
+            border: 2px solid var(--primary);
+            background: transparent;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            min-width: 140px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .reading-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: var(--primary);
+            transition: width 0.3s;
+            z-index: -1;
+        }
+
+        .reading-btn:hover::before {
+            width: 100%;
+        }
+
+        .reading-btn:hover {
+            color: white;
+        }
+
+        .reading-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .night-mode .reading-btn {
+            border-color: var(--accent-light);
+            color: var(--night-text);
+        }
+
+        .night-mode .reading-btn::before {
+            background: var(--accent-light);
+        }
+
+        .night-mode .reading-btn.active {
+            background: var(--accent-light);
+        }
+
+        .philo-mode .reading-btn {
+            border-color: var(--philo-text);
+            color: var(--philo-text);
+        }
+
+        .philo-mode .reading-btn::before {
+            background: var(--philo-text);
+        }
+
+        .philo-mode .reading-btn.active {
+            background: var(--philo-text);
+            color: var(--philo-bg);
+        }
+
+        /* Elementi di contenuto */
+        blockquote {
+            border-left: 4px solid var(--accent);
+            padding: 20px 30px;
+            margin: 30px 0;
+            background: rgba(107, 91, 69, 0.05);
+            font-style: italic;
+            border-radius: 0 8px 8px 0;
+            position: relative;
+        }
+
+        blockquote::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 3rem;
+            color: rgba(107, 91, 69, 0.1);
+            font-family: serif;
+        }
+
+        .night-mode blockquote {
+            border-left-color: var(--accent-light);
+            background: rgba(196, 181, 165, 0.1);
+        }
+
+        .philo-mode blockquote {
+            border-left: 4px solid var(--philo-text);
+            background: rgba(74, 58, 40, 0.05);
+            font-style: normal;
+        }
+
+        .highlight {
+            position: relative;
+            z-index: 1;
+        }
+
+        .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            background: rgba(255, 213, 79, 0.4);
+            z-index: -1;
+            transition: height 0.3s;
+        }
+
+        .highlight:hover::after {
+            height: 100%;
+        }
+
+        .night-mode .highlight::after {
+            background: rgba(196, 181, 165, 0.3);
+        }
+
+        .philo-mode .highlight::after {
+            background: rgba(138, 121, 93, 0.2);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+            margin: 30px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding-left: 30px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 4px solid var(--classic-bg);
+        }
+
+        .night-mode .timeline-item::before {
+            background: var(--accent-light);
+            border-color: var(--night-bg);
+        }
+
+        .philo-mode .timeline-item::before {
+            background: var(--philo-text);
+            border-color: var(--philo-bg);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            
+            .tab-btn {
+                padding: 15px 20px;
+                font-size: 1rem;
+            }
+            
+            .reading-options {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .reading-btn {
+                width: 100%;
+                max-width: 220px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="reading-options">
+        <button class="reading-btn active" onclick="setMode('classic')">Classico</button>
+        <button class="reading-btn" onclick="setMode('night')">Notturno</button>
+        <button class="reading-btn" onclick="setMode('philo')">Filosofico</button>
+    </div>
+
+    <h1>Panezio di Rodi: Lo Stoico che conquistò Roma</h1>
+    <p><em>Il filosofo che adattò lo Stoicismo alla mentalità romana, ponendo le basi per Seneca e Marco Aurelio</em></p>
+    
+    <div class="tab-container">
+        <button class="tab-btn">
+            Vita e Contesto Storico
+            <span class="icon">▼</span>
+        </button>
+        <div class="tab-content">
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>185 a.C. circa</h3>
+                    <p>Nascita a <span class="highlight">Rodi</span>, importante centro culturale ellenistico</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>160-150 a.C.</h3>
+                    <p>Studi ad Atene con <span class="highlight">Diogene di Babilonia</span> e <span class="highlight">Antipatro di Tarso</span></p>
+                </div>
+                <div class="timeline-item">
+                    <h3>144 a.C.</h3>
+                    <p>Diventa scolarco della scuola stoica ad Atene</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>140-129 a.C.</h3>
+                    <p>Soggiorno a Roma, amicizia con <span class="highlight">Scipione Emiliano</span> e <span class="highlight">Lelio</span></p>
+                </div>
+                <div class="timeline-item">
+                    <h3>110 a.C.</h3>
+                    <p>Morte a <span class="highlight">Atene</span>, dopo aver guidato la Stoà per 34 anni</p>
+                </div>
+            </div>
+
+            <blockquote>
+                "Panezio fu il primo a temperare la rigidità stoica, adattandola alla concretezza romana senza tradirne i principi fondamentali."
+                <footer>- Cicerone, <cite>De Officiis</cite></footer>
+            </blockquote>
+        </div>
+    </div>
+
+    <div class="tab-container">
+        <button class="tab-btn">
+            Innovazioni Filosofiche
+            <span class="icon">▼</span>
+        </button>
+        <div class="tab-content">
+            <h3>Lo Stoicismo Moderato</h3>
+            <p>Panezio sviluppò una versione più <span class="highlight">pratica e accessibile</span> dello Stoicismo:</p>
+            
+            <ul>
+                <li><strong>Rifiuto dell'apateia radicale</strong>: riconobbe il valore delle <span class="highlight">propatheiai</span> (prime reazioni emotive)</li>
+                <li><strong>Etica più flessibile</strong>: distinzione tra doveri perfetti e intermedi</li>
+                <li><strong>Approccio antropocentrico</strong>: maggiore attenzione alla condizione umana</li>
+            </ul>
+            
+            <h3>Le Quattro Personae</h3>
+            <p>La sua teoria più originale esposta nel <span class="highlight">Περὶ τοῦ καθήκοντος</span> (Sul Dovere):</p>
+            
+            <blockquote>
+                "Ogni uomo deve conciliare quattro ruoli: la natura universale, la sua natura individuale, le circostanze della nascita, e le scelte della volontà."
+            </blockquote>
+            
+            <ol>
+                <li><strong>Persona universale</strong>: la nostra comune natura razionale</li>
+                <li><strong>Persona individuale</strong>: il carattere e le inclinazioni personali</li>
+                <li><strong>Persona sociale</strong>: il ruolo assegnato dal destino</li>
+                <li><strong>Persona elettiva</strong>: le scelte che definiscono la nostra vita</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="tab-container">
+        <button class="tab-btn">
+            Influenza su Roma
+            <span class="icon">▼</span>
+        </button>
+        <div class="tab-content">
+            <h3>Il Circolo degli Scipioni</h3>
+            <p>Panezio fu il <span class="highlight">primo filosofo greco</span> ad essere pienamente accettato dall'aristocrazia romana:</p>
+            
+            <ul>
+                <li>Divenne consigliere di <span class="highlight">Scipione Emiliano</span></li>
+                <li>Influenzò il pensiero di <span class="highlight">Gaio Lelio</span> (il "Sapiente")</li>
+                <li>Ispirò il <span class="highlight">De Republica</span> di Cicerone</li>
+            </ul>
+            
+            <h3>L'Humanitas Romana</h3>
+            <p>La sua filosofia contribuì a formare il concetto romano di <span class="highlight">humanitas</span>:</p>
+            
+            <blockquote>
+                "La vera cultura non è mero ornamento, ma la coltivazione di quelle virtù che rendono l'uomo completo nella sua individualità e nella sua socialità."
+            </blockquote>
+            
+            <p>Questa visione influenzò profondamente l'educazione romana e la concezione del <span class="highlight">vir bonus</span> (l'uomo virtuoso).</p>
+        </div>
+    </div>
+
+    <div class="tab-container">
+        <button class="tab-btn">
+            Eredità e Opere
+            <span class="highlight">▼</span>
+        </button>
+        <div class="tab-content">
+            <h3>Opere Perdute</h3>
+            <p>Delle sue opere ci restano solo frammenti e testimonianze indirette:</p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>Περὶ τοῦ καθήκοντος</h3>
+                    <p><em>Sul Dovere</em> - Base per il <span class="highlight">De Officiis</span> di Cicerone</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Περὶ εὐθυμίας</h3>
+                    <p><em>Sulla Serenità</em> - Influenzò Seneca</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Περὶ προνοίας</h3>
+                    <p><em>Sulla Provvidenza</em> - Discussione sul problema del male</p>
+                </div>
+            </div>
+            
+            <h3>Successione Filosofica</h3>
+            <p>Panezio preparò il terreno per:</p>
+            <ul>
+                <li><strong>Posidonio</strong>: suo allievo diretto</li>
+                <li><strong>Cicerone</strong>: che diffuse il suo pensiero in latino</li>
+                <li><strong>Seneca</strong>: che sviluppò il suo approccio psicologico</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="tab-container">
+        <button class="tab-btn">
+            Attualità del Pensiero
+            <span class="icon">▼</span>
+        </button>
+        <div class="tab-content">
+            <h3>Panezio per il XXI Secolo</h3>
+            <p>Il suo approccio offre strumenti per:</p>
+            
+            <ul>
+                <li><strong>Gestione delle identità multiple</strong>: la teoria delle quattro personae aiuta a conciliare ruoli diversi</li>
+                <li><strong>Leadership etica</strong>: il suo modello di <span class="highlight">pratica senza dogmi</span></li>
+                <li><strong>Interculturalità</span>: dimostrò come tradurre filosofie tra contesti diversi</li>
+            </ul>
+            
+            <blockquote>
+                "L'eredità di Panezio ci insegna che la saggezza non sta nell'aderire rigidamente a una dottrina, ma nel saperla vivere con intelligenza nelle circostanze concrete."
+            </blockquote>
+            
+            <h3>Esercizi Pratici</h3>
+            <ol>
+                <li><strong>Analisi delle personae</strong>: mappare i propri ruoli e le loro esigenze</li>
+                <li><strong>Dovere flessibile</strong>: distinguere tra ideale e possibile</li>
+                <li><strong>Adattamento creativo</strong>: applicare principi astratti a situazioni concrete</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        // Toggle sections
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.classList.toggle('active');
+                const content = btn.nextElementSibling;
+                content.style.display = content.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+
+        // Reading modes
+        function setMode(mode) {
+            document.body.className = '';
+            if (mode === 'night') {
+                document.body.classList.add('night-mode');
+            } else if (mode === 'philo') {
+                document.body.classList.add('philo-mode');
+            }
+            
+            // Update active button
+            const buttons = document.querySelectorAll('.reading-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if ((mode === 'classic' && btn.textContent === 'Classico') ||
+                    (mode === 'night' && btn.textContent === 'Notturno') ||
+                    (mode === 'philo' && btn.textContent === 'Filosofico')) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // Open first section by default
+        document.querySelector('.tab-btn').click();
+    </script>
+</body>
+</html>

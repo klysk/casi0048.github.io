@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posidonio di Apamea - Il Rinascimento dello Stoicismo</title>
+    <style>
+        :root {
+            --classic-bg: #f5f3f0;
+            --classic-text: #3a3630;
+            --night-bg: #1a1c24;
+            --night-text: #e0e2e8;
+            --philo-bg: #fffcf5;
+            --philo-text: #4a4236;
+            --primary: #5a6d8a;
+            --primary-light: #8a9cb8;
+            --accent: #6d7b8f;
+            --accent-light: #9caaba;
+            --gold: #c0a062;
+        }
+
+        body {
+            font-family: 'Garamond', 'Times New Roman', serif;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: var(--classic-bg);
+            color: var(--classic-text);
+            transition: all 0.5s ease-in-out;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary);
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        h1 {
+            font-size: 2.6rem;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            width: 50%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        }
+
+        h2 {
+            font-size: 1.9rem;
+            margin-top: 2em;
+            border-left: 4px solid var(--accent);
+            padding-left: 15px;
+        }
+
+        .night-mode {
+            background-color: var(--night-bg);
+            color: var(--night-text);
+        }
+
+        .night-mode h1,
+        .night-mode h2,
+        .night-mode h3 {
+            color: var(--primary-light);
+        }
+
+        .night-mode h1:after {
+            background: linear-gradient(90deg, transparent, var(--primary-light), transparent);
+        }
+
+        .philo-mode {
+            background-color: var(--philo-bg);
+            color: var(--philo-text);
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+        }
+
+        .philo-mode h1,
+        .philo-mode h2,
+        .philo-mode h3 {
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        /* Bottoni a scheda con stile antico-moderno */
+        .tab-container {
+            margin: 45px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border: 1px solid rgba(90, 109, 138, 0.2);
+        }
+
+        .night-mode .tab-container {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border-color: rgba(138, 156, 184, 0.2);
+        }
+
+        .philo-mode .tab-container {
+            box-shadow: 0 5px 15px rgba(90, 109, 138, 0.1);
+            border-color: rgba(90, 109, 138, 0.1);
+        }
+
+        .tab-btn {
+            background: linear-gradient(145deg, var(--primary) 0%, #4a5a75 100%);
+            color: white;
+            border: none;
+            padding: 20px 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            letter-spacing: 0.5px;
+        }
+
+        .tab-btn:hover {
+            background: linear-gradient(145deg, #6a7d9a 0%, #5a6d8a 100%);
+            padding-left: 35px;
+        }
+
+        .night-mode .tab-btn {
+            background: linear-gradient(145deg, #3a4a65 0%, #2a3a55 100%);
+        }
+
+        .night-mode .tab-btn:hover {
+            background: linear-gradient(145deg, #4a5a75 0%, #3a4a65 100%);
+        }
+
+        .philo-mode .tab-btn {
+            background: linear-gradient(145deg, #6a5a4a 0%, #5a4a3a 100%);
+        }
+
+        .philo-mode .tab-btn:hover {
+            background: linear-gradient(145deg, #7a6a5a 0%, #6a5a4a 100%);
+        }
+
+        .tab-btn .icon {
+            transition: all 0.4s ease;
+            font-size: 1.3rem;
+            margin-left: 15px;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .tab-btn.active .icon {
+            transform: rotate(180deg);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 30px;
+            background: white;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .night-mode .tab-content {
+            background: #252836;
+        }
+
+        .philo-mode .tab-content {
+            background: #fffef9;
+        }
+
+        /* Opzioni di lettura con stile antico */
+        .reading-options {
+            display: flex;
+            gap: 15px;
+            margin: 40px 0;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .reading-btn {
+            padding: 12px 25px;
+            border: none;
+            background: rgba(90, 109, 138, 0.1);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.4s;
+            font-weight: 500;
+            min-width: 150px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            color: var(--primary);
+            border: 1px solid rgba(90, 109, 138, 0.3);
+        }
+
+        .reading-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary);
+            opacity: 0;
+            transition: opacity 0.4s;
+            z-index: -1;
+        }
+
+        .reading-btn:hover {
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .reading-btn:hover::before {
+            opacity: 1;
+        }
+
+        .reading-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .night-mode .reading-btn {
+            background: rgba(138, 156, 184, 0.1);
+            color: var(--primary-light);
+            border-color: rgba(138, 156, 184, 0.3);
+        }
+
+        .night-mode .reading-btn::before {
+            background: var(--primary-light);
+        }
+
+        .night-mode .reading-btn.active {
+            background: var(--primary-light);
+            color: var(--night-bg);
+        }
+
+        .philo-mode .reading-btn {
+            background: rgba(90, 80, 60, 0.1);
+            color: var(--philo-text);
+            border-color: rgba(90, 80, 60, 0.3);
+        }
+
+        .philo-mode .reading-btn::before {
+            background: var(--philo-text);
+        }
+
+        .philo-mode .reading-btn.active {
+            background: var(--philo-text);
+            color: var(--philo-bg);
+        }
+
+        /* Elementi di contenuto */
+        blockquote {
+            border-left: 4px solid var(--gold);
+            padding: 25px;
+            margin: 35px 0;
+            background: rgba(192, 160, 98, 0.05);
+            font-style: italic;
+            position: relative;
+            border-radius: 0 8px 8px 0;
+        }
+
+        blockquote::before {
+            content: '“';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 4rem;
+            color: rgba(192, 160, 98, 0.1);
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .night-mode blockquote {
+            border-left-color: var(--gold);
+            background: rgba(192, 160, 98, 0.1);
+        }
+
+        .philo-mode blockquote {
+            border-left: 4px solid var(--philo-text);
+            background: rgba(74, 66, 54, 0.05);
+            font-style: normal;
+        }
+
+        .highlight {
+            position: relative;
+            display: inline-block;
+            z-index: 1;
+        }
+
+        .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background: rgba(192, 160, 98, 0.3);
+            z-index: -1;
+            transition: height 0.3s;
+        }
+
+        .highlight:hover::after {
+            height: 100%;
+        }
+
+        .night-mode .highlight::after {
+            background: rgba(192, 160, 98, 0.4);
+        }
+
+        .philo-mode .highlight::after {
+            background: rgba(90, 80, 60, 0.2);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+            margin: 35px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 35px;
+            padding-left: 30px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 4px solid var(--classic-bg);
+            box-shadow: 0 0 0 2px var(--primary);
+        }
+
+        .night-mode .timeline-item::before {
+            background: var(--primary-light);
+            border-color: var(--night-bg);
+            box-shadow: 0 0 0 2px var(--primary-light);
+        }
+
+        .philo-mode .timeline-item::before {
+            background: var(--philo-text);
+            border-color: var(--philo-bg);
+            box-shadow: 0 0 0 2px var(--philo-text);
+        }
+
+        .scientific-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .scientific-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            border-top: 3px solid var(--gold);
+        }
+
+        .night-mode .scientific-card {
+            background: #2a2d3a;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        .philo-mode .scientific-card {
+            background: #fffef9;
+            box-shadow: 0 3px 10px rgba(90, 109, 138, 0.05);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .tab-btn {
+                padding: 15px 20px;
+                font-size: 1.1rem;
+            }
+            
+            .reading-options {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .reading-btn {
+                width: 100%;
+                max-width: 250px;
+            }
+            
+            .scientific-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="reading-options">
+        <button class="reading-btn active" onclick="setMode('classic')">Classico</button>
+        <button class="reading-btn" onclick="setMode('night')">Notturno</button>
+        <button class="reading-btn" onclick="setMode('philo')">Filosofico</button>
+    </div>
+
+    <h1>Posidonio di Apamea<br><span style="font-size: 1.2rem; font-weight: normal;">Il Genio Enciclopedico dello Stoicismo</span></h1>
+    <p style="text-align: center; font-style: italic; max-width: 700px; margin: 0 auto 30px;">"Il più universale pensatore del suo tempo, che unì la profondità stoica alla vastità della conoscenza scientifica"</p>
+    
+    <div class="tab-container">
+        <button class="tab-btn">
+            Vita e Viaggi
+            <span class="icon">▼</span>
+        </button>
+        <div class="tab-content">
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>135 a.C.</h3>
+                    <p>Nascita a <span class="highlight">Apamea</span>, Siria (oggi Qalaat al-Madiq)</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>110-100 a.C.</h3>
+                    <p>Studi ad Atene con <span class="highlight">Panezio</span>, capo della scuola stoica</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>95-70 a.C.</h3>
+                    <p>Grandi viaggi scientifici nel Mediterraneo, dalla Spagna all'Egitto</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>75 a.C.</h3>
+                    <p>Fondazione della scuola a <span class="highlight">Rodi</span>, centro di studi cosmopoliti</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>51 a.C.</h3>
+                    <p>Cicerone visita la sua scuola durante il viaggio in Oriente</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>50 a.C.</h3>
+                    <p>Morte a <span class="highlight">Rodi</span>, all'età di circa 85 anni</p>
+                </div>
+            </div>
+
+            <blockquote>
+                "Posidonio era chiamato 'l'atleta' per la sua instancabile ricerca della conoscenza, avendo viaggiato più di ogni filosofo prima di lui per verificare personalmente ogni fenomeno."
+                <footer>- Strabone, <cite>Geografia</cite></footer>
+            </blockquote>
+        </div>
+    </div>
+
+    <div class="tab-container">
+        <button class="tab-btn">
+            Pensiero Filosofico
+            <span class="icon">▼</span>
+        </button>
+        <div class="tab-content">
+            <h3>Lo Stoicismo Rinnovato</h3>
+            <p>Posidonio sviluppò una versione più <span class="highlight">scientifica e olistica</span> dello Stoicismo:</p>
+            
+            <ul>
+                <li><strong>Teoria della simpatia universale</strong>: interconnessione di tutte le parti del cosmo</li>
+                <li><strong>Psicologia tripartita</strong>: ragione, anima irascibile e anima concupiscibile</li>
+                <li><strong>Etica pragmatica</strong>: adattamento dei principi stoici alla vita reale</li>
+            </ul>
+            
+            <h3>La Sintesi del Sapere</h3>
+            <p>La sua filosofia unificava:</p>
+            
+            <div class="scientific-grid">
+                <div class="scientific-card">
+                    <h4>Fisica</h4>
+                    <p>Teorie su terremoti, vulcani e maree che anticiparono scoperte moderne</p>
+                </div>
+                <div class="scientific-card">
+                    <h4>Astronomia</h4>
+                    <p>Calcolo della distanza Terra-Luna e studio delle comete</p>
+                </div>
+                <div class="scientific-card">
+                    <h4>Geografia</h4>
+                    <p>Mappatura delle correnti oceaniche e influssi lunari</p>
+                </div>
+                <div class="scientific-card">
+                    <h4>Storia</h4>
+                    <p>Analisi delle cause profonde degli eventi storici</p>
+                </div>
+            </div>
+            
+            <blockquote>
+                "Non vi è conoscenza che non riguardi il filosofo, poiché tutte le discipline concorrono a rivelare l'armonia del Logos universale."
+                <footer>- Posidonio, <cite>Sul Cosmo</cite> (frammento)</footer>
+            </blockquote>
+        </div>
+    </div>
+
+    <div class="tab-container">
+        <button class="tab-btn">
+            Scoperte Scientifiche
+            <span class="icon">▼</span>
+        </button>
+        <div class="tab-content">
+            <h3>Pioniere della Scienza Antica</h3>
+            <p>Le sue osservazioni empiriche furono rivoluzionarie:</p>
+            
+            <ul>
+                <li><strong>Oceanografia</strong>: descrisse per primo la corrente del Golfo</li>
+                <li><strong>Sismologia</strong>: correlò terremoti con attività vulcaniche</li>
+                <li><strong>Astronomia</strong>: calcolò la circonferenza terrestre (vicino al valore reale)</li>
+                <li><strong>Meteorologia</span>: studiò l'influsso lunare sulle maree</li>
+            </ul>
+            
+            <h3>Metodo di Ricerca</h3>
+            <p>Posidonio combinò:</p>
+            
+            <blockquote>
+                "L'osservazione diretta dei fenomeni, la misurazione matematica, e la riflessione filosofica sulle cause prime."
+            </blockquote>
+            
+            <p>Questo approccio <span class="highlight">interdisciplinare</span> lo rende una figura precorritrice del metodo scientifico moderno.</p>
+        </div>
+    </div>
+
+    <div class="tab-container">
+        <button class="tab-btn">
+            Influenza Storica
+            <span class="icon">▼</span>
+        </button>
+        <div class="tab-content">
+            <h3>Eredità Intellettuale</h3>
+            <p>Il pensiero di Posidonio influenzò:</p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>Cicerone</h3>
+                    <p>Adattò le sue teorie nel <span class="highlight">De Natura Deorum</span> e <span class="highlight">De Divinatione</span></p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Virgilio</h3>
+                    <p>Le descrizioni naturali nell'Eneide riflettono la sua visione</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Galeno</h3>
+                    <p>La psicologia tripartita nella medicina antica</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Rinascimento</h3>
+                    <p>La riscoperta del suo approccio enciclopedico</p>
+                </div>
+            </div>
+            
+            <h3>Opere Perdute</h3>
+            <p>Dei suoi 30+ scritti restano frammenti in:</p>
+            <ul>
+                <li><strong>Sul Cosmo</strong>: cosmologia e fisica</li>
+                <li><strong>Sulle Passioni</strong>: psicologia stoica</li>
+                <li><strong>Storie</strong>: continuazione di Polibio</li>
+                <li><strong>Sul Oceano</strong>: geografia fisica</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="tab-container">
+        <button class="tab-btn">
+            Attualità del Pensiero
+            <span class="icon">▼</span>
+        </button>
+        <div class="tab-content">
+            <h3>Posidonio nel XXI Secolo</h3>
+            <p>La sua visione offre strumenti per:</p>
+            
+            <ul>
+                <li><strong>Ecologia integrale</strong>: visione olistica della natura</li>
+                <li><strong>Interdisciplinarità</strong>: superamento delle divisioni accademiche</li>
+                <li><strong>Scienza etica</strong>: ricerca scientifica con fondamento filosofico</li>
+            </ul>
+            
+            <blockquote>
+                "L'eredità di Posidonio ci invita a riconnettere la frammentazione del sapere moderno, ritrovando l'unità tra scienza, filosofia e saggezza pratica."
+            </blockquote>
+            
+            <h3>Esercizi Posidoniani</h3>
+            <ol>
+                <li><strong>Osservazione sistematica</strong>: studiare un fenomeno naturale con approccio multidisciplinare</li>
+                <li><strong>Mappatura delle connessioni</strong>: tracciare relazioni tra eventi apparentemente distanti</li>
+                <li><strong>Pratica enciclopedica</strong>: coltivare conoscenze in campi diversi ma correlati</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        // Toggle sections
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.classList.toggle('active');
+                const content = btn.nextElementSibling;
+                content.style.display = content.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+
+        // Reading modes
+        function setMode(mode) {
+            document.body.className = '';
+            if (mode === 'night') {
+                document.body.classList.add('night-mode');
+            } else if (mode === 'philo') {
+                document.body.classList.add('philo-mode');
+            }
+            
+            // Update active button
+            const buttons = document.querySelectorAll('.reading-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if ((mode === 'classic' && btn.textContent === 'Classico') ||
+                    (mode === 'night' && btn.textContent === 'Notturno') ||
+                    (mode === 'philo' && btn.textContent === 'Filosofico')) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // Open first section by default
+        document.querySelector('.tab-btn').click();
+    </script>
+</body>
+</html>

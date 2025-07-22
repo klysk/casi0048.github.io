@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cleante di Asso - Filosofo Stoico</title>
+    <style>
+        :root {
+            --filosofo-bg: #f5f0e6;
+            --filosofo-text: #3a3226;
+            --notturno-bg: #1a1a2e;
+            --notturno-text: #e6e6fa;
+            --focus-bg: #fff8e1;
+            --focus-text: #5d4037;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: var(--filosofo-bg);
+            color: var(--filosofo-text);
+            transition: all 0.3s ease;
+        }
+
+        h1, h2, h3 {
+            color: #5d4037;
+            border-bottom: 1px solid #d7ccc8;
+            padding-bottom: 5px;
+        }
+
+        .notturno {
+            background-color: var(--notturno-bg);
+            color: var(--notturno-text);
+        }
+
+        .notturno h1, .notturno h2, .notturno h3 {
+            color: #d1c4e9;
+            border-bottom-color: #4a148c;
+        }
+
+        .filosofico {
+            background-color: var(--focus-bg);
+            color: var(--focus-text);
+            font-style: italic;
+        }
+
+        .filosofico h1, .filosofico h2, .filosofico h3 {
+            color: #3e2723;
+            font-style: normal;
+        }
+
+        .toggle-container {
+            margin: 30px 0;
+        }
+
+        .toggle-btn {
+            background: #8d6e63;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+            text-align: left;
+            margin-bottom: 5px;
+            transition: background 0.3s;
+            position: relative;
+        }
+
+        .toggle-btn:hover {
+            background: #6d4c41;
+        }
+
+        .toggle-btn:after {
+            content: '+';
+            position: absolute;
+            right: 20px;
+            font-size: 20px;
+        }
+
+        .toggle-btn.active:after {
+            content: '-';
+        }
+
+        .toggle-content {
+            display: none;
+            padding: 20px;
+            background: white;
+            border-left: 4px solid #8d6e63;
+            margin-bottom: 20px;
+            border-radius: 0 0 5px 5px;
+        }
+
+        .reading-options {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .reading-btn {
+            padding: 8px 15px;
+            border: 1px solid #8d6e63;
+            background: transparent;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .reading-btn:hover, .reading-btn.active {
+            background: #8d6e63;
+            color: white;
+        }
+
+        blockquote {
+            border-left: 3px solid #8d6e63;
+            padding-left: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            color: #5d4037;
+        }
+
+        .notturno blockquote {
+            border-left-color: #7e57c2;
+            color: #b39ddb;
+        }
+
+        .filosofico blockquote {
+            font-style: normal;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background-color: #fff9c4;
+            padding: 2px 5px;
+        }
+
+        .notturno .highlight {
+            background-color: #4a148c;
+            color: #e1bee7;
+        }
+
+        .filosofico .highlight {
+            background-color: transparent;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        @media (max-width: 600px) {
+            .reading-options {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="reading-options">
+        <button class="reading-btn" onclick="setMode('default')">Standard</button>
+        <button class="reading-btn" onclick="setMode('notturno')">Notturno</button>
+        <button class="reading-btn" onclick="setMode('filosofico')">Filosofico</button>
+    </div>
+
+    <h1>Cleante di Asso: Il Filosofo Stoico della Resilienza</h1>
+    
+    <div class="toggle-container">
+        <button class="toggle-btn">Vita e Contesto Storico</button>
+        <div class="toggle-content">
+            <p>Cleante (331-232 a.C.), nato ad <span class="highlight">Asso nella Troade</span> (attuale Turchia), fu il successore di Zenone di Cizio nella guida della scuola stoica. La sua vita rappresenta un esempio emblematico di <span class="highlight">coerenza tra insegnamento filosofico e pratica quotidiana</span>.</p>
+            
+            <p>Giunto ad Atene con solo quattro dracme, si mantenne lavorando come <span class="highlight">portatore d'acqua</span> di notte, mentre di giorno studiava filosofia. Questo dualismo tra fatica fisica e impegno intellettuale divenne leggendario:</p>
+            
+            <blockquote>
+                "Mentre gli altri dormono, io guadagno il pane; quando gli altri banchettano, io nutro la mia anima con la filosofia."
+            </blockquote>
+        </div>
+    </div>
+
+    <div class="toggle-container">
+        <button class="toggle-btn">Pensiero Filosofico</button>
+        <div class="toggle-content">
+            <h3>L'Inno a Zeus</h3>
+            <p>La sua opera più celebre, l'<span class="highlight">Inno a Zeus</span>, sintetizza la visione stoica del cosmo come organismo vivente governato dal Logos:</p>
+            
+            <blockquote>
+                "A te, o Zeus, tutto obbedisce nell'universo... Conducimi, o Zeus, e tu, Destino, ovunque sono designato da voi."
+            </blockquote>
+            
+            <h3>Innovazioni Dottrinali</h3>
+            <p>Cleante sviluppò importanti concetti:</p>
+            <ul>
+                <li><strong>Tensione cosmica</strong>: teoria della <span class="highlight">tonos</span> che spiega coesione e movimento</li>
+                <li><strong>Fisica del fuoco</strong>: elaborazione della teoria degli elementi</li>
+                <li><strong>Etica della resistenza</strong>: enfasi sulla perseveranza come virtù cardinale</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="toggle-container">
+        <button class="toggle-btn">Eredità e Influenza</button>
+        <div class="toggle-content">
+            <p>Nonostante la perdita della maggior parte delle sue opere, l'influenza di Cleante si irradiò attraverso:</p>
+            
+            <h3>Successione Stoica</h3>
+            <p>Preparò il terreno per <span class="highlight">Crisippo</span>, che sistematizzò il pensiero stoico. Senza Cleante, la scuola avrebbe rischiato l'estinzione dopo Zenone.</p>
+            
+            <h3>Ricezione Moderna</h3>
+            <p>La sua figura ispirò:</p>
+            <ul>
+                <li>Idealisti tedeschi (Hegel apprezzava la sua dialettica cosmica)</li>
+                <li>Esistenzialisti (per l'esempio di autenticità)</li>
+                <li>Movimenti ecologisti (per la visione olistica della natura)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="toggle-container">
+        <button class="toggle-btn">Lezioni per il XXI Secolo</button>
+        <div class="toggle-content">
+            <h3>Resilienza nell'Era Digitale</h3>
+            <p>La vita di Cleante offre paradigmi attualissimi:</p>
+            
+            <blockquote>
+                "Non sono le circostanze che determinano la nostra vita, ma ciò che facciamo con le circostanze che abbiamo."
+            </blockquote>
+            
+            <h3>Applicazioni Pratiche</h3>
+            <ul>
+                <li><strong>Etica del lavoro</strong>: integrare impegno manuale e intellettuale</li>
+                <li><strong>Sostenibilità</strong>: vivere in armonia con i ritmi naturali</li>
+                <li><strong>Resistenza psicologica</strong>: trasformare le avversità in palestre morali</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Toggle sections
+        const toggleBtns = document.querySelectorAll('.toggle-btn');
+        toggleBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.classList.toggle('active');
+                const content = btn.nextElementSibling;
+                content.style.display = content.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+
+        // Reading modes
+        function setMode(mode) {
+            document.body.className = mode;
+            const buttons = document.querySelectorAll('.reading-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase().includes(mode) || 
+                    (mode === 'default' && btn.textContent === 'Standard')) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // Open first section by default
+        document.querySelector('.toggle-btn').click();
+    </script>
+</body>
+</html>

@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ermarco di Mitilene - Il Successore di Epicuro</title>
+    <style>
+        :root {
+            --classic-bg: #f8f5f0;
+            --classic-text: #3a362e;
+            --night-bg: #1e1c18;
+            --night-text: #e8e6e0;
+            --philo-bg: #fffaf0;
+            --philo-text: #4a4236;
+            --primary: #8c7b68;
+            --primary-light: #c4b5a5;
+            --accent: #a08c76;
+            --accent-light: #d8c8b8;
+            --epicurean: #c0a060;
+        }
+
+        body {
+            font-family: 'Garamond', 'Times New Roman', serif;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: var(--classic-bg);
+            color: var(--classic-text);
+            transition: all 0.5s ease;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            width: 50%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 1.8em;
+            border-left: 4px solid var(--accent);
+            padding-left: 15px;
+        }
+
+        .night-mode {
+            background-color: var(--night-bg);
+            color: var(--night-text);
+        }
+
+        .night-mode h1,
+        .night-mode h2,
+        .night-mode h3 {
+            color: var(--primary-light);
+        }
+
+        .night-mode h1:after {
+            background: linear-gradient(90deg, transparent, var(--primary-light), transparent);
+        }
+
+        .philo-mode {
+            background-color: var(--philo-bg);
+            color: var(--philo-text);
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+        }
+
+        .philo-mode h1,
+        .philo-mode h2,
+        .philo-mode h3 {
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        /* Bottoni a scheda con stile epicureo */
+        .tab-container {
+            margin: 40px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border: 1px solid rgba(140, 123, 104, 0.2);
+        }
+
+        .night-mode .tab-container {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            border-color: rgba(196, 181, 165, 0.2);
+        }
+
+        .philo-mode .tab-container {
+            box-shadow: 0 4px 12px rgba(140, 123, 104, 0.1);
+            border-color: rgba(140, 123, 104, 0.1);
+        }
+
+        .tab-btn {
+            background: linear-gradient(to right, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            border: none;
+            padding: 18px 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            position: relative;
+            transition: all 0.4s ease;
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tab-btn:hover {
+            background: linear-gradient(to right, var(--accent) 0%, var(--primary) 100%);
+            padding-left: 35px;
+        }
+
+        .night-mode .tab-btn {
+            background: linear-gradient(to right, #6b5d4d 0%, #8c7b68 100%);
+        }
+
+        .night-mode .tab-btn:hover {
+            background: linear-gradient(to right, #8c7b68 0%, #6b5d4d 100%);
+        }
+
+        .philo-mode .tab-btn {
+            background: linear-gradient(to right, #7a6b58 0%, #a08c76 100%);
+        }
+
+        .philo-mode .tab-btn:hover {
+            background: linear-gradient(to right, #a08c76 0%, #7a6b58 100%);
+        }
+
+        .tab-btn .icon {
+            transition: all 0.4s ease;
+            font-size: 1.2rem;
+            margin-left: 15px;
+        }
+
+        .tab-btn.active .icon {
+            transform: rotate(180deg);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 30px;
+            background: white;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .night-mode .tab-content {
+            background: #2a2824;
+        }
+
+        .philo-mode .tab-content {
+            background: #fffdf8;
+        }
+
+        /* Opzioni di lettura */
+        .reading-options {
+            display: flex;
+            gap: 15px;
+            margin: 40px 0;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .reading-btn {
+            padding: 12px 24px;
+            border: 2px solid var(--primary);
+            background: transparent;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.4s;
+            font-weight: 500;
+            min-width: 140px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reading-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: var(--primary);
+            transition: width 0.4s;
+            z-index: -1;
+        }
+
+        .reading-btn:hover {
+            color: white;
+        }
+
+        .reading-btn:hover::before {
+            width: 100%;
+        }
+
+        .reading-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .night-mode .reading-btn {
+            border-color: var(--primary-light);
+            color: var(--primary-light);
+        }
+
+        .night-mode .reading-btn::before {
+            background: var(--primary-light);
+        }
+
+        .night-mode .reading-btn.active {
+            background: var(--primary-light);
+            color: var(--night-bg);
+        }
+
+        .philo-mode .reading-btn {
+            border-color: var(--philo-text);
+            color: var(--philo-text);
+        }
+
+        .philo-mode .reading-btn::before {
+            background: var(--philo-text);
+        }
+
+        .philo-mode .reading-btn.active {
+            background: var(--philo-text);
+            color: var(--philo-bg);
+        }
+
+        /* Elementi di contenuto */
+        blockquote {
+            border-left: 4px solid var(--epicurean);
+            padding: 20px 30px;
+            margin: 30px 0;
+            background: rgba(192, 160, 96, 0.05);
+            font-style: italic;
+            border-radius: 0 8px 8px 0;
+            position: relative;
+        }
+
+        blockquote::before {
+            content: '“';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 4rem;
+            color: rgba(192, 160, 96, 0.1);
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .night-mode blockquote {
+            border-left-color: var(--epicurean);
+            background: rgba(192, 160, 96, 0.1);
+        }
+
+        .philo-mode blockquote {
+            border-left: 4px solid var(--philo-text);
+            background: rgba(74, 66, 54, 0.05);
+            font-style: normal;
+        }
+
+        .highlight {
+            position: relative;
+            display: inline-block;
+            z-index: 1;
+        }
+
+        .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background: rgba(192, 160, 96, 0.3);
+            z-index: -1;
+            transition: height 0.3s;
+        }
+
+        .highlight:hover::after {
+            height: 100%;
+        }
+
+        .night-mode .highlight::after {
+            background: rgba(192, 160, 96, 0.4);
+        }
+
+        .philo-mode .highlight::after {
+            background: rgba(74, 66, 54, 0.2);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+            margin: 30px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding-left: 30px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 4px solid var(--classic-bg);
+        }
+
+        .night-mode .timeline-item::before {
+            background: var(--primary-light);
+            border-color: var(--night-bg);
+        }
+
+        .philo-mode .timeline-item::before {
+            background: var(--philo-text);
+            border-color: var(--philo-bg);
+        }
+
+        .epicurean-list {
+            margin: 25px 0;
+            padding-left: 20px;
+        }
+
+        .epicurean-list li {
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .epicurean-list li::before {
+            content: '☙';
+            position: absolute;
+            left: 0;
+            color: var(--epicurean);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .tab-btn {
+                padding: 15px 20px;
+                font-size: 1rem;
+            }
+            
+            .reading-options {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .reading-btn {
+                width: 100%;
+                max-width: 220px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="reading-options">
+        <button class="reading-btn active" onclick="setMode('classic')">Classico</button>
+        <button class="reading-btn" onclick="setMode('night')">Notturno</button>
+        <button class="reading-btn" onclick="setMode('philo')">Filosofico</button>
+    </div>
+
+    <h1>Ermarco di Mitilene<br><span style="font-size: 1.2rem; font-weight: normal;">L'Erede di Epicuro</span></h1>
+    <p style="text-align: center; font-style: italic; max-width: 700px; margin: 0 auto 30px;">"Colui che preservò il Giardino di Epicuro e ne diffuse la dottrina con fedeltà e innovazione"</p>
+    
+    <div class="tab-container">
+        <button class="tab-btn">
+            Vita e Contesto Storico
+            <span class="icon">▼</span>
+        </button>
+        <div class="tab-content">
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>340-330 a.C.</h3>
+                    <p>Nascita a <span class="highlight">Mitilene</span>, nell'isola di Lesbo</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>310 a.C. circa</h3>
+                    <p>Incontro con <span class="highlight">Epicuro</span> e conversione alla filosofia epicurea</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>306 a.C.</h3>
+                    <p>Trasferimento ad Atene nel <span class="highlight">Giardino</span> di Epicuro</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>270 a.C.</h3>
+                    <p>Successione a Epicuro come capo della scuola epicurea</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>250 a.C. circa</h3>
+                    <p>Morte a <span class="highlight">Atene</span>, dopo aver guidato la scuola per circa 20 anni</p>
+                </div>
+            </div>
+
+            <blockquote>
+                "Ermarco non fu semplicemente un discepolo, ma il custode fedele della dottrina epicurea, che difese dagli attacchi esterni e preservò per le generazioni future."
+                <footer>- Diogene Laerzio, <cite>Vite dei filosofi</cite></footer>
+            </blockquote>
+        </div>
+    </div>
+
+    <div class="tab-container">
+        <button class="tab-btn">
+            Pensiero Filosofico
+            <span class="icon">▼</span>
+        </button>
+        <div class="tab-content">
+            <h3>L'Eredità Epicurea</h3>
+            <p>Ermarco sviluppò e sistematizzò gli insegnamenti del maestro:</p>
+            
+            <ul class="epicurean-list">
+                <li><strong>Canonica</strong>: teoria della conoscenza basata sui sensi</li>
+                <li><strong>Fisica</strong>: atomismo e spiegazione naturalistica dei fenomeni</li>
+                <li><strong>Etica</strong>: ricerca dell'atarassia attraverso il piacere catastematico</li>
+            </ul>
+            
+            <h3>Innovazioni Dottrinali</h3>
+            <p>I suoi contributi originali includono:</p>
+            
+            <blockquote>
+                "La giustizia non esiste di per sé, ma solo in relazione all'utilità reciproca degli uomini riuniti in società."
+                <footer>- Ermarco, <cite>Sulla Giustizia</cite> (frammento)</footer>
+            </blockquote>
+            
+            <ul class="epicurean-list">
+                <li><strong>Teoria contrattualista</strong>: origine della giustizia come accordo utilitario</li>
+                <li><strong>Evoluzione sociale</strong>: dallo stato primitivo alla civiltà</li>
+                <li><strong>Psicologia del piacere</strong>: analisi delle dinamiche del desiderio</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="tab-container">
+        <button class="tab-btn">
+            Opere e Scritti
+            <span class="icon">▼</span>
+        </button>
+        <div class="tab-content">
+            <h3>Lettere e Trattati</h3>
+            <p>Delle sue opere restano solo frammenti e testimonianze indirette:</p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>Lettere a...</h3>
+                    <p>Corrispondenza con altri epicurei su questioni dottrinali</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Sulla Giustizia</h3>
+                    <p>Trattato sull'origine contrattualista della giustizia</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Contro Empedocle</h3>
+                    <p>Opera polemica contro le teorie empedoclee</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Epitomi</h3>
+                    <p>Sintesi della dottrina epicurea per i nuovi discepoli</p>
+                </div>
+            </div>
+            
+            <h3>Stile Letterario</h3>
+            <p>Secondo le testimonianze antiche:</p>
+            
+            <blockquote>
+                "Scrisse con chiarezza e precisione, più attento alla sostanza che all'ornamento retorico, secondo lo spirito del Giardino."
+            </blockquote>
+        </div>
+    </div>
+
+    <div class="tab-container">
+        <button class="tab-btn">
+            Eredità e Influenza
+            <span class="icon">▼</span>
+        </button>
+        <div class="tab-content">
+            <h3>La Scuola dopo Ermarco</h3>
+            <p>La sua direzione assicurò la continuità dell'epicureismo:</p>
+            
+            <ul class="epicurean-list">
+                <li>Conservazione intatta degli insegnamenti originali</li>
+                <li>Formazione di nuove generazioni di epicurei</li>
+                <li>Diffusione della dottrina oltre Atene</li>
+            </ul>
+            
+            <h3>Ricezione Moderna</h3>
+            <p>Riscoperto come figura chiave per:</p>
+            
+            <blockquote>
+                "La sua teoria contrattualista della giustizia anticipa elementi del pensiero di Hobbes e Rousseau, mostrando la modernità dell'epicureismo antico."
+            </blockquote>
+            
+            <ul class="epicurean-list">
+                <li>Studi sul contrattualismo antico</li>
+                <li>Analisi delle teorie evolutive precoci</li>
+                <li>Storia della trasmissione dei testi filosofici</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="tab-container">
+        <button class="tab-btn">
+            Lezioni per Oggi
+            <span class="icon">▼</span>
+        </button>
+        <div class="tab-content">
+            <h3>L'Attualità di Ermarco</h3>
+            <p>Il suo pensiero offre spunti per:</p>
+            
+            <ul class="epicurean-list">
+                <li><strong>Etica contemporanea</strong>: ripensare il rapporto tra piacere e virtù</li>
+                <li><strong>Filosofia politica</strong>: origine contrattuale delle istituzioni</li>
+                <li><strong>Psicologia</strong>: gestione dei desideri e delle aspettative</li>
+            </ul>
+            
+            <h3>Esercizi Epicurei</h3>
+            <ol class="epicurean-list">
+                <li><strong>Analisi dei desideri</strong>: distinguere tra naturali e non necessari</li>
+                <li><strong>Memoria dei piaceri</strong>: coltivare la gratitudine per i beni presenti</li>
+                <li><strong>Esame contrattuale</strong>: valutare le istituzioni in base alla loro utilità reciproca</li>
+            </ol>
+            
+            <blockquote>
+                "Come insegnava Ermarco, la saggezza non sta nel possedere molto, ma nel desiderare poco e godere profondamente di ciò che si ha."
+            </blockquote>
+        </div>
+    </div>
+
+    <script>
+        // Toggle sections
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.classList.toggle('active');
+                const content = btn.nextElementSibling;
+                content.style.display = content.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+
+        // Reading modes
+        function setMode(mode) {
+            document.body.className = '';
+            if (mode === 'night') {
+                document.body.classList.add('night-mode');
+            } else if (mode === 'philo') {
+                document.body.classList.add('philo-mode');
+            }
+            
+            // Update active button
+            const buttons = document.querySelectorAll('.reading-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if ((mode === 'classic' && btn.textContent === 'Classico') ||
+                    (mode === 'night' && btn.textContent === 'Notturno') ||
+                    (mode === 'philo' && btn.textContent === 'Filosofico')) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // Open first section by default
+        document.querySelector('.tab-btn').click();
+    </script>
+</body>
+</html>
