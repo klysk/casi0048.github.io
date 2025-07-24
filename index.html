@@ -24,1538 +24,2088 @@
 
   <!-- Icone Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
   <!-- Librerie GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <!-- Plugin SplitText (ora gratuito) -->
-    <style>
-        :root {
-            --gold: #FFD700;
-            --dark-bg: #0a0a1a;
-            --opaque-bg: rgba(10, 10, 26, 0.85);
-        }
-        
-        body {
-            background: var(--dark-bg);
-            color: white;
-            font-family: 'Georgia', serif;
-            margin: 0;
-            overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle, rgba(255, 215, 0, 0.1) 1px, transparent 1px),
-                radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-            background-size: 30px 30px, 60px 60px;
-            animation: stars 20s linear infinite;
-        }
-        
-        @keyframes stars {
-            0% { background-position: 0 0, 0 0; }
-            100% { background-position: -600px 600px, -1200px 1200px; }
-        }
-        
-        /* Header */
-        header {
-            background: linear-gradient(to bottom, var(--opaque-bg), transparent);
-            padding: 1rem;
-            position: relative;
-            z-index: 100;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            align-items: center;
-        }
-        
-        .logo {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: var(--gold);
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-            animation: phi-pulse 3s infinite;
-        }
-        
-        @keyframes phi-pulse {
-            0%, 100% { opacity: 0.8; }
-            50% { opacity: 1; text-shadow: 0 0 15px rgba(255, 215, 0, 0.8); }
-        }
-        
-        /* Box di ricerca e traduzione */
-        .search-box {
-            display: flex;
-            gap: 1rem;
-            margin: 1rem 0;
-        }
-        
-        .search-container, .translate-container {
-            display: flex;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            padding: 0.5rem 1rem;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-        }
-        
-        .search-container input, .translate-container select {
-            background: transparent;
-            border: none;
-            color: white;
-            padding: 0.5rem;
-            outline: none;
-        }
-        
-        .search-container input::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
-        
-        .search-icon, .translate-icon {
-            color: var(--gold);
-            margin-right: 0.5rem;
-        }
-        
-        /* Menu a tendina con 4 colonne */
-        nav ul {
-            display: flex;
-            list-style: none;
-            padding: 0;
-            margin: 1rem 0;
-            width: 100%;
-        }
-       nav > ul > li {
-    margin-right: 6px; /* Sostituisce il gap */
-    padding: 0 2px; /* Padding orizzontale aggiuntivo */
-}
-nav ul {
-    gap: 2px;
-}
-nav > ul > li:last-child {
-    margin-right: 0; /* Rimuove margine dall'ultimo elemento */
-}
-        nav li {
-            position: relative;
-            margin: 0 1rem;
-        }
-        
-        nav a {
-            color: white;
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            transition: all 0.3s;
-        }
-        
-        nav a:hover {
-            color: var(--gold);
-        }
-        
-        .submenu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 700px;
-            display: none;
-            grid-template-columns: repeat(4, 1fr);
-            background: #004a5d ; var(--opaque-bg);
-            padding: 1rem;
-            border: 1px solid var(--gold);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-        }
-        
-        nav li:hover .submenu {
-            display: grid;
-            animation: fadeIn 0.3s;
-        }
-        
-        .submenu-col h3 {
-            color: var(--gold);
-            border-bottom: 1px solid var(--gold);
-            padding-bottom: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .submenu-col ul {
-            display: block;
-        }
-        
-        .submenu-col li {
-            margin: 0.5rem 0;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* Hero section */
-        .hero {
-            text-align: center;
-            padding: 5rem 1rem;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero h1 {
-            font-size: 4rem;
-            margin: 0;
-            color: var(--gold);
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
-            animation: title-entrance 1.5s ease-out forwards, glow 2s infinite alternate 1.5s;
-            transform: translateY(50px);
-            opacity: 0;
-        }
-        
-        @keyframes title-entrance {
-            to { 
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-        
-        @keyframes glow {
-            from { text-shadow: 0 0 10px rgba(255, 215, 0, 0.7); }
-            to { text-shadow: 0 0 20px rgba(255, 215, 0, 0.9), 0 0 30px rgba(255, 215, 0, 0.5); }
-        }
-        
-        .hero h2 {
-            font-size: 1.5rem;
-            margin: 1rem auto;
-            max-width: 600px;
-            animation: subtitle-entrance 1.5s ease-out 0.3s forwards, subtle-pulse 4s ease-in-out infinite 1.8s;
-            transform: translateY(30px);
-            opacity: 0;
-        }
-        
-        /* Animazione sottotitolo */
-        @keyframes subtitle-entrance {
-            to { 
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-        
-        @keyframes subtle-pulse {
-            0%, 100% { 
-                transform: translateY(0) scale(1);
-                opacity: 0.9;
-            }
-            50% { 
-                transform: translateY(-3px) scale(1.02);
-                opacity: 1;
-                text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-            }
-        }
-        
-        /* Animazione particelle cosmiche */
-        .particle {
-            position: absolute;
-            pointer-events: none;
-            animation: float 15s infinite ease-in-out;
-            will-change: transform;
-        }
-        
-        .symbol-particle {
-            color: rgba(255, 215, 0, 0.7);
-            font-size: 1rem;
-        }
-        
-        .word-particle {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.8rem;
-            white-space: nowrap;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(-20px, -30px) rotate(5deg); }
-            50% { transform: translate(20px, -60px) rotate(-5deg); }
-            75% { transform: translate(-10px, -40px) rotate(3deg); }
-        }
-        
-        /* Slider citazioni */
-        .quote-slider {
-            max-width: 800px;
-            margin: 3rem auto;
-            padding: 2rem;
-            background: var(--opaque-bg);
-            border-left: 3px solid var(--gold);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .quotes {
-            animation: slide 20s infinite;
-        }
-        
-        @keyframes slide {
-            0%, 20% { transform: translateY(0); }
-            25%, 45% { transform: translateY(-100%); }
-            50%, 70% { transform: translateY(-200%); }
-            75%, 95% { transform: translateY(-300%); }
-            100% { transform: translateY(-400%); }
-        }
-        
-        /* Slider laterale sinistro con foto */
-        .left-slider {
-            position: fixed;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 250px;
-            background: var(--opaque-bg);
-            padding: 1rem;
-            border-right: 1px solid var(--gold);
-            animation: slideInLeft 0.5s;
-            max-height: 70vh;
-            overflow: hidden;
-        }
-        
-        .slider-content {
-            display: flex;
-            flex-direction: column;
-            animation: slideUp 30s infinite linear;
-        }
-        
-        .slide-item {
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-        
-        .slide-item img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-        }
-        
-        .slide-caption {
-            margin-top: 0.5rem;
-            font-size: 0.9rem;
-        }
-        
-        @keyframes slideUp {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-100%); }
-        }
-        
-        @keyframes slideInLeft {
-            from { transform: translateX(-100%) translateY(-50%); }
-            to { transform: translateX(0) translateY(-50%); }
-        }
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/SplitText.min.js"></script>
 
-/* Slider laterale sinistro con foto - MODIFICATO */
-.left-slider {
-    position: fixed;
-    left: 10px; /* Spostato più vicino al bordo */
-    top: 60%; /* ABBASSATO rispetto al 50% precedente */
-    transform: translateY(-50%);
-    width: 160px; /* RISTRETTO da 250px */
-    background: var(--opaque-bg);
-    padding: 0.8rem; /* Ridotto il padding */
-    border-right: 1px solid var(--gold);
-    animation: slideInLeft 0.5s;
-    max-height: 60vh; /* Ridotta l'altezza massima */
-    overflow: hidden;
-    z-index: 50; /* Assicurati che sia sotto il menu */
+<style>
+  /* CORREZIONE AREA CLICCABILE a href="" role="menuitem">Massimo Cacciari </a>*/
+  .menu-desktop > ul > li > a,
+  .menu-desktop > ul > li > button.menu-btn {
+    position: relative;
+    padding: 5px 5px !important; /* Area più grande */
+    margin: 0 -5px !important; /* Sovrapposizione controllata */
+    z-index: 10;
+    transition: all 0.2s;
+  }
+.menu-btn {
+  font-family: 'Roboto Condensed', sans-serif;
 }
+  /* Aumenta area cliccabile con pseudo-elemento */
+  .menu-desktop > ul > li > a::after,
+  .menu-desktop > ul > li > button.menu-btn::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    z-index: -1;
+  }
 
-/* Immagini dentro lo slider - MODIFICATO */
-.slide-item img {
+  /* Effetto hover su tutta l'area */
+  .menu-desktop > ul > li > a:hover,
+  .menu-desktop > ul > li > button.menu-btn:hover {
+    background-color: rgba(72, 102, 255, 0.8) !important;
+    color: white !important;
+  }
+
+  /* Stile attivo migliorato */
+  .menu-desktop > ul > li > a.active,
+  .menu-desktop > ul > li > button.menu-btn.active {
+    font-weight: bold !important;
+    color: #ffd700 !important;
+    border-bottom: 3px solid #ffd700 !important;
+  }
+
+  /* CORREZIONE CSS ESISTENTE */
+  .dropdown {
+    position: relative;
+    padding-bottom: 5px; /* Crea area sicura per il passaggio del cursore */
+  }
+
+  .mega-menu {
+    top: calc(100% - 10px); /* Sovrappone leggermente il bottone padre */
+    left: 50%;
+    transform: translateX(-50%);
+    padding-top: 15px; /* Area di sicurezza superiore */
+  }
+
+  /* Aggiungi un pseudo-elemento invisibile per colmare il gap */
+  .dropdown::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
     width: 100%;
-    height: 120px; /* Ridotta l'altezza da 150px */
-    object-fit: cover;
-    border: 1px solid rgba(255, 215, 0, 0.3);
+    height: 20px;
+    background: transparent;
+    z-index: 999;
+  }
+
+  /* Animazione più lenta */
+  .mega-menu {
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  /* Mantieni visibile durante l'hover su tutto il dropdown */
+  .dropdown:hover .mega-menu,
+  .dropdown:focus-within .mega-menu,
+  .mega-menu:hover {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+</style>
+<style>
+  /* Reset base */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 20px;
+    background-color: #12182b;
+font-family: 'Roboto Condensed', sans-serif;
+
+    
+    color: #e0e6f3;
+  }
+
+  .menu-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+nav.menu-desktop {
+    background-color: #0e0e0e; 1f2740;
+    padding: 15px 20px;
+    border-radius: 6px;
+    min-width: 850px;
+    position: relative;
+    top: -40px; /* Alza il menu */
+    z-index: 999;
+}
+nav.menu-desktop {
+  z-index: 999;
+  position: relative;
+}
+.dropdown-menu {
+  z-index: 1000;
+  position: absolute;
+}
+ 
+  nav.menu-desktop ul[role="menu"] {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 2px;
+  }
+
+  nav.menu-desktop > ul > li.dropdown {
+    position: relative;
+  }
+
+
+  nav.menu-desktop > ul > li > a,
+  nav.menu-desktop > ul > li > button.menu-btn {
+    background: none;
+    border: none;
+    color: #c8d0e7;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 8px 10px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+
+  nav.menu-desktop > ul > li > a:hover,
+  nav.menu-desktop > ul > li > button.menu-btn:hover,
+  nav.menu-desktop > ul > li > a:focus,
+  nav.menu-desktop > ul > li > button.menu-btn:focus {
+    background-color: #4866ff;
+    color: white;
+    outline: none;
+  }
+
+  .arrow {
+    font-size: 0.7rem;
+    user-select: none;
+  }
+nav.menu-desktop > ul > li > a,
+nav.menu-desktop > ul > li > button.menu-btn {
+  display: inline-block;
+  color: #e0e0e0;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  line-height: 1.2; /* Uniforma il testo */
+}
+nav {
+  background: #000;
+  padding: 10px 30px;
+}
+* MEGA MENU FIX */
+  .dropdown {
+    position: relative;
+  }
+  .mega-menu {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
 }
 
-/* Didascalia - MODIFICATO */
-.slide-caption {
-    margin-top: 0.3rem;
-    font-size: 0.8rem; /* Ridotta la dimensione del font */
-    padding: 0.2rem;
+.dropdown.active > .mega-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.mega-menu {
+  background: rgba(20, 20, 30, 0.95);
 }
 
-/* Animazione slider - MODIFICATO per la nuova altezza */
-@keyframes slideUp {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(calc(-100% + 60vh)); }
-}
+  .mega-menu {
+    display: none; /* Inizialmente nascosto */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    max-width: 90vw;
+    background: rgba(10, 10, 30, 0.98);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    padding: 1rem;
+    z-index: 1000;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
 
-        
-        /* Sidebar ultimi articoli */
-        .sidebar {
-            position: fixed;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 250px;
-            background: var(--opaque-bg);
-            padding: 1rem;
-            border-left: 1px solid var(--gold);
-            animation: slideInRight 0.5s;
-            max-height: 70vh;
-            overflow-y: auto;
-        }
-        
-        .articles-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .articles-list li {
-            padding: 0.5rem 0;
-            border-bottom: 1px dashed rgba(255, 215, 0, 0.3);
-        }
-        
-        .articles-list a {
-            color: white;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .articles-list a:hover {
-            color: var(--gold);
-        }
-        
-        @keyframes slideInRight {
-            from { transform: translateX(100%) translateY(-50%); }
-            to { transform: translateX(0) translateY(-50%); }
-        }
-        
-        /* Footer */
-        footer {
-            background: var(--opaque-bg);
-            padding: 2rem;
-            text-align: center;
-            margin-top: 5rem;
-            border-top: 1px solid rgba(255, 215, 0, 0.3);
-        }
-        
-        /* Banner cookie */
-        .cookie-banner {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--opaque-bg);
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-        }
-        
-        .cookie-banner button {
-            background: var(--gold);
-            border: none;
-            padding: 0.5rem 1rem;
-            margin-left: 1rem;
-            cursor: pointer;
-        }
+  .dropdown:hover .mega-menu,
+  .dropdown:focus-within .mega-menu {
+    display: grid;
+    animation: fadeIn 0.3s ease;
+  }
 
-<!-- i aggiunta per scroll slider-->
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
 
-.quote-slider {
-  width: 100%;
-  max-width: 800px;
-  margin: 2rem auto;
-  overflow: hidden;
-  background: rgba(0, 0, 0, 0.4);
-  padding: 2rem;
-  border-radius: 20px;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-  color: white;
-  font-family: 'Georgia', serif;
-}
-
-.quotes {
-  display: flex;
-  flex-direction: row;
-  animation: slideQuotes 100s linear infinite;
-}
-
-.quotes > div {
-  flex: 0 0 100%;
-  padding: 1rem;
-  text-align: center;
-}
-
-blockquote {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-  font-style: italic;
+  /* Responsive */
+  @media (max-width: 992px) {
+    .mega-menu {
+      width: 95vw;
+      left: 2.5vw;
+      transform: none;
+    }
+  }
+  /* Mega menu */
+/* Mega Menu Base Styles */
+.dropdown {
   position: relative;
 }
 
-blockquote::before {
-  content: open-quote;
-  font-size: 2rem;
-  vertical-align: top;
+
+.mega-menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  max-width: 90vw;
+  background: rgba(10, 10, 30, 0.98);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  padding: 1rem;
+  z-index: 1000;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+ 
+  /* Initial hidden state */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  
+  /* Smooth transition */
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Show menu on hover/focus */
+.dropdown:hover .mega-menu,
+.dropdown:focus-within .mega-menu,
+.mega-menu:hover {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .mega-menu {
+    width: 95vw;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 768px) {
+  .mega-menu {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+  /* Stabile: mega-menu visibile se hover su li.dropdown O mega-menu stesso */
+  li.dropdown:hover > .mega-menu,
+  li.dropdown:focus-within > .mega-menu,
+  li.dropdown .mega-menu:hover {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  nav.menu-desktop a:focus,
+  nav.menu-desktop button.menu-btn:focus,
+  .mega-menu a:focus {
+    outline: none;
+    box-shadow: 0 0 5px 2px #7b9aff;
+    border-radius: 3px;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    nav.menu-desktop {
+      min-width: auto;
+    }
+    nav.menu-desktop ul[role="menu"] {
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .mega-menu.columns-4 {
+      min-width: 320px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px 20px;
+      position: static;
+      box-shadow: none;
+      padding: 10px 15px;
+      border-radius: 0 0 6px 6px;
+
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
+    li.dropdown:hover > .mega-menu,
+    li.dropdown:focus-within > .mega-menu,
+    li.dropdown .mega-menu:hover {
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+      display: grid !important;
+    }
+  }
+   .exploding-text {
+  font-size: 1.8rem;
+  font-weight: bold;
   color: #d4af37;
+  text-align: center;
+  margin-top: 20px;
+  opacity: 0; /* inizialmente invisibile */
 }
 
-blockquote::after {
-  content: close-quote;
-  font-size: 2rem;
-  vertical-align: bottom;
-  color: #d4af37;
+   <!--  inizio restringimento colonne submenu-->
+.mega-menu.columns-4 {
+  display: grid;
+  grid-template-columns: repeat(2, 190px);
+  gap: 15px 30px;
+  max-width: 960px;
+  padding: 20px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.15);
+  border-radius: 6px;
+}
+.mega-menu.columns-4 {
+  grid-template-columns: repeat(2, 1fr);
+  min-width: 220px;
+  padding: 10px 15px;
+}
+.mega-menu.columns-4 {
+  max-width: 900px;  /* riduci larghezza totale del blocco */
+  width: auto;       /* lascia che sia fluido sotto il max-width */
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 180px); /* 2 colonne da 150px */
+  gap: 20px 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.15);
+  border-radius: 6px;
+}
+.mega-menu.columns-4 > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centra orizzontalmente il contenuto della colonna */
+  text-align: center;  /* centra testo link e titoli */
+  background-color: #002b36;
 }
 
-cite {
-  display: block;
-  font-size: 1rem;
-  color: #ccc;
-  margin-top: 0.5rem;
-  font-style: normal;
+<!--  fine restringimento colonne submenu-->
+.mega-menu {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(180px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  background: #0b0b2a;
+  border: 1px solid gold;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 9999;
 }
 
-@keyframes slideQuotes {
-  0% { transform: translateX(0%); }
-  5% { transform: translateX(-100%); }
-  10% { transform: translateX(-200%); }
-  15% { transform: translateX(-300%); }
-  20% { transform: translateX(-400%); }
-  25% { transform: translateX(-500%); }
-  30% { transform: translateX(-600%); }
-  35% { transform: translateX(-700%); }
-  40% { transform: translateX(-800%); }
-  45% { transform: translateX(-900%); }
-  50% { transform: translateX(-1000%); }
-  55% { transform: translateX(-1100%); }
-  60% { transform: translateX(-1200%); }
-  65% { transform: translateX(-1300%); }
-  70% { transform: translateX(-1400%); }
-  75% { transform: translateX(-1500%); }
-  80% { transform: translateX(-1600%); }
-  85% { transform: translateX(-1700%); }
-  90% { transform: translateX(-1800%); }
-  95% { transform: translateX(-1900%); }
-  100% { transform: translateX(-2000%); }
+/* Limite di altezza SOLO per le colonne lunghe */
+.mega-menu .column {
+  max-height: 350px;
+  overflow-y: auto;
+  padding-right: 5px;
 }
 
-
-<!-- f aggiunta per scroll slider-->
-
-/* MODIFICA PER COLONNE PIÙ STRETTE */
-.submenu {
-    width: 700px; /* Ridotto da 800px */
-    grid-template-columns: repeat(4, 1fr);
-    gap: 5px; /* Spazio tra le colonne */
+/* Scrollbar elegante */
+.mega-menu .column::-webkit-scrollbar {
+  width: 6px;
+}
+.mega-menu .column::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
 }
 
-.submenu-col {
-    width: 180px; /* Larghezza fissa per ogni colonna */
-    padding: 0.6rem; /* Padding ridotto */
-    margin: 0.2rem; /* Margine ridotto */
-    box-sizing: border-box; /* Include padding nella larghezza */
+ 
+  * { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-/* Mantieni il resto dello stile invariato */
-.submenu-col h3 {
-    font-size: 1rem; /* Leggermente più piccolo */
-    white-space: nowrap; /* Evita a capo */
-    overflow: hidden;
-    text-overflow: ellipsis;
+main {
+    min-height: 800px; /* O valore che vuoi, es. 2000px */
 }
 
-.submenu-col li {
-    margin: 0.3rem 0;
+body {
+    font-family: 'Crimson Pro', serif;
+    font-weight: 400;
+    color: #e0e0e0;
+    background: #0a0a1a;
+    overflow-x: hidden;
+    cursor: default;
+    min-height: 100vh;
+    line-height: 1.6;
 }
 
-.submenu-col a {
-    font-size: 2rem; /* Testo più compatto */
-    padding: 0.15rem 0;
+/* BARRA SUPERIORE CON RICERCA E TRADUTTORE */
+.top-bar {
+    display: flex;
+    justify-content: center; /* Centra orizzontalmente */
+    align-items: center;     /* Centra verticalmente */
+    padding: 18px;
+    background: rgba(0, 0, 0, 0.5);
+    gap: 10px; /* Distanza tra elementi */
 }
-.submenu {
-    width: 700px;
+.top-bar {
+  padding-top: 20px;
+  margin-top: 12px;
+  margin-bottom: 20px;
 }
-
-.submenu-col {
-    width: 180px;
-    padding: 0.5rem;
-}
-.submenu {
-    width: min(90vw, 700px); /* Non supera 700px o il 90% dello schermo */
-}
-
-.submenu-col {
-    width: clamp(180px, 22vw, 180px); /* Tra 120px e 160px */
+.top-bar input {
+    padding: 10px 10px;
 }
 
-
-
-/* SOVRASCRIVI TUTTI GLI STILI ESISTENTI DEL SUBMENU */
-.submenu {
-    width: 500px !important; /* Larghezza totale ridotta */
-    grid-template-columns: repeat(4, minmax(0, 1fr)) !important; /* Colonne uguali */
-    gap: 8px !important; /* Spazio tra colonne */
-    padding: 10px !important; /* Padding interno ridotto */
+.search-translate-container {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
 }
 
-.submenu-col {
-    width: 100% !important; /* Occupa tutto lo spazio disponibile */
-    min-width: 0 !important; /* Permette il ridimensionamento */
-    padding: 8px !important; /* Padding interno ridotto */
-    margin: 0 !important; /* Rimuovi margini */
-    box-sizing: border-box !important; /* Include padding nella larghezza */
+.search-container {
+    display: flex;
+    align-items: center;
+    position: relative;
 }
 
-.submenu-col h3 {
-    font-size: 0.9rem !important;
-    padding-bottom: 4px !important;
-    margin-bottom: 6px !important;
+.search-container input {
+    padding: 0.6rem 1rem 0.6rem 2.5rem;
+    background: rgba(20, 20, 40, 0.7);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 4px;
+    color: #e0e0e0;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.95rem;
+    transition: all 0.4s ease-out;
+    width: 250px;
 }
 
-.submenu-col ul {
-    padding-left: 0 !important;
+.search-container input:focus {
+    outline: none;
+    border-color: rgba(255, 215, 0, 0.5);
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.2);
+    background: rgba(20, 20, 40, 0.9);
 }
 
-.submenu-col li {
-    margin: 4px 0 !important;
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    color: rgba(255, 215, 0, 0.6);
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
 }
 
-.submenu-col a {
-    font-size: 0.82rem !important;
-    padding: 2px 0 !important;
+.search-container input:focus + .search-icon {
+    color: rgba(255, 215, 0, 0.9);
+    transform: scale(1.1);
 }
-.submenu-col {
-    word-break: break-word;
-    hyphens: auto;
-}
-/* Aggiungi questa regola CSS */
-.submenu-col li a::after {
-    content: "→";
+
+/* Stile per il traduttore Google */
+#google_translate_element {
     display: inline-block;
-    margin-left: 8px;
-    color: rgba(255, 215, 0, 0.7);
-    transition: transform 0.3s ease;
 }
 
-.submenu-col li a:hover::after {
-    transform: translateX(3px);
-    color: #FFD700;
+.goog-te-combo {
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 300 !important;
+    background: rgba(20, 20, 40, 0.7) !important;
+    color: #e0e0e0 !important;
+    border: 1px solid rgba(255, 215, 0, 0.2) !important;
+    border-radius: 4px !important;
+    padding: 8px 15px !important;
+    cursor: pointer !important;
+    height: 40px;
+    transition: all 0.4s ease-out !important;
 }
 
-/* Per frecce più sottili (stile moderno) */
-.submenu-col.slim-arrows li a::after {
-    content: "›";
-    font-size: 1.2em;
-    vertical-align: middle;
+.goog-te-combo:hover {
+    background: rgba(20, 20, 40, 0.9) !important;
+    border-color: rgba(255, 215, 0, 0.5) !important;
 }
 
-/* Per animazione più dinamica */
-.submenu-col.animated-arrows li a::after {
-    content: "➔";
-    animation: arrow-pulse 1.5s infinite;
+.goog-te-banner-frame {
+    display: none !important;
 }
 
-@keyframes arrow-pulse {
-    0%, 100% { opacity: 0.7; transform: translateX(0); }
-    50% { opacity: 1; transform: translateX(3px); }
+.goog-te-gadget {
+    color: transparent !important;
 }
-.submenu-col li a::after {
-    content: "\f054"; /* Codice Freccia FA */
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-    margin-left: 6px;
-    font-size: 0.7em;
+
+/* SFONDO STELLATO */
+.starfield {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
 }
+
+.star {
+    position: absolute;
+    background-color: #fff;
+    border-radius: 50%;
+    animation: twinkle var(--duration) infinite ease-in-out;
+    will-change: opacity;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 1; }
+}
+
+/* PARTICELLE INTERATTIVE */
+.philo-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    font-family: 'Arial Unicode MS';
+    will-change: transform;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    text-shadow: 0 0 10px rgba(255,215,0,0.4);
+}
+
+/* HEADER E MENU */
+header {
+    top: 120px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 103;
+}
+
+/* CONTENITORE PRINCIPALE MENU */
+.menu-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.7rem 2rem 0.1rem 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 1px;
+}
+
+/* INIZIO SEZIONE MENU E MEGA-MENU */
+
+.menu-desktop ul {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    white-space: nowrap;
+}
+
+.menu-desktop ul li {
+    flex: 0 0 auto;
+    margin-right: 10px;
+    padding: 0 5px;
+    position: relative;
+}
+
+.menu-desktop ul li:last-child {
+    margin-right: 0;
+}
+
+.menu-btn,
+.menu-desktop > ul > li > a {
+    background: none;
+    border: none;
+    color: #e0e0e0;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 1.4rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    transition: all 0.3s ease-out;
+    display: inline-block;
+}
+
+
+/* Per una scrollbar più elegante */
+.mega-menu::-webkit-scrollbar {
+  width: 6px;
+}
+.mega-menu::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 3px;
+}
+
+.menu-btn:hover,
+.menu-desktop > ul > li > a:hover {
+    color: #ffd700;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+}
+.arrow {
+  font-size: 10px;
+  display: block;
+  margin-top: 2px;
+}
+<!--  i sposta freccette menu sotto-->
+.menu-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 10px; /* Regola se vuoi meno spazio verticale */
+  line-height: 1.2;
+}
+
+.menu-btn .arrow {
+  font-size: 10px;
+  margin-top: 2px; /* distanza dal testo */
+}
+
+<!--  f sposta freccette menu sotto-->
+
+.menu-desktop .arrow {
+    display: inline-block;
+    font-size: 0.7rem;
+    margin-left: 0.5rem;
+    margin-top: 0.2rem;
+    transition: transform 0.3s ease-out;
+}
+
+.dropdown {
+    position: relative;
+}
+.logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            font-size: 1.4rem;
+            color: #ffd700;
+            text-decoration: none;
+            letter-spacing: 1.5px;
+            transition: all 0.4s ease-out;
+        }
+
+        .logo:hover {
+            text-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
+            transform: translateY(-1px);
+        }
+.mega-menu {
+    position: absolute;
+    top: 100%; /* subito sotto il bottone */
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: rgba(10, 10, 30, 0.98);
+    border: 3px solid rgba(255, 215, 0, 0.2);
+    border-top: 0;
+    padding: 1rem;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    z-index: 10;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    will-change: transform, opacity;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* Attivazione visibilità stabile hover e focus */
+.dropdown:hover > .mega-menu,
+.dropdown:focus-within > .mega-menu,
+.dropdown .mega-menu:hover {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+}
+.menu-desktop ul ul {
+  position: absolute;
+  top: 100%;
+  left: 0;
+}
+.menu-desktop ul ul {
+  margin-top: -2px;
+}
+
+/* Link e titoli nel mega-menu */
+.mega-menu a {
+    display: block;
+    font-size: 0.8rem;
+    line-height: 1.2;
+    color: #e0e0e0;
+    padding: 0.2rem 0;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+.mega-menu {
+    z-index: 999;
+}
+.mega-menu a:hover,
+.mega-menu a:focus {
+    color: #ffd700;
+    outline: none;
+}
+.mega-menu a {
+  font-family: 'Georgia', serif; /* Cambia con il font che vuoi */
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+}
+
+
+
+.mega-menu a::after {
+  content: "→";
+  margin-left: 8px;
+  transition: transform 0.3s ease;
+}
+
+.mega-menu a:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateX(4px);
+}
+
+.mega-menu a:hover::after {
+  transform: translateX(4px) rotate(15deg);
+}
+
+
+.mega-menu h4 {
+    color: #ffd700;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    font-size: 1rem;
+}
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+    .mega-menu {
+        width: 95vw;
+        left: 2.5vw;
+        transform: none !important;
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .menu-desktop {
+        display: none;
+    }
+    
+    .top-bar {
+        justify-content: center;
+        padding: 0.8rem;
+    }
+    
+    .search-translate-container {
+        width: 100%;
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    
+    .search-container {
+        width: 100%;
+    }
+    
+    .search-container input {
+        width: 100%;
+    }
+    
+    .translate-container {
+        width: 100%;
+    }
+    
+    .goog-te-combo {
+        width: 100%;
+    }
+    
+    main {
+        padding-top: 140px;
+    }
+    
+    .welcome-title {
+        font-size: 3.5rem;
+        line-height: 1.2;
+    }
+    
+    .welcome-quote {
+        font-size: 1.3rem;
+        padding: 1rem;
+        border-left: none;
+        padding-left: 0;
+    }
+
+    .quotes-carousel {
+        top: 100px;
+        padding: 1rem;
+    }
+    
+    .quote-text {
+        font-size: 1.2rem;
+    }
+    
+    .quote-author {
+        font-size: 0.9rem;
+    }
+
+    .footer-columns {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    footer h3 {
+        font-size: 1.2rem;
+    }
+    
+    .footer-legal {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+
+/* CAROSELLO CITAZIONI */
+.quotes-carousel {
+    position: fixed;
+    top: 140px;
+    left: 0;
+    width: 100%;
+    background: rgba(10, 10, 30, 0.3);
+    backdrop-filter: blur(10px);
+    border-bottom: 0px solid rgba(255, 255, 255, 0.2);
+    padding: 15px 0;
+    color: #ffffffcc;
+    text-align: center;
+    z-index: 900;
+}
+
+.quotes-carousel {
+    top: 160px; /* o anche meno, prova 80px, 90px, ecc. */
+}
+
+.quote-slide {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(1px);
+    transition: transform 1.8s ease, opacity 1.2s ease;
+    will-change: transform, opacity;
+}
+
+.quotes-carousel .author {
+    margin-top: 5px;
+    font-size: 1rem;
+    color: gold;
+}
+
+.quote-slide.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.quote-text {
+    font-family: 'EB Garamond', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 1.3rem;
+    color: #00FF00;
+    line-height: 1.2;
+    margin-bottom: 0; /* rimuoviamo completamente lo spazio */
+    padding-bottom: 0; /* rimuoviamo completamente lo spazio */
+}
+
+.quote-author {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 1rem;
+    color: #00BFFF;
+    margin-top: 0.3rem; /* riduciamo al minimo il margine */
+    letter-spacing: 0.5px;
+    padding-top: 0; /* togli padding */
+}
+
+/* SEZIONE BENVENUTO */
+.welcome-title {
+    margin-bottom: 2rem;
+    margin-top: 7rem; /* solleva il titolo */
+}
+
+.welcome-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+
+<!--  iii modifica  -->
+.welcome-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0a0a1a;
+    z-index: 1;
+    will-change: height;
+}
+.menu-desktop {
+  position: relative;
+  z-index: 10; /* Deve essere > 1 per stare sopra */
+}
+
+
+  <!--       fff modifica-->
+.welcome-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    opacity: 0;
+    transform: scale(0.9);
+    will-change: transform, opacity;
+}
+
+.welcome-title {
+  font-family: 'Cinzel Decorative', cursive;
+  font-weight: 500;
+  font-size: 3.5rem;
+  color: transparent;
+  background: linear-gradient(90deg, #ffd700, #ffaa00, #ffd700);
+  background-size: 300% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  text-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+  margin-bottom: 2rem;
+  letter-spacing: 2px;
+  line-height: 1.3;
+  animation: gradientShift 4s infinite ease-in-out, titlePulse 4s infinite ease-in-out;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes titlePulse {
+  0% {
+    transform: scale(1);
+    text-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+  }
+  50% {
+    transform: scale(1.06);
+    text-shadow: 0 0 45px rgba(255, 215, 0, 0.8);
+  }
+  100% {
+    transform: scale(1);
+    text-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+  }
+}
+
+@keyframes titlePulse {
+    0% { 
+        transform: scale(1); 
+        text-shadow: 0 0 20px rgba(255, 215, 0, 0.3); 
+    }
+    50% { 
+        transform: scale(1.03); 
+        text-shadow: 0 0 30px rgba(255, 215, 0, 0.5); 
+    }
+    100% { 
+        transform: scale(1); 
+        text-shadow: 0 0 20px rgba(255, 215, 0, 0.3); 
+    }
+}
+
+.welcome-quote {
+    font-family: 'EB Garamond', serif;
+    font-weight: 400;
+    font-size: 1.8rem;
+    color: rgba(255,255,255,0.85);
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    border-left: 2px solid rgba(255, 215, 0, 0.5);
+}
+
+.quote-author {
+    display: block;
+    font-style: italic;
+    margin-top: 0.2rem;
+    color: rgba(255, 215, 0, 0.8);
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* SLIDER */
+.slider-wrapper {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.slider-track {
+    display: flex;
+    transition: transform 0.6s ease-in-out;
+    will-change: transform;
+}
+.slider {
+  position: fixed; /* o absolute */
+  z-index: 1; /* più basso del menu */
+}
+
+.slide {
+    flex: 0 0 100%;
+    opacity: 1;
+    transition: opacity 0.6s ease-in-out;
+}
+
+/* SOTTOTITOLO BENVENUTO */
+.welcome-title {
+  font-family: 'Cinzel Decorative', cursive;
+  font-weight: 500;
+  font-size: 3.5rem;
+  color: transparent;
+  background: linear-gradient(90deg, #ffd700, #ffaa00, #ffd700);
+  background-size: 300% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  text-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+  margin-bottom: 2rem;
+  letter-spacing: 2px;
+  line-height: 1.3;
+  animation: gradientShift 4s infinite ease-in-out, titlePulse 4s infinite ease-in-out;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes titlePulse {
+  0% {
+    transform: scale(1);
+    text-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+  }
+  50% {
+    transform: scale(1.06);
+    text-shadow: 0 0 45px rgba(255, 215, 0, 0.8);
+  }
+  100% {
+    transform: scale(1);
+    text-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+  }
+}
+
 </style>
+  </head>
 
-    
-
-</head>
 <body>
-<div class="philosopher-slider" id="philosopherSlider">
-        <!-- Le carte dei filosofi verranno inserite qui via JavaScript -->
+
+
+</style>
+<!-- inizio slider verticale -->
+<div class="slider-vertical">
+  <div class="slider-inner">
+
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Socrates_Louvre.jpg" alt="Socrate">
+      <p>Socrate</p>
     </div>
 
-    <!-- Particelle cosmiche -->
-    <div id="particles"></div>
-    
-    <!-- Header -->
-    <header>
-        <div class="header-top">
-            <div class="logo">Φ Echi di Sofia</div>
-            
-            <div class="search-box">
-                <div class="search-container">
-                    <span class="search-icon">🔍</span>
-                    <input type="text" placeholder="Cerca nel sito...">
-                </div>
-                
-                <div class="translate-container">
-                    <span class="translate-icon">🌐</span>
-                    <select>
-                        <option>Italiano</option>
-                        <option>English</option>
-                        <option>Español</option>
-                        <option>Français</option>
-                        <option>Polski</option>
-                        <option>Deutsch</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        
-        <nav>
-            <ul>
-                <li>
-                    <a href="#">Home</a>
-                    <div class="submenu">
-                        <div class="submenu-col">
-                            <h3>Introduzione</h3>
-                            <ul>
-                                <li><a href="#">Chi siamo</a></li>
-                                <li><a href="#">Missione</a></li>
-                                <li><a href="#">Team</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Risorse</h3>
-                            <ul>
-                                <li><a href="#">Glossario</a></li>
-                                <li><a href="#">Bibliografia</a></li>
-                                <li><a href="#">Fonti</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Novità</h3>
-                            <ul>
-                                <li><a href="#">Eventi</a></li>
-                                <li><a href="#">Aggiornamenti</a></li>
-                                <li><a href="#">Blog</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Guide</h3>
-                            <ul>
-                                <li><a href="#">Come studiare</a></li>
-                                <li><a href="#">Metodologia</a></li>
-                                <li><a href="#">Consigli</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <a href="#">Filosofia Antica</a>
-                    <div class="submenu">
-                        <div class="submenu-col">
-                            <h3>Presocratici</h3>
-                            <ul>
-                                <li><a href="#">Talete</a></li>
-                                <li><a href="#">Eraclito</a></li>
-                                <li><a href="#">Parmenide</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Classici</h3>
-                            <ul>
-                                <li><a href="#">Socrate</a></li>
-                                <li><a href="#">Platone</a></li>
-                                <li><a href="#">Aristotele</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Ellenistici</h3>
-                            <ul>
-                                <li><a href="#">Epicuro</a></li>
-                                <li><a href="#">Stoici</a></li>
-                                <li><a href="#">Scettici</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Altro</h3>
-                            <ul>
-                                <li><a href="#">Neoplatonismo</a></li>
-                                <li><a href="#">Filosofia Romana</a></li>
-                                <li><a href="#">Testi antichi</a></li>
-                            </ul>
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/platone.png" alt="Platone">
+      <p>Platone</p>
+    </div>
 
-                        </div>
- <div class="submenu-col">
-                            <h3>Presocratici</h3>
-                            <ul>
-                                <li><a href="#">Talete</a></li>
-                                <li><a href="#">Eraclito</a></li>
-                                <li><a href="#">Parmenide</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Classici</h3>
-                            <ul>
-                                <li><a href="#">Socrate</a></li>
-                                <li><a href="#">Platone</a></li>
-                                <li><a href="#">Aristotele</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Ellenistici</h3>
-                            <ul>
-                                <li><a href="#">Epicuro</a></li>
-                                <li><a href="#">Stoici</a></li>
-                                <li><a href="#">Scettici</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Altro</h3>
-                            <ul>
-                                <li><a href="#">Neoplatonismo</a></li>
-                                <li><a href="#">Filosofia Romana</a></li>
-                                <li><a href="#">Testi antichi</a></li>
-                            </ul>
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Aristotle_.jpg" alt="Aristotele">
+      <p>Aristotele</p>
+    </div>
 
-                        </div>
-                           <div class="submenu-col">
-                            <h3>Presocratici</h3>
-                            <ul>
-                                <li><a href="#">Talete</a></li>
-                                <li><a href="#">Eraclito</a></li>
-                                <li><a href="#">Parmenide</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Classici</h3>
-                            <ul>
-                                <li><a href="#">Socrate</a></li>
-                                <li><a href="#">Platone</a></li>
-                                <li><a href="#">Aristotele</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Ellenistici</h3>
-                            <ul>
-                                <li><a href="#">Epicuro</a></li>
-                                <li><a href="#">Stoici</a></li>
-                                <li><a href="#">Scettici</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Altro</h3>
-                            <ul>
-                                <li><a href="#">Neoplatonismo</a></li>
-                                <li><a href="#">Filosofia Romana</a></li>
-                                <li><a href="#">Testi antichi</a></li>
-                            </ul>
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/MT2.png" alt="Maria Teresa">
+      <p>Maria Teresa</p>
+    </div>
 
-                        </div>
-                       <div class="submenu-col">
-                            <h3>Presocratici</h3>
-                            <ul>
-                                <li><a href="#">Talete</a></li>
-                                <li><a href="#">Eraclito</a></li>
-                                <li><a href="#">Parmenide</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Classici</h3>
-                            <ul>
-                                <li><a href="#">Socrate</a></li>
-                                <li><a href="#">Platone</a></li>
-                                <li><a href="#">Aristotele</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Ellenistici</h3>
-                            <ul>
-                                <li><a href="#">Epicuro</a></li>
-                                <li><a href="#">Stoici</a></li>
-                                <li><a href="#">Scettici</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Altro</h3>
-                            <ul>
-                                <li><a href="#">Neoplatonismo</a></li>
-                                <li><a href="#">Filosofia Romana</a></li>
-                                <li><a href="#">Testi antichi</a></li>
-                            </ul>
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/cartesio.jpg" alt="Cartesio">
+      <p>Cartesio</p>
+    </div>
 
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <a href="#">Filosofia Medievale</a>
-                    <div class="submenu">
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/kant.webp" alt="Kant">
+      <p>Kant: il più storpio tra gli zoppi del concetto</p>
+    </div>
 
-                        <div class="submenu-col">
-                            <h3>Rinascimento</h3>
-                            <ul>
-                                <li><a href="#">Erasmo</a></li>
-                                <li><a href="#">Machiavelli</a></li>
-                                <li><a href="#">Bruno</a></li>
-                            </ul>
-                        </div>
-                         <div class="submenu-col">
-                            <h3>Rinascimento</h3>
-                            <ul>
-                                <li><a href="#">Erasmo</a></li>
-                                <li><a href="#">Machiavelli</a></li>
-                                <li><a href="#">Bruno</a></li>
-                            </ul>
-                        </div>
-<div class="submenu-col">
-                            <h3>Rinascimento</h3>
-                            <ul>
-                                <li><a href="#">Erasmo</a></li>
-                                <li><a href="#">Machiavelli</a></li>
-                                <li><a href="#">Bruno</a></li>
-                            </ul>
-                        </div>
-<div class="submenu-col">
-                            <h3>Rinascimento</h3>
-                            <ul>
-                                <li><a href="#">Erasmo</a></li>
-                                <li><a href="#">Machiavelli</a></li>
-                                <li><a href="#">Bruno</a></li>
-                            </ul>
-                        </div>
-<div class="submenu-col">
-                            <h3>Rinascimento</h3>
-                            <ul>
-                                <li><a href="#">Erasmo</a></li>
-                                <li><a href="#">Machiavelli</a></li>
-                                <li><a href="#">Bruno</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Razionalismo</h3>
-                            <ul>
-                                <li><a href="#">Cartesio</a></li>
-                                <li><a href="#">Spinoza</a></li>
-                                <li><a href="#">Leibniz</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Empirismo</h3>
-                            <ul>
-                                <li><a href="#">Locke</a></li>
-                                <li><a href="#">Hume</a></li>
-                                <li><a href="#">Berkeley</a></li>
-                            </ul>
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/s.Tommaso.jpg" alt="Tommaso">
+      <p>San Tommaso</p>
+    </div>
 
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Illuminismo</h3>
-                            <ul>
-                                <li><a href="#">Kant</a></li>
-                                <li><a href="#">Rousseau</a></li>
-                                <li><a href="#">Voltaire</a></li>
-                            </ul>
-                             </div>
-<div class="submenu-col">
-                            <h3>Rinascimento</h3>
-                            <ul>
-                                <li><a href="#">Erasmo</a></li>
-                                <li><a href="#">Machiavelli</a></li>
-                                <li><a href="#">Bruno</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Razionalismo</h3>
-                            <ul>
-                                <li><a href="#">Cartesio</a></li>
-                                <li><a href="#">Spinoza</a></li>
-                                <li><a href="#">Leibniz</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Empirismo</h3>
-                            <ul>
-                                <li><a href="#">Locke</a></li>
-                                <li><a href="#">Hume</a></li>
-                                <li><a href="#">Berkeley</a></li>
-                            </ul>
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/friedrich-nietzsche.jpg" alt="Nietzsche">
+      <p>Nietzsche</p>
+    </div>
 
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Illuminismo</h3>
-                            <ul>
-                                <li><a href="#">Kant</a></li>
-                                <li><a href="#">Rousseau</a></li>
-                                <li><a href="#">Voltaire</a></li>
-                            </ul>
-                             </div>
-                          </div>
- <li>
-                    <a href="#">Filosofia Moderna</a>
-                    <div class="submenu">
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Livia.jpeg" alt="Livia">
+      <p>⚖👑Livia dea egizia🏛️ </p>
+    </div>
 
-                        <div class="submenu-col">
-                            <h3>Rinascimento</h3>
-                            <ul>
-                                <li><a href="#">Erasmo</a></li>
-                                <li><a href="#">Machiavelli</a></li>
-                                <li><a href="#">Bruno</a></li>
-                            </ul>
-                        </div>
-                         <div class="submenu-col">
-                            <h3>Rinascimento</h3>
-                            <ul>
-                                <li><a href="#">Erasmo</a></li>
-                                <li><a href="#">Machiavelli</a></li>
-                                <li><a href="#">Bruno</a></li>
-                            </ul>
-                        </div>
-<div class="submenu-col">
-                            <h3>Rinascimento</h3>
-                            <ul>
-                                <li><a href="#">Erasmo</a></li>
-                                <li><a href="#">Machiavelli</a></li>
-                                <li><a href="#">Bruno</a></li>
-                            </ul>
-                        </div>
-<div class="submenu-col">
-                            <h3>Rinascimento</h3>
-                            <ul>
-                                <li><a href="#">Erasmo</a></li>
-                                <li><a href="#">Machiavelli</a></li>
-                                <li><a href="#">Bruno</a></li>
-                            </ul>
-                        </div>
-<div class="submenu-col">
-                            <h3>Rinascimento</h3>
-                            <ul>
-                                <li><a href="#">Erasmo</a></li>
-                                <li><a href="#">Machiavelli</a></li>
-                                <li><a href="#">Bruno</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Razionalismo</h3>
-                            <ul>
-                                <li><a href="#">Cartesio</a></li>
-                                <li><a href="#">Spinoza</a></li>
-                                <li><a href="#">Leibniz</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Empirismo</h3>
-                            <ul>
-                                <li><a href="#">Locke</a></li>
-                                <li><a href="#">Hume</a></li>
-                                <li><a href="#">Berkeley</a></li>
-                            </ul>
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/dea.jpeg" alt="Dea">
+      <p>Dea mesopotamica</p>
+    </div>
 
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Illuminismo</h3>
-                            <ul>
-                                <li><a href="#">Kant</a></li>
-                                <li><a href="#">Rousseau</a></li>
-                                <li><a href="#">Voltaire</a></li>
-                            </ul>
-                             </div>
-<div class="submenu-col">
-                            <h3>Rinascimento</h3>
-                            <ul>
-                                <li><a href="#">Erasmo</a></li>
-                                <li><a href="#">Machiavelli</a></li>
-                                <li><a href="#">Bruno</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Razionalismo</h3>
-                            <ul>
-                                <li><a href="#">Cartesio</a></li>
-                                <li><a href="#">Spinoza</a></li>
-                                <li><a href="#">Leibniz</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Empirismo</h3>
-                            <ul>
-                                <li><a href="#">Locke</a></li>
-                                <li><a href="#">Hume</a></li>
-                                <li><a href="#">Berkeley</a></li>
-                            </ul>
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/vattimo.png" alt="Vattimo">
+      <p>Gianni Vattimo</p>
+    </div>
 
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Illuminismo</h3>
-                            <ul>
-                                <li><a href="#">Kant</a></li>
-                                <li><a href="#">Rousseau</a></li>
-                                <li><a href="#">Voltaire</a></li>
-                            </ul>
-                             </div>
-                          </div>
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/casi.JPG" alt="Testa di...">
+      <p>Testa di ...</p>
+    </div>
 
-              <li>
-                    <a href="#">Filosofia Contemporanea</a>
-                    <div class="submenu">
+    <!-- nuovi elementi -->
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Democritus.jpg" alt="Democrito">
+      <p>Democrito</p>
+    </div>
 
-                        <div class="submenu-col">
-                            <h3>Rinascimento</h3>
-                            <ul>
-                                <li><a href="#">Erasmo</a></li>
-                                <li><a href="#">Machiavelli</a></li>
-                                <li><a href="#">Bruno</a></li>
-                            </ul>
-                        </div>
-                         <div class="submenu-col">
-                            <h3>Rinascimento</h3>
-                            <ul>
-                                <li><a href="#">Erasmo</a></li>
-                                <li><a href="#">Machiavelli</a></li>
-                                <li><a href="#">Bruno</a></li>
-                            </ul>
-                        </div>
-<div class="submenu-col">
-                            <h3>Rinascimento</h3>
-                            <ul>
-                                <li><a href="#">Erasmo</a></li>
-                                <li><a href="#">Machiavelli</a></li>
-                                <li><a href="#">Bruno</a></li>
-                            </ul>
-                        </div>
-<div class="submenu-col">
-                            <h3>Rinascimento</h3>
-                            <ul>
-                                <li><a href="#">Erasmo</a></li>
-                                <li><a href="#">Machiavelli</a></li>
-                                <li><a href="#">Bruno</a></li>
-                            </ul>
-                        </div>
-<div class="submenu-col">
-                            <h3>Rinascimento</h3>
-                            <ul>
-                                <li><a href="#">Erasmo</a></li>
-                                <li><a href="#">Machiavelli</a></li>
-                                <li><a href="#">Bruno</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Razionalismo</h3>
-                            <ul>
-                                <li><a href="#">Cartesio</a></li>
-                                <li><a href="#">Spinoza</a></li>
-                                <li><a href="#">Leibniz</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Empirismo</h3>
-                            <ul>
-                                <li><a href="#">Locke</a></li>
-                                <li><a href="#">Hume</a></li>
-                                <li><a href="#">Berkeley</a></li>
-                            </ul>
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Talete.jpg" alt="Talete">
+      <p>Talete</p>
+    </div>
 
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Illuminismo</h3>
-                            <ul>
-                                <li><a href="#">Kant</a></li>
-                                <li><a href="#">Rousseau</a></li>
-                                <li><a href="#">Voltaire</a></li>
-                            </ul>
-                             </div>
-<div class="submenu-col">
-                            <h3>Rinascimento</h3>
-                            <ul>
-                                <li><a href="#">Erasmo</a></li>
-                                <li><a href="#">Machiavelli</a></li>
-                                <li><a href="#">Bruno</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Razionalismo</h3>
-                            <ul>
-                                <li><a href="#">Cartesio</a></li>
-                                <li><a href="#">Spinoza</a></li>
-                                <li><a href="#">Leibniz</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Empirismo</h3>
-                            <ul>
-                                <li><a href="#">Locke</a></li>
-                                <li><a href="#">Hume</a></li>
-                                <li><a href="#">Berkeley</a></li>
-                            </ul>
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/aristippo.webp" alt="Aristippo">
+      <p>Aristippo</p>
+    </div>
 
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Illuminismo</h3>
-                            <ul>
-                                <li><a href="#">Kant</a></li>
-                                <li><a href="#">Rousseau</a></li>
-                                <li><a href="#">Voltaire</a></li>
-                            </ul>
-                             </div>
-                          </div>
-                <li>
-                    <a href="#">Filosofia Moderna</a>
-                    <div class="submenu">
-                        <div class="submenu-col">
-                            <h3>Ottocento</h3>
-                            <ul>
-                                <li><a href="#">Hegel</a></li>
-                                <li><a href="#">Schopenhauer</a></li>
-                                <li><a href="#">Nietzsche</a></li>
-                            </ul>
-                        </div>
-<div class="submenu-col">
-                            <h3>Ottocento</h3>
-                            <ul>
-                                <li><a href="#">Hegel</a></li>
-                                <li><a href="#">Schopenhauer</a></li>
-                                <li><a href="#">Nietzsche</a></li>
-                            </ul>
-                        </div>
-<div class="submenu-col">
-                            <h3>Ottocento</h3>
-                            <ul>
-                                <li><a href="#">Hegel</a></li>
-                                <li><a href="#">Schopenhauer</a></li>
-                                <li><a href="#">Nietzsche</a></li>
-                            </ul>
-                        </div>
-<div class="submenu-col">
-                            <h3>Ottocento</h3>
-                            <ul>
-                                <li><a href="#">Hegel</a></li>
-                                <li><a href="#">Schopenhauer</a></li>
-                                <li><a href="#">Nietzsche</a></li>
-                            </ul>
-                        </div>
-<div class="submenu-col">
-                            <h3>Ottocento</h3>
-                            <ul>
-                                <li><a href="#">Hegel</a></li>
-                                <li><a href="#">Schopenhauer</a></li>
-                                <li><a href="#">Nietzsche</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Fenomenologia</h3>
-                            <ul>
-                                <li><a href="#">Husserl</a></li>
-                                <li><a href="#">Heidegger</a></li>
-                                <li><a href="#">Merleau-Ponty</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Esistenzialismo</h3>
-                            <ul>
-                                <li><a href="#">Sartre</a></li>
-                                <li><a href="#">Camus</a></li>
-                                <li><a href="#">Jaspers</a></li>
-                            </ul>
-                        </div>
-                      <div class="submenu-col">
-                            <h3>Esistenzialismo</h3>
-                            <ul>
-                                <li><a href="#">Sartre</a></li>
-                                <li><a href="#">Camus</a></li>
-                                <li><a href="#">Jaspers</a></li>
-                            </ul>
-                        </div>
-                       <div class="submenu-col">
-                            <h3>Esistenzialismo</h3>
-                            <ul>
-                                <li><a href="#">Sartre</a></li>
-                                <li><a href="#">Camus</a></li>
-                                <li><a href="#">Jaspers</a></li>
-                            </ul>
-                        </div>
-<div class="submenu-col">
-                            <h3>Esistenzialismo</h3>
-                            <ul>
-                                <li><a href="#">Sartre</a></li>
-                                <li><a href="#">Camus</a></li>
-                                <li><a href="#">Jaspers</a></li>
-                            </ul>
-                        </div>
-<div class="submenu-col">
-                            <h3>Esistenzialismo</h3>
-                            <ul>
-                                <li><a href="#">Sartre</a></li>
-                                <li><a href="#">Camus</a></li>
-                                <li><a href="#">Jaspers</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Postmoderno</h3>
-                            <ul>
-                                <li><a href="#">Foucault</a></li>
-                                <li><a href="#">Derrida</a></li>
-                                <li><a href="#">Deleuze</a></li>
-                            </ul>
-                      </div>
-                    </div>
-                  </li>
-<li>
-                    <a href="#">Filosofia Polacca</a>
-                    <div class="submenu">
-                        <div class="submenu-col">
-                            <h3>Ottocento</h3>
-                            <ul>
-                                <li><a href="#">Hegel</a></li>
-                                <li><a href="#">Schopenhauer</a></li>
-                                <li><a href="#">Nietzsche</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Fenomenologia</h3>
-                            <ul>
-                                <li><a href="#">Husserl</a></li>
-                                <li><a href="#">Heidegger</a></li>
-                                <li><a href="#">Merleau-Ponty</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Esistenzialismo</h3>
-                            <ul>
-                                <li><a href="#">Sartre</a></li>
-                                <li><a href="#">Camus</a></li>
-                                <li><a href="#">Jaspers</a></li>
-                            </ul>
-                        </div>
-                      <div class="submenu-col">
-                            <h3>Esistenzialismo</h3>
-                            <ul>
-                                <li><a href="#">Sartre</a></li>
-                                <li><a href="#">Camus</a></li>
-                                <li><a href="#">Jaspers</a></li>
-                            </ul>
-                        </div>
-                       <div class="submenu-col">
-                            <h3>Esistenzialismo</h3>
-                            <ul>
-                                <li><a href="#">Sartre</a></li>
-                                <li><a href="#">Camus</a></li>
-                                <li><a href="#">Jaspers</a></li>
-                            </ul>
-                        </div>
-                 <div class="submenu-col">
-                            <h3>Esistenzialismo</h3>
-                            <ul>
-                                <li><a href="#">Sartre</a></li>
-                                <li><a href="#">Camus</a></li>
-                                <li><a href="#">Jaspers</a></li>
-                            </ul>
-                        </div>
-                       <div class="submenu-col">
-                            <h3>Esistenzialismo</h3>
-                            <ul>
-                                <li><a href="#">Sartre</a></li>
-                                <li><a href="#">Camus</a></li>
-                                <li><a href="#">Jaspers</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Postmoderno</h3>
-                            <ul>
-                                <li><a href="#">Foucault</a></li>
-                                <li><a href="#">Derrida</a></li>
-                                <li><a href="#">Deleuze</a></li>
-                            </ul>
-                      </div>
-                    </div>
-                  </li>
-               <li>
-                   
-                <li>
-                    <a href="#">Contatti</a>
-                    <div class="submenu">
-                        <div class="submenu-col">
-                            <h3>Contatti</h3>
-                            <ul>
-                                <li><a href="#">Email</a></li>
-                                <li><a href="#">Modulo</a></li>
-                                <li><a href="#">Social</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Collabora</h3>
-                            <ul>
-                                <li><a href="#">Diventa autore</a></li>
-                                <li><a href="#">Sponsor</a></li>
-                                <li><a href="#">Partnership</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Info</h3>
-                            <ul>
-                                <li><a href="#">FAQ</a></li>
-                                <li><a href="#">Privacy</a></li>
-                                <li><a href="#">Cookie</a></li>
-                            </ul>
-                        </div>
-                        <div class="submenu-col">
-                            <h3>Social</h3>
-                            <ul>
-                                <li><a href="#">Facebook</a></li>
-                                <li><a href="#">Twitter</a></li>
-                                <li><a href="#">Instagram</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </nav>
-    </header>
-    
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1>Benvenuto in Echi di Sofia</h1>
-        <h2>Esplora il pensiero filosofico attraverso i secoli</h2>
-    </section>
-    
-    <!-- Slider laterale sinistro con foto -->
-    <aside class="left-slider">
-        <div class="slider-content" id="philosophers-slider">
-            <!-- Contenuto generato dinamicamente via JavaScript -->
-        </div>
-    </aside>
-    
-    <!-- Citazioni filosofiche -->
- <div class="quote-slider">
-  <div class="quotes">
-    <div>
-      <blockquote>"Conosci te stesso"</blockquote>
-      <cite>- Iscrizione sul tempio di Apollo a Delfi</cite>
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/cacciari.jpg" alt="Massimo Cacciari">
+      <p>Massimo Cacciari</p>
     </div>
-    <div>
-      <blockquote>"Penso, dunque sono"</blockquote>
-      <cite>- Cartesio</cite>
+
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/cicerone.jpg" alt="Cicerone">
+      <p>Cicerone</p>
     </div>
-    <div>
-      <blockquote>"L'uomo è condannato ad essere libero"</blockquote>
-      <cite>- Jean-Paul Sartre</cite>
+
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/dante.jpg" alt="Dante Alighieri">
+      <p>Dante:la iena che fa poesia nelle tombe.</p>
     </div>
-    <div>
-      <blockquote>"Tutto ciò che so è di non sapere nulla"</blockquote>
-      <cite>- Socrate</cite>
+
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/deleuze.jpg" alt="Gilles Deleuze">
+      <p>Gilles Deleuze</p>
     </div>
-    <div>
-      <blockquote>"Dio è morto"</blockquote>
-      <cite>- Friedrich Nietzsche</cite>
+
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/derrida.jpg" alt="Jacques Derrida">
+      <p>Jacques Derrida</p>
     </div>
-    <div>
-      <blockquote>"La libertà è il riconoscimento della necessità"</blockquote>
-      <cite>- Friedrich Engels</cite>
+
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/dewey.jpg" alt="John Dewey">
+      <p>John Dewey</p>
     </div>
-    <div>
-      <blockquote>"L'essere è, il non-essere non è"</blockquote>
-      <cite>- Parmenide</cite>
+
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/foucault.jpg" alt="Michel Foucault">
+      <p>Michel Foucault</p>
     </div>
-    <div>
-      <blockquote>"Il tempo è l'immagine mobile dell'eternità"</blockquote>
-      <cite>- Platone</cite>
+
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/hegel.avif" alt="Georg Wilhelm Friedrich Hegel">
+      <p>G.W.F. Hegel</p>
     </div>
-    <div>
-      <blockquote>"L'uomo è la misura di tutte le cose"</blockquote>
-      <cite>- Protagora</cite>
+
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/heidegger.jpg" alt="Martin Heidegger">
+      <p>Martin Heidegger</p>
     </div>
-    <div>
-      <blockquote>"La filosofia è la nostalgia dell’infanzia dell’umanità"</blockquote>
-      <cite>- Novalis</cite>
+
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/horkheimer.jpg" alt="Max Horkheimer">
+      <p>Max Horkheimer</p>
     </div>
-    <div>
-      <blockquote>"Sapere di non sapere è la molla della ricerca"</blockquote>
-      <cite>- Socrate</cite>
+
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/husserl.jpg" alt="Edmund Husserl">
+      <p>Edmund Husserl</p>
     </div>
-    <div>
-      <blockquote>"La vita senza esame non è degna di essere vissuta"</blockquote>
-      <cite>- Socrate</cite>
+
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/merleau-ponty.avif" alt="Maurice Merleau-Ponty">
+      <p>Maurice Merleau-Ponty</p>
     </div>
-    <div>
-      <blockquote>"L'essere umano è un animale politico"</blockquote>
-      <cite>- Aristotele</cite>
+
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/peirce.jpg" alt="Charles Sanders Peirce">
+      <p>Charles S. Peirce</p>
     </div>
-    <div>
-      <blockquote>"Il fine giustifica i mezzi"</blockquote>
-      <cite>- Niccolò Machiavelli</cite>
+
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/pirrone.jpg" alt="Pirrone">
+      <p>Pirrone</p>
     </div>
-    <div>
-      <blockquote>"La felicità è un’attività dell’anima secondo virtù"</blockquote>
-      <cite>- Aristotele</cite>
+
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/pitagora.avif" alt="Pitagora">
+      <p>Pitagora</p>
     </div>
-    <div>
-      <blockquote>"La speranza è un sogno ad occhi aperti"</blockquote>
-      <cite>- Aristotele</cite>
+
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/richard_rorty.jpg" alt="Richard Rorty">
+      <p>Richard Rorty</p>
     </div>
-    <div>
-      <blockquote>"La volontà di potenza è l’essenza più intima dell’essere"</blockquote>
-      <cite>- Nietzsche</cite>
+
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/russell.jpeg" alt="Bertrand Russell">
+      <p>Bertrand Russell</p>
     </div>
-    <div>
-      <blockquote>"L’essere umano è condannato alla libertà"</blockquote>
-      <cite>- Sartre</cite>
-    </div>
-    <div>
-      <blockquote>"Abbi il coraggio di servirti della tua propria intelligenza!"</blockquote>
-      <cite>- Immanuel Kant</cite>
-    </div>
-    <div>
-      <blockquote>"L’inferno sono gli altri"</blockquote>
-      <cite>- Sartre</cite>
-    </div>
-    <div>
-      <blockquote>"La religione è l’oppio dei popoli"</blockquote>
-      <cite>- Karl Marx</cite>
-    </div>
-    <div>
-      <blockquote>"Tutto scorre, nulla sta fermo"</blockquote>
-      <cite>- Eraclito</cite>
-    </div>
-    <div>
-      <blockquote>"La verità è figlia del tempo, non dell’autorità"</blockquote>
-      <cite>- Francis Bacon</cite>
-    </div>
-    <div>
-      <blockquote>"Vivere è pensare"</blockquote>
-      <cite>- Cicerone</cite>
-    </div>
-    <div>
-      <blockquote>"Cogito ergo sum"</blockquote>
-      <cite>- Cartesio</cite>
-    </div>
-  </div>
+    <div class="slide-vertical">
+  <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Severino.png" alt="Emanuele Severino">
+  <p>Emanuele Severino</p>
+</div>
+
+<div class="slide-vertical">
+  <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/bulgakov.jpg" alt="Michail Bulgakov">
+  <p>Michail Bulgakov</p>
+</div>
+
+<div class="slide-vertical">
+  <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/dostoevskij.gif" alt="Fëdor Dostoevskij">
+  <p>Fëdor Dostoevskij</p>
+</div>
+
+<div class="slide-vertical">
+  <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/galimberti.pg" alt="Umberto Galimberti">
+  <p>Umberto Galimberti</p>
+</div>
+
+<div class="slide-vertical">
+  <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/max%20weber.jpg" alt="Max Weber">
+  <p>Max Weber</p>
+</div>
+
+<div class="slide-vertical">
+  <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/sestov.jpg" alt="Lev Šestov">
+  <p>Lev Šestov</p>
 </div>
 
 
-    
-    <!-- Sidebar ultimi articoli -->
-    <aside class="sidebar">
-        <h3>Ultimi Articoli</h3>
-        <ul class="articles-list">
-            <li><a href="#">La dialettica hegeliana spiegata</a></li>
-            <li><a href="#">L'etica di Spinoza oggi</a></li>
-            <li><a href="#">Foucault e il potere</a></li>
-            <li><a href="#">Platone e la teoria delle idee</a></li>
-            <li><a href="#">Kant e l'imperativo categorico</a></li>
-            <li><a href="#">Nietzsche e l'eterno ritorno</a></li>
-            <li><a href="#">Heidegger e l'essere</a></li>
-            <li><a href="#">L'esistenzialismo di Sartre</a></li>
-        </ul>
-    </aside>
-    
-    <!-- Footer -->
-    <footer>
-        <p>© 2023 Echi di Sofia - Tutti i diritti riservati</p>
-        <p>Contatti: info@echidisofia.it | Privacy Policy | Cookie Policy</p>
-    </footer>
-    
-    <!-- Cookie Banner -->
-    <div class="cookie-banner">
-        <p>Questo sito utilizza cookie per migliorare l'esperienza utente.</p>
-        <div>
-            <button id="accept-cookies">Accetta</button>
-            <button id="reject-cookies">Rifiuta</button>
-        </div>
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/schelling.jpg" alt="Friedrich Wilhelm Joseph Schelling">
+      <p>F.W.J. Schelling</p>
     </div>
+
+    <div class="slide-vertical">
+      <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/wittgenstein.jpg" alt="Ludwig Wittgenstein">
+      <p>Ludwig Wittgenstein</p>
+    </div>
+
+  </div>
+</div>
+
+<!--   fine slide verticale -->
+
+<style>
+  .slider-vertical {
+    position: fixed;
+    top: 300px;
+    left: 20px;
+    width: 160px;
+    height: 300px;
+    overflow: hidden;
+    background: #0a0a20;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.6);
+    padding: 5px 0;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    z-index: 10;
+  }
+  .slide-vertical {
+  height: auto;
+  min-height: 160px;
+}
+  .slider-inner {
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.6s ease-in-out;
+  }
+  .slide-vertical {
+    flex-shrink: 0;
+    width: 160px;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #eee;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 5px 10px;
+  }
+  .slide-vertical img {
+  max-width: 120px;
+  max-height: 90px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 4px; /* 🔽 Ridotto spazio */
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.7);
+}
+
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const sliderInner = document.querySelector(".slider-inner");
+    const slides = document.querySelectorAll(".slide-vertical");
+    const slideHeight = slides[0].offsetHeight;
+    let index = 0;
+
+    setInterval(() => {
+      index++;
+      if (index >= slides.length) index = 0;
+      sliderInner.style.transform = `translateY(-${index * slideHeight}px)`;
+    }, 3000);
+  });
+</script>
+
+
+  <!--  fine slider verticale -->
+    <!-- SFONDO STELLATO -->
+    <div class="starfield" id="starfield"></div>
     
+    <!-- PARTICELLE INTERATTIVE -->
+    <div class="philo-particles" id="philoParticles"></div>
+    
+    <!-- BARRA SUPERIORE CON RICERCA E TRADUTTORE -->
+  <div class="top-bar">
+
+<a class="logo" href="https://casi0048.github.io/pagine/benvenuti.html">Φ ECHI DI SOFIA</a>
+
+
+
+
+<!--  inizio 4 filosofi --
+<!-- inizio 4 filosofi -->
+<div style="position: relative; display: inline-block;" id="paradigma-container">
+
+  <button id="paradigma-btn" style="
+   padding: 2px 15px 2px 15px;
+    background: #0a0a0a; 
+    color: #f8f4e9;
+    border: 0;
+    cursor: pointer;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    border-radius: 4px;
+  ">
+   <h3 style="color: gold; font-family: 'Cormorant Garamond', serif; font-weight: 600; text-shadow: 0 0 8px #ffd700; display: flex; align-items: center; justify-content: center; gap: 8px; margin:0;">
+  <span style="font-size: 0.9em;">🌙 </span>
+  Loro hanno cambiato il paradigma
+  <span style="font-size: 0.9em;">⚡</span>
+</h3>
+  </button>
+
+  <div id="filosofi-overlay" style="
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 95px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+    border-radius: 10px;
+    max-width: 800px;
+    width: 600px;
+    padding: 5px 5px 15px 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    z-index: 9999;
+  ">
+ <h3 style="color: #2a4b3a; margin-bottom: 20px; font-family: 'Cormorant Garamond', serif;">
+  I Filosofi che hanno cambiato il paradigma
+  <span style="font-size: 1.5em; color: goldenrod;">▾</span>
+</h3>
+
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 51px;">
+
+      <div style="text-align: center;">
+        <img src="immagini per sito/Socrates_Louvre.jpg" alt="Socrate" style="width: 100%; max-width: 80px; border-radius: 50%; border: 3px solid #8B5A2B;">
+        <p style="margin-top: 10px; color: #3e3a36; font-weight: bold;">Socrate</p>
+        <p style="font-style: italic; color: #2a4b3a; font-size: 0.85rem;">"So di non sapere."</p>
+      </div>
+
+      <div style="text-align: center;">
+        <img src="immagini per sito/platone.jpg" alt="Platone" style="width: 100%; max-width: 80px; border-radius: 50%; border: 3px solid #8B5A2B;">
+        <p style="margin-top: 10px; color: #3e3a36; font-weight: bold;">Platone</p>
+        <p style="font-style: italic; color: #2a4b3a; font-size: 0.85rem;">"La realtà è un'ombra delle Idee."</p>
+      </div>
+
+      <div style="text-align: center;">
+        <img src="immagini per sito/kant.webp" alt="Kant" style="width: 100%; max-width: 80px; border-radius: 50%; border: 3px solid #8B5A2B;">
+        <p style="margin-top: 10px; color: #3e3a36; font-weight: bold;">Kant</p>
+        <p style="font-style: italic; color: #2a4b3a; font-size: 0.85rem;">"Agisci come se la tua azione diventasse legge universale."</p>
+      </div>
+
+      <div style="text-align: center;">
+        <img src="immagini per sito/friedrich-nietzsche.jpg" alt="Nietzsche" style="width: 100%; max-width: 80px; border-radius: 50%; border: 3px solid #8B5A2B;">
+        <p style="margin-top: 10px; color: #3e3a36; font-weight: bold;">Nietzsche</p>
+        <p style="font-style: italic; color: #2a4b3a; font-size: 0.85rem;">"Dio è morto."</p>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const btn = document.getElementById('paradigma-btn');
+const overlay = document.getElementById('filosofi-overlay');
+
+let hideTimeout;
+
+function showOverlay() {
+  clearTimeout(hideTimeout);
+  overlay.style.display = 'block';
+}
+
+function hideOverlay() {
+  hideTimeout = setTimeout(() => {
+    overlay.style.display = 'none';
+  }, 300);
+}
+
+// Apri overlay al passaggio mouse sul bottone
+btn.addEventListener('mouseenter', showOverlay);
+
+// Chiudi overlay dopo uscita mouse dal bottone
+btn.addEventListener('mouseleave', hideOverlay);
+
+// Se il mouse entra nell'overlay cancella la chiusura
+overlay.addEventListener('mouseenter', () => clearTimeout(hideTimeout));
+
+// Se il mouse esce dall'overlay, avvia chiusura
+overlay.addEventListener('mouseleave', hideOverlay);
+
+// Pulsante chiudi resta funzionante
+document.getElementById('chiudi-overlay').addEventListener('click', () => {
+  overlay.style.display = 'none';
+});
+
+</script>
+<!-- fine 4 filosofi -->
+<!-- fine 4 folosofi  -->
+<!---iiii scrittura a macchina -->
+<style>
+.typing-effect {
+    font-size: 1.4rem;
+    color: gold;
+    font-family: 'Poppins', sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid gold;
+    width: fit-content;
+    margin: 20px auto;
+    padding-right: 5px;
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const el = document.querySelector(".typing-effect");
+    const texts = [
+    "Φιλοσοφία: l'arte di cercare appigli nel vuoto.",
+    "La filosofia è sete, non possesso.",
+    "Pensare è camminare senza mappa.",
+    "Ogni risposta nasconde un'altra domanda.",
+    "Il dubbio è già inizio di sapere.",
+    "Domandare è respirare con la mente.",
+    "Il silenzio è una forma di pensiero.",
+    "La verità abita tra due errori.",
+    "Il sapere inizia con il non sapere.",
+    "Filosofare è guardare oltre l'ovvio.",
+    "La mente inquieta è sempre viva.",
+    "Il pensiero non ha confini.",
+    "Nulla è più certo del dubbio.",
+    "La sapienza si nutre di incertezza.",
+    "La filosofia non promette risposte.",
+    "Ogni passo è già metà del cammino.",
+    "La logica è poesia con regole.",
+    "La libertà comincia nel pensiero.",
+    "La verità è un equilibrio mobile.",
+    "Non esiste ultima parola.",
+    "Il pensiero è un viaggio senza ritorno.",
+    "Ogni idea è un ponte tra due silenzi.",
+    "La ragione è un faro in un mare scuro.",
+    "Ogni filosofia è un tentativo fallito che illumina.",
+    "Pensare è sfidare l'invisibile.",
+    "Il filosofo ascolta ciò che non si dice.",
+    "L'eterno ritorno è anche dell'errore.",
+    "Dubitare di sé è il primo passo per conoscersi.",
+    "Non sapere è già sapere qualcosa.",
+    "Ogni teoria è una mappa mai definitiva.",
+    "La filosofia è musica muta.",
+    "La parola è solo l'ombra del pensiero.",
+    "Il tempo è il filosofo silenzioso.",
+    "Cercare senso è già crearlo.",
+    "Non c'è verità senza rischio.",
+    "La mente che si ferma muore.",
+    "Il pensiero abita tra desiderio e paura.",
+    "Ogni concetto è una prigione e una chiave.",
+    "L'ignoto è la vera patria del filosofo.",
+    "La domanda giusta vale più di mille risposte.",
+    "Pensare è disfare i propri stessi pensieri.",
+    "L'essere si nasconde dietro il nulla.",
+    "Ogni parola è già un'interpretazione.",
+    "Il pensiero puro è un abisso.",
+    "La conoscenza è sempre provvisoria.",
+    "Ogni certezza è figlia di un compromesso.",
+    "Il filosofo è un eterno esiliato.",
+    "Dubitare è una forma di fedeltà alla verità.",
+    "Il sapere divide, il mistero unisce.",
+    "L’inquietudine è il motore della ricerca."
+];
+
+
+    
+    let textIndex = 0;
+    let index = 0;
+    let forward = true;
+    let delay = 0;
+    let stepCounter = 0;
+    const writeSpeed = 3;
+    const deleteSpeed = 2;
+
+    function animate() {
+        if (!el) return;
+
+        stepCounter++;
+        const speed = forward ? writeSpeed : deleteSpeed;
+
+        if (stepCounter >= speed) {
+            stepCounter = 0;
+
+            if (delay > 0) {
+                delay--;
+            } else {
+                const currentText = texts[textIndex];
+
+                if (forward) {
+                    index++;
+                    if (index > currentText.length) {
+                        forward = false;
+                        delay = 60;
+                    }
+                } else {
+                    index--;
+                    if (index < 0) {
+                        forward = true;
+                        textIndex = (textIndex + 1) % texts.length;
+                        delay = 20;
+                    }
+                }
+
+                el.textContent = currentText.substring(0, index);
+            }
+        }
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+});
+</script>
+<div class="search-translate-container">
+        <form action="https://www.google.com/search" method="get" target="_blank">
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" name="q" placeholder="Cerca filosofi, concetti..." required>
+                <input type="hidden" name="sitesearch" value="echidisofia.org">
+            </div>
+        </form>
+        <div class="translate-container" id="google_translate_element"></div>
+    </div>
+</div>
+
+
+
+   
+    
+    <header id="mainHeader">
+    <div class="menu-container">
+<!-- qui il logo  -->
+        
+<div style="display: flex; align-items: center;">
+  
+  <nav class="menu-desktop">
+    <ul role="menu">
+      <li class="dropdown">
+        <a href="https://casi0048.github.io/pagine/benvenuti.html" role="menuitem" class="menu-btn underline-effect">INCIPIT</a>
+      </li>
+      <li class="dropdown">
+        <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
+          Filosofia antica <span class="arrow">▼</span>
+        </button>
+        <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia antica">
+          <div>
+            <h4>Scuola ionica</h4>
+            <a href="/Presocratici/talete.html" role="menuitem">Talete</a>
+            <a href="Presocratici/anassimandro.html" role="menuitem">Anassimandro</a>
+            <a href="Presocratici/anassimene.html" role="menuitem">Anassimene</a>
+          </div>
+          <div>
+            <h4>Scuola eleatica</h4>
+            <a href="Presocratici/senofane.html" role="menuitem">Senofane</a>
+            <a href="/Presocratici/parmenide.html" role="menuitem">Parmenide</a>
+            <a href="articoli/zenone.html" role="menuitem">Zenone</a>
+            <a href="articoli/melisso.html" role="menuitem">Melisso</a>
+          </div>
+          <div>
+            <h4>Sofisti</h4>
+            
+            <a href="articoli/gorgia.html" role="menuitem">Gorgia</a>
+            <a href="articoli/ippia.html" role="menuitem">Ippia</a>
+            <a href="articoli/prodico.html" role="menuitem">Prodico</a>
+            
+          </div>
+          <div>
+            <h4>Pitagorici</h4>
+            <a href="/articoli/pitagora.html" role="menuitem">Pitagora</a>
+            <a href="/articoli/filolao.html" role="menuitem">Filolao</a>
+            <a href="/articoli/alcmeone.html" role="menuitem">Alcmeone</a>
+            <a href="articoli/archita.html" role="menuitem">Archita</a>
+            <a href="/articoli/ippaso.html" role="menuitem">Ippaso</a>
+          </div>
+        </div>
+      </li>
+      <li class="dropdown">
+        <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
+          Filosofia classica <span class="arrow">▼</span>
+        </button>
+        <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia classica">
+          <div>
+            <h4>Classici</h4>
+            <a href="articoli/socrate.html" role="menuitem">Socrate</a>
+            <a href="articoli/platone.html" role="menuitem">Platone</a>
+            <a href="articoli/aristotele.html" role="menuitem">Aristotele</a>
+          </div>
+          <div>
+            <h4>Platonismo</h4>
+            <a href="articoli/senofonte.html" role="menuitem">Senofonte</a>
+            <a href="articoli/antistene.html" role="menuitem">Antistene</a>
+            <a href="articoli/aristippo.html" role="menuitem">Aristippo</a>
+          </div>
+          <div>
+            <h4>Stoicismo</h4>
+            <a href="articoli/zenone.html" role="menuitem">Zenone di Cizio</a>
+            <a href="articoli/epitteto.html" role="menuitem">Epitteto</a>
+            <a href="articoli/seneca.html" role="menuitem">Seneca</a>
+            <a href="articoli/cleante " role="menuitem">Cleante di Asso </a>
+            <a href=" articoli/crisippo.html" role="menuitem">Crisippo di Soli </a>
+               <a href=" articoli/panezio.html" role="menuitem">Panezio di Rodi</a>
+               <a href=" articoli/posidonio.html" role="menuitem">Posidonio di Apamea </a>
+          </div>
+          <div>
+            <h4>Epicureismo</h4>
+            <a href="articoli/epicuro.html" role="menuitem">Epicuro</a>
+            <a href="articoli/lucrezio.html" role="menuitem">Lucrezio</a>
+            <a href="articoli/cicerone.html" role="menuitem">Cicerone</a>
+            <a href=" articoli/ermarco.html" role="menuitem">Ermarco di Mitilene</a>
+            <a href=" articoli/colote.html" role="menuitem">Colote di Lampsaco</a>
+            <a href="articoli/zenone_di_sidone.html " role="menuitem">Zenone di Sidone </a>
+          </div>
+        </div>
+      </li>
+      <li class="dropdown">
+        <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
+          Filosofia medievale <span class="arrow">▼</span>
+        </button>
+        <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia medievale">
+          <div>
+            <h4>Medievale</h4>
+            <a href="articoli/tommaso%20d'aquino.html" role="menuitem">Tommaso d'Aquino</a>
+            <a href="articoli/anselmo.html" role="menuitem">Anselmo</a>
+            <a href="articoli/guglielmo%20di%20ockham" role="menuitem">Guglielmo di Ockham</a>
+            <a href="articoli/duns%20scoto.html" role="menuitem">Duns Scoto</a>
+          </div>
+          <div>
+            <h4>Patristica</h4>
+            <a href="articoli/agostino.html" role="menuitem">Agostino</a>
+            <a href="articoli/origene.html" role="menuitem">Origene</a>
+            <a href="articoli/gregorio.html" role="menuitem">Gregorio di Nissa</a>
+            <a href="articoli/tertuliao.html" role="menuitem">Tertulliano</a>
+          </div>
+          <div>
+            <h4>Filosofia Islamica</h4>
+            <a href="articoli/avicenna.html" role="menuitem">Avicenna</a>
+            <a href="articoli/averroe.html" role="menuitem">Averroè</a>
+            <a href="articoli/al-farabi.html" role="menuitem">Al-Farabi</a>
+            <a href="articoli/al-ghazali.html" role="menuitem">Al-Ghazali</a>
+          </div>
+          <div>
+            <h4>Filosofia Ebraica</h4>
+            <a href="articoli/maimonide.html" role="menuitem">Maimonide</a>
+            <a href="articoli/saadia%20goan.html" role="menuitem">Saadia Gaon</a>
+            <a href="articoli/gersonide.html" role="menuitem">Gersonide</a>
+            <a href="articoli/hasdai%20crescas.html" role="menuitem">Hasdai Crescas</a>
+          </div>
+        </div>
+      </li>
+      <li class="dropdown">
+        <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
+          Filosofia moderna <span class="arrow">▼</span>
+        </button>
+        <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia moderna">
+          <div>
+            <h4>Razionalismo</h4>
+            <a href="articoli/cartesio.html" role="menuitem">Cartesio</a>
+            <a href="articoli/spinoza.html" role="menuitem">Spinoza</a>
+            <a href="articoli/leibnitz.html" role="menuitem">Leibniz</a>
+          </div>
+          <div>
+            <h4>Empirismo</h4>
+            <a href="articoli/locke.html" role="menuitem">Locke</a>
+            <a href="articoli/hume.html" role="menuitem">Hume</a>
+            <a href="articoli/berkeley.html" role="menuitem">Berkeley</a>
+          </div>
+          <div>
+            <h4>Illuminismo</h4>
+            <a href="articoli/rousseau.html" role="menuitem">Rousseau</a>
+            <a href="articoli/montesquieu.html" role="menuitem">Montesquieu</a>
+            <a href="articoli/voltaire.html" role="menuitem">Voltaire</a>
+          </div>
+          <div>
+            <h4>Idealismo</h4>
+            <a href="articoli/hegel.html" role="menuitem">Hegel</a>
+            <a href="articoli/kant.html" role="menuitem">Kant</a>
+            <a href="articoli/fichte.html" role="menuitem">Fichte</a>
+            <a href="articoli/schelling.html" role="menuitem">Schelling</a>
+            
+          </div>
+<div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia contemporanea">
+          <div>
+            <h4>Filosofia russa</h4>
+<a href="articoli/dostoevskij.html" role="menuitem">Fëdor Dostoevskij</a>
+<a href="articoli/solov'%C3%ABv.html" role="menuitem">Vladimir Solov'ëv </a>
+<a href="articoli/rozanov.html" role="menuitem">Vasilij Rozanov </a>
+<a href="articoli/sestov.html" role="menuitem">Lev Šestov</a>
+<a href="articoli/bulgakov.html" role="menuitem">Sergej Bulgakov</a>
+
+        </div>
+ 
+        </div>
+      </li>
+      <li class="dropdown">
+        <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
+          Filosofia contemporanea <span class="arrow">▼</span>
+        </button>
+        <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia contemporanea">
+          <div>
+            <h4>Filosofia analitica</h4>
+            <a href="articoli/frege.html" role="menuitem">Frege</a>
+            <a href="articoli/russell.html" role="menuitem">Rusell</a>
+            <a href="articoli/wittgenstein.html" role="menuitem">Wittgenstein </a>
+             <a href="articoli/moore.html" role="menuitem">G.E.Moore</a>
+          </div>
+          <div>
+            <h4>Filosofia Continentale</h4>
+            <a href="articoli/husserl.html" role="menuitem">Husserl</a>
+            <a href="articoli/heidegger.html" role="menuitem">Heidegger</a>
+            <a href="articoli/merleau-ponty.html" role="menuitem">Merleau-Ponty</a>
+<a href="articoli/sartre.html" role="menuitem">Sartre</a>
+<a href="articoli/adorno.html" role="menuitem">Adorno</a>
+<a href="articoli/horkheimer.html" role="menuitem">Horkheimer</a>
+
+          </div>
+          <div>
+            <h4> Pragmatismo Americano</h4>
+            <a href="articoli/peirce.html" role="menuitem">Peirce</a>
+            <a href="articoli/james.html" role="menuitem">W.James</a>
+            <a href="articoli/dewey.html" role="menuitem"> Dewey</a>
+            <a href="articoli/rorty.html" role="menuitem">R.  Rorty </a>
+          </div>
+          <div>
+            <h4>Filosofia postmoderna</h4>
+           <a href="articoli/derrida.html" role="menuitem">Derrida </a>
+            <a href="articoli/foucault.html" role="menuitem">Foucault</a>
+<a href="articoli/lyotard.html" role="menuitem">Lyotard</a>
+<a href="articoli/deleuze.html" role="menuitem">Deleuze</a>
+<a href="articoli/butler.html" role="menuitem">Butler</a>
+          </div>
+<div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia contemporanea">
+          <div>
+
+           <h4>Filosofia italiana</h4>
+<a href="articoli/severino.html" role="menuitem">Emmanuele Severino</a>
+<a href="articoli/eco.html" role="menuitem">Umberto Eco</a>
+<a href="articoli/vattimo.html
+" role="menuitem">Gianni Vattimo </a>
+<a href="articoli/bodei.html" role="menuitem">Remo Bodei</a>
+<a href="articoli/cacciari.html" role="menuitem">Massimo Cacciari </a>
+<a href="articoli/galimberti.html" role="menuitem">Umberto Galimberti</a>
+ </div>
+
+
+<li class="dropdown">
+  <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
+    Filosofia polacca <span class="arrow">▼</span>
+  </button>
+  <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia polacca">
+    <div>
+      <h4>Romanticismo</h4>
+      <a href="articoli/wronski.html" role="menuitem">Józef Hoene-Wroński</a>
+      <a href="articoli/cieszkowski.html" role="menuitem">August Cieszkowski</a>
+      <a href="articoli/mickiewicz.html" role="menuitem">Adam Mickiewicz</a>
+      <a href="articoli/rzewuski.html" role="menuitem">Henryk Rzewuski</a>
+      <a href="articoli/potocki.html" role="menuitem">Stanisław Kostka Potocki</a>
+    </div>
+    <div>
+      <h4>Logica e Analitica</h4>
+      <a href="articoli/twardowski.html" role="menuitem">Kazimierz Twardowski</a>
+      <a href="articoli/lukasiewicz.html" role="menuitem">Jan Łukasiewicz</a>
+      <a href="articoli/tarski.html" role="menuitem">Alfred Tarski</a>
+      <a href="articoli/kotarbinski.html" role="menuitem">Tadeusz Kotarbiński</a>
+      <a href="articoli/ingarden.html" role="menuitem">Roman Ingarden</a>
+    </div>
+    <div>
+      <h4>Periodo comunista</h4>
+      <a href="articoli/kolakowski.html" role="menuitem">Leszek Kołakowski</a>
+      <a href="articoli/wojtyla.html" role="menuitem">Karol Wojtyła<br>(Papa Giovanni Paolo II)</a>
+    </div>
+    <div>
+      <h4>Post-Comunista</h4>
+      <a href="articoli/tischner.html" role="menuitem">Józef Tischner</a>
+      <a href="articoli/bauman.html" role="menuitem">Zygmunt Bauman</a>
+    </div>
+  </div>
+</li>
+
+<li class="dropdown">
+  <a href="pagine/pagina-contatti.html" class="menu-btn underline-effect" role="menuitem">
+    Contatti
+  </a>
+</li>
+
+
+</header>
+
+  <!-- CAROSELLO CITAZIONI -->
+    <div class="quotes-carousel" id="quotesCarousel">
+        <!-- Le citazioni verranno aggiunte dinamicamente via JavaScript -->
+    </div>
+<!--  INIZIO NUOVA ANIMAZIONE TITOLO-->
+    <!-- SEZIONE BENVENUTO -->
+
+<section class="welcome-section">
+ <div class="welcome-content">
+  <h1 class="welcome-title">
+    Benvenuto<br>in Echi di Sofia<br>
+    </h1>
+<p class="welcome-subtitle">Un viaggio tra stelle e pensiero</p>
+
+</div>
+<div class="exploding-text">
+  Φ Pensare, dunque è ancora possibile 🤔 
+</div>
+ 
+    
+    <div class="welcome-quote">
+      <p class="quote-text"></p>
+      <span class="quote-author"></span>
+    </div>
+  </div>
+</section>
+
+
+
+<style>
+
+
+.welcome-title {
+  font-family: 'Cinzel Decorative', cursive;
+  font-weight: 500;
+  font-size: 3.5rem; /* Grande */
+  color: transparent;
+  background: linear-gradient(90deg, #ffd700, #ffaa00, #ffd700);
+  background-size: 300% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  text-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+  margin-bottom: 1.5rem;
+  letter-spacing: 2px;
+  line-height: 1.3;
+  animation: gradientShift 4s infinite ease-in-out, titlePulse 4s infinite ease-in-out;
+}
+
+.welcome-subtitle {
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem !important;
+  font-weight: 300;
+  color: #dddddd;
+  margin-top: -1rem;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes titlePulse {
+  0% {
+    transform: scale(1);
+    text-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+  }
+  50% {
+    transform: scale(1.06);
+    text-shadow: 0 0 45px rgba(255, 215, 0, 0.8);
+  }
+  100% {
+    transform: scale(1);
+    text-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+  }
+}
+
+
+.logo-container {
+  flex: 1;
+}
+.site-logo {
+  height: 60px;
+}
+
+.top-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.search-box input {
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+}
+.search-box button {
+  background: #333;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+}
+
+.
+
+</style>
+
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    // Entrata animata
+    gsap.fromTo(".welcome-title", 
+      { opacity: 0, y: 50 }, 
+      { opacity: 1, y: 0, duration: 2, ease: "power3.out" }
+    );
+
+    gsap.fromTo(".welcome-subtitle", 
+      { opacity: 0, y: 30 }, 
+      { opacity: 1, y: 0, duration: 2, delay: 0.5, ease: "power2.out" }
+    );
+
+    // Loop bagliore soft
+    gsap.to(".welcome-title", {
+      filter: "drop-shadow(0 0 15px #ffeaa7)",
+      duration: 2,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut"
+    });
+  });
+
+</script>
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+<script>
+    gsap.registerPlugin(TextPlugin);
+
+    gsap.to(".welcome-subtitle", {
+        duration: 3,
+
+        ease: "none",
+    });
+
+    gsap.to(".welcome-title", {
+        x: 20,
+        duration: 2,
+        ease: "power1.inOut",
+        repeat: -1,
+        yoyo: true,
+    });
+</script>
+
+
+    <main>
+      <h2 class="typing-effect"></h2>  <!-- Il tuo contenuto qui -->
+    </main>
+
+    <footer>
+        
+
     <script>
-        // Simboli e parole per le particelle
+        // Registra il plugin TextPlugin
+        gsap.registerPlugin(TextPlugin);
+
+        // SIMBOLI FILOSOFICI
         const symbols = [
             '∞', 'Φ', 'Ψ', 'Λ', 'Δ', 'Ω', 'π', '∑', '∏', '√',
             '≡', '≈', '∴', '∀', '∃', '∈', '∧', '∨', '⊕', '⊗',
@@ -1572,524 +2122,1327 @@ cite {
             'Dialettica', 'Ontologia', 'Metafisica', 'Etica', 'Estetica', 'Logica'
         ];
 
-        // Dati per lo slider sinistro
-        const philosophers = [
-            {
-                name: "Socrate",
-                image: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Socrates_Louvre.jpg",
-                quote: "Conosci te stesso"
-            },
-            {
-                name: "Platone",
-                image: "https://upload.wikimedia.org/wikipedia/commons/4/49/Plato_Silanion_Musei_Capitolini_MC1377.jpg",
-                quote: "La filosofia è la più grande musica"
-            },
-            {
-                name: "Aristotele",
-                image: "https://upload.wikimedia.org/wikipedia/commons/a/ae/Aristotle_Altemps_Inv8575.jpg",
-                quote: "L'uomo è per natura un animale politico"
-            },
-            {
-                name: "Cartesio",
-                image: "https://upload.wikimedia.org/wikipedia/commons/7/73/Frans_Hals_-_Portret_van_Ren%C3%A9_Descartes.jpg",
-                quote: "Penso, dunque sono"
-            },
-            
-            {
-                name: "Nietzsche",
-                image: "https://upload.wikimedia.org/wikipedia/commons/1/1b/Nietzsche187a.jpg",
-                quote: "Dio è morto"
-            },
-            {
-                name: "Sartre",
-                image: "https://upload.wikimedia.org/wikipedia/commons/e/e9/Jean-Paul_Sartre_1965.jpg",
-                quote: "L'esistenza precede l'essenza"
-            },
-            {
-                name: "Foucault",
-                image: "https://upload.wikimedia.org/wikipedia/commons/8/8c/Michel_Foucault.jpg",
-                quote: "Il sapere è potere"
-            }
-        ];
-
-        // Inizializza lo slider sinistro
-        function initLeftSlider() {
-            const slider = document.getElementById('philosophers-slider');
-            
-            // Duplica gli elementi per un loop continuo
-            const doubleContent = [...philosophers, ...philosophers];
-            
-            doubleContent.forEach(philosopher => {
-                const item = document.createElement('div');
-                item.className = 'slide-item';
-                item.innerHTML = `
-                    <img src="${philosopher.image}" alt="${philosopher.name}">
-                    <div class="slide-caption">
-                        <strong>${philosopher.name}</strong>
-                        <p>"${philosopher.quote}"</p>
-                    </div>
-                `;
-                slider.appendChild(item);
-            });
-            
-            // Calcola l'altezza totale dello slider
-            const itemHeight = 200; // altezza approssimativa di ogni elemento
-            slider.style.height = `${philosophers.length * itemHeight}px`;
-        }
-<!--            -->
-function initLeftSlider() {
-    const slider = document.getElementById('philosophers-slider');
-    
-    // Duplica gli elementi per un loop continuo
-    const doubleContent = [...philosophers, ...philosophers];
-    
-    doubleContent.forEach(philosopher => {
-        const item = document.createElement('div');
-        item.className = 'slide-item';
-        item.innerHTML = `
-            <img src="${philosopher.image}" alt="${philosopher.name}">
-            <div class="slide-caption">
-                <strong>${philosopher.name}</strong>
-                <p>"${philosopher.quote}"</p>
-            </div>
-        `;
-        slider.appendChild(item);
-    });
-    
-    // Calcola l'altezza totale dello slider - MODIFICATO
-    const itemHeight = 160; // ridotta da 200px
-    slider.style.height = `${philosophers.length * itemHeight}px`;
-}
-
-        // Particelle cosmiche
-        function createParticles() {
-            const container = document.getElementById('particles');
-            const particleCount = 80;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                
-                // Scegli casualmente tra simbolo o parola
-                const isSymbol = Math.random() > 0.3;
-                const randomIndex = Math.floor(Math.random() * symbols.length);
-                const content = symbols[randomIndex];
-                
-                if (isSymbol || content.length > 8) {
-                    particle.classList.add('symbol-particle');
-                    particle.textContent = content;
-                    particle.style.fontSize = `${Math.random() * 20 + 10}px`;
-                } else {
-                    particle.classList.add('word-particle');
-                    particle.textContent = content;
-                }
-                
-                particle.style.left = `${Math.random() * 100}vw`;
-                particle.style.top = `${Math.random() * 100}vh`;
-                particle.style.opacity = Math.random() * 0.7 + 0.3;
-                particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
-                particle.style.animationDelay = `${Math.random() * 5}s`;
-                
-                container.appendChild(particle);
-                
-                // Esplosione di simboli al click
-                particle.addEventListener('click', () => {
-                    explodeParticle(particle);
-                });
-            }
-        }
-        
-        function explodeParticle(element) {
-            const content = element.textContent;
-            const isWord = element.classList.contains('word-particle');
-            const count = isWord ? 5 : 10;
-            
-            for (let i = 0; i < count; i++) {
-                const newParticle = document.createElement('div');
-                newParticle.classList.add('particle');
-                newParticle.classList.add(isWord ? 'word-particle' : 'symbol-particle');
-                newParticle.textContent = content;
-                newParticle.style.fontSize = element.style.fontSize || `${Math.random() * 15 + 5}px`;
-                newParticle.style.left = element.style.left;
-                newParticle.style.top = element.style.top;
-                newParticle.style.opacity = 1;
-                newParticle.style.animation = `explode ${Math.random() * 2 + 1}s forwards`;
-                
-                document.getElementById('particles').appendChild(newParticle);
-                
-                // Rimuovi dopo l'animazione
-                setTimeout(() => {
-                    newParticle.remove();
-                }, 1000);
-            }
-            
-            // Rimuovi la particella originale
-            element.remove();
-        }
-        
-        // Animazione esplosione
-        document.head.insertAdjacentHTML('beforeend', `
-            <style>
-                @keyframes explode {
-                    0% {
-                        transform: translate(0, 0) scale(1);
-                        opacity: 1;
-                    }
-                    100% {
-                        transform: translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px) scale(0);
-                        opacity: 0;
-                    }
-                }
-            </style>
-        `);
-        
-        // Inizializzazione
-        window.onload = function() {
-            createParticles();
-            initLeftSlider();
-            
-            // Gestione cookie banner
-            document.getElementById('accept-cookies').addEventListener('click', () => {
-                document.querySelector('.cookie-banner').style.display = 'none';
-                // Qui aggiungi il codice per accettare i cookie
-            });
-            
-            document.getElementById('reject-cookies').addEventListener('click', () => {
-                document.querySelector('.cookie-banner').style.display = 'none';
-                // Qui aggiungi il codice per rifiutare i cookie
-            });
+        // CONFIGURAZIONE
+        const config = {
+            particleCount: 50,
+            minSize: 0.6,
+            maxSize: 2,
+            repulsionRadius: 100,
+            maxRepulsionForce: 30,
+            floatSpeed: 0.5,
+            floatDistance: 40,
+            colors: ['#FFD700', '#FFAA00', '#FFEE88', '#FFFFFF']
         };
-    </script>
-<script>
-        // Dati per lo slider sinistro - MODIFICATO con più filosofi
-        const philosophers = [
-            {
-                name: "Socrate",
-                image: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Socrates_Louvre.jpg",
-                quote: "Conosci te stesso"
-            },
-            // ... (altri filosofi esistenti)
-        ];
 
-        // Inizializza lo slider sinistro - VERSIONE AGGIORNATA
-        function initLeftSlider() {
-            const slider = document.getElementById('philosophers-slider');
-            if (!slider) return;
+        // CITAZIONI FILOSOFICHE
+       const quotes = [
+    {
+        text: "Conosci te stesso e conoscerai l'universo e gli dei.",
+        author: "Socrate"
+    },
+    {
+        text: "Il sapere è l'unico bene che aumenta condividendolo.",
+        author: "Pitagora"
+    },
+    {
+        text: "La meraviglia è il principio di ogni conoscenza.",
+        author: "Aristotele"
+    },
+    {
+        text: "Non è forte colui che non cade mai, ma colui che cadendo si rialza.",
+        author: "Confucio"
+    },
+    {
+        text: "Penso, dunque sono.",
+        author: "Cartesio"
+    },
+    {
+        text: "L'uomo è condannato ad essere libero.",
+        author: "Jean-Paul Sartre"
+    },
+    {
+        text: "Dove c'è amore c'è vita.",
+        author: "Mahatma Gandhi"
+    },
+    {
+        text: "La vita deve essere compresa all'indietro. Ma vissuta in avanti.",
+        author: "Søren Kierkegaard"
+    },
+    {
+        text: "L'unica cosa che so è di non sapere.",
+        author: "Socrate"
+    },
+    {
+        text: "La felicità non è un ideale della ragione, ma dell'immaginazione.",
+        author: "Immanuel Kant"
+    },
+    {
+        text: "Tutto scorre.",
+        author: "Eraclito"
+    },
+    {
+        text: "Il mondo è la mia rappresentazione.",
+        author: "Arthur Schopenhauer"
+    },
+    {
+        text: "Ciò che è razionale è reale; ciò che è reale è razionale.",
+        author: "Georg Wilhelm Friedrich Hegel"
+    },
+    {
+        text: "Dio è morto.",
+        author: "Friedrich Nietzsche"
+    },
+    {
+        text: "L'esistenza precede l'essenza.",
+        author: "Jean-Paul Sartre"
+    },
+    {
+        text: "La vita non esaminata non è degna di essere vissuta.",
+        author: "Socrate"
+    },
+    {
+        text: "Non si può scendere due volte nello stesso fiume.",
+        author: "Eraclito"
+    },
+    {
+        text: "La felicità è il significato e lo scopo della vita, l'intero scopo e fine dell'esistenza umana.",
+        author: "Aristotele"
+    },
+    {
+        text: "Non c'è niente nella mente che prima non sia stato nei sensi.",
+        author: "John Locke"
+    },
+    {
+        text: "L'uomo è un animale politico.",
+        author: "Aristotele"
+    },
+    {
+        text: "La storia è maestra di vita.",
+        author: "Cicerone"
+    },
+    {
+        text: "Sapere aude! (Osa sapere!)",
+        author: "Immanuel Kant"
+    },
+    {
+        text: "Dal dubbio nasce la conoscenza.",
+        author: "Francis Bacon"
+    },
+    {
+        text: "Ogni uomo è causa della sua propria felicità o infelicità.",
+        author: "Buddha"
+    },
+    {
+        text: "Sii il cambiamento che vuoi vedere nel mondo.",
+        author: "Mahatma Gandhi"
+    },
+    {
+        text: "La vera saggezza sta nel riconoscere la propria ignoranza.",
+        author: "Socrate"
+    },
+    {
+        text: "La filosofia è una battaglia contro l'incantamento della nostra intelligenza per mezzo del linguaggio.",
+        author: "Ludwig Wittgenstein"
+    },
+    {
+        text: "La ragione è schiava delle passioni.",
+        author: "David Hume"
+    },
+    {
+        text: "L'inferno sono gli altri.",
+        author: "Jean-Paul Sartre"
+    },
+    {
+        text: "L'individuo è la misura di tutte le cose.",
+        author: "Protagora"
+    },
+    {
+        text: "Due cose riempiono l'animo di ammirazione e venerazione sempre nuove e crescenti: il cielo stellato sopra di me e la legge morale in me.",
+        author: "Immanuel Kant"
+    },
+    {
+        text: "Tutto ciò che so è che non so nulla.",
+        author: "Socrate"
+    },
+    {
+        text: "L'uomo è la misura di tutte le cose: di quelle che sono in quanto sono, e di quelle che non sono in quanto non sono.",
+        author: "Protagora"
+    },
+    {
+        text: "Là dove finisce la conoscenza inizia la fede.",
+        author: "Agostino d'Ippona"
+    },
+    {
+        text: "La pace non è assenza di guerra, è una virtù, uno stato d'animo, una disposizione alla benevolenza, alla fiducia, alla giustizia.",
+        author: "Baruch Spinoza"
+    },
+    {
+        text: "La religione è l'oppio dei popoli.",
+        author: "Karl Marx"
+    },
+    {
+        text: "Se non sai dove stai andando, qualsiasi strada ti ci porterà.",
+        author: "Seneca"
+    },
+    {
+        text: "Il desiderio è l'essenza stessa dell'uomo.",
+        author: "Baruch Spinoza"
+    },
+    {
+        text: "L'esperienza è la maestra di tutte le cose.",
+        author: "Giulio Cesare"
+    },
+    {
+        text: "Nessuno è libero se non è padrone di sé stesso.",
+        author: "Epitteto"
+    },
+    {
+        text: "Il dubbio è l'inizio della saggezza.",
+        author: "Aristotele"
+    },
+    {
+        text: "La vita è sofferenza.",
+        author: "Buddha"
+    },
+    {
+        text: "La mente è tutto. Ciò che pensi, diventi.",
+        author: "Buddha"
+    },
+    {
+        text: "L'uomo è un lupo per l'altro uomo.",
+        author: "Thomas Hobbes"
+    },
+    {
+        text: "Il contratto sociale.",
+        author: "Jean-Jacques Rousseau"
+    },
+    {
+        text: "Il sapere è potere.",
+        author: "Francis Bacon"
+    },
+    {
+        text: "L'uomo è fatto per il pensiero.",
+        author: "Blaise Pascal"
+    },
+    {
+        text: "La vera moralità consiste nel fare ciò che è giusto, non ciò che è facile.",
+        author: "Immanuel Kant"
+    },
+    {
+        text: "Senza musica la vita sarebbe un errore.",
+        author: "Friedrich Nietzsche"
+    },
+    {
+        text: "La morale è la forza dei deboli.",
+        author: "Friedrich Nietzsche"
+    },
+    {
+        text: "L'eterno ritorno dell'uguale.",
+        author: "Friedrich Nietzsche"
+    },
+    {
+        text: "La volontà di potenza.",
+        author: "Friedrich Nietzsche"
+    },
+    {
+        text: "La dialettica è l'arte di discutere.",
+        author: "Platone"
+    },
+    {
+        text: "Le idee sono le vere realtà.",
+        author: "Platone"
+    },
+    {
+        text: "Tutto ciò che è solido si dissolve nell'aria.",
+        author: "Karl Marx"
+    },
+    {
+        text: "Filosofare è imparare a morire.",
+        author: "Cicerone"
+    },
+    {
+        text: "La gioia è la vera filosofia.",
+        author: "Epicuro"
+    },
+    {
+        text: "Non c'è niente di così assurdo che non sia stato detto da qualche filosofo.",
+        author: "Cicerone"
+    },
+    {
+        text: "La virtù è conoscenza.",
+        author: "Socrate"
+    },
+    {
+        text: "Ogni verità passa attraverso tre stadi: prima viene ridicolizzata, poi violentemente opposta, infine accettata come evidente.",
+        author: "Arthur Schopenhauer"
+    },
+    {
+        text: "Il filosofo è un uomo che in mezzo all'ubriachezza generale mantiene la sua lucidità.",
+        author: "Emil Cioran"
+    },
+    {
+        text: "Chi ha un perché per vivere, sopporta quasi ogni come.",
+        author: "Friedrich Nietzsche"
+    },
+    {
+        text: "La filosofia non è una dottrina, ma un'attività.",
+        author: "Ludwig Wittgenstein"
+    },
+    {
+        text: "L'uomo è il creatore dei propri valori.",
+        author: "Friedrich Nietzsche"
+    },
+    {
+        text: "Il male è ciò che l'uomo fa di se stesso.",
+        author: "Albert Camus"
+    },
+    {
+        text: "La libertà non è stare sopra un albero, non è neanche il volo di un moscone, la libertà non è uno spazio libero, libertà è partecipazione.",
+        author: "Giorgio Gaber"
+    },
+    {
+        text: "La democrazia è quella forma di governo in cui ognuno può scegliere il proprio destino.",
+        author: "Giovanni Gentile"
+    },
+    {
+        text: "Non è la verità a fare una dottrina, ma la dottrina a fare una verità.",
+        author: "Michel Foucault"
+    },
+    {
+        text: "L'uomo è ciò che fa di sé stesso.",
+        author: "Jean-Paul Sartre"
+    },
+    {
+        text: "Il saggio sa di essere uno stolto, lo stolto crede di essere saggio.",
+        author: "William Shakespeare"
+    },
+    {
+        text: "La natura non fa nulla di inutile.",
+        author: "Aristotele"
+    },
+    {
+        text: "Ciò che non mi uccide mi rende più forte.",
+        author: "Friedrich Nietzsche"
+    }
+];
+        // INIZIALIZZAZIONE
+        const container = document.getElementById('philoParticles');
+        const particles = [];
+        const mouse = { x: window.innerWidth/2, y: window.innerHeight/2 };
+        
+        // CREA STELLE
+        const starfield = document.getElementById('starfield');
+        for (let i = 0; i < 200; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.width = `${Math.random() * 3}px`;
+            star.style.height = star.style.width;
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.opacity = Math.random();
+            star.style.setProperty('--duration', `${5 + Math.random() * 10}s`);
+            starfield.appendChild(star);
+        }
+
+        // CREA PARTICELLE
+        for (let i = 0; i < config.particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
             
-            // Svuota lo slider prima di riempirlo
-            slider.innerHTML = '';
+            const size = config.minSize + Math.random() * (config.maxSize - config.minSize);
+            const symbol = symbols[Math.floor(Math.random() * symbols.length)];
+            const color = config.colors[Math.floor(Math.random() * config.colors.length)];
             
-            // Duplica gli elementi per un loop continuo
-            const doubleContent = [...philosophers, ...philosophers];
+            particle.textContent = symbol;
+            particle.style.fontSize = `${size}rem`;
+            particle.style.color = color;
+            particle.style.opacity = 0.7 + Math.random() * 0.3;
             
-            doubleContent.forEach((philosopher, index) => {
-                const item = document.createElement('div');
-                item.className = 'slide-item';
-                item.innerHTML = `
-                    <img src="${philosopher.image}" alt="${philosopher.name}" loading="lazy">
-                    <div class="slide-caption">
-                        <strong>${philosopher.name}</strong>
-                        <p>"${philosopher.quote}"</p>
-                    </div>
+            container.appendChild(particle);
+            
+            particles.push({
+                element: particle,
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
+                size: size,
+                baseX: 0,
+                baseY: 0,
+                speed: 0.01 + Math.random() * 0.02,
+                angle: Math.random() * Math.PI * 2,
+                floatRadius: 10 + Math.random() * config.floatDistance,
+                color: color
+            });
+        }
+
+        // INIZIALIZZA IL CAROSELLO DI CITAZIONI
+        function initQuotesCarousel() {
+            const carousel = document.getElementById('quotesCarousel');
+            
+            // Aggiungi tutte le citazioni al carosello
+            quotes.forEach((quote, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'quote-slide';
+                slide.innerHTML = `
+                    <div class="quote-text">${quote.text}</div>
+                    <div class="quote-author">— ${quote.author}</div>
                 `;
-                slider.appendChild(item);
+                carousel.appendChild(slide);
             });
             
-            // Calcola l'altezza totale dello slider
-            const itemHeight = 160;
-            slider.style.height = `${philosophers.length * itemHeight}px`;
+            const slides = document.querySelectorAll('.quote-slide');
+            let currentSlide = 0;
             
-            // Animazione automatica
-            let scrollPos = 0;
-            const scrollSpeed = 0.5; // px per frame
-            const animateSlider = () => {
-                scrollPos += scrollSpeed;
-                if (scrollPos >= slider.scrollHeight / 2) {
-                    scrollPos = 0;
+            // Mostra la prima slide
+            slides[currentSlide].classList.add('active');
+            
+            // Cambia slide ogni 5 secondi
+            setInterval(() => {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 6000);
+        }
+
+        // TRACCIA MOUSE
+        document.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        // ANIMAZIONE
+        function animate() {
+            particles.forEach(p => {
+                // Fluttuazione naturale
+                p.angle += p.speed;
+                p.baseX = p.x + Math.cos(p.angle) * p.floatRadius;
+                p.baseY = p.y + Math.sin(p.angle * 0.7) * p.floatRadius;
+                
+                // Calcola repulsione
+                const dx = mouse.x - p.baseX;
+                const dy = mouse.y - p.baseY;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                let targetX = p.baseX;
+                let targetY = p.baseY;
+                let scale = 1;
+                
+                if (distance < config.repulsionRadius) {
+                    const force = (config.repulsionRadius - distance) / config.repulsionRadius;
+                    const angle = Math.atan2(dy, dx);
+                    const repulsionForce = force * config.maxRepulsionForce * (1/p.size);
+                    
+                    targetX = p.baseX - Math.cos(angle) * repulsionForce;
+                    targetY = p.baseY - Math.sin(angle) * repulsionForce;
+                    scale = 1 + force * 0.5;
+                    
+                    // Effetto glow
+                    p.element.style.textShadow = `0 0 ${5 + force * 15}px ${p.color}`;
+                } else {
+                    p.element.style.textShadow = `0 0 10px ${p.color}`;
                 }
-                slider.style.transform = `translateY(-${scrollPos}px)`;
-                requestAnimationFrame(animateSlider);
-            };
+                
+                // Applica trasformazione
+                p.element.style.transform = `translate(${targetX}px, ${targetY}px) scale(${scale})`;
+            });
             
-            // Avvia l'animazione dopo un ritardo
-            setTimeout(() => {
-                requestAnimationFrame(animateSlider);
-            }, 1000);
+            requestAnimationFrame(animate);
         }
 
-        // Particelle cosmiche - VERSIONE AGGIORNATA
-        function createParticles() {
-            const container = document.getElementById('particles');
-            if (!container) return;
-            
-            const particleCount = 80;
-            const symbols = [
-                '∞', 'Φ', 'Ψ', 'Λ', 'Δ', 'Ω', 'π', '∑', '∏', '√',
-                // ... (altri simboli)
-            ];
-            
-            for (let i = 0; i < particleCount; i++) {
-                // ... (codice particelle esistente)
-            }
-        }
+        animate();
 
-        // Inizializzazione completa - VERSIONE AGGIORNATA
-        document.addEventListener('DOMContentLoaded', function() {
-            createParticles();
-            initLeftSlider();
-            
-            // Gestione cookie banner
-            const acceptCookies = document.getElementById('accept-cookies');
-            const rejectCookies = document.getElementById('reject-cookies');
-            
-            if (acceptCookies) {
-                acceptCookies.addEventListener('click', () => {
-                    document.querySelector('.cookie-banner').style.display = 'none';
-                });
-            }
-            
-            if (rejectCookies) {
-                rejectCookies.addEventListener('click', () => {
-                    document.querySelector('.cookie-banner').style.display = 'none';
-                });
-            }
-            
-            // Ottimizzazione prestazioni
-            const submenus = document.querySelectorAll('.submenu');
-            submenus.forEach(menu => {
-                menu.style.willChange = 'transform, opacity';
+        // ADATTA AL RIDIMENSIONAMENTO
+        window.addEventListener('resize', () => {
+            particles.forEach(p => {
+                p.x = Math.max(p.size * 10, Math.min(window.innerWidth - p.size * 10, p.x));
+                p.y = Math.max(p.size * 10, Math.min(window.innerHeight - p.size * 10, p.y));
             });
         });
-    </script>
- <script>
-     const philosophers = [
-  {
-    name: "Socrate",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Socrates_Louvre.jpg",
-    quote: "Conosci te stesso"
-  },
-  {
-    name: "Platone",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/platone.png",
-    quote: "La filosofia è la più grande musica"
-  },
-  {
-    name: "Aristotele",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Aristotle_.jpg",
-    quote: "L'uomo è per natura un animale politico"
-  },
-  {
-    name: "Maria Teresa",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/MT2.png",
-    quote: "Educare è governare"
-  },
-  {
-    name: "Cartesio",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/cartesio.jpg",
-    quote: "Penso, dunque sono"
-  },
-  {
-    name: "Kant",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/kant.webp",
-    quote: "Il cielo stellato sopra di me, la legge morale dentro di me"
-  },
-  {
-    name: "San Tommaso",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/s.Tommaso.jpg",
-    quote: "La fede non annulla la ragione"
-  },
-  {
-    name: "Nietzsche",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/friedrich-nietzsche.jpg",
-    quote: "Chi lotta con i mostri deve guardarsi dal diventare egli stesso un mostro"
-  },
-  {
-    name: "Livia",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Livia.jpeg",
-    quote: "⚖👑Livia dea egizia🏛️"
-  },
-  {
-    name: "Dea Mesopotamica",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/dea.jpeg",
-    quote: "La saggezza è antica quanto gli dei"
-  },
-  {
-    name: "Gianni Vattimo",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/vattimo.png",
-    quote: "Il pensiero debole è il nostro presente"
-  },
-  {
-    name: "Testa di...",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/casi.JPG",
-    quote: "La verità si cela nella forma"
-  },
-  {
-    name: "Democrito",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Democritus.jpg",
-    quote: "Tutto è atomi e vuoto"
-  },
-  {
-    name: "Talete",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Talete.jpg",
-    quote: "L'acqua è l'origine di tutte le cose"
-  },
-  {
-    name: "Aristippo",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/aristippo.webp",
-    quote: "Il piacere è il bene supremo"
-  },
-  {
-    name: "Massimo Cacciari",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/cacciari.jpg",
-    quote: "La filosofia è domanda che non finisce mai"
-  },
-  {
-    name: "Cicerone",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/cicerone.jpg",
-    quote: "La vita dei morti sta nella memoria dei vivi"
-  },
-  {
-    name: "Dante",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/dante.jpg",
-    quote: "La iena che fa poesia nelle tombe"
-  },
-  {
-    name: "Gilles Deleuze",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/deleuze.jpg",
-    quote: "La filosofia è creare concetti"
-  },
-  {
-    name: "Jacques Derrida",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/derrida.jpg",
-    quote: "Non ci sono fatti, solo interpretazioni"
-  },
-  {
-    name: "John Dewey",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/dewey.jpg",
-    quote: "L'educazione è vita stessa"
-  },
-  {
-    name: "Michel Foucault",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/foucault.jpg",
-    quote: "Il sapere è potere"
-  },
-  {
-    name: "G.W.F. Hegel",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/hegel.avif",
-    quote: "Tutto ciò che è reale è razionale"
-  },
-  {
-    name: "Martin Heidegger",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/heidegger.jpg",
-    quote: "L'essere è il nulla"
-  },
-  {
-    name: "Max Horkheimer",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/horkheimer.jpg",
-    quote: "La ragione strumentale distrugge la libertà"
-  },
-  {
-    name: "Edmund Husserl",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/husserl.jpg",
-    quote: "Alle cose stesse!"
-  },
-  {
-    name: "Merleau-Ponty",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/merleau-ponty.avif",
-    quote: "La percezione è filosofia"
-  },
-  {
-    name: "Peirce",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/peirce.jpg",
-    quote: "La logica è una branca dell'etica"
-  },
-  {
-    name: "Pirrone",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/pirrone.jpg",
-    quote: "Astenersi dal giudizio per raggiungere l'atarassia"
-  },
-  {
-    name: "Pitagora",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/pitagora.avif",
-    quote: "Tutto è numero"
-  },
-  {
-    name: "Richard Rorty",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/richard_rorty.jpg",
-    quote: "La verità è ciò che i tuoi pari ti lasciano dire"
-  },
-  {
-    name: "Bertrand Russell",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/russell.jpeg",
-    quote: "La filosofia è inutile, ma vitale"
-  },
-  {
-    name: "Emanuele Severino",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Severino.png",
-    quote: "L'essere è eterno"
-  },
-  {
-    name: "Michail Bulgakov",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/bulgakov.jpg",
-    quote: "Il Maestro e Margherita è la mia verità"
-  },
-  {
-    name: "Dostoevskij",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/dostoevskij.gif",
-    quote: "Se Dio non esiste, tutto è permesso"
-  },
-  {
-    name: "Galimberti",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/galimberti.pg",
-    quote: "L'uomo è un ospite del mondo"
-  },
-  {
-    name: "Max Weber",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/max%20weber.jpg",
-    quote: "La burocrazia è l'acciaio della modernità"
-  },
-  {
-    name: "Lev Šestov",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/sestov.jpg",
-    quote: "La filosofia comincia con la disperazione"
-  },
-  {
-    name: "Schelling",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/schelling.jpg",
-    quote: "L'arte è l'organo supremo della filosofia"
-  },
-  {
-    name: "Wittgenstein",
-    image: "https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/wittgenstein.jpg",
-    quote: "Di ciò di cui non si può parlare, si deve tacere"
-  }
-];
-  
 
-        // INIZIALIZZA LO SLIDER
-        function initPhilosopherSlider() {
-            const slider = document.getElementById('philosopherSlider');
+        // ANIMAZIONE DI BENVENUTO
+        function playWelcomeAnimation() {
+            const mask = document.querySelector('.welcome-mask');
+            const content = document.querySelector('.welcome-content');
+            const title = document.querySelector('.welcome-title');
+            const quoteText = document.querySelector('.quote-text');
+            const quoteAuthor = document.querySelector('.quote-author');
             
-            // Crea e aggiungi tutte le carte dei filosofi
-            philosophers.forEach(philosopher => {
-                const card = document.createElement('div');
-                card.className = 'philosopher-card';
-                card.innerHTML = `
-                    <img class="philosopher-image" 
-                         src="${philosopher.image}" 
-                         alt="${philosopher.name}"
-                         loading="lazy">
-                    <div class="philosopher-details">
-                        <h3 class="philosopher-name">${philosopher.name}</h3>
-                        <p class="philosopher-quote">"${philosopher.quote}"</p>
-                    </div>
-                `;
-                slider.appendChild(card);
+            // Scegli una citazione casuale
+            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            
+            // Timeline animazione
+            const tl = gsap.timeline();
+            
+            // 1. Apertura sipario
+            tl.to(mask, {
+                duration: 1.5,
+                height: 0,
+                ease: "power4.inOut"
+            })
+            
+            // 2. Entrata titolo
+            .to(content, {
+                duration: 1.2,
+                opacity: 1,
+                scale: 1,
+                ease: "elastic.out(1, 0.5)"
+            }, "-=0.8")
+            
+            // 3. Scrittura citazione
+            .call(() => {
+                let i = 0;
+                const speed = 30;
+                
+                function typeWriter() {
+                    if (i < randomQuote.text.length) {
+                        quoteText.textContent += randomQuote.text.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, speed);
+                    } else {
+                        quoteAuthor.textContent = `— ${randomQuote.author}`;
+                        // Particelle dorate alla fine
+                        createGoldenParticles(title);
+                    }
+                }
+                
+                typeWriter();
             });
         }
 
-        // AVVIA AL CARICAMENTO DELLA PAGINA
-        document.addEventListener('DOMContentLoaded', initPhilosopherSlider);
+        // CREA PARTICELLE DORATE
+        function createGoldenParticles(element) {
+            const bounds = element.getBoundingClientRect();
+            const centerX = bounds.left + bounds.width / 2;
+            const centerY = bounds.top + bounds.height / 2;
+            
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.textContent = ['∞', 'Φ', 'Ψ', 'Δ'][Math.floor(Math.random() * 4)];
+                particle.style.color = '#ffd700';
+                particle.style.position = 'fixed';
+                particle.style.left = `${centerX}px`;
+                particle.style.top = `${centerY}px`;
+                particle.style.fontSize = `${1 + Math.random() * 1.5}rem`;
+                particle.style.opacity = '0';
+                document.body.appendChild(particle);
+                
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 100 + Math.random() * 200;
+                
+                gsap.to(particle, {
+                    duration: 1.5 + Math.random(),
+                    x: Math.cos(angle) * distance,
+                    y: Math.sin(angle) * distance,
+                    opacity: 1,
+                    ease: "power3.out",
+                    onComplete: () => {
+                        gsap.to(particle, {
+                            duration: 0.5,
+                            opacity: 0,
+                            onComplete: () => particle.remove()
+                        });
+                    }
+                });
+            }
+        }
+
+        // INIZIALIZZA TRADUTTORE GOOGLE
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'it',
+                includedLanguages: 'it,en,es,fr,de,pt,ru,zh-CN,ja,ar,hi,bn,ko,vi,th,pl,tr,nl,sv,fi,he',
+                layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
+                autoDisplay: false,
+                multilanguagePage: true
+            }, 'google_translate_element');
+            
+            // Mostra solo il menu a tendina e nascondi il resto
+            const googleTranslateElement = document.querySelector('.goog-te-gadget');
+            if (googleTranslateElement) {
+                googleTranslateElement.style.fontSize = '0';
+            }
+            
+            // Stili aggiuntivi per il menu a tendina
+            const combo = document.querySelector('.goog-te-combo');
+            if (combo) {
+                combo.style.fontFamily = "'Montserrat', sans-serif";
+                combo.style.background = "rgba(20, 20, 40, 0.7)";
+                combo.style.color = "#e0e0e0";
+                combo.style.border = "1px solid rgba(255, 215, 0, 0.2)";
+                combo.style.borderRadius = "4px";
+                combo.style.padding = "8px 15px";
+                combo.style.cursor = "pointer";
+            }
+        }
+
+        // CARICA GOOGLE TRANSLATE
+        function loadGoogleTranslate() {
+            const script = document.createElement('script');
+            script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+            script.async = true;
+            document.body.appendChild(script);
+        }
+
+        // GESTIONE NEWSLETTER
+        document.querySelector('.newsletter-form')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const emailInput = this.querySelector('input');
+            const email = emailInput.value.trim();
+            
+            if (email) {
+                // Simulazione invio
+                this.style.opacity = '0.7';
+                this.querySelector('button').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Invio...';
+                
+                setTimeout(() => {
+                    this.reset();
+                    this.style.opacity = '1';
+                    this.querySelector('button').innerHTML = 'Iscriviti <i class="fas fa-paper-plane"></i>';
+                    
+                    // Notifica temporanea
+                    const notification = document.createElement('div');
+                    notification.textContent = 'Grazie per esserti iscritto!';
+                    notification.style.position = 'fixed';
+                    notification.style.bottom = '20px';
+                    notification.style.left = '50%';
+                    notification.style.transform = 'translateX(-50%)';
+                    notification.style.backgroundColor = '#c9ada7';
+                    notification.style.color = '#22223b';
+                    notification.style.padding = '10px 20px';
+                    notification.style.borderRadius = '4px';
+                    notification.style.zIndex = '1000';
+                    notification.style.boxShadow = '0 3px 10px rgba(0,0,0,0.2)';
+                    document.body.appendChild(notification);
+                    
+                    setTimeout(() => {
+                        notification.style.transition = 'opacity 0.5s';
+                        notification.style.opacity = '0';
+                        setTimeout(() => notification.remove(), 500);
+                    }, 3000);
+                }, 1500);
+            }
+        });
+
+        // AVVIA TUTTO AL CARICAMENTO DELLA PAGINA
+        window.addEventListener('load', () => {
+            playWelcomeAnimation();
+            loadGoogleTranslate();
+            initQuotesCarousel();
+        });
     </script>
-</body>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Echi di Sofia - Banner Cookie Raffinato</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0; padding: 0;
+      background: #0b0c10;
+      color: #f8f4e9;
+    }
+    /* Banner cookie */
+    #cookie-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      max-width: 480px;
+      background: rgba(42, 75, 58, 0.95);
+      color: #f8f4e9;
+      border-radius: 12px;
+      padding: 20px 25px;
+      box-shadow: 0 8px 24px rgba(42, 75, 58, 0.6);
+      font-size: 14px;
+      line-height: 1.4;
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      animation: fadeInUp 0.6s ease forwards;
+    }
+    #cookie-banner p {
+      margin: 0;
+    }
+    #cookie-banner a {
+      color: #aad8a0;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    #cookie-banner a:hover {
+      color: #d4f1c5;
+    }
+    #cookie-banner .btns {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    #cookie-banner button {
+      background: #2a4b3a;
+      border: none;
+      color: #f8f4e9;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    #cookie-banner button:hover {
+      background: #3b6c53;
+    }
+    #cookie-banner button.reject {
+      background: #6a3a3a;
+    }
+    #cookie-banner button.reject:hover {
+      background: #8a5151;
+    }
+    /* Modal Personalizza */
+    #cookie-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 11000;
+    }
+    #cookie-modal {
+      background: #1a1c22;
+      color: #f8f4e9;
+      padding: 25px 30px;
+      max-width: 400px;
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.7);
+      font-size: 15px;
+    }
+    #cookie-modal h2 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-weight: 700;
+      font-size: 1.3em;
+      text-align: center;
+    }
+    #cookie-modal label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+    #cookie-modal input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+    #cookie-modal .modal-btns {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    #cookie-modal button {
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    #cookie-modal button.save {
+      background: #2a4b3a;
+      color: #f8f4e9;
+    }
+    #cookie-modal button.save:hover {
+      background: #3b6c53;
+    }
+    #cookie-modal button.cancel {
+      background: #555a5e;
+      color: #eee;
+    }
+    #cookie-modal button.cancel:hover {
+      background: #777c80;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px);}
+      to { opacity: 1; transform: translateY(0);}
+@keyframes fadeInSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.element {
+  animation: fadeInSlideUp 0.6s ease-in-out forwards;
+}
+.element {
+  will-change: transform, opacity;
+}
+
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Banner cookie -->
+  <div id="cookie-banner" role="dialog" aria-live="polite" aria-label="Informativa cookie">
+    <p>
+      Questo sito utilizza cookie per migliorare l’esperienza utente e per analisi anonime. 
+      <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.
+    </p>
+    <div class="btns">
+      <button class="reject" id="btn-reject">Rifiuta</button>
+      <button id="btn-personalize">Personalizza</button>
+      <button id="btn-accept">Accetta</button>
+    </div>
+  </div>
+
+  <!-- Modal Personalizza -->
+  <div id="cookie-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div id="cookie-modal">
+      <h2 id="modal-title">Impostazioni cookie</h2>
+      <form id="cookie-form">
+        <label>
+          <input type="checkbox" name="analytics" checked />
+          Consenti cookie analitici
+        </label>
+        <label>
+          <input type="checkbox" name="marketing" />
+          Consenti cookie marketing
+        </label>
+        <div class="modal-btns">
+          <button type="button" class="cancel" id="modal-cancel">Annulla</button>
+          <button type="submit" class="save">Salva preferenze</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const banner = document.getElementById('cookie-banner');
+    const modalOverlay = document.getElementById('cookie-modal-overlay');
+    const btnAccept = document.getElementById('btn-accept');
+    const btnReject = document.getElementById('btn-reject');
+    const btnPersonalize = document.getElementById('btn-personalize');
+    const modalCancel = document.getElementById('modal-cancel');
+    const cookieForm = document.getElementById('cookie-form');
+
+    // Controlla se preferenze salvate
+    function getCookiePrefs() {
+      try {
+        return JSON.parse(localStorage.getItem('cookiePrefs'));
+      } catch {
+        return null;
+      }
+    }
+
+    function saveCookiePrefs(prefs) {
+      localStorage.setItem('cookiePrefs', JSON.stringify(prefs));
+    }
+
+    function hideBanner() {
+      banner.style.display = 'none';
+    }
+
+    function showBanner() {
+      banner.style.display = 'flex';
+    }
+
+    // Accetta tutti i cookie
+    btnAccept.addEventListener('click', () => {
+      saveCookiePrefs({ analytics: true, marketing: true, accepted: true });
+      hideBanner();
+    });
+
+    // Rifiuta tutti i cookie tranne necessari (implicitamente)
+    btnReject.addEventListener('click', () => {
+      saveCookiePrefs({ analytics: false, marketing: false, accepted: false });
+      hideBanner();
+    });
+
+    // Mostra modale Personalizza
+    btnPersonalize.addEventListener('click', () => {
+      // Sincronizza checkbox con preferenze salvate
+      const prefs = getCookiePrefs() || { analytics: false, marketing: false };
+      cookieForm.analytics.checked = prefs.analytics === true;
+      cookieForm.marketing.checked = prefs.marketing === true;
+      modalOverlay.style.display = 'flex';
+    });
+
+    // Chiudi modale
+    modalCancel.addEventListener('click', () => {
+      modalOverlay.style.display = 'none';
+    });
+
+    // Salva preferenze da modale
+    cookieForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const analytics = cookieForm.analytics.checked;
+      const marketing = cookieForm.marketing.checked;
+      saveCookiePrefs({ analytics, marketing, accepted: true });
+      modalOverlay.style.display = 'none';
+      hideBanner();
+    });
+
+    // All'avvio mostra banner se non c'è consenso
+    window.addEventListener('load', () => {
+      const prefs = getCookiePrefs();
+      if (!prefs || prefs.accepted === undefined) {
+        showBanner();
+      }
+    });
+  </script>
+<footer style="
+  background-color: #0a0a0a; /* Nero brillante */
+  color: #d4af37; /* Oro classico */
+  padding: 3rem 2rem;
+  text-align: center;
+  font-family: 'Cormorant Garamond', 'Georgia', serif;
+  border-top: 1px solid #3d3d3d; /* Linea divisoria sottile */
+">
+  <div style="max-width: 800px; margin: 0 auto;">
+    <div style="
+      display: inline-block;
+      padding: 0.5rem 1.5rem;
+      border: 1px solid #d4af37; /* Bordo oro */
+      color: #d4af37;
+      margin-bottom: 1.8rem;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 300;
+    ">
+      echi di Sofia
+    </div>
+    
+    <p style="
+      font-size: 1.2rem;
+      line-height: 1.7;
+      margin-bottom: 1.8rem;
+      font-weight: 300;
+      color: #e6e6e6; /* Testo leggermente più chiaro per la citazione */
+    ">
+      "Nella semplicità troviamo l'essenza della vera autosufficienza"
+    </p>
+    
+    <div style="
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    margin-bottom: 2rem;
+">
+  <a href="https://casi0048.github.io/pagine/pagina-contatti.html"
+   style="color: #d4af37; text-decoration: none; transition: all 0.3s ease; font-size: 0.9rem; letter-spacing: 1px;"
+   onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Contatti</a>
+
+    <a href="https://casi0048.github.io/pagine/privacy-policy.html"
+       style="color: #d4af37; text-decoration: none; transition: all 0.3s ease; font-size: 0.9rem; letter-spacing: 1px;"
+       onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Privacy</a>
+
+    <a href="https://casi0048.github.io/pagine/blog.html"
+       style="color: #d4af37; text-decoration: none; transition: all 0.3s ease; font-size: 0.9rem; letter-spacing: 1px;"
+       onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Blog</a>
+
+    <a href="https://casi0048.github.io/pagine/progetti.html"
+       style="color: #d4af37; text-decoration: none; transition: all 0.3s ease; font-size: 0.9rem; letter-spacing: 1px;"
+       onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Progetti</a>
+</div>
+
+    
+    <div style="margin: 1.5rem 0;">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity: 0.7;">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="#d4af37"/>
+        <path d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" fill="#d4af37"/>
+      </svg>
+    </div>
+    
+    <p style="
+    font-size: 0.75rem;
+    color: #8a8a8a;
+    letter-spacing: 0.5px;
+    margin-top: 1rem;
+">
+    © 2024 Echi di Sofia | Tutti i diritti riservati
+</p>
+  </div>
+  
+   
+</footer>
+
+<script>
+    gsap.registerPlugin(TextPlugin);
+
+    window.addEventListener("load", () => {
+      const tl = gsap.timeline();
+
+      tl.to(".welcome-subtitle", {
+        duration: 4,
+       
+        ease: "none",
+      }, 0)
+
+      .to(".welcome-subtitle", {
+        duration: 4,
+        color: "#ffd700",
+        ease: "none",
+      }, 0);
+
+      gsap.to(".welcome-title", {
+        x: 20,
+        duration: 2,
+        ease: "power1.inOut",
+        repeat: -1,
+        yoyo: true,
+      });
+    });
+  </script>
+
+  <!-- Tutto il contenuto già presente nel tuo <body> -->
+
+  <!-- inizio Box Ultimi Articoli -->
+<div class="ultimi-articoli">
+  <h3>Ultimi Articoli</h3>
+  <ul>
+     <li><a href="articoli/ipazia.html">Ipazia di Alessandria</a></li>
+     <li><a href="articoli/2nietzsche.html">Nietzsche filosofo folgorante</a></li>
+    <li><a href="articoli/hegel.html">Hegel</a></li>
+    <li><a href="articoli/heidegger.html">Martin Heidegger</a></li>
+    <li><a href="articoli/schelling.html">Friedrich Schelling:</a></li>
+  </ul>
+</div>
+<style>
+.ultimi-articoli {
+  position: fixed;
+  top: 400px; /* distanza verticale dalla barra del menu */
+  right: 40px; /* distacco dal lato destro */
+  width: 300px;
+  background: rgba(20, 20, 30, 0.95); /* sfondo semi-trasparente coerente col sito */
+  color: #f0f0f0;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  font-family: 'Georgia', serif;
+  z-index: 10; /* più basso del menu per non coprirlo */
+  transform: translateX(120%);
+  opacity: 0;
+  animation: slideInFromRight 1s ease-out forwards;
+}
+
+.ultimi-articoli h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: gold;
+  text-align: center;
+}
+
+.ultimi-articoli ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ultimi-articoli li {
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 6px;
+}
+
+.ultimi-articoli li:last-child {
+  border-bottom: none;
+}
+
+.ultimi-articoli a {
+  text-decoration: none;
+  color: #ddd;
+  transition: color 0.3s;
+}
+
+.ultimi-articoli a:hover {
+  color: gold;
+}
+
+/* ANIMAZIONE DA DESTRA */
+@keyframes slideInFromRight {
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+</style>
+
+
+
+  
+<!--
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".dropdown").forEach((dropdown, i) => {
+    const button = dropdown.querySelector(".menu-btn");
+    const menu = dropdown.querySelector(".mega-menu") || dropdown.querySelector(".menu");
+
+    if (!menu) {
+      console.warn(`⚠️ Nessun menu trovato in dropdown #${i + 1}`, dropdown);
+      return; // salta questo dropdown se non c'è menu
+    }
+
+    let menuTimeout;
+
+    // Mostra il menu al passaggio del mouse
+    dropdown.addEventListener("mouseenter", () => {
+      clearTimeout(menuTimeout);
+      menu.style.display = "grid";
+      menu.style.opacity = "1";
+      menu.style.visibility = "visible";
+      menu.style.pointerEvents = "auto";
+    });
+
+    // Nasconde il menu se il mouse esce
+    dropdown.addEventListener("mouseleave", (e) => {
+      const isInside = dropdown.contains(e.relatedTarget) || menu.contains(e.relatedTarget);
+      if (!isInside) {
+        menuTimeout = setTimeout(() => {
+          menu.style.opacity = "0";
+          menu.style.visibility = "hidden";
+          menu.style.pointerEvents = "none";
+        }, 300);
+      }
+    });
+
+    // Se il mouse rientra nel menu, annulla il timeout
+    menu.addEventListener("mouseenter", () => {
+      clearTimeout(menuTimeout);
+    });
+  });
+});
+
+
+
+    menu.addEventListener("mouseleave", () => {
+      menuTimeout = setTimeout(() => {
+        menu.style.opacity = "0";
+        menu.style.visibility = "hidden";
+        menu.style.pointerEvents = "none";
+      }, 200);
+    });
+
+    button?.addEventListener("focus", () => {
+      menu.style.display = "grid";
+      menu.style.opacity = "1";
+      menu.style.visibility = "visible";
+      menu.style.pointerEvents = "auto";
+    });
+
+    dropdown.addEventListener("focusout", (e) => {
+      if (!dropdown.contains(e.relatedTarget)) {
+        menu.style.opacity = "0";
+        menu.style.visibility = "hidden";
+        menu.style.pointerEvents = "none";
+      }
+    });
+  });
+
+  // EFFETTO SCRITTURA LETTERA PER LETTERA CON CANCELLAZIONE
+  const phrases = [
+    "Pensare è ancora possibile.",
+    "Il sapere inizia con il non sapere.",
+    "Ogni risposta nasconde un'altra domanda.",
+    "La filosofia è sete, non possesso.",
+    "Domandare è respirare con la mente."
+  ];
+
+  const el = document.getElementById("welcome-subtitle");
+  let index = 0;
+  let charIndex = 0;
+  let isDeleting = false;
+
+  function typeEffect() {
+    const current = phrases[index];
+    el.textContent = isDeleting
+      ? current.substring(0, charIndex--)
+      : current.substring(0, charIndex++);
+
+    let delay = isDeleting ? 60 : 120;
+
+    if (!isDeleting && charIndex === current.length + 1) {
+      delay = 1500;
+      isDeleting = true;
+    } else if (isDeleting && charIndex === 0) {
+      isDeleting = false;
+      index = (index + 1) % phrases.length;
+      delay = 500;
+    }
+
+    setTimeout(typeEffect, delay);
+  }
+
+  typeEffect();
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const spinner = document.querySelector(".spinner, .loading, [class*='spinner']");
+  if (spinner) {
+    spinner.remove();
+  }
+});
+</script>  
+        -->
+ <!- inizio aggiunta animazione welcome e sottotitolo-->
+
+<script>
+  // Animazione GSAP per titolo e sottotitolo
+  window.addEventListener('DOMContentLoaded', () => {
+    // Titolo principale
+    gsap.from(".welcome-title", {
+      y: 80,
+      opacity: 0,
+      scale: 0.9,
+      duration: 1.4,
+      ease: "power3.out"
+    });
+
+    // Sottotitolo con fade-in e delay
+    gsap.from(".welcome-subtitle", {
+      opacity: 0,
+      y: 20,
+      duration: 1.2,
+      delay: 1.3,
+      ease: "power2.out"
+    });
+
+
+// Animazione loopata sul titolo dopo l'ingresso
+gsap.to(".welcome-title", {
+  scale: 1.05,
+  duration: 3,
+  repeat: -1,
+  yoyo: true,
+  ease: "power1.inOut",
+  delay: 2
+});
+
+// Sottotitolo: entra dopo con fade + leggera salita
+gsap.fromTo(".welcome-subtitle",
+  { opacity: 0, y: 20 },
+  { opacity: 1, y: 0, duration: 1.5, delay: 1.8, ease: "power2.out" }
+);
+// Titolo con entrata fade + salita
+gsap.fromTo(".welcome-title", 
+  { opacity: 0, y: 30 },
+  { opacity: 1, y: 0, duration: 2, ease: "power2.out" }
+);
+
+// Animazione loopata sul titolo dopo l'ingresso
+gsap.to(".welcome-title", {
+  scale: 1.05,
+  duration: 3,
+  repeat: -1,
+  yoyo: true,
+  ease: "power1.inOut",
+  delay: 2
+});
+
+// Sottotitolo: entra dopo con fade + leggera salita
+gsap.fromTo(".welcome-subtitle",
+  { opacity: 0, y: 20 },
+  { opacity: 1, y: 0, duration: 1.5, delay: 1.8, ease: "power2.out" }
+);
+
+</script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+      gsap.to('.welcome-title', {
+        duration: 1.8,
+        opacity: 1,
+        y: 0,
+        ease: 'power3.out',
+      });
+      gsap.to('.welcome-subtitle', {
+        delay: 1,
+        duration: 1.8,
+        opacity: 1,
+        y: 0,
+        ease: 'power3.out',
+      });
+    });
+  </script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  gsap.to(".welcome-title", {
+    duration: 2,
+    opacity: 1,
+    y: 0,
+    ease: "power4.out"
+  });
+
+  gsap.to(".welcome-subtitle", {
+    duration: 2,
+    opacity: 1,
+    y: 0,
+    delay: 0.5,
+    ease: "power4.out"
+  });
+});
+</script>
+
+
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const tl = gsap.timeline({ defaults: { ease: "power3.out", duration: 1.5 } });
+
+    tl.from(".welcome-title", {
+      x: -100,
+      opacity: 0,
+    })
+    .from(".welcome-subtitle", {
+      x: 100,
+      opacity: 0,
+    }, "-=1"); // parte quasi insieme al titolo, ma dopo 0.5s
+  });
+<!-              -->
+gsap.to(".shine-text", {
+  duration: 3,
+  repeat: -1,
+  repeatDelay: 0.5,
+  ease: "power2.inOut",
+  textShadow: "0px 0px 50px #ffd700, 0px 0px 30px #ffaa00",
+  yoyo: true,
+  scale: 1.05
+});
+
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const exploding = document.querySelector(".exploding-text");
+  
+  const split = new SplitText(exploding, { type: "chars" });
+  const chars = split.chars;
+
+  gsap.set(exploding, { opacity: 1 }); // mostra il contenitore
+
+  gsap.from(chars, {
+    duration: 1,
+    opacity: 0,
+    scale: 0,
+    y: 50,
+    rotation: 360,
+    ease: "back.out(2)",
+    stagger: {
+      amount: 1.5,
+      from: "center"
+    }
+  });
+});
+</script>
+
+       </body>
 </html>
