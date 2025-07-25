@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sergej Nikolaevič Bulgakov</title>
+    <style>
+        :root {
+            --primary: #6e48aa;
+            --secondary: #9d50bb;
+            --dark: #0f0f1a;
+            --light: #f5f5e9;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: white;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+        
+        /* Temi */
+        .notturno {
+            background: var(--dark);
+            color: #e0e0ff;
+        }
+        
+        .filosofico {
+            background: var(--light);
+            color: #333;
+            font-family: 'Palatino', serif;
+        }
+        
+        /* Bottoni tema */
+        .theme-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .theme-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: inherit;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .theme-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        
+        /* Accordion */
+        .accordion {
+            background: linear-gradient(135deg, #434343, #000000);
+            color: white;
+            padding: 15px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            font-size: 18px;
+            border-radius: 8px;
+            margin-top: 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .accordion:hover {
+            background: linear-gradient(135deg, #333, #000);
+        }
+        
+        .accordion:after {
+            content: '+';
+            font-size: 20px;
+            font-weight: bold;
+            transition: transform 0.3s;
+        }
+        
+        .accordion.active:after {
+            content: '-';
+        }
+        
+        .panel {
+            padding: 0 20px;
+            background: rgba(255,255,255,0.9);
+            border-left: 3px solid var(--primary);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            margin-bottom: 10px;
+            border-radius: 0 0 5px 5px;
+        }
+        
+        /* Bottoni dimensione testo */
+        .text-size-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .size-btn {
+            background: linear-gradient(135deg, #4776E6, #8E54E9);
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        
+        .size-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Stile contenuto */
+        h1 {
+            color: var(--primary);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 10px;
+        }
+        
+        blockquote {
+            border-left: 4px solid var(--secondary);
+            padding-left: 15px;
+            font-style: italic;
+            color: #555;
+            margin: 20px 0;
+        }
+        
+        .notturno blockquote {
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sergej Nikolaevič Bulgakov: Il Filosofo della Sophia Divina</h1>
+    
+    <div class="theme-buttons">
+        <button class="theme-btn" onclick="toggleTheme('notturno')">🌙 Notturno</button>
+        <button class="theme-btn" onclick="toggleTheme('filosofico')">🏛️ Filosofico</button>
+        <button class="theme-btn" onclick="toggleTheme('')">☀️ Classico</button>
+    </div>
+    
+    <div class="text-size-buttons">
+        <button class="size-btn" onclick="setFontSize('large')">A++ Grande</button>
+        <button class="size-btn" onclick="setFontSize('medium')">A• Normale</button>
+        <button class="size-btn" onclick="setFontSize('small')">A-- Piccolo</button>
+    </div>
+
+    <button class="accordion">📜 Introduzione</button>
+    <div class="panel">
+        <p>Sergej Nikolaevič Bulgakov (1871–1944) è stato uno dei più profondi filosofi e teologi russi del XX secolo. Pioniere del <strong>sofianismo</strong>, univa filosofia, teologia e mistica in una visione cosmica dell'umanità e di Dio. La sua opera oscilla tra l'ortodossia cristiana e un audace pensiero metafisico, influenzando teologi come Pavel Florenskij e Nikolaj Berdjaev.</p>
+    </div>
+
+    <button class="accordion">🌌 La Sophia: Saggezza Divina</button>
+    <div class="panel">
+        <p>Bulgakov sviluppò una <strong>teologia della Sophia</strong>, la Saggezza Divina, come principio mediatore tra Dio e il creato.</p>
+        <ul>
+            <li><strong>Non è una "quarta ipostasi"</strong> (accanto alla Trinità), ma un'energia divina che permea il mondo.</li>
+            <li><strong>Collega cielo e terra</strong>, spirituale e materiale.</li>
+            <li><strong>Influenzò l'arte e la letteratura russa</strong> (es. il simbolismo di Aleksandr Blok).</li>
+        </ul>
+        <blockquote>"La Sophia è l'anima del mondo, il volto femminile di Dio."</blockquote>
+    </div>
+
+    <button class="accordion">📚 Opere Principali</button>
+    <div class="panel">
+        <ol>
+            <li><strong>"La Luce senza Tramonto"</strong> (1917) – Riflessioni sulla crisi post-rivoluzionaria.</li>
+            <li><strong>"L'Agnello di Dio"</strong> (1933) – Cristologia sofianica.</li>
+            <li><strong>"La Gerarchia"</strong> – Sul rapporto tra Chiesa e società.</li>
+            <li><strong>"Filosofia dell'Economia"</strong> – Spiritualità nel lavoro umano.</li>
+        </ol>
+    </div>
+
+    <button class="accordion">⚡ Pensiero Rivoluzionario</button>
+    <div class="panel">
+        <ul>
+            <li><strong>Critica al materialismo marxista</strong> (inizialmente simpatizzante, poi oppositore).</li>
+            <li><strong>Teologia dell'Incarnazione</strong> – La materia è redenta in Cristo.</li>
+            <li><strong>Escatologia ottimista</strong> – Tutto sarà ricapitolato in Dio.</li>
+        </ul>
+    </div>
+
+    <button class="accordion">🎨 Stile e Influenza</button>
+    <div class="panel">
+        <ul>
+            <li><strong>Misticismo poetico</strong> (vicino a Solov'ëv).</li>
+            <li><strong>Ponte tra Oriente e Occidente</strong> (dialogo con il cattolicesimo).</li>
+            <li><strong>Eredita nella filosofia russa moderna</strong> (es. Evdokimov).</li>
+        </ul>
+    </div>
+
+    <button class="accordion">🖋️ Citazione Finale</button>
+    <div class="panel">
+        <blockquote>"Il mondo è un mistero che attende di essere trasfigurato dalla luce divina."</blockquote>
+    </div>
+
+    <script>
+        // Funzione per gli accordion
+        const acc = document.getElementsByClassName("accordion");
+        for (let i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                const panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                } 
+            });
+        }
+        
+        // Funzione per cambiare tema
+        function toggleTheme(theme) {
+            document.body.className = theme;
+        }
+        
+        // Funzione per cambiare dimensione testo
+        function setFontSize(size) {
+            const sizes = {
+                'small': '14px',
+                'medium': '16px',
+                'large': '18px'
+            };
+            document.body.style.fontSize = sizes[size];
+        }
+        
+        // Apri il primo panel di default
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.accordion').click();
+        });
+    </script>
+</body>
+</html>
