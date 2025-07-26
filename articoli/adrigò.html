@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roberto Ardigò - Il Positivismo Italiano | Echi di Sofia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,700;1,400&family=Fira+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Color Schemes */
+            --classic-text: #333;
+            --classic-bg: #f9f5e9;
+            --classic-accent: #8b4513;
+            
+            --night-text: #e0e0e0;
+            --night-bg: #121212;
+            --night-accent: #9c27b0;
+            
+            --philo-text: #3e2723;
+            --philo-bg: #efebe9;
+            --philo-accent: #5d4037;
+            
+            --modern-text: #263238;
+            --modern-bg: #eceff1;
+            --modern-accent: #00838f;
+            
+            /* Current Theme - Default to Classic */
+            --text: var(--classic-text);
+            --bg: var(--classic-bg);
+            --accent: var(--classic-accent);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.5s, color 0.3s;
+        }
+        
+        body {
+            font-family: 'Crimson Text', serif;
+            color: var(--text);
+            background-color: var(--bg);
+            line-height: 1.8;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Fira Sans', sans-serif;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 40px;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            margin-top: 30px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        blockquote {
+            border-left: 4px solid var(--accent);
+            padding-left: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            color: var(--text);
+            opacity: 0.9;
+        }
+        
+        /* Theme Selector */
+        .theme-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .theme-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Fira Sans', sans-serif;
+            font-weight: 500;
+            transition: all 0.3s;
+            background-color: var(--accent);
+            color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .theme-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        /* Accordion System */
+        .accordion-container {
+            margin: 30px 0;
+        }
+        
+        .accordion-header {
+            position: relative;
+            padding: 15px 20px;
+            background-color: var(--accent);
+            color: white;
+            cursor: pointer;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            font-family: 'Fira Sans', sans-serif;
+            font-weight: 500;
+            transition: all 0.3s;
+            overflow: hidden;
+        }
+        
+        .accordion-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background-color: rgba(255,255,255,0.3);
+            transition: all 0.3s;
+        }
+        
+        .accordion-header:hover {
+            padding-left: 30px;
+        }
+        
+        .accordion-header:hover::before {
+            width: 10px;
+        }
+        
+        .accordion-header::after {
+            content: '+';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            transition: all 0.3s;
+        }
+        
+        .accordion-header.active::after {
+            content: '-';
+        }
+        
+        .accordion-content {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.3s;
+            background-color: rgba(0,0,0,0.03);
+            border-radius: 0 0 5px 5px;
+        }
+        
+        .accordion-content.active {
+            padding: 20px;
+            max-height: 2000px;
+        }
+        
+        /* Special Button Shapes */
+        .btn-shape-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .shape-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background-color: var(--accent);
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .shape-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .shape-btn.round {
+            border-radius: 50%;
+        }
+        
+        .shape-btn.hexagon {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+        
+        .shape-btn.diamond {
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+        
+        .shape-btn.thought {
+            clip-path: path('M20,10 Q30,5 40,10 T60,10 Q70,5 80,10 T100,10 Q110,15 100,20 T80,30 Q70,35 60,30 T40,30 Q30,35 20,30 T0,20 Q-10,15 0,10 T20,10');
+        }
+        
+        /* Apply shape classes */
+        .shape-round .accordion-header {
+            border-radius: 50px;
+        }
+        
+        .shape-hexagon .accordion-header {
+            clip-path: polygon(0% 25%, 0% 75%, 50% 100%, 100% 75%, 100% 25%, 50% 0%);
+        }
+        
+        .shape-diamond .accordion-header {
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+        
+        .shape-thought .accordion-header {
+            border-radius: 50px 50px 50px 0;
+        }
+        
+        /* Theme Classes */
+        .theme-classic {
+            --text: var(--classic-text);
+            --bg: var(--classic-bg);
+            --accent: var(--classic-accent);
+        }
+        
+        .theme-night {
+            --text: var(--night-text);
+            --bg: var(--night-bg);
+            --accent: var(--night-accent);
+        }
+        
+        .theme-philo {
+            --text: var(--philo-text);
+            --bg: var(--philo-bg);
+            --accent: var(--philo-accent);
+        }
+        
+        .theme-modern {
+            --text: var(--modern-text);
+            --bg: var(--modern-bg);
+            --accent: var(--modern-accent);
+        }
+        
+        /* Additional Styles */
+        .timeline {
+            position: relative;
+            padding-left: 50px;
+            margin: 30px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: var(--accent);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -43px;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            border: 3px solid var(--bg);
+        }
+        
+        .timeline-date {
+            font-weight: bold;
+            color: var(--accent);
+        }
+        
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .work-card {
+            background-color: rgba(0,0,0,0.05);
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 3px solid var(--accent);
+            transition: all 0.3s;
+        }
+        
+        .work-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .work-card h4 {
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+        
+        .work-card .year {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .works-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="theme-classic shape-round">
+    <div class="container">
+        <header>
+            <h1>Roberto Ardigò: Il Padre del Positivismo Italiano</h1>
+            
+            <div class="theme-selector">
+                <button class="theme-btn" onclick="setTheme('classic')">Classico</button>
+                <button class="theme-btn" onclick="setTheme('night')">Notturno</button>
+                <button class="theme-btn" onclick="setTheme('philo')">Filosofico</button>
+                <button class="theme-btn" onclick="setTheme('modern')">Moderno</button>
+            </div>
+            
+            <div class="btn-shape-selector">
+                <button class="shape-btn round" onclick="setShape('round')">◯</button>
+                <button class="shape-btn hexagon" onclick="setShape('hexagon')">⬡</button>
+                <button class="shape-btn diamond" onclick="setShape('diamond')">◆</button>
+                <button class="shape-btn thought" onclick="setShape('thought')">☁</button>
+            </div>
+            
+            <p>Roberto Ardigò (1828-1920) è stato una figura centrale nella filosofia italiana del XIX secolo, considerato il principale esponente del positivismo italiano. La sua opera ha segnato una svolta nel pensiero filosofico nazionale, coniugando rigore scientifico e riflessione filosofica.</p>
+        </header>
+        
+        <div class="accordion-container">
+            <div class="accordion-header">Biografia Intellettuale</div>
+            <div class="accordion-content">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">1828</div>
+                        <p>Nascita a Casteldidone (Cremona) il 28 gennaio.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1846-1851</div>
+                        <p>Studi teologici e ordinazione sacerdotale. Inizia a insegnare nei seminari.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1869</div>
+                        <p>Pubblicazione de "La psicologia come scienza positiva", opera fondamentale che segna la sua adesione al positivismo.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1870</div>
+                        <p>Abbandono dello stato sacerdotale e laicizzazione. Inizia l'insegnamento universitario.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1881-1918</div>
+                        <p>Professore di Filosofia teoretica all'Università di Padova. Periodo di massima produzione filosofica.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1920</div>
+                        <p>Morte a Mantova il 15 settembre.</p>
+                    </div>
+                </div>
+                
+                <blockquote>
+                    "La libertà del pensiero è la condizione prima di ogni progresso scientifico e morale."
+                </blockquote>
+            </div>
+            
+            <div class="accordion-header">Il Pensiero Filosofico</div>
+            <div class="accordion-content">
+                <h3>Il Positivismo Evoluzionistico</h3>
+                <p>Ardigò sviluppa una forma originale di positivismo, distaccandosi dal modello comtiano e avvicinandosi piuttosto all'evoluzionismo spenceriano. Il suo sistema filosofico si basa su:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>L'idea di "naturale formazione" come legge universale</li>
+                    <li>Il principio di "indistinto originario"</li>
+                    <li>La concezione della coscienza come prodotto evolutivo</li>
+                    <li>L'unità metodologica tra scienze naturali e scienze umane</li>
+                </ul>
+                
+                <h3>La Critica al Sovrannaturale</h3>
+                <p>Ardigò opera una radicale demistificazione delle credenze metafisiche e religiose, interpretandole come forme primitive di conoscenza superate dallo sviluppo scientifico. La sua critica si concentra su:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>La delegittimazione del dogma come fonte di conoscenza</li>
+                    <li>L'interpretazione naturalistica dei fenomeni religiosi</li>
+                    <li>La sostituzione della provvidenza con le leggi naturali</li>
+                </ul>
+                
+                <h3>La Pedagogia Scientifica</h3>
+                <p>Ardigò elabora una pedagogia basata sull'osservazione scientifica dello sviluppo psichico, anticipando temi che saranno sviluppati dalla psicologia dell'età evolutiva:</p>
+                <ul style="margin-left: 20px;">
+                    <li>L'educazione come processo naturale</li>
+                    <li>Il metodo sperimentale in pedagogia</li>
+                    <li>La critica all'educazione confessionale</li>
+                </ul>
+            </div>
+            
+            <div class="accordion-header">Opere Principali</div>
+            <div class="accordion-content">
+                <div class="works-grid">
+                    <div class="work-card">
+                        <h4>La psicologia come scienza positiva</h4>
+                        <div class="year">1869</div>
+                        <p>Fondamentale opera che segna la svolta positivista di Ardigò, in cui applica il metodo scientifico allo studio dei fenomeni psichici.</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>La morale dei positivisti</h4>
+                        <div class="year">1879</div>
+                        <p>Esposizione sistematica di un'etica laica basata sui principi del positivismo evoluzionistico.</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>Il fatto psicologico della percezione</h4>
+                        <div class="year">1882</div>
+                        <p>Analisi del processo percettivo dal punto di vista della psicologia scientifica.</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>La formazione naturale nel fatto del sistema solare</h4>
+                        <div class="year">1884</div>
+                        <p>Applicazione del principio di "naturale formazione" alla cosmologia.</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>L'unità della coscienza</h4>
+                        <div class="year">1898</div>
+                        <p>Studio sull'identità personale e la continuità della coscienza.</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>Opere complete</h4>
+                        <div class="year">1922-1930</div>
+                        <p>Raccolta postuma in 12 volumi di tutti gli scritti di Ardigò, curata da Giovanni Marchesini.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-header">Influenza e Critica</div>
+            <div class="accordion-content">
+                <h3>Eredità Intellettuale</h3>
+                <p>L'influsso di Ardigò si estese ben oltre l'ambito filosofico, interessando:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>La pedagogia italiana (Maria Montessori, Giuseppe Lombardo Radice)</li>
+                    <li>La storiografia filosofica (Giovanni Gentile, Eugenio Garin)</li>
+                    <li>Il movimento laico e anticlericale</li>
+                    <li>La psicologia scientifica italiana</li>
+                </ul>
+                
+                <h3>Critiche e Polemiche</h3>
+                <p>Il pensiero di Ardigò suscitò vivaci reazioni:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>Le accuse di materialismo e determinismo da parte dei cattolici</li>
+                    <li>Le critiche degli idealisti (Croce, Gentile) per il suo scientismo</li>
+                    <li>Le riserve degli stessi positivisti per le sue originali elaborazioni</li>
+                </ul>
+                
+                <blockquote>
+                    "Ardigò ha il merito di aver portato in Italia il metodo sperimentale nello studio dei fenomeni psichici, superando le astrattezze della psicologia metafisica."
+                    <footer>- Giovanni Marchesini</footer>
+                </blockquote>
+            </div>
+            
+            <div class="accordion-header">Attualità del Pensiero</div>
+            <div class="accordion-content">
+                <h3>Riletture Contemporanee</h3>
+                <p>Negli ultimi decenni si è assistito a un rinnovato interesse per Ardigò:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>Come precursore delle scienze cognitive</li>
+                    <li>Per la sua epistemologia naturalizzata</li>
+                    <li>Per l'approccio interdisciplinare</li>
+                    <li>Come figura di transizione tra positivismo e pragmatismo</li>
+                </ul>
+                
+                <h3>Prospettive di Ricerca</h3>
+                <p>Le linee di sviluppo più promettenti negli studi ardigiani:</p>
+                <ul style="margin-left: 20px;">
+                    <li>L'analisi dei manoscritti inediti</li>
+                    <li>Il confronto con il neopositivismo</li>
+                    <li>L'applicazione delle sue teorie in campo educativo</li>
+                    <li>Lo studio dei suoi rapporti con la scienza europea del tempo</li>
+                </ul>
+                
+                <p style="margin-top: 20px;">L'opera di Ardigò rappresenta ancora oggi una miniera di spunti per riflettere sui rapporti tra scienza e filosofia, tra evoluzione e cultura, tra metodo sperimentale e indagine umanistica.</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Accordion functionality
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const content = this.nextElementSibling;
+                content.classList.toggle('active');
+            });
+        });
+        
+        // Theme switching
+        function setTheme(theme) {
+            document.body.className = '';
+            document.body.classList.add(`theme-${theme}`);
+            
+            // Keep current shape when changing theme
+            const currentShape = document.body.classList.contains('shape-round') ? 'round' :
+                                document.body.classList.contains('shape-hexagon') ? 'hexagon' :
+                                document.body.classList.contains('shape-diamond') ? 'diamond' :
+                                'thought';
+            document.body.classList.add(`shape-${currentShape}`);
+        }
+        
+        // Shape switching
+        function setShape(shape) {
+            document.body.className = document.body.className.replace(/\bshape-\S+/g, '');
+            document.body.classList.add(`shape-${shape}`);
+            
+            // Keep current theme when changing shape
+            const currentTheme = document.body.classList.contains('theme-classic') ? 'classic' :
+                               document.body.classList.contains('theme-night') ? 'night' :
+                               document.body.classList.contains('theme-philo') ? 'philo' :
+                               'modern';
+            document.body.classList.add(`theme-${currentTheme}`);
+        }
+        
+        // Open first accordion by default
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstHeader = document.querySelector('.accordion-header');
+            firstHeader.classList.add('active');
+            firstHeader.nextElementSibling.classList.add('active');
+        });
+    </script>
+</body>
+</html>
