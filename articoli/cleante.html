@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cleante di Asso: Il Successore di Zenone</title>
+    <style>
+        :root {
+            --primary-color: #2C4E6B; /* Blu stoico */
+            --secondary-color: #E6AF2E; /* Oro filosofico */
+            --text-color: #333333;
+            --bg-color: #F8F5F0; /* Papiro chiaro */
+            --card-bg: #FFFFFF;
+            --shadow: 0 4px 12px rgba(44, 78, 107, 0.15);
+            --border-radius: 8px;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+        }
+
+        body {
+            font-family: 'Garamond', 'Georgia', serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="%232C4E6B05" d="M50 0 Q75 20 50 40 Q25 60 50 80 Q75 100 50 100 Q25 100 0 80 Q0 60 0 40 Q0 20 50 0 Z"/></svg>');
+            background-size: 150px 150px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--primary-color);
+            position: relative;
+        }
+
+        header::after {
+            content: "⚡";
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-color);
+            padding: 0 15px;
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            font-style: italic;
+            color: var(--secondary-color);
+            font-size: 1.3rem;
+        }
+
+        /* Bottoni sezione - Stile a colonna greca */
+        .section-toggle {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 16px 100px;
+            margin: 15px 0;
+            border-radius: 0;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            text-align: left;
+            position: relative;
+            clip-path: polygon(0 0, 90% 0, 100% 100%, 10% 100%);
+        }
+
+        .section-toggle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                rgba(255,255,255,0.2) 0%, 
+                rgba(255,255,255,0) 50%);
+            transform: translateX(-100%);
+            transition: var(--transition);
+        }
+
+        .section-toggle:hover::before {
+            transform: translateX(100%);
+        }
+
+        .section-toggle::after {
+            content: '↓';
+            font-size: 1.3rem;
+            transition: var(--transition);
+            margin-left: 10px;
+        }
+
+        .section-toggle.active::after {
+            content: '↑';
+            transform: rotate(180deg);
+        }
+
+        /* Contenuto sezioni - Stile tavoletta stoica */
+        .section-content {
+            background-color: var(--card-bg);
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+            border-left: 4px solid var(--secondary-color);
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="%232C4E6B08" d="M0 10 L100 10 L100 20 L0 20 Z M0 40 L100 40 L100 50 L0 50 Z M0 70 L100 70 L100 80 L0 80 Z"/></svg>');
+            background-size: 100% 100px;
+        }
+
+        .section-content.active {
+            padding: 25px;
+            max-height: 5000px;
+        }
+
+        /* Modalità lettura */
+        .reading-modes {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .mode-btn {
+            padding: 10px 20px;
+            border-radius: 30px;
+            border: 2px solid var(--primary-color);
+            background: var(--card-bg);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .mode-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            z-index: -1;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .mode-btn:hover, .mode-btn.active {
+            color: white;
+            border-color: transparent;
+        }
+
+        .mode-btn:hover::before, .mode-btn.active::before {
+            opacity: 1;
+        }
+
+        /* Stili modalità specifiche */
+        body.night-mode {
+            --bg-color: #0A1A2F;
+            --card-bg: #152642;
+            --text-color: #E6E6E6;
+            --primary-color: #4A90E2;
+            --secondary-color: #F5D76E;
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle fill="%234A90E210" cx="50" cy="50" r="40"/></svg>');
+        }
+
+        body.philosophical-mode {
+            --primary-color: #3E4C5E;
+            --secondary-color: #B38B59;
+            --bg-color: #EAE6DF;
+            --card-bg: #D5CFC4;
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+        }
+
+        body.philosophical-mode .section-content {
+            border-left: 4px solid #B38B59;
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="%23B38B5910" d="M0 20 Q50 30 100 20 L100 30 Q50 40 0 30 Z M0 50 Q50 60 100 50 L100 60 Q50 70 0 60 Z M0 80 Q50 90 100 80 L100 90 Q50 100 0 90 Z"/></svg>');
+        }
+
+        body.minimal-mode {
+            --bg-color: #fff;
+            --card-bg: #fff;
+            --shadow: none;
+            --primary-color: #555;
+            --secondary-color: #777;
+            background-image: none;
+        }
+
+        /* Stili creativi per bottoni */
+        .section-toggle.creative-1 {
+            clip-path: polygon(0 0, 85% 15%, 100% 50%, 85% 85%, 0 100%);
+            background: linear-gradient(135deg, #3E4C5E, #6B7B8F);
+        }
+
+        .section-toggle.creative-2 {
+            clip-path: polygon(0 15%, 100% 0, 100% 85%, 0 100%);
+            background: linear-gradient(to right, #2C4E6B, #4A7B9D);
+        }
+
+        .section-toggle.creative-3 {
+            background: linear-gradient(135deg, #2C4E6B, #E6AF2E);
+            clip-path: polygon(15% 0, 100% 0, 85% 100%, 0 100%);
+        }
+
+        /* Elementi tipografici */
+        blockquote {
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px 25px;
+            margin: 25px 0;
+            background-color: rgba(230, 175, 46, 0.05);
+            font-style: italic;
+            position: relative;
+        }
+
+        blockquote::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--secondary-color);
+            opacity: 0.2;
+            position: absolute;
+            left: 10px;
+            top: -20px;
+            line-height: 1;
+        }
+
+        /* Figure e immagini */
+        .figure {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .figure img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(44, 78, 107, 0.2);
+        }
+
+        .figure-caption {
+            font-style: italic;
+            margin-top: 10px;
+            color: var(--secondary-color);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .section-toggle {
+                padding: 12px 20px;
+                font-size: 1rem;
+                clip-path: none;
+                border-radius: var(--border-radius);
+            }
+            
+            .reading-modes {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Cleante di Asso</h1>
+        <p class="subtitle">Il filosofo che lavorava di notte per sostenere la filosofia</p>
+        
+        <div class="reading-modes">
+            <button class="mode-btn" data-mode="default">Classico</button>
+            <button class="mode-btn" data-mode="night">Notturno</button>
+            <button class="mode-btn" data-mode="philosophical">Filosofico</button>
+            <button class="mode-btn" data-mode="minimal">Minimal</button>
+            <button class="mode-btn" data-mode="creative-buttons">Bottoni Creativi</button>
+        </div>
+    </header>
+
+    <main>
+        <button class="section-toggle" data-section="vita">
+            <span>Vita e Contesto Storico</span>
+        </button>
+        <div class="section-content" id="vita">
+            <p>Cleante di Asso (331-232 a.C.) fu il secondo scolarca della Stoà, succedendo al fondatore Zenone di Cizio. Nato ad Asso nella Troade (odierna Turchia), inizialmente atleta, si trasferì ad Atene con pochi soldi e divenne discepolo di Zenone.</p>
+            
+            <div class="figure">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Cleanthes.jpg/440px-Cleanthes.jpg" alt="Busto di Cleante di Asso">
+                <p class="figure-caption">Rappresentazione di Cleante in un busto antico</p>
+            </div>
+            
+            <p>Per mantenersi mentre studiava filosofia, Cleante lavorava di notte come acquaiolo, attingendo acqua per i giardini. Quando i suoi compagni si vergognavano di questa attività umile, Zenone rispose: <em>"Vedete? Mentre Cleante attinge acqua, attinge anche filosofia"</em>.</p>
+            
+            <blockquote>
+                "Cleante, uomo di straordinaria perseveranza ma di limitato ingegno, dedicò tutta la sua vita alla filosofia con una devozione ammirevole, dimostrando che la costanza può supplire al talento naturale."
+                <footer>- Diogene Laerzio, <cite>Vite dei filosofi</cite></footer>
+            </blockquote>
+        </div>
+
+        <button class="section-toggle" data-section="pensiero">
+            <span>Pensiero Filosofico</span>
+        </button>
+        <div class="section-content" id="pensiero">
+            <p>Cleante sviluppò ulteriormente il sistema stoico iniziato da Zenone, con particolare attenzione alla fisica e alla teologia stoica:</p>
+            
+            <h3>Teologia Stoica</h3>
+            <p>Identificò Zeus con il Logos universale, principio razionale che permea tutto il cosmo. Scrisse un famoso <em>Inno a Zeus</em> che sintetizza la visione stoica della divinità.</p>
+            
+            <h3>Etica</h3>
+            <p>Sottolineò l'importanza di vivere secondo natura, intesa come ragione universale. Il suo motto era: <em>"Conduci me, o Zeus, e tu, o Destino"</em>.</p>
+            
+            <h3>Fisica Stoica</h3>
+            <p>Elaborò la teoria del fuoco artistico (πῦρ τεχνικόν) come principio attivo del cosmo, distinguendolo dal fuoco ordinario.</p>
+            
+            <div class="figure">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cleanthes%27_Hymn_to_Zeus.jpg/800px-Cleanthes%27_Hymn_to_Zeus.jpg" alt="Inno a Zeus di Cleante">
+                <p class="figure-caption">Manoscritto medievale contenente l'Inno a Zeus di Cleante</p>
+            </div>
+            
+            <blockquote>
+                "Niente avviene nella terra senza di te, o Dio, né nel cielo divino né nel mare, se non ciò che fanno i malvagi nella loro follia."
+                <footer>- Cleante, <cite>Inno a Zeus</cite></footer>
+            </blockquote>
+        </div>
+
+        <button class="section-toggle" data-section="opere">
+            <span>Opere e Frammenti</span>
+        </button>
+        <div class="section-content" id="opere">
+            <p>Delle circa 50 opere attribuite a Cleante, ci sono pervenuti solo frammenti:</p>
+            
+            <h3>Inno a Zeus</h3>
+            <p>L'unico testo completo sopravvissuto, importante testimonianza della religiosità stoica.</p>
+            
+            <h3>Sulla Virtù</h3>
+            <p>Sosteneva che la virtù è sufficiente per la felicità, indipendentemente dalle circostanze esterne.</p>
+            
+            <h3>Sul Dovere</h3>
+            <p>Precursore del concetto di "kathekon" che sarà sviluppato da Panezio e Cicerone.</p>
+            
+            <h3>Altri scritti</h3>
+            <ul>
+                <li>Sul Tempo</li>
+                <li>Sulla Scienza Naturale</li>
+                <li>Interpretazioni di Eraclito</li>
+                <li>Contro Democrito</li>
+            </ul>
+            
+            <blockquote>
+                "Cleante era chiamato 'il secondo Ercole' per la sua instancabile capacità di lavoro, sia fisico che intellettuale."
+                <footer>- Filodemo, <cite>Sulla Stoà</cite></footer>
+            </blockquote>
+        </div>
+
+        <button class="section-toggle" data-section="successione">
+            <span>Successione nella Stoà</span>
+        </button>
+        <div class="section-content" id="successione">
+            <p>Cleante guidò la scuola stoica per 32 anni (262-232 a.C.), periodo di consolidamento dottrinale:</p>
+            
+            <h3>Relazione con Zenone</h3>
+            <p>Mentre Zenone era il fondatore carismatico, Cleante fu il sistematico che organizzò il pensiero stoico in aree distinte (logica, fisica, etica).</p>
+            
+            <h3>Allievi importanti</h3>
+            <p>Tra i suoi discepoli spicca Crisippo, che gli succederà e diventerà il "secondo fondatore" dello stoicismo.</p>
+            
+            <h3>Conflitti dottrinali</h3>
+            <p>Dovette difendere la scuola dagli attacchi dell'Accademia scettica e del giardino epicureo.</p>
+            
+            <div class="figure">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Athens_Stoa_of_Attalus.jpg/800px-Athens_Stoa_of_Attalus.jpg" alt="Stoa di Attalo">
+                <p class="figure-caption">La Stoa di Attalo ad Atene, ricostruita nel luogo dove insegnavano gli stoici</p>
+            </div>
+        </div>
+
+        <button class="section-toggle" data-section="eredita">
+            <span>Eredita e Influenza</span>
+        </button>
+        <div class="section-content" id="eredita">
+            <p>L'influenza di Cleante si estende ben oltre l'antichità:</p>
+            
+            <h3>Sviluppo dello Stoicismo</h3>
+            <p>La sua interpretazione teistica del Logos influenzò tutto il successivo sviluppo della scuola.</p>
+            
+            <h3>Cristianesimo antico</h3>
+            <p>Alcuni Padri della Chiesa apprezzarono il suo Inno a Zeus come anticipazione pagana del monoteismo cristiano.</p>
+            
+            <h3>Filosofia moderna</h3>
+            <p>Le sue idee sul determinismo cosmico e la provvidenza furono riprese da Spinoza e Leibniz.</p>
+            
+            <blockquote>
+                "Cleante dimostrò che la filosofia non è questione di parole ma di vita, e che anche l'intelligenza più modesta, se sostenuta da costanza, può raggiungere la saggezza."
+                <footer>- Epitteto, <cite>Diatribe</cite></footer>
+            </blockquote>
+        </div>
+    </main>
+
+    <footer>
+        <p style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px dashed var(--primary-color);">
+            © 2023 Enciclopedia di Filosofia Antica | Fonti: Diogene Laerzio, Filodemo, Stobeo, Cicerone
+        </p>
+    </footer>
+
+    <script>
+        // Gestione apertura/chiusura sezioni
+        document.querySelectorAll('.section-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const sectionId = button.getAttribute('data-section');
+                const sectionContent = document.getElementById(sectionId);
+                
+                button.classList.toggle('active');
+                sectionContent.classList.toggle('active');
+                
+                // Animazione smooth scroll
+                if (sectionContent.classList.contains('active')) {
+                    setTimeout(() => {
+                        sectionContent.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }, 100);
+                }
+            });
+        });
+
+        // Gestione modalità di lettura
+        document.querySelectorAll('.mode-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Rimuovi tutte le classi di modalità
+                document.body.className = '';
+                
+                // Aggiungi la classe corrispondente alla modalità selezionata
+                const mode = button.getAttribute('data-mode');
+                if (mode !== 'default') {
+                    document.body.classList.add(mode + '-mode');
+                }
+                
+                // Gestione bottoni creativi
+                if (mode === 'creative-buttons') {
+                    document.querySelectorAll('.section-toggle').forEach((btn, index) => {
+                        btn.className = 'section-toggle';
+                        const creativeClass = 'creative-' + ((index % 3) + 1);
+                        btn.classList.add(creativeClass);
+                    });
+                } else {
+                    document.querySelectorAll('.section-toggle').forEach(btn => {
+                        btn.className = 'section-toggle';
+                    });
+                }
+                
+                // Aggiorna stato attivo dei bottoni
+                document.querySelectorAll('.mode-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                button.classList.add('active');
+            });
+        });
+
+        // Apri la prima sezione di default
+        document.querySelector('.section-toggle').click();
+    </script>
+</body>
+</html>
