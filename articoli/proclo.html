@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proclo: Filosofo Neoplatonico</title>
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+            --card-bg: #fff;
+            --shadow: 0 4px 8px rgba(0,0,0,0.1);
+            --border-radius: 8px;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-style: italic;
+            color: var(--secondary-color);
+        }
+
+        /* Stili per i bottoni delle sezioni */
+        .section-toggle {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            margin: 10px 0;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            text-align: left;
+        }
+
+        .section-toggle:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .section-toggle::after {
+            content: '+';
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .section-toggle.active::after {
+            content: '-';
+        }
+
+        /* Stili per il contenuto delle sezioni */
+        .section-content {
+            background-color: var(--card-bg);
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.3s ease;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .section-content.active {
+            padding: 20px;
+            max-height: 2000px;
+        }
+
+        /* Stili per le modalità di lettura */
+        .reading-modes {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .mode-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--primary-color);
+            background: white;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .mode-btn:hover, .mode-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Stili specifici per modalità */
+        body.night-mode {
+            --bg-color: #1a1a2e;
+            --card-bg: #16213e;
+            --text-color: #e6e6e6;
+            --primary-color: #8ab4f8;
+            --secondary-color: #6a8fcc;
+        }
+
+        body.philosophical-mode {
+            font-family: 'Palatino Linotype', 'Book Antiqua', serif;
+            --primary-color: #5e3023;
+            --secondary-color: #895737;
+        }
+
+        body.philosophical-mode .section-content {
+            border-left: 4px solid var(--primary-color);
+        }
+
+        body.minimal-mode {
+            --bg-color: #fff;
+            --card-bg: #f5f5f5;
+            --shadow: none;
+        }
+
+        body.minimal-mode .section-content {
+            border: 1px solid #eee;
+        }
+
+        /* Stili per citazioni */
+        blockquote {
+            border-left: 4px solid var(--primary-color);
+            padding-left: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            color: var(--secondary-color);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reading-modes {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .mode-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        /* Stili creativi per bottoni */
+        .section-toggle.creative-1 {
+            background: linear-gradient(135deg, #8e44ad, #3498db);
+            clip-path: polygon(0% 0%, 95% 0%, 100% 50%, 95% 100%, 0% 100%);
+            padding-left: 30px;
+        }
+
+        .section-toggle.creative-2 {
+            background: linear-gradient(135deg, #e74c3c, #f39c12);
+            border-radius: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-toggle.creative-2::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition);
+        }
+
+        .section-toggle.creative-2:hover::before {
+            left: 100%;
+        }
+
+        .section-toggle.creative-3 {
+            background: linear-gradient(135deg, #16a085, #2ecc71);
+            border-radius: 0 20px 0 20px;
+        }
+
+        /* Stili per immagini */
+        .figure {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .figure img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .figure-caption {
+            font-style: italic;
+            margin-top: 8px;
+            color: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Proclo Diadoco</h1>
+        <p class="subtitle">L'ultimo grande sistematore del Neoplatonismo</p>
+        
+        <div class="reading-modes">
+            <button class="mode-btn" data-mode="default">Classico</button>
+            <button class="mode-btn" data-mode="night">Notturno</button>
+            <button class="mode-btn" data-mode="philosophical">Filosofico</button>
+            <button class="mode-btn" data-mode="minimal">Minimal</button>
+            <button class="mode-btn" data-mode="creative-buttons">Bottoni Creativi</button>
+        </div>
+    </header>
+
+    <main>
+        <button class="section-toggle creative-1" data-section="vita">
+            <span>Vita e Contesto Storico</span>
+        </button>
+        <div class="section-content" id="vita">
+            <p>Proclo (412-485 d.C.), noto come Proclo Diadoco ("il Successore"), fu uno dei più importanti filosofi neoplatonici dell'antichità tardiva. Nato a Costantinopoli da una famiglia originaria di Xanthos in Licia, studiò ad Alessandria prima di trasferirsi ad Atene per entrare nella Scuola neoplatonica fondata da Plutarco di Atene.</p>
+            
+            <div class="figure">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Proclus_17th-century_engraving.jpg/440px-Proclus_17th-century_engraving.jpg" alt="Ritratto antico di Proclo">
+                <p class="figure-caption">Rappresentazione di Proclo in un'incisione del XVII secolo</p>
+            </div>
+            
+            <p>Divenne scolarca dell'Accademia platonica nel 437, posizione che mantenne fino alla morte. Visse durante un periodo di crescente tensione tra tradizione pagana e cristianesimo emergente, e la sua opera rappresenta una sintesi monumentale della filosofia greca antica.</p>
+            
+            <blockquote>
+                "Proclo era un uomo di straordinaria devozione filosofica, che si dedicava alle pratiche religiose e agli studi con uguale fervore, considerandoli aspetti complementari della stessa ricerca della verità."
+                <footer>- Marino di Neapoli, <cite>Vita di Proclo</cite></footer>
+            </blockquote>
+        </div>
+
+        <button class="section-toggle creative-2" data-section="pensiero">
+            <span>Pensiero Filosofico</span>
+        </button>
+        <div class="section-content" id="pensiero">
+            <p>Il sistema filosofico di Proclo rappresenta la forma più matura e sistematica del Neoplatonismo. La sua metafisica si struttura secondo una rigorosa gerarchia di ipostasi:</p>
+            
+            <ol>
+                <li><strong>L'Uno</strong>: Principio assolutamente trascendente e ineffabile</li>
+                <li><strong>Intelletto divino (Nous)</strong>: Contiene le Forme platoniche</li>
+                <li><strong>Anima del mondo</strong>: Media tra il mondo intelligibile e quello sensibile</li>
+                <li><strong>Natura</strong>: Principio immanente del mondo fisico</li>
+                <li><strong>Materia</strong>: Ultimo grado dell'emanazione</li>
+            </ol>
+            
+            <p>Proclo sviluppò il concetto di "triadi" per spiegare i processi di emanazione, permanenza e ritorno (monē, proodos, epistrophē) che caratterizzano ogni livello della realtà.</p>
+            
+            <p>La sua epistemologia distingue tra:</p>
+            <ul>
+                <li>Conoscenza discorsiva (dianoia)</li>
+                <li>Intellezione (noēsis)</li>
+                <li>Unione mistica (henōsis)</li>
+            </ul>
+        </div>
+
+        <button class="section-toggle creative-3" data-section="opere">
+            <span>Opere Principali</span>
+        </button>
+        <div class="section-content" id="opere">
+            <p>Proclo fu un autore prolifico i cui scritti spaziano dalla metafisica alla teologia, dalla matematica all'astronomia. Le sue opere principali includono:</p>
+            
+            <h3>Scritti sistematici</h3>
+            <ul>
+                <li><em>Elementi di Teologia</em>: Esposizione assiomatica della metafisica neoplatonica</li>
+                <li><em>Teologia Platonica</em>: Commentario sistematico alla filosofia di Platone</li>
+            </ul>
+            
+            <h3>Commentari</h3>
+            <ul>
+                <li>Commentari ai dialoghi di Platone (Timeo, Parmenide, Repubblica, Alcibiade I)</li>
+                <li>Commentario al primo libro degli Elementi di Euclide</li>
+            </ul>
+            
+            <h3>Opere minori</h3>
+            <ul>
+                <li><em>Inni</em>: Composizioni poetiche di carattere teologico</li>
+                <li><em>Opuscoli</em>: Trattati su temi specifici come la provvidenza e il male</li>
+            </ul>
+        </div>
+
+        <button class="section-toggle creative-1" data-section="influenza">
+            <span>Influenza e Ricezione</span>
+        </button>
+        <div class="section-content" id="influenza">
+            <p>L'influenza di Proclo si estende ben oltre l'antichità tardiva:</p>
+            
+            <h3>Medioevo</h3>
+            <p>Attraverso lo Pseudo-Dionigi e il <em>Liber de Causis</em> (una parafrasi degli Elementi di Teologia), il pensiero di Proclo influenzò profondamente la teologia cristiana medievale, specialmente in autori come Tommaso d'Aquino e Meister Eckhart.</p>
+            
+            <h3>Rinascimento</h3>
+            <p>Marsilio Ficino tradusse molte opere di Proclo, che divennero fondamentali per il platonismo rinascimentale. La sua influenza è evidente in Pico della Mirandola e Giordano Bruno.</p>
+            
+            <h3>Età Moderna</h3>
+            <p>L'idealismo tedesco (specialmente Schelling e Hegel) riscoprì Proclo come precursore di una filosofia dialettica. Nel XX secolo, la sua metafisica ha influenzato pensatori come Heidegger e la scuola tradizionalista (Guénon, Coomaraswamy).</p>
+            
+            <blockquote>
+                "Proclo è il vertice della filosofia antica, colui che ha saputo sistematizzare l'intera tradizione platonica in una sintesi grandiosa che ancora oggi stupisce per la sua coerenza e profondità."
+                <footer>- Pierre Hadot, <cite>Esercizi spirituali e filosofia antica</cite></footer>
+            </blockquote>
+        </div>
+
+        <button class="section-toggle creative-2" data-section="concetti">
+            <span>Concetti Chiave</span>
+        </button>
+        <div class="section-content" id="concetti">
+            <h3>Emanazione</h3>
+            <p>Proclo sviluppa una complessa teoria dell'emanazione che spiega come dalla perfezione dell'Uno derivi la molteplicità ordinata del cosmo senza che l'Uno stesso venga diminuito.</p>
+            
+            <h3>Teurgia</h3>
+            <p>Pratica rituale che permette all'anima di elevarsi verso le realtà divine. Proclo integra la filosofia con la teurgia, seguendo la tradizione dei Caldei.</p>
+            
+            <h3>Gerarchia degli esseri</h3>
+            <p>La realtà è strutturata secondo una precisa gerarchia in cui ogni livello partecipa a quello superiore e dà esistenza a quello inferiore.</p>
+            
+            <h3>Eternità del mondo</h3>
+            <p>Contro la creazione cristiana, Proclo difende l'idea platonica di un mondo eternamente derivato dall'Uno.</p>
+            
+            <div class="figure">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Neoplatonic_hierarchy.svg/800px-Neoplatonic_hierarchy.svg.png" alt="Diagramma della gerarchia neoplatonica">
+                <p class="figure-caption">Rappresentazione schematica della gerarchia neoplatonica secondo Proclo</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2023 Enciclopedia di Filosofia Antica. Tutti i diritti riservati.</p>
+    </footer>
+
+    <script>
+        // Gestione apertura/chiusura sezioni
+        document.querySelectorAll('.section-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const sectionId = button.getAttribute('data-section');
+                const sectionContent = document.getElementById(sectionId);
+                
+                button.classList.toggle('active');
+                sectionContent.classList.toggle('active');
+            });
+        });
+
+        // Gestione modalità di lettura
+        document.querySelectorAll('.mode-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Rimuovi tutte le classi di modalità
+                document.body.className = '';
+                
+                // Aggiungi la classe corrispondente alla modalità selezionata
+                const mode = button.getAttribute('data-mode');
+                if (mode !== 'default') {
+                    document.body.classList.add(mode + '-mode');
+                }
+                
+                // Gestione bottoni creativi
+                if (mode === 'creative-buttons') {
+                    document.querySelectorAll('.section-toggle').forEach((btn, index) => {
+                        btn.className = 'section-toggle';
+                        const creativeClass = 'creative-' + ((index % 3) + 1);
+                        btn.classList.add(creativeClass);
+                    });
+                } else {
+                    document.querySelectorAll('.section-toggle').forEach(btn => {
+                        btn.className = 'section-toggle';
+                    });
+                }
+                
+                // Aggiorna stato attivo dei bottoni
+                document.querySelectorAll('.mode-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                button.classList.add('active');
+            });
+        });
+
+        // Apri la prima sezione di default
+        document.querySelector('.section-toggle').click();
+    </script>
+</body>
+</html>

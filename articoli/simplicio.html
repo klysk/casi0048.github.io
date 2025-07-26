@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simplicio di Cilicia: Filosofo Neoplatonico</title>
+    <style>
+        :root {
+            --primary-color: #6d597a;
+            --secondary-color: #b56576;
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 12px rgba(0,0,0,0.08);
+            --border-radius: 10px;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            --gold-accent: #d4a017;
+        }
+
+        body {
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-image: linear-gradient(to bottom, rgba(248,249,250,0.9), rgba(248,249,250,0.9));
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 2px dashed var(--secondary-color);
+            position: relative;
+        }
+
+        header::after {
+            content: "✻";
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-color);
+            padding: 0 15px;
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            font-style: italic;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            margin-top: 0;
+        }
+
+        /* Bottoni sezione - Stile base */
+        .section-toggle {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 18px 30px;
+            margin: 15px 0;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .section-toggle:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .section-toggle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            z-index: -1;
+            transition: var(--transition);
+            opacity: 1;
+        }
+
+        .section-toggle::after {
+            content: '↓';
+            font-size: 1.3rem;
+            transition: var(--transition);
+            margin-left: 10px;
+        }
+
+        .section-toggle.active::after {
+            content: '↑';
+            transform: rotate(180deg);
+        }
+
+        /* Contenuto sezioni */
+        .section-content {
+            background-color: var(--card-bg);
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            border-left: 3px solid transparent;
+        }
+
+        .section-content.active {
+            padding: 25px;
+            max-height: 5000px;
+            border-left-color: var(--secondary-color);
+        }
+
+        /* Modalità lettura */
+        .reading-modes {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .mode-btn {
+            padding: 10px 20px;
+            border-radius: 30px;
+            border: 2px solid var(--primary-color);
+            background: white;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .mode-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            z-index: -1;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .mode-btn:hover, .mode-btn.active {
+            color: white;
+            border-color: transparent;
+        }
+
+        .mode-btn:hover::before, .mode-btn.active::before {
+            opacity: 1;
+        }
+
+        /* Stili modalità specifiche */
+        body.night-mode {
+            --bg-color: #1a1a2e;
+            --card-bg: #16213e;
+            --text-color: #e6e6ff;
+            --primary-color: #9f86c0;
+            --secondary-color: #e0b1cb;
+            --shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        body.philosophical-mode {
+            --primary-color: #5d5c61;
+            --secondary-color: #938e94;
+            --bg-color: #f5f5f5;
+            --card-bg: #fffaf0;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        body.philosophical-mode .section-content {
+            border-left: 3px solid var(--gold-accent);
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="%23d4a01710" d="M50 0 L100 50 L50 100 L0 50 Z"/></svg>');
+            background-size: 60px 60px;
+        }
+
+        body.minimal-mode {
+            --bg-color: #fff;
+            --card-bg: #fff;
+            --shadow: 0 1px 3px rgba(0,0,0,0.1);
+            --primary-color: #555;
+            --secondary-color: #777;
+        }
+
+        body.minimal-mode .section-content {
+            border-left: 1px solid #eee;
+        }
+
+        /* Stili creativi per bottoni */
+        .section-toggle.creative-1 {
+            clip-path: polygon(0% 0%, 92% 0, 100% 50%, 92% 100%, 0% 100%);
+            padding-left: 40px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border-radius: 0;
+        }
+
+        .section-toggle.creative-1::after {
+            content: '→';
+            transform: rotate(90deg);
+        }
+
+        .section-toggle.creative-1.active::after {
+            transform: rotate(270deg);
+        }
+
+        .section-toggle.creative-2 {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            border-radius: 50px;
+        }
+
+        .section-toggle.creative-2::before {
+            background: var(--primary-color);
+            clip-path: circle(0% at 50% 50%);
+        }
+
+        .section-toggle.creative-2:hover, .section-toggle.creative-2.active {
+            color: white;
+        }
+
+        .section-toggle.creative-2:hover::before, .section-toggle.creative-2.active::before {
+            clip-path: circle(100% at 50% 50%);
+        }
+
+        .section-toggle.creative-3 {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 0;
+            position: relative;
+        }
+
+        .section-toggle.creative-3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 4px;
+            background: var(--gold-accent);
+            transition: var(--transition);
+        }
+
+        .section-toggle.creative-3.active::after {
+            width: 100%;
+        }
+
+        /* Elementi tipografici */
+        h2, h3 {
+            color: var(--primary-color);
+            margin-top: 25px;
+        }
+
+        h2 {
+            border-bottom: 1px dashed var(--secondary-color);
+            padding-bottom: 8px;
+            font-size: 1.8rem;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+        }
+
+        blockquote {
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px 25px;
+            margin: 25px 0;
+            background-color: rgba(181, 101, 118, 0.05);
+            font-style: italic;
+            position: relative;
+        }
+
+        blockquote::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--secondary-color);
+            opacity: 0.2;
+            position: absolute;
+            left: 10px;
+            top: -10px;
+            line-height: 1;
+        }
+
+        /* Figure e immagini */
+        .figure {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .figure img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .figure-caption {
+            font-style: italic;
+            margin-top: 10px;
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .section-toggle {
+                padding: 15px 20px;
+                font-size: 1.1rem;
+            }
+            
+            .reading-modes {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .mode-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        /* Effetti speciali */
+        .decoration {
+            position: fixed;
+            opacity: 0.03;
+            z-index: -1;
+            font-size: 20rem;
+            color: var(--primary-color);
+        }
+
+        .decoration-1 {
+            top: -50px;
+            right: -50px;
+        }
+
+        .decoration-2 {
+            bottom: -50px;
+            left: -50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="decoration decoration-1">⌬</div>
+    <div class="decoration decoration-2">⌬</div>
+    
+    <header>
+        <h1>Simplicio di Cilicia</h1>
+        <p class="subtitle">L'ultimo grande commentatore dell'Accademia di Atene</p>
+        
+        <div class="reading-modes">
+            <button class="mode-btn" data-mode="default">Classico</button>
+            <button class="mode-btn" data-mode="night">Notturno</button>
+            <button class="mode-btn" data-mode="philosophical">Filosofico</button>
+            <button class="mode-btn" data-mode="minimal">Minimal</button>
+            <button class="mode-btn" data-mode="creative-buttons">Bottoni Creativi</button>
+        </div>
+    </header>
+
+    <main>
+        <button class="section-toggle" data-section="vita">
+            <span>Vita e Contesto Storico</span>
+        </button>
+        <div class="section-content" id="vita">
+            <p>Simplicio di Cilicia (490-560 d.C. circa) fu uno degli ultimi filosofi neoplatonici dell'Accademia di Atene prima della sua chiusura per ordine dell'imperatore Giustiniano nel 529 d.C. Nato in Cilicia (nell'odierna Turchia meridionale), studiò ad Alessandria sotto Ammonio Ermia e ad Atene sotto Damascio.</p>
+            
+            <div class="figure">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Athens_Plato_Academy_Archaeological_Site_3.jpg/800px-Athens_Plato_Academy_Archaeological_Site_3.jpg" alt="Rovine dell'Accademia di Atene">
+                <p class="figure-caption">Rovine dell'Accademia di Atene dove Simplicio studiò e insegnò</p>
+            </div>
+            
+            <p>Dopo la chiusura dell'Accademia, Simplicio e altri filosofi neoplatonici cercarono rifugio presso la corte del re persiano Cosroe I, sperando di trovare un ambiente più tollerante per la filosofia pagana. Tuttavia, deluso dall'esperienza persiana, Simplicio probabilmente tornò nell'Impero romano d'Oriente, dove continuò a scrivere le sue opere.</p>
+            
+            <blockquote>
+                "Simplicio rappresenta l'ultimo anello di una catena ininterrotta di maestri e discepoli che risaliva fino a Platone stesso. Con lui si chiude definitivamente l'epoca della filosofia antica."
+                <footer>- Ilsetraut Hadot, <cite>Le néoplatonisme</cite></footer>
+            </blockquote>
+        </div>
+
+        <button class="section-toggle" data-section="opere">
+            <span>Opere e Commentari</span>
+        </button>
+        <div class="section-content" id="opere">
+            <p>Simplicio è principalmente ricordato per i suoi ampi commentari alle opere di Aristotele, che rappresentano fonti preziose non solo per la comprensione del pensiero aristotelico, ma anche per la ricostruzione di filosofie precedenti.</p>
+            
+            <h3>Commentari ad Aristotele</h3>
+            <ul>
+                <li><em>Commento al De Caelo</em>: Importante per la storia dell'astronomia antica</li>
+                <li><em>Commento alla Fisica</em>: Contiene ampie citazioni di filosofi presocratici</li>
+                <li><em>Commento alle Categorie</em>: Polemica contro Filopono</li>
+                <li><em>Commento al De Anima</em> (attribuzione discussa)</li>
+            </ul>
+            
+            <h3>Altre opere</h3>
+            <ul>
+                <li><em>Commento al Manuale di Epitteto</em>: Riflessioni etiche in chiave neoplatonica</li>
+                <li>Probabile autore di un commentario agli <em>Elementi</em> di Euclide</li>
+            </ul>
+            
+            <div class="figure">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Aristotle_Altemps_Inv8575.jpg/440px-Aristotle_Altemps_Inv8575.jpg" alt="Busto di Aristotele">
+                <p class="figure-caption">Aristotele, le cui opere furono ampiamente commentate da Simplicio</p>
+            </div>
+            
+            <p>I commentari di Simplicio si distinguono per la loro ampiezza, precisione filologica e l'attenzione alla storia della filosofia precedente. Spesso preservano frammenti di filosofi altrimenti perduti, come Parmenide, Anassagora e gli Stoici.</p>
+        </div>
+
+        <button class="section-toggle" data-section="pensiero">
+            <span>Pensiero Filosofico</span>
+        </button>
+        <div class="section-content" id="pensiero">
+            <p>Simplicio sviluppò una forma di neoplatonismo che cercava di armonizzare Platone con Aristotele, mostrando come le apparenti divergenze tra i due filosofi fossero in realtà riconducibili a differenze di linguaggio e prospettiva.</p>
+            
+            <h3>Metafisica</h3>
+            <p>La sua metafisica segue la struttura gerarchica tipica del neoplatonismo tardo:</p>
+            <ol>
+                <li><strong>L'Uno</strong>: Principio trascendente di tutta la realtà</li>
+                <li><strong>Intelletto divino</strong>: Contiene le Forme platoniche</li>
+                <li><strong>Anima del mondo</strong>: Media tra intelligibile e sensibile</li>
+                <li><strong>Natura</strong>: Principio immanente del cosmo fisico</li>
+            </ol>
+            
+            <h3>Fisica e cosmologia</h3>
+            <p>Simplicio difese la fisica aristotelica contro le critiche di Giovanni Filopono, sostenendo:</p>
+            <ul>
+                <li>L'eternità del mondo</li>
+                <li>La differenza qualitativa tra mondo celeste e sublunare</li>
+                <li>La teoria dei luoghi naturali</li>
+            </ul>
+            
+            <blockquote>
+                "Simplicio vede in Aristotele non un avversario di Platone, ma un continuatore che ha sviluppato aspetti lasciati impliciti nel pensiero del maestro. La sua è una lettura conciliatrice che cerca l'armonia tra i due grandi filosofi."
+                <footer>- Richard Sorabji, <cite>Ancient Commentators on Aristotle</cite></footer>
+            </blockquote>
+            
+            <h3>Etica</h3>
+            <p>Nel suo commento al Manuale di Epitteto, Simplicio sviluppa un'etica neoplatonica che unisce:</p>
+            <ul>
+                <li>L'ascesi stoica</li>
+                <li>La contemplazione aristotelica</li>
+                <li>L'unione mistica plotiniana</li>
+            </ul>
+        </div>
+
+        <button class="section-toggle" data-section="eredita">
+            <span>Eredità e Influenza</span>
+        </button>
+        <div class="section-content" id="eredita">
+            <p>L'influenza di Simplicio si estende ben oltre l'antichità tardiva, attraverso varie fasi della storia del pensiero:</p>
+            
+            <h3>Medioevo</h3>
+            <p>Le opere di Simplicio furono tradotte in siriaco e arabo, influenzando:</p>
+            <ul>
+                <li>La filosofia islamica (Al-Farabi, Avicenna)</li>
+                <li>La scolastica bizantina</li>
+            </ul>
+            
+            <h3>Rinascimento</h3>
+            <p>Con la riscoperta dei testi greci, i commentari di Simplicio divennero fondamentali per:</p>
+            <ul>
+                <li>La comprensione di Aristotele</li>
+                <li>Lo studio dei presocratici</li>
+                <li>Lo sviluppo della filosofia naturale</li>
+            </ul>
+            
+            <div class="figure">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Hypatia_by_Julius_Kronberg.jpg/440px-Hypatia_by_Julius_Kronberg.jpg" alt="Ipazia di Alessandria">
+                <p class="figure-caption">Ipazia di Alessandria, predecessore di Simplicio nella tradizione neoplatonica</p>
+            </div>
+            
+            <h3>Età Moderna</h3>
+            <p>I commentari di Simplicio sono oggi indispensabili per:</p>
+            <ul>
+                <li>La ricostruzione della filosofia presocratica</li>
+                <li>Lo studio della ricezione di Aristotele nell'antichità</li>
+                <li>La comprensione del neoplatonismo tardo</li>
+            </ul>
+            
+            <blockquote>
+                "Simplicio è per noi una miniera di informazioni sulla filosofia antica. Senza i suoi commentari, la nostra conoscenza di molti filosofi presocratici sarebbe enormemente più povera."
+                <footer>- Jonathan Barnes, <cite>The Presocratic Philosophers</cite></footer>
+            </blockquote>
+        </div>
+
+        <button class="section-toggle" data-section="metodo">
+            <span>Metodo Filosofico</span>
+        </button>
+        <div class="section-content" id="metodo">
+            <p>Simplicio sviluppò un metodo filosofico caratteristico che combinava:</p>
+            
+            <h3>Esegesi testuale</h3>
+            <p>Un'analisi minuziosa del testo aristotelico che cerca di:</p>
+            <ul>
+                <li>Risolvere apparenti contraddizioni</li>
+                <li>Chiarire passaggi oscuri</li>
+                <li>Mostrare la coerenza interna</li>
+            </ul>
+            
+            <h3>Storia della filosofia</h3>
+            <p>Una ricostruzione storica delle dottrine precedenti per:</p>
+            <ul>
+                <li>Mostrare lo sfondo delle tesi aristoteliche</li>
+                <li>Preservare tradizioni filosofiche in via di estinzione</li>
+                <li>Dimostrare la continuità del pensiero greco</li>
+            </ul>
+            
+            <h3>Conciliazione</h3>
+            <p>Un tentativo sistematico di mostrare l'armonia tra:</p>
+            <ul>
+                <li>Platone e Aristotele</li>
+                <li>Filosofia e teologia tradizionale</li>
+                <li>Ragione e rivelazione (nella misura in cui accettava i miti religiosi come allegorie)</li>
+            </ul>
+            
+            <div class="figure">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Justinian_mosaic_%28cropped%29.jpg/440px-Justinian_mosaic_%28cropped%29.jpg" alt="Mosaico di Giustiniano">
+                <p class="figure-caption">Giustiniano, il cui editto del 529 portò alla chiusura dell'Accademia di Atene</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px dashed var(--secondary-color);">
+            © 2023 Enciclopedia di Filosofia Antica | Fonti: <em>Commentaria in Aristotelem Graeca</em>, <em>Dizionario dei Filosofi Antichi</em>, <em>The Cambridge History of Later Greek and Early Medieval Philosophy</em>
+        </p>
+    </footer>
+
+    <script>
+        // Gestione apertura/chiusura sezioni
+        document.querySelectorAll('.section-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const sectionId = button.getAttribute('data-section');
+                const sectionContent = document.getElementById(sectionId);
+                
+                button.classList.toggle('active');
+                sectionContent.classList.toggle('active');
+                
+                // Animazione smooth scroll per posizionare la sezione
+                if (sectionContent.classList.contains('active')) {
+                    setTimeout(() => {
+                        sectionContent.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }, 100);
+                }
+            });
+        });
+
+        // Gestione modalità di lettura
+        document.querySelectorAll('.mode-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Rimuovi tutte le classi di modalità
+                document.body.className = '';
+                
+                // Aggiungi la classe corrispondente alla modalità selezionata
+                const mode = button.getAttribute('data-mode');
+                if (mode !== 'default') {
+                    document.body.classList.add(mode + '-mode');
+                }
+                
+                // Gestione bottoni creativi
+                if (mode === 'creative-buttons') {
+                    document.querySelectorAll('.section-toggle').forEach((btn, index) => {
+                        btn.className = 'section-toggle';
+                        const creativeClass = 'creative-' + ((index % 3) + 1);
+                        btn.classList.add(creativeClass);
+                    });
+                } else {
+                    document.querySelectorAll('.section-toggle').forEach(btn => {
+                        btn.className = 'section-toggle';
+                    });
+                }
+                
+                // Aggiorna stato attivo dei bottoni
+                document.querySelectorAll('.mode-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                button.classList.add('active');
+            });
+        });
+
+        // Apri la prima sezione di default
+        document.querySelector('.section-toggle').click();
+    </script>
+</body>
+</html>
