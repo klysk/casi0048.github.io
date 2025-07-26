@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teofrasto - Il Successore di Aristotele</title>
+    <style>
+        :root {
+            --primary-color: #2E7D32;
+            --secondary-color: #388E3C;
+            --text-color: #1B5E20;
+            --bg-color: #E8F5E9;
+            --accent-color: #C8E6C9;
+            --font-main: 'Garamond', 'Times New Roman', serif;
+            --font-alt: 'Palatino Linotype', 'Book Antiqua', serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            transition: all 0.5s ease;
+        }
+
+        /* Stili per le modalità di lettura */
+        .peripatetico {
+            --primary-color: #00695C;
+            --secondary-color: #00796B;
+            --text-color: #004D40;
+            --bg-color: #E0F2F1;
+            --accent-color: #B2DFDB;
+        }
+
+        .botanico {
+            --primary-color: #33691E;
+            --secondary-color: #689F38;
+            --text-color: #1B5E20;
+            --bg-color: #F1F8E9;
+            --accent-color: #DCEDC8;
+        }
+
+        .antico {
+            --primary-color: #5D4037;
+            --secondary-color: #8D6E63;
+            --text-color: #3E2723;
+            --bg-color: #EFEBE9;
+            --accent-color: #D7CCC8;
+            font-family: 'Trajan Pro', 'Times New Roman', serif;
+        }
+
+        .notturno {
+            --primary-color: #81C784;
+            --secondary-color: #66BB6A;
+            --text-color: #E8F5E9;
+            --bg-color: #1B1B1B;
+            --accent-color: #2E2E2E;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+            font-family: var(--font-alt);
+            position: relative;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.8em;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        h1::before, h1::after {
+            content: "🌿";
+            color: var(--secondary-color);
+            padding: 0 15px;
+        }
+
+        h2 {
+            margin-top: 40px;
+            font-size: 1.8em;
+            padding-bottom: 5px;
+            border-bottom: 2px dashed var(--secondary-color);
+        }
+
+        .mode-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--font-alt);
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .mode-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+            transition: 0.5s;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .mode-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Stili per i bottoni di sezione */
+        .section-container {
+            margin: 40px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .section-toggle {
+            position: relative;
+            width: 100%;
+            padding: 20px;
+            text-align: left;
+            border: none;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            font-size: 1.3em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-toggle:hover {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+        }
+
+        .section-toggle::after {
+            content: '⌃';
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+        }
+
+        .section-toggle.active::after {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.3s ease;
+            background-color: white;
+        }
+
+        .section-content.show {
+            max-height: 5000px;
+            padding: 30px;
+            border-top: 1px solid var(--accent-color);
+        }
+
+        .section-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .quote {
+            font-style: italic;
+            padding: 20px;
+            background-color: var(--accent-color);
+            border-radius: 8px;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .quote::before {
+            content: '❝';
+            font-size: 4em;
+            position: absolute;
+            left: 10px;
+            top: 0;
+            color: rgba(0,0,0,0.1);
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .quote-author {
+            text-align: right;
+            font-weight: bold;
+            margin-top: 15px;
+            font-style: normal;
+            color: var(--secondary-color);
+        }
+
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .work-card {
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--primary-color);
+            transition: transform 0.3s ease;
+        }
+
+        .work-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .work-card h4 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 50px;
+            margin: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background-color: var(--primary-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .timeline-year {
+            position: absolute;
+            left: -45px;
+            top: 0;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.8em;
+        }
+
+        .timeline-content {
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-left: 20px;
+            border: 1px solid var(--accent-color);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2em;
+            }
+            
+            .section-toggle {
+                padding: 15px;
+                font-size: 1.1em;
+            }
+            
+            .section-content.show {
+                padding: 20px;
+            }
+            
+            .works-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Teofrasto</h1>
+        <p style="text-align: center; font-style: italic; font-size: 1.2em;">Il padre della botanica e successore di Aristotele</p>
+        
+        <div class="mode-selector">
+            <button class="mode-btn" onclick="setMode('default')">Classico</button>
+            <button class="mode-btn" onclick="setMode('peripatetico')">Peripatetico</button>
+            <button class="mode-btn" onclick="setMode('botanico')">Botanico</button>
+            <button class="mode-btn" onclick="setMode('antico')">Antico</button>
+            <button class="mode-btn" onclick="setMode('notturno')">Notturno</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="section-container">
+            <button class="section-toggle" onclick="toggleSection('biografia')">Biografia</button>
+            <div class="section-content" id="biografia">
+                <p>Teofrasto (371 a.C. - 287 a.C. circa), nato Tirtamo a Ereso nell'isola di Lesbo, fu un filosofo e scienziato greco, successore di Aristotele alla guida del Liceo. Aristotele stesso gli diede il nome Teofrasto ("dio che parla divinamente") per la sua eloquenza.</p>
+                
+                <div class="quote">
+                    "Teofrasto era uomo di straordinaria intelligenza e diligenza... Aristotele lo designò come successore alla guida del Liceo."
+                    <div class="quote-author">- Diogene Laerzio, Vite dei filosofi</div>
+                </div>
+                
+                <p>Guidò la scuola peripatetica per 35 anni, ampliando notevolmente la biblioteca del Liceo e attirando fino a 2000 studenti. Sotto la sua direzione, il Liceo si orientò maggiormente verso la ricerca scientifica e naturalistica.</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">371 a.C.</div>
+                        <div class="timeline-content">Nascita a Ereso, Lesbo</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">347 a.C.</div>
+                        <div class="timeline-content">Incontro con Aristotele ad Asso</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">335 a.C.</div>
+                        <div class="timeline-content">Trasferimento ad Atene con Aristotele</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">322 a.C.</div>
+                        <div class="timeline-content">Successione ad Aristotele come scolarca</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">287 a.C.</div>
+                        <div class="timeline-content">Morte di Teofrasto</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle" onclick="toggleSection('contributi')">Contributi Filosofici</button>
+            <div class="section-content" id="contributi">
+                <h3>Logica e Metafisica</h3>
+                <p>Teofrasto sviluppò la logica aristotelica, introducendo importanti modifiche alla teoria del sillogismo e alla logica modale. Nella metafisica, attenuò il dualismo aristotelico tra forma e materia.</p>
+                
+                <h3>Etica</h3>
+                <p>Nell'etica, enfatizzò il ruolo della fortuna (tyche) nella vita umana e sviluppò una teoria del carattere morale che influenzò la successiva tradizione dei "caratteri".</p>
+                
+                <div class="quote">
+                    "La vita è governata dalla fortuna, non dalla saggezza. Tutta l'arte della filosofia può solo prepararci ad essere fortunati."
+                    <div class="quote-author">- Teofrasto, frammento</div>
+                </div>
+                
+                <h3>Filosofia della Natura</h3>
+                <p>Estese il lavoro aristotelico sulla fisica, sviluppando una teoria del movimento e del cambiamento che anticipava alcuni concetti della fisica moderna.</p>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle" onclick="toggleSection('botanica')">Contributi alla Botanica</button>
+            <div class="section-content" id="botanica">
+                <h3>Storia delle Piante</h3>
+                <p>La sua opera in 9 libri classificava circa 500 specie vegetali, descrivendone struttura, riproduzione e utilità. Distinse tra monocotiledoni e dicotiledoni 2000 anni prima della botanica moderna.</p>
+                
+                <h3>Cause delle Piante</h3>
+                <p>Studiò i fattori che influenzano la crescita delle piante: clima, terreno, coltivazione. Descrisse fenomeni come la germinazione e la caduta delle foglie.</p>
+                
+                <div class="quote">
+                    "Le piante hanno una natura simile agli animali, sebbene più semplice e meno differenziata."
+                    <div class="quote-author">- Teofrasto, Storia delle Piante</div>
+                </div>
+                
+                <h3>Metodologia Scientifica</h3>
+                <p>Pioniere del metodo osservativo in botanica, combinò descrizioni accurate con ipotesi sulle cause dei fenomeni vegetali.</p>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle" onclick="toggleSection('opere')">Opere Principali</button>
+            <div class="section-content" id="opere">
+                <div class="works-grid">
+                    <div class="work-card">
+                        <h4>Storia delle Piante</h4>
+                        <p>Trattato in 9 libri che fondò la botanica scientifica</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>Cause delle Piante</h4>
+                        <p>Analisi dei fattori che influenzano la vita vegetale</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>Caratteri</h4>
+                        <p>30 ritratti psicologici di tipi umani</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>Metafisica</h4>
+                        <p>Breve trattato che sviluppa il pensiero aristotelico</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>Sulle Sensazioni</h4>
+                        <p>Studio sulla percezione e la conoscenza sensoriale</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>Sulle Pietre</h4>
+                        <p>Uno dei primi trattati di mineralogia</p>
+                    </div>
+                </div>
+                
+                <p>Delle oltre 200 opere attribuite a Teofrasto, solo poche ci sono pervenute integralmente, mentre molte sono note solo attraverso frammenti e citazioni.</p>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle" onclick="toggleSection('eredita')">Eredità e Influenza</button>
+            <div class="section-content" id="eredita">
+                <h3>Nella Filosofia Antica</h3>
+                <p>Teofrasto influenzò profondamente:</p>
+                <ul>
+                    <li>La scuola peripatetica successiva</li>
+                    <li>Lo sviluppo dell'empirismo antico</li>
+                    <li>La tradizione dei "caratteri" morali</li>
+                </ul>
+                
+                <h3>Nella Scienza Moderna</h3>
+                <p>I suoi studi botanici anticiparono:</p>
+                <ul>
+                    <li>La classificazione delle piante</li>
+                    <li>L'ecologia vegetale</li>
+                    <li>La fisiologia delle piante</li>
+                </ul>
+                
+                <div class="quote">
+                    "Teofrasto merita il titolo di padre della botanica come Aristotele quello di padre della zoologia."
+                    <div class="quote-author">- Ernst Meyer, storico della scienza</div>
+                </div>
+                
+                <h3>Nella Cultura</h3>
+                <p>I suoi "Caratteri" influenzarono:</p>
+                <ul>
+                    <li>La commedia nuova greca</li>
+                    <li>La caratterizzazione teatrale</li>
+                    <li>La psicologia dei tipi umani</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Documentazione filosofica e scientifica su Teofrasto</p>
+        <p>© 2023 - Tutti i diritti riservati</p>
+    </footer>
+
+    <script>
+        // Funzione per attivare/disattivare le sezioni
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const button = document.querySelector(`[onclick="toggleSection('${sectionId}')"]`);
+            
+            section.classList.toggle('show');
+            button.classList.toggle('active');
+        }
+
+        // Funzione per cambiare modalità di lettura
+        function setMode(mode) {
+            document.body.className = mode;
+            
+            // Salva la preferenza
+            localStorage.setItem('readingMode', mode);
+            
+            // Animazione di transizione
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 300);
+        }
+
+        // Al caricamento della pagina, applica la modalità salvata
+        window.onload = function() {
+            const savedMode = localStorage.getItem('readingMode');
+            if (savedMode) {
+                setMode(savedMode);
+            }
+            
+            // Apri la prima sezione di default
+            toggleSection('biografia');
+        }
+    </script>
+</body>
+</html>
