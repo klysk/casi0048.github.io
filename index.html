@@ -31,7 +31,7 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/SplitText.min.js"></script>
 
 <style>
-  root {
+:root {
     /* Palette Base */
     --bg-dark: #0A0A0A;
     --text-gold: #D4AF37;
@@ -411,7 +411,7 @@ nav {
    <!--  inizio restringimento colonne submenu-->
 .mega-menu.columns-4 {
   display: grid;
-  grid-template-columns: repeat(2, 190px);
+  grid-template-columns: repeat(2, 250px);
   gap: 15px 30px;
   max-width: 960px;
   padding: 20px;
@@ -426,9 +426,9 @@ nav {
 .mega-menu.columns-4 {
   max-width: 900px;  /* riduci larghezza totale del blocco */
   width: auto;       /* lascia che sia fluido sotto il max-width */
-  padding: 20px;
+  padding: 10px;
   display: grid;
-  grid-template-columns: repeat(2, 180px); /* 2 colonne da 150px */
+  grid-template-columns: repeat(2, 240px); /* 2 colonne da 150px */
   gap: 20px 10px;
   box-shadow: 0 0 15px rgba(0,0,0,0.15);
   border-radius: 6px;
@@ -445,6 +445,7 @@ nav {
 .mega-menu {
   display: grid;
   grid-template-columns: repeat(4, minmax(180px, 1fr));
+
   gap: 20px;
   padding: 20px;
   background: #0b0b2a;
@@ -457,9 +458,10 @@ nav {
 
 /* Limite di altezza SOLO per le colonne lunghe */
 .mega-menu .column {
-  max-height: 350px;
+  max-height: 180px;
   overflow-y: auto;
   padding-right: 5px;
+
 }
 
 /* Scrollbar elegante */
@@ -1225,12 +1227,12 @@ header {
 
     <div class="slide-vertical">
       <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Livia.jpeg" alt="Livia">
-      <p>⚖👑🦅𓃹Livia dea egizia🏛️🐍🔱 </p>
+      <p>⚖👑🦅Livia dea egizia🏛️🐍🔱 </p>
     </div>
 
     <div class="slide-vertical">
       <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/dea.jpeg" alt="Dea">
-      <p>𓍝Dea mesopotamica⚯</p>
+      <p>Dea mesopotamica</p>
     </div>
 
     <div class="slide-vertical">
@@ -1712,71 +1714,93 @@ document.addEventListener("DOMContentLoaded", function() {
 
    
     
-    <header id="mainHeader">
-    <div class="menu-container">
-<!-- qui il logo  -->
-        
-<div style="display: flex; align-items: center;">
-  
+   <header>
   <nav class="menu-desktop">
     <ul role="menu">
       <li class="dropdown">
         <a href="https://casi0048.github.io/pagine/benvenuti.html" role="menuitem" class="menu-btn underline-effect">INCIPIT</a>
       </li>
+
       <li class="dropdown">
         <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
           Filosofia antica <span class="arrow">▼</span>
         </button>
         <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia antica">
           <div>
-            <h4>Scuola ionica</h4>
-            <a href="/Presocratici/talete.html" role="menuitem">Talete</a>
+            <h4>Presocratici</h4>
+            <a href="Presocratici/talete.html" role="menuitem">Talete</a>
             <a href="Presocratici/anassimandro.html" role="menuitem">Anassimandro</a>
             <a href="Presocratici/anassimene.html" role="menuitem">Anassimene</a>
+            <a href="articoli/eraclito.html" role="menuitem">Eraclito</a>
           </div>
           <div>
-            <h4>Scuola eleatica</h4>
+            <h4>Eleatismo</h4>
             <a href="Presocratici/senofane.html" role="menuitem">Senofane</a>
-            <a href="/Presocratici/parmenide.html" role="menuitem">Parmenide</a>
+            <a href="Presocratici/parmenide.html" role="menuitem">Parmenide</a>
             <a href="articoli/zenone.html" role="menuitem">Zenone</a>
             <a href="articoli/melisso.html" role="menuitem">Melisso</a>
           </div>
           <div>
             <h4>Sofisti</h4>
-            
             <a href="articoli/gorgia.html" role="menuitem">Gorgia</a>
             <a href="articoli/ippia.html" role="menuitem">Ippia</a>
             <a href="articoli/prodico.html" role="menuitem">Prodico</a>
-            
           </div>
           <div>
             <h4>Pitagorici</h4>
-            <a href="/articoli/pitagora.html" role="menuitem">Pitagora</a>
-            <a href="/articoli/filolao.html" role="menuitem">Filolao</a>
-            <a href="/articoli/alcmeone.html" role="menuitem">Alcmeone</a>
+            <a href="articoli/pitagora.html" role="menuitem">Pitagora</a>
+            <a href="articoli/filolao.html" role="menuitem">Filolao</a>
+            <a href="articoli/alcmeone.html" role="menuitem">Alcmeone</a>
             <a href="articoli/archita.html" role="menuitem">Archita</a>
-            <a href="/articoli/ippaso.html" role="menuitem">Ippaso</a>
+            <a href="articoli/ippaso.html" role="menuitem">Ippaso</a>
           </div>
+ <div>
+            <h4>Scuola cinica</h4>
+            <a href="articoli/antistene.html" role="menuitem">Antistene</a>
+            <a href="" role="menuitem">Diogene di Sinope</a>
+            <a href="" role="menuitem">Cratete di Tebe</a>
+             <a href="articoli/ipparchia.html" role="menuitem">Ipparchia</a>
+            <a href="" role="menuitem">Metrocle di Maronea</a> 
+         </div>
+<div>
+            <h4>Approfondimenti</h4>
+            <a href="https://www.worldhistory.org/trans/it/2-927/donne-nellantica-grecia/" role="menuitem">Donne nell'Antica Grecia</a>
+            <a href="https://www.worldhistory.org/trans/it/1-11373/magna-grecia/" role="menuitem">Magna Grecia</a>
+            <a href="https://www.worldhistory.org/trans/it/1-14956/il-teatro-dellantica-grecia/" role="menuitem">Il teatro dell'antica Grecia</a>
+             <a href="https://www.worldhistory.org/trans/it/1-10553/la-religione-nellantica-grecia/" role="menuitem">La religione nell'antica Grecia</a>
+            <a href="https://www.worldhistory.org/trans/it/1-19269/la-danza-nellantica-grecia/" role="menuitem">La danza nell’Antica Grecia</a> 
+         </div>
         </div>
       </li>
+
       <li class="dropdown">
         <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
           Filosofia classica <span class="arrow">▼</span>
         </button>
         <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia classica">
           <div>
-            <h4>Classici</h4>
+            <h4>Socrate e Scuola</h4>
             <a href="articoli/socrate.html" role="menuitem">Socrate</a>
-            <a href="articoli/platone.html" role="menuitem">Platone</a>
-            <a href="articoli/aristotele.html" role="menuitem">Aristotele</a>
-          </div>
-          <div>
-            <h4>Platonismo</h4>
             <a href="articoli/senofonte.html" role="menuitem">Senofonte</a>
             <a href="articoli/antistene.html" role="menuitem">Antistene</a>
-            <a href="articoli/aristippo.html" role="menuitem">Aristippo</a>
           </div>
           <div>
+            <h4>Platone e Accademia</h4>
+            <a href="articoli/platone.html" role="menuitem">Platone</a>
+            <a href="articoli/aristippo.html" role="menuitem">Aristippo</a>
+            <a href="articoli/diotima.html" role="menuitem">Diotima</a>
+          </div>
+          <div>
+            <h4>Aristotele e Peripatetici</h4>
+            <a href="articoli/aristotele.html" role="menuitem">Aristotele</a>
+            <a href="articoli/teofrasto.html" role="menuitem">Teofrasto</a>
+<a href="articoli/eudemo.html" role="menuitem">Eudemo di Rodi </a>
+<a href="articoli/stratone.html" role="menuitem">Stratone di Lampsaco</a>
+<a href="articoli/demetrio.html" role="menuitem">Demetrio Falereo</a>
+<a href="articoli/andronico.html" role="menuitem">Andronico di Rodi</a>
+<a href="articoli/alessandro-afrodisia.html" role="menuitem">Alessandro di Afrodisia </a>
+          </div>
+<div>
             <h4>Stoicismo</h4>
             <a href="articoli/zenone.html" role="menuitem">Zenone di Cizio</a>
             <a href="articoli/epitteto.html" role="menuitem">Epitteto</a>
@@ -1786,7 +1810,7 @@ document.addEventListener("DOMContentLoaded", function() {
                <a href=" articoli/panezio.html" role="menuitem">Panezio di Rodi</a>
                <a href=" articoli/posidonio.html" role="menuitem">Posidonio di Apamea </a>
           </div>
-          <div>
+<div>
             <h4>Epicureismo</h4>
             <a href="articoli/epicuro.html" role="menuitem">Epicuro</a>
             <a href="articoli/lucrezio.html" role="menuitem">Lucrezio</a>
@@ -1795,8 +1819,19 @@ document.addEventListener("DOMContentLoaded", function() {
             <a href=" articoli/colote.html" role="menuitem">Colote di Lampsaco</a>
             <a href="articoli/zenone_di_sidone.html " role="menuitem">Zenone di Sidone </a>
           </div>
+          <div>
+            <h4>Neoplatonismo</h4>
+            <a href="articoli/plotino.html" role="menuitem">Plotino</a>
+<a href="articoli/giamblico.html" role="menuitem">Giamblico di Calcide </a>
+<a href="articoli/proclo.html" role="menuitem">Proclo</a>
+<a href="articoli/ipazia.html" role="menuitem">Ipatia di Alessandria</a>
+<a href="articoli/simplicio.html" role="menuitem">Simplicio di Cilicia </a>
+           <a href="articoli/orfismo.html" role="menuitem">Orfismo</a>
+           <a href="articoli/eleusi.html" role="menuitem">Misteri Eleusini</a>
+           </div>
         </div>
       </li>
+
       <li class="dropdown">
         <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
           Filosofia medievale <span class="arrow">▼</span>
@@ -1806,7 +1841,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <h4>Medievale</h4>
             <a href="articoli/tommaso%20d'aquino.html" role="menuitem">Tommaso d'Aquino</a>
             <a href="articoli/anselmo.html" role="menuitem">Anselmo</a>
-            <a href="articoli/guglielmo%20di%20ockham" role="menuitem">Guglielmo di Ockham</a>
+            <a href="articoli/guglielmo%20di%20ockham.html" role="menuitem">Guglielmo di Ockham</a>
             <a href="articoli/duns%20scoto.html" role="menuitem">Duns Scoto</a>
           </div>
           <div>
@@ -1814,7 +1849,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <a href="articoli/agostino.html" role="menuitem">Agostino</a>
             <a href="articoli/origene.html" role="menuitem">Origene</a>
             <a href="articoli/gregorio.html" role="menuitem">Gregorio di Nissa</a>
-            <a href="articoli/tertuliao.html" role="menuitem">Tertulliano</a>
+            <a href="articoli/tertulliano.html" role="menuitem">Tertulliano</a>
           </div>
           <div>
             <h4>Filosofia Islamica</h4>
@@ -1832,6 +1867,7 @@ document.addEventListener("DOMContentLoaded", function() {
           </div>
         </div>
       </li>
+
       <li class="dropdown">
         <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
           Filosofia moderna <span class="arrow">▼</span>
@@ -1861,9 +1897,8 @@ document.addEventListener("DOMContentLoaded", function() {
             <a href="articoli/kant.html" role="menuitem">Kant</a>
             <a href="articoli/fichte.html" role="menuitem">Fichte</a>
             <a href="articoli/schelling.html" role="menuitem">Schelling</a>
-            
           </div>
-<div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia contemporanea">
+
           <div>
             <h4>Filosofia russa</h4>
 <a href="articoli/dostoevskij.html" role="menuitem">Fëdor Dostoevskij</a>
@@ -1873,9 +1908,20 @@ document.addEventListener("DOMContentLoaded", function() {
 <a href="articoli/bulgakov.html" role="menuitem">Sergej Bulgakov</a>
 
         </div>
- 
+  <div>
+            <h4>Positivismo</h4>
+<a href="articoli/comte.html" role="menuitem">Auguste Comte </a>
+<a href="articoli/mill.html" role="menuitem">John Stuart Mill </a>
+<a href="articoli/spencer.html" role="menuitem">Herbert Spencer </a>
+<a href="articoli/mach.html" role="menuitem">Ernst Mach</a>
+<a href="articoli/adrig%C3%B2.html
+" role="menuitem">Roberto Ardigò </a>
+
+        </div>
+        </div>
         </div>
       </li>
+
       <li class="dropdown">
         <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
           Filosofia contemporanea <span class="arrow">▼</span>
@@ -1884,91 +1930,100 @@ document.addEventListener("DOMContentLoaded", function() {
           <div>
             <h4>Filosofia analitica</h4>
             <a href="articoli/frege.html" role="menuitem">Frege</a>
-            <a href="articoli/russell.html" role="menuitem">Rusell</a>
-            <a href="articoli/wittgenstein.html" role="menuitem">Wittgenstein </a>
-             <a href="articoli/moore.html" role="menuitem">G.E.Moore</a>
+            <a href="articoli/russell.html" role="menuitem">Russell</a>
+            <a href="articoli/wittgenstein.html" role="menuitem">Wittgenstein</a>
+            <a href="articoli/moore.html" role="menuitem">G.E. Moore</a>
           </div>
           <div>
             <h4>Filosofia Continentale</h4>
             <a href="articoli/husserl.html" role="menuitem">Husserl</a>
             <a href="articoli/heidegger.html" role="menuitem">Heidegger</a>
             <a href="articoli/merleau-ponty.html" role="menuitem">Merleau-Ponty</a>
-<a href="articoli/sartre.html" role="menuitem">Sartre</a>
-<a href="articoli/adorno.html" role="menuitem">Adorno</a>
-<a href="articoli/horkheimer.html" role="menuitem">Horkheimer</a>
-
+            <a href="articoli/sartre.html" role="menuitem">Sartre</a>
+            <a href="articoli/adorno.html" role="menuitem">Adorno</a>
+            <a href="articoli/horkheimer.html" role="menuitem">Horkheimer</a>
           </div>
           <div>
-            <h4> Pragmatismo Americano</h4>
+            <h4>Pragmatismo Americano</h4>
             <a href="articoli/peirce.html" role="menuitem">Peirce</a>
-            <a href="articoli/james.html" role="menuitem">W.James</a>
-            <a href="articoli/dewey.html" role="menuitem"> Dewey</a>
-            <a href="articoli/rorty.html" role="menuitem">R.  Rorty </a>
+            <a href="articoli/james.html" role="menuitem">W. James</a>
+            <a href="articoli/dewey.html" role="menuitem">Dewey</a>
+            <a href="articoli/rorty.html" role="menuitem">R. Rorty</a>
           </div>
           <div>
             <h4>Filosofia postmoderna</h4>
-           <a href="articoli/derrida.html" role="menuitem">Derrida </a>
+            <a href="articoli/derrida.html" role="menuitem">Derrida</a>
             <a href="articoli/foucault.html" role="menuitem">Foucault</a>
-<a href="articoli/lyotard.html" role="menuitem">Lyotard</a>
-<a href="articoli/deleuze.html" role="menuitem">Deleuze</a>
-<a href="articoli/butler.html" role="menuitem">Butler</a>
+            <a href="articoli/lyotard.html" role="menuitem">Lyotard</a>
+            <a href="articoli/deleuze.html" role="menuitem">Deleuze</a>
+            <a href="articoli/butler.html" role="menuitem">Butler</a>
           </div>
-<div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia contemporanea">
           <div>
+            <h4>Filosofia italiana</h4>
+            <a href="articoli/severino.html" role="menuitem">Emmanuele Severino</a>
+            <a href="articoli/eco.html" role="menuitem">Umberto Eco</a>
+            <a href="articoli/vattimo.html" role="menuitem">Gianni Vattimo</a>
+            <a href="articoli/bodei.html" role="menuitem">Remo Bodei</a>
+            <a href="articoli/cacciari.html" role="menuitem">Massimo Cacciari</a>
+            <a href="articoli/galimberti.html" role="menuitem">Umberto Galimberti</a>
+          </div>
+<div>
+            <h4>Socioetica</h4>
+            <a href="articoli/rawls.html" role="menuitem">John Rawls:</a>
+            <a href="articoli/nozick.html" role="menuitem">Robert Nozick</a>
+            <a href="articoli/singer.html" role="menuitem">Peter Singer</a>
+            <a href="articoli/jonas.html" role="menuitem">Hans Jonas</a>
+            <a href="articoli/beauvoir.html" role="menuitem">Simone de Beauvoir</a>
+            <a href="articoli/fraser.html" role="menuitem">Nancy Fraser</a>
+            <a href="articoli/said.html" role="menuitem">Edward Said</a>
+          </div>
+        </div>
+      </li>
 
-           <h4>Filosofia italiana</h4>
-<a href="articoli/severino.html" role="menuitem">Emmanuele Severino</a>
-<a href="articoli/eco.html" role="menuitem">Umberto Eco</a>
-<a href="articoli/vattimo.html
-" role="menuitem">Gianni Vattimo </a>
-<a href="articoli/bodei.html" role="menuitem">Remo Bodei</a>
-<a href="articoli/cacciari.html" role="menuitem">Massimo Cacciari </a>
-<a href="articoli/galimberti.html" role="menuitem">Umberto Galimberti</a>
- </div>
+      <li class="dropdown">
+        <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
+          Filosofia polacca <span class="arrow">▼</span>
+        </button>
+        <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia polacca">
+          <div>
+            <h4>Romanticismo</h4>
+            <a href="articoli/wronski.html" role="menuitem">Józef Hoene-Wroński</a>
+            <a href="articoli/cieszkowski.html" role="menuitem">August Cieszkowski</a>
+            <a href="articoli/mickiewicz.html" role="menuitem">Adam Mickiewicz</a>
+            <a href="articoli/rzewuski.html" role="menuitem">Henryk Rzewuski</a>
+            <a href="articoli/potocki.html" role="menuitem">Stanisław Kostka Potocki</a>
+          </div>
+          <div>
+            <h4>Logica e Analitica</h4>
+            <a href="articoli/twardowski.html" role="menuitem">Kazimierz Twardowski</a>
+            <a href="articoli/lukasiewicz.html" role="menuitem">Jan Łukasiewicz</a>
+            <a href="articoli/tarski.html" role="menuitem">Alfred Tarski</a>
+            <a href="articoli/kotarbinski.html" role="menuitem">Tadeusz Kotarbiński</a>
+            <a href="articoli/ingarden.html" role="menuitem">Roman Ingarden</a>
+          </div>
+          <div>
+            <h4>Periodo comunista</h4>
+            <a href="articoli/kolakowski.html" role="menuitem">Leszek Kołakowski</a>
+            <a href="articoli/wojtyla.html" role="menuitem">Karol Wojtyła<br>(Papa Giovanni Paolo II)</a>
+          </div>
+          <div>
+            <h4>Post-Comunista</h4>
+            <a href="articoli/tischner.html" role="menuitem">Józef Tischner</a>
+            <a href="articoli/bauman.html" role="menuitem">Zygmunt Bauman</a>
+          </div>
+        </div>
+      </li>
 
-
-<li class="dropdown">
-  <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
-    Filosofia polacca <span class="arrow">▼</span>
-  </button>
-  <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia polacca">
-    <div>
-      <h4>Romanticismo</h4>
-      <a href="articoli/wronski.html" role="menuitem">Józef Hoene-Wroński</a>
-      <a href="articoli/cieszkowski.html" role="menuitem">August Cieszkowski</a>
-      <a href="articoli/mickiewicz.html" role="menuitem">Adam Mickiewicz</a>
-      <a href="articoli/rzewuski.html" role="menuitem">Henryk Rzewuski</a>
-      <a href="articoli/potocki.html" role="menuitem">Stanisław Kostka Potocki</a>
-    </div>
-    <div>
-      <h4>Logica e Analitica</h4>
-      <a href="articoli/twardowski.html" role="menuitem">Kazimierz Twardowski</a>
-      <a href="articoli/lukasiewicz.html" role="menuitem">Jan Łukasiewicz</a>
-      <a href="articoli/tarski.html" role="menuitem">Alfred Tarski</a>
-      <a href="articoli/kotarbinski.html" role="menuitem">Tadeusz Kotarbiński</a>
-      <a href="articoli/ingarden.html" role="menuitem">Roman Ingarden</a>
-    </div>
-    <div>
-      <h4>Periodo comunista</h4>
-      <a href="articoli/kolakowski.html" role="menuitem">Leszek Kołakowski</a>
-      <a href="articoli/wojtyla.html" role="menuitem">Karol Wojtyła<br>(Papa Giovanni Paolo II)</a>
-    </div>
-    <div>
-      <h4>Post-Comunista</h4>
-      <a href="articoli/tischner.html" role="menuitem">Józef Tischner</a>
-      <a href="articoli/bauman.html" role="menuitem">Zygmunt Bauman</a>
-    </div>
-  </div>
-</li>
-
-<li class="dropdown">
-  <a href="pagine/pagina-contatti.html" class="menu-btn underline-effect" role="menuitem">
-    Contatti
-  </a>
-</li>
-
-
+      <li class="dropdown">
+        <a href="pagine/pagina-contatti.html" class="menu-btn underline-effect" role="menuitem">Contatti</a>
+      </li>
+    </ul>
+  </nav>
 </header>
+
+<!---=================================================-->
+
+<!-- =============================================-->
 
   <!-- CAROSELLO CITAZIONI -->
     <div class="quotes-carousel" id="quotesCarousel">
@@ -2000,7 +2055,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 <style>
+.subtitle {
+  text-shadow: 0 0 10px transparent;
+  animation: glow 3s infinite alternate;
+}
 
+@keyframes glow {
+  from { text-shadow: 0 0 5px #00FFFF; }
+  to { text-shadow: 0 0 20px #0088FF, 0 0 30px #00FFFF; }
+}
 
 .welcome-title {
   font-family: 'Cinzel Decorative', cursive;
@@ -3215,125 +3278,7 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 
 </style>
-
-
-
-  
-<!--
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".dropdown").forEach((dropdown, i) => {
-    const button = dropdown.querySelector(".menu-btn");
-    const menu = dropdown.querySelector(".mega-menu") || dropdown.querySelector(".menu");
-
-    if (!menu) {
-      console.warn(`⚠️ Nessun menu trovato in dropdown #${i + 1}`, dropdown);
-      return; // salta questo dropdown se non c'è menu
-    }
-
-    let menuTimeout;
-
-    // Mostra il menu al passaggio del mouse
-    dropdown.addEventListener("mouseenter", () => {
-      clearTimeout(menuTimeout);
-      menu.style.display = "grid";
-      menu.style.opacity = "1";
-      menu.style.visibility = "visible";
-      menu.style.pointerEvents = "auto";
-    });
-
-    // Nasconde il menu se il mouse esce
-    dropdown.addEventListener("mouseleave", (e) => {
-      const isInside = dropdown.contains(e.relatedTarget) || menu.contains(e.relatedTarget);
-      if (!isInside) {
-        menuTimeout = setTimeout(() => {
-          menu.style.opacity = "0";
-          menu.style.visibility = "hidden";
-          menu.style.pointerEvents = "none";
-        }, 300);
-      }
-    });
-
-    // Se il mouse rientra nel menu, annulla il timeout
-    menu.addEventListener("mouseenter", () => {
-      clearTimeout(menuTimeout);
-    });
-  });
-});
-
-
-
-    menu.addEventListener("mouseleave", () => {
-      menuTimeout = setTimeout(() => {
-        menu.style.opacity = "0";
-        menu.style.visibility = "hidden";
-        menu.style.pointerEvents = "none";
-      }, 200);
-    });
-
-    button?.addEventListener("focus", () => {
-      menu.style.display = "grid";
-      menu.style.opacity = "1";
-      menu.style.visibility = "visible";
-      menu.style.pointerEvents = "auto";
-    });
-
-    dropdown.addEventListener("focusout", (e) => {
-      if (!dropdown.contains(e.relatedTarget)) {
-        menu.style.opacity = "0";
-        menu.style.visibility = "hidden";
-        menu.style.pointerEvents = "none";
-      }
-    });
-  });
-
-  // EFFETTO SCRITTURA LETTERA PER LETTERA CON CANCELLAZIONE
-  const phrases = [
-    "Pensare è ancora possibile.",
-    "Il sapere inizia con il non sapere.",
-    "Ogni risposta nasconde un'altra domanda.",
-    "La filosofia è sete, non possesso.",
-    "Domandare è respirare con la mente."
-  ];
-
-  const el = document.getElementById("welcome-subtitle");
-  let index = 0;
-  let charIndex = 0;
-  let isDeleting = false;
-
-  function typeEffect() {
-    const current = phrases[index];
-    el.textContent = isDeleting
-      ? current.substring(0, charIndex--)
-      : current.substring(0, charIndex++);
-
-    let delay = isDeleting ? 60 : 120;
-
-    if (!isDeleting && charIndex === current.length + 1) {
-      delay = 1500;
-      isDeleting = true;
-    } else if (isDeleting && charIndex === 0) {
-      isDeleting = false;
-      index = (index + 1) % phrases.length;
-      delay = 500;
-    }
-
-    setTimeout(typeEffect, delay);
-  }
-
-  typeEffect();
-});
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const spinner = document.querySelector(".spinner, .loading, [class*='spinner']");
-  if (spinner) {
-    spinner.remove();
-  }
-});
-</script>  
-        -->
- <!- inizio aggiunta animazione welcome e sottotitolo-->
+<!- inizio aggiunta animazione welcome e sottotitolo-->
 
 <script>
   // Animazione GSAP per titolo e sottotitolo
