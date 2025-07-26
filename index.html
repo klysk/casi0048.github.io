@@ -855,7 +855,23 @@ header {
         grid-template-columns: repeat(4, 1fr);
     }
 }
-
+<!--       -->
+@media (max-width: 768px) {
+  .slider-vertical {
+    width: 120px;
+    top: 250px;
+  }
+  
+  .mega-menu {
+    grid-template-columns: 1fr;
+    width: 90vw;
+  }
+  
+  .top-bar {
+    flex-direction: column;
+  }
+}
+ <!--       --> 
 @media (max-width: 768px) {
     .menu-desktop {
         display: none;
@@ -2023,7 +2039,21 @@ document.addEventListener("DOMContentLoaded", function() {
 </header>
 
 <!---=================================================-->
+<meta name="description" content="Echi di Sofia - Portale di filosofia con approfondimenti su filosofi antichi e moderni">
+<meta property="og:image" content="https://tuosito.com/immagine-social.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Echi di Sofia",
+  "url": "https://tuosito.com"
+}
+  // Ottimizza le animazioni con will-change
+gsap.set(".welcome-title", { willChange: "transform, opacity" });
 
+// Riduci il carico delle particelle
+const particleCount = window.innerWidth < 768 ? 20 : 50;
+</script>
 <!-- =============================================-->
 
   <!-- CAROSELLO CITAZIONI -->
