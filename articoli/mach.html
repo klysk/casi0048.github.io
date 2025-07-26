@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ernst Mach | Filosofo della Scienza</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #5D4037;  /* Brown */
+            --secondary: #8D6E63;  /* Light Brown */
+            --accent: #D84315;  /* Deep Orange */
+            --text: #3E2723;  /* Dark Brown */
+            --bg: #EFEBE9;  /* Light Beige */
+            --card-bg: #FFFFFF;
+            --border: #BCAAA4;  /* Pale Brown */
+            --shadow: 0 4px 8px rgba(93, 64, 55, 0.1);
+            --btn-shape: polygon(0% 15%, 15% 0%, 85% 0%, 100% 15%, 100% 85%, 85% 100%, 15% 100%, 0% 85%);
+        }
+
+        /* Modalità Scientifica */
+        .science-mode {
+            --primary: #006064;  /* Teal */
+            --secondary: #00838F;  /* Cyan */
+            --accent: #FF6D00;  /* Orange */
+            --text: #263238;  /* Blue Gray */
+            --bg: #E0F7FA;  /* Light Cyan */
+            --card-bg: #FFFFFF;
+            --border: #B2EBF2;  /* Pale Cyan */
+            --shadow: 0 4px 8px rgba(0, 96, 100, 0.1);
+            --btn-shape: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+
+        /* Modalità Empirista */
+        .empiric-mode {
+            --primary: #4A148C;  /* Purple */
+            --secondary: #7B1FA2;  /* Deep Purple */
+            --accent: #FFAB00;  /* Amber */
+            --text: #212121;  /* Black */
+            --bg: #F3E5F5;  /* Light Purple */
+            --card-bg: #FFFFFF;
+            --border: #CE93D8;  /* Light Purple */
+            --shadow: 0 4px 8px rgba(74, 20, 140, 0.1);
+            --btn-shape: polygon(0% 0%, 100% 0%, 100% 75%, 75% 75%, 75% 100%, 50% 75%, 0% 75%);
+        }
+
+        /* Modalità Relativista */
+        .relativist-mode {
+            --primary: #B71C1C;  /* Red */
+            --secondary: #E53935;  /* Light Red */
+            --accent: #1A237E;  /* Indigo */
+            --text: #212121;
+            --bg: #FFEBEE;  /* Light Red */
+            --card-bg: #FFFFFF;
+            --border: #EF9A9A;  /* Pale Red */
+            --shadow: 0 4px 8px rgba(183, 28, 28, 0.1);
+            --btn-shape: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            color: var(--text);
+            background-color: var(--bg);
+            margin: 0;
+            padding: 0;
+            transition: all 0.5s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px dotted var(--primary);
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: var(--secondary);
+            font-style: italic;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Controlli Modalità - Design Sperimentale */
+        .mode-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 0.8rem 1.8rem;
+            border: none;
+            background: var(--primary);
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            clip-path: var(--btn-shape);
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+            transform-style: preserve-3d;
+        }
+
+        .mode-btn:hover {
+            background: var(--accent);
+            transform: translateY(-3px) scale(1.05);
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+        }
+
+        .mode-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255,255,255,0.3),
+                rgba(255,255,255,0)
+            );
+            transform: rotate(30deg);
+            transition: all 0.5s ease;
+        }
+
+        .mode-btn:hover::before {
+            left: 100%;
+            top: 100%;
+        }
+
+        /* Sezioni espandibili - Design Scientifico */
+        .section {
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.5s ease;
+            position: relative;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        .section-header {
+            padding: 1.8rem;
+            background: var(--card-bg);
+            color: var(--primary);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.5s ease;
+            position: relative;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .section-header:hover {
+            background: linear-gradient(90deg, var(--card-bg), rgba(141, 110, 99, 0.1));
+        }
+
+        .section-title {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 15px;
+            color: var(--accent);
+        }
+
+        .section-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.7s cubic-bezier(0.4, 0, 0.2, 1), padding 0.7s ease;
+        }
+
+        .section.active .section-content {
+            padding: 2rem;
+            max-height: 5000px;
+        }
+
+        .toggle-icon {
+            transition: transform 0.5s ease, color 0.3s ease;
+            font-size: 1.2rem;
+            color: var(--primary);
+            z-index: 1;
+            background: var(--secondary);
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .section.active .toggle-icon {
+            transform: rotate(180deg);
+            color: var(--accent);
+            background: var(--primary);
+        }
+
+        /* Elementi di Contenuto */
+        .quote {
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            background: rgba(216, 67, 21, 0.05);
+            position: relative;
+            font-style: italic;
+            color: var(--text);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .quote::before {
+            content: '"';
+            position: absolute;
+            top: 0;
+            left: 10px;
+            font-size: 4rem;
+            color: var(--accent);
+            opacity: 0.2;
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .quote-author {
+            display: block;
+            text-align: right;
+            font-weight: bold;
+            margin-top: 1rem;
+            color: var(--secondary);
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .principle-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .principle-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--accent);
+        }
+
+        .principle-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .principle-card h3 {
+            color: var(--primary);
+            margin-top: 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dotted var(--secondary);
+        }
+
+        /* Timeline Scientifica */
+        .timeline {
+            position: relative;
+            padding-left: 60px;
+            margin: 3rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            border-radius: 3px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-date {
+            position: absolute;
+            left: -60px;
+            top: 0;
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+            box-shadow: 0 0 0 4px var(--bg);
+            z-index: 1;
+        }
+
+        .timeline-content {
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 8px;
+            border-left: 3px solid var(--accent);
+            position: relative;
+            box-shadow: var(--shadow);
+            margin-left: 20px;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 20px;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid var(--accent);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .two-columns {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline {
+                padding-left: 50px;
+            }
+            
+            .timeline-date {
+                left: -50px;
+                width: 50px;
+                height: 50px;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .section-header {
+                padding: 1.2rem;
+            }
+            
+            .section.active .section-content {
+                padding: 1.2rem;
+            }
+            
+            .mode-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            
+            .timeline {
+                padding-left: 40px;
+            }
+            
+            .timeline-date {
+                left: -40px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Ernst Mach</h1>
+            <p class="subtitle">Fisico, filosofo e pioniere della psicologia della percezione</p>
+            
+            <div class="mode-controls">
+                <button class="mode-btn" onclick="setMode('default')">
+                    <i class="fas fa-atom"></i> Fisico
+                </button>
+                <button class="mode-btn" onclick="setMode('science')">
+                    <i class="fas fa-flask"></i> Scientifico
+                </button>
+                <button class="mode-btn" onclick="setMode('empiric')">
+                    <i class="fas fa-eye"></i> Empirista
+                </button>
+                <button class="mode-btn" onclick="setMode('relativist')">
+                    <i class="fas fa-rocket"></i> Relativista
+                </button>
+            </div>
+        </header>
+
+        <!-- Sezione Biografia -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title"><i class="fas fa-book-open"></i> Vita e Formazione</h2>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="section-content">
+                <p>Ernst Mach (1838-1916) è stato un fisico e filosofo austriaco, noto per i suoi contributi alla fisica, alla psicologia e alla filosofia della scienza. I suoi lavori sull'ottica, l'acustica e la meccanica influenzarono profondamente lo sviluppo della fisica moderna.</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">1838</div>
+                        <div class="timeline-content">
+                            Nasce a Brno (nell'allora Impero Austriaco) il 18 febbraio, in una famiglia colta e agiata.
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1860</div>
+                        <div class="timeline-content">
+                            Si laurea in fisica all'Università di Vienna con una tesi sull'elettricità di scarica e induzione.
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1867</div>
+                        <div class="timeline-content">
+                            Diventa professore di fisica all'Università di Praga, dove rimarrà per 28 anni.
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1883</div>
+                        <div class="timeline-content">
+                            Pubblica "La meccanica nel suo sviluppo storico-critico", opera fondamentale che influenzerà Einstein.
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1895</div>
+                        <div class="timeline-content">
+                            Ritorna a Vienna come professore di filosofia, occupando la cattedra di "Storia e teoria della scienza induttiva".
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1916</div>
+                        <div class="timeline-content">
+                            Muore a Haar, vicino a Monaco, il 19 febbraio, lasciando un'eredità scientifica e filosofica di grande impatto.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quote">
+                    "I fatti non cessano di esistere perché vengono ignorati."
+                    <span class="quote-author">- Ernst Mach</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Contributi Scientifici -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title"><i class="fas fa-microscope"></i> Contributi Scientifici</h2>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="section-content">
+                <p>Mach ha dato contributi fondamentali in diversi campi della fisica sperimentale:</p>
+                
+                <div class="two-columns">
+                    <div class="principle-card">
+                        <h3>Onde d'urto e fotografia</h3>
+                        <p>Pioniere nello studio delle onde d'urto, sviluppò tecniche fotografiche per visualizzare il flusso d'aria intorno ai proiettili (il "cono di Mach").</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Psicofisica</h3>
+                        <p>Studiò la relazione tra stimoli fisici e percezione sensoriale, formulando la legge di Mach sul contrasto delle bande luminose.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Acustica</h3>
+                        <p>Indagò la natura delle onde sonore e la percezione del suono, scoprendo le "bande di Mach" nell'udito.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Ottica</h3>
+                        <p>Condusse esperimenti fondamentali sulla velocità della luce e sulla percezione visiva.</p>
+                    </div>
+                </div>
+                
+                <div class="quote">
+                    "La scienza può essere considerata come un problema minimo, consistente nella più completa presentazione dei fatti con il minimo dispendio di pensiero."
+                    <span class="quote-author">- Ernst Mach, La meccanica</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Filosofia della Scienza -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title"><i class="fas fa-brain"></i> Empiriocriticismo</h2>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="section-content">
+                <p>Mach sviluppò una filosofia della scienza radicalmente empirista, nota come empiriocriticismo:</p>
+                
+                <h3>Principi fondamentali</h3>
+                <ul>
+                    <li><strong>Anti-metafisica:</strong> Rifiuto di ogni concetto non verificabile empiricamente.</li>
+                    <li><strong>Economia del pensiero:</strong> La scienza deve descrivere i fenomeni nel modo più semplice ed economico possibile.</li>
+                    <li><strong>Relatività della conoscenza:</strong> Tutta la conoscenza è relativa alle sensazioni dell'osservatore.</li>
+                    <li><strong>Critica al concetto di atomo:</strong> Considerava gli atomi come costrutti metafisici non osservabili direttamente.</li>
+                </ul>
+                
+                <div class="two-columns">
+                    <div class="principle-card">
+                        <h3>Fenomenismo</h3>
+                        <p>La realtà è costituita solo da "elementi" (sensazioni) e le loro relazioni funzionali.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Critica alla meccanica newtoniana</h3>
+                        <p>Attaccò i concetti di spazio e tempo assoluti come privi di fondamento empirico.</p>
+                    </div>
+                </div>
+                
+                <div class="quote">
+                    "Il compito della scienza non è tanto quello di spiegare, quanto quello di descrivere nel modo più economico possibile le connessioni tra i fenomeni."
+                    <span class="quote-author">- Ernst Mach, Conoscenza ed errore</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Influenza sulla Relatività -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title"><i class="fas fa-star"></i> Influenza su Einstein</h2>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="section-content">
+                <p>Le idee di Mach ebbero un impatto profondo sullo sviluppo della teoria della relatività:</p>
+                
+                <h3>Principio di Mach</h3>
+                <p>L'inerzia di un corpo non è una proprietà intrinseca, ma deriva dalla sua interazione con la distribuzione totale della massa nell'universo.</p>
+                
+                <div class="two-columns">
+                    <div class="principle-card">
+                        <h3>Critica al concetto di spazio assoluto</h3>
+                        <p>Mach contestò l'esperimento del secchio di Newton, suggerendo che gli effetti inerziali dipendono dalle stelle fisse.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Relatività generale</h3>
+                        <p>Einstein riconobbe che il principio di Mach fu un'ispirazione fondamentale per lo sviluppo della sua teoria.</p>
+                    </div>
+                </div>
+                
+                <div class="quote">
+                    "Mach riconobbe chiaramente le debolezze della meccanica classica e fu vicino a richiedere una teoria della relatività generale, e tutto questo molto prima che nascesse la minima idea della relatività."
+                    <span class="quote-author">- Albert Einstein</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Eredità e Critiche -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title"><i class="fas fa-history"></i> Eredità Intellettuale</h2>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="section-content">
+                <p>L'influenza di Mach si estese ben oltre la fisica e la filosofia della scienza:</p>
+                
+                <div class="two-columns">
+                    <div class="principle-card">
+                        <h3>Positivismo logico</h3>
+                        <p>Il Circolo di Vienna si ispirò all'empiriocriticismo machiano per sviluppare il verificazionismo.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Psicologia della Gestalt</h3>
+                        <p>I suoi studi sulla percezione influenzarono lo sviluppo della psicologia della forma.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Operazionismo</h3>
+                        <p>La sua enfasi sulle operazioni misurabili anticipò l'operazionismo di Bridgman.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Critiche</h3>
+                        <p>La sua opposizione alla teoria atomica fu criticata dopo la conferma sperimentale degli atomi.</p>
+                    </div>
+                </div>
+                
+                <div class="quote">
+                    "Mach ha esercitato una grande influenza sulla nostra generazione. La sua opposizione alla metafisica si è dimostrata estremamente fruttuosa."
+                    <span class="quote-author">- Niels Bohr</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Opere Principali -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title"><i class="fas fa-book"></i> Opere Fondamentali</h2>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="section-content">
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem;">
+                    <div class="principle-card">
+                        <h3>La meccanica nel suo sviluppo storico-critico (1883)</h3>
+                        <p>Analisi critica dei fondamenti della meccanica classica che influenzò Einstein.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>L'analisi delle sensazioni (1886)</h3>
+                        <p>Studio pionieristico sui rapporti tra fisica e psicologia della percezione.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Conoscenza ed errore (1905)</h3>
+                        <p>Esposizione della sua epistemologia e filosofia della scienza.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>La scienza dell'ottica (1921)</h3>
+                        <p>Raccolta postuma dei suoi contributi fondamentali all'ottica fisica.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funzione per attivare/disattivare sezioni
+        function toggleSection(header) {
+            const section = header.parentElement;
+            section.classList.toggle('active');
+            
+            // Animazione speciale
+            if (section.classList.contains('active')) {
+                section.style.transform = 'scale(1.02)';
+                setTimeout(() => {
+                    section.style.transform = '';
+                }, 300);
+            }
+        }
+
+        // Funzione per cambiare modalità di visualizzazione
+        function setMode(mode) {
+            document.body.className = '';
+            if (mode === 'science') {
+                document.body.classList.add('science-mode');
+            } else if (mode === 'empiric') {
+                document.body.classList.add('empiric-mode');
+            } else if (mode === 'relativist') {
+                document.body.classList.add('relativist-mode');
+            }
+            
+            // Salva la preferenza
+            localStorage.setItem('modePreference', mode);
+            
+            // Animazione speciale per i bottoni
+            animateModeButtons(mode);
+        }
+
+        // Animazione creativa per i bottoni
+        function animateModeButtons(mode) {
+            const buttons = document.querySelectorAll('.mode-btn');
+            buttons.forEach((btn, index) => {
+                setTimeout(() => {
+                    btn.style.transform = 'rotate(' + (index % 2 === 0 ? '5deg' : '-5deg') + ') scale(1.1)';
+                    btn.style.filter = 'brightness(1.2)';
+                    
+                    setTimeout(() => {
+                        btn.style.transform = '';
+                        btn.style.filter = '';
+                    }, 500);
+                }, index * 200);
+            });
+        }
+
+        // Carica la modalità preferita al caricamento della pagina
+        window.onload = function() {
+            const savedMode = localStorage.getItem('modePreference');
+            if (savedMode) {
+                setMode(savedMode);
+            }
+            
+            // Apri la prima sezione per default
+            document.querySelector('.section').classList.add('active');
+            
+            // Effetto di apparizione graduale
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.8s ease';
+                document.body.style.opacity = '1';
+            }, 100);
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peter Singer: Filosofo dell'Etica Pratica</title>
+    <style>
+        :root {
+            --primary-color: #27ae60;
+            --secondary-color: #2ecc71;
+            --text-color: #2c3e50;
+            --bg-color: #f5f9fa;
+            --card-bg: #ffffff;
+            --border-radius: 12px;
+            --box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 30px;
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 30px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 2.5rem;
+        }
+
+        .subtitle {
+            color: var(--secondary-color);
+            font-style: italic;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .section-container {
+            margin-bottom: 40px;
+        }
+
+        .section-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 25px;
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .section-header {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, #219653, #27ae60);
+        }
+
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.4rem;
+            font-weight: 600;
+            position: relative;
+            z-index: 2;
+        }
+
+        .toggle-icon {
+            width: 24px;
+            height: 24px;
+            position: relative;
+            z-index: 2;
+            transition: var(--transition);
+        }
+
+        .toggle-icon::before,
+        .toggle-icon::after {
+            content: '';
+            position: absolute;
+            background-color: white;
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+
+        .toggle-icon::before {
+            width: 100%;
+            height: 3px;
+            top: 50%;
+            transform: translateY(-50%) rotate(0deg);
+        }
+
+        .toggle-icon::after {
+            width: 3px;
+            height: 100%;
+            left: 50%;
+            transform: translateX(-50%) rotate(0deg);
+        }
+
+        .section-header.active .toggle-icon::after {
+            transform: translateX(-50%) rotate(90deg);
+            opacity: 0;
+        }
+
+        .section-header.active .toggle-icon::before {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .section-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s cubic-bezier(0.77, 0, 0.175, 1), padding 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .section-content.active {
+            padding: 25px;
+            max-height: 5000px;
+        }
+
+        .section-content p {
+            margin-bottom: 18px;
+            font-size: 1.05rem;
+        }
+
+        .section-content ul, .section-content ol {
+            padding-left: 25px;
+            margin-bottom: 20px;
+        }
+
+        .section-content li {
+            margin-bottom: 10px;
+        }
+
+        .mode-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 500;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .mode-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            opacity: 0;
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .mode-btn:hover::before {
+            opacity: 1;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Modalità Notturna */
+        body.night-mode {
+            --primary-color: #2ecc71;
+            --secondary-color: #27ae60;
+            --text-color: #ecf0f1;
+            --bg-color: #1a1a1a;
+            --card-bg: #2d2d2d;
+        }
+
+        /* Modalità Filosofica */
+        body.philosophy-mode {
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            --primary-color: #6d4c41;
+            --secondary-color: #8d6e63;
+            --text-color: #3e2723;
+            --bg-color: #efebe9;
+            --card-bg: #d7ccc8;
+        }
+
+        body.philosophy-mode .section-header {
+            font-style: italic;
+            letter-spacing: 0.5px;
+        }
+
+        /* Modalità Minimalista */
+        body.minimal-mode {
+            --primary-color: #555;
+            --secondary-color: #777;
+            --text-color: #444;
+            --bg-color: #f9f9f9;
+            --card-bg: #fff;
+            --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        body.minimal-mode .section-card {
+            border: 1px solid #eee;
+            box-shadow: none;
+        }
+
+        body.minimal-mode .mode-btn {
+            background: #eee;
+            color: #555;
+            box-shadow: none;
+        }
+
+        body.minimal-mode .mode-btn::before {
+            background: #ddd;
+        }
+
+        /* Modalità Accademica */
+        body.academic-mode {
+            --primary-color: #2980b9;
+            --secondary-color: #3498db;
+            --text-color: #2c3e50;
+            --bg-color: #ebf5fb;
+            --card-bg: #fff;
+        }
+
+        body.academic-mode .section-header {
+            font-weight: bold;
+        }
+
+        body.academic-mode .section-content {
+            font-size: 0.97rem;
+        }
+
+        /* Modalità Etica */
+        body.ethics-mode {
+            --primary-color: #16a085;
+            --secondary-color: #1abc9c;
+            --text-color: #34495e;
+            --bg-color: #e8f8f5;
+            --card-bg: #fff;
+        }
+
+        body.ethics-mode .section-header {
+            background: linear-gradient(135deg, #1abc9c, #16a085);
+        }
+
+        /* Stile citazioni */
+        blockquote {
+            border-left: 5px solid var(--secondary-color);
+            padding: 15px 20px;
+            margin: 25px 0;
+            font-style: italic;
+            color: var(--primary-color);
+            background-color: rgba(46, 204, 113, 0.05);
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        blockquote::before {
+            content: '"';
+            font-size: 3rem;
+            color: var(--secondary-color);
+            opacity: 0.2;
+            position: absolute;
+            left: 10px;
+            top: -10px;
+            line-height: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            header {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .mode-selector {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .mode-btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            
+            .section-header {
+                padding: 15px;
+            }
+            
+            .section-content.active {
+                padding: 15px;
+            }
+        }
+
+        /* Effetti speciali sezioni */
+        .section-card {
+            position: relative;
+        }
+
+        .section-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(46, 204, 113, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: var(--transition);
+            pointer-events: none;
+        }
+
+        .section-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Animazione apertura sezione */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-content.active {
+            animation: fadeIn 0.5s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Peter Singer</h1>
+            <p class="subtitle">Filosofo dell'Etica Pratica e Pioniere del Movimento per i Diritti Animali</p>
+            <div class="mode-selector">
+                <button class="mode-btn" data-mode="default">Standard</button>
+                <button class="mode-btn" data-mode="night">Notturno</button>
+                <button class="mode-btn" data-mode="philosophy">Filosofico</button>
+                <button class="mode-btn" data-mode="minimal">Minimalista</button>
+                <button class="mode-btn" data-mode="academic">Accademico</button>
+                <button class="mode-btn" data-mode="ethics">Etico</button>
+            </div>
+        </header>
+
+        <div class="section-container">
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Biografia</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <p>Peter Singer (nato nel 1946) è un filosofo morale australiano di origine austriaca, professore di bioetica alla Princeton University e alla University of Melbourne. Considerato uno dei filosofi contemporanei più influenti, Singer è noto per il suo approccio utilitarista all'etica pratica.</p>
+                    
+                    <p>Nato a Melbourne da genitori ebrei viennesi fuggiti dall'Austria dopo l'Anschluss, Singer ha studiato all'Università di Melbourne e all'Università di Oxford. La sua opera più famosa, "Liberazione animale" (1975), è considerata un testo fondante del movimento per i diritti animali.</p>
+                    
+                    <p>Singer ha sviluppato un'etica secolare che affronta questioni pratiche come la povertà globale, l'aborto, l'eutanasia e i diritti degli animali, diventando una figura sia celebrata che controversa nel dibattito filosofico contemporaneo.</p>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Etica Utilitarista</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <p>L'approccio filosofico di Singer si basa sull'utilitarismo, una tradizione filosofica che valuta le azioni in base alle loro conseguenze e alla capacità di massimizzare il benessere generale.</p>
+                    
+                    <blockquote>
+                        "L'etica non è un ideale astratto ma un impegno pratico a ridurre la sofferenza e aumentare la felicità nel mondo."
+                    </blockquote>
+                    
+                    <p>I principi fondamentali dell'etica di Singer includono:</p>
+                    <ul>
+                        <li><strong>Principio di uguaglianza</strong>: gli interessi di tutti gli esseri senzienti devono essere considerati equamente</li>
+                        <li><strong>Principio del bene maggiore</strong>: dobbiamo agire per produrre le migliori conseguenze possibili</li>
+                        <li><strong>Etica globale</strong>: le nostre responsabilità morali si estendono oltre i confini nazionali</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Liberazione Animale</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <p>Pubblicato nel 1975, "Liberazione animale" è l'opera più influente di Singer e ha dato vita al moderno movimento per i diritti animali. Il libro sostiene che la capacità di soffrire (senzienza), non l'intelligenza, è il criterio per considerare gli interessi di un essere.</p>
+                    
+                    <p>Singer introduce il concetto di <strong>specismo</strong>, definendolo come "un pregiudizio o atteggiamento di prevenzione a favore degli interessi dei membri della propria specie e contro quelli dei membri di altre specie".</p>
+                    
+                    <p>Le principali argomentazioni del libro includono:</p>
+                    <ol>
+                        <li>La maggior parte degli usi degli animali nella ricerca scientifica è moralmente ingiustificabile</li>
+                        <li>L'allevamento industriale infligge sofferenze inaccettabili agli animali</li>
+                        <li>Dobbiamo estendere il principio di uguaglianza oltre i confini della specie umana</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>L'Argomento del Bambino che Affoga</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <p>Uno degli esperimenti mentali più famosi di Singer, presentato in "Famine, Affluence, and Morality" (1971), chiede di immaginare di passare accanto a uno stagno dove un bambino sta affogando.</p>
+                    
+                    <blockquote>
+                        "Se è nelle nostre possibilità prevenire qualcosa di negativo senza sacrificare nulla di significativo, dovremmo farlo."
+                    </blockquote>
+                    
+                    <p>L'analogia dimostra che:</p>
+                    <ul>
+                        <li>La distanza geografica non dovrebbe influenzare le nostre responsabilità morali</li>
+                        <li>Non aiutare qualcuno in grave bisogno è moralmente equivalente a causare attivamente il danno</li>
+                        <li>Abbiamo l'obbligo di aiutare gli altri, anche quando ciò richiede sacrifici personali</li>
+                    </ul>
+                    
+                    <p>Questo argomento ha influenzato profondamente il movimento dell'altruismo efficace.</p>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Etica Pratica</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <p>L'opera "Etica pratica" (1979) di Singer rappresenta una sintesi del suo pensiero morale applicato a questioni concrete. Il libro esplora come i principi etici possono guidare le nostre scelte quotidiane.</p>
+                    
+                    <p>Alcune delle posizioni più significative di Singer includono:</p>
+                    
+                    <h3>Bioetica</h3>
+                    <ul>
+                        <li>Difesa dell'aborto e dell'eutanasia in certe circostanze</li>
+                        <li>Critica della sacralità assoluta della vita umana</li>
+                        <li>Analisi delle implicazioni etiche delle nuove tecnologie riproduttive</li>
+                    </ul>
+                    
+                    <h3>Povertà globale</h3>
+                    <ul>
+                        <li>Obbligo morale dei ricchi di aiutare i poveri</li>
+                        <li>Critica del consumismo e dello stile di vita occidentale</li>
+                        <li>Promozione dell'altruismo efficace</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Altruismo Efficace</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <p>Singer è una figura chiave nel movimento dell'altruismo efficace, che applica la ragione e l'evidenza per determinare i modi più efficaci per migliorare il mondo.</p>
+                    
+                    <p>I principi fondamentali includono:</p>
+                    <ul>
+                        <li><strong>Prioritizzazione</strong>: concentrarsi sui problemi più gravi e trascurati</li>
+                        <li><strong>Efficacia</strong>: scegliere interventi con il massimo impatto per unità di risorsa</li>
+                        <li><strong>Razionalità</strong>: basare le decisioni su evidenze e analisi rigorose</li>
+                    </ul>
+                    
+                    <p>Singer sostiene che donare una parte significativa del proprio reddito alle organizzazioni più efficaci sia un obbligo morale per chi vive nei paesi ricchi.</p>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Critiche e Controversie</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <p>Le posizioni di Singer hanno suscitato accesi dibattiti e critiche da diverse prospettive:</p>
+                    
+                    <h3>Critiche filosofiche</h3>
+                    <ul>
+                        <li>L'utilitarismo trascura i diritti individuali e la giustizia</li>
+                        <li>L'enfasi sulle conseguenze può portare a conclusioni controintuitive</li>
+                        <li>Difficoltà nel misurare e confrontare il benessere</li>
+                    </ul>
+                    
+                    <h3>Controversie pubbliche</h3>
+                    <ul>
+                        <li>Le sue posizioni su aborto ed eutanasia hanno provocato proteste</li>
+                        <li>Alcuni hanno accusato le sue teorie di minare il valore della vita umana</li>
+                        <li>Le sue posizioni sui diritti animali hanno suscitato opposizione da parte dell'industria zootecnica</li>
+                    </ul>
+                    
+                    <p>Nonostante le critiche, Singer ha mantenuto le sue posizioni, sostenendo che derivano logicamente dai principi fondamentali dell'etica.</p>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Opere Principali</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <ul>
+                        <li><strong>Liberazione animale</strong> (1975) - Fondamento teorico del movimento per i diritti animali</li>
+                        <li><strong>Etica pratica</strong> (1979) - Applicazione dell'etica utilitarista a questioni concrete</li>
+                        <li><strong>Fame, ricchezza e moralità</strong> (1971) - Saggio seminale sull'obbligo di aiutare i poveri globali</li>
+                        <li><strong>The Life You Can Save</strong> (2009) - Guida all'altruismo efficace e alla filantropia razionale</li>
+                        <li><strong>Ethics in the Real World</strong> (2016) - Raccolta di saggi su questioni etiche contemporanee</li>
+                        <li><strong>Why Vegan?</strong> (2020) - Difesa concisa dello stile di vita vegano</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Eredità e Influenza</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <p>L'influenza di Peter Singer si estende ben oltre l'accademia, avendo plasmato movimenti sociali e dibattiti pubblici:</p>
+                    
+                    <ul>
+                        <li><strong>Movimento per i diritti animali</strong>: Ha ispirato generazioni di attivisti e organizzazioni</li>
+                        <li><strong>Altruismo efficace</strong>: Ha contribuito a fondare un movimento globale con miliardi di dollari in donazioni</li>
+                        <li><strong>Bioetica</strong>: Ha influenzato le politiche su eutanasia e fine vita in molti paesi</li>
+                        <li><strong>Etica globale</strong>: Ha ridefinito il modo in cui pensiamo alle nostre responsabilità verso i poveri del mondo</li>
+                    </ul>
+                    
+                    <p>Sebbene controverso, Singer rimane una delle voci più importanti nell'etica applicata contemporanea, dimostrando come la filosofia possa avere un impatto concreto sul mondo.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funzionalità toggle sezioni
+        document.querySelectorAll('.section-header').forEach(header => {
+            header.addEventListener('click', () => {
+                header.classList.toggle('active');
+                const content = header.nextElementSibling;
+                content.classList.toggle('active');
+            });
+        });
+
+        // Cambio modalità di lettura
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Rimuovi tutte le classi di modalità
+                document.body.className = '';
+                
+                // Aggiungi la classe selezionata
+                const mode = btn.getAttribute('data-mode');
+                if (mode !== 'default') {
+                    document.body.classList.add(`${mode}-mode`);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nancy Fraser: Teorica della Giustizia Sociale</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --text-color: #2c3e50;
+            --bg-color: #f0f7fd;
+            --card-bg: #ffffff;
+            --border-radius: 10px;
+            --box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        body {
+            font-family: 'Merriweather', serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 30px;
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '⚖';
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 120px;
+            opacity: 0.05;
+            z-index: 0;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 2.8rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .subtitle {
+            color: var(--secondary-color);
+            font-style: italic;
+            font-size: 1.3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-container {
+            margin-bottom: 40px;
+        }
+
+        .section-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 30px;
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .section-header {
+            padding: 22px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            transition: var(--transition);
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, #2980b9, #3498db);
+        }
+
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.4rem;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .toggle-icon {
+            width: 26px;
+            height: 26px;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .toggle-icon .line {
+            position: absolute;
+            background-color: white;
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+
+        .toggle-icon .line-1 {
+            width: 100%;
+            height: 3px;
+            top: 30%;
+            transform: rotate(0deg);
+        }
+
+        .toggle-icon .line-2 {
+            width: 80%;
+            height: 3px;
+            top: 70%;
+            right: 0;
+            transform: rotate(0deg);
+        }
+
+        .section-header.active .toggle-icon .line-1 {
+            transform: rotate(135deg);
+            top: 50%;
+        }
+
+        .section-header.active .toggle-icon .line-2 {
+            transform: rotate(45deg);
+            top: 50%;
+            width: 100%;
+        }
+
+        .section-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.7s cubic-bezier(0.4, 0, 0.2, 1), padding 0.7s ease;
+        }
+
+        .section-content.active {
+            padding: 28px;
+            max-height: 5000px;
+        }
+
+        .section-content p {
+            margin-bottom: 20px;
+            font-size: 1.08rem;
+        }
+
+        .section-content ul, .section-content ol {
+            padding-left: 28px;
+            margin-bottom: 22px;
+        }
+
+        .section-content li {
+            margin-bottom: 12px;
+        }
+
+        .mode-selector {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            margin-bottom: 45px;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 500;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .mode-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .mode-btn:hover::before {
+            left: 100%;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Modalità Notturna */
+        body.night-mode {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --text-color: #ecf0f1;
+            --bg-color: #1a1a1a;
+            --card-bg: #2d2d2d;
+        }
+
+        /* Modalità Filosofica */
+        body.philosophy-mode {
+            font-family: 'Cormorant Garamond', serif;
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --text-color: #3d3d3d;
+            --bg-color: #f5f5f5;
+            --card-bg: #e8e8e8;
+        }
+
+        body.philosophy-mode .section-header {
+            font-variant: small-caps;
+            letter-spacing: 1px;
+        }
+
+        /* Modalità Minimalista */
+        body.minimal-mode {
+            --primary-color: #7f8c8d;
+            --secondary-color: #95a5a6;
+            --text-color: #2c3e50;
+            --bg-color: #f9f9f9;
+            --card-bg: #fff;
+            --box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        body.minimal-mode .section-card {
+            border: 1px solid #eee;
+            box-shadow: none;
+        }
+
+        body.minimal-mode .mode-btn {
+            background: #eee;
+            color: #555;
+            box-shadow: none;
+        }
+
+        /* Modalità Accademica */
+        body.academic-mode {
+            --primary-color: #8e44ad;
+            --secondary-color: #9b59b6;
+            --text-color: #2c3e50;
+            --bg-color: #f0e6f6;
+            --card-bg: #fff;
+        }
+
+        body.academic-mode .section-header {
+            font-weight: bold;
+        }
+
+        /* Modalità Critica */
+        body.critical-mode {
+            --primary-color: #e74c3c;
+            --secondary-color: #c0392b;
+            --text-color: #2c3e50;
+            --bg-color: #fdedec;
+            --card-bg: #fff;
+        }
+
+        /* Stile citazioni */
+        blockquote {
+            border-left: 5px solid var(--secondary-color);
+            padding: 20px;
+            margin: 30px 0;
+            font-style: italic;
+            color: var(--primary-color);
+            background-color: rgba(52, 152, 219, 0.05);
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            position: relative;
+        }
+
+        blockquote::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--secondary-color);
+            opacity: 0.2;
+            position: absolute;
+            left: 10px;
+            top: -20px;
+            line-height: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            
+            header {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .mode-selector {
+                flex-direction: column;
+                align-items: center;
+                gap: 12px;
+            }
+            
+            .mode-btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            
+            .section-header {
+                padding: 18px;
+            }
+            
+            .section-content.active {
+                padding: 20px;
+            }
+        }
+
+        /* Effetti speciali sezioni */
+        .section-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+
+        .section-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* Animazione apertura sezione */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-content.active {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* Decorazioni */
+        .justice-symbol {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 30px;
+            opacity: 0.1;
+            z-index: 0;
+            pointer-events: none;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Cormorant+Garamond:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Nancy Fraser</h1>
+            <p class="subtitle">Teorica della Giustizia Sociale</p>
+            <div class="mode-selector">
+                <button class="mode-btn" data-mode="default">Standard</button>
+                <button class="mode-btn" data-mode="night">Notturno</button>
+                <button class="mode-btn" data-mode="philosophy">Filosofico</button>
+                <button class="mode-btn" data-mode="minimal">Minimalista</button>
+                <button class="mode-btn" data-mode="academic">Accademico</button>
+                <button class="mode-btn" data-mode="critical">Critico</button>
+            </div>
+        </header>
+
+        <div class="section-container">
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Biografia</h2>
+                    <div class="toggle-icon">
+                        <div class="line line-1"></div>
+                        <div class="line line-2"></div>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <p>Nancy Fraser (nata nel 1947) è una filosofa e teorica politica femminista statunitense, nota per i suoi contributi alla teoria critica e agli studi sulla giustizia sociale. Professoressa alla New School for Social Research di New York, Fraser è considerata una delle pensatrici più influenti nel campo della filosofia politica contemporanea.</p>
+                    
+                    <p>La sua opera combina elementi del femminismo, della teoria critica, del pragmatismo e della teoria politica per sviluppare un approccio originale alla giustizia sociale. Fraser è particolarmente nota per la sua critica al neoliberismo e per la sua teoria della giustizia come "parità di partecipazione".</p>
+                    
+                    <p>Tra i suoi principali interlocutori teorici vi sono Jürgen Habermas, Axel Honneth e Judith Butler, con cui ha spesso dialogato e talvolta polemizzato, contribuendo a ridefinire il panorama della teoria critica contemporanea.</p>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Teoria della Giustizia</h2>
+                    <div class="toggle-icon">
+                        <div class="line line-1"></div>
+                        <div class="line line-2"></div>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <p>Fraser ha sviluppato una teoria della giustizia che integra tre dimensioni fondamentali: redistribuzione, riconoscimento e rappresentanza.</p>
+                    
+                    <blockquote>
+                        "La giustizia oggi richiede sia la redistribuzione che il riconoscimento, né l'una può essere ridotta all'altro."
+                    </blockquote>
+                    
+                    <p>I pilastri della sua teoria includono:</p>
+                    <ul>
+                        <li><strong>Redistribuzione</strong>: Giustizia economica e lotta alle disuguaglianze materiali</li>
+                        <li><strong>Riconoscimento</strong>: Lotta contro le ingiustizie culturali e per la differenza</li>
+                        <li><strong>Rappresentanza</strong>: Giustizia politica e partecipazione democratica</li>
+                        <li><strong>Parità di partecipazione</strong>: Principio normativo che unifica le tre dimensioni</li>
+                    </ul>
+                    
+                    <p>Fraser critica sia le teorie che privilegiano esclusivamente la redistribuzione (come certe forme di marxismo) sia quelle che si concentrano solo sul riconoscimento (come certi approcci culturalisti).</p>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Femminismo e Capitalismo</h2>
+                    <div class="toggle-icon">
+                        <div class="line line-1"></div>
+                        <div class="line line-2"></div>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <p>Una delle analisi più originali di Fraser riguarda il rapporto tra femminismo e capitalismo, sviluppata in particolare nel libro "Fortunes of Feminism" (2013).</p>
+                    
+                    <p>Le tesi principali includono:</p>
+                    <ol>
+                        <li>Il femminismo della seconda ondata è stato "cooptato" dal neoliberalismo</li>
+                        <li>La critica al "familismo salariale" e la proposta di un modello di "cura universale"</li>
+                        <li>L'analisi della "crisi della cura" nel capitalismo contemporaneo</li>
+                        <li>La necessità di un femminismo anticapitalista e antirazzista</li>
+                    </ol>
+                    
+                    <p>Fraser sostiene che il femminismo non può limitarsi a chiedere l'uguaglianza di genere all'interno del sistema attuale, ma deve mettere in discussione il capitalismo stesso come sistema che produce ingiustizie multiple.</p>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Critica al Neoliberalismo</h2>
+                    <div class="toggle-icon">
+                        <div class="line line-1"></div>
+                        <div class="line line-2"></div>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <p>Fraser ha sviluppato una critica sistematica al neoliberalismo, analizzandolo come un "regime di accumulazione" che produce specifiche forme di ingiustizia.</p>
+                    
+                    <p>Elementi chiave della sua analisi:</p>
+                    
+                    <h3>Caratteristiche del neoliberalismo</h3>
+                    <ul>
+                        <li>Finanziarizzazione dell'economia</li>
+                        <li>Precarizzazione del lavoro</li>
+                        <li>Crisi della riproduzione sociale</li>
+                        <li>Ascesa del nazionalismo reazionario</li>
+                    </ul>
+                    
+                    <h3>Alternative proposte</h3>
+                    <ul>
+                        <li>Ripoliticizzazione dell'economia</li>
+                        <li>Democratizzazione dei processi decisionali</li>
+                        <li>Istituzione di un reddito universale</li>
+                        <li>Riorganizzazione del lavoro di cura</li>
+                    </ul>
+                    
+                    <blockquote>
+                        "Il neoliberalismo non è semplicemente una politica economica, ma un progetto di trasformazione della società nel suo complesso."
+                    </blockquote>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Confronti Teorici</h2>
+                    <div class="toggle-icon">
+                        <div class="line line-1"></div>
+                        <div class="line line-2"></div>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <p>Fraser ha dialogato criticamente con numerosi autori contemporanei, contribuendo a ridefinire il dibattito nella teoria critica:</p>
+                    
+                    <h3>Con Axel Honneth</h3>
+                    <ul>
+                        <li>Critica alla riduzione della giustizia al riconoscimento</li>
+                        <li>Difesa dell'importanza della redistribuzione economica</li>
+                        <li>Proposta di un approccio bidimensionale</li>
+                    </ul>
+                    
+                    <h3>Con Judith Butler</h3>
+                    <ul>
+                        <li>Discussione sul rapporto tra redistribuzione e riconoscimento</li>
+                        <li>Critica all'eccessivo culturalismo</li>
+                        <li>Dialogo sul ruolo dell'economia politica nel femminismo</li>
+                    </ul>
+                    
+                    <h3>Con Jürgen Habermas</h3>
+                    <ul>
+                        <li>Riformulazione della sfera pubblica in termini pluralisti</li>
+                        <li>Critica femminista alla distinzione tra sistema e mondo vitale</li>
+                        <li>Ridefinizione del concetto di emancipazione</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Opere Principali</h2>
+                    <div class="toggle-icon">
+                        <div class="line line-1"></div>
+                        <div class="line line-2"></div>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <ul>
+                        <li><strong>Redistribuzione o riconoscimento?</strong> (2003) - Con Axel Honneth</li>
+                        <li><strong>Scales of Justice</strong> (2008) - Sulla giustizia transnazionale</li>
+                        <li><strong>Fortunes of Feminism</strong> (2013) - Analisi storica del femminismo</li>
+                        <li><strong>Capitalism: A Conversation in Critical Theory</strong> (2018) - Con Rahel Jaeggi</li>
+                        <li><strong>The Old is Dying and the New Cannot Be Born</strong> (2019) - Analisi della crisi politica contemporanea</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Attualità del Pensiero</h2>
+                    <div class="toggle-icon">
+                        <div class="line line-1"></div>
+                        <div class="line line-2"></div>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <p>Il pensiero di Nancy Fraser offre strumenti cruciali per comprendere le sfide del nostro tempo:</p>
+                    
+                    <ul>
+                        <li><strong>Crisi climatica</strong>: La sua analisi del capitalismo illumina le radici della crisi ecologica</li>
+                        <li><strong>Disuguaglianze globali</strong>: La teoria della giustizia transnazionale offre risposte alle ingiustizie globali</li>
+                        <li><strong>Ascesa della destra</strong>: La sua analisi del "neoliberalismo progressista" spiega l'ascesa dei populismi</li>
+                        <li><strong>Femminismo contemporaneo</strong>: La sua critica alla cooptazione neoliberale del femminismo è più attuale che mai</li>
+                    </ul>
+                    
+                    <p>Fraser continua a essere un punto di riferimento imprescindibile per chi cerca risposte radicali alle crisi del capitalismo contemporaneo.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="justice-symbol">⚖</div>
+    </div>
+
+    <script>
+        // Funzionalità toggle sezioni
+        document.querySelectorAll('.section-header').forEach(header => {
+            header.addEventListener('click', () => {
+                header.classList.toggle('active');
+                const content = header.nextElementSibling;
+                content.classList.toggle('active');
+            });
+        });
+
+        // Cambio modalità di lettura
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Rimuovi tutte le classi di modalità
+                document.body.className = '';
+                
+                // Aggiungi la classe selezionata
+                const mode = btn.getAttribute('data-mode');
+                if (mode !== 'default') {
+                    document.body.classList.add(`${mode}-mode`);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

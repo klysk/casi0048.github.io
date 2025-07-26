@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>John Stuart Mill | Filosofo della Libertà</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --text: #2c3e50;
+            --bg: #ecf0f1;
+            --card-bg: #fff;
+            --border: #bdc3c7;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --btn-shape: 20px 5px;
+        }
+
+        /* Modalità Notturna */
+        .night-mode {
+            --primary: #34495e;
+            --secondary: #9b59b6;
+            --accent: #e67e22;
+            --text: #ecf0f1;
+            --bg: #2c3e50;
+            --card-bg: #34495e;
+            --border: #7f8c8d;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --btn-shape: 5px 20px;
+        }
+
+        /* Modalità Utilitarista */
+        .utilitarian-mode {
+            --primary: #27ae60;
+            --secondary: #2ecc71;
+            --accent: #e74c3c;
+            --text: #2c3e50;
+            --bg: #f7f9f9;
+            --card-bg: #fff;
+            --border: #bdc3c7;
+            --shadow: 0 4px 6px rgba(39, 174, 96, 0.1);
+            --btn-shape: 10px 10px;
+        }
+
+        /* Modalità Liberale */
+        .liberal-mode {
+            --primary: #2980b9;
+            --secondary: #3498db;
+            --accent: #f39c12;
+            --text: #2c3e50;
+            --bg: #f5f9fc;
+            --card-bg: #fff;
+            --border: #d4e6f1;
+            --shadow: 0 4px 6px rgba(41, 128, 185, 0.1);
+            --btn-shape: 30px 0;
+        }
+
+        /* Modalità Classica */
+        .classic-mode {
+            --primary: #8e44ad;
+            --secondary: #9b59b6;
+            --accent: #d35400;
+            --text: #2c3e50;
+            --bg: #f5eef8;
+            --card-bg: #fff;
+            --border: #d2b4de;
+            --shadow: 0 4px 6px rgba(142, 68, 173, 0.1);
+            --btn-shape: 0 30px;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            color: var(--text);
+            background-color: var(--bg);
+            margin: 0;
+            padding: 0;
+            transition: all 0.5s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px dashed var(--primary);
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: var(--secondary);
+            font-style: italic;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Controlli Modalità - Design Creativo */
+        .mode-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            background: var(--primary);
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--btn-shape);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transform-style: preserve-3d;
+        }
+
+        .mode-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-3px) rotateX(10deg);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .mode-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .mode-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Sezioni espandibili - Design Avanzato */
+        .section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.5s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        .section-header {
+            padding: 1.8rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.5s ease;
+            position: relative;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+        }
+
+        .section-title {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.7s cubic-bezier(0.4, 0, 0.2, 1), padding 0.7s ease;
+        }
+
+        .section.active .section-content {
+            padding: 2rem;
+            max-height: 5000px;
+        }
+
+        .toggle-icon {
+            transition: transform 0.5s ease, color 0.3s ease;
+            font-size: 1.2rem;
+            color: white;
+            z-index: 1;
+        }
+
+        .section.active .toggle-icon {
+            transform: rotate(180deg);
+            color: var(--accent);
+        }
+
+        /* Elementi di Contenuto */
+        .quote {
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            background: rgba(0,0,0,0.03);
+            position: relative;
+            font-style: italic;
+            color: var(--text);
+        }
+
+        .quote::before {
+            content: '"';
+            position: absolute;
+            top: 0;
+            left: 10px;
+            font-size: 4rem;
+            color: var(--accent);
+            opacity: 0.2;
+            font-family: serif;
+        }
+
+        .quote-author {
+            display: block;
+            text-align: right;
+            font-weight: bold;
+            margin-top: 1rem;
+            color: var(--secondary);
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .principle-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .principle-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: var(--secondary);
+        }
+
+        .principle-card h3 {
+            color: var(--primary);
+            margin-top: 0;
+            border-bottom: 2px dashed var(--secondary);
+            padding-bottom: 0.5rem;
+        }
+
+        /* Timeline Creativa */
+        .timeline {
+            position: relative;
+            padding-left: 4rem;
+            margin: 3rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 2rem;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-date {
+            position: absolute;
+            left: -4rem;
+            top: 0;
+            width: 4rem;
+            height: 4rem;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+            box-shadow: 0 0 0 4px var(--bg);
+        }
+
+        .timeline-content {
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 8px;
+            border-left: 3px solid var(--accent);
+            position: relative;
+            box-shadow: var(--shadow);
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 20px;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid var(--accent);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .two-columns {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline {
+                padding-left: 3rem;
+            }
+            
+            .timeline-date {
+                left: -3rem;
+                width: 3rem;
+                height: 3rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .section-header {
+                padding: 1.2rem;
+            }
+            
+            .section.active .section-content {
+                padding: 1.2rem;
+            }
+            
+            .mode-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>John Stuart Mill</h1>
+            <p class="subtitle">Filosofo della libertà e padre dell'utilitarismo moderno</p>
+            
+            <div class="mode-controls">
+                <button class="mode-btn" onclick="setMode('default')">
+                    <i class="fas fa-sun"></i> Classico
+                </button>
+                <button class="mode-btn" onclick="setMode('night')">
+                    <i class="fas fa-moon"></i> Notturno
+                </button>
+                <button class="mode-btn" onclick="setMode('utilitarian')">
+                    <i class="fas fa-calculator"></i> Utilitarista
+                </button>
+                <button class="mode-btn" onclick="setMode('liberal')">
+                    <i class="fas fa-scale-balanced"></i> Liberale
+                </button>
+            </div>
+        </header>
+
+        <!-- Sezione Biografia -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title"><i class="fas fa-book-open" style="margin-right: 10px;"></i> Vita e Formazione</h2>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="section-content">
+                <p>John Stuart Mill (1806-1873) è stato un filosofo, economista e funzionario britannico, tra i pensatori più influenti del XIX secolo. Figlio del filosofo James Mill, ricevette un'educazione eccezionalmente rigorosa che lo portò a leggere greco a tre anni e latino a otto.</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">1806</div>
+                        <div class="timeline-content">
+                            Nasce a Pentonville, Londra, il 20 maggio, primogenito di James Mill e Harriet Burrow.
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1820</div>
+                        <div class="timeline-content">
+                            Soggiorno in Francia presso la famiglia di Samuel Bentham, fratello di Jeremy Bentham, dove approfondisce le sue conoscenze scientifiche e linguistiche.
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1823</div>
+                        <div class="timeline-content">
+                            Inizia a lavorare per la Compagnia delle Indie Orientali, dove rimarrà per 35 anni, parallelamente alla sua attività intellettuale.
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1851</div>
+                        <div class="timeline-content">
+                            Sposa Harriet Taylor dopo vent'anni di amicizia intellettuale. La loro relazione sarà fondamentale per lo sviluppo del pensiero di Mill.
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1865-1868</div>
+                        <div class="timeline-content">
+                            Eletto membro del Parlamento per Westminster, si batte per i diritti delle donne, la riforma elettorale e la giustizia sociale.
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1873</div>
+                        <div class="timeline-content">
+                            Muore ad Avignone, Francia, l'8 maggio, lasciando un'eredità intellettuale che influenza ancora oggi il pensiero liberale e utilitarista.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quote">
+                    "Chi conosce solo la propria parte della questione, conosce ben poco di quella."
+                    <span class="quote-author">- John Stuart Mill, Sulla Libertà</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Utilitarismo -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title"><i class="fas fa-chess-queen" style="margin-right: 10px;"></i> Utilitarismo Raffinato</h2>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="section-content">
+                <p>Mill sviluppò una versione più sofisticata dell'utilitarismo benthamiano, introducendo la distinzione tra piaceri "superiori" e "inferiori":</p>
+                
+                <div class="two-columns">
+                    <div class="principle-card">
+                        <h3>Principio di Massima Felicità</h3>
+                        <p>Le azioni sono giuste nella misura in cui tendono a promuovere la felicità, e sbagliate se producono il contrario della felicità.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Qualità dei Piaceri</h3>
+                        <p>"È meglio essere un essere umano insoddisfatto che un maiale soddisfatto", distinguendo tra piaceri intellettuali e meramente sensoriali.</p>
+                    </div>
+                </div>
+                
+                <p>Nella sua opera <em>Utilitarismo</em> (1861), Mill risponde alle critiche comuni all'utilitarismo:</p>
+                
+                <ul>
+                    <li><strong>Critica all'edonismo:</strong> Rifiuta l'equiparazione dell'utilitarismo a una filosofia del piacere egoistico.</li>
+                    <li><strong>Giustizia:</strong> Dimostra come i principi di giustizia derivino dalla massimizzazione del benessere.</li>
+                    <li><strong>Diritti individuali:</strong> Mostra come il rispetto dei diritti sia essenziale per la felicità collettiva.</li>
+                </ul>
+                
+                <div class="quote">
+                    "La felicità non è un'esistenza beata; è una vita fatta di pochi e transitori dolori, molti e vari piaceri, con una preponderanza dell'attivo sul passivo."
+                    <span class="quote-author">- John Stuart Mill, Utilitarismo</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Sulla Libertà -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title"><i class="fas fa-dove" style="margin-right: 10px;"></i> Filosofia della Libertà</h2>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="section-content">
+                <p>Nel celebre saggio <em>Sulla Libertà</em> (1859), Mill elabora una difesa radicale della libertà individuale:</p>
+                
+                <h3>Principio del Danno</h3>
+                <p>"L'unico scopo per cui si può legittimamente esercitare un potere su qualsiasi membro di una comunità civilizzata, contro la sua volontà, è per prevenire il danno agli altri."</p>
+                
+                <div class="two-columns">
+                    <div class="principle-card">
+                        <h3>Libertà di Pensiero</h3>
+                        <p>Argomenta che anche le opinioni false hanno valore perché costringono quelle vere a rimanere vive e non diventare semplici dogmi.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Libertà di Azione</h3>
+                        <p>Sostiene che gli individui devono essere liberi di perseguire i propri piani di vita, purché non danneggino altri.</p>
+                    </div>
+                </div>
+                
+                <h3>Importanza dell'Individualità</h3>
+                <p>Mill vede nell'individualità e nell'eccentricità le fonti del progresso sociale e della vitalità culturale:</p>
+                
+                <div class="quote">
+                    "Il valore di uno Stato, alla lunga, è il valore degli individui che lo compongono."
+                    <span class="quote-author">- John Stuart Mill, Sulla Libertà</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Diritti delle Donne -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title"><i class="fas fa-venus" style="margin-right: 10px;"></i> Femminismo e Diritti delle Donne</h2>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="section-content">
+                <p>Mill fu un pionieristico sostenitore dei diritti delle donne, influenzato dalla moglie Harriet Taylor Mill. Nel saggio <em>La soggezione delle donne</em> (1869) sostiene:</p>
+                
+                <ul>
+                    <li><strong>Parità giuridica:</strong> Le donne dovrebbero avere gli stessi diritti legali degli uomini, incluso il diritto di voto.</li>
+                    <li><strong>Educazione:</strong> Le limitazioni educative alle donne sono artificiali e dannose per il progresso sociale.</li>
+                    <li><strong>Matrimonio:</strong> Critica l'istituzione matrimoniale come forma di schiavitù legale per le donne.</li>
+                    <li><strong>Potenziale umano:</strong> L'emancipazione femminile avrebbe raddoppiato la quantità di talento intellettuale disponibile per la società.</li>
+                </ul>
+                
+                <div class="quote">
+                    "Il principio che regola i rapporti sociali esistenti tra i due sessi - la subordinazione legale di un sesso all'altro - è sbagliato in sé, e costituisce oggi uno dei principali ostacoli al progresso umano."
+                    <span class="quote-author">- John Stuart Mill, La soggezione delle donne</span>
+                </div>
+                
+                <p>Durante il suo mandato parlamentare, Mill propose (senza successo) di sostituire la parola "uomo" con "persona" nel Reform Act del 1867, nel tentativo di estendere il suffragio alle donne.</p>
+            </div>
+        </div>
+
+        <!-- Sezione Eredità Intellettuale -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title"><i class="fas fa-brain" style="margin-right: 10px;"></i> Eredità e Influenza</h2>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="section-content">
+                <p>L'influenza di Mill si estende attraverso molte discipline e movimenti intellettuali:</p>
+                
+                <div class="two-columns">
+                    <div class="principle-card">
+                        <h3>Filosofia Politica</h3>
+                        <p>Fondamentale per lo sviluppo del liberalismo moderno, il libertarismo e il femminismo liberale.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Economia</h3>
+                        <p>Ponte tra l'economia classica e il marginalismo, con contributi alla teoria del valore e del commercio internazionale.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Etica</h3>
+                        <p>La sua versione qualitativa dell'utilitarismo rimane influente nella filosofia morale contemporanea.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Educazione</h3>
+                        <p>Le sue idee sull'educazione liberale e lo sviluppo del carattere influenzano ancora la pedagogia.</p>
+                    </div>
+                </div>
+                
+                <h3>Critiche e Dibattiti</h3>
+                <p>Nonostante la sua influenza, il pensiero di Mill ha suscitato critiche:</p>
+                
+                <ul>
+                    <li><strong>Compatibilità:</strong> Alcuni sostengono che il suo utilitarismo sia in tensione con la sua difesa dei diritti individuali.</li>
+                    <li><strong>Elitismo:</strong> La distinzione tra piaceri superiori e inferiori è stata accusata di essere classista.</li>
+                    <li><strong>Individualismo:</strong> Alcuni comunitaristi criticano la sua enfasi eccessiva sull'individuo a scapito delle relazioni sociali.</li>
+                </ul>
+                
+                <div class="quote">
+                    "Sono stato educato nella convinzione che il miglior modo per rendere le persone degne di fiducia sia quello di fidarsi di loro."
+                    <span class="quote-author">- John Stuart Mill, Autobiografia</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Opere Principali -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title"><i class="fas fa-book" style="margin-right: 10px;"></i> Opere Fondamentali</h2>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="section-content">
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem;">
+                    <div class="principle-card">
+                        <h3>Sistema di Logica (1843)</h3>
+                        <p>Trattato innovativo sui metodi della scienza sociale e naturale, con la difesa dell'induzione come base della conoscenza.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Principi di Economia Politica (1848)</h3>
+                        <p>Sintesi dell'economia classica con aperture alle idee socialiste e all'intervento statale per il benessere sociale.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Sulla Libertà (1859)</h3>
+                        <p>Classica difesa della libertà individuale contro l'interferenza statale e la tirannia della maggioranza.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Utilitarismo (1861)</h3>
+                        <p>Esposizione sistematica della sua versione qualitativa dell'utilitarismo, con risposte alle principali obiezioni.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>La soggezione delle donne (1869)</h3>
+                        <p>Appassionata difesa dell'uguaglianza di genere e critica radicale delle strutture patriarcali.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Autobiografia (1873)</h3>
+                        <p>Racconto della sua straordinaria educazione e sviluppo intellettuale, pubblicato postumo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funzione per attivare/disattivare sezioni
+        function toggleSection(header) {
+            const section = header.parentElement;
+            section.classList.toggle('active');
+            
+            // Chiudi le altre sezioni quando una viene aperta
+            if (section.classList.contains('active')) {
+                document.querySelectorAll('.section').forEach(sec => {
+                    if (sec !== section) sec.classList.remove('active');
+                });
+            }
+        }
+
+        // Funzione per cambiare modalità di visualizzazione
+        function setMode(mode) {
+            document.body.className = '';
+            if (mode === 'night') {
+                document.body.classList.add('night-mode');
+            } else if (mode === 'utilitarian') {
+                document.body.classList.add('utilitarian-mode');
+            } else if (mode === 'liberal') {
+                document.body.classList.add('liberal-mode');
+            } else if (mode === 'classic') {
+                document.body.classList.add('classic-mode');
+            }
+            
+            // Salva la preferenza
+            localStorage.setItem('modePreference', mode);
+            
+            // Animazione speciale per i bottoni
+            animateModeButtons();
+        }
+
+        // Animazione creativa per i bottoni
+        function animateModeButtons() {
+            const buttons = document.querySelectorAll('.mode-btn');
+            buttons.forEach((btn, index) => {
+                setTimeout(() => {
+                    btn.style.transform = 'scale(1.1)';
+                    setTimeout(() => {
+                        btn.style.transform = '';
+                    }, 300);
+                }, index * 100);
+            });
+        }
+
+        // Carica la modalità preferita al caricamento della pagina
+        window.onload = function() {
+            const savedMode = localStorage.getItem('modePreference');
+            if (savedMode) {
+                setMode(savedMode);
+            }
+            
+            // Apri la prima sezione per default
+            document.querySelector('.section').classList.add('active');
+            
+            // Aggiungi effetto di apparizione graduale
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        };
+        
+        document.body.style.opacity = '0';
+        document.body.style.transition = 'opacity 0.5s ease';
+    </script>
+</body>
+</html>

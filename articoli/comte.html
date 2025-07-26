@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auguste Comte: Il Padre del Positivismo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #6b8cae;
+            --text: #333;
+            --bg: #f9f9f9;
+            --card-bg: #fff;
+            --border: #e0e0e0;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        /* Modalità Notturna */
+        .night-mode {
+            --primary: #6a5acd;
+            --secondary: #9370db;
+            --text: #e0e0e0;
+            --bg: #121212;
+            --card-bg: #1e1e1e;
+            --border: #333;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Modalità Filosofica */
+        .philo-mode {
+            --primary: #8b4513;
+            --secondary: #a0522d;
+            --text: #333;
+            --bg: #f5f5dc;
+            --card-bg: #fffaf0;
+            --border: #d2b48c;
+            --shadow: rgba(139, 69, 19, 0.1);
+        }
+
+        /* Modalità Minimalista */
+        .minimal-mode {
+            --primary: #333;
+            --secondary: #666;
+            --text: #333;
+            --bg: #fff;
+            --card-bg: #fff;
+            --border: #e0e0e0;
+            --shadow: none;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            color: var(--text);
+            background-color: var(--bg);
+            margin: 0;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            color: var(--secondary);
+            font-style: italic;
+            font-size: 1.2rem;
+        }
+
+        /* Controlli Modalità */
+        .mode-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .mode-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            background: var(--card-bg);
+            color: var(--text);
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .mode-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Sezioni espandibili */
+        .section {
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px var(--shadow);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .section-header {
+            padding: 1.5rem;
+            background-color: var(--primary);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            background-color: var(--secondary);
+        }
+
+        .section-title {
+            margin: 0;
+            font-size: 1.3rem;
+        }
+
+        .section-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+        }
+
+        .section.active .section-content {
+            padding: 1.5rem;
+            max-height: 2000px;
+        }
+
+        .toggle-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .section.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+            margin: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--primary);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-date {
+            position: absolute;
+            left: -3rem;
+            top: 0;
+            background: var(--primary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .timeline-content {
+            padding: 1rem;
+            background: var(--card-bg);
+            border-radius: 4px;
+            border-left: 3px solid var(--secondary);
+        }
+
+        /* Citazioni */
+        blockquote {
+            border-left: 4px solid var(--primary);
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: var(--secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .mode-controls {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Auguste Comte</h1>
+            <p class="subtitle">Il Padre del Positivismo e della Sociologia</p>
+            
+            <div class="mode-controls">
+                <button class="mode-btn" onclick="setMode('default')">Default</button>
+                <button class="mode-btn" onclick="setMode('night')">Notturno</button>
+                <button class="mode-btn" onclick="setMode('philo')">Filosofico</button>
+                <button class="mode-btn" onclick="setMode('minimal')">Minimalista</button>
+            </div>
+        </header>
+
+        <!-- Sezione Biografia -->
+        <div class="section active">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title">Biografia</h2>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="section-content">
+                <p>Auguste Comte (1798-1857) è stato un filosofo francese, considerato il fondatore del positivismo e uno dei padri della sociologia. Nato a Montpellier, Comte sviluppò un sistema filosofico che avrebbe influenzato profondamente il pensiero scientifico e sociale del XIX secolo.</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">1798</div>
+                        <div class="timeline-content">
+                            Nasce a Montpellier, Francia, il 19 gennaio.
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1814-1816</div>
+                        <div class="timeline-content">
+                            Studia all'École Polytechnique di Parigi, dove sviluppa il suo interesse per la matematica e le scienze.
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1826</div>
+                        <div class="timeline-content">
+                            Inizia a tenere lezioni private sul suo "Sistema di filosofia positiva", ma soffre di un esaurimento nervoso.
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1830-1842</div>
+                        <div class="timeline-content">
+                            Pubblica il <em>Corso di filosofia positiva</em> in sei volumi, la sua opera più importante.
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1857</div>
+                        <div class="timeline-content">
+                            Muore a Parigi il 5 settembre, lasciando un'eredità intellettuale che avrebbe influenzato generazioni di pensatori.
+                        </div>
+                    </div>
+                </div>
+                
+                <blockquote>
+                    "Sapere per prevedere, prevedere per potere."
+                </blockquote>
+            </div>
+        </div>
+
+        <!-- Sezione Il Positivismo -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title">Il Positivismo</h2>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="section-content">
+                <p>Il positivismo di Comte rappresenta una rivoluzione nel modo di concepire la conoscenza e il progresso umano. Secondo Comte, la società umana attraversa tre stadi fondamentali:</p>
+                
+                <h3>La Legge dei Tre Stadi</h3>
+                <ol>
+                    <li><strong>Stadio teologico:</strong> L'uomo spiega i fenomeni naturali attraverso entità soprannaturali e divinità.</li>
+                    <li><strong>Stadio metafisico:</strong> Le spiegazioni si basano su concetti astratti e forze essenziali.</li>
+                    <li><strong>Stadio positivo/scientifico:</strong> L'umanità cerca di stabilire relazioni tra fenomeni attraverso l'osservazione e il ragionamento.</li>
+                </ol>
+                
+                <p>Comte riteneva che tutte le scienze avessero attraversato questi stadi, con velocità diverse, e che la sociologia (da lui chiamata inizialmente "fisica sociale") fosse la più giovane e complessa.</p>
+                
+                <blockquote>
+                    "Ogni scienza ha per oggetto la scoperta delle leggi dei fenomeni che studia."
+                </blockquote>
+            </div>
+        </div>
+
+        <!-- Sezione La Classificazione delle Scienze -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title">Classificazione delle Scienze</h2>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="section-content">
+                <p>Comte propose una classificazione gerarchica delle scienze fondamentali, ordinata secondo complessità crescente e dipendenza logica:</p>
+                
+                <table style="width:100%; border-collapse: collapse; margin: 1.5rem 0;">
+                    <tr style="background-color: var(--primary); color: white;">
+                        <th style="padding: 0.8rem; text-align: left;">Scienza</th>
+                        <th style="padding: 0.8rem; text-align: left;">Oggetto di studio</th>
+                        <th style="padding: 0.8rem; text-align: left;">Metodo</th>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border);">
+                        <td style="padding: 0.8rem;">Matematica</td>
+                        <td style="padding: 0.8rem;">Quantità e relazioni numeriche</td>
+                        <td style="padding: 0.8rem;">Deduzione</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border);">
+                        <td style="padding: 0.8rem;">Astronomia</td>
+                        <td style="padding: 0.8rem;">Corpi celesti</td>
+                        <td style="padding: 0.8rem;">Osservazione</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border);">
+                        <td style="padding: 0.8rem;">Fisica</td>
+                        <td style="padding: 0.8rem;">Fenomeni fisici generali</td>
+                        <td style="padding: 0.8rem;">Sperimentazione</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border);">
+                        <td style="padding: 0.8rem;">Chimica</td>
+                        <td style="padding: 0.8rem;">Composizione della materia</td>
+                        <td style="padding: 0.8rem;">Sperimentazione</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border);">
+                        <td style="padding: 0.8rem;">Biologia</td>
+                        <td style="padding: 0.8rem;">Organismi viventi</td>
+                        <td style="padding: 0.8rem;">Comparazione</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.8rem;">Sociologia</td>
+                        <td style="padding: 0.8rem;">Società umana</td>
+                        <td style="padding: 0.8rem;">Osservazione storica</td>
+                    </tr>
+                </table>
+                
+                <p>Questa classificazione riflette la convinzione di Comte che le scienze più complesse si basino su quelle più semplici, e che la sociologia rappresenti il vertice del sapere scientifico.</p>
+            </div>
+        </div>
+
+        <!-- Sezione La Religione dell'Umanità -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title">La Religione dell'Umanità</h2>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="section-content">
+                <p>Nell'ultima fase della sua vita, Comte sviluppò quella che chiamò la "Religione dell'Umanità", un sistema morale e spirituale basato sui principi positivisti:</p>
+                
+                <ul>
+                    <li><strong>L'Umanità come Grande Essere:</strong> Concetto che unifica tutti gli esseri umani, passati, presenti e futuri.</li>
+                    <li><strong>Il Culto dei Grandi Uomini:</strong> Venerazione di figure che hanno contribuito al progresso umano.</li>
+                    <li><strong>Il Calendario Positivista:</strong> Sistema che celebra scienziati, artisti e filosofi invece di santi.</li>
+                    <li><strong>L'Altruismo come Principio Etico:</strong> "Vivere per gli altri" come massima morale fondamentale.</li>
+                </ul>
+                
+                <p>Questa fase del pensiero di Comte è stata spesso criticata come una deviazione dal suo rigoroso approccio scientifico iniziale, ma rappresenta il suo tentativo di creare una base morale per la società industriale moderna.</p>
+                
+                <blockquote>
+                    "L'amore come principio, l'ordine come base, il progresso come fine."
+                </blockquote>
+            </div>
+        </div>
+
+        <!-- Sezione Influenza e Critiche -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title">Influenza e Critiche</h2>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="section-content">
+                <h3>Influenza</h3>
+                <p>Il pensiero di Comte ha avuto un impatto profondo su diverse discipline:</p>
+                
+                <ul>
+                    <li><strong>Sociologia:</strong> Fondazione come disciplina scientifica autonoma.</li>
+                    <li><strong>Filosofia della scienza:</strong> Approccio empirico e rifiuto della metafisica.</li>
+                    <li><strong>Politica:</strong> Influenza su movimenti progressisti e riformisti.</li>
+                    <li><strong>Educazione:</strong> Enfasi sull'istruzione scientifica e tecnica.</li>
+                </ul>
+                
+                <h3>Critiche</h3>
+                <p>Nonostante la sua influenza, il pensiero di Comte ha ricevuto diverse critiche:</p>
+                
+                <ul>
+                    <li><strong>Riduzionismo scientifico:</strong> Eccessiva fiducia nella scienza come unica fonte di conoscenza.</li>
+                    <li><strong>Determinismo:</strong> Visione troppo rigida del progresso storico.</li>
+                    <li><strong>Religione dell'Umanità:</strong> Considerata da molti come una contraddizione con i suoi stessi principi positivisti.</li>
+                    <li><strong>Eurocentrismo:</strong> Visione del progresso basata esclusivamente sull'esperienza europea.</li>
+                </ul>
+                
+                <p>Nonostante queste critiche, l'approccio metodologico di Comte continua a influenzare la ricerca sociale contemporanea.</p>
+            </div>
+        </div>
+
+        <!-- Sezione Opere Principali -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title">Opere Principali</h2>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="section-content">
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
+                    <div style="background: var(--card-bg); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border);">
+                        <h3 style="margin-top: 0; color: var(--primary);">Corso di filosofia positiva (1830-1842)</h3>
+                        <p>L'opera fondamentale di Comte, in cui espone la legge dei tre stadi e la classificazione delle scienze.</p>
+                    </div>
+                    <div style="background: var(--card-bg); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border);">
+                        <h3 style="margin-top: 0; color: var(--primary);">Sistema di politica positiva (1851-1854)</h3>
+                        <p>Dove sviluppa la sua teoria della "Religione dell'Umanità" e del governo positivista.</p>
+                    </div>
+                    <div style="background: var(--card-bg); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border);">
+                        <h3 style="margin-top: 0; color: var(--primary);">Calendario positivista (1849)</h3>
+                        <p>Un sistema alternativo di commemorazione basato su figure del progresso umano.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funzione per attivare/disattivare sezioni
+        function toggleSection(header) {
+            const section = header.parentElement;
+            section.classList.toggle('active');
+        }
+
+        // Funzione per cambiare modalità di visualizzazione
+        function setMode(mode) {
+            document.body.className = '';
+            if (mode === 'night') {
+                document.body.classList.add('night-mode');
+            } else if (mode === 'philo') {
+                document.body.classList.add('philo-mode');
+            } else if (mode === 'minimal') {
+                document.body.classList.add('minimal-mode');
+            }
+            
+            // Salva la preferenza
+            localStorage.setItem('modePreference', mode);
+        }
+
+        // Carica la modalità preferita al caricamento della pagina
+        window.onload = function() {
+            const savedMode = localStorage.getItem('modePreference');
+            if (savedMode) {
+                setMode(savedMode);
+            }
+            
+            // Apri la prima sezione per default
+            document.querySelector('.section').classList.add('active');
+        };
+    </script>
+</body>
+</html>

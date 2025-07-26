@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robert Nozick: Filosofo del Libertarianismo</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+            --card-bg: #fff;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--secondary-color);
+            font-style: italic;
+        }
+
+        .section-container {
+            margin-bottom: 30px;
+        }
+
+        .section-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .section-header {
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--primary-color);
+            color: white;
+            transition: var(--transition);
+        }
+
+        .section-header:hover {
+            background-color: #1a252f;
+        }
+
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.3rem;
+        }
+
+        .toggle-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .section-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+        }
+
+        .section-content.active {
+            padding: 20px;
+            max-height: 2000px;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+        }
+
+        .section-content ul {
+            padding-left: 20px;
+        }
+
+        .mode-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Modalità Notturna */
+        body.night-mode {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --text-color: #ecf0f1;
+            --bg-color: #1a1a1a;
+            --card-bg: #2d2d2d;
+        }
+
+        /* Modalità Filosofica */
+        body.philosophy-mode {
+            font-family: 'Palatino Linotype', 'Book Antiqua', serif;
+            --primary-color: #5d4037;
+            --secondary-color: #8d6e63;
+            --text-color: #3e2723;
+            --bg-color: #efebe9;
+            --card-bg: #d7ccc8;
+        }
+
+        body.philosophy-mode .section-header {
+            font-style: italic;
+            letter-spacing: 1px;
+        }
+
+        /* Modalità Minimalista */
+        body.minimal-mode {
+            --primary-color: #333;
+            --secondary-color: #666;
+            --text-color: #444;
+            --bg-color: #f5f5f5;
+            --card-bg: #fff;
+            --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        body.minimal-mode .section-card {
+            border: 1px solid #eee;
+            box-shadow: none;
+        }
+
+        /* Modalità Accademica */
+        body.academic-mode {
+            --primary-color: #8e44ad;
+            --secondary-color: #9b59b6;
+            --text-color: #2c3e50;
+            --bg-color: #f0e6f6;
+            --card-bg: #fff;
+        }
+
+        body.academic-mode .section-header {
+            font-weight: bold;
+        }
+
+        body.academic-mode .section-content {
+            font-size: 0.95rem;
+        }
+
+        /* Stile bottoni creativi */
+        .section-header {
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: width 0.3s ease;
+            z-index: -1;
+        }
+
+        .section-header:hover::before {
+            width: 100%;
+        }
+
+        .toggle-icon {
+            position: relative;
+            width: 20px;
+            height: 20px;
+        }
+
+        .toggle-icon::before,
+        .toggle-icon::after {
+            content: '';
+            position: absolute;
+            background-color: white;
+            transition: var(--transition);
+        }
+
+        .toggle-icon::before {
+            width: 100%;
+            height: 2px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .toggle-icon::after {
+            width: 2px;
+            height: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-header.active .toggle-icon::after {
+            opacity: 0;
+        }
+
+        /* Stile citazioni */
+        blockquote {
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            color: var(--primary-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .mode-selector {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .mode-btn {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Robert Nozick</h1>
+            <p class="subtitle">Filosofo del Libertarianismo e Critico della Giustizia Distributiva</p>
+            <div class="mode-selector">
+                <button class="mode-btn" data-mode="default">Standard</button>
+                <button class="mode-btn" data-mode="night">Notturno</button>
+                <button class="mode-btn" data-mode="philosophy">Filosofico</button>
+                <button class="mode-btn" data-mode="minimal">Minimalista</button>
+                <button class="mode-btn" data-mode="academic">Accademico</button>
+            </div>
+        </header>
+
+        <div class="section-container">
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Biografia</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <p>Robert Nozick (1938-2002) è stato un filosofo americano e professore all'Università di Harvard. Nato a Brooklyn da una famiglia ebrea, Nozick si è distinto come uno dei pensatori più influenti del XX secolo nel campo della filosofia politica.</p>
+                    
+                    <p>Dopo gli studi alla Columbia University e a Princeton, Nozick ha sviluppato un interesse per la filosofia politica che lo ha portato a scrivere la sua opera più famosa, "Anarchia, Stato e Utopia" (1974), una risposta al "Teoria della giustizia" di John Rawls.</p>
+                    
+                    <p>Nonostante il suo successo nel campo della filosofia politica, Nozick ha successivamente ampliato i suoi interessi ad altre aree della filosofia, tra cui l'epistemologia, la metafisica e l'etica.</p>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Anarchia, Stato e Utopia</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <p>Pubblicato nel 1974, "Anarchia, Stato e Utopia" è l'opera più influente di Nozick e una pietra miliare del pensiero libertario. Il libro è una risposta diretta a "Una teoria della giustizia" di John Rawls e difende una forma di stato minimo.</p>
+                    
+                    <blockquote>
+                        "Gli individui hanno diritti, e ci sono cose che nessuna persona o gruppo può fare loro (senza violare i loro diritti)."
+                    </blockquote>
+                    
+                    <p>Nozick sostiene che:</p>
+                    <ul>
+                        <li>Uno stato più esteso del "minimo" violerebbe i diritti delle persone di non essere costrette a fare certe cose</li>
+                        <li>La redistribuzione della ricchezza equivale al lavoro forzato</li>
+                        <li>I diritti individuali sono inviolabili e non possono essere sacrificati per il bene collettivo</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Teoria dei Diritti</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <p>Al centro della filosofia politica di Nozick c'è una teoria dei diritti naturali basata sulle idee di John Locke. Nozick sostiene che gli individui possiedono certi diritti fondamentali che sono inviolabili.</p>
+                    
+                    <p>Questi diritti includono:</p>
+                    <ul>
+                        <li>Diritto alla vita</li>
+                        <li>Diritto alla libertà</li>
+                        <li>Diritto alla proprietà</li>
+                    </ul>
+                    
+                    <p>Nozick ritiene che questi diritti siano "side constraints" (vincoli laterali) su ciò che gli altri possono fare. Ciò significa che non possiamo violare questi diritti anche se farlo porterebbe a risultati migliori complessivi.</p>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Critica alla Giustizia Distributiva</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <p>Nozick è famoso per la sua critica alle teorie della giustizia distributiva, in particolare quella di John Rawls. La sua argomentazione si basa sul concetto di "justice in holdings" (giustizia nei possessi).</p>
+                    
+                    <p>La teoria di Nozick si articola in tre principi:</p>
+                    <ol>
+                        <li><strong>Principio di acquisizione originale</strong>: come le cose non possedute da nessuno vengono acquisite</li>
+                        <li><strong>Principio di trasferimento</strong>: come le possessioni possono essere trasferite da una persona all'altra</li>
+                        <li><strong>Principio di rettifica</strong>: come affrontare le ingiustizie nei possessi derivanti da violazioni dei primi due principi</li>
+                    </ol>
+                    
+                    <p>Nozick sostiene che qualsiasi distribuzione di beni è giusta se è il risultato di trasferimenti volontari a partire da una situazione iniziale giusta.</p>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>L'Esperimento Mentale della Macchina delle Esperienze</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <p>In "Anarchia, Stato e Utopia", Nozick introduce il famoso esperimento mentale della "macchina delle esperienze" per criticare l'utilitarismo e difendere l'importanza della realtà e dell'autenticità.</p>
+                    
+                    <blockquote>
+                        "Che cosa conta per noi, oltre a come si sentono le nostre esperienze dall'interno?"
+                    </blockquote>
+                    
+                    <p>Nozick chiede: se ci fosse una macchina che potesse darci qualsiasi esperienza desideriamo, sceglieremmo di collegarci ad essa per sempre? La maggior parte delle persone risponde di no, suggerendo che ci sono valori oltre il semplice piacere o benessere soggettivo.</p>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Influenza e Critiche</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <p>L'opera di Nozick ha avuto un impatto significativo sulla filosofia politica contemporanea, stimolando dibattiti sui diritti individuali, la giustizia distributiva e i limiti dello stato.</p>
+                    
+                    <p><strong>Influenze principali:</strong></p>
+                    <ul>
+                        <li>Ha rinvigorito il libertarianismo come posizione filosofica rispettabile</li>
+                        <li>Ha fornito una potente critica alle teorie egualitarie della giustizia</li>
+                        <li>Ha influenzato lo sviluppo dell'economia politica e la teoria delle scelte pubbliche</li>
+                    </ul>
+                    
+                    <p><strong>Critiche principali:</strong></p>
+                    <ul>
+                        <li>La sua teoria dei diritti naturali manca di una solida fondazione filosofica</li>
+                        <li>Lo stato minimo potrebbe non essere in grado di affrontare efficacemente le disuguaglianze sociali</li>
+                        <li>La sua visione della giustizia ignora le circostanze sociali che influenzano le opportunità individuali</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Opere Principali</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <ul>
+                        <li><strong>Anarchia, Stato e Utopia</strong> (1974) - La sua opera più famosa che delinea la sua filosofia politica libertaria</li>
+                        <li><strong>Spiegazioni filosofiche</strong> (1981) - Esplora questioni di epistemologia, metafisica e filosofia della mente</li>
+                        <li><strong>La natura della razionalità</strong> (1993) - Esamina i principi della razionalità e della teoria delle decisioni</li>
+                        <li><strong>Socratic Puzzles</strong> (1997) - Una raccolta di saggi su vari argomenti filosofici</li>
+                        <li><strong>Invarianze: La struttura del mondo oggettivo</strong> (2001) - La sua ultima opera importante che tratta di metafisica e ontologia</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Eredità Intellettuale</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <p>Nonostante il suo allontanamento dalla filosofia politica negli ultimi anni della sua carriera, Nozick rimane una figura centrale nel pensiero libertario e nella filosofia politica contemporanea.</p>
+                    
+                    <p>La sua difesa dei diritti individuali e la critica alle teorie redistributive continuano a influenzare il dibattito politico e filosofico. Molti filosofi contemporanei, sia quelli che concordano con le sue posizioni sia quelli che le criticano, devono confrontarsi con le argomentazioni di Nozick.</p>
+                    
+                    <p>La sua opera rappresenta una sfida permanente a qualsiasi teoria della giustizia che cerchi di giustificare l'intervento statale nella vita degli individui oltre la protezione dei diritti fondamentali.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funzionalità toggle sezioni
+        document.querySelectorAll('.section-header').forEach(header => {
+            header.addEventListener('click', () => {
+                header.classList.toggle('active');
+                const content = header.nextElementSibling;
+                content.classList.toggle('active');
+            });
+        });
+
+        // Cambio modalità di lettura
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Rimuovi tutte le classi di modalità
+                document.body.className = '';
+                
+                // Aggiungi la classe selezionata
+                const mode = btn.getAttribute('data-mode');
+                if (mode !== 'default') {
+                    document.body.classList.add(`${mode}-mode`);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

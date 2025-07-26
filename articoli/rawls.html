@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>John Rawls | Teoria della Giustizia</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;  /* Blu scuro */
+            --secondary: #3498db;  /* Blu */
+            --accent: #e74c3c;  /* Rosso */
+            --text: #2c3e50;
+            --bg: #ecf0f1;  /* Grigio chiaro */
+            --card-bg: #fff;
+            --border: #bdc3c7;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --btn-shape: polygon(0% 20%, 20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%);
+        }
+
+        /* Modalità Giustizia Sociale */
+        .justice-mode {
+            --primary: #27ae60;  /* Verde */
+            --secondary: #2ecc71;  /* Verde chiaro */
+            --accent: #e67e22;  /* Arancione */
+            --text: #34495e;
+            --bg: #e8f8f5;  /* Verde molto chiaro */
+            --card-bg: #fff;
+            --border: #a3e4d7;
+            --shadow: 0 4px 6px rgba(39, 174, 96, 0.1);
+            --btn-shape: polygon(0% 0%, 100% 0%, 100% 75%, 75% 75%, 75% 100%, 50% 75%, 0% 75%);
+        }
+
+        /* Modalità Velio di Ignoranza */
+        .veil-mode {
+            --primary: #8e44ad;  /* Viola */
+            --secondary: #9b59b6;
+            --accent: #f1c40f;  /* Giallo */
+            --text: #2c3e50;
+            --bg: #f5eef8;  /* Viola chiaro */
+            --card-bg: #fff;
+            --border: #d2b4de;
+            --shadow: 0 4px 6px rgba(142, 68, 173, 0.1);
+            --btn-shape: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+
+        /* Modalità Contrattualista */
+        .contract-mode {
+            --primary: #c0392b;  /* Rosso scuro */
+            --secondary: #e74c3c;
+            --accent: #3498db;  /* Blu */
+            --text: #2c3e50;
+            --bg: #fdedec;  /* Rosso chiaro */
+            --card-bg: #fff;
+            --border: #f5b7b1;
+            --shadow: 0 4px 6px rgba(192, 57, 43, 0.1);
+            --btn-shape: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            color: var(--text);
+            background-color: var(--bg);
+            margin: 0;
+            padding: 0;
+            transition: all 0.5s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px dashed var(--primary);
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: var(--secondary);
+            font-style: italic;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Controlli Modalità - Design Creativo */
+        .mode-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 0.8rem 1.8rem;
+            border: none;
+            background: var(--primary);
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            clip-path: var(--btn-shape);
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .mode-btn:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+        }
+
+        .mode-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255,255,255,0.3),
+                rgba(255,255,255,0)
+            );
+            transform: rotate(30deg);
+            transition: all 0.5s ease;
+        }
+
+        .mode-btn:hover::before {
+            left: 100%;
+            top: 100%;
+        }
+
+        /* Sezioni espandibili - Design Elegante */
+        .section {
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.5s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        .section-header {
+            padding: 1.8rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.5s ease;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+        }
+
+        .section-title {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 15px;
+        }
+
+        .section-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.7s cubic-bezier(0.4, 0, 0.2, 1), padding 0.7s ease;
+        }
+
+        .section.active .section-content {
+            padding: 2rem;
+            max-height: 5000px;
+        }
+
+        .toggle-icon {
+            transition: transform 0.5s ease;
+            font-size: 1.2rem;
+        }
+
+        .section.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Elementi di Contenuto */
+        .quote {
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            background: rgba(231, 76, 60, 0.05);
+            position: relative;
+            font-style: italic;
+        }
+
+        .quote::before {
+            content: '"';
+            position: absolute;
+            top: 0;
+            left: 10px;
+            font-size: 4rem;
+            color: var(--accent);
+            opacity: 0.2;
+            font-family: serif;
+        }
+
+        .quote-author {
+            display: block;
+            text-align: right;
+            font-weight: bold;
+            margin-top: 1rem;
+            color: var(--secondary);
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .principle-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .principle-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: var(--secondary);
+        }
+
+        .principle-card h3 {
+            color: var(--primary);
+            margin-top: 0;
+            border-bottom: 2px dashed var(--secondary);
+            padding-bottom: 0.5rem;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 4rem;
+            margin: 3rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 2rem;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-date {
+            position: absolute;
+            left: -4rem;
+            top: 0;
+            width: 4rem;
+            height: 4rem;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+            box-shadow: 0 0 0 4px var(--bg);
+        }
+
+        .timeline-content {
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 8px;
+            border-left: 3px solid var(--accent);
+            position: relative;
+            box-shadow: var(--shadow);
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 20px;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid var(--accent);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .two-columns {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline {
+                padding-left: 3rem;
+            }
+            
+            .timeline-date {
+                left: -3rem;
+                width: 3rem;
+                height: 3rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .section-header {
+                padding: 1.2rem;
+            }
+            
+            .section.active .section-content {
+                padding: 1.2rem;
+            }
+            
+            .mode-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>John Rawls</h1>
+            <p class="subtitle">Teorico della giustizia sociale e del contrattualismo moderno</p>
+            
+            <div class="mode-controls">
+                <button class="mode-btn" onclick="setMode('default')">
+                    <i class="fas fa-balance-scale"></i> Classico
+                </button>
+                <button class="mode-btn" onclick="setMode('justice')">
+                    <i class="fas fa-hand-holding-heart"></i> Giustizia
+                </button>
+                <button class="mode-btn" onclick="setMode('veil')">
+                    <i class="fas fa-blind"></i> Velio
+                </button>
+                <button class="mode-btn" onclick="setMode('contract')">
+                    <i class="fas fa-handshake"></i> Contratto
+                </button>
+            </div>
+        </header>
+
+        <!-- Sezione Biografia -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title"><i class="fas fa-book-open"></i> Vita e Formazione</h2>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="section-content">
+                <p>John Rawls (1921-2002) è stato un filosofo statunitense, considerato uno dei più importanti teorici politici del XX secolo. La sua opera "Una teoria della giustizia" (1971) rivoluzionò la filosofia politica contemporanea.</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">1921</div>
+                        <div class="timeline-content">
+                            Nasce a Baltimora, Maryland, il 21 febbraio, in una famiglia benestante.
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1943</div>
+                        <div class="timeline-content">
+                            Si laurea a Princeton e viene arruolato nell'esercito durante la Seconda Guerra Mondiale.
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1950</div>
+                        <div class="timeline-content">
+                            Ottiene il dottorato a Princeton con una tesi su "Uno studio sul fondamento della conoscenza etica".
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1971</div>
+                        <div class="timeline-content">
+                            Pubblica "Una teoria della giustizia", opera che lo rende famoso a livello mondiale.
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1993</div>
+                        <div class="timeline-content">
+                            Pubblica "Liberalismo politico", che sviluppa e modifica alcune idee della sua opera principale.
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2002</div>
+                        <div class="timeline-content">
+                            Muore a Lexington, Massachusetts, il 24 novembre, lasciando un'eredità filosofica immensa.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quote">
+                    "La giustizia è la prima virtù delle istituzioni sociali, come la verità lo è per i sistemi di pensiero."
+                    <span class="quote-author">- John Rawls, Una teoria della giustizia</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Teoria della Giustizia -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title"><i class="fas fa-gavel"></i> Teoria della Giustizia</h2>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="section-content">
+                <p>Rawls propone una teoria della giustizia come equità, basata su due principi fondamentali:</p>
+                
+                <div class="two-columns">
+                    <div class="principle-card">
+                        <h3>Principio di Libertà</h3>
+                        <p>Ogni persona ha un eguale diritto al più ampio sistema di libertà fondamentali compatibile con un sistema simile di libertà per tutti.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Principio di Differenza</h3>
+                        <p>Le disuguaglianze sociali ed economiche devono essere organizzate in modo da essere:
+                            a) al massimo vantaggio dei meno avvantaggiati
+                            b) collegate a cariche e posizioni aperte a tutti in condizioni di equa eguaglianza di opportunità</p>
+                    </div>
+                </div>
+                
+                <div class="quote">
+                    "Le istituzioni fondamentali di una società distribuiscono i diritti e i doveri fondamentali e determinano la divisione dei vantaggi derivanti dalla cooperazione sociale."
+                    <span class="quote-author">- John Rawls</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Posizione Originaria -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title"><i class="fas fa-user-secret"></i> Posizione Originaria</h2>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="section-content">
+                <p>Rawls immagina un ipotetico "stato di natura" moderno, chiamato Posizione Originaria, dove gli individui scelgono i principi di giustizia dietro un "velo di ignoranza":</p>
+                
+                <h3>Caratteristiche del velo di ignoranza</h3>
+                <ul>
+                    <li>Nessuno conosce il proprio posto nella società</li>
+                    <li>Nessuno conosce la propria classe sociale o status</li>
+                    <li>Nessuno conosce le proprie capacità naturali o intelligenza</li>
+                    <li>Nessuno conosce la propria concezione del bene</li>
+                    <li>Nessuno conosce le particolarità della propria psicologia</li>
+                </ul>
+                
+                <div class="quote">
+                    "Dietro il velo di ignoranza, nessuno sa chi sarà nella società. Quindi, si sceglieranno principi che garantiscano una posizione accettabile a tutti."
+                    <span class="quote-author">- John Rawls</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Liberalismo Politico -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title"><i class="fas fa-landmark"></i> Liberalismo Politico</h2>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="section-content">
+                <p>Nella sua opera successiva, Rawls sviluppa il concetto di "consenso per intersezione" in una società pluralistica:</p>
+                
+                <div class="two-columns">
+                    <div class="principle-card">
+                        <h3>Ragionevolezza</h3>
+                        <p>I cittadini sono disposti a proporre e ad accettare principi equi di cooperazione sociale.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Pluralismo ragionevole</h3>
+                        <p>Accettazione del fatto che nelle società libere esistono dottrine comprensive contrastanti ma ragionevoli.</p>
+                    </div>
+                </div>
+                
+                <div class="quote">
+                    "Un liberalismo politico cerca una base politica indipendente dalle dottrine filosofiche e religiose contrastanti."
+                    <span class="quote-author">- John Rawls, Liberalismo politico</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Eredità e Critiche -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title"><i class="fas fa-chart-line"></i> Influenza e Critiche</h2>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="section-content">
+                <p>Il pensiero di Rawls ha generato un vasto dibattito nella filosofia politica contemporanea:</p>
+                
+                <div class="two-columns">
+                    <div class="principle-card">
+                        <h3>Influenze</h3>
+                        <ul>
+                            <li>Rinascita del contrattualismo</li>
+                            <li>Sviluppo del liberalismo egualitario</li>
+                            <li>Teorie della democrazia deliberativa</li>
+                            <li>Filosofia del diritto internazionale</li>
+                        </ul>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Critiche</h3>
+                        <ul>
+                            <li>Robert Nozick: critica all'egalitarismo</li>
+                            <li>Michael Sandel: critica comunitarista</li>
+                            <li>Amartya Sen: approccio delle capacità</li>
+                            <li>Femministe: critica all'astrazione</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="quote">
+                    "Rawls ha ridefinito l'agenda della filosofia politica nel XX secolo."
+                    <span class="quote-author">- Jürgen Habermas</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Opere Principali -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title"><i class="fas fa-book"></i> Opere Fondamentali</h2>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="section-content">
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem;">
+                    <div class="principle-card">
+                        <h3>Una teoria della giustizia (1971)</h3>
+                        <p>Opera fondamentale che presenta la teoria della giustizia come equità.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Liberalismo politico (1993)</h3>
+                        <p>Sviluppa il concetto di consenso per intersezione in società pluralistiche.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Il diritto dei popoli (1999)</h3>
+                        <p>Estende la teoria della giustizia alla società internazionale.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Giustizia come equità: una riformulazione (2001)</h3>
+                        <p>Riassume e modifica alcuni aspetti della sua teoria.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funzione per attivare/disattivare sezioni
+        function toggleSection(header) {
+            const section = header.parentElement;
+            section.classList.toggle('active');
+        }
+
+        // Funzione per cambiare modalità di visualizzazione
+        function setMode(mode) {
+            document.body.className = '';
+            if (mode === 'justice') {
+                document.body.classList.add('justice-mode');
+            } else if (mode === 'veil') {
+                document.body.classList.add('veil-mode');
+            } else if (mode === 'contract') {
+                document.body.classList.add('contract-mode');
+            }
+            
+            // Salva la preferenza
+            localStorage.setItem('modePreference', mode);
+            
+            // Animazione speciale per i bottoni
+            animateModeButtons();
+        }
+
+        // Animazione creativa per i bottoni
+        function animateModeButtons() {
+            const buttons = document.querySelectorAll('.mode-btn');
+            buttons.forEach((btn, index) => {
+                setTimeout(() => {
+                    btn.style.transform = 'scale(1.1)';
+                    setTimeout(() => {
+                        btn.style.transform = '';
+                    }, 300);
+                }, index * 100);
+            });
+        }
+
+        // Carica la modalità preferita al caricamento della pagina
+        window.onload = function() {
+            const savedMode = localStorage.getItem('modePreference');
+            if (savedMode) {
+                setMode(savedMode);
+            }
+            
+            // Apri la prima sezione per default
+            document.querySelector('.section').classList.add('active');
+        };
+    </script>
+</body>
+</html>

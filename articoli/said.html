@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edward Said: Intellettuale Postcoloniale</title>
+    <style>
+        :root {
+            --primary-color: #16a085;
+            --secondary-color: #1abc9c;
+            --text-color: #2c3e50;
+            --bg-color: #e8f8f5;
+            --card-bg: #ffffff;
+            --border-radius: 8px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 30px;
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '✍';
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 120px;
+            opacity: 0.05;
+            z-index: 0;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 2.8rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .subtitle {
+            color: var(--secondary-color);
+            font-style: italic;
+            font-size: 1.3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-container {
+            margin-bottom: 40px;
+        }
+
+        .section-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 30px;
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .section-header {
+            padding: 22px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            transition: var(--transition);
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, #1abc9c, #16a085);
+        }
+
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.4rem;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .toggle-icon {
+            width: 24px;
+            height: 24px;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .toggle-icon::before,
+        .toggle-icon::after {
+            content: '';
+            position: absolute;
+            background-color: white;
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+
+        .toggle-icon::before {
+            width: 100%;
+            height: 2px;
+            top: 50%;
+            transform: translateY(-50%) rotate(90deg);
+        }
+
+        .toggle-icon::after {
+            width: 100%;
+            height: 2px;
+            top: 50%;
+            transform: translateY(-50%) rotate(0deg);
+        }
+
+        .section-header.active .toggle-icon::before {
+            transform: translateY(-50%) rotate(45deg);
+        }
+
+        .section-header.active .toggle-icon::after {
+            transform: translateY(-50%) rotate(-45deg);
+        }
+
+        .section-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.7s cubic-bezier(0.4, 0, 0.2, 1), padding 0.7s ease;
+        }
+
+        .section-content.active {
+            padding: 28px;
+            max-height: 5000px;
+        }
+
+        .section-content p {
+            margin-bottom: 20px;
+            font-size: 1.08rem;
+        }
+
+        .section-content ul, .section-content ol {
+            padding-left: 28px;
+            margin-bottom: 22px;
+        }
+
+        .section-content li {
+            margin-bottom: 12px;
+        }
+
+        .mode-selector {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            margin-bottom: 45px;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 500;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .mode-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .mode-btn:hover::before {
+            left: 100%;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Modalità Notturna */
+        body.night-mode {
+            --primary-color: #1abc9c;
+            --secondary-color: #16a085;
+            --text-color: #ecf0f1;
+            --bg-color: #1a1a1a;
+            --card-bg: #2d2d2d;
+        }
+
+        /* Modalità Filosofica */
+        body.philosophy-mode {
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            --primary-color: #5d4037;
+            --secondary-color: #8d6e63;
+            --text-color: #3d3d3d;
+            --bg-color: #efebe9;
+            --card-bg: #d7ccc8;
+        }
+
+        body.philosophy-mode .section-header {
+            font-variant: small-caps;
+            letter-spacing: 1px;
+        }
+
+        /* Modalità Minimalista */
+        body.minimal-mode {
+            --primary-color: #7f8c8d;
+            --secondary-color: #95a5a6;
+            --text-color: #2c3e50;
+            --bg-color: #f9f9f9;
+            --card-bg: #fff;
+            --box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        body.minimal-mode .section-card {
+            border: 1px solid #eee;
+            box-shadow: none;
+        }
+
+        body.minimal-mode .mode-btn {
+            background: #eee;
+            color: #555;
+            box-shadow: none;
+        }
+
+        /* Modalità Accademica */
+        body.academic-mode {
+            --primary-color: #8e44ad;
+            --secondary-color: #9b59b6;
+            --text-color: #2c3e50;
+            --bg-color: #f0e6f6;
+            --card-bg: #fff;
+        }
+
+        body.academic-mode .section-header {
+            font-weight: bold;
+        }
+
+        /* Modalità Postcoloniale */
+        body.postcolonial-mode {
+            --primary-color: #e67e22;
+            --secondary-color: #d35400;
+            --text-color: #2c3e50;
+            --bg-color: #fef5e7;
+            --card-bg: #fff;
+        }
+
+        /* Stile citazioni */
+        blockquote {
+            border-left: 5px solid var(--secondary-color);
+            padding: 20px;
+            margin: 30px 0;
+            font-style: italic;
+            color: var(--primary-color);
+            background-color: rgba(22, 160, 133, 0.05);
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            position: relative;
+        }
+
+        blockquote::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--secondary-color);
+            opacity: 0.2;
+            position: absolute;
+            left: 10px;
+            top: -20px;
+            line-height: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            
+            header {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .mode-selector {
+                flex-direction: column;
+                align-items: center;
+                gap: 12px;
+            }
+            
+            .mode-btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            
+            .section-header {
+                padding: 18px;
+            }
+            
+            .section-content.active {
+                padding: 20px;
+            }
+        }
+
+        /* Effetti speciali sezioni */
+        .section-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+
+        .section-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* Animazione apertura sezione */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-content.active {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* Decorazioni */
+        .book-symbol {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 30px;
+            opacity: 0.1;
+            z-index: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Edward Said</h1>
+            <p class="subtitle">Intellettuale Postcoloniale</p>
+            <div class="mode-selector">
+                <button class="mode-btn" data-mode="default">Standard</button>
+                <button class="mode-btn" data-mode="night">Notturno</button>
+                <button class="mode-btn" data-mode="philosophy">Filosofico</button>
+                <button class="mode-btn" data-mode="minimal">Minimalista</button>
+                <button class="mode-btn" data-mode="academic">Accademico</button>
+                <button class="mode-btn" data-mode="postcolonial">Postcoloniale</button>
+            </div>
+        </header>
+
+        <div class="section-container">
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Biografia</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <p>Edward W. Said (1935-2003) è stato un critico letterario, teorico culturale e attivista politico palestinese-americano, considerato uno dei fondatori degli studi postcoloniali. Nato a Gerusalemme e cresciuto tra il Cairo e il Libano, Said si trasferì negli Stati Uniti per studiare, diventando poi professore alla Columbia University.</p>
+                    
+                    <p>La sua opera più influente, "Orientalismo" (1978), ha rivoluzionato gli studi culturali e la critica letteraria, introducendo un nuovo modo di pensare alle relazioni tra Occidente e Oriente. Oltre alla sua attività accademica, Said è stato un attivo sostenitore della causa palestinese e un critico delle politiche occidentali in Medio Oriente.</p>
+                    
+                    <p>La sua vita e il suo lavoro incarnano la figura dell'intellettuale "secolare" che opera al crocevia tra cultura e politica, teoria e pratica.</p>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Orientalismo</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <p>Pubblicato nel 1978, "Orientalismo" è l'opera più celebre di Said e una pietra miliare degli studi postcoloniali. Il libro analizza come l'Occidente abbia costruito una rappresentazione dell'Oriente come suo "Altro" inferiore ed esotico.</p>
+                    
+                    <blockquote>
+                        "L'Oriente non è un fatto inerte della natura. Non è semplicemente là, come l'Occidente non è semplicemente là."
+                    </blockquote>
+                    
+                    <p>Le tesi fondamentali dell'opera includono:</p>
+                    <ul>
+                        <li>L'Orientalismo come sistema di conoscenza/potere che legittima il dominio occidentale</li>
+                        <li>La costruzione discorsiva dell'Oriente attraverso testi letterari, storici e politici</li>
+                        <li>L'immobilizzazione delle culture orientali in un eterno passato</li>
+                        <li>L'intreccio tra sapere accademico e progetti imperiali</li>
+                    </ul>
+                    
+                    <p>Said dimostra come queste rappresentazioni abbiano avuto concrete conseguenze politiche nella storia del colonialismo e nelle relazioni internazionali.</p>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Teoria Postcoloniale</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <p>Il contributo di Said alla teoria postcoloniale va oltre "Orientalismo", abbracciando una critica radicale alle strutture del potere e del sapere.</p>
+                    
+                    <p>Elementi chiave della sua teoria:</p>
+                    <ol>
+                        <li><strong>Critica del discorso</strong>: Analisi dei testi come strumenti di potere</li>
+                        <li><strong>Contrappunti</strong>: Lettura delle culture in relazione reciproca piuttosto che isolata</li>
+                        <li><strong>Secolarismo</strong>: Rifiuto delle visioni essenzialiste e nazionaliste</li>
+                        <li><strong>Esilio</strong>: La condizione dell'intellettuale come posizione privilegiata di critica</li>
+                    </ol>
+                    
+                    <p>In opere successive come "Cultura e imperialismo" (1993), Said ha ampliato la sua analisi mostrando come la letteratura e la cultura occidentale siano profondamente intrecciate con la storia del colonialismo.</p>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>L'Intellettuale Pubblico</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <p>Nei suoi scritti sull'intellettuale, specialmente in "Rappresentazioni dell'intellettuale" (1993), Said ha teorizzato il ruolo dell'intellettuale come figura pubblica e critica.</p>
+                    
+                    <p>Caratteristiche dell'intellettuale saidiano:</p>
+                    
+                    <h3>Posizione</h3>
+                    <ul>
+                        <li>Amatoriale piuttosto che professionale</li>
+                        <li>Marginale e in esilio</li>
+                        <li>Secolare e critico verso ogni dogma</li>
+                    </ul>
+                    
+                    <h3>Funzione</h3>
+                    <ul>
+                        <li>Dire la verità al potere</li>
+                        <li>Rappresentare i senza voce</li>
+                        <li>Creare contro-narrazioni</li>
+                        <li>Resistere alla cooptazione da parte di istituzioni e governi</li>
+                    </ul>
+                    
+                    <blockquote>
+                        "Il compito dell'intellettuale è dire la verità al potere, demistificare, distogliere il consenso."
+                    </blockquote>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Questione Palestinese</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <p>La questione palestinese è stata al centro dell'impegno politico di Said, che ha scritto ampiamente sul conflitto israelo-palestinese e sulla rappresentazione mediatica del Medio Oriente.</p>
+                    
+                    <p>Le sue posizioni principali includevano:</p>
+                    <ul>
+                        <li>Critica del sionismo come progetto coloniale</li>
+                        <li>Denuncia dell'occupazione israeliana</li>
+                        <li>Analisi del ruolo dei media occidentali nel conflitto</li>
+                        <li>Sostegno a una soluzione binazionale</li>
+                        <li>Critica sia di Arafat che delle leadership arabe</li>
+                    </ul>
+                    
+                    <p>Opere come "La questione palestinese" (1979) e "After the Last Sky" (1986) combinano analisi politica, memoria personale e riflessione culturale sulla diaspora palestinese.</p>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Critiche e Influenze</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <p>Il lavoro di Said ha suscitato ampie discussioni e critiche, oltre a influenzare numerosi campi del sapere.</p>
+                    
+                    <h3>Influenze principali</h3>
+                    <ul>
+                        <li>Fondazione degli studi postcoloniali</li>
+                        <li>Sviluppo dei subaltern studies</li>
+                        <li>Influenza sugli studi culturali e la teoria critica</li>
+                        <li>Ispirazione per generazioni di attivisti e intellettuali</li>
+                    </ul>
+                    
+                    <h3>Critiche principali</h3>
+                    <ul>
+                        <li>Accuse di essenzialismo rovesciato</li>
+                        <li>Critiche alla sua rappresentazione dell'Orientalismo come monolitico</li>
+                        <li>Discussioni sul suo approccio alla questione palestinese</li>
+                        <li>Limitata considerazione delle voci orientali autonome</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Opere Principali</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <ul>
+                        <li><strong>Orientalismo</strong> (1978) - Analisi critica delle rappresentazioni occidentali dell'Oriente</li>
+                        <li><strong>La questione palestinese</strong> (1979) - Saggio politico sul conflitto israelo-palestinese</li>
+                        <li><strong>After the Last Sky</strong> (1986) - Riflessione sulla diaspora palestinese</li>
+                        <li><strong>Cultura e imperialismo</strong> (1993) - Estensione dell'analisi dell'Orientalismo alla cultura occidentale</li>
+                        <li><strong>Rappresentazioni dell'intellettuale</strong> (1993) - Riflessione sul ruolo dell'intellettuale</li>
+                        <li><strong>Out of Place</strong> (1999) - Autobiografia</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Eredità Intellettuale</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <p>L'eredità di Edward Said continua a influenzare numerosi campi del sapere e dell'attivismo:</p>
+                    
+                    <ul>
+                        <li><strong>Studi postcoloniali</strong>: Rimane un punto di riferimento fondamentale</li>
+                        <li><strong>Teoria critica</strong>: Il suo approccio interdisciplinare è ampiamente adottato</li>
+                        <li><strong>Attivismo</strong>: Il suo impegno per la Palestina ispira nuove generazioni</li>
+                        <li><strong>Studi culturali</strong>: La sua analisi del potere delle rappresentazioni è più attuale che mai</li>
+                    </ul>
+                    
+                    <p>In un'epoca di crescenti nazionalismi e scontri culturali, il pensiero di Said offre strumenti critici essenziali per decostruire le narrazioni dominanti e immaginare alternative più giuste.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="book-symbol">📚</div>
+    </div>
+
+    <script>
+        // Funzionalità toggle sezioni
+        document.querySelectorAll('.section-header').forEach(header => {
+            header.addEventListener('click', () => {
+                header.classList.toggle('active');
+                const content = header.nextElementSibling;
+                content.classList.toggle('active');
+            });
+        });
+
+        // Cambio modalità di lettura
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Rimuovi tutte le classi di modalità
+                document.body.className = '';
+                
+                // Aggiungi la classe selezionata
+                const mode = btn.getAttribute('data-mode');
+                if (mode !== 'default') {
+                    document.body.classList.add(`${mode}-mode`);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hans Jonas: Filosofo della Responsabilità</title>
+    <style>
+        :root {
+            --primary-color: #8e44ad;
+            --secondary-color: #9b59b6;
+            --text-color: #2c3e50;
+            --bg-color: #f5eef8;
+            --card-bg: #ffffff;
+            --border-radius: 10px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.4s ease;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 30px;
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 30px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            position: relative;
+            overflow: hidden;
+            border-top: 5px solid var(--primary-color);
+        }
+
+        header::after {
+            content: '⚖';
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 60px;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .subtitle {
+            color: var(--secondary-color);
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-container {
+            margin-bottom: 40px;
+        }
+
+        .section-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 25px;
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-header {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--primary-color);
+            color: white;
+            transition: var(--transition);
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-header:hover {
+            background-color: #7d3c98;
+        }
+
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.3rem;
+            font-weight: 500;
+        }
+
+        .toggle-icon {
+            width: 24px;
+            height: 24px;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .toggle-icon::before,
+        .toggle-icon::after {
+            content: '';
+            position: absolute;
+            background-color: white;
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+
+        .toggle-icon::before {
+            width: 100%;
+            height: 2px;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%) rotate(0deg);
+        }
+
+        .toggle-icon::after {
+            width: 2px;
+            height: 100%;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%) rotate(0deg);
+        }
+
+        .section-header.active .toggle-icon::before {
+            transform: translateY(-50%) rotate(45deg);
+        }
+
+        .section-header.active .toggle-icon::after {
+            transform: translateX(-50%) rotate(135deg);
+        }
+
+        .section-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s cubic-bezier(0.65, 0, 0.35, 1), padding 0.6s ease;
+        }
+
+        .section-content.active {
+            padding: 25px;
+            max-height: 5000px;
+        }
+
+        .section-content p {
+            margin-bottom: 18px;
+        }
+
+        .section-content ul, .section-content ol {
+            padding-left: 25px;
+            margin-bottom: 20px;
+        }
+
+        .section-content li {
+            margin-bottom: 10px;
+        }
+
+        .mode-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            background-color: var(--primary-color);
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .mode-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .mode-btn:hover::before {
+            left: 100%;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Modalità Notturna */
+        body.night-mode {
+            --primary-color: #9b59b6;
+            --secondary-color: #8e44ad;
+            --text-color: #ecf0f1;
+            --bg-color: #1a1a1a;
+            --card-bg: #2d2d2d;
+        }
+
+        /* Modalità Filosofica */
+        body.philosophy-mode {
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            --primary-color: #5d4037;
+            --secondary-color: #8d6e63;
+            --text-color: #3e2723;
+            --bg-color: #efebe9;
+            --card-bg: #d7ccc8;
+        }
+
+        body.philosophy-mode .section-header {
+            font-style: italic;
+            letter-spacing: 0.5px;
+        }
+
+        /* Modalità Minimalista */
+        body.minimal-mode {
+            --primary-color: #555;
+            --secondary-color: #777;
+            --text-color: #444;
+            --bg-color: #f9f9f9;
+            --card-bg: #fff;
+            --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        body.minimal-mode .section-card {
+            border: 1px solid #eee;
+            box-shadow: none;
+        }
+
+        body.minimal-mode .mode-btn {
+            background: #eee;
+            color: #555;
+            box-shadow: none;
+        }
+
+        /* Modalità Accademica */
+        body.academic-mode {
+            --primary-color: #2980b9;
+            --secondary-color: #3498db;
+            --text-color: #2c3e50;
+            --bg-color: #ebf5fb;
+            --card-bg: #fff;
+        }
+
+        body.academic-mode .section-header {
+            font-weight: bold;
+        }
+
+        /* Modalità Etica */
+        body.ethics-mode {
+            --primary-color: #16a085;
+            --secondary-color: #1abc9c;
+            --text-color: #34495e;
+            --bg-color: #e8f8f5;
+            --card-bg: #fff;
+        }
+
+        /* Stile citazioni */
+        blockquote {
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px 20px;
+            margin: 25px 0;
+            font-style: italic;
+            color: var(--primary-color);
+            background-color: rgba(155, 89, 182, 0.05);
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            header {
+                padding: 20px;
+            }
+            
+            .mode-selector {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .mode-btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            
+            .section-header {
+                padding: 15px;
+            }
+            
+            .section-content.active {
+                padding: 15px;
+            }
+        }
+
+        /* Effetti speciali sezioni */
+        .section-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .section-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* Animazione apertura sezione */
+        @keyframes contentAppear {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-content.active {
+            animation: contentAppear 0.5s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Hans Jonas</h1>
+            <p class="subtitle">Filosofo della Responsabilità nell'Era Tecnologica</p>
+            <div class="mode-selector">
+                <button class="mode-btn" data-mode="default">Standard</button>
+                <button class="mode-btn" data-mode="night">Notturno</button>
+                <button class="mode-btn" data-mode="philosophy">Filosofico</button>
+                <button class="mode-btn" data-mode="minimal">Minimalista</button>
+                <button class="mode-btn" data-mode="academic">Accademico</button>
+                <button class="mode-btn" data-mode="ethics">Etico</button>
+            </div>
+        </header>
+
+        <div class="section-container">
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Biografia</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <p>Hans Jonas (1903-1993) è stato un filosofo tedesco-americano di origine ebraica, noto per i suoi lavori sull'etica, la filosofia della biologia e la filosofia della tecnologia. Nato a Mönchengladbach, in Germania, Jonas studiò con Martin Heidegger e Rudolf Bultmann prima di fuggire dalla Germania nazista nel 1933.</p>
+                    
+                    <p>Dopo aver combattuto nella seconda guerra mondiale con la Brigata Ebraica, Jonas si trasferì negli Stati Uniti, dove insegnò alla New School for Social Research di New York. La sua opera più influente, "Il principio responsabilità" (1979), rappresenta una pietra miliare nell'etica ambientale e nella filosofia della tecnologia.</p>
+                    
+                    <p>Jonas ha sviluppato un'etica che affronta le sfide poste dalla tecnologia moderna e dalla crisi ecologica, ponendo al centro il concetto di responsabilità verso le generazioni future.</p>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Il Principio Responsabilità</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <p>Pubblicato nel 1979, "Il principio responsabilità" è l'opera più importante di Jonas e rappresenta una risposta alle sfide etiche poste dalla tecnologia moderna e dalla crisi ecologica.</p>
+                    
+                    <blockquote>
+                        "Agisci in modo che le conseguenze della tua azione siano compatibili con la permanenza di un'autentica vita umana sulla Terra."
+                    </blockquote>
+                    
+                    <p>I principi fondamentali dell'etica della responsabilità di Jonas includono:</p>
+                    <ul>
+                        <li><strong>Principio della responsabilità</strong>: dobbiamo rispondere delle conseguenze delle nostre azioni sulle generazioni future</li>
+                        <li><strong>Principio della precauzione</strong>: in caso di dubbio, è meglio astenersi da azioni che potrebbero avere conseguenze irreversibili</li>
+                        <li><strong>Etica del futuro</strong>: la nostra responsabilità si estende alle generazioni non ancora nate</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Critica alla Tecnologia Moderna</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <p>Jonas ha sviluppato una critica radicale alla tecnologia moderna, sostenendo che il potere senza precedenti dell'uomo di modificare la natura richiede un nuovo tipo di etica.</p>
+                    
+                    <p>Le principali argomentazioni di Jonas includono:</p>
+                    <ol>
+                        <li>La tecnologia moderna ha cambiato la natura dell'agire umano, rendendo possibili conseguenze irreversibili</li>
+                        <li>L'etica tradizionale è inadeguata perché si concentra sulle relazioni tra contemporanei</li>
+                        <li>Dobbiamo sviluppare un'etica che consideri le conseguenze a lungo termine delle nostre azioni</li>
+                        <li>La natura diventa un oggetto di responsabilità morale</li>
+                    </ol>
+                    
+                    <p>Jonas sostiene che la sopravvivenza dell'umanità e della vita sulla Terra deve diventare il valore supremo della nostra etica.</p>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Etica per la Civiltà Tecnologica</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <p>Jonas propone una nuova fondazione metafisica per l'etica, basata sul concetto di "essere" e sulla "teleologia della natura".</p>
+                    
+                    <p>Elementi chiave della sua proposta etica:</p>
+                    
+                    <h3>Ontologia della vita</h3>
+                    <ul>
+                        <li>La vita ha un fine intrinseco: la sua stessa conservazione</li>
+                        <li>L'uomo, come essere dotato di libertà, ha la massima responsabilità</li>
+                        <li>La natura non è solo materia, ma esprime una forma di finalità</li>
+                    </ul>
+                    
+                    <h3>Imperativo categorico ecologico</h3>
+                    <ul>
+                        <li>"Agisci in modo che le conseguenze della tua azione siano compatibili con la permanenza di un'autentica vita umana sulla terra"</li>
+                        <li>Dovere di conservare l'integrità dell'uomo e della natura</li>
+                        <li>Priorità del male possibile sul bene incerto</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Filosofia della Biologia</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <p>Nella sua opera "Organismo e libertà" (1966), Jonas sviluppa una filosofia della biologia che cerca di superare il dualismo cartesiano tra mente e corpo.</p>
+                    
+                    <blockquote>
+                        "La vita è già una forma primitiva di libertà, in quanto si oppone alla necessità della materia inerte."
+                    </blockquote>
+                    
+                    <p>Le principali tesi di Jonas includono:</p>
+                    <ul>
+                        <li>La vita rappresenta un salto qualitativo rispetto alla materia inorganica</li>
+                        <li>Esiste una continuità tra i vari livelli di vita, dalle forme più semplici all'uomo</li>
+                        <li>La libertà umana ha le sue radici nella libertà biologica fondamentale di ogni organismo</li>
+                        <li>Il corpo non è una macchina, ma un organismo che esprime finalità</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Influenza e Critiche</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <p>Il pensiero di Jonas ha avuto un impatto significativo su diverse aree della filosofia e dell'etica applicata.</p>
+                    
+                    <h3>Influenze principali</h3>
+                    <ul>
+                        <li>Fondamento filosofico per il principio di precauzione nell'etica ambientale</li>
+                        <li>Influenza sul movimento ecologista e sulla bioetica</li>
+                        <li>Contributo al dibattito sull'etica della tecnologia e delle generazioni future</li>
+                    </ul>
+                    
+                    <h3>Critiche principali</h3>
+                    <ul>
+                        <li>Accusa di "catastrofismo" e pessimismo</li>
+                        <li>Difficoltà nell'applicare concretamente il principio di responsabilità</li>
+                        <li>Critiche alla sua metafisica della natura come teleologica</li>
+                        <li>Possibile conflitto tra conservazione della natura e progresso umano</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Opere Principali</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <ul>
+                        <li><strong>Il principio responsabilità</strong> (1979) - Fondamento dell'etica ecologica e della responsabilità verso il futuro</li>
+                        <li><strong>Organismo e libertà</strong> (1966) - Filosofia della biologia e critica del dualismo cartesiano</li>
+                        <li><strong>Gnosi e spirito tardo-antico</strong> (1934) - Studio sulla gnosi come fenomeno religioso e filosofico</li>
+                        <li><strong>Technik, Medizin und Ethik</strong> (1985) - Saggi su tecnologia, medicina ed etica</li>
+                        <li><strong>Memorie</strong> (2003, postumo) - Autobiografia intellettuale e testimonianza storica</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Attualità del Pensiero di Jonas</h2>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="section-content">
+                    <p>In un'epoca di crisi climatica, sviluppo tecnologico accelerato e rischi globali, il pensiero di Jonas si rivela più attuale che mai.</p>
+                    
+                    <p>Le questioni per cui la sua filosofia offre strumenti critici includono:</p>
+                    <ul>
+                        <li><strong>Crisi climatica</strong>: responsabilità verso le generazioni future</li>
+                        <li><strong>Biotecnologie</strong>: limiti etici della manipolazione della vita</li>
+                        <li><strong>Intelligenza artificiale</strong>: controllo sulle tecnologie autonome</li>
+                        <li><strong>Sviluppo sostenibile</strong>: equilibrio tra progresso e conservazione</li>
+                    </ul>
+                    
+                    <p>Jonas ci lascia un monito: nella civiltà tecnologica, la saggezza deve prevalere sul potere, e la responsabilità deve guidare l'innovazione.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funzionalità toggle sezioni
+        document.querySelectorAll('.section-header').forEach(header => {
+            header.addEventListener('click', () => {
+                header.classList.toggle('active');
+                const content = header.nextElementSibling;
+                content.classList.toggle('active');
+            });
+        });
+
+        // Cambio modalità di lettura
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Rimuovi tutte le classi di modalità
+                document.body.className = '';
+                
+                // Aggiungi la classe selezionata
+                const mode = btn.getAttribute('data-mode');
+                if (mode !== 'default') {
+                    document.body.classList.add(`${mode}-mode`);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

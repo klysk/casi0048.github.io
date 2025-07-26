@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simone de Beauvoir: Pioniera del Femminismo Esistenzialista</title>
+    <style>
+        :root {
+            --primary-color: #e84393;
+            --secondary-color: #fd79a8;
+            --text-color: #2d3436;
+            --bg-color: #fceff7;
+            --card-bg: #ffffff;
+            --border-radius: 12px;
+            --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            --transition: all 0.4s cubic-bezier(0.3, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Lora', 'Times New Roman', serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 30px;
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px 30px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '♀';
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 100px;
+            opacity: 0.05;
+            z-index: 0;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 2.8rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .subtitle {
+            color: var(--secondary-color);
+            font-style: italic;
+            font-size: 1.3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-container {
+            margin-bottom: 40px;
+        }
+
+        .section-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 30px;
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .section-header {
+            padding: 22px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            transition: var(--transition);
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, #d6308a, #e84393);
+        }
+
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.4rem;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .toggle-icon {
+            width: 26px;
+            height: 26px;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .toggle-icon .bar {
+            position: absolute;
+            background-color: white;
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+
+        .toggle-icon .bar-top {
+            width: 100%;
+            height: 3px;
+            top: 20%;
+            transform: rotate(0deg);
+        }
+
+        .toggle-icon .bar-bottom {
+            width: 70%;
+            height: 3px;
+            bottom: 20%;
+            right: 0;
+            transform: rotate(0deg);
+        }
+
+        .section-header.active .toggle-icon .bar-top {
+            transform: rotate(45deg);
+            top: 50%;
+        }
+
+        .section-header.active .toggle-icon .bar-bottom {
+            transform: rotate(-45deg);
+            bottom: 45%;
+            width: 100%;
+        }
+
+        .section-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.7s cubic-bezier(0.4, 0, 0.2, 1), padding 0.7s ease;
+        }
+
+        .section-content.active {
+            padding: 28px;
+            max-height: 5000px;
+        }
+
+        .section-content p {
+            margin-bottom: 20px;
+            font-size: 1.08rem;
+        }
+
+        .section-content ul, .section-content ol {
+            padding-left: 28px;
+            margin-bottom: 22px;
+        }
+
+        .section-content li {
+            margin-bottom: 12px;
+        }
+
+        .mode-selector {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            margin-bottom: 45px;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 500;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .mode-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .mode-btn:hover::before {
+            left: 100%;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Modalità Notturna */
+        body.night-mode {
+            --primary-color: #fd79a8;
+            --secondary-color: #e84393;
+            --text-color: #f5f6fa;
+            --bg-color: #1e272e;
+            --card-bg: #2f3640;
+        }
+
+        /* Modalità Filosofica */
+        body.philosophy-mode {
+            font-family: 'Cormorant Garamond', serif;
+            --primary-color: #6d214f;
+            --secondary-color: #b33771;
+            --text-color: #3d3d3d;
+            --bg-color: #f8efba;
+            --card-bg: #f5f5f5;
+        }
+
+        body.philosophy-mode .section-header {
+            font-variant: small-caps;
+            letter-spacing: 1px;
+        }
+
+        /* Modalità Minimalista */
+        body.minimal-mode {
+            --primary-color: #636e72;
+            --secondary-color: #b2bec3;
+            --text-color: #2d3436;
+            --bg-color: #f9f9f9;
+            --card-bg: #fff;
+            --box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        body.minimal-mode .section-card {
+            border: 1px solid #eee;
+            box-shadow: none;
+        }
+
+        body.minimal-mode .mode-btn {
+            background: #eee;
+            color: #555;
+            box-shadow: none;
+        }
+
+        /* Modalità Accademica */
+        body.academic-mode {
+            --primary-color: #8e44ad;
+            --secondary-color: #9b59b6;
+            --text-color: #2c3e50;
+            --bg-color: #f0e6f6;
+            --card-bg: #fff;
+        }
+
+        body.academic-mode .section-header {
+            font-weight: bold;
+        }
+
+        /* Modalità Femminista */
+        body.feminist-mode {
+            --primary-color: #e84393;
+            --secondary-color: #fd79a8;
+            --text-color: #2d3436;
+            --bg-color: #fff0f6;
+            --card-bg: #fff;
+        }
+
+        body.feminist-mode header::before {
+            content: '♀⚢⚧';
+            opacity: 0.1;
+        }
+
+        /* Stile citazioni */
+        blockquote {
+            border-left: 5px solid var(--secondary-color);
+            padding: 20px;
+            margin: 30px 0;
+            font-style: italic;
+            color: var(--primary-color);
+            background-color: rgba(232, 67, 147, 0.05);
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            position: relative;
+        }
+
+        blockquote::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--secondary-color);
+            opacity: 0.2;
+            position: absolute;
+            left: 10px;
+            top: -20px;
+            line-height: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            
+            header {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .mode-selector {
+                flex-direction: column;
+                align-items: center;
+                gap: 12px;
+            }
+            
+            .mode-btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            
+            .section-header {
+                padding: 18px;
+            }
+            
+            .section-content.active {
+                padding: 20px;
+            }
+        }
+
+        /* Effetti speciali sezioni */
+        .section-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+
+        .section-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* Animazione apertura sezione */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-content.active {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* Decorazioni */
+        .feminist-symbol {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 30px;
+            opacity: 0.1;
+            z-index: 0;
+            pointer-events: none;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Cormorant+Garamond:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Simone de Beauvoir</h1>
+            <p class="subtitle">Pioniera del Femminismo Esistenzialista</p>
+            <div class="mode-selector">
+                <button class="mode-btn" data-mode="default">Standard</button>
+                <button class="mode-btn" data-mode="night">Notturno</button>
+                <button class="mode-btn" data-mode="philosophy">Filosofico</button>
+                <button class="mode-btn" data-mode="minimal">Minimalista</button>
+                <button class="mode-btn" data-mode="academic">Accademico</button>
+                <button class="mode-btn" data-mode="feminist">Femminista</button>
+            </div>
+        </header>
+
+        <div class="section-container">
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Biografia</h2>
+                    <div class="toggle-icon">
+                        <div class="bar bar-top"></div>
+                        <div class="bar bar-bottom"></div>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <p>Simone de Beauvoir (1908-1986) è stata una filosofa, scrittrice e saggista francese, figura centrale nell'esistenzialismo e nel femminismo del XX secolo. Nata a Parigi in una famiglia borghese, de Beauvoir dimostrò precocemente un'intelligenza eccezionale e una forte indipendenza intellettuale.</p>
+                    
+                    <p>Dopo gli studi alla Sorbona, dove conobbe Jean-Paul Sartre, divenne una delle figure di spicco dell'esistenzialismo francese. La sua opera più celebre, "Il secondo sesso" (1949), è considerata un testo fondante del femminismo moderno.</p>
+                    
+                    <p>De Beauvoir ha vissuto una vita non convenzionale per la sua epoca, rifiutando il matrimonio e la maternità, e mantenendo una relazione aperta con Sartre che durò tutta la vita. La sua produzione letteraria include romanzi, saggi filosofici, autobiografie e opere politiche.</p>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Il Secondo Sesso</h2>
+                    <div class="toggle-icon">
+                        <div class="bar bar-top"></div>
+                        <div class="bar bar-bottom"></div>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <p>Pubblicato nel 1949, "Il secondo sesso" è l'opera più influente di de Beauvoir e una pietra miliare del pensiero femminista. Il libro analizza la condizione femminile attraverso una prospettiva storica, filosofica e sociologica.</p>
+                    
+                    <blockquote>
+                        "Donna non si nasce, lo si diventa. Nessun destino biologico, psichico o economico definisce l'aspetto che la donna ha in seno alla società: è l'insieme della civiltà a elaborare quel prodotto intermedio tra il maschio e il castrato che chiamiamo donna."
+                    </blockquote>
+                    
+                    <p>Le tesi fondamentali dell'opera includono:</p>
+                    <ul>
+                        <li>La femminilità è una costruzione sociale e culturale, non un dato naturale</li>
+                        <li>La donna è stata storicamente definita come "l'Altro" rispetto all'uomo come soggetto</li>
+                        <li>Le istituzioni sociali (famiglia, religione, educazione) perpetuano la subordinazione femminile</li>
+                        <li>La liberazione delle donne richiede l'indipendenza economica e intellettuale</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Filosofia Esistenzialista</h2>
+                    <div class="toggle-icon">
+                        <div class="bar bar-top"></div>
+                        <div class="bar bar-bottom"></div>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <p>De Beauvoir sviluppò una filosofia esistenzialista che enfatizzava la libertà, la responsabilità individuale e l'importanza dell'azione. La sua opera "Per una morale dell'ambiguità" (1947) esplora questi temi centrali.</p>
+                    
+                    <p>Principi fondamentali del suo pensiero esistenzialista:</p>
+                    <ol>
+                        <li><strong>Libertà radicale</strong>: Gli esseri umani sono condannati a essere liberi e devono assumersi questa responsabilità</li>
+                        <li><strong>Ambiguïtà</strong>: L'esistenza umana è fondamentalmente ambigua, divisa tra finitudine e trascendenza</li>
+                        <li><strong>Autenticità</strong>: Vivere autenticamente significa riconoscere e accettare questa ambiguità</li>
+                        <li><strong>Impegno</strong>: La libertà si realizza solo attraverso l'azione e l'impegno nel mondo</li>
+                    </ol>
+                    
+                    <p>De Beauvoir applicò questi principi alla condizione femminile, mostrando come le donne siano state storicamente negate nella loro libertà e ridotte a oggetti.</p>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Etica dell'Ambiguïtà</h2>
+                    <div class="toggle-icon">
+                        <div class="bar bar-top"></div>
+                        <div class="bar bar-bottom"></div>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <p>In "Per una morale dell'ambiguità", de Beauvoir sviluppa un'etica esistenzialista che riconosce la natura contraddittoria della condizione umana.</p>
+                    
+                    <p>Elementi chiave della sua proposta etica:</p>
+                    
+                    <h3>Ambiguïtà esistenziale</h3>
+                    <ul>
+                        <li>L'uomo è insieme soggetto e oggetto, libertà e fatticità</li>
+                        <li>Questa tensione è irrisolvibile e va accettata</li>
+                        <li>Rifiutare l'ambiguità porta a forme di fuga (mauvaise foi)</li>
+                    </ul>
+                    
+                    <h3>Libertà e impegno</h3>
+                    <ul>
+                        <li>La libertà si realizza solo attraverso l'azione nel mondo</li>
+                        <li>L'impegno politico e sociale è necessario per un'etica autentica</li>
+                        <li>La libertà individuale è legata alla liberazione di tutti</li>
+                    </ul>
+                    
+                    <blockquote>
+                        "Nessun'esistenza può essere validamente realizzata se è limitata a se stessa. Ci si realizza solo andando all'infinito verso l'altro."
+                    </blockquote>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Opere Letterarie</h2>
+                    <div class="toggle-icon">
+                        <div class="bar bar-top"></div>
+                        <div class="bar bar-bottom"></div>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <p>Oltre ai saggi filosofici, de Beauvoir scrisse numerose opere letterarie che esplorano temi esistenzialisti e femministi:</p>
+                    
+                    <h3>Romanzi</h3>
+                    <ul>
+                        <li><strong>L'invitata</strong> (1943) - Esplora le relazioni interpersonali e la coscienza</li>
+                        <li><strong>Il sangue degli altri</strong> (1945) - Affronta temi di libertà e responsabilità durante la Resistenza</li>
+                        <li><strong>I mandarini</strong> (1954) - Romanzo semi-autobiografico sulla vita intellettuale del dopoguerra</li>
+                    </ul>
+                    
+                    <h3>Autobiografie</h3>
+                    <ul>
+                        <li><strong>Memorie di una ragazza perbene</strong> (1958) - Prima parte della sua autobiografia</li>
+                        <li><strong>L'età forte</strong> (1960) - Gli anni con Sartre e la guerra</li>
+                        <li><strong>La forza delle cose</strong> (1963) - Il dopoguerra e il successo letterario</li>
+                        <li><strong>A conti fatti</strong> (1972) - Riflessioni sulla vecchiaia</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Influenza e Critiche</h2>
+                    <div class="toggle-icon">
+                        <div class="bar bar-top"></div>
+                        <div class="bar bar-bottom"></div>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <p>Il pensiero di de Beauvoir ha avuto un impatto profondo sul femminismo e sulla filosofia del XX secolo, ma ha anche suscitato critiche e controversie.</p>
+                    
+                    <h3>Influenze principali</h3>
+                    <ul>
+                        <li>Fondamento teorico per il femminismo della seconda ondata</li>
+                        <li>Influenza sugli studi di genere e la teoria queer</li>
+                        <li>Contributo all'esistenzialismo francese e alla filosofia morale</li>
+                        <li>Ispirazione per generazioni di attiviste e intellettuali</li>
+                    </ul>
+                    
+                    <h3>Critiche principali</h3>
+                    <ul>
+                        <li>Accuse di universalismo e marginalizzazione delle differenze tra donne</li>
+                        <li>Critiche alla sua posizione sulla maternità e il corpo femminile</li>
+                        <li>Discussioni sul suo rapporto con Sartre e l'appropriazione del suo pensiero</li>
+                        <li>Limitata considerazione delle intersezioni tra genere, classe e razza</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Attualità del Pensiero</h2>
+                    <div class="toggle-icon">
+                        <div class="bar bar-top"></div>
+                        <div class="bar bar-bottom"></div>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <p>A decenni di distanza, il pensiero di Simone de Beauvoir rimane straordinariamente attuale e continua a influenzare dibattiti contemporanei:</p>
+                    
+                    <ul>
+                        <li><strong>Femminismo intersezionale</strong>: Pur con i suoi limiti, il suo lavoro resta un punto di riferimento</li>
+                        <li><strong>Teoria queer</strong>: La sua analisi della costruzione sociale del genere anticipa sviluppi successivi</li>
+                        <li><strong>Filosofia del corpo</strong>: Le sue riflessioni sul corpo femminile sono ancora influenti</li>
+                        <li><strong>Etica esistenziale</strong>: La sua enfasi su libertà e responsabilità risuona in tempi di crisi</li>
+                    </ul>
+                    
+                    <p>De Beauvoir ci lascia un'eredità intellettuale che continua a sfidare e ispirare, dimostrando come la filosofia possa essere uno strumento potente per comprendere e trasformare il mondo.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="feminist-symbol">♀⚢</div>
+    </div>
+
+    <script>
+        // Funzionalità toggle sezioni
+        document.querySelectorAll('.section-header').forEach(header => {
+            header.addEventListener('click', () => {
+                header.classList.toggle('active');
+                const content = header.nextElementSibling;
+                content.classList.toggle('active');
+            });
+        });
+
+        // Cambio modalità di lettura
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Rimuovi tutte le classi di modalità
+                document.body.className = '';
+                
+                // Aggiungi la classe selezionata
+                const mode = btn.getAttribute('data-mode');
+                if (mode !== 'default') {
+                    document.body.classList.add(`${mode}-mode`);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
