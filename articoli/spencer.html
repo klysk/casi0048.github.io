@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herbert Spencer | Filosofo dell'Evoluzione Sociale</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #8B4513;  /* SaddleBrown */
+            --secondary: #D2B48C;  /* Tan */
+            --accent: #CD853F;  /* Peru */
+            --text: #5D4037;  /* Brown */
+            --bg: #F5F5DC;  /* Beige */
+            --card-bg: #FFF8E1;  /* Light Beige */
+            --border: #D2B48C;  /* Tan */
+            --shadow: 0 4px 8px rgba(139, 69, 19, 0.1);
+            --btn-shape: polygon(0% 20%, 20% 0%, 100% 0%, 100% 80%, 80% 100%, 0% 100%);
+        }
+
+        /* Modalità Darwiniana */
+        .darwin-mode {
+            --primary: #1E8449;  /* Dark Green */
+            --secondary: #52BE80;  /* Green */
+            --accent: #F1C40F;  /* Yellow */
+            --text: #1B2631;  /* Dark Gray */
+            --bg: #EAFAF1;  /* Light Green */
+            --card-bg: #FFFFFF;
+            --border: #A3E4D7;  /* Light Teal */
+            --shadow: 0 4px 8px rgba(30, 132, 73, 0.1);
+            --btn-shape: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
+        }
+
+        /* Modalità Vittoriana */
+        .victorian-mode {
+            --primary: #4A235A;  /* Dark Purple */
+            --secondary: #7D3C98;  /* Purple */
+            --accent: #BA4A00;  /* Rust */
+            --text: #212F3D;  /* Dark Blue */
+            --bg: #F4ECF7;  /* Light Purple */
+            --card-bg: #FFFFFF;
+            --border: #D2B4DE;  /* Light Purple */
+            --shadow: 0 4px 8px rgba(74, 35, 90, 0.1);
+            --btn-shape: polygon(0% 0%, 100% 0%, 100% 70%, 50% 100%, 0% 70%);
+        }
+
+        /* Modalità Industrial */
+        .industrial-mode {
+            --primary: #34495E;  /* Dark Gray */
+            --secondary: #5D6D7E;  /* Gray */
+            --accent: #C0392B;  /* Red */
+            --text: #212F3D;
+            --bg: #EBEDEF;  /* Light Gray */
+            --card-bg: #FFFFFF;
+            --border: #AEB6BF;  /* Gray */
+            --shadow: 0 4px 8px rgba(52, 73, 94, 0.1);
+            --btn-shape: polygon(0% 15%, 15% 15%, 15% 0%, 85% 0%, 85% 15%, 100% 15%, 100% 85%, 85% 85%, 85% 100%, 15% 100%, 15% 85%, 0% 85%);
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            color: var(--text);
+            background-color: var(--bg);
+            margin: 0;
+            padding: 0;
+            transition: all 0.5s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px dotted var(--primary);
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: var(--secondary);
+            font-style: italic;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Controlli Modalità - Design Avanguardista */
+        .mode-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 0.8rem 1.8rem;
+            border: none;
+            background: var(--primary);
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            clip-path: var(--btn-shape);
+            transform-style: preserve-3d;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .mode-btn:hover {
+            background: var(--accent);
+            transform: translateY(-3px) scale(1.05);
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+        }
+
+        .mode-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255,255,255,0.3),
+                rgba(255,255,255,0)
+            );
+            transform: rotate(30deg);
+            transition: all 0.5s ease;
+        }
+
+        .mode-btn:hover::before {
+            left: 100%;
+            top: 100%;
+        }
+
+        /* Sezioni espandibili - Design Evolutivo */
+        .section {
+            background: var(--card-bg);
+            border-radius: 0 20px 20px 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.5s ease;
+            position: relative;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        .section-header {
+            padding: 1.8rem;
+            background: var(--card-bg);
+            color: var(--primary);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.5s ease;
+            position: relative;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .section-header:hover {
+            background: linear-gradient(90deg, var(--card-bg), rgba(210, 180, 140, 0.1));
+        }
+
+        .section-title {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 15px;
+            color: var(--accent);
+        }
+
+        .section-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.7s cubic-bezier(0.4, 0, 0.2, 1), padding 0.7s ease;
+        }
+
+        .section.active .section-content {
+            padding: 2rem;
+            max-height: 5000px;
+        }
+
+        .toggle-icon {
+            transition: transform 0.5s ease, color 0.3s ease;
+            font-size: 1.2rem;
+            color: var(--primary);
+            z-index: 1;
+            background: var(--secondary);
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .section.active .toggle-icon {
+            transform: rotate(180deg);
+            color: var(--accent);
+            background: var(--primary);
+        }
+
+        /* Elementi di Contenuto */
+        .quote {
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            background: rgba(205, 133, 63, 0.05);
+            position: relative;
+            font-style: italic;
+            color: var(--text);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .quote::before {
+            content: '"';
+            position: absolute;
+            top: 0;
+            left: 10px;
+            font-size: 4rem;
+            color: var(--accent);
+            opacity: 0.2;
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .quote-author {
+            display: block;
+            text-align: right;
+            font-weight: bold;
+            margin-top: 1rem;
+            color: var(--secondary);
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .principle-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .principle-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--accent);
+        }
+
+        .principle-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .principle-card h3 {
+            color: var(--primary);
+            margin-top: 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dotted var(--secondary);
+        }
+
+        /* Timeline Evolutiva */
+        .timeline {
+            position: relative;
+            padding-left: 60px;
+            margin: 3rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            border-radius: 3px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-date {
+            position: absolute;
+            left: -60px;
+            top: 0;
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+            box-shadow: 0 0 0 4px var(--bg);
+            z-index: 1;
+        }
+
+        .timeline-content {
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 8px;
+            border-left: 3px solid var(--accent);
+            position: relative;
+            box-shadow: var(--shadow);
+            margin-left: 20px;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 20px;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid var(--accent);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .two-columns {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline {
+                padding-left: 50px;
+            }
+            
+            .timeline-date {
+                left: -50px;
+                width: 50px;
+                height: 50px;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .section-header {
+                padding: 1.2rem;
+            }
+            
+            .section.active .section-content {
+                padding: 1.2rem;
+            }
+            
+            .mode-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            
+            .timeline {
+                padding-left: 40px;
+            }
+            
+            .timeline-date {
+                left: -40px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Herbert Spencer</h1>
+            <p class="subtitle">Il filosofo dell'evoluzione sociale e del darwinismo sociale</p>
+            
+            <div class="mode-controls">
+                <button class="mode-btn" onclick="setMode('default')">
+                    <i class="fas fa-seedling"></i> Organico
+                </button>
+                <button class="mode-btn" onclick="setMode('darwin')">
+                    <i class="fas fa-dna"></i> Darwiniano
+                </button>
+                <button class="mode-btn" onclick="setMode('victorian')">
+                    <i class="fas fa-clock"></i> Vittoriano
+                </button>
+                <button class="mode-btn" onclick="setMode('industrial')">
+                    <i class="fas fa-industry"></i> Industriale
+                </button>
+            </div>
+        </header>
+
+        <!-- Sezione Biografia -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title"><i class="fas fa-book-open"></i> Vita e Formazione</h2>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="section-content">
+                <p>Herbert Spencer (1820-1903) è stato un filosofo, biologo e sociologo britannico, principale esponente del positivismo evoluzionista e teorico del darwinismo sociale. Autodidatta, sviluppò un sistema filosofico che applicava il principio dell'evoluzione a tutti i campi della conoscenza.</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">1820</div>
+                        <div class="timeline-content">
+                            Nasce a Derby, Inghilterra, il 27 aprile, in una famiglia di insegnanti non conformisti.
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1837</div>
+                        <div class="timeline-content">
+                            Inizia a lavorare come ingegnere ferroviario, sviluppando un interesse per la scienza e la tecnologia.
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1848</div>
+                        <div class="timeline-content">
+                            Diventa redattore dell'Economist, dove sviluppa le sue idee sul laissez-faire e il progresso sociale.
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1851</div>
+                        <div class="timeline-content">
+                            Pubblica "Social Statics", la sua prima opera importante, che espone la sua filosofia sociale.
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1855</div>
+                        <div class="timeline-content">
+                            Formula il principio della "sopravvivenza del più adatto" (prima ancora di Darwin).
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1903</div>
+                        <div class="timeline-content">
+                            Muore a Brighton l'8 dicembre, dopo aver completato il suo "Sistema di Filosofia Sintetica".
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quote">
+                    "Il progresso non è un accidente, ma una necessità. Invece di essere civilizzazione, arte, scienza, è una parte della natura."
+                    <span class="quote-author">- Herbert Spencer, Social Statics</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Evoluzione Sociale -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title"><i class="fas fa-atom"></i> Filosofia dell'Evoluzione</h2>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="section-content">
+                <p>Spencer sviluppò una teoria evoluzionistica universale che applicava a tutti i fenomeni, dall'universo fisico alle società umane:</p>
+                
+                <div class="two-columns">
+                    <div class="principle-card">
+                        <h3>Dall'omogeneo all'eterogeneo</h3>
+                        <p>L'evoluzione è un processo di differenziazione e integrazione, da strutture semplici e uniformi a complesse e specializzate.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Equilibrio dinamico</h3>
+                        <p>I sistemi tendono verso un equilibrio tra forze interne ed esterne, che viene costantemente ridefinito.</p>
+                    </div>
+                </div>
+                
+                <h3>Leggi fondamentali dell'evoluzione</h3>
+                <ol>
+                    <li><strong>Legge della persistenza della forza:</strong> L'energia è eterna e inalterabile.</li>
+                    <li><strong>Legge dell'indifferenziazione:</strong> Ogni forza produce effetti molteplici.</li>
+                    <li><strong>Legge della segregazione:</strong> Le parti dissimili tendono a separarsi.</li>
+                    <li><strong>Legge dell'equilibrio:</strong> Ogni sistema tende verso uno stato di equilibrio.</li>
+                </ol>
+                
+                <div class="quote">
+                    "La sopravvivenza del più adatto, che ho cercato di esprimere in termini meccanici, è quella che il sig. Darwin ha chiamato 'selezione naturale'."
+                    <span class="quote-author">- Herbert Spencer, Principles of Biology</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Darwinismo Sociale -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title"><i class="fas fa-users"></i> Darwinismo Sociale</h2>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="section-content">
+                <p>La controversa applicazione delle teorie evolutive alla società:</p>
+                
+                <div class="two-columns">
+                    <div class="principle-card">
+                        <h3>Individualismo radicale</h3>
+                        <p>Opposizione a qualsiasi intervento statale che potesse interferire con la "sopravvivenza del più adatto".</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Laissez-faire</h3>
+                        <p>Le società più avanzate sono quelle che permettono la libera competizione tra individui.</p>
+                    </div>
+                </div>
+                
+                <h3>Implicazioni sociali</h3>
+                <ul>
+                    <li>Opposizione all'assistenza pubblica ai poveri, che avrebbe interferito con la selezione naturale.</li>
+                    <li>Critica all'istruzione pubblica, considerata un'imposizione contro la libertà individuale.</li>
+                    <li>Difesa della proprietà privata come diritto fondamentale.</li>
+                    <li>Teoria razziale che giustificava il colonialismo come "fardello dell'uomo bianco".</li>
+                </ul>
+                
+                <div class="quote">
+                    "Se sono sufficientemente completi per vivere, vivono. E se non sono sufficientemente completi per vivere, muoiono. E devono morire a meno che non siano mantenuti in vita artificialmente."
+                    <span class="quote-author">- Herbert Spencer, The Man Versus The State</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Etica Evolutiva -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title"><i class="fas fa-scale-balanced"></i> Etica Evolutiva</h2>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="section-content">
+                <p>Spencer sviluppò un sistema etico basato sui principi evolutivi:</p>
+                
+                <h3>Principi di Etica (1879-1893)</h3>
+                <div class="two-columns">
+                    <div class="principle-card">
+                        <h3>Etica assoluta</h3>
+                        <p>Ideale di condotta perfettamente adattata alla vita sociale in condizioni ideali.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Etica relativa</h3>
+                        <p>Principi pratici per la condotta nelle attuali condizioni imperfette.</p>
+                    </div>
+                </div>
+                
+                <h3>Legge della libertà uguale</h3>
+                <p>"Ogni uomo ha libertà di fare tutto ciò che vuole, purché non violi la libertà uguale di qualsiasi altro uomo."</p>
+                
+                <div class="quote">
+                    "La morale non è altro che una specie di prudenza sviluppata, una previsione a lungo raggio dei risultati delle azioni."
+                    <span class="quote-author">- Herbert Spencer, Data of Ethics</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Eredità e Critiche -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title"><i class="fas fa-brain"></i> Influenza e Critiche</h2>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="section-content">
+                <p>L'influenza di Spencer si estese a molte discipline, pur suscitando aspre critiche:</p>
+                
+                <div class="two-columns">
+                    <div class="principle-card">
+                        <h3>Influenze</h3>
+                        <ul>
+                            <li>Sociologia: concetto di differenziazione strutturale</li>
+                            <li>Psicologia: teoria dell'adattamento</li>
+                            <li>Politica: liberalismo libertario</li>
+                            <li>Biologia: prima formulazione dell'ecologia</li>
+                        </ul>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Critiche</h3>
+                        <ul>
+                            <li>Determinismo biologico eccessivo</li>
+                            <li>Giustificazione delle disuguaglianze sociali</li>
+                            <li>Analogia troppo meccanica tra società e organismi</li>
+                            <li>Eurocentrismo e razzismo scientifico</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="quote">
+                    "Spencer ha costruito un castello colossale, ma è abitato da fantasmi."
+                    <span class="quote-author">- William James su Herbert Spencer</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Opere Principali -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2 class="section-title"><i class="fas fa-book"></i> Sistema di Filosofia Sintetica</h2>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="section-content">
+                <p>Il monumentale progetto enciclopedico di Spencer, sviluppato in 10 volumi:</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem;">
+                    <div class="principle-card">
+                        <h3>Primi Principi (1862)</h3>
+                        <p>Fondamenti filosofici del sistema, con la teoria dell'evoluzione universale.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Principi di Biologia (1864-67)</h3>
+                        <p>Applicazione dell'evoluzione agli organismi viventi.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Principi di Psicologia (1855-72)</h3>
+                        <p>Evoluzione della mente come adattamento all'ambiente.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Principi di Sociologia (1876-96)</h3>
+                        <p>Teoria dell'evoluzione sociale dalle forme militari a quelle industriali.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>Principi di Etica (1879-93)</h3>
+                        <p>Morale come prodotto dell'evoluzione sociale.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funzione per attivare/disattivare sezioni
+        function toggleSection(header) {
+            const section = header.parentElement;
+            section.classList.toggle('active');
+            
+            // Animazione speciale
+            if (section.classList.contains('active')) {
+                section.style.transform = 'scale(1.02)';
+                setTimeout(() => {
+                    section.style.transform = '';
+                }, 300);
+            }
+        }
+
+        // Funzione per cambiare modalità di visualizzazione
+        function setMode(mode) {
+            document.body.className = '';
+            if (mode === 'darwin') {
+                document.body.classList.add('darwin-mode');
+            } else if (mode === 'victorian') {
+                document.body.classList.add('victorian-mode');
+            } else if (mode === 'industrial') {
+                document.body.classList.add('industrial-mode');
+            }
+            
+            // Salva la preferenza
+            localStorage.setItem('modePreference', mode);
+            
+            // Animazione speciale per i bottoni
+            animateModeButtons(mode);
+        }
+
+        // Animazione creativa per i bottoni
+        function animateModeButtons(mode) {
+            const buttons = document.querySelectorAll('.mode-btn');
+            buttons.forEach((btn, index) => {
+                setTimeout(() => {
+                    btn.style.transform = 'rotate(' + (index % 2 === 0 ? '5deg' : '-5deg') + ') scale(1.1)';
+                    btn.style.filter = 'brightness(1.2)';
+                    
+                    setTimeout(() => {
+                        btn.style.transform = '';
+                        btn.style.filter = '';
+                    }, 500);
+                }, index * 200);
+            });
+        }
+
+        // Carica la modalità preferita al caricamento della pagina
+        window.onload = function() {
+            const savedMode = localStorage.getItem('modePreference');
+            if (savedMode) {
+                setMode(savedMode);
+            }
+            
+            // Apri la prima sezione per default
+            document.querySelector('.section').classList.add('active');
+            
+            // Effetto di apparizione graduale
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.8s ease';
+                document.body.style.opacity = '1';
+            }, 100);
+        };
+    </script>
+</body>
+</html>
