@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plotino - Il Fondatore del Neoplatonismo</title>
+    <style>
+        :root {
+            --primary-color: #5e35b1;
+            --secondary-color: #7e57c2;
+            --text-color: #311b92;
+            --bg-color: #ede7f6;
+            --accent-color: #d1c4e9;
+            --font-main: 'Palatino Linotype', 'Book Antiqua', serif;
+            --font-alt: 'Garamond', serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            transition: all 0.5s ease;
+        }
+
+        /* Stili per le modalità di lettura */
+        .estatico {
+            --primary-color: #6a1b9a;
+            --secondary-color: #9c27b0;
+            --text-color: #4a148c;
+            --bg-color: #f3e5f5;
+            --accent-color: #e1bee7;
+        }
+
+        .mistico {
+            --primary-color: #0d47a1;
+            --secondary-color: #1976d2;
+            --text-color: #01579b;
+            --bg-color: #e1f5fe;
+            --accent-color: #b3e5fc;
+            font-family: 'Times New Roman', serif;
+        }
+
+        .neoplatonico {
+            --primary-color: #004d40;
+            --secondary-color: #00796b;
+            --text-color: #00251a;
+            --bg-color: #e0f2f1;
+            --accent-color: #b2dfdb;
+        }
+
+        .antico {
+            --primary-color: #3e2723;
+            --secondary-color: #5d4037;
+            --text-color: #260e04;
+            --bg-color: #efebe9;
+            --accent-color: #d7ccc8;
+            font-family: 'Trajan Pro', 'Times New Roman', serif;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+            font-family: var(--font-alt);
+            position: relative;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.8em;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        h1::before, h1::after {
+            content: "⚡";
+            color: var(--secondary-color);
+            padding: 0 15px;
+        }
+
+        h2 {
+            margin-top: 40px;
+            font-size: 1.8em;
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--secondary-color);
+        }
+
+        .mode-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--font-alt);
+            background: linear-gradient(145deg, var(--accent-color), var(--bg-color));
+            color: var(--primary-color);
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+            z-index: 1;
+        }
+
+        .mode-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .mode-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Stili per i bottoni di sezione */
+        .section-container {
+            margin: 40px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background: white;
+        }
+
+        .section-toggle {
+            position: relative;
+            width: 100%;
+            padding: 20px;
+            text-align: left;
+            border: none;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            font-size: 1.3em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-toggle:hover {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+        }
+
+        .section-toggle::after {
+            content: '⌃';
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+        }
+
+        .section-toggle.active::after {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.3s ease;
+        }
+
+        .section-content.show {
+            max-height: 5000px;
+            padding: 30px;
+        }
+
+        .section-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .quote {
+            font-style: italic;
+            padding: 20px;
+            background-color: var(--accent-color);
+            border-radius: 8px;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .quote::before {
+            content: '❝';
+            font-size: 4em;
+            position: absolute;
+            left: 10px;
+            top: 0;
+            color: rgba(0,0,0,0.1);
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .quote-author {
+            text-align: right;
+            font-weight: bold;
+            margin-top: 15px;
+            font-style: normal;
+            color: var(--secondary-color);
+        }
+
+        .hierarchy {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 40px 0;
+        }
+
+        .hierarchy-level {
+            width: 200px;
+            padding: 15px;
+            text-align: center;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            margin: 10px 0;
+            position: relative;
+            border: 2px solid var(--accent-color);
+        }
+
+        .hierarchy-level::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid var(--accent-color);
+        }
+
+        .hierarchy-level:last-child::after {
+            display: none;
+        }
+
+        .hierarchy-level.one {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            width: 150px;
+        }
+
+        .hierarchy-level.two {
+            width: 180px;
+        }
+
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .work-card {
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--primary-color);
+            transition: transform 0.3s ease;
+        }
+
+        .work-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .work-card h4 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid var(--accent-color);
+            font-size: 0.9em;
+            color: var(--secondary-color);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2em;
+            }
+            
+            .section-toggle {
+                padding: 15px;
+                font-size: 1.1em;
+            }
+            
+            .section-content.show {
+                padding: 20px;
+            }
+            
+            .works-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Plotino</h1>
+        <p style="text-align: center; font-style: italic; font-size: 1.2em;">Il filosofo dell'Uno e padre del Neoplatonismo</p>
+        
+        <div class="mode-selector">
+            <button class="mode-btn" onclick="setMode('default')">Classico</button>
+            <button class="mode-btn" onclick="setMode('estatico')">Estatico</button>
+            <button class="mode-btn" onclick="setMode('mistico')">Mistico</button>
+            <button class="mode-btn" onclick="setMode('neoplatonico')">Neoplatonico</button>
+            <button class="mode-btn" onclick="setMode('antico')">Antico</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="section-container">
+            <button class="section-toggle" onclick="toggleSection('vita')">Vita e Contesto Storico</button>
+            <div class="section-content" id="vita">
+                <p>Plotino (204/205 - 270 d.C.) fu un filosofo greco-romano, considerato il fondatore del Neoplatonismo. Nato probabilmente a Licopoli in Egitto, studiò ad Alessandria con Ammonio Sacca prima di trasferirsi a Roma nel 245, dove fondò una scuola filosofica.</p>
+                
+                <div class="quote">
+                    "Plotino, il filosofo del nostro tempo, sembrava vergognarsi di essere nel corpo."
+                    <div class="quote-author">- Porfirio, Vita di Plotino</div>
+                </div>
+                
+                <p>La sua filosofia univa elementi platonici, aristotelici e stoici in un sistema originale che ebbe enorme influenza sul pensiero occidentale e orientale. Scrisse 54 trattati organizzati dal suo discepolo Porfirio in sei gruppi di nove (da cui il nome Enneadi).</p>
+                
+                <div class="hierarchy">
+                    <div class="hierarchy-level one">L'Uno</div>
+                    <div class="hierarchy-level two">Intelletto (Nous)</div>
+                    <div class="hierarchy-level">Anima del Mondo</div>
+                    <div class="hierarchy-level">Natura</div>
+                    <div class="hierarchy-level">Mondo Materiale</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle" onclick="toggleSection('metafisica')">Metafisica Plotiniana</button>
+            <div class="section-content" id="metafisica">
+                <h3>L'Uno</h3>
+                <p>Principio supremo, ineffabile e trascendente, fonte di ogni essere. L'Uno è al di là di ogni determinazione e conoscenza, e può essere avvicinato solo attraverso l'estasi mistica.</p>
+                
+                <h3>L'Intelletto (Nous)</h3>
+                <p>Prima ipostasi che emana dall'Uno, contiene le Forme platoniche ed è il luogo della vera conoscenza intuitiva.</p>
+                
+                <div class="quote">
+                    "L'Uno è tutte le cose e nessuna di esse: principio di tutte le cose, non tutte le cose, ma tutte le cose da lui."
+                    <div class="quote-author">- Plotino, Enneadi (V.2.1)</div>
+                </div>
+                
+                <h3>L'Anima</h3>
+                <p>Terza ipostasi, intermedia tra il mondo intelligibile e quello sensibile. L'anima individuale partecipa dell'Anima universale.</p>
+                
+                <h3>Processione e Ritorno</h3>
+                <p>Tutto emana dall'Uno per sovrabbondanza d'essere (processione), ma tutto tende a ritornare all'Uno (conversione), in un ciclo eterno.</p>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle" onclick="toggleSection('etica')">Etica e Mistica</button>
+            <div class="section-content" id="etica">
+                <h3>Ascesi Filosofica</h3>
+                <p>Plotino propone un percorso di purificazione (katharsis) che porta l'anima a distaccarsi dal corporeo per elevarsi verso l'intelligibile.</p>
+                
+                <h3>L'Estasi Mistica</h3>
+                <p>Momento culminante dell'itinerario spirituale, in cui l'anima si unisce all'Uno in un'esperienza ineffabile che trascende la razionalità.</p>
+                
+                <div class="quote">
+                    "Spesso mi risveglio dal corpo a me stesso, esterno a ogni altra cosa e dentro all'essenza; ottengo una meravigliosa saggezza."
+                    <div class="quote-author">- Plotino, Enneadi (IV.8.1)</div>
+                </div>
+                
+                <h3>La Virtù</h3>
+                <p>Distinte in virtù politiche (purificazione), virtù contemplative (illuminazione) e virtù esemplari (unione), guidano l'anima verso l'alto.</p>
+                
+                <h3>Il Male come Assenza</h3>
+                <p>Il male non ha realtà positiva, ma è privazione di bene, conseguenza necessaria della distanza dall'Uno.</p>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle" onclick="toggleSection('opere')">Le Enneadi</button>
+            <div class="section-content" id="opere">
+                <p>Le opere di Plotino furono raccolte e ordinate dal suo discepolo Porfirio in sei Enneadi (gruppi di nove trattati):</p>
+                
+                <div class="works-grid">
+                    <div class="work-card">
+                        <h4>I Enneade</h4>
+                        <p>Etica e virtù</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>II Enneade</h4>
+                        <p>Fisica e mondo sensibile</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>III Enneade</h4>
+                        <p>Provvidenza e destino</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>IV Enneade</h4>
+                        <p>L'anima</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>V Enneade</h4>
+                        <p>Intelletto e idee</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>VI Enneade</h4>
+                        <p>L'Uno e l'essere</p>
+                    </div>
+                </div>
+                
+                <p>I trattati furono scritti tra il 253 e il 270 d.C. e mostrano l'evoluzione del pensiero plotiniano.</p>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle" onclick="toggleSection('influenza')">Influenza Storica</button>
+            <div class="section-content" id="influenza">
+                <h3>Filosofia Tardoantica</h3>
+                <p>Il neoplatonismo divenne la filosofia dominante nel tardo impero romano, con figure come Porfirio, Giamblico e Proclo.</p>
+                
+                <h3>Filosofia Medievale</h3>
+                <p>Influenzò il pensiero cristiano (Agostino, Pseudo-Dionigi), islamico (Al-Kindi, Avicenna) ed ebraico (Maimonide).</p>
+                
+                <div class="quote">
+                    "Se Plotino fosse vissuto ai nostri tempi, avrebbe cambiato poche parole e sarebbe diventato cristiano."
+                    <div class="quote-author">- Sant'Agostino, Confessioni</div>
+                </div>
+                
+                <h3>Rinascimento e Modernità</h3>
+                <p>Riscoperto da Ficino e Pico della Mirandola, influenzò l'idealismo tedesco (Schelling, Hegel) e la teosofia.</p>
+                
+                <h3>Pensiero Contemporaneo</h3>
+                <p>La sua metafisica ha ispirato Bergson, Teilhard de Chardin e la psicologia transpersonale.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Documentazione filosofica su Plotino e il Neoplatonismo</p>
+        <p>© 2023 - Tutti i diritti riservati</p>
+    </footer>
+
+    <script>
+        // Funzione per attivare/disattivare le sezioni
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const button = document.querySelector(`[onclick="toggleSection('${sectionId}')"]`);
+            
+            section.classList.toggle('show');
+            button.classList.toggle('active');
+        }
+
+        // Funzione per cambiare modalità di lettura
+        function setMode(mode) {
+            document.body.className = mode;
+            
+            // Salva la preferenza
+            localStorage.setItem('readingMode', mode);
+            
+            // Animazione di transizione
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 300);
+        }
+
+        // Al caricamento della pagina, applica la modalità salvata
+        window.onload = function() {
+            const savedMode = localStorage.getItem('readingMode');
+            if (savedMode) {
+                setMode(savedMode);
+            }
+            
+            // Apri la prima sezione di default
+            toggleSection('vita');
+        }
+    </script>
+</body>
+</html>

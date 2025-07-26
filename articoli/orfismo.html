@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orfismo - Il Mistero della Luce e delle Tenebre</title>
+    <style>
+        :root {
+            --primary-color: #8e24aa;
+            --secondary-color: #ab47bc;
+            --text-color: #6a1b9a;
+            --bg-color: #f3e5f5;
+            --accent-color: #e1bee7;
+            --font-main: 'Garamond', 'Times New Roman', serif;
+            --font-alt: 'Palatino Linotype', 'Book Antiqua', serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            transition: all 0.5s ease;
+        }
+
+        /* Stili per le modalità di lettura */
+        .misterico {
+            --primary-color: #7b1fa2;
+            --secondary-color: #9c27b0;
+            --text-color: #4a148c;
+            --bg-color: #121212;
+            --accent-color: #1e1e1e;
+        }
+
+        .antico {
+            --primary-color: #5d4037;
+            --secondary-color: #8d6e63;
+            --text-color: #3e2723;
+            --bg-color: #efebe9;
+            --accent-color: #d7ccc8;
+            font-family: 'Uncial Antiqua', 'Times New Roman', serif;
+        }
+
+        .estatico {
+            --primary-color: #6a1b9a;
+            --secondary-color: #9c27b0;
+            --text-color: #4a148c;
+            --bg-color: #f3e5f5;
+            --accent-color: #e1bee7;
+        }
+
+        .dualistico {
+            --primary-color: #000000;
+            --secondary-color: #ffffff;
+            --text-color: #333333;
+            --bg-color: #f5f5f5;
+            --accent-color: #e0e0e0;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+            font-family: var(--font-alt);
+            position: relative;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.8em;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        h1::before, h1::after {
+            content: "⚯";
+            color: var(--secondary-color);
+            padding: 0 15px;
+        }
+
+        h2 {
+            margin-top: 40px;
+            font-size: 1.8em;
+            padding-bottom: 5px;
+            border-bottom: 2px dotted var(--secondary-color);
+        }
+
+        .mode-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--font-alt);
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .mode-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+            transition: 0.5s;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .mode-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Stili per i bottoni di sezione */
+        .section-container {
+            margin: 40px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .section-toggle {
+            position: relative;
+            width: 100%;
+            padding: 20px;
+            text-align: left;
+            border: none;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            font-size: 1.3em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-toggle:hover {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+        }
+
+        .section-toggle::after {
+            content: '⌾';
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+        }
+
+        .section-toggle.active::after {
+            transform: rotate(45deg);
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.3s ease;
+            background-color: white;
+        }
+
+        .section-content.show {
+            max-height: 5000px;
+            padding: 30px;
+            border-top: 1px solid var(--accent-color);
+        }
+
+        .section-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .quote {
+            font-style: italic;
+            padding: 20px;
+            background-color: var(--accent-color);
+            border-radius: 8px;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .quote::before {
+            content: '✥';
+            font-size: 4em;
+            position: absolute;
+            left: 10px;
+            top: 0;
+            color: rgba(0,0,0,0.1);
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .quote-author {
+            text-align: right;
+            font-weight: bold;
+            margin-top: 15px;
+            font-style: normal;
+            color: var(--secondary-color);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 50px;
+            margin: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .timeline-year {
+            position: absolute;
+            left: -50px;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary-color), var(--secondary-color));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 0 0 4px var(--bg-color);
+            z-index: 1;
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+            margin-left: 30px;
+            position: relative;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 20px;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid white;
+        }
+
+        .symbol-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .symbol-card {
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+            border-top: 3px solid var(--primary-color);
+        }
+
+        .symbol-card span {
+            font-size: 2em;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid var(--accent-color);
+            font-size: 0.9em;
+            color: var(--secondary-color);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2em;
+            }
+            
+            .section-toggle {
+                padding: 15px;
+                font-size: 1.1em;
+            }
+            
+            .section-content.show {
+                padding: 20px;
+            }
+            
+            .symbol-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Orfismo</h1>
+        <p style="text-align: center; font-style: italic; font-size: 1.2em;">Il movimento mistico che rivoluzionò la spiritualità greca</p>
+        
+        <div class="mode-selector">
+            <button class="mode-btn" onclick="setMode('default')">Classico</button>
+            <button class="mode-btn" onclick="setMode('misterico')">Misterico</button>
+            <button class="mode-btn" onclick="setMode('antico')">Antico</button>
+            <button class="mode-btn" onclick="setMode('estatico')">Estatico</button>
+            <button class="mode-btn" onclick="setMode('dualistico')">Dualistico</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="section-container">
+            <button class="section-toggle" onclick="toggleSection('origini')">Origini e Fondamenti</button>
+            <div class="section-content" id="origini">
+                <p>L'Orfismo fu un movimento religioso e mistico dell'antica Grecia, sorto probabilmente tra il VI e V secolo a.C., attribuito tradizionalmente al leggendario poeta Orfeo. Questo culto rappresentò una profonda rivoluzione spirituale con elementi di:</p>
+                
+                <ul>
+                    <li>Dualismo cosmico (luce/tenebre)</li>
+                    <li>Teologia della colpa e della redenzione</li>
+                    <li>Immortalità dell'anima</li>
+                    <li>Ascesi purificatoria</li>
+                </ul>
+                
+                <div class="quote">
+                    "Gli iniziati agli antichi misteri orfici si astenevano dalla violenza e seguivano una vita di purezza, credendo nella trasmigrazione delle anime."
+                    <div class="quote-author">- Platone, Leggi</div>
+                </div>
+                
+                <p>Diversamente dalla religione olimpica ufficiale, l'Orfismo proponeva una visione dualistica dell'essere umano, diviso tra un principio divino (l'anima, dionisiaco) e un principio titanico (il corpo, peccaminoso).</p>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle" onclick="toggleSection('mito')">Il Mito Fondatore</button>
+            <div class="section-content" id="mito">
+                <h3>Dioniso-Zagreo</h3>
+                <p>Al centro della teologia orfica sta il mito di Dioniso-Zagreo, figlio di Zeus e Persefone, destinato a succedere al padre. I Titani, istigati da Era, lo uccisero e ne divorarono le carni.</p>
+                
+                <h3>La Punizione dei Titani</h3>
+                <p>Zeus fulminò i Titani e dalla loro fuliggine nacquero gli esseri umani, che quindi partecipano di una doppia natura: titanica (corporea e peccaminosa) e dionisiaca (spirituale e divina).</p>
+                
+                <div class="quote">
+                    "Siamo nati dalla terra e dal cielo stellato, ma anche dalla stirpe divina di cui siamo parte."
+                    <div class="quote-author">- Lamina orfica</div>
+                </div>
+                
+                <h3>Il Ruolo di Orfeo</h3>
+                <p>Orfeo, il poeta tracio che discese nell'Ade e tornò, sarebbe stato l'iniziatore dei riti di purificazione per liberare l'elemento divino dalla prigione titanica.</p>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle" onclick="toggleSection('simboli')">Simboli e Riti</button>
+            <div class="section-content" id="simboli">
+                <h3>Simbolismo Orfico</h3>
+                <p>L'Orfismo sviluppò un ricco linguaggio simbolico che influenzò l'arte e la letteratura greca:</p>
+                
+                <div class="symbol-grid">
+                    <div class="symbol-card">
+                        <span>⚯</span>
+                        Dualismo cosmico
+                    </div>
+                    <div class="symbol-card">
+                        <span>𓃢</span>
+                        Serpente (rinnovamento)
+                    </div>
+                    <div class="symbol-card">
+                        <span>𓍝</span>
+                        Uovo cosmico
+                    </div>
+                    <div class="symbol-card">
+                        <span>☽</span>
+                        Luna (Persefone)
+                    </div>
+                    <div class="symbol-card">
+                        <span>𓃹</span>
+                        Toro (Dioniso)
+                    </div>
+                    <div class="symbol-card">
+                        <span>𓃺</span>
+                        Lira (Orfeo)
+                    </div>
+                </div>
+                
+                <h3>Pratiche Iniziatiche</h3>
+                <p>I seguaci dell'Orfismo seguivano un rigoroso codice di purificazione (teleté) che includeva:</p>
+                <ul>
+                    <li>Vegetarianesimo (astensione dalla violenza)</li>
+                    <li>Rinuncia ai sacrifici cruenti</li>
+                    <li>Pratiche ascetiche</li>
+                    <li>Iniziazione ai misteri</li>
+                    <li>Uso di testi sacri e laminette d'oro</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle" onclick="toggleSection('testi')">Testi e Fonti</button>
+            <div class="section-content" id="testi">
+                <h3>I Testi Orfici</h3>
+                <p>La tradizione attribuisce a Orfeo numerosi poemi teogonici e inni, composti probabilmente tra il VI e il II secolo a.C.:</p>
+                
+                <ul>
+                    <li><strong>Teogonie orfiche</strong> - Diverse versioni del mito cosmogonico</li>
+                    <li><strong>Inni Orfici</strong> - 87 inni rituali</li>
+                    <li><strong>Argonautiche Orfiche</strong> - Poema epico</li>
+                    <li><strong>Laminette auree</strong> - Istruzioni per l'aldilà</li>
+                </ul>
+                
+                <div class="quote">
+                    "Troverai a sinistra della casa di Ade una fonte e accanto ad essa un bianco cipresso: a questa fonte non avvicinarti neppure."
+                    <div class="quote-author">- Istruzioni dalla lamina di Petelia</div>
+                </div>
+                
+                <h3>Fonti Archeologiche</h3>
+                <p>Importanti ritrovamenti hanno confermato la diffusione dell'Orfismo:</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">1962</div>
+                        <div class="timeline-content">Scoperta delle lamine d'oro di Thurii</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1974</div>
+                        <div class="timeline-content">Ritrovamento del papiro di Derveni</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle" onclick="toggleSection('eredita')">Eredità e Influenza</button>
+            <div class="section-content" id="eredita">
+                <h3>Nella Filosofia Greca</h3>
+                <p>L'Orfismo influenzò profondamente:</p>
+                <ul>
+                    <li>Pitagora e il pitagorismo</li>
+                    <li>Empedocle e la sua dottrina delle metempsicosi</li>
+                    <li>Platone (mito della biga alata, teoria della reminiscenza)</li>
+                </ul>
+                
+                <h3>Nei Misteri Eleusini</h3>
+                <p>Molti elementi orfici confluirono nei più famosi misteri greci, specialmente nel culto di Demetra e Persefone.</p>
+                
+                <div class="quote">
+                    "L'Orfismo rappresenta la prima grande rivoluzione spirituale dell'Occidente, anticipando temi che ritroveremo nel platonismo e nel cristianesimo."
+                    <div class="quote-author">- Mircea Eliade, storico delle religioni</div>
+                </div>
+                
+                <h3>Nella Cultura Contemporanea</h3>
+                <p>Temi orfici appaiono in:</p>
+                <ul>
+                    <li>Letteratura (Rilke, "Sonetti a Orfeo")</li>
+                    <li>Psicanalisi (Jung e gli archetipi)</li>
+                    <li>Esoterismo moderno</li>
+                    <li>Neopaganesimo</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Documentazione sull'Orfismo e la tradizione misterica greca</p>
+        <p>© 2023 - Tutti i diritti riservati</p>
+    </footer>
+
+    <script>
+        // Funzione per attivare/disattivare le sezioni
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const button = document.querySelector(`[onclick="toggleSection('${sectionId}')"]`);
+            
+            section.classList.toggle('show');
+            button.classList.toggle('active');
+        }
+
+        // Funzione per cambiare modalità di lettura
+        function setMode(mode) {
+            document.body.className = mode;
+            
+            // Salva la preferenza
+            localStorage.setItem('readingMode', mode);
+            
+            // Animazione di transizione
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 300);
+        }
+
+        // Al caricamento della pagina, applica la modalità salvata
+        window.onload = function() {
+            const savedMode = localStorage.getItem('readingMode');
+            if (savedMode) {
+                setMode(savedMode);
+            }
+            
+            // Apri la prima sezione di default
+            toggleSection('origini');
+        }
+    </script>
+</body>
+</html>

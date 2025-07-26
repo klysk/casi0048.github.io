@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eudemo di Rodi - Il Discepolo Fedele | Echi di Sofia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Marcellus&family=Quattrocento:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Color Schemes */
+            --papyrus-text: #3e2723;
+            --papyrus-bg: #f5f0e6;
+            --papyrus-accent: #6d4c41;
+            --papyrus-border: #8d6e63;
+            
+            --night-text: #e0e0e0;
+            --night-bg: #121212;
+            --night-accent: #d7b740;
+            --night-border: #5d4037;
+            
+            --marble-text: #263238;
+            --marble-bg: #f5f5f5;
+            --marble-accent: #546e7a;
+            --marble-border: #90a4ae;
+            
+            --academy-text: #3e2723;
+            --academy-bg: #efebe9;
+            --academy-accent: #5d4037;
+            --academy-border: #8d6e63;
+            
+            /* Current Theme - Default to Papyrus */
+            --text: var(--papyrus-text);
+            --bg: var(--papyrus-bg);
+            --accent: var(--papyrus-accent);
+            --border: var(--papyrus-border);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.5s, color 0.3s, border-color 0.3s;
+        }
+        
+        body {
+            font-family: 'Cardo', serif;
+            color: var(--text);
+            background-color: var(--bg);
+            line-height: 1.8;
+            padding: 20px;
+            background-image: var(--bg-image);
+            background-attachment: fixed;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: var(--bg);
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background-color: var(--accent);
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Marcellus', serif;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        
+        h2 {
+            font-size: 1.9rem;
+            margin-top: 40px;
+            border-left: 4px solid var(--accent);
+            padding-left: 15px;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            margin-top: 30px;
+            font-family: 'Quattrocento', serif;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            line-height: 1.9;
+        }
+        
+        blockquote {
+            border-left: 4px solid var(--accent);
+            padding: 15px 20px;
+            margin: 25px 0;
+            font-style: italic;
+            color: var(--text);
+            background-color: rgba(0,0,0,0.03);
+            font-family: 'Cardo', serif;
+            position: relative;
+        }
+        
+        blockquote::before {
+            content: '"';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            font-size: 3rem;
+            color: var(--accent);
+            opacity: 0.2;
+            font-family: 'Times New Roman', serif;
+        }
+        
+        /* Theme Selector */
+        .theme-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .theme-btn {
+            padding: 10px 20px;
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            cursor: pointer;
+            font-family: 'Marcellus', serif;
+            font-weight: normal;
+            transition: all 0.3s;
+            background-color: var(--bg);
+            color: var(--text);
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .theme-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,0,0,0.1), transparent);
+            transition: all 0.5s;
+        }
+        
+        .theme-btn:hover::before {
+            left: 100%;
+        }
+        
+        .theme-btn.active {
+            background-color: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+        
+        /* Shape Selector */
+        .shape-selector {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 25px 0;
+        }
+        
+        .shape-btn {
+            width: 44px;
+            height: 44px;
+            border: none;
+            background-color: var(--accent);
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg);
+            font-size: 1.2rem;
+            position: relative;
+        }
+        
+        .shape-btn:hover {
+            transform: translateY(-3px);
+        }
+        
+        .shape-btn.active {
+            transform: scale(1.1);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        
+        .shape-btn.scroll {
+            clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 50% 100%, 0% 75%);
+        }
+        
+        .shape-btn.tablet {
+            clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
+        }
+        
+        .shape-btn.lamp {
+            clip-path: path('M10,0 L30,0 L35,15 L25,15 L20,40 L10,40 L5,15 L0,15 Z');
+        }
+        
+        .shape-btn.wave {
+            clip-path: path('M0,10 Q10,0 20,10 T40,10 Q50,20 60,10 T80,10 Q90,0 100,10 L100,30 Q90,40 80,30 T60,30 Q50,20 40,30 T20,30 Q10,40 0,30 Z');
+        }
+        
+        /* Accordion System */
+        .accordion-container {
+            margin: 40px 0;
+        }
+        
+        .accordion-header {
+            position: relative;
+            padding: 18px 25px;
+            background-color: var(--bg);
+            color: var(--text);
+            cursor: pointer;
+            margin-bottom: 10px;
+            border: 1px solid var(--border);
+            font-family: 'Marcellus', serif;
+            font-size: 1.2rem;
+            transition: all 0.4s;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .accordion-header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, var(--accent), var(--bg));
+            opacity: 0;
+            z-index: -1;
+            transition: all 0.4s;
+        }
+        
+        .accordion-header:hover::after {
+            opacity: 0.1;
+        }
+        
+        .accordion-header::before {
+            content: '→';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: all 0.3s;
+        }
+        
+        .accordion-header.active::before {
+            transform: translateY(-50%) rotate(90deg);
+        }
+        
+        .accordion-content {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s ease-out, padding 0.4s;
+            border-left: 1px solid transparent;
+            border-right: 1px solid transparent;
+        }
+        
+        .accordion-content.active {
+            padding: 25px;
+            max-height: 5000px;
+            border-color: var(--border);
+        }
+        
+        /* Apply shape classes */
+        .shape-scroll .accordion-header {
+            clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 50% 100%, 0% 75%);
+            border-top: none;
+        }
+        
+        .shape-tablet .accordion-header {
+            clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
+        }
+        
+        .shape-lamp .accordion-header {
+            clip-path: path('M10,0 L30,0 L35,15 L25,15 L20,40 L10,40 L5,15 L0,15 Z');
+            padding-top: 25px;
+        }
+        
+        .shape-wave .accordion-header {
+            clip-path: path('M0,10 Q10,0 20,10 T40,10 Q50,20 60,10 T80,10 Q90,0 100,10 L100,30 Q90,40 80,30 T60,30 Q50,20 40,30 T20,30 Q10,40 0,30 Z');
+        }
+        
+        /* Theme Classes */
+        .theme-papyrus {
+            --text: var(--papyrus-text);
+            --bg: var(--papyrus-bg);
+            --accent: var(--papyrus-accent);
+            --border: var(--papyrus-border);
+            --bg-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f5f0e6"/><path d="M0,20 Q50,15 100,20 L100,30 Q50,25 0,30 Z" fill="%23e6ddd0" opacity="0.3"/><path d="M0,40 Q50,35 100,40 L100,50 Q50,45 0,50 Z" fill="%23e6ddd0" opacity="0.3"/><path d="M0,60 Q50,55 100,60 L100,70 Q50,65 0,70 Z" fill="%23e6ddd0" opacity="0.3"/><path d="M0,80 Q50,75 100,80 L100,90 Q50,85 0,90 Z" fill="%23e6ddd0" opacity="0.3"/></svg>');
+        }
+        
+        .theme-night {
+            --text: var(--night-text);
+            --bg: var(--night-bg);
+            --accent: var(--night-accent);
+            --border: var(--night-border);
+            --bg-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23121212"/><circle cx="20" cy="30" r="1" fill="%23d7b740"/><circle cx="50" cy="15" r="1.5" fill="%23d7b740"/><circle cx="80" cy="25" r="1" fill="%23d7b740"/><circle cx="30" cy="60" r="1" fill="%23d7b740"/><circle cx="70" cy="70" r="2" fill="%23d7b740"/><circle cx="90" cy="50" r="1" fill="%23d7b740"/><circle cx="10" cy="80" r="1.5" fill="%23d7b740"/><circle cx="40" cy="90" r="1" fill="%23d7b740"/><circle cx="85" cy="85" r="1" fill="%23d7b740"/></svg>');
+        }
+        
+        .theme-marble {
+            --text: var(--marble-text);
+            --bg: var(--marble-bg);
+            --accent: var(--marble-accent);
+            --border: var(--marble-border);
+            --bg-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f5f5f5"/><path d="M0,0 Q50,20 100,0 L100,100 Q50,80 0,100 Z" fill="%23e0e0e0" opacity="0.3"/><path d="M0,0 Q30,50 0,100 L100,100 Q70,50 100,0 Z" fill="%23e0e0e0" opacity="0.2"/></svg>');
+        }
+        
+        .theme-academy {
+            --text: var(--academy-text);
+            --bg: var(--academy-bg);
+            --accent: var(--academy-accent);
+            --border: var(--academy-border);
+            --bg-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23efebe9"/><path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="%238d6e63" stroke-width="0.5" opacity="0.3"/><path d="M30,30 L70,30 L70,70 L30,70 Z" fill="none" stroke="%238d6e63" stroke-width="0.5" opacity="0.3"/><path d="M40,40 L60,40 L60,60 L40,60 Z" fill="none" stroke="%238d6e63" stroke-width="0.5" opacity="0.3"/></svg>');
+        }
+        
+        /* Special Elements */
+        .fragment {
+            background-color: rgba(0,0,0,0.05);
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Quattrocento', serif;
+            font-size: 0.9rem;
+            color: var(--accent);
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 50px;
+            margin: 30px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: var(--accent);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -43px;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--bg);
+            border: 3px solid var(--accent);
+        }
+        
+        .timeline-date {
+            font-weight: bold;
+            color: var(--accent);
+            font-family: 'Marcellus', serif;
+        }
+        
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .work-card {
+            background-color: rgba(0,0,0,0.03);
+            padding: 20px;
+            border-radius: 3px;
+            border-top: 3px solid var(--accent);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .work-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.03), transparent);
+            z-index: 0;
+        }
+        
+        .work-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .work-card h4 {
+            margin-bottom: 10px;
+            color: var(--accent);
+            font-family: 'Marcellus', serif;
+            position: relative;
+        }
+        
+        .work-card .year {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 10px;
+            font-family: 'Quattrocento', serif;
+            position: relative;
+        }
+        
+        .work-card p {
+            position: relative;
+        }
+        
+        .influence-diagram {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        
+        .influence-item {
+            text-align: center;
+            margin: 0 20px;
+            position: relative;
+        }
+        
+        .influence-item::before {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            opacity: 0.1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+        
+        .influence-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+        }
+        
+        .influence-item span {
+            display: block;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .works-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .influence-diagram {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .influence-item {
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body class="theme-papyrus shape-scroll">
+    <div class="container">
+        <header>
+            <h1>Eudemo di Rodi: Il Peripatetico Ritrovato</h1>
+            
+            <div class="theme-selector">
+                <button class="theme-btn active" onclick="setTheme('papyrus')">Papiro</button>
+                <button class="theme-btn" onclick="setTheme('night')">Notte</button>
+                <button class="theme-btn" onclick="setTheme('marble')">Marmo</button>
+                <button class="theme-btn" onclick="setTheme('academy')">Accademia</button>
+            </div>
+            
+            <div class="shape-selector">
+                <button class="shape-btn scroll active" onclick="setShape('scroll')">⌃</button>
+                <button class="shape-btn tablet" onclick="setShape('tablet')">◻</button>
+                <button class="shape-btn lamp" onclick="setShape('lamp')">⏀</button>
+                <button class="shape-btn wave" onclick="setShape('wave')">~</button>
+            </div>
+            
+            <p>Eudemo di Rodi (IV secolo a.C.) fu uno dei più fedeli discepoli di Aristotele e membro di spicco della scuola peripatetica. La sua opera, oggi in gran parte perduta, rappresenta un ponte fondamentale tra l'insegnamento aristotelico e la tradizione filosofica successiva.</p>
+        </header>
+        
+        <div class="accordion-container">
+            <div class="accordion-header">Vita e Contesto Storico</div>
+            <div class="accordion-content">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">ca. 350 a.C.</div>
+                        <p>Nascita a Rodi, in un'epoca di intensi scambi culturali tra le isole greche e l'Asia Minore.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">335 a.C.</div>
+                        <p>Trasferimento ad Atene per studiare presso l'Accademia di Platone, dove incontra Aristotele.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">323 a.C.</div>
+                        <p>Dopo la morte di Alessandro Magno, segue Aristotele a Calcide, assistendolo negli ultimi anni di vita.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">322 a.C.</div>
+                        <p>Morte di Aristotele. Eudemo ritorna a Rodi dove fonda una scuola peripatetica locale.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">310 a.C.</div>
+                        <p>Probabile data della morte, anche se le fonti sono incerte. La sua scuola a Rodi continua a operare.</p>
+                    </div>
+                </div>
+                
+                <blockquote>
+                    "Eudemo fu tra coloro che meglio compresero l'essenza dell'insegnamento aristotelico, non solo come erudito compilatore, ma come pensatore originale."
+                    <footer>- Fritz Wehrli, studioso della scuola peripatetica</footer>
+                </blockquote>
+                
+                <h3>Il Contesto Intellettuale</h3>
+                <p>Eudemo operò in un periodo di transizione tra la filosofia classica e l'ellenismo, caratterizzato da:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>La diffusione delle scuole filosofiche ad Atene e oltre</li>
+                    <li>La sistemazione dell'eredità aristotelica</li>
+                    <li>L'incontro tra tradizione greca e culture orientali</li>
+                    <li>Lo sviluppo delle scienze particolari (fisica, biologia, astronomia)</li>
+                </ul>
+            </div>
+            
+            <div class="accordion-header">Opere e Dottrine</div>
+            <div class="accordion-content">
+                <h3>Le Opere Perdute</h3>
+                <p>Della vasta produzione di Eudemo ci restano solo frammenti e testimonianze indirette:</p>
+                
+                <div class="works-grid">
+                    <div class="work-card">
+                        <h4>Fisica</h4>
+                        <div class="year">ca. 320 a.C.</div>
+                        <p>Rielaborazione sistematica della <span class="fragment">Physica</span> aristotelica, citata ampiamente da Simplicio.</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>Etica Eudemia</h4>
+                        <div class="year">ca. 315 a.C.</div>
+                        <p>Probabilmente la fonte dell'omonima opera attribuita ad Aristotele, con significative divergenze dottrinali.</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>Storia dell'Astronomia</h4>
+                        <div class="year">ca. 310 a.C.</div>
+                        <p>Primo tentativo di storia della scienza, che traccia lo sviluppo delle conoscenze astronomiche da Talete in poi.</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>Storia della Geometria</h4>
+                        <div class="year">ca. 310 a.C.</div>
+                        <p>Analogo lavoro per la geometria, fondamentale fonte per la ricostruzione della matematica presocratica.</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>Sull'Anima</h4>
+                        <div class="year">ca. 315 a.C.</div>
+                        <p>Commentario al <span class="fragment">De Anima</span> aristotelico con originali sviluppi sulla teoria della percezione.</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>Analitici</h4>
+                        <div class="year">ca. 318 a.C.</div>
+                        <p>Esposizione della logica aristotelica con importanti integrazioni metodologiche.</p>
+                    </div>
+                </div>
+                
+                <h3>Contributi Dottrinali</h3>
+                <p>Eudemo sviluppò in modo originale diversi aspetti del pensiero aristotelico:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li><strong>Teoria del movimento</strong>: Maggiore enfasi sugli aspetti quantitativi</li>
+                    <li><strong>Etica</strong>: Concezione più "umanistica" della virtù</li>
+                    <li><strong>Metodologia scientifica</strong>: Sviluppo della distinzione tra scienze teoriche e pratiche</li>
+                    <li><strong>Storiografia filosofica</strong>: Approccio genetico allo sviluppo del pensiero</li>
+                </ul>
+                
+                <blockquote>
+                    "Eudemo non fu semplice epigono, ma pensatore capace di sviluppare in direzioni nuove l'eredità del maestro, specialmente nel campo dell'etica e della metodologia scientifica."
+                </blockquote>
+            </div>
+            
+            <div class="accordion-header">La Questione dell'Etica Eudemia</div>
+            <div class="accordion-content">
+                <h3>Il Problema Attributivo</h3>
+                <p>L'<span class="fragment">Ethica Eudemia</span> tramandata nel <span class="fragment">Corpus Aristotelicum</span> presenta:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>Stile composito e disomogeneo</li>
+                    <li>Dottrine in parte divergenti dall'etica nicomachea</li>
+                    <li>Riferimenti a contesti storici successivi ad Aristotele</li>
+                </ul>
+                
+                <h3>L'Ipotesi Eudemea</h3>
+                <p>Molti studiosi moderni ritengono che:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>L'opera sia fondamentalmente di Eudemo</li>
+                    <li>Contenga materiale aristotelico rielaborato</li>
+                    <li>Rappresenti una fase intermedia tra l'etica delle grandi opere e quella nicomachea</li>
+                    <li>Sia stata poi attribuita ad Aristotele per aumentarne l'autorità</li>
+                </ul>
+                
+                <h3>Elementi Caratteristici</h3>
+                <p>Specificità dell'etica eudemea:</p>
+                <ul style="margin-left: 20px;">
+                    <li>Maggiore attenzione alla <span class="fragment">phronesis</span> pratica</li>
+                    <li>Concezione più "democratica" della virtù</li>
+                    <li>Influssi della tradizione socratico-platonica</li>
+                    <li>Approccio più empirico allo studio del comportamento</li>
+                </ul>
+            </div>
+            
+            <div class="accordion-header">Influenza e Ricezione</div>
+            <div class="accordion-content">
+                <h3>La Scuola di Rodi</h3>
+                <p>Eudemo fondò un importante centro peripatetico che:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>Mantenne viva la tradizione aristotelica in Asia Minore</li>
+                    <li>Sviluppò interessi scientifici originali</li>
+                    <li>Funse da ponte tra Atene e Alessandria</li>
+                    <li>Influenzò pensatori come Stratone di Lampsaco</li>
+                </ul>
+                
+                <div class="influence-diagram">
+                    <div class="influence-item">
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%235d4037'/><text x='50' y='60' font-size='50' text-anchor='middle' fill='%23efebe9'>A</text></svg>" alt="Aristotele">
+                        <span>Aristotele</span>
+                    </div>
+                    <div class="influence-item">
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%235d4037'/><text x='50' y='60' font-size='50' text-anchor='middle' fill='%23efebe9'>E</text></svg>" alt="Eudemo">
+                        <span>Eudemo</span>
+                    </div>
+                    <div class="influence-item">
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%235d4037'/><text x='50' y='60' font-size='50' text-anchor='middle' fill='%23efebe9'>S</text></svg>" alt="Stratone">
+                        <span>Stratone</span>
+                    </div>
+                    <div class="influence-item">
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%235d4037'/><text x='50' y='60' font-size='50' text-anchor='middle' fill='%23efebe9'>C</text></svg>" alt="Cicerone">
+                        <span>Cicerone</span>
+                    </div>
+                    <div class="influence-item">
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%235d4037'/><text x='50' y='60' font-size='50' text-anchor='middle' fill='%23efebe9'>S</text></svg>" alt="Simplicio">
+                        <span>Simplicio</span>
+                    </div>
+                </div>
+                
+                <h3>La Tradizione Indiretta</h3>
+                <p>L'influenza di Eudemo si esercitò principalmente attraverso:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>Le citazioni nei commentatori tardo-antichi (Simplicio, Filopono)</li>
+                    <li>La mediazione della scuola di Alessandria</li>
+                    <li>L'anonima incorporazione di sue dottrine nel corpus aristotelico</li>
+                    <li>La tradizione araba (attraverso le traduzioni siriache)</li>
+                </ul>
+                
+                <blockquote>
+                    "La vera grandezza di Eudemo sta nell'aver saputo essere fedele allo spirito dell'aristotelismo tradendone la lettera, sviluppando in modo creativo le intuizioni del maestro."
+                </blockquote>
+            </div>
+            
+            <div class="accordion-header">Eudemo nella Storiografia Moderna</div>
+            <div class="accordion-content">
+                <h3>La Riscoperta Ottocentesca</h3>
+                <p>Gli studi su Eudemo conobbero una rinascita grazie a:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>Hermann Diels e la raccolta dei frammenti dei presocratici</li>
+                    <li>Paul Moraux e la storia del peripatetismo</li>
+                    <li>La nuova attenzione per la tradizione indiretta</li>
+                    <li>Il ritrovamento di papiri con commentari aristotelici</li>
+                </ul>
+                
+                <h3>Prospettive Contemporanee</h3>
+                <p>Le recenti linee di ricerca includono:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>L'analisi filologica dei frammenti superstiti</li>
+                    <li>Lo studio del suo metodo storiografico</li>
+                    <li>Il ruolo nella trasmissione dell'aristotelismo</li>
+                    <li>L'influenza sull'etica ellenistica</li>
+                </ul>
+                
+                <h3>Edizioni Critiche</h3>
+                <p>Principali raccolte di frammenti e studi:</p>
+                <ul style="margin-left: 20px;">
+                    <li>Wehrli, <span class="fragment">Die Schule des Aristoteles</span> (1969)</li>
+                    <li>Fortenbaugh, <span class="fragment">Eudemus of Rhodes</span> (2002)</li>
+                    <li>Bodnár-Pellegrin, <span class="fragment">Eudème de Rhodes</span> (2013)</li>
+                    <li>La nuova edizione Teubner dei frammenti (in preparazione)</li>
+                </ul>
+                
+                <p style="margin-top: 20px;">Eudemo rappresenta una figura chiave per comprendere la transizione dal pensiero aristotelico classico alla filosofia ellenistica, meritando una rivalutazione critica che lo ponga al centro della storia del peripatetismo antico.</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Accordion functionality
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const content = this.nextElementSibling;
+                content.classList.toggle('active');
+                
+                // Close other accordions when opening one
+                if(this.classList.contains('active')) {
+                    accordionHeaders.forEach(otherHeader => {
+                        if(otherHeader !== this && otherHeader.classList.contains('active')) {
+                            otherHeader.classList.remove('active');
+                            otherHeader.nextElementSibling.classList.remove('active');
+                        }
+                    });
+                }
+            });
+        });
+        
+        // Theme switching
+        function setTheme(theme) {
+            document.body.className = document.body.className.replace(/\btheme-\S+/g, '');
+            document.body.classList.add(`theme-${theme}`);
+            
+            // Keep current shape when changing theme
+            const currentShape = document.body.classList.contains('shape-scroll') ? 'scroll' :
+                                document.body.classList.contains('shape-tablet') ? 'tablet' :
+                                document.body.classList.contains('shape-lamp') ? 'lamp' :
+                                'wave';
+            document.body.classList.add(`shape-${currentShape}`);
+            
+            // Update active button
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+        
+        // Shape switching
+        function setShape(shape) {
+            document.body.className = document.body.className.replace(/\bshape-\S+/g, '');
+            document.body.classList.add(`shape-${shape}`);
+            
+            // Keep current theme when changing shape
+            const currentTheme = document.body.classList.contains('theme-papyrus') ? 'papyrus' :
+                               document.body.classList.contains('theme-night') ? 'night' :
+                               document.body.classList.contains('theme-marble') ? 'marble' :
+                               'academy';
+            document.body.classList.add(`theme-${currentTheme}`);
+            
+            // Update active button
+            document.querySelectorAll('.shape-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+        
+        // Open first accordion by default
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstHeader = document.querySelector('.accordion-header');
+            firstHeader.classList.add('active');
+            firstHeader.nextElementSibling.classList.add('active');
+        });
+    </script>
+</body>
+</html>

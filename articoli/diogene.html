@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Antistene di Atene - Il Precursore del Cinismo</title>
+    <title>Diogene di Sinope - Il Cane Filosofo</title>
     <style>
         :root {
-            --primary-color: #8d6e63;
-            --secondary-color: #a1887f;
-            --text-color: #4e342e;
-            --bg-color: #efebe9;
-            --accent-color: #d7ccc8;
+            --primary-color: #5D4037;
+            --secondary-color: #8D6E63;
+            --text-color: #3E2723;
+            --bg-color: #EFEBE9;
+            --accent-color: #D7CCC8;
             --font-main: 'Garamond', 'Times New Roman', serif;
             --font-alt: 'Palatino Linotype', 'Book Antiqua', serif;
         }
@@ -28,37 +28,37 @@
 
         /* Stili per le modalità di lettura */
         .cinico {
-            --primary-color: #5d4037;
-            --secondary-color: #3e2723;
-            --text-color: #3e2723;
-            --bg-color: #d7ccc8;
-            --accent-color: #8d6e63;
+            --primary-color: #3E2723;
+            --secondary-color: #5D4037;
+            --text-color: #260e04;
+            --bg-color: #D7CCC8;
+            --accent-color: #8D6E63;
             font-family: 'Courier New', monospace;
         }
 
-        .sobrio {
-            --primary-color: #37474f;
-            --secondary-color: #455a64;
-            --text-color: #263238;
-            --bg-color: #eceff1;
-            --accent-color: #cfd8dc;
+        .ribelle {
+            --primary-color: #BF360C;
+            --secondary-color: #E64A19;
+            --text-color: #8c1f00;
+            --bg-color: #FBE9E7;
+            --accent-color: #FFCCBC;
         }
 
         .antico {
-            --primary-color: #5d4037;
-            --secondary-color: #3e2723;
-            --text-color: #4e342e;
-            --bg-color: #efebe9;
-            --accent-color: #d7ccc8;
+            --primary-color: #5D4037;
+            --secondary-color: #3E2723;
+            --text-color: #4E342E;
+            --bg-color: #EFEBE9;
+            --accent-color: #D7CCC8;
             font-family: 'Trajan Pro', 'Times New Roman', serif;
         }
 
-        .ribelle {
-            --primary-color: #bf360c;
-            --secondary-color: #e64a19;
-            --text-color: #8c1f00;
-            --bg-color: #fbe9e7;
-            --accent-color: #ffccbc;
+        .minimalista {
+            --primary-color: #263238;
+            --secondary-color: #37474F;
+            --text-color: #212121;
+            --bg-color: #FAFAFA;
+            --accent-color: #E0E0E0;
         }
 
         h1, h2, h3 {
@@ -75,7 +75,7 @@
         }
 
         h1::before, h1::after {
-            content: "⌘";
+            content: "𓃢";
             color: var(--secondary-color);
             padding: 0 15px;
         }
@@ -118,7 +118,7 @@
             height: 100%;
             background-color: var(--accent-color);
             transform: scaleX(0);
-            transform-origin: left;
+            transform-origin: right;
             transition: transform 0.3s ease;
             z-index: -1;
         }
@@ -130,6 +130,7 @@
 
         .mode-btn:hover::before {
             transform: scaleX(1);
+            transform-origin: left;
         }
 
         /* Stili per i bottoni di sezione */
@@ -161,13 +162,13 @@
         }
 
         .section-toggle::after {
-            content: '⌄';
+            content: '↓';
             font-size: 1.5em;
             transition: transform 0.3s ease;
         }
 
         .section-toggle.active::after {
-            transform: rotate(-180deg);
+            transform: rotate(180deg);
         }
 
         .section-content {
@@ -198,7 +199,7 @@
         }
 
         .quote::before {
-            content: '"';
+            content: '❝';
             font-size: 4em;
             position: absolute;
             left: 10px;
@@ -214,6 +215,31 @@
             margin-top: 15px;
             font-style: normal;
             color: var(--secondary-color);
+        }
+
+        .anecdotes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .anecdote-card {
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-top: 3px solid var(--primary-color);
+            transition: transform 0.3s ease;
+        }
+
+        .anecdote-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .anecdote-card h4 {
+            margin-top: 0;
+            color: var(--primary-color);
         }
 
         .timeline {
@@ -262,21 +288,7 @@
             border: 1px solid var(--accent-color);
         }
 
-        .works-list {
-            columns: 2;
-            column-gap: 30px;
-        }
-
-        .works-list li {
-            margin-bottom: 10px;
-            break-inside: avoid;
-        }
-
         @media (max-width: 768px) {
-            .works-list {
-                columns: 1;
-            }
-            
             h1 {
                 font-size: 2.2em;
             }
@@ -289,130 +301,108 @@
             .section-content.show {
                 padding: 20px;
             }
-        }
-
-        .virtues-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 30px 0;
-        }
-
-        .virtue-card {
-            padding: 15px;
-            background-color: white;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            border-top: 3px solid var(--primary-color);
+            
+            .anecdotes-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Antistene di Atene</h1>
-        <p style="text-align: center; font-style: italic; font-size: 1.2em;">Il filosofo che fondò la scuola cinica</p>
+        <h1>Diogene di Sinope</h1>
+        <p style="text-align: center; font-style: italic; font-size: 1.2em;">Il filosofo che visse in una botte</p>
         
         <div class="mode-selector">
             <button class="mode-btn" onclick="setMode('default')">Classico</button>
             <button class="mode-btn" onclick="setMode('cinico')">Cinico</button>
-            <button class="mode-btn" onclick="setMode('sobrio')">Sobrio</button>
-            <button class="mode-btn" onclick="setMode('antico')">Antico</button>
             <button class="mode-btn" onclick="setMode('ribelle')">Ribelle</button>
+            <button class="mode-btn" onclick="setMode('antico')">Antico</button>
+            <button class="mode-btn" onclick="setMode('minimalista')">Minimalista</button>
         </div>
     </header>
 
     <main>
         <div class="section-container">
-            <button class="section-toggle" onclick="toggleSection('biografia')">Biografia e Contesto Storico</button>
+            <button class="section-toggle" onclick="toggleSection('biografia')">Biografia</button>
             <div class="section-content" id="biografia">
-                <p>Antistene (445-365 a.C. circa) fu un filosofo ateniese, allievo di Gorgia e poi di Socrate, considerato il fondatore della scuola cinica. Nato da padre ateniese e madre tracia (forse una schiava), sperimentò personalmente la condizione di meteco prima di ottenere la piena cittadinanza.</p>
+                <p>Diogene di Sinope (412/404 a.C. - 323 a.C.) fu il più famoso filosofo della scuola cinica. Nato a Sinope, una colonia greca sul Mar Nero, fu esiliato dalla sua città natale per aver falsificato monete insieme al padre, banchiere pubblico.</p>
                 
                 <div class="quote">
-                    "Antistene insegnava nel ginnasio del Cinosarge (Cane Agile), da cui probabilmente derivò il nome della scuola cinica."
+                    "Quando gli chiesero perché fosse stato esiliato da Sinope, rispose: 'Perché ho falsificato la moneta corrente, così come loro falsificano i veri valori della vita'."
                     <div class="quote-author">- Diogene Laerzio, Vite dei filosofi</div>
                 </div>
                 
-                <p>Dopo la morte di Socrate, Antistene sviluppò una filosofia radicale che enfatizzava l'autosufficienza, il disprezzo per le convenzioni sociali e la vita secondo virtù. Il suo più famoso discepolo fu Diogene di Sinope.</p>
+                <p>Giunto ad Atene, divenne allievo di Antistene, fondatore della scuola cinica. Diogene portò all'estremo gli insegnamenti del maestro, vivendo in assoluta povertà in una botte (o in una grande giara) e rifiutando ogni convenzione sociale.</p>
                 
                 <div class="timeline">
                     <div class="timeline-item">
-                        <div class="timeline-year">445 a.C.</div>
-                        <div class="timeline-content">Nascita di Antistene ad Atene</div>
+                        <div class="timeline-year">412 a.C.</div>
+                        <div class="timeline-content">Nascita di Diogene a Sinope</div>
                     </div>
                     <div class="timeline-item">
-                        <div class="timeline-year">420 a.C.</div>
-                        <div class="timeline-content">Studia con Gorgia e diventa retore</div>
+                        <div class="timeline-year">390 a.C.</div>
+                        <div class="timeline-content">Esilio da Sinope per falsificazione di moneta</div>
                     </div>
                     <div class="timeline-item">
-                        <div class="timeline-year">410 a.C.</div>
-                        <div class="timeline-content">Diventa seguace di Socrate</div>
+                        <div class="timeline-year">380 a.C.</div>
+                        <div class="timeline-content">Arrivo ad Atene e incontro con Antistene</div>
                     </div>
                     <div class="timeline-item">
-                        <div class="timeline-year">399 a.C.</div>
-                        <div class="timeline-content">Morte di Socrate, fondazione della scuola cinica</div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-year">365 a.C.</div>
-                        <div class="timeline-content">Morte di Antistene</div>
+                        <div class="timeline-year">323 a.C.</div>
+                        <div class="timeline-content">Morte di Diogene a Corinto</div>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="section-container">
-            <button class="section-toggle" onclick="toggleSection('filosofia')">Filosofia e Dottrina</button>
+            <button class="section-toggle" onclick="toggleSection('filosofia')">Filosofia e Stile di Vita</button>
             <div class="section-content" id="filosofia">
-                <h3>Virtù e Autosufficienza</h3>
-                <p>Antistene sosteneva che la virtù (areté) fosse l'unico bene necessario e sufficiente per la felicità. Tutto il resto - ricchezza, fama, piaceri - erano indifferenti o dannosi.</p>
+                <h3>Autosufficienza Radicale</h3>
+                <p>Diogene portò all'estremo il principio dell'autarchia (autosufficienza), riducendo al minimo i suoi bisogni materiali. Viveva in una botte, possedeva solo un mantello, una bisaccia e una ciotola (che poi gettò via quando vide un bambino bere con le mani).</p>
                 
-                <div class="virtues-grid">
-                    <div class="virtue-card">
-                        <h4>Autarchia</h4>
-                        <p>Autosufficienza e indipendenza dai bisogni artificiali</p>
-                    </div>
-                    <div class="virtue-card">
-                        <h4>Parrhesia</h4>
-                        <p>Libertà di parola e franchezza</p>
-                    </div>
-                    <div class="virtue-card">
-                        <h4>Askesis</h4>
-                        <p>Esercizio e disciplina per rafforzare il carattere</p>
-                    </div>
-                    <div class="virtue-card">
-                        <h4>Ponos</h4>
-                        <p>Valorizzazione della fatica e del lavoro</p>
-                    </div>
-                </div>
-                
-                <h3>Critica alla Società</h3>
-                <p>Antistene rifiutava le convenzioni sociali, le ricchezze e i piaceri effimeri. Celebre la sua affermazione: "Preferirei impazzire che provare piacere".</p>
+                <h3>Libertà dalle Convenzioni</h3>
+                <p>Rifiutava ogni norma sociale che considerava artificiale, compresi i tabù sul comportamento in pubblico. Celebre il suo gesto di masturbarsi in piazza dicendo: "Se solo si potesse sfamare la fame strofinandosi il ventre!"</p>
                 
                 <div class="quote">
-                    "Quando un aristocratico gli disse che proveniva da una grande città, rispose: 'Non è questo che conta, ma saper essere grande in una piccola città'."
-                    <div class="quote-author">- Antistene secondo Diogene Laerzio</div>
+                    "Quando Platone definì l'uomo 'un bipede senza piume', Diogene spennò un gallo e lo portò all'Accademia dicendo: 'Ecco l'uomo di Platone!'."
+                    <div class="quote-author">- Diogene Laerzio</div>
                 </div>
+                
+                <h3>La Virtù come Unico Bene</h3>
+                <p>Come Antistene, Diogene credeva che la virtù fosse l'unico bene necessario per la felicità, e che potesse essere raggiunta attraverso l'allenamento (askesis) e la libertà dai bisogni artificiali.</p>
             </div>
         </div>
 
         <div class="section-container">
-            <button class="section-toggle" onclick="toggleSection('opere')">Opere e Insegnamenti</button>
-            <div class="section-content" id="opere">
-                <p>Sebbene nessuna opera completa di Antistene sia sopravvissuta, le fonti antiche gli attribuiscono numerosi scritti:</p>
-                
-                <ul class="works-list">
-                    <li><strong>Sulla virtù</strong> - Sulla possibilità di insegnare la virtù</li>
-                    <li><strong>Ciro</strong> - Dialogo sull'educazione</li>
-                    <li><strong>Aiace e Odisseo</strong> - Opere retoriche</li>
-                    <li><strong>Eracle</strong> - L'eroe come modello cinico</li>
-                    <li><strong>Sul linguaggio</strong> - Teoria del significato</li>
-                    <li><strong>Contro i sofisti</strong> - Polemica contro l'insegnamento a pagamento</li>
-                    <li><strong>Dialoghi socratici</strong> - Ricordi di Socrate</li>
-                    <li><strong>Sulla libertà e la schiavitù</strong> - Sulla vera libertà interiore</li>
-                </ul>
-                
-                <div class="quote">
-                    "La virtù riguarda le azioni e non ha bisogno di molti discorsi né di conoscenze, ma solo di forza socratica."
-                    <div class="quote-author">- Antistene secondo Diogene Laerzio</div>
+            <button class="section-toggle" onclick="toggleSection('aneddoti')">Aneddoti Celebri</button>
+            <div class="section-content" id="aneddoti">
+                <div class="anecdotes-grid">
+                    <div class="anecdote-card">
+                        <h4>La Lanterna</h4>
+                        <p>Diogene girava di giorno con una lanterna accesa, dicendo: "Cerco l'uomo", criticando l'ipocrisia della società.</p>
+                    </div>
+                    <div class="anecdote-card">
+                        <h4>Alessandro Magno</h4>
+                        <p>Quando Alessandro gli chiese cosa potesse fare per lui, Diogene rispose: "Spostati, mi copri il sole".</p>
+                    </div>
+                    <div class="anecdote-card">
+                        <h4>La Botte</h4>
+                        <p>Viveva in una botte nel tempio di Cibele, dimostrando che la felicità non dipende dai beni materiali.</p>
+                    </div>
+                    <div class="anecdote-card">
+                        <h4>Il Cane</h4>
+                        <p>Si definiva "cane" per la sua vita randagia e perché "i cani leccano gli amici e mordono i nemici".</p>
+                    </div>
+                    <div class="anecdote-card">
+                        <h4>Il Teatro</h4>
+                        <p>Entrò in un teatro controcorrente mentre tutti uscivano, dicendo: "È quello che faccio da tutta la vita".</p>
+                    </div>
+                    <div class="anecdote-card">
+                        <h4>La Ciotola</h4>
+                        <p>Vide un bambino bere con le mani e gettò via la sua ciotola, l'ultimo suo possesso.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -420,28 +410,33 @@
         <div class="section-container">
             <button class="section-toggle" onclick="toggleSection('eredita')">Eredità e Influenza</button>
             <div class="section-content" id="eredita">
-                <h3>La Scuola Cinica</h3>
-                <p>Antistene è considerato il fondatore della scuola cinica, sebbene Diogene di Sinope ne sia diventato la figura più emblematica. I cinici successivi svilupparono ulteriormente il suo insegnamento:</p>
+                <h3>Nella Filosofia Antica</h3>
+                <p>Diogene influenzò profondamente:</p>
                 <ul>
-                    <li>Diogene di Sinope - Il "cane" più famoso</li>
-                    <li>Cratete di Tebe - Rinunciò alla ricchezza</li>
-                    <li>Ipparchia - Donna filosofa che sfidò le convenzioni</li>
+                    <li>Cratete di Tebe e Ipparchia, che seguirono il suo esempio</li>
+                    <li>Lo stoicismo, che riprese molti temi della sua etica</li>
+                    <li>Lo scetticismo, per il suo atteggiamento critico</li>
                 </ul>
                 
-                <h3>Influenza sullo Stoicismo</h3>
-                <p>Lo stoicismo riprese molti temi dell'etica di Antistene, specialmente l'idea di vivere secondo natura e l'autosufficienza.</p>
+                <h3>Nella Cultura Moderna</h3>
+                <p>La figura di Diogene è diventata un simbolo di:</p>
+                <ul>
+                    <li>Anticonformismo e libertà di pensiero</li>
+                    <li>Critica al consumismo e alla società dei consumi</li>
+                    <li>Minimalismo e semplicità volontaria</li>
+                </ul>
                 
                 <div class="quote">
-                    "Zenone di Cizio, fondatore dello stoicismo, iniziò come allievo dei cinici prima di sviluppare la sua filosofia."
-                    <div class="quote-author">- Diogene Laerzio</div>
+                    "Diogene è il filosofo più radicale della storia occidentale, colui che ha vissuto fino in fondo le conseguenze del suo pensiero."
+                    <div class="quote-author">- Peter Sloterdijk, filosofo</div>
                 </div>
                 
-                <h3>Nella Filosofia Moderna</h3>
-                <p>L'eredità di Antistene si ritrova in:</p>
+                <h3>Nell'Arte e nella Letteratura</h3>
+                <p>Diogene è stato rappresentato in:</p>
                 <ul>
-                    <li>Nietzsche e la critica ai valori tradizionali</li>
-                    <li>L'esistenzialismo e la ricerca di autenticità</li>
-                    <li>I movimenti anticonsumisti e di decrescita</li>
+                    <li>Dipinti (da Raffaello a Waterhouse)</li>
+                    <li>Opere teatrali e letterarie</li>
+                    <li>Fumetti e cultura popolare</li>
                 </ul>
             </div>
         </div>
@@ -450,30 +445,30 @@
             <button class="section-toggle" onclick="toggleSection('citazioni')">Citazioni Celebri</button>
             <div class="section-content" id="citazioni">
                 <div class="quote">
-                    "La virtù è sufficiente per la felicità."
-                    <div class="quote-author">- Principio fondamentale di Antistene</div>
+                    "Sfido tutte le convenzioni umane."
+                    <div class="quote-author">- Massima attribuita a Diogene</div>
                 </div>
                 
                 <div class="quote">
-                    "Preferirei impazzire che provare piacere."
-                    <div class="quote-author">- Antistene sul rifiuto dei piaceri effimeri</div>
+                    "La moneta corrente è la virtù."
+                    <div class="quote-author">- Risposta quando gli chiesero perché falsificava monete</div>
                 </div>
                 
                 <div class="quote">
-                    "Ai suoi discepoli raccomandava: 'Armatevi del coraggio dei vostri pensieri'."
-                    <div class="quote-author">- Diogene Laerzio</div>
+                    "Diventare ricco è un bene se significa spogliarsi dei bisogni."
+                    <div class="quote-author">- Diogene sulla vera ricchezza</div>
                 </div>
                 
                 <div class="quote">
-                    "Quando gli chiesero cosa avesse guadagnato dalla filosofia, rispose: 'La capacità di parlare con me stesso'."
-                    <div class="quote-author">- Antistene secondo Diogene Laerzio</div>
+                    "Tutto appartiene agli dei; i saggi sono amici degli dei; tra amici tutto è comune: dunque tutto appartiene ai saggi."
+                    <div class="quote-author">- Argomentazione di Diogene sul furto</div>
                 </div>
             </div>
         </div>
     </main>
 
     <footer>
-        <p>Documentazione filosofica su Antistene di Atene - Il padre del Cinismo</p>
+        <p>Documentazione filosofica su Diogene di Sinope - Il Cane Filosofo</p>
         <p>© 2023 - Tutti i diritti riservati</p>
     </footer>
 

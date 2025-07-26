@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demetrio Falereo - Tra Filosofia e Potere | Echi di Sofia</title>
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=IM+Fell+Double+Pica&family=EB+Garamond:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Color Schemes */
+            --scroll-text: #3e2723;
+            --scroll-bg: #f5efdc;
+            --scroll-accent: #6d4c41;
+            --scroll-border: #8d6e63;
+            --scroll-highlight: #d7ccc8;
+            
+            --night-text: #e0e0e0;
+            --night-bg: #121212;
+            --night-accent: #d4af37;
+            --night-border: #a67c00;
+            --night-highlight: #332900;
+            
+            --marble-text: #263238;
+            --marble-bg: #f5f5f5;
+            --marble-accent: #5d4037;
+            --marble-border: #8d6e63;
+            --marble-highlight: #d7ccc8;
+            
+            --court-text: #3e2723;
+            --court-bg: #efebe9;
+            --court-accent: #8d6e63;
+            --court-border: #6d4c41;
+            --court-highlight: #d7ccc8;
+            
+            /* Current Theme - Default to Scroll */
+            --text: var(--scroll-text);
+            --bg: var(--scroll-bg);
+            --accent: var(--scroll-accent);
+            --border: var(--scroll-border);
+            --highlight: var(--scroll-highlight);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.5s, color 0.3s, border-color 0.3s;
+        }
+        
+        body {
+            font-family: 'EB Garamond', serif;
+            color: var(--text);
+            background-color: var(--bg);
+            line-height: 1.8;
+            padding: 20px;
+            background-image: var(--bg-texture);
+            background-attachment: fixed;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: var(--bg);
+            box-shadow: 0 0 25px rgba(0,0,0,0.15);
+            position: relative;
+            border: 1px solid var(--border);
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--accent), var(--border));
+        }
+        
+        h1, h2, h3 {
+            font-family: 'IM Fell Double Pica', serif;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+        
+        h1 {
+            font-size: 3.2rem;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+            letter-spacing: 1px;
+            position: relative;
+            font-weight: normal;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 30%;
+            width: 40%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+        
+        h2 {
+            font-size: 2.1rem;
+            margin-top: 40px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+            font-weight: normal;
+        }
+        
+        h3 {
+            font-size: 1.7rem;
+            margin-top: 30px;
+            font-family: 'EB Garamond', serif;
+            font-weight: 700;
+        }
+        
+        p {
+            margin-bottom: 18px;
+            font-size: 1.15rem;
+            line-height: 1.9;
+        }
+        
+        blockquote {
+            border-left: 4px solid var(--accent);
+            padding: 25px;
+            margin: 35px 0;
+            font-style: italic;
+            color: var(--text);
+            background-color: var(--highlight);
+            position: relative;
+            font-family: 'EB Garamond', serif;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        blockquote::before {
+            content: '❝';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 3rem;
+            color: var(--accent);
+            opacity: 0.3;
+            font-family: 'Times New Roman', serif;
+            line-height: 1;
+        }
+        
+        blockquote::after {
+            content: '❞';
+            position: absolute;
+            bottom: -20px;
+            right: 20px;
+            font-size: 3rem;
+            color: var(--accent);
+            opacity: 0.3;
+            font-family: 'Times New Roman', serif;
+            line-height: 1;
+        }
+        
+        /* Theme Selector */
+        .theme-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
+        }
+        
+        .theme-btn {
+            padding: 12px 24px;
+            border: 1px solid var(--border);
+            border-radius: 0;
+            cursor: pointer;
+            font-family: 'IM Fell Double Pica', serif;
+            font-weight: normal;
+            transition: all 0.4s;
+            background-color: var(--bg);
+            color: var(--text);
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            font-size: 1rem;
+        }
+        
+        .theme-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            transition: all 0.6s;
+        }
+        
+        .theme-btn:hover::before {
+            left: 100%;
+        }
+        
+        .theme-btn.active {
+            background-color: var(--accent);
+            color: var(--bg);
+            border-color: var(--accent);
+        }
+        
+        /* Shape Selector */
+        .shape-selector {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 30px 0;
+        }
+        
+        .shape-btn {
+            width: 50px;
+            height: 50px;
+            border: none;
+            background-color: var(--accent);
+            cursor: pointer;
+            transition: all 0.4s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg);
+            font-size: 1.4rem;
+            position: relative;
+            font-family: 'UnifrakturMaguntia', cursive;
+        }
+        
+        .shape-btn:hover {
+            transform: translateY(-5px) rotate(-5deg);
+        }
+        
+        .shape-btn.active {
+            transform: scale(1.2);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .shape-btn.scroll {
+            clip-path: polygon(10% 0%, 90% 0%, 100% 20%, 100% 80%, 90% 100%, 10% 100%, 0% 80%, 0% 20%);
+        }
+        
+        .shape-btn.law {
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+        
+        .shape-btn.crown {
+            clip-path: path('M10,10 L90,10 L80,40 L100,30 L90,60 L70,50 L50,80 L30,50 L10,60 L0,30 L20,40 Z');
+        }
+        
+        .shape-btn.owl {
+            clip-path: path('M50,0 Q70,20 50,40 Q30,20 50,0 Z M30,40 Q50,60 70,40 Q50,80 30,40 Z');
+        }
+        
+        /* Accordion System */
+        .accordion-container {
+            margin: 45px 0;
+        }
+        
+        .accordion-header {
+            position: relative;
+            padding: 20px 30px;
+            background-color: var(--bg);
+            color: var(--text);
+            cursor: pointer;
+            margin-bottom: 15px;
+            border: 1px solid var(--border);
+            font-family: 'IM Fell Double Pica', serif;
+            font-size: 1.4rem;
+            transition: all 0.5s;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .accordion-header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--highlight), transparent);
+            opacity: 0;
+            z-index: -1;
+            transition: all 0.5s;
+        }
+        
+        .accordion-header:hover::after {
+            opacity: 0.3;
+        }
+        
+        .accordion-header::before {
+            content: '›';
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: all 0.4s;
+            font-family: 'UnifrakturMaguntia', cursive;
+            font-size: 2rem;
+        }
+        
+        .accordion-header.active::before {
+            transform: translateY(-50%) rotate(90deg);
+        }
+        
+        .accordion-content {
+            padding: 0 30px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.7s cubic-bezier(0.65, 0, 0.35, 1), padding 0.5s;
+            border-left: 1px solid transparent;
+            border-right: 1px solid transparent;
+            background-color: var(--bg);
+        }
+        
+        .accordion-content.active {
+            padding: 30px;
+            max-height: 5000px;
+            border-color: var(--border);
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        /* Apply shape classes */
+        .shape-scroll .accordion-header {
+            clip-path: polygon(10% 0%, 90% 0%, 100% 20%, 100% 80%, 90% 100%, 10% 100%, 0% 80%, 0% 20%);
+        }
+        
+        .shape-law .accordion-header {
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+        
+        .shape-crown .accordion-header {
+            clip-path: path('M10,10 L90,10 L80,40 L100,30 L90,60 L70,50 L50,80 L30,50 L10,60 L0,30 L20,40 Z');
+            padding-top: 30px;
+        }
+        
+        .shape-owl .accordion-header {
+            clip-path: path('M50,0 Q70,20 50,40 Q30,20 50,0 Z M30,40 Q50,60 70,40 Q50,80 30,40 Z');
+        }
+        
+        /* Theme Classes */
+        .theme-scroll {
+            --text: var(--scroll-text);
+            --bg: var(--scroll-bg);
+            --accent: var(--scroll-accent);
+            --border: var(--scroll-border);
+            --highlight: var(--scroll-highlight);
+            --bg-texture: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f5efdc"/><path d="M0,20 Q50,25 100,20 L100,30 Q50,35 0,30 Z" fill="%23d7ccc8" opacity="0.2"/><path d="M0,45 Q50,50 100,45 L100,55 Q50,60 0,55 Z" fill="%23d7ccc8" opacity="0.2"/><path d="M0,70 Q50,75 100,70 L100,80 Q50,85 0,80 Z" fill="%23d7ccc8" opacity="0.2"/></svg>');
+        }
+        
+        .theme-night {
+            --text: var(--night-text);
+            --bg: var(--night-bg);
+            --accent: var(--night-accent);
+            --border: var(--night-border);
+            --highlight: var(--night-highlight);
+            --bg-texture: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23121212"/><circle cx="20" cy="25" r="1" fill="%23d4af37"/><circle cx="50" cy="15" r="1.5" fill="%23d4af37"/><circle cx="80" cy="30" r="1" fill="%23d4af37"/><circle cx="30" cy="60" r="1" fill="%23d4af37"/><circle cx="70" cy="70" r="2" fill="%23d4af37"/><circle cx="90" cy="50" r="1" fill="%23d4af37"/><circle cx="10" cy="80" r="1.5" fill="%23d4af37"/><circle cx="40" cy="90" r="1" fill="%23d4af37"/><circle cx="85" cy="85" r="1" fill="%23d4af37"/></svg>');
+        }
+        
+        .theme-marble {
+            --text: var(--marble-text);
+            --bg: var(--marble-bg);
+            --accent: var(--marble-accent);
+            --border: var(--marble-border);
+            --highlight: var(--marble-highlight);
+            --bg-texture: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f5f5f5"/><path d="M0,0 L100,100" stroke="%23d7ccc8" stroke-width="1"/><path d="M100,0 L0,100" stroke="%23d7ccc8" stroke-width="1"/></svg>');
+        }
+        
+        .theme-court {
+            --text: var(--court-text);
+            --bg: var(--court-bg);
+            --accent: var(--court-accent);
+            --border: var(--court-border);
+            --highlight: var(--court-highlight);
+            --bg-texture: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23efebe9"/><path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="%238d6e63" stroke-width="0.5" opacity="0.3"/><path d="M30,30 L70,30 L70,70 L30,70 Z" fill="none" stroke="%238d6e63" stroke-width="0.5" opacity="0.3"/><path d="M40,40 L60,40 L60,60 L40,60 Z" fill="none" stroke="%238d6e63" stroke-width="0.5" opacity="0.3"/></svg>');
+        }
+        
+        /* Special Elements */
+        .term {
+            background-color: var(--highlight);
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-family: 'EB Garamond', serif;
+            font-size: 0.95rem;
+            color: var(--accent);
+            border-bottom: 1px dashed var(--accent);
+            font-style: italic;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 60px;
+            margin: 35px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--accent), var(--border));
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 35px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -55px;
+            top: 5px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: var(--bg);
+            border: 4px solid var(--accent);
+        }
+        
+        .timeline-date {
+            font-weight: bold;
+            color: var(--accent);
+            font-family: 'IM Fell Double Pica', serif;
+            font-size: 1.1rem;
+        }
+        
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 35px 0;
+        }
+        
+        .work-card {
+            background-color: var(--highlight);
+            padding: 25px;
+            border-radius: 3px;
+            border-bottom: 3px solid var(--accent);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .work-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.05), transparent);
+            z-index: 0;
+        }
+        
+        .work-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
+        .work-card h4 {
+            margin-bottom: 12px;
+            color: var(--accent);
+            font-family: 'IM Fell Double Pica', serif;
+            position: relative;
+            font-size: 1.3rem;
+        }
+        
+        .work-card .period {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-bottom: 12px;
+            font-family: 'EB Garamond', serif;
+            position: relative;
+            font-style: italic;
+        }
+        
+        .work-card p {
+            position: relative;
+        }
+        
+        .influence-map {
+            display: flex;
+            justify-content: center;
+            margin: 45px 0;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .influence-node {
+            text-align: center;
+            position: relative;
+            width: 120px;
+        }
+        
+        .influence-node::before {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            opacity: 0.1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+        
+        .influence-node .symbol {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            color: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-family: 'UnifrakturMaguntia', cursive;
+            font-size: 1.8rem;
+            border: 2px solid var(--border);
+        }
+        
+        .influence-node span {
+            display: block;
+            margin-top: 10px;
+            font-size: 1rem;
+            font-family: 'EB Garamond', serif;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2.4rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .works-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .influence-map {
+                gap: 20px;
+            }
+            
+            .theme-btn {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="theme-scroll shape-scroll">
+    <div class="container">
+        <header>
+            <h1>Demetrio Falereo<br>Il Filosofo-Regnante</h1>
+            
+            <div class="theme-selector">
+                <button class="theme-btn active" onclick="setTheme('scroll')">Rotolo</button>
+                <button class="theme-btn" onclick="setTheme('night')">Notte</button>
+                <button class="theme-btn" onclick="setTheme('marble')">Marmo</button>
+                <button class="theme-btn" onclick="setTheme('court')">Corte</button>
+            </div>
+            
+            <div class="shape-selector">
+                <button class="shape-btn scroll active" onclick="setShape('scroll')">📜</button>
+                <button class="shape-btn law" onclick="setShape('law')">⚖</button>
+                <button class="shape-btn crown" onclick="setShape('crown')">👑</button>
+                <button class="shape-btn owl" onclick="setShape('owl')">🦉</button>
+            </div>
+            
+            <p>Demetrio Falereo (ca. 350-282 a.C.), allievo di Teofrasto e governatore di Atene per dieci anni, rappresenta una figura unica nell'antichità: filosofo peripatetico, statista e legislatore, la cui vita incarna la sintesi tra pensiero e azione politica.</p>
+        </header>
+        
+        <div class="accordion-container">
+            <div class="accordion-header">Vita e Carriera Politica</div>
+            <div class="accordion-content">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">ca. 350 a.C.</div>
+                        <p>Nascita nel demo attico di Falero, da famiglia benestante ma non aristocratica.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">325 a.C.</div>
+                        <p>Diventa allievo di Teofrasto nel Peripato, distinguendosi per gli studi retorici e politici.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">317 a.C.</div>
+                        <p>Cassandro lo nomina governatore (<span class="term">epimeletes</span>) di Atene, carica che manterrà per un decennio.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">307 a.C.</div>
+                        <p>Rovesciato da Demetrio Poliorcete, fugge prima a Tebe poi alla corte di Tolomeo I.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">297 a.C.</div>
+                        <p>Consigliere di Tolomeo I a Alessandria, contribuisce alla fondazione della Biblioteca.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">282 a.C.</div>
+                        <p>Morte in esilio, secondo la tradizione per il morso di un aspide.</p>
+                    </div>
+                </div>
+                
+                <blockquote>
+                    "Demetrio univa alla profondità del filosofo l'abilità del politico, dimostrando come il sapere possa guidare l'azione di governo."
+                    <footer>- Cicerone, <em>De Oratore</em></footer>
+                </blockquote>
+                
+                <h3>Il Governo di Atene (317-307 a.C.)</h3>
+                <p>Durante il suo decennio al potere, Demetrio:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>Riformò il sistema legislativo ateniese</li>
+                    <li>Promosse grandi opere pubbliche e monumenti</li>
+                    <li>Mantenne una politica di equilibrio tra le potenze macedoni</li>
+                    <li>Favorì le arti e la filosofia pur limitando la democrazia</li>
+                </ul>
+            </div>
+            
+            <div class="accordion-header">Opere e Pensiero Filosofico</div>
+            <div class="accordion-content">
+                <h3>Scritti Perduti</h3>
+                <p>Delle numerose opere di Demetrio ci restano solo frammenti:</p>
+                
+                <div class="works-grid">
+                    <div class="work-card">
+                        <h4>Sulla Retorica</h4>
+                        <div class="period">ca. 320 a.C.</div>
+                        <p>Trattato sull'arte oratoria che influenzò Cicerone e Quintiliano.</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>Sulla Fortuna</h4>
+                        <div class="period">ca. 310 a.C.</div>
+                        <p>Analisi del ruolo del caso nella vita umana e nella storia.</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>Sulla Pace</h4>
+                        <div class="period">ca. 315 a.C.</div>
+                        <p>Opera politica che teorizzava un equilibrio tra le città greche.</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>Costituzione di Atene</h4>
+                        <div class="period">ca. 300 a.C.</div>
+                        <p>Probabile fonte per l'omonima opera attribuita ad Aristotele.</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>Lettere</h4>
+                        <div class="period">varie</div>
+                        <p>Corrispondenza con Teofrasto, Tolomeo e altri sovrani ellenistici.</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>Discorsi</h4>
+                        <div class="period">varie</div>
+                        <p>Orazioni politiche e celebrative, modello di eloquenza attica.</p>
+                    </div>
+                </div>
+                
+                <h3>Posizioni Filosofiche</h3>
+                <p>Il pensiero di Demetrio si caratterizzava per:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li><strong>Eclettismo</strong>: Fusione di elementi peripatetici e stoici</li>
+                    <li><strong>Pragmatismo politico</strong>: Teoria del governo illuminato</li>
+                    <li><strong>Interesse per la storia</strong>: Metodo storiografico innovativo</li>
+                    <li><strong>Etica pubblica</strong>: Virtù civili come fondamento dello Stato</li>
+                </ul>
+                
+                <blockquote>
+                    "Demetrio seppe conciliare l'idealità della filosofia con le necessità della pratica politica, dimostrando che il sapere non è evasione ma strumento di governo."
+                </blockquote>
+            </div>
+            
+            <div class="accordion-header">Riforme e Politica ad Atene</div>
+            <div class="accordion-content">
+                <h3>Legislazione e Amministrazione</h3>
+                <p>Le riforme di Demetrio includevano:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>Revisione del codice di leggi (<span class="term">nomothesia</span>)</li>
+                    <li>Riorganizzazione del sistema fiscale</li>
+                    <li>Regolamentazione del lusso privato</li>
+                    <li>Potenziamento delle istituzioni culturali</li>
+                </ul>
+                
+                <h3>Urbanistica e Monumenti</h3>
+                <p>Demetrio promosse:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>Costruzione dell'altare dei Dodici Dei nell'agorà</li>
+                    <li>Erezione di 360 statue di sé stesso (secondo la tradizione)</li>
+                    <li>Ampliamento del porto del Pireo</li>
+                    <li>Restauro di edifici pubblici danneggiati</li>
+                </ul>
+                
+                <div class="influence-map">
+                    <div class="influence-node">
+                        <div class="symbol">T</div>
+                        <span>Teofrasto</span>
+                    </div>
+                    <div class="influence-node">
+                        <div class="symbol">C</div>
+                        <span>Cassandro</span>
+                    </div>
+                    <div class="influence-node">
+                        <div class="symbol">D</div>
+                        <span>Demetrio</span>
+                    </div>
+                    <div class="influence-node">
+                        <div class="symbol">P</div>
+                        <span>Tolomeo I</span>
+                    </div>
+                    <div class="influence-node">
+                        <div class="symbol">C</div>
+                        <span>Cicerone</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-header">Ruolo nella Biblioteca di Alessandria</div>
+            <div class="accordion-content">
+                <h3>Consigliere di Tolomeo I</h3>
+                <p>Durante l'esilio egiziano, Demetrio:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>Ispirò la creazione della Biblioteca reale</li>
+                    <li>Progettò il sistema di acquisizione dei testi</li>
+                    <li>Influenzò la scelta dei primi direttori</li>
+                    <li>Promosse traduzioni di opere straniere</li>
+                </ul>
+                
+                <h3>Contributi Intellettuali</h3>
+                <p>Demetrio portò ad Alessandria:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>Il metodo filologico peripatetico</li>
+                    <li>L'idea di biblioteca come istituzione universale</li>
+                    <li>Contatti con gli intellettuali di tutto il mondo greco</li>
+                    <li>L'interesse per la sistemazione del sapere</li>
+                </ul>
+                
+                <blockquote>
+                    "Fu Demetrio a suggerire a Tolomeo di raccogliere i libri di tutti i popoli, gettando le basi per la più grande impresa culturale dell'antichità."
+                </blockquote>
+            </div>
+            
+            <div class="accordion-header">Eredità e Ricezione</div>
+            <div class="accordion-content">
+                <h3>Giudizi Antichi</h3>
+                <p>La figura di Demetrio fu valutata diversamente:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>Lodato da Cicerone per l'eloquenza</li>
+                    <li>Criticato da Plutarco per l'ambizione</li>
+                    <li>Ambigua valutazione in Diogene Laerzio</li>
+                    <li>Ricordato positivamente nella tradizione alessandrina</li>
+                </ul>
+                
+                <h3>Fortuna Moderna</h3>
+                <p>Gli studi recenti hanno rivalutato:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>Il suo ruolo nella transizione alla cultura ellenistica</li>
+                    <li>L'originalità del pensiero politico</li>
+                    <li>L'influenza sulla teoria del governo illuminato</li>
+                    <li>Il contributo alla nascita delle biblioteche moderne</li>
+                </ul>
+                
+                <h3>Edizioni Critiche</h3>
+                <p>I frammenti di Demetrio sono raccolti in:</p>
+                <ul style="margin-left: 20px;">
+                    <li>Wehrli, <span class="term">Die Schule des Aristoteles</span>, vol. IV (1949)</li>
+                    <li>Fortenbaugh, <span class="term">Demetrius of Phalerum</span> (2011)</li>
+                    <li>Traduzione italiana commentata di S. Cerasuolo (2001)</li>
+                </ul>
+                
+                <p style="margin-top: 20px;">Demetrio Falereo rappresenta una figura cruciale nella storia del pensiero politico antico, ponte tra la polis classica e le monarchie ellenistiche, la cui opera merita maggiore attenzione nella storia della filosofia greca.</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Accordion functionality
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const content = this.nextElementSibling;
+                content.classList.toggle('active');
+            });
+        });
+        
+        // Theme switching
+        function setTheme(theme) {
+            document.body.className = document.body.className.replace(/\btheme-\S+/g, '');
+            document.body.classList.add(`theme-${theme}`);
+            
+            // Keep current shape when changing theme
+            const currentShape = document.body.classList.contains('shape-scroll') ? 'scroll' :
+                                document.body.classList.contains('shape-law') ? 'law' :
+                                document.body.classList.contains('shape-crown') ? 'crown' :
+                                'owl';
+            document.body.classList.add(`shape-${currentShape}`);
+            
+            // Update active button
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+        
+        // Shape switching
+        function setShape(shape) {
+            document.body.className = document.body.className.replace(/\bshape-\S+/g, '');
+            document.body.classList.add(`shape-${shape}`);
+            
+            // Keep current theme when changing shape
+            const currentTheme = document.body.classList.contains('theme-scroll') ? 'scroll' :
+                               document.body.classList.contains('theme-night') ? 'night' :
+                               document.body.classList.contains('theme-marble') ? 'marble' :
+                               'court';
+            document.body.classList.add(`theme-${currentTheme}`);
+            
+            // Update active button
+            document.querySelectorAll('.shape-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+        
+        // Open first accordion by default
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstHeader = document.querySelector('.accordion-header');
+            firstHeader.classList.add('active');
+            firstHeader.nextElementSibling.classList.add('active');
+        });
+    </script>
+</body>
+</html>

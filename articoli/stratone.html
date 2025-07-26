@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stratone di Lampsaco - La Natura Senza Dei | Echi di Sofia</title>
+    <link href="https://fonts.googleapis.com/css2?family=New+Athena+Unicode&family=Forum&family=EB+Garamond:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Color Schemes */
+            --library-text: #3e2723;
+            --library-bg: #f3e9d9;
+            --library-accent: #5d4037;
+            --library-border: #8d6e63;
+            --library-highlight: #d7ccc8;
+            
+            --observatory-text: #e0e0e0;
+            --observatory-bg: #0a0e17;
+            --observatory-accent: #448aff;
+            --observatory-border: #2962ff;
+            --observatory-highlight: #1a237e;
+            
+            --laboratory-text: #263238;
+            --laboratory-bg: #eceff1;
+            --laboratory-accent: #00838f;
+            --laboratory-border: #4fb3bf;
+            --laboratory-highlight: #b2ebf2;
+            
+            --lyceum-text: #3e2723;
+            --lyceum-bg: #efebe9;
+            --lyceum-accent: #4e342e;
+            --lyceum-border: #8d6e63;
+            --lyceum-highlight: #d7ccc8;
+            
+            /* Current Theme - Default to Library */
+            --text: var(--library-text);
+            --bg: var(--library-bg);
+            --accent: var(--library-accent);
+            --border: var(--library-border);
+            --highlight: var(--library-highlight);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.5s, color 0.3s, border-color 0.3s;
+        }
+        
+        body {
+            font-family: 'EB Garamond', serif;
+            color: var(--text);
+            background-color: var(--bg);
+            line-height: 1.8;
+            padding: 20px;
+            background-image: var(--bg-pattern);
+            background-attachment: fixed;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: var(--bg);
+            box-shadow: 0 0 25px rgba(0,0,0,0.15);
+            position: relative;
+            border: 1px solid var(--border);
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--accent), var(--border));
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Forum', cursive;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+        
+        h1 {
+            font-size: 3rem;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+            letter-spacing: 2px;
+            position: relative;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            width: 50%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin-top: 40px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        h3 {
+            font-size: 1.6rem;
+            margin-top: 30px;
+            font-family: 'EB Garamond', serif;
+            font-weight: 700;
+        }
+        
+        p {
+            margin-bottom: 18px;
+            font-size: 1.15rem;
+            line-height: 1.9;
+        }
+        
+        blockquote {
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            margin: 30px 0;
+            font-style: italic;
+            color: var(--text);
+            background-color: var(--highlight);
+            position: relative;
+            font-family: 'EB Garamond', serif;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        blockquote::before {
+            content: '“';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 4rem;
+            color: var(--accent);
+            opacity: 0.2;
+            font-family: 'Times New Roman', serif;
+            line-height: 1;
+        }
+        
+        blockquote::after {
+            content: '”';
+            position: absolute;
+            bottom: -20px;
+            right: 20px;
+            font-size: 4rem;
+            color: var(--accent);
+            opacity: 0.2;
+            font-family: 'Times New Roman', serif;
+            line-height: 1;
+        }
+        
+        /* Theme Selector */
+        .theme-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
+        }
+        
+        .theme-btn {
+            padding: 12px 24px;
+            border: 1px solid var(--border);
+            border-radius: 0;
+            cursor: pointer;
+            font-family: 'Forum', cursive;
+            font-weight: normal;
+            transition: all 0.4s;
+            background-color: var(--bg);
+            color: var(--text);
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            font-size: 1rem;
+        }
+        
+        .theme-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            transition: all 0.6s;
+        }
+        
+        .theme-btn:hover::before {
+            left: 100%;
+        }
+        
+        .theme-btn.active {
+            background-color: var(--accent);
+            color: var(--bg);
+            border-color: var(--accent);
+        }
+        
+        /* Shape Selector */
+        .shape-selector {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 30px 0;
+        }
+        
+        .shape-btn {
+            width: 48px;
+            height: 48px;
+            border: none;
+            background-color: var(--accent);
+            cursor: pointer;
+            transition: all 0.4s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg);
+            font-size: 1.3rem;
+            position: relative;
+            font-family: 'New Athena Unicode', serif;
+        }
+        
+        .shape-btn:hover {
+            transform: translateY(-5px) rotate(5deg);
+        }
+        
+        .shape-btn.active {
+            transform: scale(1.15);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .shape-btn.atom {
+            clip-path: circle(50% at 50% 50%);
+        }
+        
+        .shape-btn.vessel {
+            clip-path: path('M20,0 L80,0 L90,20 L90,60 L80,80 L20,80 L10,60 L10,20 Z');
+        }
+        
+        .shape-btn.lightning {
+            clip-path: path('M50,0 L75,50 L50,30 L75,80 L50,60 L25,30 L50,50 L25,0 Z');
+        }
+        
+        .shape-btn.wave {
+            clip-path: path('M0,20 Q25,0 50,20 T100,20 Q125,40 150,20 T200,20 L200,40 Q175,60 150,40 T100,40 Q75,20 50,40 T0,40 Z');
+            width: 60px;
+        }
+        
+        /* Accordion System */
+        .accordion-container {
+            margin: 45px 0;
+        }
+        
+        .accordion-header {
+            position: relative;
+            padding: 20px 30px;
+            background-color: var(--bg);
+            color: var(--text);
+            cursor: pointer;
+            margin-bottom: 15px;
+            border: 1px solid var(--border);
+            font-family: 'Forum', cursive;
+            font-size: 1.3rem;
+            transition: all 0.5s;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .accordion-header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--highlight), transparent);
+            opacity: 0;
+            z-index: -1;
+            transition: all 0.5s;
+        }
+        
+        .accordion-header:hover::after {
+            opacity: 0.3;
+        }
+        
+        .accordion-header::before {
+            content: '↓';
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: all 0.4s;
+            font-family: 'New Athena Unicode', serif;
+        }
+        
+        .accordion-header.active::before {
+            transform: translateY(-50%) rotate(180deg);
+        }
+        
+        .accordion-content {
+            padding: 0 30px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.7s cubic-bezier(0.65, 0, 0.35, 1), padding 0.5s;
+            border-left: 1px solid transparent;
+            border-right: 1px solid transparent;
+            background-color: var(--bg);
+        }
+        
+        .accordion-content.active {
+            padding: 30px;
+            max-height: 5000px;
+            border-color: var(--border);
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        /* Apply shape classes */
+        .shape-atom .accordion-header {
+            border-radius: 50px;
+            border-top-left-radius: 0;
+        }
+        
+        .shape-vessel .accordion-header {
+            clip-path: path('M20,0 L80,0 L90,20 L90,60 L80,80 L20,80 L10,60 L10,20 Z');
+            padding-top: 25px;
+        }
+        
+        .shape-lightning .accordion-header {
+            clip-path: path('M50,0 L75,50 L50,30 L75,80 L50,60 L25,30 L50,50 L25,0 Z');
+        }
+        
+        .shape-wave .accordion-header {
+            clip-path: path('M0,20 Q25,0 50,20 T100,20 Q125,40 150,20 T200,20 L200,40 Q175,60 150,40 T100,40 Q75,20 50,40 T0,40 Z');
+            width: 100%;
+        }
+        
+        /* Theme Classes */
+        .theme-library {
+            --text: var(--library-text);
+            --bg: var(--library-bg);
+            --accent: var(--library-accent);
+            --border: var(--library-border);
+            --highlight: var(--library-highlight);
+            --bg-pattern: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f3e9d9"/><path d="M0,20 Q50,25 100,20 L100,30 Q50,35 0,30 Z" fill="%23d7ccc8" opacity="0.3"/><path d="M0,45 Q50,50 100,45 L100,55 Q50,60 0,55 Z" fill="%23d7ccc8" opacity="0.3"/><path d="M0,70 Q50,75 100,70 L100,80 Q50,85 0,80 Z" fill="%23d7ccc8" opacity="0.3"/></svg>');
+        }
+        
+        .theme-observatory {
+            --text: var(--observatory-text);
+            --bg: var(--observatory-bg);
+            --accent: var(--observatory-accent);
+            --border: var(--observatory-border);
+            --highlight: var(--observatory-highlight);
+            --bg-pattern: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%230a0e17"/><circle cx="20" cy="25" r="1" fill="%23448aff"/><circle cx="50" cy="15" r="1.5" fill="%23448aff"/><circle cx="80" cy="30" r="1" fill="%23448aff"/><circle cx="30" cy="60" r="1" fill="%23448aff"/><circle cx="70" cy="70" r="2" fill="%23448aff"/><circle cx="90" cy="50" r="1" fill="%23448aff"/><circle cx="10" cy="80" r="1.5" fill="%23448aff"/><circle cx="40" cy="90" r="1" fill="%23448aff"/><circle cx="85" cy="85" r="1" fill="%23448aff"/></svg>');
+        }
+        
+        .theme-laboratory {
+            --text: var(--laboratory-text);
+            --bg: var(--laboratory-bg);
+            --accent: var(--laboratory-accent);
+            --border: var(--laboratory-border);
+            --highlight: var(--laboratory-highlight);
+            --bg-pattern: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23eceff1"/><path d="M0,0 L100,100" stroke="%23b2ebf2" stroke-width="1"/><path d="M100,0 L0,100" stroke="%23b2ebf2" stroke-width="1"/></svg>');
+        }
+        
+        .theme-lyceum {
+            --text: var(--lyceum-text);
+            --bg: var(--lyceum-bg);
+            --accent: var(--lyceum-accent);
+            --border: var(--lyceum-border);
+            --highlight: var(--lyceum-highlight);
+            --bg-pattern: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23efebe9"/><path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="%238d6e63" stroke-width="0.5" opacity="0.3"/><path d="M30,30 L70,30 L70,70 L30,70 Z" fill="none" stroke="%238d6e63" stroke-width="0.5" opacity="0.3"/><path d="M40,40 L60,40 L60,60 L40,60 Z" fill="none" stroke="%238d6e63" stroke-width="0.5" opacity="0.3"/></svg>');
+        }
+        
+        /* Special Elements */
+        .concept {
+            background-color: var(--highlight);
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-family: 'New Athena Unicode', serif;
+            font-size: 0.95rem;
+            color: var(--accent);
+            border-bottom: 1px dashed var(--accent);
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 60px;
+            margin: 35px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--accent), var(--border));
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 35px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -55px;
+            top: 5px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: var(--bg);
+            border: 4px solid var(--accent);
+        }
+        
+        .timeline-date {
+            font-weight: bold;
+            color: var(--accent);
+            font-family: 'Forum', cursive;
+            font-size: 1.1rem;
+        }
+        
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 35px 0;
+        }
+        
+        .work-card {
+            background-color: var(--highlight);
+            padding: 25px;
+            border-radius: 3px;
+            border-bottom: 3px solid var(--accent);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .work-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.05), transparent);
+            z-index: 0;
+        }
+        
+        .work-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
+        .work-card h4 {
+            margin-bottom: 12px;
+            color: var(--accent);
+            font-family: 'Forum', cursive;
+            position: relative;
+            font-size: 1.3rem;
+        }
+        
+        .work-card .period {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-bottom: 12px;
+            font-family: 'EB Garamond', serif;
+            position: relative;
+            font-style: italic;
+        }
+        
+        .work-card p {
+            position: relative;
+        }
+        
+        .influence-map {
+            display: flex;
+            justify-content: center;
+            margin: 45px 0;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .influence-node {
+            text-align: center;
+            position: relative;
+            width: 120px;
+        }
+        
+        .influence-node::before {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            opacity: 0.1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+        
+        .influence-node .symbol {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            color: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-family: 'New Athena Unicode', serif;
+            font-size: 1.8rem;
+            border: 2px solid var(--border);
+        }
+        
+        .influence-node span {
+            display: block;
+            margin-top: 10px;
+            font-size: 1rem;
+            font-family: 'EB Garamond', serif;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            h2 {
+                font-size: 1.7rem;
+            }
+            
+            .works-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .influence-map {
+                gap: 20px;
+            }
+            
+            .theme-btn {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="theme-library shape-atom">
+    <div class="container">
+        <header>
+            <h1>Stratone di Lampsaco<br>La Natura Senza Dei</h1>
+            
+            <div class="theme-selector">
+                <button class="theme-btn active" onclick="setTheme('library')">Biblioteca</button>
+                <button class="theme-btn" onclick="setTheme('observatory')">Osservatorio</button>
+                <button class="theme-btn" onclick="setTheme('laboratory')">Laboratorio</button>
+                <button class="theme-btn" onclick="setTheme('lyceum')">Liceo</button>
+            </div>
+            
+            <div class="shape-selector">
+                <button class="shape-btn atom active" onclick="setShape('atom')">⚛</button>
+                <button class="shape-btn vessel" onclick="setShape('vessel')">⚱</button>
+                <button class="shape-btn lightning" onclick="setShape('lightning')">⚡</button>
+                <button class="shape-btn wave" onclick="setShape('wave')">~</button>
+            </div>
+            
+            <p>Stratone di Lampsaco (ca. 335-269 a.C.), successore di Teofrasto alla guida del Peripato, sviluppò una rigorosa filosofia naturalista che eliminava ogni residuo finalistico dall'aristotelismo, anticipando concezioni moderne del determinismo fisico.</p>
+        </header>
+        
+        <div class="accordion-container">
+            <div class="accordion-header">Vita e Successione nel Peripato</div>
+            <div class="accordion-content">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">ca. 335 a.C.</div>
+                        <p>Nascita a Lampsaco, città nota per la sua tradizione filosofica (patria di Anassagora).</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">310 a.C.</div>
+                        <p>Si trasferisce ad Atene per studiare nel Peripato sotto Teofrasto.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">287 a.C.</div>
+                        <p>Succede a Teofrasto come scolarca del Peripato, carica che manterrà per 18 anni.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">286-269 a.C.</div>
+                        <p>Periodo di massima attività filosofica e scientifica. Educa il futuro Tolomeo II Filadelfo ad Alessandria.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">269 a.C.</div>
+                        <p>Morte ad Atene. Gli succede Licone di Troade.</p>
+                    </div>
+                </div>
+                
+                <blockquote>
+                    "Stratone, detto il Fisico, trascurò la parte più speculativa della filosofia per dedicarsi interamente allo studio della natura."
+                    <footer>- Diogene Laerzio, <em>Vite dei filosofi</em></footer>
+                </blockquote>
+                
+                <h3>Il Contesto Storico</h3>
+                <p>L'epoca di Stratone coincide con:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>L'affermazione dei regni ellenistici dopo Alessandro</li>
+                    <li>La fondazione del Museo di Alessandria (ca. 280 a.C.)</li>
+                    <li>Lo sviluppo delle scienze specialistiche (matematica, astronomia, medicina)</li>
+                    <li>La crescente separazione tra filosofia e ricerca scientifica</li>
+                </ul>
+            </div>
+            
+            <div class="accordion-header">La Fisica Stratoniana</div>
+            <div class="accordion-content">
+                <h3>Il Naturalismo Radicale</h3>
+                <p>Stratone sviluppa un sistema fisico caratterizzato da:</p>
+                
+                <div class="works-grid">
+                    <div class="work-card">
+                        <h4>Materialismo Integrale</h4>
+                        <div class="period">Principio fondamentale</div>
+                        <p>Rifiuto di ogni dualismo materia-forma. Anima e intelletto sono funzioni del corpo organizzato.</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>Critica del Finalismo</h4>
+                        <div class="period">Contro Aristotele</div>
+                        <p>La natura agisce per necessità meccanica, non in vista di fini. Le spiegazioni teleologiche sono antropomorfismi.</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>Peso come Principio</h4>
+                        <div class="period">Fisica elementare</div>
+                        <p>Il peso (<span class="concept">baros</span>) è proprietà intrinseca dei corpi e causa del movimento naturale.</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>Vuoto Interno</h4>
+                        <div class="period">Innovazione teorica</div>
+                        <p>Ammise l'esistenza di microvuoti diffusi nella materia per spiegare compressione e rarefazione.</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>Determinismo Fisico</h4>
+                        <div class="period">Anticipazione moderna</div>
+                        <p>Tutti i fenomeni naturali sono riconducibili a cause necessarie e meccaniche.</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>Empirismo Scientifico</h4>
+                        <div class="period">Metodologia</div>
+                        <p>Primato dell'osservazione e dell'esperimento sulle spiegazioni teoriche.</p>
+                    </div>
+                </div>
+                
+                <h3>Concezione dell'Universo</h3>
+                <p>La cosmologia stratoniana presenta elementi originali:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li><strong>Unicità del mondo</strong>: Negazione dei mondi infiniti</li>
+                    <li><strong>Eternità del movimento</strong>: Senza primo motore trascendente</li>
+                    <li><strong>Autosufficienza della natura</strong>: Eliminazione di ogni principio divino</li>
+                    <li><strong>Unificazione della fisica celeste e terrestre</strong>: Le stelle sono pietre infuocate</li>
+                </ul>
+                
+                <blockquote>
+                    "Stratone sosteneva che tutte le forze divine fossero insite nella natura, che contiene in sé ogni principio di generazione e di crescita."
+                </blockquote>
+            </div>
+            
+            <div class="accordion-header">Psicologia e Teoria della Conoscenza</div>
+            <div class="accordion-content">
+                <h3>L'Anima come Funzione Corporea</h3>
+                <p>La psicologia stratoniana radicalizza l'impostazione aristotelica:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li><strong>Materialismo psicofisico</strong>: L'anima è funzione del corpo organizzato</li>
+                    <li><strong>Localizzazione dell'intelletto</strong>: Nel <span class="concept">pneuma</span> tra le sopracciglia</li>
+                    <li><strong>Unificazione delle facoltà</strong>: Negazione della distinzione tra intelletto attivo e passivo</li>
+                    <li><strong>Morte come dissoluzione</strong>: Nessuna sopravvivenza dell'anima</li>
+                </ul>
+                
+                <h3>Epistemologia Empirista</h3>
+                <p>La teoria della conoscenza di Stratone enfatizza:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>L'origine sensibile di tutti i concetti</li>
+                    <li>Il ruolo attivo dell'osservazione sperimentale</li>
+                    <li>La critica delle astrazioni metafisiche</li>
+                    <li>L'unità del processo conoscitivo dalla percezione al ragionamento</li>
+                </ul>
+                
+                <div class="influence-map">
+                    <div class="influence-node">
+                        <div class="symbol">α</div>
+                        <span>Aristotele</span>
+                    </div>
+                    <div class="influence-node">
+                        <div class="symbol">τ</div>
+                        <span>Teofrasto</span>
+                    </div>
+                    <div class="influence-node">
+                        <div class="symbol">σ</div>
+                        <span>Stratone</span>
+                    </div>
+                    <div class="influence-node">
+                        <div class="symbol">ε</div>
+                        <span>Epicuro</span>
+                    </div>
+                    <div class="influence-node">
+                        <div class="symbol">γ</div>
+                        <span>Galeno</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-header">Eredità e Influenza</div>
+            <div class="accordion-content">
+                <h3>La Scuola Stratoniana</h3>
+                <p>L'influsso di Stratone si esercitò attraverso:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>I suoi allievi diretti nel Peripato (Licone, Aristone)</li>
+                    <li>La mediazione del Museo di Alessandria</li>
+                    <li>L'influenza su Erasistrato nella medicina ellenistica</li>
+                    <li>Possibili contatti con Epicuro (entrambi di Lampsaco)</li>
+                </ul>
+                
+                <h3>Ricezione Antica</h3>
+                <p>Le dottrine stratoniane furono:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>Criticate dagli stoici per il materialismo radicale</li>
+                    <li>Rivalutate da Galeno per l'approccio fisiologico</li>
+                    <li>Quasi dimenticate in epoca imperiale</li>
+                    <li>Preservate parzialmente nella tradizione araba</li>
+                </ul>
+                
+                <h3>Riscoperta Moderna</h3>
+                <p>L'interesse per Stratone riemerge con:</p>
+                <ul style="margin-left: 20px;">
+                    <li>Gli studi di Diels sul peripatetismo (fine XIX sec.)</li>
+                    <li>La pubblicazione dei frammenti da parte di Wehrli (1944-1959)</li>
+                    <li>Le ricerche di Gottschalk sul naturalismo ellenistico (1980)</li>
+                    <li>Le recenti interpretazioni nel contesto della storia della scienza</li>
+                </ul>
+                
+                <blockquote>
+                    "Stratone rappresenta il culmine della tendenza naturalistica nell'aristotelismo, punto di arrivo e insieme di dissoluzione della scuola peripatetica classica."
+                </blockquote>
+            </div>
+            
+            <div class="accordion-header">Opere e Frammenti</div>
+            <div class="accordion-content">
+                <h3>Scritti Perduti</h3>
+                <p>Le opere di Stratone, tutte perdute, includevano:</p>
+                
+                <div class="works-grid">
+                    <div class="work-card">
+                        <h4>Sul Vuoto</h4>
+                        <div class="period">Fisica</div>
+                        <p>Teoria dei microvuoti nella materia. Citato da Erone di Alessandria.</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>Sul Movimento</h4>
+                        <div class="period">Fisica</div>
+                        <p>Analisi del movimento naturale e violento. Influenzò la teoria dell'impeto.</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>Sull'Anima</h4>
+                        <div class="period">Psicologia</div>
+                        <p>Trattato materialista sull'anima-corporea. Citato da Tertulliano.</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>Sulle Minuzie Naturali</h4>
+                        <div class="period">Fenomenologia</div>
+                        <p>Raccolta di osservazioni su fenomeni fisici particolari.</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>Sui Re</h4>
+                        <div class="period">Etica/Politica</div>
+                        <p>Opera dedicata a Tolomeo Filadelfo. Contenuto sconosciuto.</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>Questioni Fisiche</h4>
+                        <div class="period">Problemata</div>
+                        <p>Serie di problemi e soluzioni di fisica. Struttura simile agli <em>Problemata</em> aristotelici.</p>
+                    </div>
+                </div>
+                
+                <h3>Edizioni Moderne</h3>
+                <p>I frammenti di Stratone sono raccolti in:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>Wehrli, <span class="concept">Die Schule des Aristoteles</span>, vol. V (1944)</li>
+                    <li>Desclos-Fortenbaugh, <span class="concept">Strato of Lampsacus</span> (2011)</li>
+                    <li>Traduzione italiana commentata di M. Isnardi Parente (1961)</li>
+                </ul>
+                
+                <p style="margin-top: 20px;">Stratone di Lampsaco rappresenta una figura cruciale nella transizione tra la filosofia della natura classica e la scienza ellenistica, il cui pensiero merita maggiore attenzione nella storia del materialismo antico.</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Accordion functionality
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const content = this.nextElementSibling;
+                content.classList.toggle('active');
+            });
+        });
+        
+        // Theme switching
+        function setTheme(theme) {
+            document.body.className = document.body.className.replace(/\btheme-\S+/g, '');
+            document.body.classList.add(`theme-${theme}`);
+            
+            // Keep current shape when changing theme
+            const currentShape = document.body.classList.contains('shape-atom') ? 'atom' :
+                                document.body.classList.contains('shape-vessel') ? 'vessel' :
+                                document.body.classList.contains('shape-lightning') ? 'lightning' :
+                                'wave';
+            document.body.classList.add(`shape-${currentShape}`);
+            
+            // Update active button
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+        
+        // Shape switching
+        function setShape(shape) {
+            document.body.className = document.body.className.replace(/\bshape-\S+/g, '');
+            document.body.classList.add(`shape-${shape}`);
+            
+            // Keep current theme when changing shape
+            const currentTheme = document.body.classList.contains('theme-library') ? 'library' :
+                               document.body.classList.contains('theme-observatory') ? 'observatory' :
+                               document.body.classList.contains('theme-laboratory') ? 'laboratory' :
+                               'lyceum';
+            document.body.classList.add(`theme-${currentTheme}`);
+            
+            // Update active button
+            document.querySelectorAll('.shape-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+        
+        // Open first accordion by default
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstHeader = document.querySelector('.accordion-header');
+            firstHeader.classList.add('active');
+            firstHeader.nextElementSibling.classList.add('active');
+        });
+    </script>
+</body>
+</html>

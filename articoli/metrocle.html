@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Antistene di Atene - Il Precursore del Cinismo</title>
+    <title>Metrocle di Maronea - Il Cinico Convertito</title>
     <style>
         :root {
-            --primary-color: #8d6e63;
-            --secondary-color: #a1887f;
-            --text-color: #4e342e;
-            --bg-color: #efebe9;
-            --accent-color: #d7ccc8;
+            --primary-color: #8D6E63;
+            --secondary-color: #A1887F;
+            --text-color: #4E342E;
+            --bg-color: #EFEBE9;
+            --accent-color: #D7CCC8;
             --font-main: 'Garamond', 'Times New Roman', serif;
             --font-alt: 'Palatino Linotype', 'Book Antiqua', serif;
         }
@@ -28,37 +28,37 @@
 
         /* Stili per le modalità di lettura */
         .cinico {
-            --primary-color: #5d4037;
-            --secondary-color: #3e2723;
-            --text-color: #3e2723;
-            --bg-color: #d7ccc8;
-            --accent-color: #8d6e63;
+            --primary-color: #5D4037;
+            --secondary-color: #3E2723;
+            --text-color: #3E2723;
+            --bg-color: #D7CCC8;
+            --accent-color: #8D6E63;
             font-family: 'Courier New', monospace;
         }
 
-        .sobrio {
-            --primary-color: #37474f;
-            --secondary-color: #455a64;
-            --text-color: #263238;
-            --bg-color: #eceff1;
-            --accent-color: #cfd8dc;
+        .trasformativo {
+            --primary-color: #6A1B9A;
+            --secondary-color: #9C27B0;
+            --text-color: #4A148C;
+            --bg-color: #F3E5F5;
+            --accent-color: #E1BEE7;
         }
 
         .antico {
-            --primary-color: #5d4037;
-            --secondary-color: #3e2723;
-            --text-color: #4e342e;
-            --bg-color: #efebe9;
-            --accent-color: #d7ccc8;
+            --primary-color: #5D4037;
+            --secondary-color: #3E2723;
+            --text-color: #4E342E;
+            --bg-color: #EFEBE9;
+            --accent-color: #D7CCC8;
             font-family: 'Trajan Pro', 'Times New Roman', serif;
         }
 
-        .ribelle {
-            --primary-color: #bf360c;
-            --secondary-color: #e64a19;
-            --text-color: #8c1f00;
-            --bg-color: #fbe9e7;
-            --accent-color: #ffccbc;
+        .filosofico {
+            --primary-color: #1565C0;
+            --secondary-color: #1976D2;
+            --text-color: #0D47A1;
+            --bg-color: #E3F2FD;
+            --accent-color: #BBDEFB;
         }
 
         h1, h2, h3 {
@@ -75,7 +75,7 @@
         }
 
         h1::before, h1::after {
-            content: "⌘";
+            content: "⚔";
             color: var(--secondary-color);
             padding: 0 15px;
         }
@@ -98,7 +98,7 @@
         .mode-btn {
             padding: 10px 20px;
             border: 2px solid var(--primary-color);
-            border-radius: 0;
+            border-radius: 25px;
             cursor: pointer;
             transition: all 0.3s ease;
             font-family: var(--font-alt);
@@ -113,31 +113,29 @@
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
+            left: -100%;
             width: 100%;
             height: 100%;
-            background-color: var(--accent-color);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.3s ease;
-            z-index: -1;
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+            transition: 0.5s;
         }
 
         .mode-btn:hover {
             color: var(--text-color);
-            border-color: transparent;
+            border-color: var(--accent-color);
         }
 
         .mode-btn:hover::before {
-            transform: scaleX(1);
+            left: 100%;
         }
 
         /* Stili per i bottoni di sezione */
         .section-container {
             margin: 40px 0;
             border: 1px solid var(--accent-color);
-            border-radius: 5px;
+            border-radius: 8px;
             overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
         }
 
         .section-toggle {
@@ -198,7 +196,7 @@
         }
 
         .quote::before {
-            content: '"';
+            content: '❞';
             font-size: 4em;
             position: absolute;
             left: 10px;
@@ -262,21 +260,39 @@
             border: 1px solid var(--accent-color);
         }
 
-        .works-list {
-            columns: 2;
-            column-gap: 30px;
+        .transformation-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 40px 0;
         }
 
-        .works-list li {
-            margin-bottom: 10px;
-            break-inside: avoid;
+        .transformation-step {
+            width: 80%;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            margin: 15px 0;
+            position: relative;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .transformation-step::after {
+            content: '↓';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--primary-color);
+            font-size: 1.5em;
+        }
+
+        .transformation-step:last-child::after {
+            display: none;
         }
 
         @media (max-width: 768px) {
-            .works-list {
-                columns: 1;
-            }
-            
             h1 {
                 font-size: 2.2em;
             }
@@ -289,191 +305,172 @@
             .section-content.show {
                 padding: 20px;
             }
-        }
-
-        .virtues-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 30px 0;
-        }
-
-        .virtue-card {
-            padding: 15px;
-            background-color: white;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            border-top: 3px solid var(--primary-color);
+            
+            .transformation-step {
+                width: 90%;
+            }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Antistene di Atene</h1>
-        <p style="text-align: center; font-style: italic; font-size: 1.2em;">Il filosofo che fondò la scuola cinica</p>
+        <h1>Metrocle di Maronea</h1>
+        <p style="text-align: center; font-style: italic; font-size: 1.2em;">Dal fallimento alla filosofia cinica</p>
         
         <div class="mode-selector">
             <button class="mode-btn" onclick="setMode('default')">Classico</button>
             <button class="mode-btn" onclick="setMode('cinico')">Cinico</button>
-            <button class="mode-btn" onclick="setMode('sobrio')">Sobrio</button>
+            <button class="mode-btn" onclick="setMode('trasformativo')">Trasformativo</button>
             <button class="mode-btn" onclick="setMode('antico')">Antico</button>
-            <button class="mode-btn" onclick="setMode('ribelle')">Ribelle</button>
+            <button class="mode-btn" onclick="setMode('filosofico')">Filosofico</button>
         </div>
     </header>
 
     <main>
         <div class="section-container">
-            <button class="section-toggle" onclick="toggleSection('biografia')">Biografia e Contesto Storico</button>
+            <button class="section-toggle" onclick="toggleSection('biografia')">Biografia</button>
             <div class="section-content" id="biografia">
-                <p>Antistene (445-365 a.C. circa) fu un filosofo ateniese, allievo di Gorgia e poi di Socrate, considerato il fondatore della scuola cinica. Nato da padre ateniese e madre tracia (forse una schiava), sperimentò personalmente la condizione di meteco prima di ottenere la piena cittadinanza.</p>
+                <p>Metrocle di Maronea (IV-III secolo a.C.) fu un filosofo cinico, fratello della più famosa Ipparchia. Nato a Maronea in Tracia, inizialmente studiò presso la scuola peripatetica di Teofrasto, per poi convertirsi al cinismo sotto l'influenza di Cratete di Tebe, che in seguito divenne suo cognato sposando sua sorella Ipparchia.</p>
                 
                 <div class="quote">
-                    "Antistene insegnava nel ginnasio del Cinosarge (Cane Agile), da cui probabilmente derivò il nome della scuola cinica."
+                    "Metrocle, dopo un iniziale fallimento come retore, bruciò i suoi scritti e si convertì alla filosofia cinica."
                     <div class="quote-author">- Diogene Laerzio, Vite dei filosofi</div>
                 </div>
                 
-                <p>Dopo la morte di Socrate, Antistene sviluppò una filosofia radicale che enfatizzava l'autosufficienza, il disprezzo per le convenzioni sociali e la vita secondo virtù. Il suo più famoso discepolo fu Diogene di Sinope.</p>
+                <p>La sua conversione al cinismo avvenne dopo un umiliante incidente durante una performance retorica, quando si lasciò sfuggire un peto e cadde in depressione. Cratete lo aiutò a superare la vergogna insegnandogli a disprezzare le convenzioni sociali.</p>
                 
                 <div class="timeline">
                     <div class="timeline-item">
-                        <div class="timeline-year">445 a.C.</div>
-                        <div class="timeline-content">Nascita di Antistene ad Atene</div>
+                        <div class="timeline-year">330 a.C.</div>
+                        <div class="timeline-content">Nascita di Metrocle a Maronea</div>
                     </div>
                     <div class="timeline-item">
-                        <div class="timeline-year">420 a.C.</div>
-                        <div class="timeline-content">Studia con Gorgia e diventa retore</div>
+                        <div class="timeline-year">310 a.C.</div>
+                        <div class="timeline-content">Studi presso Teofrasto al Liceo</div>
                     </div>
                     <div class="timeline-item">
-                        <div class="timeline-year">410 a.C.</div>
-                        <div class="timeline-content">Diventa seguace di Socrate</div>
+                        <div class="timeline-year">305 a.C.</div>
+                        <div class="timeline-content">Conversione al cinismo grazie a Cratete</div>
                     </div>
                     <div class="timeline-item">
-                        <div class="timeline-year">399 a.C.</div>
-                        <div class="timeline-content">Morte di Socrate, fondazione della scuola cinica</div>
+                        <div class="timeline-year">300 a.C.</div>
+                        <div class="timeline-content">Matrimonio di sua sorella Ipparchia con Cratete</div>
                     </div>
                     <div class="timeline-item">
-                        <div class="timeline-year">365 a.C.</div>
-                        <div class="timeline-content">Morte di Antistene</div>
+                        <div class="timeline-year">280 a.C.</div>
+                        <div class="timeline-content">Morte di Metrocle</div>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="section-container">
-            <button class="section-toggle" onclick="toggleSection('filosofia')">Filosofia e Dottrina</button>
+            <button class="section-toggle" onclick="toggleSection('conversione')">La Conversione Filosofica</button>
+            <div class="section-content" id="conversione">
+                <div class="transformation-container">
+                    <div class="transformation-step">
+                        <h3>1. L'Incidente</h3>
+                        <p>Durante un discorso pubblico, Metrocle si lasciò sfuggire un peto e, sopraffatto dalla vergogna, si rinchiuse in casa decidendo di lasciarsi morire di fame.</p>
+                    </div>
+                    <div class="transformation-step">
+                        <h3>2. L'Intervento di Cratete</h3>
+                        <p>Cratete venne a trovarlo e, per dimostrare l'insignificanza dell'accaduto, mangiò delle fave (notoriamente flatulente) e gli disse: "Vedi? Non è successo nulla di grave".</p>
+                    </div>
+                    <div class="transformation-step">
+                        <h3>3. La Rivelazione</h3>
+                        <p>Cratete spiegò che la vergogna di Metrocle derivava dalle false convenzioni sociali, non dalla natura umana, convincendolo ad abbracciare la filosofia cinica.</p>
+                    </div>
+                    <div class="transformation-step">
+                        <h3>4. Il Gesto Simbolico</h3>
+                        <p>Metrocle bruciò tutti i suoi scritti retorici, dichiarando: "Queste sono le vane chimere che mi hanno allontanato dalla verità".</p>
+                    </div>
+                    <div class="transformation-step">
+                        <h3>5. La Nuova Vita</h3>
+                        <p>Adottò lo stile di vita cinico, rinunciando alle ricchezze e vivendo in povertà volontaria con Cratete e sua sorella Ipparchia.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle" onclick="toggleSection('filosofia')">Insegnamenti Filosofici</button>
             <div class="section-content" id="filosofia">
-                <h3>Virtù e Autosufficienza</h3>
-                <p>Antistene sosteneva che la virtù (areté) fosse l'unico bene necessario e sufficiente per la felicità. Tutto il resto - ricchezza, fama, piaceri - erano indifferenti o dannosi.</p>
-                
-                <div class="virtues-grid">
-                    <div class="virtue-card">
-                        <h4>Autarchia</h4>
-                        <p>Autosufficienza e indipendenza dai bisogni artificiali</p>
-                    </div>
-                    <div class="virtue-card">
-                        <h4>Parrhesia</h4>
-                        <p>Libertà di parola e franchezza</p>
-                    </div>
-                    <div class="virtue-card">
-                        <h4>Askesis</h4>
-                        <p>Esercizio e disciplina per rafforzare il carattere</p>
-                    </div>
-                    <div class="virtue-card">
-                        <h4>Ponos</h4>
-                        <p>Valorizzazione della fatica e del lavoro</p>
-                    </div>
-                </div>
-                
-                <h3>Critica alla Società</h3>
-                <p>Antistene rifiutava le convenzioni sociali, le ricchezze e i piaceri effimeri. Celebre la sua affermazione: "Preferirei impazzire che provare piacere".</p>
+                <h3>Critica alla Retorica</h3>
+                <p>Metrocle sosteneva che la retorica tradizionale fosse vuota e ingannevole, preferendo un linguaggio diretto e sincero, tipico dello stile cinico.</p>
                 
                 <div class="quote">
-                    "Quando un aristocratico gli disse che proveniva da una grande città, rispose: 'Non è questo che conta, ma saper essere grande in una piccola città'."
-                    <div class="quote-author">- Antistene secondo Diogene Laerzio</div>
+                    "La vera eloquenza consiste nel dire ciò che si pensa e nel pensare ciò che si dice."
+                    <div class="quote-author">- Metrocle secondo Diogene Laerzio</div>
                 </div>
-            </div>
-        </div>
-
-        <div class="section-container">
-            <button class="section-toggle" onclick="toggleSection('opere')">Opere e Insegnamenti</button>
-            <div class="section-content" id="opere">
-                <p>Sebbene nessuna opera completa di Antistene sia sopravvissuta, le fonti antiche gli attribuiscono numerosi scritti:</p>
                 
-                <ul class="works-list">
-                    <li><strong>Sulla virtù</strong> - Sulla possibilità di insegnare la virtù</li>
-                    <li><strong>Ciro</strong> - Dialogo sull'educazione</li>
-                    <li><strong>Aiace e Odisseo</strong> - Opere retoriche</li>
-                    <li><strong>Eracle</strong> - L'eroe come modello cinico</li>
-                    <li><strong>Sul linguaggio</strong> - Teoria del significato</li>
-                    <li><strong>Contro i sofisti</strong> - Polemica contro l'insegnamento a pagamento</li>
-                    <li><strong>Dialoghi socratici</strong> - Ricordi di Socrate</li>
-                    <li><strong>Sulla libertà e la schiavitù</strong> - Sulla vera libertà interiore</li>
-                </ul>
+                <h3>Liberazione dalle Convenzioni</h3>
+                <p>Insegnava che la vera libertà si ottiene liberandosi dalla vergogna imposta dalla società e accettando la natura umana in tutte le sue manifestazioni.</p>
                 
-                <div class="quote">
-                    "La virtù riguarda le azioni e non ha bisogno di molti discorsi né di conoscenze, ma solo di forza socratica."
-                    <div class="quote-author">- Antistene secondo Diogene Laerzio</div>
-                </div>
+                <h3>Autosufficienza</h3>
+                <p>Come tutti i cinici, Metrocle promuoveva l'autarchia (autosufficienza) e la riduzione dei bisogni al minimo indispensabile.</p>
+                
+                <h3>Unione di Teoria e Pratica</h3>
+                <p>Insisteva sull'importanza di vivere secondo i principi filosofici, non solo di professarli a parole.</p>
             </div>
         </div>
 
         <div class="section-container">
             <button class="section-toggle" onclick="toggleSection('eredita')">Eredità e Influenza</button>
             <div class="section-content" id="eredita">
-                <h3>La Scuola Cinica</h3>
-                <p>Antistene è considerato il fondatore della scuola cinica, sebbene Diogene di Sinope ne sia diventato la figura più emblematica. I cinici successivi svilupparono ulteriormente il suo insegnamento:</p>
+                <h3>Nella Scuola Cinica</h3>
+                <p>Metrocle contribuì a diffondere il cinismo attraverso:</p>
                 <ul>
-                    <li>Diogene di Sinope - Il "cane" più famoso</li>
-                    <li>Cratete di Tebe - Rinunciò alla ricchezza</li>
-                    <li>Ipparchia - Donna filosofa che sfidò le convenzioni</li>
+                    <li>La sua conversione, divenuta un esempio della trasformazione possibile attraverso la filosofia</li>
+                    <li>L'introduzione di sua sorella Ipparchia alla vita cinica</li>
+                    <li>Gli scritti che influenzarono i cinici successivi</li>
                 </ul>
                 
-                <h3>Influenza sullo Stoicismo</h3>
-                <p>Lo stoicismo riprese molti temi dell'etica di Antistene, specialmente l'idea di vivere secondo natura e l'autosufficienza.</p>
+                <h3>Nella Filosofia Successiva</h3>
+                <p>Il suo approccio anti-accademico e basato sull'esperienza anticipò elementi dello stoicismo e dello scetticismo.</p>
                 
                 <div class="quote">
-                    "Zenone di Cizio, fondatore dello stoicismo, iniziò come allievo dei cinici prima di sviluppare la sua filosofia."
-                    <div class="quote-author">- Diogene Laerzio</div>
+                    "La storia di Metrocle dimostra come un apparente fallimento possa diventare l'inizio di una vita autentica."
+                    <div class="quote-author">- Michel Foucault, filosofo moderno</div>
                 </div>
                 
-                <h3>Nella Filosofia Moderna</h3>
-                <p>L'eredità di Antistene si ritrova in:</p>
+                <h3>Nella Cultura Moderna</h3>
+                <p>La sua vicenda è stata interpretata come:</p>
                 <ul>
-                    <li>Nietzsche e la critica ai valori tradizionali</li>
-                    <li>L'esistenzialismo e la ricerca di autenticità</li>
-                    <li>I movimenti anticonsumisti e di decrescita</li>
+                    <li>Un esempio di resilienza e trasformazione personale</li>
+                    <li>Una critica alle ipocrisie sociali</li>
+                    <li>Un modello di autenticità esistenziale</li>
                 </ul>
             </div>
         </div>
 
         <div class="section-container">
-            <button class="section-toggle" onclick="toggleSection('citazioni')">Citazioni Celebri</button>
+            <button class="section-toggle" onclick="toggleSection('citazioni')">Citazioni Attribuite</button>
             <div class="section-content" id="citazioni">
                 <div class="quote">
-                    "La virtù è sufficiente per la felicità."
-                    <div class="quote-author">- Principio fondamentale di Antistene</div>
+                    "Ho sprecato molto tempo nell'arte di dire bene le cose false, ora imparo l'arte di dire male le cose vere."
+                    <div class="quote-author">- Dopo la conversione al cinismo</div>
                 </div>
                 
                 <div class="quote">
-                    "Preferirei impazzire che provare piacere."
-                    <div class="quote-author">- Antistene sul rifiuto dei piaceri effimeri</div>
+                    "La vergogna è la catena più pesante, perché è fatta di aria."
+                    <div class="quote-author">- Sull'incidente che cambiò la sua vita</div>
                 </div>
                 
                 <div class="quote">
-                    "Ai suoi discepoli raccomandava: 'Armatevi del coraggio dei vostri pensieri'."
-                    <div class="quote-author">- Diogene Laerzio</div>
+                    "Meglio un peto libero che un discorso imprigionato nelle convenzioni."
+                    <div class="quote-author">- Risposta a chi lo prendeva in giro</div>
                 </div>
                 
                 <div class="quote">
-                    "Quando gli chiesero cosa avesse guadagnato dalla filosofia, rispose: 'La capacità di parlare con me stesso'."
-                    <div class="quote-author">- Antistene secondo Diogene Laerzio</div>
+                    "Non esistono fallimenti, solo lezioni troppo costose."
+                    <div class="quote-author">- Sul valore degli errori</div>
                 </div>
             </div>
         </div>
     </main>
 
     <footer>
-        <p>Documentazione filosofica su Antistene di Atene - Il padre del Cinismo</p>
+        <p>Documentazione filosofica su Metrocle di Maronea - Il Cinico Convertito</p>
         <p>© 2023 - Tutti i diritti riservati</p>
     </footer>
 

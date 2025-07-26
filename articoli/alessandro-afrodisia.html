@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alessandro di Afrodisia - Filosofo Peripatetico</title>
+    <style>
+        :root {
+            --primary-color: #5d4037;
+            --secondary-color: #8d6e63;
+            --text-color: #3e2723;
+            --bg-color: #efebe9;
+            --accent-color: #d7ccc8;
+            --font-main: 'Palatino Linotype', 'Book Antiqua', serif;
+            --font-alt: 'Garamond', serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            transition: all 0.5s ease;
+        }
+
+        /* Stili per le modalità di lettura */
+        .notturno {
+            --primary-color: #b39ddb;
+            --secondary-color: #7e57c2;
+            --text-color: #e1bee7;
+            --bg-color: #121212;
+            --accent-color: #1e1e1e;
+        }
+
+        .filosofico {
+            --primary-color: #455a64;
+            --secondary-color: #607d8b;
+            --text-color: #37474f;
+            --bg-color: #eceff1;
+            --accent-color: #cfd8dc;
+            font-family: 'Times New Roman', serif;
+        }
+
+        .medievale {
+            --primary-color: #5d4037;
+            --secondary-color: #3e2723;
+            --text-color: #4e342e;
+            --bg-color: #f5f5f5;
+            --accent-color: #d7ccc8;
+            font-family: 'Trajan Pro', 'Times New Roman', serif;
+        }
+
+        .moderno {
+            --primary-color: #0288d1;
+            --secondary-color: #03a9f4;
+            --text-color: #212121;
+            --bg-color: #ffffff;
+            --accent-color: #e1f5fe;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+            font-family: var(--font-alt);
+            border-bottom: 1px solid var(--accent-color);
+            padding-bottom: 5px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            margin-top: 40px;
+            font-size: 1.8em;
+        }
+
+        .mode-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--font-main);
+            background-color: var(--accent-color);
+            color: var(--text-color);
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Stili per i bottoni di sezione */
+        .section-container {
+            margin: 30px 0;
+        }
+
+        .section-toggle {
+            position: relative;
+            width: 100%;
+            padding: 15px 20px;
+            text-align: left;
+            border: none;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 8px 8px 0 0;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .section-toggle:hover {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+        }
+
+        .section-toggle::after {
+            content: '+';
+            position: absolute;
+            right: 20px;
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+        }
+
+        .section-toggle.active::after {
+            transform: rotate(45deg);
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.3s ease;
+            background-color: white;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .section-content.show {
+            max-height: 3000px;
+            padding: 20px;
+            border: 1px solid var(--accent-color);
+            border-top: none;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .quote {
+            font-style: italic;
+            padding: 15px;
+            background-color: var(--accent-color);
+            border-left: 4px solid var(--primary-color);
+            margin: 20px 0;
+        }
+
+        .quote-author {
+            text-align: right;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 50px;
+            margin: 30px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: var(--primary-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .timeline-year {
+            position: absolute;
+            left: -50px;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .timeline-content {
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-left: 20px;
+        }
+
+        .works-list {
+            columns: 2;
+            column-gap: 30px;
+        }
+
+        .works-list li {
+            margin-bottom: 10px;
+            break-inside: avoid;
+        }
+
+        @media (max-width: 768px) {
+            .works-list {
+                columns: 1;
+            }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid var(--accent-color);
+            font-size: 0.9em;
+            color: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Alessandro di Afrodisia</h1>
+        <p style="text-align: center; font-style: italic;">Il più celebre commentatore aristotelico dell'antichità</p>
+        
+        <div class="mode-selector">
+            <button class="mode-btn" onclick="setMode('default')">Classico</button>
+            <button class="mode-btn" onclick="setMode('notturno')">Notturno</button>
+            <button class="mode-btn" onclick="setMode('filosofico')">Filosofico</button>
+            <button class="mode-btn" onclick="setMode('medievale')">Medievale</button>
+            <button class="mode-btn" onclick="setMode('moderno')">Moderno</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="section-container">
+            <button class="section-toggle" onclick="toggleSection('biografia')">Biografia</button>
+            <div class="section-content" id="biografia">
+                <p>Alessandro di Afrodisia (in greco antico: Ἀλέξανδρος ὁ Ἀφροδισιεύς) fu un filosofo peripatetico greco attivo tra la fine del II e l'inizio del III secolo d.C. Nacque ad Afrodisia, in Caria (nell'odierna Turchia), da cui deriva il suo epiteto.</p>
+                
+                <p>Fu discepolo di Sosigene e Ermino, e insegnò ad Atene tra il 198 e il 211 d.C., durante il regno degli imperatori romani Settimio Severo e Caracalla. La sua nomina a capo della scuola peripatetica ad Atene fu probabilmente favorita dall'imperatore stesso, testimoniando il prestigio di cui godeva.</p>
+                
+                <div class="quote">
+                    "Alessandro fu chiamato 'il commentatore' per eccellenza, non senza ragione, poiché nessuno prima di lui aveva spiegato Aristotele con tanta acutezza e fedeltà."
+                    <div class="quote-author">- Simplicio di Cilicia</div>
+                </div>
+                
+                <p>La sua attività filosofica si colloca in un periodo di rinascita dell'interesse per Aristotele, dopo secoli di predominio delle scuole platoniche. Alessandro rappresenta il tentativo più sistematico nell'antichità di difendere e sviluppare il pensiero aristotelico nella sua forma più pura.</p>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle" onclick="toggleSection('pensiero')">Pensiero Filosofico</button>
+            <div class="section-content" id="pensiero">
+                <h3>Metafisica e Teologia</h3>
+                <p>Alessandro sviluppò una rigorosa interpretazione della metafisica aristotelica, insistendo sulla distinzione tra forma e materia. La sua concezione dell'intelletto attivo (nous poietikos) come principio divino separato dall'anima individuale ebbe grande influenza sul pensiero medievale.</p>
+                
+                <h3>Esegesi Aristotelica</h3>
+                <p>Il suo approccio ai testi di Aristotele era caratterizzato da un'estrema fedeltà letterale, cercando di risolvere le apparenti contraddizioni interne al corpus aristotelico senza ricorrere a interpretazioni allegoriche o platonizzanti.</p>
+                
+                <h3>Determinismo e Libero Arbitrio</h3>
+                <p>Nella sua opera "Sul destino", Alessandro sostenne una forma moderata di determinismo, distinguendosi sia dallo stoicismo che dall'epicureismo. Argomentò che mentre gli eventi naturali sono determinati, le azioni umane derivano da una scelta razionale che non è completamente predeterminata.</p>
+                
+                <div class="quote">
+                    "L'uomo è padrone delle proprie azioni e con la ragione può scegliere tra alternative possibili; in questo senso è libero."
+                    <div class="quote-author">- Alessandro di Afrodisia, "Sul destino"</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle" onclick="toggleSection('opere')">Opere Principali</button>
+            <div class="section-content" id="opere">
+                <p>Alessandro scrisse numerosi commentari alle opere di Aristotele, molti dei quali sono giunti fino a noi. Tra le sue opere più significative:</p>
+                
+                <ul class="works-list">
+                    <li><strong>Commento alla Metafisica</strong> - Il più antico commentario completo all'opera aristotelica</li>
+                    <li><strong>Commento agli Analitici Primi</strong> - Importante per la logica aristotelica</li>
+                    <li><strong>Commento alle Categorie</strong> - Fondamentale per la comprensione della logica antica</li>
+                    <li><strong>Commento al De anima</strong> - Con la celebre teoria dell'intelletto</li>
+                    <li><strong>Sul destino</strong> (De fato) - Trattato autonomo sul problema del determinismo</li>
+                    <li><strong>Problemi etici</strong> - Discussione di questioni morali</li>
+                    <li><strong>Sull'anima</strong> - Esposizione sistematica della psicologia aristotelica</li>
+                    <li><strong>Questioni fisiche</strong> - Soluzione a problemi di fisica aristotelica</li>
+                </ul>
+                
+                <p>Molte delle sue opere furono tradotte in siriaco, arabo e latino, esercitando una profonda influenza sul pensiero medievale sia nel mondo islamico che in quello cristiano.</p>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle" onclick="toggleSection('influenza')">Influenza Storica</button>
+            <div class="section-content" id="influenza">
+                <h3>Nel Mondo Islamico</h3>
+                <p>Conosciuto come "al-Iskandar al-Afrudisi" nella tradizione araba, i suoi commentari furono tradotti e studiati da filosofi come al-Kindi, al-Farabi e Avicenna. La sua interpretazione dell'intelletto attivo influenzò profondamente la filosofia islamica.</p>
+                
+                <h3>Nel Medioevo Latino</h3>
+                <p>Le traduzioni latine delle sue opere circolarono a partire dal XII secolo. Tommaso d'Aquino lo cita spesso come "Alexander Aphrodiseus", talvolta concordando con le sue interpretazioni, talvolta criticandole.</p>
+                
+                <h3>Nel Rinascimento</h3>
+                <p>La riscoperta delle sue opere in originale greco alimentò le discussioni sull'aristotelismo rinascimentale. Pietro Pomponazzi si ispirò alle sue tesi sull'anima nella controversia sull'immortalità.</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">200</div>
+                        <div class="timeline-content">Alessandro insegna ad Atene e scrive i suoi commentari</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">850</div>
+                        <div class="timeline-content">Prime traduzioni arabe delle sue opere</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1150</div>
+                        <div class="timeline-content">Traduzioni latine circolano in Europa</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1500</div>
+                        <div class="timeline-content">Edizioni a stampa delle sue opere influenzano il Rinascimento</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle" onclick="toggleSection('attualita')">Attualità del Pensiero</button>
+            <div class="section-content" id="attualita">
+                <h3>Studi Contemporanei</h3>
+                <p>Negli ultimi decenni si è assistito a un rinnovato interesse per Alessandro di Afrodisia, con nuove edizioni critiche delle sue opere e studi che ne rivalutano l'originalità filosofica al di là del ruolo di semplice commentatore.</p>
+                
+                <h3>Contributi alla Filosofia della Mente</h3>
+                <p>Le sue teorie sull'intelletto e la coscienza sono oggetto di analisi nel contesto delle moderne discussioni sulla natura della mente e della soggettività.</p>
+                
+                <h3>Etica e Libero Arbitrio</h3>
+                <p>La sua posizione moderata sul determinismo viene ripresa nelle attuali discussioni tra compatibilismo e incompatibilismo nella filosofia dell'azione.</p>
+                
+                <div class="quote">
+                    "Alessandro di Afrodisia rappresenta un caso esemplare di come un commentatore possa essere al tempo stesso un pensatore originale, sviluppando il sistema del maestro in direzioni nuove e feconde."
+                    <div class="quote-author">- Jonathan Barnes, studioso di filosofia antica</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Documentazione creata con fonti storiche e filosofiche accademiche</p>
+        <p>© 2023 - Tutti i diritti riservati</p>
+    </footer>
+
+    <script>
+        // Funzione per attivare/disattivare le sezioni
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const button = document.querySelector(`[onclick="toggleSection('${sectionId}')"]`);
+            
+            section.classList.toggle('show');
+            button.classList.toggle('active');
+        }
+
+        // Funzione per cambiare modalità di lettura
+        function setMode(mode) {
+            document.body.className = mode;
+            
+            // Salva la preferenza
+            localStorage.setItem('readingMode', mode);
+        }
+
+        // Al caricamento della pagina, applica la modalità salvata
+        window.onload = function() {
+            const savedMode = localStorage.getItem('readingMode');
+            if (savedMode) {
+                setMode(savedMode);
+            }
+            
+            // Apri la prima sezione di default
+            toggleSection('biografia');
+        }
+    </script>
+</body>
+</html>

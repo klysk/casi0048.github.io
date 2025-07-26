@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andronico di Rodi - Il Sistematico di Aristotele</title>
+    <style>
+        :root {
+            --primary-color: #1565c0;
+            --secondary-color: #1976d2;
+            --text-color: #0d47a1;
+            --bg-color: #e3f2fd;
+            --accent-color: #bbdefb;
+            --font-main: 'Palatino Linotype', 'Book Antiqua', serif;
+            --font-alt: 'Garamond', serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            transition: all 0.5s ease;
+        }
+
+        /* Stili per le modalità di lettura */
+        .notturno {
+            --primary-color: #64b5f6;
+            --secondary-color: #42a5f5;
+            --text-color: #e3f2fd;
+            --bg-color: #0d1b2a;
+            --accent-color: #1b263b;
+        }
+
+        .accademico {
+            --primary-color: #283593;
+            --secondary-color: #303f9f;
+            --text-color: #1a237e;
+            --bg-color: #e8eaf6;
+            --accent-color: #c5cae9;
+            font-family: 'Times New Roman', serif;
+        }
+
+        .peripatetico {
+            --primary-color: #00695c;
+            --secondary-color: #00796b;
+            --text-color: #004d40;
+            --bg-color: #e0f2f1;
+            --accent-color: #b2dfdb;
+        }
+
+        .antico {
+            --primary-color: #5d4037;
+            --secondary-color: #3e2723;
+            --text-color: #4e342e;
+            --bg-color: #efebe9;
+            --accent-color: #d7ccc8;
+            font-family: 'Trajan Pro', 'Times New Roman', serif;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+            font-family: var(--font-alt);
+            position: relative;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.8em;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        h1::before, h1::after {
+            content: "✦";
+            color: var(--secondary-color);
+            padding: 0 15px;
+        }
+
+        h2 {
+            margin-top: 40px;
+            font-size: 1.8em;
+            padding-bottom: 5px;
+            border-bottom: 2px dashed var(--secondary-color);
+        }
+
+        .mode-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--font-alt);
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .mode-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .mode-btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+
+        /* Stili per i bottoni di sezione */
+        .section-container {
+            margin: 40px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .section-toggle {
+            position: relative;
+            width: 100%;
+            padding: 20px;
+            text-align: left;
+            border: none;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            font-size: 1.3em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-toggle:hover {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+        }
+
+        .section-toggle::after {
+            content: '›';
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+        }
+
+        .section-toggle.active::after {
+            transform: rotate(90deg);
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.3s ease;
+            background-color: white;
+        }
+
+        .section-content.show {
+            max-height: 5000px;
+            padding: 30px;
+            border-top: 1px solid var(--accent-color);
+        }
+
+        .section-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .quote {
+            font-style: italic;
+            padding: 20px;
+            background-color: var(--accent-color);
+            border-radius: 8px;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .quote::before {
+            content: '“';
+            font-size: 4em;
+            position: absolute;
+            left: 10px;
+            top: 0;
+            color: rgba(0,0,0,0.1);
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .quote-author {
+            text-align: right;
+            font-weight: bold;
+            margin-top: 15px;
+            font-style: normal;
+            color: var(--secondary-color);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 50px;
+            margin: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .timeline-year {
+            position: absolute;
+            left: -50px;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary-color), var(--secondary-color));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 0 0 4px var(--bg-color);
+            z-index: 1;
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+            margin-left: 30px;
+            position: relative;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 20px;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid white;
+        }
+
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .work-card {
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .work-card h4 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid var(--accent-color);
+            font-size: 0.9em;
+            color: var(--secondary-color);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2em;
+            }
+            
+            .section-toggle {
+                padding: 15px;
+                font-size: 1.1em;
+            }
+            
+            .section-content.show {
+                padding: 20px;
+            }
+            
+            .works-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Andronico di Rodi</h1>
+        <p style="text-align: center; font-style: italic; font-size: 1.2em;">L'editore che salvò l'eredità aristotelica</p>
+        
+        <div class="mode-selector">
+            <button class="mode-btn" onclick="setMode('default')">Classico</button>
+            <button class="mode-btn" onclick="setMode('notturno')">Notturno</button>
+            <button class="mode-btn" onclick="setMode('accademico')">Accademico</button>
+            <button class="mode-btn" onclick="setMode('peripatetico')">Peripatetico</button>
+            <button class="mode-btn" onclick="setMode('antico')">Antico</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="section-container">
+            <button class="section-toggle" onclick="toggleSection('biografia')">Biografia e Contesto Storico</button>
+            <div class="section-content" id="biografia">
+                <p>Andronico di Rodi (I secolo a.C.) fu un filosofo peripatetico greco e l'undicesimo scolarca del Liceo dopo Aristotele. La sua fama è legata principalmente alla sua attività di editore e organizzatore del corpus aristotelico.</p>
+                
+                <div class="quote">
+                    "Andronico di Rodi, uomo acutissimo, mise in ordine le opere di Aristotele e di Teofrasto che giacevano nascoste e confuse nei sotterranei di Scepsi."
+                    <div class="quote-author">- Plutarco, Vita di Silla</div>
+                </div>
+                
+                <p>Divenne capo della scuola peripatetica intorno al 60 a.C., in un periodo di rinascita dell'interesse per Aristotele. La sua edizione delle opere aristoteliche divenne la base per tutte le successive tradizioni manoscritte.</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">100 a.C.</div>
+                        <div class="timeline-content">Probabile nascita di Andronico a Rodi</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">60 a.C.</div>
+                        <div class="timeline-content">Diventa scolarca del Liceo</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">50 a.C.</div>
+                        <div class="timeline-content">Pubblica l'edizione critica di Aristotele</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle" onclick="toggleSection('edizione')">L'Edizione Aristotelica</button>
+            <div class="section-content" id="edizione">
+                <h3>Il Ritrovamento dei Testi</h3>
+                <p>Secondo la tradizione, Andronico lavorò sui manoscritti di Aristotele che erano stati nascosti a Scepsi per evitarne la confisca e che furono ritrovati in cattive condizioni. La sua edizione rappresentò il primo tentativo sistematico di organizzare il corpus aristotelico.</p>
+                
+                <h3>Struttura dell'Opera</h3>
+                <p>Andronico suddivise le opere di Aristotele in gruppi tematici, creando la struttura che ancora oggi conosciamo:</p>
+                <ol>
+                    <li>Logica (Organon)</li>
+                    <li>Fisica</li>
+                    <li>Metafisica</li>
+                    <li>Etica e Politica</li>
+                    <li>Retorica e Poetica</li>
+                </ol>
+                
+                <div class="quote">
+                    "Ad Andronico dobbiamo i titoli stessi di 'Metafisica' e di 'Organon', che riflettono la sua interpretazione dell'architettura del pensiero aristotelico."
+                    <div class="quote-author">- Jonathan Barnes, studioso di Aristotele</div>
+                </div>
+                
+                <h3>Innovazioni Editoriali</h3>
+                <p>Introdusse l'uso di segni critici per indicare passaggi dubbi o interpolati, stabilendo un nuovo standard per l'edizione dei testi filosofici.</p>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle" onclick="toggleSection('pensiero')">Contributi Filosofici</button>
+            <div class="section-content" id="pensiero">
+                <h3>Teoria delle Categorie</h3>
+                <p>Andronico sviluppò un'interpretazione originale delle categorie aristoteliche, enfatizzando il loro ruolo come classificazione dei tipi di predicati piuttosto che come classificazione delle cose stesse.</p>
+                
+                <h3>Commentari e Interpretazioni</h3>
+                <p>Scrisse commentari a diverse opere di Aristotele, oggi perduti, ma citati da autori successivi come Simplicio e Boezio. Il suo approccio esegetico combinava fedeltà al testo con originalità interpretativa.</p>
+                
+                <div class="quote">
+                    "Andronico non fu semplice editore, ma pensatore originale che attraverso la sistemazione dei testi offrì una propria interpretazione del pensiero aristotelico."
+                    <div class="quote-author">- Paul Moraux, storico della filosofia</div>
+                </div>
+                
+                <h3>La Questione del Corpus Aristotelicum</h3>
+                <p>La sua edizione sollevò questioni fondamentali sull'autenticità e la cronologia delle opere aristoteliche, dibattiti che continuano ancora oggi tra gli studiosi.</p>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle" onclick="toggleSection('opere')">Opere Attribuite</button>
+            <div class="section-content" id="opere">
+                <p>Poche opere di Andronico sono giunte fino a noi direttamente, ma le fonti antiche gli attribuiscono:</p>
+                
+                <div class="works-grid">
+                    <div class="work-card">
+                        <h4>Edizione critica di Aristotele</h4>
+                        <p>La sua opera più importante, che organizzò il corpus aristotelico nella forma che ancora oggi utilizziamo</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>Commentari aristotelici</h4>
+                        <p>Inclusi commenti alle Categorie, al De interpretatione e alla Fisica</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>Scritti sulla vita di Aristotele</h4>
+                        <p>Una biografia filosofica oggi perduta</p>
+                    </div>
+                    <div class="work-card">
+                        <h4>Trattati filosofici indipendenti</h4>
+                        <p>Sulle passioni e sulla divisione della filosofia</p>
+                    </div>
+                </div>
+                
+                <p>Molte delle sue idee ci sono note attraverso riferimenti in autori successivi come Alessandro di Afrodisia, Porfirio e Boezio.</p>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle" onclick="toggleSection('eredita')">Eredità e Influenza</button>
+            <div class="section-content" id="eredita">
+                <h3>Trasmissione del Pensiero Aristotelico</h3>
+                <p>L'edizione di Andronico divenne la base per tutte le successive tradizioni manoscritte e influenzò profondamente la ricezione di Aristotele nel mondo antico e medievale.</p>
+                
+                <h3>Nella Tradizione Peripatetica</h3>
+                <p>La sua interpretazione di Aristotele dominò la scuola peripatetica fino al II secolo d.C., quando emerse la figura di Alessandro di Afrodisia.</p>
+                
+                <div class="quote">
+                    "Senza l'opera editoriale di Andronico, l'intera tradizione aristotelica avrebbe potuto prendere una direzione completamente diversa."
+                    <div class="quote-author">- Myles Burnyeat, filosofo contemporaneo</div>
+                </div>
+                
+                <h3>Influenza sulla Filologia Moderna</h3>
+                <p>Il suo metodo critico anticipò molte tecniche della filologia moderna, dimostrando un approccio scientifico alla ricostruzione dei testi antichi.</p>
+                
+                <h3>Nella Storiografia Filosofica</h3>
+                <p>La sua organizzazione del corpus aristotelico ha condizionato per secoli la comprensione dello sviluppo del pensiero di Aristotele.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Documentazione filosofica su Andronico di Rodi - L'editore di Aristotele</p>
+        <p>© 2023 - Tutti i diritti riservati</p>
+    </footer>
+
+    <script>
+        // Funzione per attivare/disattivare le sezioni
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const button = document.querySelector(`[onclick="toggleSection('${sectionId}')"]`);
+            
+            section.classList.toggle('show');
+            button.classList.toggle('active');
+        }
+
+        // Funzione per cambiare modalità di lettura
+        function setMode(mode) {
+            document.body.className = mode;
+            
+            // Salva la preferenza
+            localStorage.setItem('readingMode', mode);
+            
+            // Animazione di transizione
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 300);
+        }
+
+        // Al caricamento della pagina, applica la modalità salvata
+        window.onload = function() {
+            const savedMode = localStorage.getItem('readingMode');
+            if (savedMode) {
+                setMode(savedMode);
+            }
+            
+            // Apri la prima sezione di default
+            toggleSection('biografia');
+        }
+    </script>
+</body>
+</html>
