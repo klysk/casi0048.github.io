@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cratete di Tebe: Filosofo Cinico</title>
+    <style>
+        :root {
+            --primary-color: #8B4513; /* Terra cotta */
+            --secondary-color: #DAA520; /* Oro antico */
+            --text-color: #333333;
+            --bg-color: #F5F5DC; /* Beige pergamena */
+            --card-bg: #FFF8E7;
+            --shadow: 0 4px 12px rgba(139, 69, 19, 0.15);
+            --border-radius: 8px;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+        }
+
+        body {
+            font-family: 'EB Garamond', serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="%238B451310" d="M50 0 Q75 25 50 50 Q25 75 50 100 Q75 75 100 50 Q75 25 50 0 Z"/></svg>');
+            background-size: 120px 120px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px dashed var(--primary-color);
+            position: relative;
+        }
+
+        header::after {
+            content: "⚝";
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-color);
+            padding: 0 15px;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(139, 69, 19, 0.2);
+        }
+
+        .subtitle {
+            font-style: italic;
+            color: var(--secondary-color);
+            font-size: 1.3rem;
+        }
+
+        /* Bottoni sezione - Stile a rotolo di pergamena */
+        .section-toggle {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 16px 30px;
+            margin: 15px 0;
+            border-radius: 0 20px 20px 0;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            clip-path: polygon(0 0, 90% 0, 100% 50%, 90% 100%, 0 100%);
+        }
+
+        .section-toggle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                rgba(255,255,255,0.1) 0%, 
+                rgba(255,255,255,0.3) 50%, 
+                rgba(255,255,255,0.1) 100%);
+            transform: translateX(-100%);
+            transition: var(--transition);
+        }
+
+        .section-toggle:hover::before {
+            transform: translateX(100%);
+        }
+
+        .section-toggle::after {
+            content: '⌄';
+            font-size: 1.5rem;
+            transition: var(--transition);
+            margin-left: 10px;
+        }
+
+        .section-toggle.active::after {
+            content: '⌃';
+            transform: rotate(180deg);
+        }
+
+        /* Contenuto sezioni - Stile pergamena */
+        .section-content {
+            background-color: var(--card-bg);
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            border-left: 4px solid var(--primary-color);
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="%238B451305" d="M0 0 L100 0 L100 100 L0 100 Z" /></svg>');
+            background-size: 100% 30px;
+            background-attachment: local;
+        }
+
+        .section-content.active {
+            padding: 25px;
+            max-height: 5000px;
+        }
+
+        /* Modalità lettura */
+        .reading-modes {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .mode-btn {
+            padding: 10px 20px;
+            border-radius: 30px;
+            border: 2px solid var(--primary-color);
+            background: var(--card-bg);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .mode-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            z-index: -1;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .mode-btn:hover, .mode-btn.active {
+            color: white;
+            border-color: transparent;
+        }
+
+        .mode-btn:hover::before, .mode-btn.active::before {
+            opacity: 1;
+        }
+
+        /* Stili modalità specifiche */
+        body.night-mode {
+            --bg-color: #1a1a1a;
+            --card-bg: #2a2a2a;
+            --text-color: #e6e6e6;
+            --primary-color: #CD853F;
+            --secondary-color: #FFD700;
+            background-image: none;
+        }
+
+        body.philosophical-mode {
+            --primary-color: #5D4037;
+            --secondary-color: #8D6E63;
+            --bg-color: #EFEBE9;
+            --card-bg: #D7CCC8;
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+        }
+
+        body.philosophical-mode .section-content {
+            border-left: 4px solid #5D4037;
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="%235D403710" d="M0 10 Q50 30 100 10 L100 90 Q50 70 0 90 Z"/></svg>');
+        }
+
+        body.minimal-mode {
+            --bg-color: #fff;
+            --card-bg: #fff;
+            --shadow: none;
+            --primary-color: #555;
+            --secondary-color: #777;
+            background-image: none;
+        }
+
+        body.minimal-mode .section-content {
+            border-left: 1px solid #eee;
+        }
+
+        /* Stili creativi per bottoni */
+        .section-toggle.creative-1 {
+            clip-path: polygon(0 0, 85% 0, 100% 50%, 85% 100%, 0 100%);
+            background: linear-gradient(135deg, #5D4037, #8D6E63);
+        }
+
+        .section-toggle.creative-2 {
+            border-radius: 30px 0 0 30px;
+            background: linear-gradient(to right, #6D4C41, #A1887F);
+            box-shadow: 5px 5px 10px rgba(0,0,0,0.1);
+        }
+
+        .section-toggle.creative-3 {
+            background: linear-gradient(135deg, #8B4513, #DAA520);
+            clip-path: polygon(0 0, 100% 0, 90% 50%, 100% 100%, 0 100%);
+        }
+
+        /* Elementi tipografici */
+        blockquote {
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px 25px;
+            margin: 25px 0;
+            background-color: rgba(218, 165, 32, 0.05);
+            font-style: italic;
+            position: relative;
+        }
+
+        blockquote::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--secondary-color);
+            opacity: 0.2;
+            position: absolute;
+            left: 10px;
+            top: -20px;
+            line-height: 1;
+        }
+
+        /* Figure e immagini */
+        .figure {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .figure img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(139, 69, 19, 0.2);
+        }
+
+        .figure-caption {
+            font-style: italic;
+            margin-top: 10px;
+            color: var(--secondary-color);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .section-toggle {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+            
+            .reading-modes {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Cratete di Tebe</h1>
+        <p class="subtitle">Il cinico che gettò le ricchezze in mare</p>
+        
+        <div class="reading-modes">
+            <button class="mode-btn" data-mode="default">Classico</button>
+            <button class="mode-btn" data-mode="night">Notturno</button>
+            <button class="mode-btn" data-mode="philosophical">Filosofico</button>
+            <button class="mode-btn" data-mode="minimal">Minimal</button>
+            <button class="mode-btn" data-mode="creative-buttons">Bottoni Creativi</button>
+        </div>
+    </header>
+
+    <main>
+        <button class="section-toggle" data-section="vita">
+            <span>Vita e Contesto Storico</span>
+        </button>
+        <div class="section-content" id="vita">
+            <p>Cratete di Tebe (c. 365-285 a.C.) fu un filosofo cinico greco, allievo di Diogene di Sinope e maestro di Zenone di Cizio, il fondatore dello stoicismo. Nato in una ricca famiglia tebana, Cratete rinunciò alla sua considerevole fortuna abbracciando la povertà filosofica dei cinici.</p>
+            
+            <div class="figure">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Crates_of_Thebes_-_Project_Gutenberg_eText_14994.png/440px-Crates_of_Thebes_-_Project_Gutenberg_eText_14994.png" alt="Raffigurazione antica di Cratete di Tebe">
+                <p class="figure-caption">Rappresentazione di Cratete in un'incisione antica</p>
+            </div>
+            
+            <p>La tradizione racconta che Cratete, dopo aver assistito a una rappresentazione della <em>Telefo</em> di Euripide (dove si esaltava la vita semplice), abbandonò tutte le sue ricchezze gettandole simbolicamente in mare, dicendo: <em>"Andate a fondo, voi piaceri volgari; vi affonderò perché non mi affondiate voi"</em>.</p>
+            
+            <blockquote>
+                "Cratete, liberatosi dalle ricchezze come da pesanti catene, si fece cittadino del mondo, vivendo in perfetta libertà e insegnando che la vera felicità consiste nell'indipendenza dai beni materiali."
+                <footer>- Diogene Laerzio, <cite>Vite dei filosofi</cite></footer>
+            </blockquote>
+        </div>
+
+        <button class="section-toggle" data-section="pensiero">
+            <span>Pensiero Filosofico</span>
+        </button>
+        <div class="section-content" id="pensiero">
+            <p>Cratete sviluppò ulteriormente la filosofia cinica di Diogene, con un approccio più mite e umoristico. I principi fondamentali del suo insegnamento includevano:</p>
+            
+            <h3>Autosufficienza (Autarkeia)</h3>
+            <p>La completa indipendenza da beni materiali, convenzioni sociali e opinioni altrui come via alla libertà interiore.</p>
+            
+            <h3>Parresia</h3>
+            <p>Il coraggio di dire la verità senza mezzi termini, anche a costo di risultare sconvenienti o impopolari.</p>
+            
+            <h3>Askesis</h3>
+            <p>L'esercizio continuo nel sopportare privazioni e difficoltà per rafforzare il carattere.</p>
+            
+            <div class="figure">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Cynic_philosopher_Crates_of_Thebes_and_his_wife_Hipparchia._Engraving_by_Jacques_Grasset_Wellcome_V0025050.jpg/800px-Cynic_philosopher_Crates_of_Thebes_and_his_wife_Hipparchia._Engraving_by_Jacques_Grasset_Wellcome_V0025050.jpg" alt="Cratete e Ipparchia">
+                <p class="figure-caption">Cratete e sua moglie Ipparchia, un raro esempio di coppia filosofica nell'antichità</p>
+            </div>
+            
+            <h3>Etica pratica</h3>
+            <p>Cratete insegnava principalmente attraverso l'esempio personale e brevi massime memorabili piuttosto che con lunghi discorsi teorici.</p>
+            
+            <blockquote>
+                "La povertà volontaria è la via più breve alla libertà. Per liberarsi dalle catene che ci legano alla terra, dobbiamo prima liberarci di tutto ciò che ci trattiene."
+                <footer>- Frammento attribuito a Cratete</footer>
+            </blockquote>
+        </div>
+
+        <button class="section-toggle" data-section="relazione">
+            <span>Relazione con Ipparchia</span>
+        </button>
+        <div class="section-content" id="relazione">
+            <p>Cratete ebbe una relazione unica nella storia della filosofia antica con Ipparchia di Maronea, che divenne sua allieva e poi moglie. La loro unione fu basata sulla condivisione dello stile di vita cinico e sulla comune ricerca filosofica.</p>
+            
+            <h3>Una coppia filosofica</h3>
+            <p>Ipparchia, proveniente da una famiglia ricca, rinunciò alla sua condizione privilegiata per seguire Cratete, suscitando grande scandalo nell'Atene del tempo. La coppia visse per le strade praticando la povertà volontaria.</p>
+            
+            <h3>Uguaglianza di genere</h3>
+            <p>Il loro rapporto rappresentò una sfida radicale alle convenzioni sociali, dimostrando che una donna poteva essere filosofa al pari di un uomo.</p>
+            
+            <blockquote>
+                "Mi sono unita a Cratete non per un letto coniugale o per la tavola, ma per la filosofia e per la vita secondo natura."
+                <footer>- Ipparchia, citata da Diogene Laerzio</footer>
+            </blockquote>
+        </div>
+
+        <button class="section-toggle" data-section="opere">
+            <span>Opere e Insegnamenti</span>
+        </button>
+        <div class="section-content" id="opere">
+            <p>Purtroppo, nessuna opera completa di Cratete ci è pervenuta. Conosciamo il suo pensiero principalmente attraverso:</p>
+            
+            <h3>Lettere (probabilmente spurie)</h3>
+            <p>Una raccolta di 36 lettere che circolavano nell'antichità, attribuite a Cratete ma probabilmente scritte in epoca successiva.</p>
+            
+            <h3>Frammenti poetici</h3>
+            <p>Compose brevi poemi filosofici in metro elegiaco e giambico, di cui restano pochi frammenti:</p>
+            <ul>
+                <li><em>Pera</em>: descrive la sua bisaccia come simbolo della vita semplice</li>
+                <li><em>Ricchezza</em>: critica l'accumulo di beni materiali</li>
+            </ul>
+            
+            <h3>Detti memorabili</h3>
+            <p>Molti dei suoi insegnamenti ci sono stati tramandati come aforismi:</p>
+            <ul>
+                <li>"L'ignoranza è la patria di tutti i mali"</li>
+                <li>"Meglio inciampare con i piedi che con la lingua"</li>
+                <li>"La filosofia è la medicina dell'anima"</li>
+            </ul>
+            
+            <div class="figure">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Crates_giving_his_wealth_to_the_poor._Woodcut_from_Hartmann_Schedel%2C_Liber_chronicarum_%28Nuremberg_Chronicle%29%2C_1493_Wellcome_L0005045.jpg/800px-Crates_giving_his_wealth_to_the_poor._Woodcut_from_Hartmann_Schedel%2C_Liber_chronicarum_%28Nuremberg_Chronicle%29%2C_1493_Wellcome_L0005045.jpg" alt="Cratete dona le sue ricchezze">
+                <p class="figure-caption">Cratete dona le sue ricchezze ai poveri (Cronaca di Norimberga, 1493)</p>
+            </div>
+        </div>
+
+        <button class="section-toggle" data-section="eredita">
+            <span>Eredita e Influenza</span>
+        </button>
+        <div class="section-content" id="eredita">
+            <p>Cratete ebbe un'influenza significativa sullo sviluppo della filosofia ellenistica:</p>
+            
+            <h3>Transizione allo Stoicismo</h3>
+            <p>Come maestro di Zenone di Cizio, Cratete fornì il ponte tra il cinismo e lo stoicismo. Zenone prese dal cinismo l'ideale di autosufficienza ma lo sviluppò in un sistema più completo.</p>
+            
+            <h3>Influenza sul pensiero occidentale</h3>
+            <p>Il tema della povertà volontaria e della critica alla ricchezza riemergerà con forza nel cristianesimo primitivo e in movimenti come il francescanesimo.</p>
+            
+            <h3>Modello di vita filosofica</h3>
+            <p>Cratete rappresentò per i successivi filosofi antichi l'esempio di coerenza tra teoria e pratica, vivendo ciò che predicava.</p>
+            
+            <blockquote>
+                "Cratete insegnava non con parole ma con l'esempio, mostrando nella vita quotidiana che la felicità non dipende da circostanze esterne."
+                <footer>- Epitteto, <cite>Diatribe</cite></footer>
+            </blockquote>
+        </div>
+    </main>
+
+    <footer>
+        <p style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px dashed var(--primary-color);">
+            © 2023 Enciclopedia di Filosofia Antica | Fonti: Diogene Laerzio, <em>Vite dei filosofi</em>; Julian, <em>Discorsi</em>; Frammenti dei Cinici
+        </p>
+    </footer>
+
+    <script>
+        // Gestione apertura/chiusura sezioni
+        document.querySelectorAll('.section-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const sectionId = button.getAttribute('data-section');
+                const sectionContent = document.getElementById(sectionId);
+                
+                button.classList.toggle('active');
+                sectionContent.classList.toggle('active');
+                
+                // Animazione smooth scroll
+                if (sectionContent.classList.contains('active')) {
+                    setTimeout(() => {
+                        sectionContent.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }, 100);
+                }
+            });
+        });
+
+        // Gestione modalità di lettura
+        document.querySelectorAll('.mode-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Rimuovi tutte le classi di modalità
+                document.body.className = '';
+                
+                // Aggiungi la classe corrispondente alla modalità selezionata
+                const mode = button.getAttribute('data-mode');
+                if (mode !== 'default') {
+                    document.body.classList.add(mode + '-mode');
+                }
+                
+                // Gestione bottoni creativi
+                if (mode === 'creative-buttons') {
+                    document.querySelectorAll('.section-toggle').forEach((btn, index) => {
+                        btn.className = 'section-toggle';
+                        const creativeClass = 'creative-' + ((index % 3) + 1);
+                        btn.classList.add(creativeClass);
+                    });
+                } else {
+                    document.querySelectorAll('.section-toggle').forEach(btn => {
+                        btn.className = 'section-toggle';
+                    });
+                }
+                
+                // Aggiorna stato attivo dei bottoni
+                document.querySelectorAll('.mode-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                button.classList.add('active');
+            });
+        });
+
+        // Apri la prima sezione di default
+        document.querySelector('.section-toggle').click();
+    </script>
+</body>
+</html>
