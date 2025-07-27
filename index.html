@@ -1481,6 +1481,8 @@ header {
 
 <body>
 
+<div id="google_translate_element"></div>
+<div id="translate-btn" title="Traduci">🌐</div>
 
 </style>
 <!-- inizio slider verticale -->
@@ -3340,6 +3342,28 @@ document.addEventListener("DOMContentLoaded", function () {
         }tit
 <!--------------------------------------------------------------->
   
+</script>
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'it',
+    layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+  }, 'google_translate_element');
+}
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<script>
+  const btn = document.getElementById('translate-btn');
+  btn.addEventListener('click', () => {
+    // Mostra/nascondi il widget Google Translate al click
+    const container = document.getElementById('google_translate_element');
+    if (container.style.display === 'block') {
+      container.style.display = 'none';
+    } else {
+      container.style.display = 'block';
+    }
+  });
 </script>
 
 </body>
