@@ -27,10 +27,11 @@
   <!-- Icone Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <!-- Librerie GSAP -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <!-- Plugin SplitText (ora gratuito) -->
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/SplitText.min.js"></script>
+ 
+ <!-- GSAP core e plugin ufficiali FULL FREE da aprile 2025 -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/SplitText.min.js"></script>
+
 
 <style>
 :root {
@@ -2077,7 +2078,35 @@ const particleCount = window.innerWidth < 768 ? 20 : 50;
   </div>
 </section>
 
- 
+ <script>
+  window.addEventListener("load", () => {
+    const subtitle = document.querySelector(".shine-text");
+    if (!subtitle) return;
+
+    // Crea SplitText (plugin ufficiale e gratuito)
+    const split = new SplitText(subtitle, { type: "chars" });
+
+    // Imposta inizialmente lettere invisibili e spostate
+    gsap.set(split.chars, {
+      opacity: 0,
+      y: 40,
+      scale: 3,
+      rotation: 360
+    });
+
+    // Animazione ingresso lettere esplosione
+    gsap.to(split.chars, {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      rotation: 0,
+      duration: 1.2,
+      ease: "back.out(1.7)",
+      stagger: 0.05
+    });
+  });
+</script>
+
     
     <div class="welcome-quote">
       <p class="quote-text"></p>
@@ -3436,6 +3465,7 @@ gsap.to(".shine-text", {
 });
 
 </script>
+<!--
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   const exploding = document.querySelector(".exploding-text");
@@ -3459,7 +3489,10 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 </script>
-<!-- Assicurati che GSAP e SplitText siano già caricati PRIMA di questo script -->
+
+-->
+ <!--
+Assicurati che GSAP e SplitText siano già caricati PRIMA di questo script -->
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const exploding = document.querySelector(".exploding-text");
@@ -3485,6 +3518,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 </script>
-
+-->
        </body>
 </html>
