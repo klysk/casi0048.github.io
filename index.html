@@ -27,12 +27,10 @@
   <!-- Icone Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-
-  
- <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/SplitText.min.js"></script>
- <!-- GSAP core e plugin ufficiali FULL FREE da aprile 2025 -->
-  
-
+  <!-- Librerie GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <!-- Plugin SplitText (ora gratuito) -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/SplitText.min.js"></script>
 
 <style>
 :root {
@@ -1602,7 +1600,7 @@ document.getElementById('chiudi-overlay').addEventListener('click', () => {
 <style>
 .typing-effect {
     font-size: 1.4rem;
-    color: #c0a0ff;   gold;
+    color: gold;
     font-family: 'Poppins', sans-serif;
     white-space: nowrap;
     overflow: hidden;
@@ -2064,7 +2062,7 @@ const particleCount = window.innerWidth < 768 ? 20 : 50;
         <!-- Le citazioni verranno aggiunte dinamicamente via JavaScript -->
     </div>
 <!--  INIZIO NUOVA ANIMAZIONE TITOLO-->
-<!-- SEZIONE BENVENUTO -->
+  <!-- SEZIONE BENVENUTO -->
 <section class="welcome-section">
   <div class="welcome-content">
     <h1 class="welcome-title">
@@ -2073,67 +2071,23 @@ const particleCount = window.innerWidth < 768 ? 20 : 50;
     <p class="welcome-subtitle">Un viaggio tra stelle e pensiero</p>
 
     <!-- Testo con animazione esplosiva -->
-    <div class="shine-text">
-      🤔 Pensare, dunque è ancora possibile 💭 
+    <div class="exploding-text">
+      Φ Pensare, dunque è ancora possibile Φ
     </div>
   </div>
 </section>
 
-<script>
-  window.addEventListener("load", () => {
-    const subtitle = document.querySelector(".shine-text");
-    if (!subtitle) return;
+ 
+    
+    <div class="welcome-quote">
+      <p class="quote-text"></p>
+      <span class="quote-author"></span>
+    </div>
+  </div>
+</section>
 
-    const split = new SplitText(subtitle, { type: "chars" });
 
-    gsap.set(split.chars, {
-      opacity: 0,
-      y: 40,
-      scale: 3,
-      rotation: 360
-    });
 
-    gsap.to(split.chars, {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      rotation: 0,
-      duration: 1.2,
-      ease: "back.out(1.7)",
-      stagger: 0.05
-    });
-  });
-</script>
-<style>
-.exploding-text {
-  font-size: 2.8rem;
-  font-weight: bold;
-  color: #d4af37;
-  text-align: center;
-  margin-top: 20px;
-  line-height: 1.5;
-  letter-spacing: 1px;
-  display: inline-block;
-}
- .exploding-text {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #d4af37;
-  text-align: center;
-  margin-top: 20px;
-  line-height: 1.5;
-  letter-spacing: 1px;
-  display: inline-block;
-  text-shadow: 0 0 5px #d4af37, 0 0 10px #d4af37, 0 0 15px #fff;
-}
-.shine-text {
-  font-size: 1.4rem;           /* aumenta la dimensione */
-  color: #d4af37;            /* colore oro, puoi cambiarlo con es. 'white', '#00ffcc', ecc. */
-  font-weight: bold;         /* facoltativo: per rendere il testo più marcato */
-  letter-spacing: 1px;       /* spaziatura tra lettere */
-}
-
-</style>
 <style>
 .subtitle {
   text-shadow: 0 0 10px transparent;
@@ -2163,7 +2117,7 @@ const particleCount = window.innerWidth < 768 ? 20 : 50;
 
 .welcome-subtitle {
   font-family: 'Cinzel', serif;
-  font-size: 1.6rem !important;
+  font-size: 1.2rem !important;
   font-weight: 300;
   color: #dddddd;
   margin-top: -1rem;
@@ -2249,11 +2203,9 @@ const particleCount = window.innerWidth < 768 ? 20 : 50;
   });
 
 </script>
-<!-- GSAP core -->
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 
-<!-- SplitText per esplosione lettere -->
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/SplitText.min.js"></script>
+
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
@@ -3258,7 +3210,33 @@ const particleCount = window.innerWidth < 768 ? 20 : 50;
    
 </footer>
 
+<script>
+    gsap.registerPlugin(TextPlugin);
 
+    window.addEventListener("load", () => {
+      const tl = gsap.timeline();
+
+      tl.to(".welcome-subtitle", {
+        duration: 4,
+       
+        ease: "none",
+      }, 0)
+
+      .to(".welcome-subtitle", {
+        duration: 4,
+        color: "#ffd700",
+        ease: "none",
+      }, 0);
+
+      gsap.to(".welcome-title", {
+        x: 20,
+        duration: 2,
+        ease: "power1.inOut",
+        repeat: -1,
+        yoyo: true,
+      });
+    });
+  </script>
 
   <!-- Tutto il contenuto già presente nel tuo <body> -->
 
@@ -3334,6 +3312,179 @@ const particleCount = window.innerWidth < 768 ? 20 : 50;
 }
 
 </style>
+<!- inizio aggiunta animazione welcome e sottotitolo-->
+
+<script>
+  // Animazione GSAP per titolo e sottotitolo
+  window.addEventListener('DOMContentLoaded', () => {
+    // Titolo principale
+    gsap.from(".welcome-title", {
+      y: 80,
+      opacity: 0,
+      scale: 0.9,
+      duration: 1.4,
+      ease: "power3.out"
+    });
+
+    // Sottotitolo con fade-in e delay
+    gsap.from(".welcome-subtitle", {
+      opacity: 0,
+      y: 20,
+      duration: 1.2,
+      delay: 1.3,
+      ease: "power2.out"
+    });
+
+
+// Animazione loopata sul titolo dopo l'ingresso
+gsap.to(".welcome-title", {
+  scale: 1.05,
+  duration: 3,
+  repeat: -1,
+  yoyo: true,
+  ease: "power1.inOut",
+  delay: 2
+});
+
+// Sottotitolo: entra dopo con fade + leggera salita
+gsap.fromTo(".welcome-subtitle",
+  { opacity: 0, y: 20 },
+  { opacity: 1, y: 0, duration: 1.5, delay: 1.8, ease: "power2.out" }
+);
+// Titolo con entrata fade + salita
+gsap.fromTo(".welcome-title", 
+  { opacity: 0, y: 30 },
+  { opacity: 1, y: 0, duration: 2, ease: "power2.out" }
+);
+
+// Animazione loopata sul titolo dopo l'ingresso
+gsap.to(".welcome-title", {
+  scale: 1.05,
+  duration: 3,
+  repeat: -1,
+  yoyo: true,
+  ease: "power1.inOut",
+  delay: 2
+});
+
+// Sottotitolo: entra dopo con fade + leggera salita
+gsap.fromTo(".welcome-subtitle",
+  { opacity: 0, y: 20 },
+  { opacity: 1, y: 0, duration: 1.5, delay: 1.8, ease: "power2.out" }
+);
+
+</script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+      gsap.to('.welcome-title', {
+        duration: 1.8,
+        opacity: 1,
+        y: 0,
+        ease: 'power3.out',
+      });
+      gsap.to('.welcome-subtitle', {
+        delay: 1,
+        duration: 1.8,
+        opacity: 1,
+        y: 0,
+        ease: 'power3.out',
+      });
+    });
+  </script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  gsap.to(".welcome-title", {
+    duration: 2,
+    opacity: 1,
+    y: 0,
+    ease: "power4.out"
+  });
+
+  gsap.to(".welcome-subtitle", {
+    duration: 2,
+    opacity: 1,
+    y: 0,
+    delay: 0.5,
+    ease: "power4.out"
+  });
+});
+</script>
+
+
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const tl = gsap.timeline({ defaults: { ease: "power3.out", duration: 1.5 } });
+
+    tl.from(".welcome-title", {
+      x: -100,
+      opacity: 0,
+    })
+    .from(".welcome-subtitle", {
+      x: 100,
+      opacity: 0,
+    }, "-=1"); // parte quasi insieme al titolo, ma dopo 0.5s
+  });
+<!-              -->
+gsap.to(".shine-text", {
+  duration: 3,
+  repeat: -1,
+  repeatDelay: 0.5,
+  ease: "power2.inOut",
+  textShadow: "0px 0px 50px #ffd700, 0px 0px 30px #ffaa00",
+  yoyo: true,
+  scale: 1.05
+});
+
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const exploding = document.querySelector(".exploding-text");
+  
+  const split = new SplitText(exploding, { type: "chars" });
+  const chars = split.chars;
+
+  gsap.set(exploding, { opacity: 1 }); // mostra il contenitore
+
+  gsap.from(chars, {
+    duration: 1,
+    opacity: 0,
+    scale: 0,
+    y: 50,
+    rotation: 360,
+    ease: "back.out(2)",
+    stagger: {
+      amount: 1.5,
+      from: "center"
+    }
+  });
+});
+</script>
+<!-- Assicurati che GSAP e SplitText siano già caricati PRIMA di questo script -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const exploding = document.querySelector(".exploding-text");
+
+    if (exploding && typeof SplitText !== "undefined") {
+      const split = new SplitText(exploding, { type: "chars" });
+      const chars = split.chars;
+
+      gsap.set(exploding, { opacity: 1 });
+
+      gsap.from(chars, {
+        duration: 1,
+        opacity: 0,
+        scale: 0,
+        y: 50,
+        rotation: 360,
+        ease: "back.out(2)",
+        stagger: {
+          amount: 1.5,
+          from: "center"
+        }
+      });
+    }
+  });
+</script>
 
        </body>
 </html>
