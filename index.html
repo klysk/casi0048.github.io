@@ -8,12 +8,9 @@
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon_io/favicon-32x32.png">
   
-
   <!-- Preconnessioni per caricamento font più rapido -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<script src="https://assets.codepen.io/16327/SplitText3.min.js"></script>
-<!-- oppure il tuo file se lo hai scaricato -->
 
   <!-- Font eleganti e filosofici -->
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
@@ -29,8 +26,229 @@
 
   <!-- Librerie GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <!-- Plugin SplitText (ora gratuito) -->
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/SplitText.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/SplitText.min.js"></script>
+
+<!--     -------------------                  -->
+<!-- Aggiungi questo script dopo il caricamento di GSAP -->
+<script>
+  // CONFIGURAZIONE PARTICELLE
+  const symbols = [
+    '∞', 'Φ', 'Ψ', 'Λ', 'Δ', 'Ω', 'π', '∑', '∏', '√',
+    '≡', '≈', '∴', '∀', '∃', '∈', '∧', '∨', '⊕', '⊗',
+    '⊖', '⊙', '⊘', '⊚', '⊛', '⊜', '⊝', '⊞', '⊟', '⊠',
+    '⊡', '⊢', '⊣', '⊤', '⊥', '⊧', '⊨', '⊩', '⊪', '⊫',
+    'Σ', 'Δ', 'Θ', 'Ξ', 'ℵ', '∂', '∇', '∫', '∬', '∭',
+    'Sapienza', 'Verità', 'Logos', 'Eros', 'Mito', 'Essere',
+    'Divenire', 'Idee', 'Armonia', 'Principio', 'Destino',
+    'Libertà', 'Giustizia', 'Virtù', 'Pensiero', 'Domanda',
+    'Risposta', 'Silenzio', 'Dialogo', 'Socratico', 'Platone',
+    'Aristotele', 'Epicuro', 'Stoà', 'Atomos', 'Nous',
+    'Anima', 'Cosmo', 'Apeiron', 'Arché', 'Physis', 'Ethos',
+    'Stoicismo', 'Epicureismo', 'Platonismo', 'Aristotelismo',
+    'Dialettica', 'Ontologia', 'Metafisica', 'Etica', 'Estetica', 'Logica'
+  ];
+
+  const config = {
+    particleCount: 50,
+    minSize: 0.6,
+    maxSize: 2,
+    repulsionRadius: 100,
+    maxRepulsionForce: 30,
+    floatSpeed: 0.5,
+    floatDistance: 40,
+    colors: ['#FFD700', '#FFAA00', '#FFEE88', '#FFFFFF']
+  };
+
+  // INIZIALIZZAZIONE PARTICELLE
+  document.addEventListener("DOMContentLoaded", () => {
+    const container = document.getElementById('philoParticles');
+    const particles = [];
+    const mouse = { x: window.innerWidth/2, y: window.innerHeight/2 };
+    
+    // CREA PARTICELLE
+    for (let i = 0; i < config.particleCount; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      
+      const size = config.minSize + Math.random() * (config.maxSize - config.minSize);
+      const symbol = symbols[Math.floor(Math.random() * symbols.length)];
+      const color = config.colors[Math.floor(Math.random() * config.colors.length)];
+      
+      particle.textContent = symbol;
+      particle.style.fontSize = `${size}rem`;
+      particle.style.color = color;
+      particle.style.opacity = 0.7 + Math.random() * 0.3;
+      
+      container.appendChild(particle);
+      
+      particles.push({
+        element: particle,
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        size: size,
+        baseX: 0,
+        baseY: 0,
+        speed: 0.01 + Math.random() * 0.02,
+        angle: Math.random() * Math.PI * 2,
+        floatRadius: 10 + Math.random() * config.floatDistance,
+        color: color
+      });
+    }
+
+    // TRACCIA MOUSE
+    document.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+
+    // ANIMAZIONE PARTICELLE
+    function animateParticles() {
+      particles.forEach(p => {
+        // Fluttuazione naturale
+        p.angle += p.speed;
+        p.baseX = p.x + Math.cos(p.angle) * p.floatRadius;
+        p.baseY = p.y + Math.sin(p.angle * 0.7) * p.floatRadius;
+        
+        // Calcola repulsione
+        const dx = mouse.x - p.baseX;
+        const dy = mouse.y - p.baseY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        let targetX = p.baseX;
+        let targetY = p.baseY;
+        let scale = 1;
+        
+        if (distance < config.repulsionRadius) {
+          const force = (config.repulsionRadius - distance) / config.repulsionRadius;
+          const angle = Math.atan2(dy, dx);
+          const repulsionForce = force * config.maxRepulsionForce * (1/p.size);
+          
+          targetX = p.baseX - Math.cos(angle) * repulsionForce;
+          targetY = p.baseY - Math.sin(angle) * repulsionForce;
+          scale = 1 + force * 0.5;
+          
+          // Effetto glow
+          p.element.style.textShadow = `0 0 ${5 + force * 15}px ${p.color}`;
+        } else {
+          p.element.style.textShadow = `0 0 10px ${p.color}`;
+        }
+        
+        // Applica trasformazione
+        p.element.style.transform = `translate(${targetX}px, ${targetY}px) scale(${scale})`;
+      });
+      
+      requestAnimationFrame(animateParticles);
+    }
+
+    animateParticles();
+
+    // CAROSELLO CITAZIONI
+    const quotes = [
+      {
+        text: "Conosci te stesso e conoscerai l'universo e gli dei.",
+        author: "Socrate"
+      },
+      {
+        text: "Il sapere è l'unico bene che aumenta condividendolo.",
+        author: "Pitagora"
+      },
+      {
+        text: "La meraviglia è il principio di ogni conoscenza.",
+        author: "Aristotele"
+      },
+      {
+        text: "Non è forte colui che non cade mai, ma colui che cadendo si rialza.",
+        author: "Confucio"
+      },
+      {
+        text: "Penso, dunque sono.",
+        author: "Cartesio"
+      },
+      {
+        text: "L'uomo è condannato ad essere libero.",
+        author: "Jean-Paul Sartre"
+      }
+    ];
+
+    function initQuotesCarousel() {
+      const carousel = document.getElementById('quotesCarousel');
+      let currentQuote = 0;
+
+      function showQuote() {
+        const quote = quotes[currentQuote];
+        carousel.innerHTML = `
+          <div class="quote-slide active">
+            <div class="quote-text">${quote.text}</div>
+            <div class="quote-author">— ${quote.author}</div>
+          </div>
+        `;
+        
+        currentQuote = (currentQuote + 1) % quotes.length;
+      }
+
+      // Mostra la prima citazione immediatamente
+      showQuote();
+      
+      // Cambia citazione ogni 5 secondi
+      setInterval(showQuote, 5000);
+    }
+
+    initQuotesCarousel();
+  });
+</script>
+
+<!-- Aggiungi questo stile per il carosello citazioni -->
+<style>
+  .quotes-carousel {
+    position: fixed;
+    top: 160px;
+    left: 0;
+    width: 100%;
+    background: rgba(10, 10, 30, 0.3);
+    backdrop-filter: blur(10px);
+    padding: 15px 0;
+    color: #ffffffcc;
+    text-align: center;
+    z-index: 900;
+    transition: all 0.5s ease;
+  }
+
+  .quote-slide {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.8s ease;
+  }
+
+  .quote-slide.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .quote-text {
+    font-family: 'EB Garamond', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 1.3rem;
+    color: #00FF00;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+  }
+
+  .quote-author {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 1rem;
+    color: #00BFFF;
+    letter-spacing: 0.5px;
+  }
+</style>
+
+<!--       --------------          -->
+
+
 
 <style>
 :root {
@@ -45,11 +263,24 @@
     --cta-red: #C41E3A;
     --deep-green: #1F6F5B;
 }
+body, html {
+  margin: 0;
+  padding: 0;
+  min-height: 650vh;
+}
+
+.welcome-content {
+  margin-top: 100px;
+  text-align: ;
+}
 
 body {
     background: var(--bg-dark);
     color: white;
 }
+
+
+
 
 h1, h2 {
     color: var(--text-gold);
@@ -821,10 +1052,6 @@ header {
   font-family: 'Georgia', serif; /* Cambia con il font che vuoi */
   font-size: 1rem;
   letter-spacing: 0.5px;
-}
-
-
-
 .mega-menu a::after {
   content: "→";
   margin-left: 8px;
@@ -934,6 +1161,8 @@ header {
     .quote-author {
         font-size: 0.9rem;
     }
+
+
 
     .footer-columns {
         grid-template-columns: 1fr;
@@ -1045,6 +1274,7 @@ header {
 
   <!--       fff modifica-->
 .welcome-content {
+
     position: relative;
     z-index: 2;
     text-align: center;
@@ -1065,7 +1295,9 @@ header {
   text-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
   margin-bottom: 2rem;
   letter-spacing: 2px;
-  line-height: 1.3;
+  line-height: 1.3
+
+
   animation: gradientShift 4s infinite ease-in-out, titlePulse 4s infinite ease-in-out;
 }
 
@@ -1190,8 +1422,28 @@ header {
     text-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
   }
 }
-
 </style>
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    min-height: 150vh; /* aumenta la pagina */
+  }
+
+  .welcome-content {
+    margin-top: 120px; /* abbassa il titolo */
+    text-align: center;
+  }
+
+  footer {
+    margin-top: 250px; /* spinge il footer in basso */
+    background: #000;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+  }
+</style>
+
   </head>
 
 <body>
@@ -1484,12 +1736,7 @@ header {
   <div class="top-bar">
 
 <a class="logo" href="https://casi0048.github.io/pagine/benvenuti.html">Φ ECHI DI SOFIA</a>
-
-
-
-
-<!--  inizio 4 filosofi --
-<!-- inizio 4 filosofi -->
+<!--  inizio 4 filosofi -->
 <div style="position: relative; display: inline-block;" id="paradigma-container">
 
   <button id="paradigma-btn" style="
@@ -1667,7 +1914,6 @@ document.addEventListener("DOMContentLoaded", function() {
     "L’inquietudine è il motore della ricerca."
 ];
 
-
     
     let textIndex = 0;
     let index = 0;
@@ -1727,12 +1973,7 @@ document.addEventListener("DOMContentLoaded", function() {
         <div class="translate-container" id="google_translate_element"></div>
     </div>
 </div>
-
-
-
-   
-    
-   <header>
+<header>
   <nav class="menu-desktop">
     <ul role="menu">
       <li class="dropdown">
@@ -1787,7 +2028,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <a href="https://www.worldhistory.org/trans/it/1-11373/magna-grecia/" role="menuitem">Magna Grecia</a>
             <a href="https://www.worldhistory.org/trans/it/1-14956/il-teatro-dellantica-grecia/" role="menuitem">Il teatro dell'antica Grecia</a>
              <a href="https://www.worldhistory.org/trans/it/1-10553/la-religione-nellantica-grecia/" role="menuitem">La religione nell'antica Grecia</a>
-            <a href="https://www.worldhistory.org/trans/it/1-19269/la-danza-nellantica-grecia/" role="menuitem">La danza nell’Antica Grecia</a> 
+            <a href="https://www.worldhistory.org/trans/it/1-19269/la-danza-nellantica-grecia/" role="menuitem">La danza nell'Antica Grecia</a> 
          </div>
         </div>
       </li>
@@ -2085,9 +2326,6 @@ const particleCount = window.innerWidth < 768 ? 20 : 50;
     </div>
   </div>
 </section>
-
-
-
 <style>
 .subtitle {
   text-shadow: 0 0 10px transparent;
@@ -2110,6 +2348,7 @@ const particleCount = window.innerWidth < 768 ? 20 : 50;
   -webkit-background-clip: text;
   text-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
   margin-bottom: 1.5rem;
+
   letter-spacing: 2px;
   line-height: 1.3;
   animation: gradientShift 4s infinite ease-in-out, titlePulse 4s infinite ease-in-out;
@@ -2124,8 +2363,11 @@ const particleCount = window.innerWidth < 768 ? 20 : 50;
   letter-spacing: 1px;
   text-align: center;
 }
-
-
+.welcome-subtitle {
+  color: #00bfff; /* azzurro */
+  font-size: 1.2rem; /* aumentato da 1.5rem */
+  margin-top: 0.5rem;
+}
 
 @keyframes gradientShift {
   0% { background-position: 0% 50%; }
@@ -2147,7 +2389,6 @@ const particleCount = window.innerWidth < 768 ? 20 : 50;
     text-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
   }
 }
-
 
 .logo-container {
   flex: 1;
@@ -2175,8 +2416,13 @@ const particleCount = window.innerWidth < 768 ? 20 : 50;
   border-radius: 5px;
 }
 
-.
-
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 90px;
+    z-index: 1000;
+}
 </style>
 
 <script>
@@ -2201,41 +2447,260 @@ const particleCount = window.innerWidth < 768 ? 20 : 50;
       ease: "sine.inOut"
     });
   });
-
 </script>
 
+<!-- Tutto il contenuto già presente nel tuo <body> -->
 
+<!-- inizio Box Ultimi Articoli -->
+<div class="ultimi-articoli">
+  <h3>Ultimi Articoli</h3>
+  <ul>
+     <li><a href="articoli/ipazia.html">Ipazia di Alessandria</a></li>
+     <li><a href="articoli/2nietzsche.html">Nietzsche filosofo folgorante</a></li>
+    <li><a href="articoli/hegel.html">Hegel</a></li>
+    <li><a href="articoli/heidegger.html">Martin Heidegger</a></li>
+    <li><a href="articoli/schelling.html">Friedrich Schelling:</a></li>
+  </ul>
+</div>
+<style>
+.ultimi-articoli {
+  position: fixed;
+  top: 400px; /* distanza verticale dalla barra del menu */
+  right: 40px; /* distacco dal lato destro */
+  width: 300px;
+  background: rgba(20, 20, 30, 0.95); /* sfondo semi-trasparente coerente col sito */
+  color: #f0f0f0;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  font-family: 'Georgia', serif;
+  z-index: 10; /* più basso del menu per non coprirlo */
+  transform: translateX(120%);
+  opacity: 0;
+  animation: slideInFromRight 1s ease-out forwards;
+}
 
+.ultimi-articoli h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: gold;
+  text-align: center;
+}
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+.ultimi-articoli ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ultimi-articoli li {
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 6px;
+}
+
+.ultimi-articoli li:last-child {
+  border-bottom: none;
+}
+
+.ultimi-articoli a {
+  text-decoration: none;
+  color: #ddd;
+  transition: color 0.3s;
+}
+
+.ultimi-articoli a:hover {
+  color: gold;
+}
+
+/* ANIMAZIONE DA DESTRA */
+@keyframes slideInFromRight {
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+</style>
+
 <script>
-    gsap.registerPlugin(TextPlugin);
-
-    gsap.to(".welcome-subtitle", {
-        duration: 3,
-
-        ease: "none",
+  // Animazione GSAP per titolo e sottotitolo
+  window.addEventListener('DOMContentLoaded', () => {
+    // Titolo principale
+    gsap.from(".welcome-title", {
+      y: 80,
+      opacity: 0,
+      scale: 0.9,
+      duration: 1.4,
+      ease: "power3.out"
     });
 
+    // Sottotitolo con fade-in e delay
+    gsap.from(".welcome-subtitle", {
+      opacity: 0,
+      y: 20,
+      duration: 1.2,
+      delay: 1.3,
+      ease: "power2.out"
+    });
+
+    // Animazione loopata sul titolo dopo l'ingresso
     gsap.to(".welcome-title", {
-        x: 20,
-        duration: 2,
-        ease: "power1.inOut",
-        repeat: -1,
-        yoyo: true,
+      scale: 1.05,
+      duration: 3,
+      repeat: -1,
+      yoyo: true,
+      ease: "power1.inOut",
+      delay: 2
     });
+
+    // Sottotitolo: entra dopo con fade + leggera salita
+    gsap.fromTo(".welcome-subtitle",
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 1.5, delay: 1.8, ease: "power2.out" }
+    );
+    
+    // Titolo con entrata fade + salita
+    gsap.fromTo(".welcome-title", 
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 2, ease: "power2.out" }
+    );
+
+    // Animazione loopata sul titolo dopo l'ingresso
+    gsap.to(".welcome-title", {
+      scale: 1.05,
+      duration: 3,
+      repeat: -1,
+      yoyo: true,
+      ease: "power1.inOut",
+      delay: 2
+    });
+
+    // Sottotitolo: entra dopo con fade + leggera salita
+    gsap.fromTo(".welcome-subtitle",
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 1.5, delay: 1.8, ease: "power2.out" }
+    );
+  });
 </script>
 
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const tl = gsap.timeline({ defaults: { ease: "power3.out", duration: 1.5 } });
 
-    <main>
-      <h2 class="typing-effect"></h2>  <!-- Il tuo contenuto qui -->
-    </main>
+    tl.from(".welcome-title", {
+      x: -100,
+      opacity: 0,
+    })
+    .from(".welcome-subtitle", {
+      x: 100,
+      opacity: 0,
+    }, "-=1"); // parte quasi insieme al titolo, ma dopo 0.5s
+  });
+</script>
 
-    <footer>
-        
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const exploding = document.querySelector(".exploding-text");
+  
+  if (exploding && typeof SplitText !== "undefined") {
+    const split = new SplitText(exploding, { type: "chars" });
+    const chars = split.chars;
 
-    <script>
+    gsap.set(exploding, { opacity: 1 });
+
+    gsap.from(chars, {
+      duration: 1,
+      opacity: 0,
+      scale: 0,
+      y: 50,
+      rotation: 360,
+      ease: "back.out(2)",
+      stagger: {
+        amount: 1.5,
+        from: "center"
+      }
+    });
+  }
+});
+</script>
+
+<!-- Footer -->
+<footer style="
+  background-color: #0a0a0a; /* Nero brillante */
+  color: #d4af37; /* Oro classico */
+  padding: 3rem 2rem;
+  text-align: center;
+  font-family: 'Cormorant Garamond', 'Georgia', serif;
+  border-top: 1px solid #3d3d3d; /* Linea divisoria sottile */
+">
+  <div style="max-width: 800px; margin: 0 auto;">
+    <div style="
+      display: inline-block;
+      padding: 0.5rem 1.5rem;
+      border: 1px solid #d4af37; /* Bordo oro */
+      color: #d4af37;
+      margin-bottom: 1.8rem;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 300;
+    ">
+      echi di Sofia
+    </div>
+    
+    <p style="
+      font-size: 1.2rem;
+      line-height: 1.7;
+      margin-bottom: 1.8rem;
+      font-weight: 300;
+      color: #e6e6e6; /* Testo leggermente più chiaro per la citazione */
+    ">
+      "Nella semplicità troviamo l'essenza della vera autosufficienza"
+    </p>
+    
+    <div style="
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    margin-bottom: 2rem;
+">
+  <a href="https://casi0048.github.io/pagine/pagina-contatti.html"
+   style="color: #d4af37; text-decoration: none; transition: all 0.3s ease; font-size: 0.9rem; letter-spacing: 1px;"
+   onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Contatti</a>
+
+    <a href="https://casi0048.github.io/pagine/privacy-policy.html"
+       style="color: #d4af37; text-decoration: none; transition: all 0.3s ease; font-size: 0.9rem; letter-spacing: 1px;"
+       onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Privacy</a>
+
+    <a href="https://casi0048.github.io/pagine/blog.html"
+       style="color: #d4af37; text-decoration: none; transition: all 0.3s ease; font-size: 0.9rem; letter-spacing: 1px;"
+       onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Blog</a>
+
+    <a href="https://casi0048.github.io/pagine/progetti.html"
+       style="color: #d4af37; text-decoration: none; transition: all 0.3s ease; font-size: 0.9rem; letter-spacing: 1px;"
+       onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Progetti</a>
+</div>
+    
+    <div style="margin: 1.5rem 0;">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity: 0.7;">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="#d4af37"/>
+        <path d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" fill="#d4af37"/>
+      </svg>
+    </div>
+    
+    <p style="
+    font-size: 0.75rem;
+    color: #8a8a8a;
+    letter-spacing: 0.5px;
+    margin-top: 1rem;
+">
+    © 2024 Echi di Sofia | Tutti i diritti riservati
+</p>
+  </div>
+</footer>
+<script>
+<script>
         // Registra il plugin TextPlugin
         gsap.registerPlugin(TextPlugin);
 
@@ -2778,713 +3243,29 @@ const particleCount = window.innerWidth < 768 ? 20 : 50;
                     }
                 });
             }
-        }
+        }tit
 
-        // INIZIALIZZA TRADUTTORE GOOGLE
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'it',
-                includedLanguages: 'it,en,es,fr,de,pt,ru,zh-CN,ja,ar,hi,bn,ko,vi,th,pl,tr,nl,sv,fi,he',
-                layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
-                autoDisplay: false,
-                multilanguagePage: true
-            }, 'google_translate_element');
-            
-            // Mostra solo il menu a tendina e nascondi il resto
-            const googleTranslateElement = document.querySelector('.goog-te-gadget');
-            if (googleTranslateElement) {
-                googleTranslateElement.style.fontSize = '0';
-            }
-            
-            // Stili aggiuntivi per il menu a tendina
-            const combo = document.querySelector('.goog-te-combo');
-            if (combo) {
-                combo.style.fontFamily = "'Montserrat', sans-serif";
-                combo.style.background = "rgba(20, 20, 40, 0.7)";
-                combo.style.color = "#e0e0e0";
-                combo.style.border = "1px solid rgba(255, 215, 0, 0.2)";
-                combo.style.borderRadius = "4px";
-                combo.style.padding = "8px 15px";
-                combo.style.cursor = "pointer";
-            }
-        }
-
-        // CARICA GOOGLE TRANSLATE
-        function loadGoogleTranslate() {
-            const script = document.createElement('script');
-            script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-            script.async = true;
-            document.body.appendChild(script);
-        }
-
-        // GESTIONE NEWSLETTER
-        document.querySelector('.newsletter-form')?.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const emailInput = this.querySelector('input');
-            const email = emailInput.value.trim();
-            
-            if (email) {
-                // Simulazione invio
-                this.style.opacity = '0.7';
-                this.querySelector('button').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Invio...';
-                
-                setTimeout(() => {
-                    this.reset();
-                    this.style.opacity = '1';
-                    this.querySelector('button').innerHTML = 'Iscriviti <i class="fas fa-paper-plane"></i>';
-                    
-                    // Notifica temporanea
-                    const notification = document.createElement('div');
-                    notification.textContent = 'Grazie per esserti iscritto!';
-                    notification.style.position = 'fixed';
-                    notification.style.bottom = '20px';
-                    notification.style.left = '50%';
-                    notification.style.transform = 'translateX(-50%)';
-                    notification.style.backgroundColor = '#c9ada7';
-                    notification.style.color = '#22223b';
-                    notification.style.padding = '10px 20px';
-                    notification.style.borderRadius = '4px';
-                    notification.style.zIndex = '1000';
-                    notification.style.boxShadow = '0 3px 10px rgba(0,0,0,0.2)';
-                    document.body.appendChild(notification);
-                    
-                    setTimeout(() => {
-                        notification.style.transition = 'opacity 0.5s';
-                        notification.style.opacity = '0';
-                        setTimeout(() => notification.remove(), 500);
-                    }, 3000);
-                }, 1500);
-            }
-        });
-
-        // AVVIA TUTTO AL CARICAMENTO DELLA PAGINA
-        window.addEventListener('load', () => {
-            playWelcomeAnimation();
-            loadGoogleTranslate();
-            initQuotesCarousel();
-        });
-    </script>
-<!DOCTYPE html>
-<html lang="it">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Echi di Sofia - Banner Cookie Raffinato</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0; padding: 0;
-      background: #0b0c10;
-      color: #f8f4e9;
-    }
-    /* Banner cookie */
-    #cookie-banner {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      right: 20px;
-      max-width: 480px;
-      background: rgba(42, 75, 58, 0.95);
-      color: #f8f4e9;
-      border-radius: 12px;
-      padding: 20px 25px;
-      box-shadow: 0 8px 24px rgba(42, 75, 58, 0.6);
-      font-size: 14px;
-      line-height: 1.4;
-      z-index: 10000;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      animation: fadeInUp 0.6s ease forwards;
-    }
-    #cookie-banner p {
-      margin: 0;
-    }
-    #cookie-banner a {
-      color: #aad8a0;
-      text-decoration: underline;
-      cursor: pointer;
-    }
-    #cookie-banner a:hover {
-      color: #d4f1c5;
-    }
-    #cookie-banner .btns {
-      display: flex;
-      justify-content: flex-end;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    #cookie-banner button {
-      background: #2a4b3a;
-      border: none;
-      color: #f8f4e9;
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    #cookie-banner button:hover {
-      background: #3b6c53;
-    }
-    #cookie-banner button.reject {
-      background: #6a3a3a;
-    }
-    #cookie-banner button.reject:hover {
-      background: #8a5151;
-    }
-    /* Modal Personalizza */
-    #cookie-modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.65);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 11000;
-    }
-    #cookie-modal {
-      background: #1a1c22;
-      color: #f8f4e9;
-      padding: 25px 30px;
-      max-width: 400px;
-      border-radius: 14px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.7);
-      font-size: 15px;
-    }
-    #cookie-modal h2 {
-      margin-top: 0;
-      margin-bottom: 16px;
-      font-weight: 700;
-      font-size: 1.3em;
-      text-align: center;
-    }
-    #cookie-modal label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 12px;
-      cursor: pointer;
-    }
-    #cookie-modal input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      cursor: pointer;
-    }
-    #cookie-modal .modal-btns {
-      display: flex;
-      justify-content: flex-end;
-      gap: 12px;
-      margin-top: 20px;
-    }
-    #cookie-modal button {
-      padding: 8px 16px;
-      border-radius: 8px;
-      border: none;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    #cookie-modal button.save {
-      background: #2a4b3a;
-      color: #f8f4e9;
-    }
-    #cookie-modal button.save:hover {
-      background: #3b6c53;
-    }
-    #cookie-modal button.cancel {
-      background: #555a5e;
-      color: #eee;
-    }
-    #cookie-modal button.cancel:hover {
-      background: #777c80;
-    }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px);}
-      to { opacity: 1; transform: translateY(0);}
-@keyframes fadeInSlideUp {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.element {
-  animation: fadeInSlideUp 0.6s ease-in-out forwards;
-}
-.element {
-  will-change: transform, opacity;
-}
-
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Banner cookie -->
-  <div id="cookie-banner" role="dialog" aria-live="polite" aria-label="Informativa cookie">
-    <p>
-      Questo sito utilizza cookie per migliorare l’esperienza utente e per analisi anonime. 
-      <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.
-    </p>
-    <div class="btns">
-      <button class="reject" id="btn-reject">Rifiuta</button>
-      <button id="btn-personalize">Personalizza</button>
-      <button id="btn-accept">Accetta</button>
-    </div>
-  </div>
-
-  <!-- Modal Personalizza -->
-  <div id="cookie-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <div id="cookie-modal">
-      <h2 id="modal-title">Impostazioni cookie</h2>
-      <form id="cookie-form">
-        <label>
-          <input type="checkbox" name="analytics" checked />
-          Consenti cookie analitici
-        </label>
-        <label>
-          <input type="checkbox" name="marketing" />
-          Consenti cookie marketing
-        </label>
-        <div class="modal-btns">
-          <button type="button" class="cancel" id="modal-cancel">Annulla</button>
-          <button type="submit" class="save">Salva preferenze</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <script>
-    const banner = document.getElementById('cookie-banner');
-    const modalOverlay = document.getElementById('cookie-modal-overlay');
-    const btnAccept = document.getElementById('btn-accept');
-    const btnReject = document.getElementById('btn-reject');
-    const btnPersonalize = document.getElementById('btn-personalize');
-    const modalCancel = document.getElementById('modal-cancel');
-    const cookieForm = document.getElementById('cookie-form');
-
-    // Controlla se preferenze salvate
-    function getCookiePrefs() {
-      try {
-        return JSON.parse(localStorage.getItem('cookiePrefs'));
-      } catch {
-        return null;
-      }
-    }
-
-    function saveCookiePrefs(prefs) {
-      localStorage.setItem('cookiePrefs', JSON.stringify(prefs));
-    }
-
-    function hideBanner() {
-      banner.style.display = 'none';
-    }
-
-    function showBanner() {
-      banner.style.display = 'flex';
-    }
-
-    // Accetta tutti i cookie
-    btnAccept.addEventListener('click', () => {
-      saveCookiePrefs({ analytics: true, marketing: true, accepted: true });
-      hideBanner();
-    });
-
-    // Rifiuta tutti i cookie tranne necessari (implicitamente)
-    btnReject.addEventListener('click', () => {
-      saveCookiePrefs({ analytics: false, marketing: false, accepted: false });
-      hideBanner();
-    });
-
-    // Mostra modale Personalizza
-    btnPersonalize.addEventListener('click', () => {
-      // Sincronizza checkbox con preferenze salvate
-      const prefs = getCookiePrefs() || { analytics: false, marketing: false };
-      cookieForm.analytics.checked = prefs.analytics === true;
-      cookieForm.marketing.checked = prefs.marketing === true;
-      modalOverlay.style.display = 'flex';
-    });
-
-    // Chiudi modale
-    modalCancel.addEventListener('click', () => {
-      modalOverlay.style.display = 'none';
-    });
-
-    // Salva preferenze da modale
-    cookieForm.addEventListener('submit', e => {
-      e.preventDefault();
-      const analytics = cookieForm.analytics.checked;
-      const marketing = cookieForm.marketing.checked;
-      saveCookiePrefs({ analytics, marketing, accepted: true });
-      modalOverlay.style.display = 'none';
-      hideBanner();
-    });
-
-    // All'avvio mostra banner se non c'è consenso
-    window.addEventListener('load', () => {
-      const prefs = getCookiePrefs();
-      if (!prefs || prefs.accepted === undefined) {
-        showBanner();
-      }
-    });
-  </script>
-<footer style="
-  background-color: #0a0a0a; /* Nero brillante */
-  color: #d4af37; /* Oro classico */
-  padding: 3rem 2rem;
-  text-align: center;
-  font-family: 'Cormorant Garamond', 'Georgia', serif;
-  border-top: 1px solid #3d3d3d; /* Linea divisoria sottile */
-">
-  <div style="max-width: 800px; margin: 0 auto;">
-    <div style="
-      display: inline-block;
-      padding: 0.5rem 1.5rem;
-      border: 1px solid #d4af37; /* Bordo oro */
-      color: #d4af37;
-      margin-bottom: 1.8rem;
-      font-size: 0.9rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      font-weight: 300;
-    ">
-      echi di Sofia
-    </div>
-    
-    <p style="
-      font-size: 1.2rem;
-      line-height: 1.7;
-      margin-bottom: 1.8rem;
-      font-weight: 300;
-      color: #e6e6e6; /* Testo leggermente più chiaro per la citazione */
-    ">
-      "Nella semplicità troviamo l'essenza della vera autosufficienza"
-    </p>
-    
-    <div style="
-    display: flex;
-    justify-content: center;
-    gap: 2.5rem;
-    margin-bottom: 2rem;
-">
-  <a href="https://casi0048.github.io/pagine/pagina-contatti.html"
-   style="color: #d4af37; text-decoration: none; transition: all 0.3s ease; font-size: 0.9rem; letter-spacing: 1px;"
-   onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Contatti</a>
-
-    <a href="https://casi0048.github.io/pagine/privacy-policy.html"
-       style="color: #d4af37; text-decoration: none; transition: all 0.3s ease; font-size: 0.9rem; letter-spacing: 1px;"
-       onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Privacy</a>
-
-    <a href="https://casi0048.github.io/pagine/blog.html"
-       style="color: #d4af37; text-decoration: none; transition: all 0.3s ease; font-size: 0.9rem; letter-spacing: 1px;"
-       onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Blog</a>
-
-    <a href="https://casi0048.github.io/pagine/progetti.html"
-       style="color: #d4af37; text-decoration: none; transition: all 0.3s ease; font-size: 0.9rem; letter-spacing: 1px;"
-       onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Progetti</a>
-</div>
-
-    
-    <div style="margin: 1.5rem 0;">
-      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity: 0.7;">
-        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="#d4af37"/>
-        <path d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" fill="#d4af37"/>
-      </svg>
-    </div>
-    
-    <p style="
-    font-size: 0.75rem;
-    color: #8a8a8a;
-    letter-spacing: 0.5px;
-    margin-top: 1rem;
-">
-    © 2024 Echi di Sofia | Tutti i diritti riservati
-</p>
-  </div>
-  
-   
-</footer>
-
-<script>
-    gsap.registerPlugin(TextPlugin);
-
-    window.addEventListener("load", () => {
-      const tl = gsap.timeline();
-
-      tl.to(".welcome-subtitle", {
-        duration: 4,
-       
-        ease: "none",
-      }, 0)
-
-      .to(".welcome-subtitle", {
-        duration: 4,
-        color: "#ffd700",
-        ease: "none",
-      }, 0);
-
-      gsap.to(".welcome-title", {
-        x: 20,
-        duration: 2,
-        ease: "power1.inOut",
-        repeat: -1,
-        yoyo: true,
-      });
-    });
-  </script>
-
-  <!-- Tutto il contenuto già presente nel tuo <body> -->
-
-  <!-- inizio Box Ultimi Articoli -->
-<div class="ultimi-articoli">
-  <h3>Ultimi Articoli</h3>
-  <ul>
-     <li><a href="articoli/ipazia.html">Ipazia di Alessandria</a></li>
-     <li><a href="articoli/2nietzsche.html">Nietzsche filosofo folgorante</a></li>
-    <li><a href="articoli/hegel.html">Hegel</a></li>
-    <li><a href="articoli/heidegger.html">Martin Heidegger</a></li>
-    <li><a href="articoli/schelling.html">Friedrich Schelling:</a></li>
-  </ul>
-</div>
-<style>
-.ultimi-articoli {
-  position: fixed;
-  top: 400px; /* distanza verticale dalla barra del menu */
-  right: 40px; /* distacco dal lato destro */
-  width: 300px;
-  background: rgba(20, 20, 30, 0.95); /* sfondo semi-trasparente coerente col sito */
-  color: #f0f0f0;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(8px);
-  font-family: 'Georgia', serif;
-  z-index: 10; /* più basso del menu per non coprirlo */
-  transform: translateX(120%);
-  opacity: 0;
-  animation: slideInFromRight 1s ease-out forwards;
-}
-
-.ultimi-articoli h3 {
-  font-size: 20px;
-  margin-bottom: 10px;
-  color: gold;
-  text-align: center;
-}
-
-.ultimi-articoli ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.ultimi-articoli li {
-  margin-bottom: 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding-bottom: 6px;
-}
-
-.ultimi-articoli li:last-child {
-  border-bottom: none;
-}
-
-.ultimi-articoli a {
-  text-decoration: none;
-  color: #ddd;
-  transition: color 0.3s;
-}
-
-.ultimi-articoli a:hover {
-  color: gold;
-}
-
-/* ANIMAZIONE DA DESTRA */
-@keyframes slideInFromRight {
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-</style>
-<!- inizio aggiunta animazione welcome e sottotitolo-->
-
-<script>
-  // Animazione GSAP per titolo e sottotitolo
-  window.addEventListener('DOMContentLoaded', () => {
-    // Titolo principale
-    gsap.from(".welcome-title", {
-      y: 80,
-      opacity: 0,
-      scale: 0.9,
-      duration: 1.4,
-      ease: "power3.out"
-    });
-
-    // Sottotitolo con fade-in e delay
-    gsap.from(".welcome-subtitle", {
-      opacity: 0,
-      y: 20,
-      duration: 1.2,
-      delay: 1.3,
-      ease: "power2.out"
-    });
-
-
-// Animazione loopata sul titolo dopo l'ingresso
-gsap.to(".welcome-title", {
-  scale: 1.05,
-  duration: 3,
-  repeat: -1,
-  yoyo: true,
-  ease: "power1.inOut",
-  delay: 2
-});
-
-// Sottotitolo: entra dopo con fade + leggera salita
-gsap.fromTo(".welcome-subtitle",
-  { opacity: 0, y: 20 },
-  { opacity: 1, y: 0, duration: 1.5, delay: 1.8, ease: "power2.out" }
-);
-// Titolo con entrata fade + salita
-gsap.fromTo(".welcome-title", 
-  { opacity: 0, y: 30 },
-  { opacity: 1, y: 0, duration: 2, ease: "power2.out" }
-);
-
-// Animazione loopata sul titolo dopo l'ingresso
-gsap.to(".welcome-title", {
-  scale: 1.05,
-  duration: 3,
-  repeat: -1,
-  yoyo: true,
-  ease: "power1.inOut",
-  delay: 2
-});
-
-// Sottotitolo: entra dopo con fade + leggera salita
-gsap.fromTo(".welcome-subtitle",
-  { opacity: 0, y: 20 },
-  { opacity: 1, y: 0, duration: 1.5, delay: 1.8, ease: "power2.out" }
-);
 
 </script>
-<script>
-    window.addEventListener('DOMContentLoaded', () => {
-      gsap.to('.welcome-title', {
-        duration: 1.8,
-        opacity: 1,
-        y: 0,
-        ease: 'power3.out',
-      });
-      gsap.to('.welcome-subtitle', {
-        delay: 1,
-        duration: 1.8,
-        opacity: 1,
-        y: 0,
-        ease: 'power3.out',
-      });
-    });
-  </script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  gsap.to(".welcome-title", {
-    duration: 2,
-    opacity: 1,
-    y: 0,
-    ease: "power4.out"
-  });
 
-  gsap.to(".welcome-subtitle", {
-    duration: 2,
-    opacity: 1,
-    y: 0,
-    delay: 0.5,
-    ease: "power4.out"
-  });
-});
-</script>
-
-
-<script>
-  window.addEventListener("DOMContentLoaded", () => {
-    const tl = gsap.timeline({ defaults: { ease: "power3.out", duration: 1.5 } });
-
-    tl.from(".welcome-title", {
-      x: -100,
-      opacity: 0,
-    })
-    .from(".welcome-subtitle", {
-      x: 100,
-      opacity: 0,
-    }, "-=1"); // parte quasi insieme al titolo, ma dopo 0.5s
-  });
-<!-              -->
-gsap.to(".shine-text", {
-  duration: 3,
-  repeat: -1,
-  repeatDelay: 0.5,
-  ease: "power2.inOut",
-  textShadow: "0px 0px 50px #ffd700, 0px 0px 30px #ffaa00",
-  yoyo: true,
-  scale: 1.05
-});
-
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const exploding = document.querySelector(".exploding-text");
-  
-  const split = new SplitText(exploding, { type: "chars" });
-  const chars = split.chars;
-
-  gsap.set(exploding, { opacity: 1 }); // mostra il contenitore
-
-  gsap.from(chars, {
-    duration: 1,
-    opacity: 0,
-    scale: 0,
-    y: 50,
-    rotation: 360,
-    ease: "back.out(2)",
-    stagger: {
-      amount: 1.5,
-      from: "center"
-    }
-  });
-});
-</script>
-<!-- Assicurati che GSAP e SplitText siano già caricati PRIMA di questo script -->
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const exploding = document.querySelector(".exploding-text");
-
-    if (exploding && typeof SplitText !== "undefined") {
-      const split = new SplitText(exploding, { type: "chars" });
-      const chars = split.chars;
-
-      gsap.set(exploding, { opacity: 1 });
-
-      gsap.from(chars, {
-        duration: 1,
-        opacity: 0,
-        scale: 0,
-        y: 50,
-        rotation: 360,
-        ease: "back.out(2)",
-        stagger: {
-          amount: 1.5,
-          from: "center"
-        }
-      });
-    }
-  });
-</script>
-
-       </body>
+</body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
