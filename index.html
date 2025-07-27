@@ -2313,6 +2313,10 @@ const particleCount = window.innerWidth < 768 ? 20 : 50;
     <p class="welcome-subtitle">Un viaggio tra stelle e pensiero</p>
   </div>
 
+  <div class="exploding-text">
+    <h1 id="title">Φ Pensare, dunque è ancora possibile Φ</h1>
+  </div>
+</section>
   <!-- GSAP locale -->
   <script src="gsap-public/umd/gsap.js"></script>
   <script src="gsap-public/umd/SplitText.min.js"></script>
@@ -2353,7 +2357,31 @@ const particleCount = window.innerWidth < 768 ? 20 : 50;
     </div>
 
 </section>
+<script>
+  window.addEventListener("load", () => {
+    // Animazione sottotitolo
+    const subtitle = document.querySelector(".welcome-subtitle");
+    const splitSubtitle = new SplitText(subtitle, { type: "chars" });
+    gsap.from(splitSubtitle.chars, {
+      opacity: 0,
+      y: 50,
+      stagger: 0.05,
+      duration: 0.8,
+      ease: "back.out"
+    });
 
+    // Animazione titolo esplosivo
+    const title = document.getElementById('title');
+    const splitTitle = new SplitText(title, { type: "chars" });
+    gsap.from(splitTitle.chars, {
+      duration: 1,
+      opacity: 0,
+      y: 50,
+      stagger: 0.05,
+      ease: "back.out(1.7)"
+    });
+  });
+</script>
  
     
     <div class="welcome-quote">
