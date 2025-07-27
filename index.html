@@ -2333,9 +2333,25 @@ const particleCount = window.innerWidth < 768 ? 20 : 50;
   </script>
     <!-- Testo con animazione esplosiva -->
     <div class="exploding-text">
-      Φ Pensare, dunque è ancora possibile Φ
+  <h1 id="title">Φ Pensare, dunque è ancora possibile Φ</h1>
+
+  <script>
+    // Inizializza SplitText sulla tua frase
+    const title = document.getElementById('title');
+    const split = new SplitText(title, { type: "chars" });
+    
+    // Anima ogni lettera
+    gsap.from(split.chars, {
+      duration: 1,
+      opacity: 0,
+      y: 50,
+      stagger: 0.05,
+      ease: "back.out(1.7)"
+    });
+  </script>
+</div>
     </div>
-  </div>
+
 </section>
 
  
