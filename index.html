@@ -1737,6 +1737,31 @@ canvas {
   filter: brightness(1.1) contrast(1.2);
   animation: nebulosa-fluttuante 60s ease-in-out infinite;
 }
+#nebulosa-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -10;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#nebulosa-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.3; /* Regola la visibilità */
+}
+
+#nebulosa-bg .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.9));
+}
 
 #nebulosa-bg .overlay {
   position: absolute;
@@ -2368,7 +2393,7 @@ document.getElementById('chiudi-overlay').addEventListener('click', () => {
 
 </script>
 <!-- fine 4 filosofi -->
-<!-- fine 4 folosofi  -->
+
 <!---iiii scrittura a macchina -->
 <style>
 .typing-effect {
