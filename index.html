@@ -1947,10 +1947,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <body>
    <body>
-  <div id="nebulosa-bg">
-    <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/nebulosa.avif" alt="sfondo nebulosa">
-    <div class="overlay"></div>
-  </div>
+
 
 
 <div id="quote-box">
@@ -2256,6 +2253,28 @@ document.addEventListener("DOMContentLoaded", function() {
   font-family: 'Georgia', serif;
   user-select: none;
   opacity: 0;
+}
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/nebulosa.avif');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.4; /* Aumenta se vuoi che si noti di più */
+  z-index: -2;
+}
+body::after {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.9) 100%);
+  z-index: -1;
 }
 
 </style>
