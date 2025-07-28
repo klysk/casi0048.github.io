@@ -297,6 +297,14 @@
     color: #00BFFF;
     letter-spacing: 0.5px;
   }
+#quote-box {
+  transition: opacity 1s ease;
+  opacity: 1;
+}
+#quote-box.fade-out {
+  opacity: 0;
+}
+
 </style>
 
 <!--       --------------          -->
@@ -336,7 +344,7 @@ body {
 
 
 h1, h2 {
-    color: var(--text-gold);
+    color: #00ccff !important; var(--text-gold);
     text-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
 }
 
@@ -485,10 +493,11 @@ nav.menu-desktop {
   nav.menu-desktop > ul > li > button.menu-btn {
     background: none;
     border: none;
-    color: #FFD700;                         #ffffff;  #c8d0e7;
+    color: #00FF00 !important;                            color: #FFD700;                         #ffffff;  #c8d0e7;
+font-weight: 700;
     text-shadow: 0 0 5px rgba(255,255,255,0.3); /* Leggera luminescenza */
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 1.2rem !important;
     cursor: pointer;
     padding: 8px 10px;
     border-radius: 4px;
@@ -498,7 +507,7 @@ nav.menu-desktop {
   }
 
 
-  nav.menu-desktop > ul > li > a:hover,
+   nav.menu-desktop > ul > li > a:hover,
   nav.menu-desktop > ul > li > button.menu-btn:hover,
   nav.menu-desktop > ul > li > a:focus,
   nav.menu-desktop > ul > li > button.menu-btn:focus {
@@ -687,7 +696,7 @@ nav {
     }
   }
    .exploding-text {
-  font-size: 1rem;
+  font-size: 0.8rem;
   font-weight: bold;
   color: #d4af37;
   text-align: center;
@@ -1472,6 +1481,7 @@ header {
 /* SOTTOTITOLO BENVENUTO */
 .welcome-title {
   font-family: 'Cinzel Decorative', cursive;
+
   font-weight: 500;
   font-size: 3.5rem;
   color: transparent;
@@ -1484,6 +1494,16 @@ header {
   letter-spacing: 2px;
   line-height: 1.3;
   animation: gradientShift 4s infinite ease-in-out, titlePulse 4s infinite ease-in-out;
+}
+.glow-text {
+  color: #00ccff;
+  text-shadow: 0 0 10px #00ccff, 0 0 20px #00ccff, 0 0 30px #00ccff;
+  font-weight: bold;
+}
+
+.glow-sub {
+  color: #00ccff;
+  text-shadow: 0 0 10px #00ccff;
 }
 
 @keyframes gradientShift {
@@ -1533,6 +1553,16 @@ header {
     padding: 20px;
     text-align: center;
   }
+.glow-text {
+  text-shadow: 0 0 10px #00ccff, 0 0 20px #00ccff, 0 0 30px #00ccff;
+  font-weight: bold;
+}
+
+.glow-sub {
+  color: #00ccff;
+  text-shadow: 0 0 10px #00ccff;
+}
+
 </style>
 <style>
   #google_translate_element {
@@ -1653,6 +1683,106 @@ canvas {
 #star-canvas {
   z-index: 0;
 }
+/* Contenitore nebulosa */
+#nebulosa-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/nebulosa.avif') no-repeat center center;
+  background-size: cover;
+  opacity: 0.2;
+  pointer-events: none;
+  z-index: 0;
+  animation: nebulosa-fluttuante 40s ease-in-out infinite;
+}
+#nebulosa-sfondo {
+  mix-blend-mode: screen;
+}
+#nebulosa-sfondo-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: -10;
+}
+
+#nebulosa-sfondo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.3; /* Aumenta se vuoi più visibilità */
+  filter: brightness(1.2) contrast(1.1);
+}
+#nebulosa-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -999; /* dietro tutto */
+}
+
+#nebulosa-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.4; /* regola per rendere più visibile */
+  filter: brightness(1.1) contrast(1.2);
+  pointer-events: none;
+}
+
+#nebulosa-bg .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 50, 0.2), rgba(0, 0, 0, 0.6));
+  pointer-events: none;
+}
+
+#nebulosa-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Effetti aggiuntivi se vuoi sfumatura */
+  background: radial-gradient(ellipse at center, rgba(0, 10, 30, 0.2), rgba(0, 0, 0, 0.6));
+}
+
+/* Effetto movimento/zoom lento */
+@keyframes nebulosa-fluttuante {
+  0% {
+    transform: scale(1) translate(0, 0);
+    opacity: 0.15;
+  }
+  50% {
+    transform: scale(1.05) translate(10px, -10px);
+    opacity: 0.25;
+  }
+  100% {
+    transform: scale(1) translate(0, 0);
+    opacity: 0.15;
+  }
+}
+#nebulosa-sfondo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  opacity: 0.65; /* aumentata */
+  z-index: -2; /* dietro a tutto, ma sopra al canvas nero eventualmente */
+  filter: brightness(1.2) contrast(1.1); /* migliora visibilità */
+  pointer-events: none;
+}
 
 </style>
 <!--   i  citazioni --
@@ -1765,6 +1895,18 @@ document.addEventListener("DOMContentLoaded", function() {
   </head>
 
 <body>
+<body>
+  <div id="nebulosa-bg">
+    <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/nebulosa.avif" alt="sfondo nebulosa">
+    <div class="overlay"></div>
+  </div>
+
+
+<div id="quote-box">
+  <p id="quote-text"></p>
+  <p id="quote-author"></p>
+</div>
+
 <canvas id="nebula-canvas"></canvas>
 
 <canvas id="star-canvas" style="position: fixed; top: 0; left: 0; z-index: -1;"></canvas>
@@ -2657,16 +2799,43 @@ const particleCount = window.innerWidth < 768 ? 20 : 50;
 <!-- =============================================-->
 
   <!-- CAROSELLO CITAZIONI -->
+ 
+</script>
+<!-- =============================================-->
+
+  <!-- CAROSELLO CITAZIONI -->
     <div class="quotes-carousel" id="quotesCarousel">
         <!-- Le citazioni verranno aggiunte dinamicamente via JavaScript -->
     </div>
+ 
+
 <!--  INIZIO NUOVA ANIMAZIONE TITOLO-->
   <!-- SEZIONE BENVENUTO -->
 <section class="welcome-section">
-  <div class="welcome-content">
-    <h1 class="welcome-title">Benvenuto<br>in Echi di Sofia</h1>
-    <p class="welcome-subtitle">Un viaggio tra stelle e pensiero</p>
-  </div>
+  <h1 class="welcome-title azzurro-glow">
+  <strong>Benvenuto</strong><br>
+  in Echi di Sofia
+</h1>
+  <p class="welcome-subtitle glow-sub">Un viaggio tra stelle e pensiero</p>
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+  gsap.to(".glow-text", {
+    textShadow: "0 0 20px #00ccff, 0 0 40px #00ccff, 0 0 60px #00ccff",
+    repeat: -1,
+    yoyo: true,
+    duration: 2,
+    ease: "power1.inOut"
+  });
+
+  gsap.to(".glow-sub", {
+    textShadow: "0 0 10px #00ccff, 0 0 30px #00ccff",
+    repeat: -1,
+    yoyo: true,
+    duration: 2.5,
+    ease: "power1.inOut"
+  });
+</script>
 
   <div class="exploding-text">
     <h1 id="title">💬 Pensare, dunque è ancora possibile ⚖️</h1>
@@ -2776,10 +2945,14 @@ const particleCount = window.innerWidth < 768 ? 20 : 50;
   line-height: 1.3;
   animation: gradientShift 4s infinite ease-in-out, titlePulse 4s infinite ease-in-out;
 }
+.welcome-title {
+  margin-left: 510px;
+}
+
 
 .welcome-subtitle {
   font-family: 'Cinzel', serif;
-  font-size: 1.2rem !important;
+  font-size: 1.4rem !important;
   font-weight: 300;
   color: #dddddd;
   margin-top: -1rem;
@@ -4347,8 +4520,26 @@ window.addEventListener('load', function () {
 
   animate();
 });
-
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+  gsap.to(".glow-text", {
+    textShadow: "0 0 20px #00ccff, 0 0 40px #00ccff, 0 0 60px #00ccff",
+    repeat: -1,
+    yoyo: true,
+    duration: 2,
+    ease: "power1.inOut"
+  });
+
+  gsap.to(".glow-sub", {
+    textShadow: "0 0 10px #00ccff, 0 0 30px #00ccff",
+    repeat: -1,
+    yoyo: true,
+    duration: 2.5,
+    ease: "power1.inOut"
+  });
+</script>
+
 </body>
 </html>
 
