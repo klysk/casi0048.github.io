@@ -1655,7 +1655,113 @@ canvas {
 }
 
 </style>
+<!--   i  citazioni --
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const el = document.querySelector(".typing-effect");
+    const texts = [
+    "Φιλοσοφία: l'arte di cercare appigli nel vuoto.",
+    "La filosofia è sete, non possesso.",
+    "Pensare è camminare senza mappa.",
+    "Ogni risposta nasconde un'altra domanda.",
+    "Il dubbio è già inizio di sapere.",
+    "Domandare è respirare con la mente.",
+    "Il silenzio è una forma di pensiero.",
+    "La verità abita tra due errori.",
+    "Il sapere inizia con il non sapere.",
+    "Filosofare è guardare oltre l'ovvio.",
+    "La mente inquieta è sempre viva.",
+    "Il pensiero non ha confini.",
+    "Nulla è più certo del dubbio.",
+    "La sapienza si nutre di incertezza.",
+    "La filosofia non promette risposte.",
+    "Ogni passo è già metà del cammino.",
+    "La logica è poesia con regole.",
+    "La libertà comincia nel pensiero.",
+    "La verità è un equilibrio mobile.",
+    "Non esiste ultima parola.",
+    "Il pensiero è un viaggio senza ritorno.",
+    "Ogni idea è un ponte tra due silenzi.",
+    "La ragione è un faro in un mare scuro.",
+    "Ogni filosofia è un tentativo fallito che illumina.",
+    "Pensare è sfidare l'invisibile.",
+    "Il filosofo ascolta ciò che non si dice.",
+    "L'eterno ritorno è anche dell'errore.",
+    "Dubitare di sé è il primo passo per conoscersi.",
+    "Non sapere è già sapere qualcosa.",
+    "Ogni teoria è una mappa mai definitiva.",
+    "La filosofia è musica muta.",
+    "La parola è solo l'ombra del pensiero.",
+    "Il tempo è il filosofo silenzioso.",
+    "Cercare senso è già crearlo.",
+    "Non c'è verità senza rischio.",
+    "La mente che si ferma muore.",
+    "Il pensiero abita tra desiderio e paura.",
+    "Ogni concetto è una prigione e una chiave.",
+    "L'ignoto è la vera patria del filosofo.",
+    "La domanda giusta vale più di mille risposte.",
+    "Pensare è disfare i propri stessi pensieri.",
+    "L'essere si nasconde dietro il nulla.",
+    "Ogni parola è già un'interpretazione.",
+    "Il pensiero puro è un abisso.",
+    "La conoscenza è sempre provvisoria.",
+    "Ogni certezza è figlia di un compromesso.",
+    "Il filosofo è un eterno esiliato.",
+    "Dubitare è una forma di fedeltà alla verità.",
+    "Il sapere divide, il mistero unisce.",
+    "L’inquietudine è il motore della ricerca."
+];
 
+
+    
+    let textIndex = 0;
+    let index = 0;
+    let forward = true;
+    let delay = 0;
+    let stepCounter = 0;
+    const writeSpeed = 3;
+    const deleteSpeed = 2;
+
+    function animate() {
+        if (!el) return;
+
+        stepCounter++;
+        const speed = forward ? writeSpeed : deleteSpeed;
+
+        if (stepCounter >= speed) {
+            stepCounter = 0;
+
+            if (delay > 0) {
+                delay--;
+            } else {
+                const currentText = texts[textIndex];
+
+                if (forward) {
+                    index++;
+                    if (index > currentText.length) {
+                        forward = false;
+                        delay = 60;
+                    }
+                } else {
+                    index--;
+                    if (index < 0) {
+                        forward = true;
+                        textIndex = (textIndex + 1) % texts.length;
+                        delay = 20;
+                    }
+                }
+
+                el.textContent = currentText.substring(0, index);
+            }
+        }
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+});
+</script>
+<!--   f  citazioni -->
   </head>
 
 <body>
@@ -2566,6 +2672,9 @@ const particleCount = window.innerWidth < 768 ? 20 : 50;
     <h1 id="title">💬 Pensare, dunque è ancora possibile ⚖️</h1>
 <div id="symbol-explosion"></div>
   </div>
+</section>
+<section class="citazioni">
+  <div class="typing-effect"></div>
 </section>
   <!-- GSAP locale -->
   <script src="https://casi0048.github.io/gsap-public/gsap.js"></script>
