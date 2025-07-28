@@ -379,7 +379,7 @@ a:hover {
   .menu-desktop > ul > li > a:hover,
   .menu-desktop > ul > li > button.menu-btn:hover {
     background-color: rgba(72, 102, 255, 0.8) !important;
-    color: white !important;
+    color: #d4af37 ;     
   }
 
   /* Stile attivo migliorato */
@@ -428,6 +428,7 @@ a:hover {
     visibility: visible;
     pointer-events: auto;
     transform: translateX(-50%) translateY(0);
+  color: #d4af37;
   }
 </style>
 <style>
@@ -758,7 +759,32 @@ nav {
   background: rgba(255, 255, 255, 0.3);
   border-radius: 3px;
 }
+<!------------------------------------------------->
+.mega-menu a::after {
 
+  margin-left: 5px;
+  color: #d4af37; /* oro, personalizzabile */
+  font-size: 0.9em;
+  transition: transform 0.4s ease;
+}
+
+.mega-menu a::after {
+  content: " \276F"; /* ❯ elegante */
+opacity: 1;
+transform: translateY(-50%) translateX(0);
+}
+.mega-menu a::after {
+  opacity: 0;
+  transform: translateX(0);
+  transition: all 0.3s ease;
+}
+
+.mega-menu a:hover::after {
+  opacity: 1;
+  transform: translateX(5px);
+}
+
+<!----------------------------------------------->
  
   * { 
     margin: 0; 
@@ -996,11 +1022,13 @@ header {
 .menu-desktop > ul > li > a:hover {
     color: #ffd700;
     text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+
 }
 .arrow {
   font-size: 10px;
   display: block;
   margin-top: 2px;
+ content: " \2192"; /* → freccia destra */
 }
 <!--  i sposta freccette menu sotto-->
 .menu-btn {
@@ -1078,6 +1106,7 @@ header {
   position: absolute;
   top: 100%;
   left: 0;
+
 }
 .menu-desktop ul ul {
   margin-top: -2px;
@@ -1088,7 +1117,7 @@ header {
     display: block;
     font-size: 0.8rem;
     line-height: 1.2;
-    color: #e0e0e0;
+     color: #00FF00; 
     padding: 0.2rem 0;
     text-decoration: none;
     transition: color 0.3s ease;
@@ -1104,9 +1133,9 @@ header {
 .mega-menu a {
   font-family: 'Georgia', serif; /* Cambia con il font che vuoi */
   font-size: 1rem;
-  letter-spacing: 0.5px;
+ letter-spacing: 0.5px;
 .mega-menu a::after {
-  content: "→";
+ 
   margin-left: 8px;
   transition: transform 0.3s ease;
 }
@@ -1114,15 +1143,17 @@ header {
 .mega-menu a:hover {
   background: rgba(255, 255, 255, 0.05);
   transform: translateX(4px);
+
 }
 
 .mega-menu a:hover::after {
   transform: translateX(4px) rotate(15deg);
+
 }
 
 
 .mega-menu h4 {
-    color: #ffd700;
+    color: #d4af37 !important;
     font-weight: 600;
     margin-bottom: 0.6rem;
     font-size: 1rem;
