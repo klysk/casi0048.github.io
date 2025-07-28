@@ -1724,28 +1724,29 @@ canvas {
   left: 0;
   width: 100%;
   height: 100%;
+  z-index: -1; /* dietro a tutto */
   overflow: hidden;
-  z-index: -100; /* dietro tutto */
-  pointer-events: none;
 }
 
 #nebulosa-bg img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.4;
-  filter: brightness(1.1) contrast(1.2);
-  animation: nebulosa-fluttuante 60s ease-in-out infinite;
+  opacity: 0.6; /* ← Regola qui l’opacità dell’immagine */
+  transition: opacity 1s ease-in-out;
 }
-#nebulosa-bg {
-  position: fixed;
+
+#nebulosa-bg .overlay {
+  position: absolute;
   top: 0;
   left: 0;
-  z-index: -10;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7));
+  opacity: 0.5; /* ← Regola qui l’opacità del filtro sopra l’immagine */
+  pointer-events: none;
 }
+
 
 #nebulosa-bg img {
   width: 100%;
@@ -1946,8 +1947,16 @@ document.addEventListener("DOMContentLoaded", function() {
   </head>
 
 <body>
-   <body>
+  <body>
+  <div id="nebulosa-bg">
+    <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/nebulosa.avif" alt="sfondo nebulosa">
+    <div class="overlay"></div>
+  </div> 
 
+<picture>
+  <source srcset="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/nebulosa.avif" type="image/avif">
+  <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/nebulosa.jpg" alt="sfondo nebulosa">
+</picture>
 
 
 <div id="quote-box">
