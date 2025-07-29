@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+
+<!--------------------------------------------->>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Echi di Sofia - Filosofia attraverso i secoli</title>
@@ -254,16 +256,19 @@
 <style>
   .quotes-carousel {
     position: fixed;
-    top: 160px;
+    top: 10px;
     left: 0;
     width: 100%;
-    background: rgba(10, 10, 30, 0.3);
+  background-color: #0e0e0e00; /* visivamente invisibile */
+
+
     backdrop-filter: blur(10px);
     padding: 15px 0;
     color: #ffffffcc;
     text-align: center;
     z-index: 900;
     transition: all 0.5s ease;
+margin-top: 160px;
   }
 
   .quote-slide {
@@ -446,7 +451,7 @@ a:hover {
   }
   body {
     margin: 20px;
-    background-color: #12182b;
+      background-color: #0e0e0e00; /* visivamente invisibile */                                    background-color: #12182b;
 font-family: 'Roboto Condensed', sans-serif;
 
     
@@ -459,12 +464,16 @@ font-family: 'Roboto Condensed', sans-serif;
     align-items: center;
   }
 nav.menu-desktop {
-    background-color: #0e0e0e; 1f2740;
-    padding: 15px 20px;
+.menu-bar {
+  background-color: #0e0e0e00; /* visivamente invisibile */
+  
+}
+ 
+    padding: 25px 20px;
     border-radius: 6px;
     min-width: 850px;
     position: relative;
-    top: -40px; /* Alza il menu */
+    top: -10px; /* Alza il menu */
     z-index: 999;
 }
 nav.menu-desktop {
@@ -823,14 +832,14 @@ body {
     display: flex;
     justify-content: center; /* Centra orizzontalmente */
     align-items: center;     /* Centra verticalmente */
-    padding: 18px;
-    background: rgba(0, 0, 0, 0.5);
-    gap: 10px; /* Distanza tra elementi */
+    padding: 10px;
+  background-color: rgba(14, 14, 14, 0);
+  gap: 5px; /* Distanza tra elementi */
 }
 .top-bar {
-  padding-top: 20px;
-  margin-top: 12px;
-  margin-bottom: 20px;
+  padding-top: 1px;
+  margin-top: 2px;
+  margin-bottom: 2px;
 }
 .top-bar input {
     padding: 10px 10px;
@@ -1243,7 +1252,7 @@ header {
     }
 
     .quotes-carousel {
-        top: 100px;
+        top: 140px;
         padding: 1rem;
     }
     
@@ -1279,8 +1288,8 @@ header {
     top: 140px;
     left: 0;
     width: 100%;
-    background: rgba(10, 10, 30, 0.3);
-    backdrop-filter: blur(10px);
+  background-color: #0e0e0e00; /* visivamente invisibile */
+
     border-bottom: 0px solid rgba(255, 255, 255, 0.2);
     padding: 15px 0;
     color: #ffffffcc;
@@ -1289,7 +1298,7 @@ header {
 }
 
 .quotes-carousel {
-    top: 160px; /* o anche meno, prova 80px, 90px, ecc. */
+    top: 140px; /* o anche meno, prova 80px, 90px, ecc. */
 }
 
 .quote-slide {
@@ -1337,7 +1346,7 @@ header {
 /* SEZIONE BENVENUTO */
 .welcome-title {
     margin-bottom: 2rem;
-    margin-top: 7rem; /* solleva il titolo */
+    margin-top: 4rem; /* solleva il titolo */
 }
 
 .welcome-section {
@@ -1346,7 +1355,7 @@ header {
     justify-content: center;
     align-items: center;
     text-align: center;
-
+margin-top: 4rem; /* solleva il titolo */
 
 <!--  iii modifica  -->
 .welcome-mask {
@@ -1363,6 +1372,15 @@ header {
   position: relative;
   z-index: 10; /* Deve essere > 1 per stare sopra */
 }
+.menu {
+  background-color: rgba(0, 0, 0, 0.6); /* nero trasparente */
+  backdrop-filter: blur(6px); /* facoltativo: effetto vetro satinato */
+}
+.top-bar {
+  background-color: rgba(0, 0, 0, 0.6); /* nero trasparente */
+  backdrop-filter: blur(4px); /* sfocatura sotto, se vuoi */
+  z-index: 100; /* sopra la nebulosa */
+}
 
 
   <!--       fff modifica-->
@@ -1378,8 +1396,8 @@ header {
 
 .welcome-title {
   font-family: 'Cinzel Decorative', cursive;
-  font-weight: 500;
-  font-size: 3.5rem;
+  font-weight: 700;
+  font-size: 3rem;
   color: transparent;
   background: linear-gradient(90deg, #ffd700, #ffaa00, #ffd700);
   background-size: 300% 100%;
@@ -1390,8 +1408,7 @@ header {
   letter-spacing: 2px;
   line-height: 1.3
 
-
-  animation: gradientShift 4s infinite ease-in-out, titlePulse 4s infinite ease-in-out;
+animation: gradientShift 4s infinite ease-in-out, titlePulse 4s infinite ease-in-out;
 }
 
 @keyframes gradientShift {
@@ -1526,6 +1543,11 @@ header {
     text-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
   }
 }
+.nebula-overlay {
+  mix-blend-mode: screen; /* Prova anche con: */
+  /* mix-blend-mode: lighten; */
+  /* mix-blend-mode: overlay; */
+}
 </style>
 <style>
   body, html {
@@ -1573,8 +1595,8 @@ header {
   }
   #translate-btn {
     position: fixed;
-    top: 10px;
-    right: 10px;
+    top: 20px;
+    right: 20px;
     background: #d4af37;
     color: black;
     padding: 6px 10px;
@@ -1604,6 +1626,9 @@ header {
   z-index: -10;
   background: black;
 }
+#space-canvas {
+  z-index: -10; /* Sfondo più basso */
+}
 #cosmic-background {
   position: fixed;
   top: 0;
@@ -1624,6 +1649,44 @@ header {
 }
 
 </style>
+<style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image: url('https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/nebulosa3.avif');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0.4;
+      z-index: -1;
+      animation: rotateBg 60s linear infinite;
+      transform-origin: center center;
+    }
+
+    @keyframes rotateBg {
+      0% { transform: scale(1.05) rotate(0deg); }
+      100% { transform: scale(1.05) rotate(360deg); }
+    }
+
+    /* Esempio di contenuto visibile sopra */
+    .content {
+      position: relative;
+      z-index: 1;
+      color: white;
+      text-align: center;
+      margin-top: 20%;
+      font-size: 2rem;
+      text-shadow: 0 0 8px #000;
+    }
+  </style>
 <style>
 /* Cielo stellato base */
 #cosmic-canvas {
@@ -1679,10 +1742,10 @@ canvas {
 #nebula-canvas {
   z-index: 1;
 }
-
 #star-canvas {
-  z-index: 0;
+  z-index: -8; /* Stelle sopra lo sfondo nero */
 }
+
 <!--------------------------------------------------------------------------------->
 /* Contenitore nebulosa */
 #nebulosa-overlay {
@@ -1691,12 +1754,12 @@ canvas {
   left: 0;
   width: 100%;
   height: 100%;
-  background: url('https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/nebulosa.avif') no-repeat center center;
+  background: url('https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/nebulosa3.avif') no-repeat center center;
   background-size: cover;
-  opacity: 0.4;
+  opacity: 0.7;
   pointer-events: none;
   z-index: 0;
-  animation: nebulosa-fluttuante 40s ease-in-out infinite;
+  animation: nebulosa-fluttuante 30s ease-in-out infinite;
 }
 #nebulosa-sfondo {
   mix-blend-mode: screen;
@@ -1711,126 +1774,7 @@ canvas {
   z-index: -10;
 }
 
-#nebulosa-sfondo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.5; /* Aumenta se vuoi più visibilità */
-  filter: brightness(1.2) contrast(1.1);
-}
-#nebulosa-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;         /* << Fondamentale: manda lo sfondo dietro */
-  opacity: 0.2;        /* Gamma da 0.0 (invisibile) a 1.0 (pieno) */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-#nebulosa-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  z-index: -1;
-  opacity: 0.2; /* o quanto vuoi */
-}
-#overlay-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to bottom, rgba(0, 0, 50, 0.3), rgba(0, 0, 0, 0.6));
-  z-index: -1;
-  pointer-events: none;
-}
-
-
-#nebulosa-bg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.2; /* ← Regola qui l’opacità dell’immagine */
-  transition: opacity 1s ease-in-out;
-}
-
-#nebulosa-bg .overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7));
-  opacity: 0.2; /* ← Regola qui l’opacità del filtro sopra l’immagine */
-  pointer-events: none;
-}
-
-
-#nebulosa-bg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.2; /* Regola la visibilità */
-}
-
-#nebulosa-bg .overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at center, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.9));
-}
-
-#nebulosa-bg .overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(ellipse at center, rgba(0, 20, 40, 0.3), rgba(0, 0, 0, 0.6));
-}
-@keyframes nebulosa-fluttuante {
-  0% { transform: scale(1) translate(0, 0); }
-  50% { transform: scale(1.05) translate(1%, 1%); }
-  100% { transform: scale(1) translate(0, 0); }
-}
-
-#nebulosa-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: -999; /* dietro tutto */
-}
-
-#nebulosa-bg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.4; /* regola per rendere più visibile */
-  filter: brightness(1.1) contrast(1.2);
-  pointer-events: none;
-}
-
-#nebulosa-bg .overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(ellipse at center, rgba(0, 0, 50, 0.2), rgba(0, 0, 0, 0.6));
-  pointer-events: none;
-}
+<!---------------------------------------------------------------->
 
 <!--------------------------------------------------------------->
 /* Effetto movimento/zoom lento */
@@ -1848,20 +1792,44 @@ canvas {
     opacity: 0.15;
   }
 }
-#nebulosa-sfondo {
+
+/* Nuovo stile per lo sfondo nebulosa secondario */
+/* Sfondo nebulosa con corretta gerarchia */
+
+@keyframes rotate-nebulosa {
+  0% { transform: rotate(0deg) scale(1.05); }
+  100% { transform: rotate(360deg) scale(1.05); }
+}
+
+.nebulosa-background {
+  animation: rotate-nebulosa 100s linear infinite;
+}
+.nebulosa-background {
+  animation: rotate-nebulosa 200s linear infinite, nebulosa-float 40s infinite alternate ease-in-out;
+}
+
+.nebulosa-background {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  object-fit: cover;
-  opacity: 0.65; /* aumentata */
-  z-index: -2; /* dietro a tutto, ma sopra al canvas nero eventualmente */
-  filter: brightness(1.2) contrast(1.1); /* migliora visibilità */
+  background: url('https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/nebulosa3.avif') no-repeat center center;
+  background-size: cover;
+  opacity: 0.35;
+  z-index: -1; /* Meno negativo */
   pointer-events: none;
+  animation: nebulosa-float 40s infinite alternate ease-in-out;
+  /* mix-blend-mode: screen; RIMOSSO per test */
 }
 
+
+@keyframes nebulosa-float {
+  0% { transform: scale(1) translateY(0); }
+  100% { transform: scale(1.05) translateY(-10px); }
+}
 </style>
+
 <!--   i  citazioni --
 <script>
 document.addEventListener("DOMContentLoaded", function() {
@@ -1970,13 +1938,109 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 <!--   f  citazioni -->
   </head>
+
+<body>
+
+
+<div id="nebulosa-bg"></div>
+<div id="guaranteed-nebula"></div>
+
+<style>
+#nebulosa-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/nebulosa.avif');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -2;
+  opacity: 1;
+}
+
+
+  #guaranteed-nebula {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: 
+      linear-gradient(135deg, rgba(30,15,60,0.7) 0%, rgba(10,5,30,0.9) 100%),
+      url('https://casi0048.github.io/immagini%20per%20sito/nebulosa.avif') center/cover;
+    opacity: 0.4;
+    z-index: -2;
+    animation: nebula-drift 120s infinite linear;
+  }
+
+  @keyframes nebula-drift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+</style>
+<!-- Aggiungi questo DIV subito dopo l'apertura del <body> -->
+<div class="nebula-overlay"></div>
+
+<style>
+  /* STILE DEFINITIVO NEBULOSA */
+  .nebula-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      url('https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/nebulosa.avif')
+      center/cover no-repeat;
+    opacity: 0.3;
+    z-index: -2;
+    pointer-events: none;
+    animation: nebula-float 90s infinite alternate ease-in-out;
+    mix-blend-mode: screen;
+  }
+.nebula-overlay {
+  z-index: -2 !important; /* Deve essere:
+                           -1 (particelle)
+                           -2 (nebulosa)
+                           -10 (stelle) */
+}
+
+.philo-particles { z-index: -1 !important; }
+#star-canvas { z-index: -3 !important; }
+#space-canvas { z-index: -10 !important; }
+  @keyframes nebula-float {
+    0% { transform: scale(1) translate(0, 0); }
+    50% { transform: scale(1.03) translate(2%, 2%); }
+    100% { transform: scale(1) translate(0, 0); }
+  }
+</style>
+
+<script>
+  // GARANZIA DI CARICAMENTO (senza console.log)
+ // SOSTITUISCI lo script esistente con questo:
+document.addEventListener('DOMContentLoaded', () => {
+  const nebula = document.querySelector('.nebula-overlay');
+  nebula.style.backgroundImage = 'none'; // Reset temporaneo
   
-  <body>
-  <div id="nebulosa-bg" style="background-image: url('https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/nebulosa.avif');"></div>
-  <div id="overlay-bg"></div>
-
- 
-
+  const img = new Image();
+  img.crossOrigin = "anonymous";
+  img.src = 'https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/nebulosa.avif?_=' + Date.now();
+  
+  img.onload = function() {
+    nebula.style.backgroundImage = `url('${this.src}')`;
+    nebula.style.opacity = '0.3';
+  };
+  
+  img.onerror = function() {
+    nebula.style.background = 'radial-gradient(circle at 50% 50%, rgba(70,30,120,0.4) 0%, rgba(10,5,30,0.8) 100%)';
+  };
+});
+</script>
+<div class="nebulosa-background"></div>
+  
 
 
 <div id="quote-box">
@@ -2218,39 +2282,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </div>
 
 <!--   fine slide verticale -->
- <style>
-    /* Sfondo della nebulosa */
-   #nebulosa-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  z-index: -2;
-}
 
-#overlay-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: black;
-  opacity: 0.2; /* o quanto vuoi */
-  z-index: -1;
-}
-
-    /* Contenuto visibile */
-    #contenuto {
-      position: relative;
-      z-index: 0;
-      color: white;
-      padding: 2rem;
-      font-family: sans-serif;
-    }
-  </style>
 <style>
   .slider-vertical {
     position: fixed;
@@ -2259,7 +2291,7 @@ document.addEventListener("DOMContentLoaded", function() {
     width: 160px;
     height: 300px;
     overflow: hidden;
-    background: #0a0a20;
+  background-color: #0e0e0e00; /* visivamente invisibile */
     border-radius: 10px;
     box-shadow: 0 0 12px rgba(0,0,0,0.6);
     padding: 5px 0;
@@ -2314,28 +2346,6 @@ document.addEventListener("DOMContentLoaded", function() {
   font-family: 'Georgia', serif;
   user-select: none;
   opacity: 0;
-}
-body::before {
-  content: "";
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-image: url('https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/nebulosa.avif');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0.4; /* Aumenta se vuoi che si noti di più */
-  z-index: -2;
-}
-body::after {
-  content: "";
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: radial-gradient(ellipse at center, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.9) 100%);
-  z-index: -1;
 }
 
 </style>
@@ -2473,7 +2483,7 @@ document.getElementById('chiudi-overlay').addEventListener('click', () => {
 
 </script>
 <!-- fine 4 filosofi -->
-
+<!-- fine 4 folosofi  -->
 <!---iiii scrittura a macchina -->
 <style>
 .typing-effect {
@@ -3078,6 +3088,7 @@ const particleCount = window.innerWidth < 768 ? 20 : 50;
 }
 .welcome-title {
   margin-left: 510px;
+margin-top: 100px;
 }
 
 
@@ -3149,6 +3160,9 @@ nav {
     width: 100%;
     height: 90px;
     z-index: 1000;
+   background-color: rgba(14, 14, 14, 0);                                                           background-color: rgba(14, 14, 14, 0.1);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px); /* per Safari */
 }
 </style>
 
@@ -3195,7 +3209,7 @@ nav {
   top: 400px; /* distanza verticale dalla barra del menu */
   right: 40px; /* distacco dal lato destro */
   width: 300px;
-  background: rgba(20, 20, 30, 0.95); /* sfondo semi-trasparente coerente col sito */
+  background-color: #0e0e0e00; /* visivamente invisibile */
   color: #f0f0f0;
   padding: 20px;
   border-radius: 12px;
@@ -3484,9 +3498,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 </script>
-
+<script>>
 <!--==========================================================-->
-    <script>
         // Registra il plugin TextPlugin
         gsap.registerPlugin(TextPlugin);
 
@@ -4017,642 +4030,9 @@ function googleTranslateElementInit() {
     }
   });
 </script>
-<script>
-const starCanvas = document.getElementById('star-canvas');
-const starCtx = starCanvas.getContext('2d');
 
-  const canvas = document.getElementById("star-canvas");
-  const ctx = canvas.getContext("2d");
 
-  let stars = [];
 
-  function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    createStars();
-  }
-
-  function createStars() {
-    stars = [];
-    const numStars = 200;
-    for (let i = 0; i < numStars; i++) {
-      stars.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        radius: Math.random() * 1.3 + 0.2,
-        alpha: Math.random(),
-        delta: Math.random() * 0.02 + 0.005
-      });
-    }
-  }
-
-  function drawStars() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (let star of stars) {
-      ctx.beginPath();
-      ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
-      ctx.fill();
-
-      star.alpha += star.delta;
-      if (star.alpha <= 0 || star.alpha >= 1) {
-        star.delta = -star.delta;
-      }
-    }
-    requestAnimationFrame(drawStars);
-  }
-
-  window.addEventListener("resize", resizeCanvas);
-
-  resizeCanvas();
-  drawStars();
-</script>
-<canvas id="galaxy-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></canvas>
-
-<script>
-const canvas = document.getElementById("galaxy-canvas");
-const ctx = canvas.getContext("2d");
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let stars = [];
-let numStars = 150;
-
-class Star {
-  constructor() {
-    this.reset();
-  }
-
-  reset() {
-    this.x = Math.random() * canvas.width;
-    this.y = Math.random() * canvas.height;
-    this.radius = Math.random() * 1.2 + 0.2;
-    this.speed = Math.random() * 0.4 + 0.05;
-    this.alpha = Math.random() * 0.5 + 0.3;
-    this.tail = Math.random() * 50 + 30;
-  }
-
-  update() {
-    this.x += this.speed;
-    this.y -= this.speed * 0.3;
-    if (this.x > canvas.width || this.y < 0) {
-      this.reset();
-      this.x = 0;
-      this.y = canvas.height * Math.random();
-    }
-  }
-
-  draw() {
-    const grad = ctx.createLinearGradient(this.x, this.y, this.x - this.tail, this.y + this.tail / 2);
-    grad.addColorStop(0, `rgba(255,255,255,${this.alpha})`);
-    grad.addColorStop(1, "rgba(255,255,255,0)");
-
-    ctx.beginPath();
-    ctx.fillStyle = `rgba(255,255,255,${this.alpha})`;
-    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.beginPath();
-    ctx.strokeStyle = grad;
-    ctx.moveTo(this.x, this.y);
-    ctx.lineTo(this.x - this.tail, this.y + this.tail / 2);
-    ctx.stroke();
-  }
-}
-
-// Nebulosa: gradiento viola/blu
-function drawNebula() {
-  let nebula = ctx.createRadialGradient(
-    canvas.width / 2, canvas.height / 2, 100,
-    canvas.width / 2, canvas.height / 2, canvas.width / 1.2
-  );
-  nebula.addColorStop(0, "rgba(100, 0, 255, 0.15)");
-  nebula.addColorStop(0.5, "rgba(0, 100, 255, 0.08)");
-  nebula.addColorStop(1, "rgba(0, 0, 0, 0)");
-  ctx.fillStyle = nebula;
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-}
-
-function init() {
-  stars = [];
-  for (let i = 0; i < numStars; i++) {
-    stars.push(new Star());
-  }
-}
-
-function animate() {
-  ctx.fillStyle = "rgba(0, 0, 10, 0.2)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  drawNebula();
-
-  stars.forEach((star) => {
-    star.update();
-    star.draw();
-  });
-
-  requestAnimationFrame(animate);
-}
-
-window.addEventListener("resize", () => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  init();
-});
-
-init();
-animate();
-</script>
-<script>
-const canvas = document.getElementById("space-canvas");
-const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let stars = [], comets = [], nebulas = [];
-
-function random(min, max) {
-  return Math.random() * (max - min) + min;
-}
-
-function createStars(count) {
-  for (let i = 0; i < count; i++) {
-    stars.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      radius: Math.random() * 1.2,
-      alpha: Math.random(),
-      delta: 0.01 * Math.random()
-    });
-  }
-}
-
-function createComet() {
-  comets.push({
-    x: -50,
-    y: random(0, canvas.height / 2),
-    vx: random(2, 5),
-    vy: random(0.5, 1),
-    length: random(100, 200)
-  });
-}
-
-function createNebula() {
-  nebulas.push({
-    x: random(0, canvas.width),
-    y: random(0, canvas.height),
-    radius: random(100, 300),
-    color: `rgba(${random(100,255)},${random(100,255)},${random(255)},${random(0.03, 0.07)})`
-  });
-}
-
-function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  // Nebulose
-  for (let nebula of nebulas) {
-    const grad = ctx.createRadialGradient(nebula.x, nebula.y, 0, nebula.x, nebula.y, nebula.radius);
-    grad.addColorStop(0, nebula.color);
-    grad.addColorStop(1, "transparent");
-    ctx.fillStyle = grad;
-    ctx.beginPath();
-    ctx.arc(nebula.x, nebula.y, nebula.radius, 0, Math.PI * 2);
-    ctx.fill();
-  }
-
-  // Stelle scintillanti
-  for (let s of stars) {
-    ctx.beginPath();
-    ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`;
-    ctx.fill();
-    s.alpha += s.delta;
-    if (s.alpha <= 0 || s.alpha >= 1) s.delta *= -1;
-  }
-
-  // Comete
-  for (let c of comets) {
-    const grad = ctx.createLinearGradient(c.x, c.y, c.x - c.length, c.y - c.length * 0.2);
-    grad.addColorStop(0, "rgba(255,255,255,0.8)");
-    grad.addColorStop(1, "rgba(255,255,255,0)");
-    ctx.strokeStyle = grad;
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(c.x, c.y);
-    ctx.lineTo(c.x - c.length, c.y - c.length * 0.2);
-    ctx.stroke();
-
-    c.x += c.vx;
-    c.y += c.vy;
-  }
-
-  // Rimuovi comete fuori schermo
-  comets = comets.filter(c => c.x < canvas.width + 200);
-
-  requestAnimationFrame(draw);
-}
-
-createStars(150);
-for (let i = 0; i < 5; i++) createNebula();
-setInterval(createComet, 4000); // ogni 4s una nuova cometa
-draw();
-
-window.addEventListener("resize", () => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-});
-
-</script>
-<script>
-const canvas = document.getElementById("cosmic-background");
-const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-const comets = [];
-const nebulas = [];
-
-function createComet() {
-  const comet = {
-    x: Math.random() * canvas.width,
-    y: -50,
-    speedX: -1 + Math.random() * 2,
-    speedY: 2 + Math.random() * 2,
-    size: 2 + Math.random() * 3,
-    tail: []
-  };
-  comets.push(comet);
-}
-
-function createNebula() {
-  const nebula = {
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    radius: 100 + Math.random() * 200,
-    color: `hsla(${Math.random() * 360}, 80%, 60%, 0.06)`,
-    alpha: 0.03 + Math.random() * 0.05
-  };
-  nebulas.push(nebula);
-}
-
-for (let i = 0; i < 5; i++) createNebula();
-setInterval(createComet, 800);
-
-function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  // NEBULAE
-  nebulas.forEach(n => {
-    ctx.beginPath();
-    ctx.fillStyle = n.color;
-    ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
-    ctx.fill();
-  });
-
-  // COMETS
-  comets.forEach((c, i) => {
-    c.x += c.speedX;
-    c.y += c.speedY;
-
-    c.tail.push({ x: c.x, y: c.y });
-    if (c.tail.length > 15) c.tail.shift();
-
-    ctx.beginPath();
-    for (let j = 0; j < c.tail.length - 1; j++) {
-      const p1 = c.tail[j];
-      const p2 = c.tail[j + 1];
-      ctx.strokeStyle = `rgba(255,255,255,${j / c.tail.length})`;
-      ctx.lineWidth = c.size;
-      ctx.moveTo(p1.x, p1.y);
-      ctx.lineTo(p2.x, p2.y);
-    }
-    ctx.stroke();
-
-    if (c.y > canvas.height + 100) comets.splice(i, 1);
-  });
-
-  requestAnimationFrame(animate);
-}
-
-animate();
-
-window.addEventListener("resize", () => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-});
-</script>
-<script>
-  const canvas = document.getElementById('space-canvas');
-  const ctx = canvas.getContext('2d');
-  let width, height;
-
-  const comets = [];
-  const nebulas = [];
-
-  function resize() {
-    width = window.innerWidth;
-    height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
-  }
-
-  window.addEventListener('resize', resize);
-  resize();
-
-  class Comet {
-    constructor() {
-      this.reset();
-    }
-
-    reset() {
-      this.x = Math.random() * width;
-      this.y = -50;
-      this.length = 100 + Math.random() * 200;
-      this.speed = 2 + Math.random() * 3;
-      this.angle = Math.PI / 4 + Math.random() * 0.2;
-      this.opacity = 0.5 + Math.random() * 0.5;
-      this.color = `rgba(255, 255, 255, ${this.opacity})`;
-    }
-
-    update() {
-      this.x += Math.cos(this.angle) * this.speed;
-      this.y += Math.sin(this.angle) * this.speed;
-      if (this.y > height + this.length) this.reset();
-    }
-
-    draw(ctx) {
-      const grad = ctx.createLinearGradient(this.x, this.y, this.x - this.length, this.y - this.length);
-      grad.addColorStop(0, this.color);
-      grad.addColorStop(1, "rgba(255,255,255,0)");
-      ctx.strokeStyle = grad;
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(this.x, this.y);
-      ctx.lineTo(this.x - this.length, this.y - this.length);
-      ctx.stroke();
-    }
-  }
-
-  class Nebula {
-    constructor() {
-      this.x = Math.random() * width;
-      this.y = Math.random() * height;
-      this.radius = 100 + Math.random() * 100;
-      this.opacity = 0.03 + Math.random() * 0.05;
-      this.color = `hsla(${Math.random() * 360}, 80%, 70%, ${this.opacity})`;
-      this.dx = (Math.random() - 0.5) * 0.3;
-      this.dy = (Math.random() - 0.5) * 0.3;
-    }
-
-    update() {
-      this.x += this.dx;
-      this.y += this.dy;
-      if (this.x < -this.radius || this.x > width + this.radius) this.x = Math.random() * width;
-      if (this.y < -this.radius || this.y > height + this.radius) this.y = Math.random() * height;
-    }
-
-    draw(ctx) {
-      const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
-      grad.addColorStop(0, this.color);
-      grad.addColorStop(1, "transparent");
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-      ctx.fill();
-    }
-  }
-
-  for (let i = 0; i < 5; i++) comets.push(new Comet());
-  for (let i = 0; i < 8; i++) nebulas.push(new Nebula());
-
-  function animate() {
-    ctx.clearRect(0, 0, width, height);
-    for (const nebula of nebulas) {
-      nebula.update();
-      nebula.draw(ctx);
-    }
-    for (const comet of comets) {
-      comet.update();
-      comet.draw(ctx);
-    }
-    requestAnimationFrame(animate);
-  }
-
-  animate();
-</script>
-<script>
-// Crea comete periodicamente
-function launchComet() {
-  const comet = document.createElement('div');
-  comet.className = 'comet';
-  
-  // Posizione iniziale casuale
-  const startX = Math.random() * window.innerWidth;
-  const startY = Math.random() * window.innerHeight * 0.3; // solo parte alta
-  
-  comet.style.left = `${startX}px`;
-  comet.style.top = `${startY}px`;
-  
-  document.getElementById('cosmic-canvas').appendChild(comet);
-
-  // Animazione cometa diagonale
-  gsap.to(comet, {
-    duration: 2 + Math.random() * 2,
-    x: -200,
-    y: 200,
-    opacity: 0,
-    ease: "power2.out",
-    onComplete: () => comet.remove()
-  });
-}
-
-// Avvia le comete ogni tot secondi
-setInterval(launchComet, 3000); // una ogni 3 secondi
-</script>
-<script>
-  const canvas = document.getElementById("nebula-canvas");
-  const ctx = canvas.getContext("2d");
-  let width, height;
-
-  function resizeCanvas() {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-  }
-
-  window.addEventListener("resize", resizeCanvas);
-  resizeCanvas();
-
-  const nebulas = Array.from({ length: 6 }, () => ({
-    x: Math.random() * width,
-    y: Math.random() * height,
-    radius: 150 + Math.random() * 300,
-    dx: -0.3 + Math.random() * 0.6,
-    dy: -0.3 + Math.random() * 0.6,
-    colorStops: [
-      `rgba(${Math.floor(100 + Math.random() * 155)}, ${Math.floor(50 + Math.random() * 100)}, ${Math.floor(150 + Math.random() * 105)}, 0.3)`,
-      `rgba(0,0,0,0)`
-    ]
-  }));
-
-  function drawNebulas() {
-    ctx.clearRect(0, 0, width, height);
-    nebulas.forEach(n => {
-      const gradient = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.radius);
-      gradient.addColorStop(0, n.colorStops[0]);
-      gradient.addColorStop(1, n.colorStops[1]);
-
-      ctx.fillStyle = gradient;
-      ctx.beginPath();
-      ctx.arc(n.x, n.y, n.radius, 0, 2 * Math.PI);
-      ctx.fill();
-
-      // Movimento leggero
-      n.x += n.dx;
-      n.y += n.dy;
-
-      // Rimbalzo
-      if (n.x < 0 || n.x > width) n.dx *= -1;
-      if (n.y < 0 || n.y > height) n.dy *= -1;
-    });
-
-    requestAnimationFrame(drawNebulas);
-  }
-
-  drawNebulas();
-const nebulaCanvas = document.getElementById('nebula-canvas');
-const nebCtx = nebulaCanvas.getContext('2d');
-
-function resizeCanvases() {
-  nebulaCanvas.width = window.innerWidth;
-  nebulaCanvas.height = window.innerHeight;
-  starCanvas.width = window.innerWidth;
-  starCanvas.height = window.innerHeight;
-}
-
-window.addEventListener('resize', resizeCanvases);
-resizeCanvases();
-
-// Nebulose: array di oggetti sfumati, con posizione e movimento
-const nebulas = [];
-
-function createNebula(x, y, radius, colorStart, colorEnd, speedX, speedY) {
-  nebulas.push({ x, y, radius, colorStart, colorEnd, speedX, speedY });
-}
-
-// Esempio: crea qualche nebulosa
-createNebula(200, 300, 150, 'rgba(255,100,200,0.4)', 'rgba(255,100,200,0)', 0.05, 0);
-createNebula(600, 500, 120, 'rgba(100,200,255,0.3)', 'rgba(100,200,255,0)', -0.03, 0.02);
-createNebula(900, 200, 180, 'rgba(200,255,100,0.35)', 'rgba(200,255,100,0)', 0.04, -0.01);
-
-function drawNebulas() {
-  nebCtx.clearRect(0, 0, nebulaCanvas.width, nebulaCanvas.height);
-
-  nebulas.forEach(n => {
-    // Muovi nebulosa
-    n.x += n.speedX;
-    n.y += n.speedY;
-
-    // Se esce dal bordo, rientra
-    if (n.x - n.radius > nebulaCanvas.width) n.x = -n.radius;
-    if (n.x + n.radius < 0) n.x = nebulaCanvas.width + n.radius;
-    if (n.y - n.radius > nebulaCanvas.height) n.y = -n.radius;
-    if (n.y + n.radius < 0) n.y = nebulaCanvas.height + n.radius;
-
-    // Crea gradiente radiale sfumato
-    const gradient = nebCtx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.radius);
-    gradient.addColorStop(0, n.colorStart);
-    gradient.addColorStop(1, n.colorEnd);
-
-    nebCtx.fillStyle = gradient;
-    nebCtx.beginPath();
-    nebCtx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
-    nebCtx.fill();
-  });
-
-  requestAnimationFrame(drawNebulas);
-}
-
-drawNebulas();
-// Aspetta che la pagina sia caricata
-window.addEventListener('load', function () {
-  const starCanvas = document.getElementById('star-canvas');
-  const starCtx = starCanvas.getContext('2d');
-
-  // Imposta le dimensioni
-  function resizeCanvas() {
-    starCanvas.width = window.innerWidth;
-    starCanvas.height = window.innerHeight;
-  }
-  resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
-
-  const stars = [];
-  const nebulas = [];
-
-  // Crea stelle
-  for (let i = 0; i < 150; i++) {
-    stars.push({
-      x: Math.random() * starCanvas.width,
-      y: Math.random() * starCanvas.height,
-      radius: Math.random() * 1.5 + 0.3,
-      alpha: Math.random(),
-      speed: Math.random() * 0.005 + 0.001
-    });
-  }
-
-  // Crea nebulose
-  for (let i = 0; i < 6; i++) {
-    nebulas.push({
-      x: Math.random() * starCanvas.width,
-      y: Math.random() * starCanvas.height,
-      radius: Math.random() * 150 + 100,
-      color: `hsla(${Math.floor(Math.random() * 360)}, 100%, 70%, 0.06)`,
-      dx: (Math.random() - 0.5) * 0.2,
-      dy: (Math.random() - 0.5) * 0.2
-    });
-  }
-
-  // Disegna la scena
-  function animate() {
-    starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
-
-    // Nebulose
-    nebulas.forEach(n => {
-      starCtx.beginPath();
-      const gradient = starCtx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.radius);
-      gradient.addColorStop(0, n.color);
-      gradient.addColorStop(1, 'transparent');
-      starCtx.fillStyle = gradient;
-      starCtx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
-      starCtx.fill();
-
-      // Movimento lento
-      n.x += n.dx;
-      n.y += n.dy;
-
-      // Rimbalzo bordi
-      if (n.x < 0 || n.x > starCanvas.width) n.dx *= -1;
-      if (n.y < 0 || n.y > starCanvas.height) n.dy *= -1;
-    });
-
-    // Stelle
-    stars.forEach(s => {
-      s.alpha += s.speed;
-      if (s.alpha >= 1 || s.alpha <= 0) s.speed *= -1;
-
-      starCtx.beginPath();
-      starCtx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
-      starCtx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`;
-      starCtx.fill();
-    });
-
-    requestAnimationFrame(animate);
-  }
-
-  animate();
-});
-</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script>
   gsap.to(".glow-text", {
@@ -4671,261 +4051,6 @@ window.addEventListener('load', function () {
     ease: "power1.inOut"
   });
 </script>
-<!DOCTYPE html>
-<html lang="it">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Echi di Sofia - Banner Cookie Raffinato</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0; padding: 0;
-      background: #0b0c10;
-      color: #f8f4e9;
-    }
-    /* Banner cookie */
-    #cookie-banner {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      right: 20px;
-      max-width: 480px;
-      background: rgba(42, 75, 58, 0.95);
-      color: #f8f4e9;
-      border-radius: 12px;
-      padding: 20px 25px;
-      box-shadow: 0 8px 24px rgba(42, 75, 58, 0.6);
-      font-size: 14px;
-      line-height: 1.4;
-      z-index: 10000;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      animation: fadeInUp 0.6s ease forwards;
-    }
-    #cookie-banner p {
-      margin: 0;
-    }
-    #cookie-banner a {
-      color: #aad8a0;
-      text-decoration: underline;
-      cursor: pointer;
-    }
-    #cookie-banner a:hover {
-      color: #d4f1c5;
-    }
-    #cookie-banner .btns {
-      display: flex;
-      justify-content: flex-end;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    #cookie-banner button {
-      background: #2a4b3a;
-      border: none;
-      color: #f8f4e9;
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    #cookie-banner button:hover {
-      background: #3b6c53;
-    }
-    #cookie-banner button.reject {
-      background: #6a3a3a;
-    }
-    #cookie-banner button.reject:hover {
-      background: #8a5151;
-    }
-    /* Modal Personalizza */
-    #cookie-modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.65);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 11000;
-    }
-    #cookie-modal {
-      background: #1a1c22;
-      color: #f8f4e9;
-      padding: 25px 30px;
-      max-width: 400px;
-      border-radius: 14px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.7);
-      font-size: 15px;
-    }
-    #cookie-modal h2 {
-      margin-top: 0;
-      margin-bottom: 16px;
-      font-weight: 700;
-      font-size: 1.3em;
-      text-align: center;
-    }
-    #cookie-modal label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 12px;
-      cursor: pointer;
-    }
-    #cookie-modal input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      cursor: pointer;
-    }
-    #cookie-modal .modal-btns {
-      display: flex;
-      justify-content: flex-end;
-      gap: 12px;
-      margin-top: 20px;
-    }
-    #cookie-modal button {
-      padding: 8px 16px;
-      border-radius: 8px;
-      border: none;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    #cookie-modal button.save {
-      background: #2a4b3a;
-      color: #f8f4e9;
-    }
-    #cookie-modal button.save:hover {
-      background: #3b6c53;
-    }
-    #cookie-modal button.cancel {
-      background: #555a5e;
-      color: #eee;
-    }
-    #cookie-modal button.cancel:hover {
-      background: #777c80;
-    }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px);}
-      to { opacity: 1; transform: translateY(0);}
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Banner cookie -->
-  <div id="cookie-banner" role="dialog" aria-live="polite" aria-label="Informativa cookie">
-    <p>
-      Questo sito utilizza cookie per migliorare l’esperienza utente e per analisi anonime. 
-      <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.
-    </p>
-    <div class="btns">
-      <button class="reject" id="btn-reject">Rifiuta</button>
-      <button id="btn-personalize">Personalizza</button>
-      <button id="btn-accept">Accetta</button>
-    </div>
-  </div>
-
-  <!-- Modal Personalizza -->
-  <div id="cookie-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <div id="cookie-modal">
-      <h2 id="modal-title">Impostazioni cookie</h2>
-      <form id="cookie-form">
-        <label>
-          <input type="checkbox" name="analytics" checked />
-          Consenti cookie analitici
-        </label>
-        <label>
-          <input type="checkbox" name="marketing" />
-          Consenti cookie marketing
-        </label>
-        <div class="modal-btns">
-          <button type="button" class="cancel" id="modal-cancel">Annulla</button>
-          <button type="submit" class="save">Salva preferenze</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <script>
-    const banner = document.getElementById('cookie-banner');
-    const modalOverlay = document.getElementById('cookie-modal-overlay');
-    const btnAccept = document.getElementById('btn-accept');
-    const btnReject = document.getElementById('btn-reject');
-    const btnPersonalize = document.getElementById('btn-personalize');
-    const modalCancel = document.getElementById('modal-cancel');
-    const cookieForm = document.getElementById('cookie-form');
-
-    // Controlla se preferenze salvate
-    function getCookiePrefs() {
-      try {
-        return JSON.parse(localStorage.getItem('cookiePrefs'));
-      } catch {
-        return null;
-      }
-    }
-
-    function saveCookiePrefs(prefs) {
-      localStorage.setItem('cookiePrefs', JSON.stringify(prefs));
-    }
-
-    function hideBanner() {
-      banner.style.display = 'none';
-    }
-
-    function showBanner() {
-      banner.style.display = 'flex';
-    }
-
-    // Accetta tutti i cookie
-    btnAccept.addEventListener('click', () => {
-      saveCookiePrefs({ analytics: true, marketing: true, accepted: true });
-      hideBanner();
-    });
-
-    // Rifiuta tutti i cookie tranne necessari (implicitamente)
-    btnReject.addEventListener('click', () => {
-      saveCookiePrefs({ analytics: false, marketing: false, accepted: false });
-      hideBanner();
-    });
-
-    // Mostra modale Personalizza
-    btnPersonalize.addEventListener('click', () => {
-      // Sincronizza checkbox con preferenze salvate
-      const prefs = getCookiePrefs() || { analytics: false, marketing: false };
-      cookieForm.analytics.checked = prefs.analytics === true;
-      cookieForm.marketing.checked = prefs.marketing === true;
-      modalOverlay.style.display = 'flex';
-    });
-
-    // Chiudi modale
-    modalCancel.addEventListener('click', () => {
-      modalOverlay.style.display = 'none';
-    });
-
-    // Salva preferenze da modale
-    cookieForm.addEventListener('submit', e => {
-      e.preventDefault();
-      const analytics = cookieForm.analytics.checked;
-      const marketing = cookieForm.marketing.checked;
-      saveCookiePrefs({ analytics, marketing, accepted: true });
-      modalOverlay.style.display = 'none';
-      hideBanner();
-    });
-
-    // All'avvio mostra banner se non c'è consenso
-    window.addEventListener('load', () => {
-      const prefs = getCookiePrefs();
-      if (!prefs || prefs.accepted === undefined) {
-        showBanner();
-      }
-    });
-  </script>
-
-</body>
-</html>
-
 </body>
 </html>
 
