@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
 
-<!--------------------------------------------->>
+<!--------------------------------------------->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Echi di Sofia - Filosofia attraverso i secoli</title>
@@ -4051,6 +4051,263 @@ function googleTranslateElementInit() {
     ease: "power1.inOut"
   });
 </script>
+  
+<!--  i nanner cooki autosufficiente -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Echi di Sofia - Banner Cookie Raffinato</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0; padding: 0;
+      background: #0b0c10;
+      color: #f8f4e9;
+    }
+    /* Banner cookie */
+    #cookie-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      max-width: 480px;
+      background: rgba(42, 75, 58, 0.95);
+      color: #f8f4e9;
+      border-radius: 12px;
+      padding: 20px 25px;
+      box-shadow: 0 8px 24px rgba(42, 75, 58, 0.6);
+      font-size: 14px;
+      line-height: 1.4;
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      animation: fadeInUp 0.6s ease forwards;
+    }
+    #cookie-banner p {
+      margin: 0;
+    }
+    #cookie-banner a {
+      color: #aad8a0;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    #cookie-banner a:hover {
+      color: #d4f1c5;
+    }
+    #cookie-banner .btns {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    #cookie-banner button {
+      background: #2a4b3a;
+      border: none;
+      color: #f8f4e9;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    #cookie-banner button:hover {
+      background: #3b6c53;
+    }
+    #cookie-banner button.reject {
+      background: #6a3a3a;
+    }
+    #cookie-banner button.reject:hover {
+      background: #8a5151;
+    }
+    /* Modal Personalizza */
+    #cookie-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 11000;
+    }
+    #cookie-modal {
+      background: #1a1c22;
+      color: #f8f4e9;
+      padding: 25px 30px;
+      max-width: 400px;
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.7);
+      font-size: 15px;
+    }
+    #cookie-modal h2 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-weight: 700;
+      font-size: 1.3em;
+      text-align: center;
+    }
+    #cookie-modal label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+    #cookie-modal input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+    #cookie-modal .modal-btns {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    #cookie-modal button {
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    #cookie-modal button.save {
+      background: #2a4b3a;
+      color: #f8f4e9;
+    }
+    #cookie-modal button.save:hover {
+      background: #3b6c53;
+    }
+    #cookie-modal button.cancel {
+      background: #555a5e;
+      color: #eee;
+    }
+    #cookie-modal button.cancel:hover {
+      background: #777c80;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Banner cookie -->
+  <div id="cookie-banner" role="dialog" aria-live="polite" aria-label="Informativa cookie">
+    <p>
+      Questo sito utilizza cookie per migliorare l’esperienza utente e per analisi anonime. 
+      <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.
+    </p>
+    <div class="btns">
+      <button class="reject" id="btn-reject">Rifiuta</button>
+      <button id="btn-personalize">Personalizza</button>
+      <button id="btn-accept">Accetta</button>
+    </div>
+  </div>
+
+  <!-- Modal Personalizza -->
+  <div id="cookie-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div id="cookie-modal">
+      <h2 id="modal-title">Impostazioni cookie</h2>
+      <form id="cookie-form">
+        <label>
+          <input type="checkbox" name="analytics" checked />
+          Consenti cookie analitici
+        </label>
+        <label>
+          <input type="checkbox" name="marketing" />
+          Consenti cookie marketing
+        </label>
+        <div class="modal-btns">
+          <button type="button" class="cancel" id="modal-cancel">Annulla</button>
+          <button type="submit" class="save">Salva preferenze</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const banner = document.getElementById('cookie-banner');
+    const modalOverlay = document.getElementById('cookie-modal-overlay');
+    const btnAccept = document.getElementById('btn-accept');
+    const btnReject = document.getElementById('btn-reject');
+    const btnPersonalize = document.getElementById('btn-personalize');
+    const modalCancel = document.getElementById('modal-cancel');
+    const cookieForm = document.getElementById('cookie-form');
+
+    // Controlla se preferenze salvate
+    function getCookiePrefs() {
+      try {
+        return JSON.parse(localStorage.getItem('cookiePrefs'));
+      } catch {
+        return null;
+      }
+    }
+
+    function saveCookiePrefs(prefs) {
+      localStorage.setItem('cookiePrefs', JSON.stringify(prefs));
+    }
+
+    function hideBanner() {
+      banner.style.display = 'none';
+    }
+
+    function showBanner() {
+      banner.style.display = 'flex';
+    }
+
+    // Accetta tutti i cookie
+    btnAccept.addEventListener('click', () => {
+      saveCookiePrefs({ analytics: true, marketing: true, accepted: true });
+      hideBanner();
+    });
+
+    // Rifiuta tutti i cookie tranne necessari (implicitamente)
+    btnReject.addEventListener('click', () => {
+      saveCookiePrefs({ analytics: false, marketing: false, accepted: false });
+      hideBanner();
+    });
+
+    // Mostra modale Personalizza
+    btnPersonalize.addEventListener('click', () => {
+      // Sincronizza checkbox con preferenze salvate
+      const prefs = getCookiePrefs() || { analytics: false, marketing: false };
+      cookieForm.analytics.checked = prefs.analytics === true;
+      cookieForm.marketing.checked = prefs.marketing === true;
+      modalOverlay.style.display = 'flex';
+    });
+
+    // Chiudi modale
+    modalCancel.addEventListener('click', () => {
+      modalOverlay.style.display = 'none';
+    });
+
+    // Salva preferenze da modale
+    cookieForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const analytics = cookieForm.analytics.checked;
+      const marketing = cookieForm.marketing.checked;
+      saveCookiePrefs({ analytics, marketing, accepted: true });
+      modalOverlay.style.display = 'none';
+      hideBanner();
+    });
+
+    // All'avvio mostra banner se non c'è consenso
+    window.addEventListener('load', () => {
+      const prefs = getCookiePrefs();
+      if (!prefs || prefs.accepted === undefined) {
+        showBanner();
+      }
+    });
+  </script>
+<!--f  bannar cooki autosufficiente  -->
+</body>
+</html>
+
 </body>
 </html>
 
