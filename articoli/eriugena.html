@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giovanni Scoto Eriugena - Filosofo Carolingio</title>
+    <style>
+        :root {
+            --primary-color: #3E2723;
+            --secondary-color: #5D4037;
+            --text-color: #212121;
+            --bg-color: #EFEBE9;
+            --card-bg: #D7CCC8;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --font-main: 'Georgia', serif;
+            --font-alt: 'Arial', sans-serif;
+            --celtic-accent: #6D4C41;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            transition: all 0.5s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border-top: 5px solid var(--celtic-accent);
+            position: relative;
+        }
+
+        header:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--celtic-accent), transparent);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        .subtitle {
+            font-style: italic;
+            color: var(--secondary-color);
+            font-size: 1.3rem;
+            letter-spacing: 0.3px;
+        }
+
+        .reading-modes {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: var(--font-alt);
+            transition: all 0.4s ease;
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mode-btn:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255,255,255,0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        .mode-btn:hover:after {
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+
+        .section-container {
+            margin-bottom: 40px;
+            transition: all 0.4s ease;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--celtic-accent));
+            color: white;
+            border-radius: 10px 10px 0 0;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, var(--celtic-accent), var(--primary-color));
+            transform: translateY(-3px);
+        }
+
+        .section-title {
+            margin: 0;
+            font-size: 1.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Bottoni creativi */
+        .toggle-btn.knot {
+            background-color: transparent;
+        }
+
+        .toggle-btn.knot:before {
+            content: "⌖";
+            transition: all 0.4s ease;
+        }
+
+        .toggle-btn.knot.rotated:before {
+            transform: rotate(45deg);
+            content: "⍟";
+        }
+
+        .toggle-btn.quill {
+            background-color: transparent;
+        }
+
+        .toggle-btn.quill:before {
+            content: "✒";
+            transition: all 0.4s ease;
+        }
+
+        .toggle-btn.quill.rotated:before {
+            transform: scale(1.2);
+            content: "✎";
+        }
+
+        .toggle-btn.cross {
+            background-color: transparent;
+        }
+
+        .toggle-btn.cross:before {
+            content: "✚";
+            transition: all 0.4s ease;
+        }
+
+        .toggle-btn.cross.rotated:before {
+            transform: rotate(45deg);
+            content: "✛";
+        }
+
+        .section-content {
+            padding: 30px;
+            background-color: var(--card-bg);
+            border-radius: 0 0 10px 10px;
+            box-shadow: var(--shadow);
+            display: none;
+            border-left: 4px solid var(--celtic-accent);
+        }
+
+        .section-content.active {
+            display: block;
+            animation: fadeInUp 0.7s ease;
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Modalità di lettura */
+        .night-mode {
+            --primary-color: #5D4037;
+            --secondary-color: #8D6E63;
+            --text-color: #EFEBE9;
+            --bg-color: #121212;
+            --card-bg: #1E1E1E;
+            --shadow: 0 4px 12px rgba(0,0,0,0.3);
+            --celtic-accent: #BCAAA4;
+        }
+
+        .philosophical-mode {
+            --font-main: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            --primary-color: #4E342E;
+            --secondary-color: #6D4C41;
+            --text-color: #3E2723;
+            --bg-color: #D7CCC8;
+            --card-bg: #BCAAA4;
+            --celtic-accent: #8D6E63;
+        }
+
+        .minimal-mode {
+            --font-main: 'Helvetica Neue', Arial, sans-serif;
+            --primary-color: #5D4037;
+            --secondary-color: #795548;
+            --text-color: #3E2723;
+            --bg-color: #FFFFFF;
+            --card-bg: #EFEBE9;
+            --shadow: 0 2px 6px rgba(0,0,0,0.1);
+            --celtic-accent: #A1887F;
+        }
+
+        .academic-mode {
+            --font-main: 'Times New Roman', Times, serif;
+            --primary-color: #3E2723;
+            --secondary-color: #5D4037;
+            --text-color: #212121;
+            --bg-color: #FAFAFA;
+            --card-bg: #EEEEEE;
+            --celtic-accent: #8D6E63;
+        }
+
+        .celtic-mode {
+            --primary-color: #3E2723;
+            --secondary-color: #5D4037;
+            --text-color: #212121;
+            --bg-color: #F5F5F5;
+            --card-bg: #E0E0E0;
+            --celtic-accent: #6D4C41;
+            --font-main: 'UnifrakturMaguntia', 'Times New Roman', serif;
+        }
+
+        /* Stili per contenuto */
+        h2, h3, h4 {
+            color: var(--primary-color);
+            margin-top: 30px;
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--celtic-accent);
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+
+        blockquote {
+            border-left: 4px solid var(--celtic-accent);
+            padding: 20px;
+            margin: 30px 0;
+            font-style: italic;
+            background-color: rgba(141, 110, 99, 0.1);
+            border-radius: 0 8px 8px 0;
+            position: relative;
+        }
+
+        blockquote:before {
+            content: """;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 4rem;
+            color: rgba(94, 53, 59, 0.1);
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        ul, ol {
+            padding-left: 30px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        li:before {
+            content: "•";
+            color: var(--celtic-accent);
+            position: absolute;
+            left: -20px;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background-color: rgba(141, 110, 99, 0.15);
+            padding: 3px 6px;
+            border-radius: 4px;
+            border-bottom: 1px solid var(--celtic-accent);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin: 25px 0;
+        }
+
+        .timeline:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--celtic-accent), var(--primary-color));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+
+        .timeline-item:before {
+            content: "";
+            position: absolute;
+            left: -8px;
+            top: 5px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: var(--celtic-accent);
+            border: 2px solid var(--primary-color);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .section-header {
+                padding: 15px 20px;
+            }
+            
+            .section-title {
+                font-size: 1.3rem;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-content {
+                padding: 20px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Giovanni Scoto Eriugena</h1>
+            <p class="subtitle">Il Filosofo Carolingio (815-877 d.C.)</p>
+            
+            <div class="reading-modes">
+                <button class="mode-btn" onclick="setMode('default')">Classico</button>
+                <button class="mode-btn" onclick="setMode('night')">Notturno</button>
+                <button class="mode-btn" onclick="setMode('philosophical')">Filosofico</button>
+                <button class="mode-btn" onclick="setMode('minimal')">Minimal</button>
+                <button class="mode-btn" onclick="setMode('academic')">Accademico</button>
+                <button class="mode-btn" onclick="setMode('celtic')">Celtico</button>
+            </div>
+        </header>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('biography')">
+                <h2 class="section-title">Vita e Contesto Storico</h2>
+                <button class="toggle-btn knot">+</button>
+            </div>
+            <div class="section-content" id="biography">
+                <p><span class="highlight">Giovanni Scoto Eriugena</span> (Erigena), filosofo e teologo irlandese del IX secolo, fu una delle menti più originali del Rinascimento carolingio. Il suo nome significa "Giovanni lo Scozzese nato in Irlanda".</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h3>815 d.C. circa</h3>
+                        <p>Nasce in Irlanda, dove riceve un'educazione monastica</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>840 d.C.</h3>
+                        <p>Si trasferisce in Francia alla corte di Carlo il Calvo</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>850-860 d.C.</h3>
+                        <p>Scrive il "De praedestinatione" contro Gottschalk</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>862 d.C.</h3>
+                        <p>Inizia la traduzione dello Pseudo-Dionigi</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>867 d.C.</h3>
+                        <p>Completa il suo capolavoro "Periphyseon"</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>877 d.C.</h3>
+                        <p>Muore probabilmente in Francia o in Inghilterra</p>
+                    </div>
+                </div>
+                
+                <h3>Contesto storico-culturale</h3>
+                <ul>
+                    <li><strong>Rinascimento carolingio:</strong> Fioritura culturale sotto Carlo Magno e i suoi successori</li>
+                    <li><strong>Monachesimo irlandese:</strong> Tradizione erudita e missionaria</li>
+                    <li><strong>Controversie teologiche:</strong> Dibattiti sulla predestinazione</li>
+                    <li><strong>Influenze:</strong> Neoplatonismo, Padri della Chiesa, cultura celtica</li>
+                </ul>
+                
+                <blockquote>
+                    "Ogni autore che viene letto con intelligenza viene subito resuscitato" - Giovanni Scoto Eriugena
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('works')">
+                <h2 class="section-title">Opere Principali</h2>
+                <button class="toggle-btn quill">+</button>
+            </div>
+            <div class="section-content" id="works">
+                <p>Eriugena fu autore prolifico, traduttore e commentatore, le cui opere riflettono una sintesi unica di pensiero cristiano e filosofia neoplatonica.</p>
+                
+                <h3>Opere filosofiche</h3>
+                <ul>
+                    <li><strong>Periphyseon (De divisione naturae):</strong> Capolavoro in 5 libri sulla natura</li>
+                    <li><strong>De praedestinatione:</strong> Trattato sulla predestinazione</li>
+                    <li><strong>Omelia sul Prologo di Giovanni:</strong> Commento mistico</li>
+                </ul>
+                
+                <h3>Traduzioni</h3>
+                <ul>
+                    <li><strong>Corpus Dionysiacum:</strong> Opere dello Pseudo-Dionigi</li>
+                    <li><strong>Ambigua ad Iohannem:</strong> Di Massimo il Confessore</li>
+                    <li><strong>De hominis opificio:</strong> Di Gregorio di Nissa</li>
+                </ul>
+                
+                <h3>Commentari</h3>
+                <ul>
+                    <li><strong>Commento al Vangelo di Giovanni</strong></li>
+                    <li><strong>Commento alla Gerarchia Celeste</strong> dello Pseudo-Dionigi</li>
+                    <li><strong>Commento alle Nozze di Mercurio e Filologia</strong> di Marziano Capella</li>
+                </ul>
+                
+                <h3>Opere minori</h3>
+                <ul>
+                    <li><strong>Versi:</strong> Composizioni poetiche</li>
+                    <li><strong>Lettere:</strong> Corrispondenza con sovrani e vescovi</li>
+                </ul>
+                
+                <blockquote>
+                    "La filosofia è la meditazione della morte, ma anche la risurrezione della verità" - Periphyseon
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('philosophy')">
+                <h2 class="section-title">Pensiero Filosofico</h2>
+                <button class="toggle-btn cross">+</button>
+            </div>
+            <div class="section-content" id="philosophy">
+                <p>Il sistema filosofico di Eriugena rappresenta una delle sintesi più originali tra neoplatonismo e cristianesimo nel Medioevo.</p>
+                
+                <h3>Divisione della Natura</h3>
+                <p>Struttura quadripartita del reale:</p>
+                <ol>
+                    <li><strong>Natura che crea e non è creata:</strong> Dio come principio</li>
+                    <li><strong>Natura che è creata e crea:</strong> Idee divine</li>
+                    <li><strong>Natura che è creata e non crea:</strong> Mondo sensibile</li>
+                    <li><strong>Natura che non crea e non è creata:</strong> Dio come fine</li>
+                </ol>
+                
+                <h3>Teologia negativa</h3>
+                <ul>
+                    <li>Dio è al di là di ogni comprensione e definizione</li>
+                    <li>Conoscenza attraverso la negazione (apofasi)</li>
+                    <li>Influenza dello Pseudo-Dionigi</li>
+                </ul>
+                
+                <h3>Antropologia</h3>
+                <ul>
+                    <li>L'uomo come microcosmo che contiene tutto il creato</li>
+                    <li>Doppia creazione dell'uomo (interiore ed esteriore)</li>
+                    <li>Ritorno a Dio attraverso la conoscenza</li>
+                </ul>
+                
+                <h3>Esegesi biblica</h3>
+                <ul>
+                    <li>Interpretazione allegorica e anagogica</li>
+                    <li>Concordanza tra Scrittura e ragione</li>
+                    <li>La Bibbia come testo polisemico</li>
+                </ul>
+                
+                <blockquote>
+                    "La vera autorità non contraddice la retta ragione, né la retta ragione la vera autorità" - Periphyseon
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('theology')">
+                <h2 class="section-title">Teologia e Dottrina</h2>
+                <button class="toggle-btn cross">+</button>
+            </div>
+            <div class="section-content" id="theology">
+                <p>La teologia eriugeniana, profondamente mistica, sfidò le convenzioni del suo tempo con un approccio razionale e speculativo.</p>
+                
+                <h3>Dottrina della creazione</h3>
+                <ul>
+                    <li>Creazione come teofania (manifestazione di Dio)</li>
+                    <li>Processione e ritorno (exitus-reditus)</li>
+                    <li>Creazione eterna nelle cause primordiali</li>
+                </ul>
+                
+                <h3>Cristologia</h3>
+                <ul>
+                    <li>Cristo come mediatore e centro del cosmo</li>
+                    <li>Incarnazione come evento cosmico</li>
+                    <li>Umanità di Cristo modello per la deificazione</li>
+                </ul>
+                
+                <h3>Escatologia</h3>
+                <ul>
+                    <li>Apocatastasi (restaurazione finale di tutte le cose)</li>
+                    <li>Ritorno a Dio attraverso la conoscenza</li>
+                    <li>Superamento delle differenze di genere e stato</li>
+                </ul>
+                
+                <h3>Controversie</h3>
+                <ul>
+                    <li><strong>Predestinazione:</strong> Negazione della doppia predestinazione</li>
+                    <li><strong>Eucaristia:</strong> Interpretazione simbolica</li>
+                    <li><strong>Rapporto fede-ragione:</strong> Armonia tra teologia e filosofia</li>
+                </ul>
+                
+                <blockquote>
+                    "Dio non conosce se stesso che che cosa è, perché non è un che cosa" - Periphyseon
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('legacy')">
+                <h2 class="section-title">Eredità e Influenza</h2>
+                <button class="toggle-btn knot">+</button>
+            </div>
+            <div class="section-content" id="legacy">
+                <p>Nonostante le condanne ecclesiastiche, il pensiero di Eriugena influenzò profondamente la filosofia e la teologia medievali.</p>
+                
+                <h3>Medioevo</h3>
+                <ul>
+                    <li><strong>Scuola di Chartres:</strong> Ripresa del suo platonismo</li>
+                    <li><strong>Mistici renani:</strong> Eckhart, Cusano</li>
+                    <li><strong>Condanne:</strong> Il Periphyseon fu condannato nel 1210 e 1225</li>
+                </ul>
+                
+                <h3>Età moderna</h3>
+                <ul>
+                    <li><strong>Rinascimento:</strong> Ripresa da Nicola Cusano e Marsilio Ficino</li>
+                    <li><strong>Idealismo tedesco:</strong> Hegel lo definì "il primo padre della speculazione"</li>
+                    <li><strong>Filosofia contemporanea:</strong> Interesse per il suo pensiero organico</li>
+                </ul>
+                
+                <h3>Contributi permanenti</h3>
+                <ul>
+                    <li><strong>Metodo dialettico:</strong> Integrazione di filosofia e teologia</li>
+                    <li><strong>Teologia negativa:</strong> Approccio apofatico a Dio</li>
+                    <li><strong>Esegesi simbolica:</strong> Approccio multilivello alla Scrittura</li>
+                    <li><strong>Visione cosmica:</strong> Unità di natura e grazia</li>
+                </ul>
+                
+                <blockquote>
+                    "Eriugena è il più grande pensatore dell'Alto Medioevo, il più originale dopo Agostino e prima di Tommaso" - Étienne Gilson
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('controversies')">
+                <h2 class="section-title">Questioni Aperte e Critiche</h2>
+                <button class="toggle-btn quill">+</button>
+            </div>
+            <div class="section-content" id="controversies">
+                <p>L'originalità del pensiero eriugeniano ha suscitato numerosi dibattiti e interpretazioni contrastanti.</p>
+                
+                <h3>Problemi interpretativi</h3>
+                <ul>
+                    <li><strong>Ortodossia:</strong> Quanto è compatibile con il cristianesimo?</li>
+                    <li><strong>Panteismo:</strong> La natura è Dio o manifestazione di Dio?</li>
+                    <li><strong>Fonti:</strong> Peso relativo delle diverse influenze</li>
+                </ul>
+                
+                <h3>Critiche storiche</h3>
+                <ul>
+                    <li><strong>Medioevo:</strong> Condanne per posizioni giudicate eterodosse</li>
+                    <li><strong>Riforma:</strong> Critiche al suo misticismo speculativo</li>
+                    <li><strong>Illuminismo:</strong> Giudizi sul suo sistema troppo astratto</li>
+                </ul>
+                
+                <h3>Rivalutazioni</h3>
+                <p>Studi recenti hanno evidenziato:</p>
+                <ul>
+                    <li>La profondità della sua sintesi culturale</li>
+                    <li>L'attualità del suo approccio ecologico ante litteram</li>
+                    <li>La modernità della sua epistemologia</li>
+                    <li>Il valore del suo dialogo tra fede e ragione</li>
+                </ul>
+                
+                <blockquote>
+                    "Eriugena ci invita a pensare l'impensabile, a dire l'indicibile, a cercare Dio oltre ogni concetto" - Werner Beierwaltes
+                </blockquote>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(sectionId) {
+            const content = document.getElementById(sectionId);
+            const button = content.previousElementSibling.querySelector('.toggle-btn');
+            
+            content.classList.toggle('active');
+            button.classList.toggle('rotated');
+        }
+
+        function setMode(mode) {
+            document.body.className = mode + '-mode';
+            
+            // Cambia stile ai bottoni in base alla modalità
+            const buttons = document.querySelectorAll('.toggle-btn');
+            buttons.forEach(btn => {
+                btn.className = 'toggle-btn';
+                if(mode === 'default' || mode === 'celtic') {
+                    btn.classList.add('knot');
+                } else if(mode === 'night' || mode === 'philosophical') {
+                    btn.classList.add('quill');
+                } else if(mode === 'minimal' || mode === 'academic') {
+                    btn.classList.add('cross');
+                }
+            });
+        }
+
+        // Apri la prima sezione di default
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleSection('biography');
+        });
+    </script>
+</body>
+</html>
