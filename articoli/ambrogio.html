@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambrogio di Milano - Studio Completo</title>
+    <style>
+        :root {
+            --primary-color: #3a506b;
+            --secondary-color: #5bc0be;
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --font-main: 'Georgia', serif;
+            --font-alt: 'Arial', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-style: italic;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+
+        .reading-modes {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: var(--font-alt);
+            transition: all 0.3s ease;
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-container {
+            margin-bottom: 30px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 8px 8px 0 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            background-color: #2c3e50;
+        }
+
+        .section-title {
+            margin: 0;
+            font-size: 1.3rem;
+        }
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .toggle-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .toggle-btn.rotated {
+            transform: rotate(45deg);
+        }
+
+        .section-content {
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 0 0 8px 8px;
+            box-shadow: var(--shadow);
+            display: none;
+        }
+
+        .section-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Modalità di lettura */
+        .night-mode {
+            --primary-color: #bb86fc;
+            --secondary-color: #03dac6;
+            --text-color: #e1e1e1;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .philosophical-mode {
+            --font-main: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            --primary-color: #6d4c41;
+            --secondary-color: #8d6e63;
+            --text-color: #3e2723;
+            --bg-color: #efebe9;
+            --card-bg: #d7ccc8;
+        }
+
+        .minimal-mode {
+            --font-main: 'Helvetica Neue', Arial, sans-serif;
+            --primary-color: #333;
+            --secondary-color: #666;
+            --text-color: #444;
+            --bg-color: #fff;
+            --card-bg: #f5f5f5;
+            --shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .academic-mode {
+            --font-main: 'Times New Roman', Times, serif;
+            --primary-color: #1a237e;
+            --secondary-color: #283593;
+            --text-color: #111;
+            --bg-color: #f9f9f9;
+            --card-bg: #fff;
+        }
+
+        /* Stili bottoni creativi */
+        .toggle-btn.book {
+            background-color: #8b4513;
+            transform: rotate(0deg);
+        }
+
+        .toggle-btn.book.rotated {
+            transform: rotate(90deg);
+            background-color: #a0522d;
+        }
+
+        .toggle-btn.scroll {
+            background-color: #d4a76a;
+            border-radius: 5px;
+        }
+
+        .toggle-btn.scroll.rotated {
+            transform: rotate(180deg);
+        }
+
+        .toggle-btn.cross {
+            position: relative;
+            background-color: transparent;
+        }
+
+        .toggle-btn.cross:before, .toggle-btn.cross:after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 2px;
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-btn.cross:before {
+            transform: rotate(0deg);
+        }
+
+        .toggle-btn.cross:after {
+            transform: rotate(90deg);
+        }
+
+        .toggle-btn.cross.rotated:before {
+            transform: rotate(45deg);
+        }
+
+        .toggle-btn.cross.rotated:after {
+            transform: rotate(-45deg);
+        }
+
+        /* Stili per citazioni */
+        blockquote {
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            color: var(--primary-color);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .section-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .toggle-btn {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Ambrogio di Milano</h1>
+            <p class="subtitle">Vescovo, teologo e Dottore della Chiesa (339-397 d.C.)</p>
+            
+            <div class="reading-modes">
+                <button class="mode-btn" onclick="setMode('default')">Classico</button>
+                <button class="mode-btn" onclick="setMode('night')">Notturno</button>
+                <button class="mode-btn" onclick="setMode('philosophical')">Filosofico</button>
+                <button class="mode-btn" onclick="setMode('minimal')">Minimal</button>
+                <button class="mode-btn" onclick="setMode('academic')">Accademico</button>
+            </div>
+        </header>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('biography')">
+                <h2 class="section-title">Vita e Biografia</h2>
+                <button class="toggle-btn book">+</button>
+            </div>
+            <div class="section-content" id="biography">
+                <p>Sant'Ambrogio, nato a Treviri nel 339 da una nobile famiglia romana, fu una delle figure più influenti della Chiesa del IV secolo. Dopo una brillante carriera come governatore della Liguria e dell'Emilia con sede a Milano, fu acclamato vescovo dalla popolazione nel 374, nonostante non fosse ancora battezzato.</p>
+                
+                <p>La sua conversione e consacrazione furono rapide: ricevette il battesimo e, una settimana dopo, il 7 dicembre 374, fu ordinato vescovo. Questo evento segnò l'inizio di un episcopato che avrebbe trasformato profondamente la Chiesa occidentale.</p>
+                
+                <h3>Contesto storico</h3>
+                <p>Ambrogio visse in un'epoca di transizione per l'Impero Romano, caratterizzata da:</p>
+                <ul>
+                    <li>Declino del paganesimo e affermazione del cristianesimo</li>
+                    <li>Conflitti teologici (arianesimo, nicenismo)</li>
+                    <li>Tensioni tra Chiesa e potere imperiale</li>
+                    <li>Migrazioni barbariche e instabilità politica</li>
+                </ul>
+                
+                <h3>Eventi principali</h3>
+                <p>Tra i momenti cruciali del suo episcopato:</p>
+                <ol>
+                    <li><strong>382:</strong> Scoperta delle reliquie dei Santi Gervasio e Protasio</li>
+                    <li><strong>386:</strong> Battesimo di Agostino d'Ippona</li>
+                    <li><strong>390:</strong> Scomunica dell'imperatore Teodosio per il massacro di Tessalonica</li>
+                    <li><strong>392:</strong> Concilio di Aquileia contro l'arianesimo</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('teachings')">
+                <h2 class="section-title">Insegnamenti e Teologia</h2>
+                <button class="toggle-btn scroll">+</button>
+            </div>
+            <div class="section-content" id="teachings">
+                <p>La teologia ambrosiana rappresenta una sintesi originale tra tradizione occidentale e orientale, con particolare attenzione alla vita morale e sacramentale della Chiesa.</p>
+                
+                <h3>Dottrine principali</h3>
+                <div class="subsection">
+                    <h4>Ecclesiologia</h4>
+                    <p>Ambrogio sviluppò una visione della Chiesa come:</p>
+                    <ul>
+                        <li>Madre dei fedeli (concezione materna della Chiesa)</li>
+                        <li>Corpo mistico di Cristo</li>
+                        <li>Istituzione indipendente dallo Stato</li>
+                    </ul>
+                    
+                    <blockquote>
+                        "Ubi Petrus, ibi Ecclesia" (Dove c'è Pietro, c'è la Chiesa) - Ambrogio, Explanatio Psalmorum
+                    </blockquote>
+                </div>
+                
+                <div class="subsection">
+                    <h4>Mariologia</h4>
+                    <p>Ambrogio fu tra i primi Padri occidentali a sviluppare una teologia mariana sistematica, enfatizzando:</p>
+                    <ul>
+                        <li>La verginità perpetua di Maria</li>
+                        <li>Maria come modello della Chiesa</li>
+                        <li>Il ruolo di Maria nella storia della salvezza</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <h4>Sacramenti</h4>
+                    <p>La sua dottrina sacramentale influenzò profondamente la liturgia occidentale:</p>
+                    <ul>
+                        <li>Enfasi sulla realtà della presenza di Cristo nell'Eucaristia</li>
+                        <li>Teologia battesimale con richiami paolini</li>
+                        <li>Dottrina della penitenza come medicina spirituale</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('works')">
+                <h2 class="section-title">Opere Principali</h2>
+                <button class="toggle-btn cross">+</button>
+            </div>
+            <div class="section-content" id="works">
+                <p>L'opera letteraria di Ambrogio copre vari generi: trattati teologici, commentari biblici, omelie e lettere. Il suo stile unisce eleganza retorica e profondità teologica.</p>
+                
+                <h3>Opere dogmatiche</h3>
+                <ul>
+                    <li><strong>De fide ad Gratianum:</strong> Difesa della fede nicena contro l'arianesimo</li>
+                    <li><strong>De Spiritu Sancto:</strong> Trattato sullo Spirito Santo</li>
+                    <li><strong>De incarnationis dominicae sacramento:</strong> Cristologia antiariana</li>
+                </ul>
+                
+                <h3>Opere esegetiche</h3>
+                <ul>
+                    <li><strong>Exameron:</strong> Commento al racconto della creazione</li>
+                    <li><strong>De paradiso:</strong> Interpretazione allegorica del giardino dell'Eden</li>
+                    <li><strong>Expositio Evangelii secundum Lucam:</strong> Commento al Vangelo di Luca</li>
+                </ul>
+                
+                <h3>Opere morali e ascetiche</h3>
+                <ul>
+                    <li><strong>De officiis ministrorum:</strong> Manuale di etica per il clero</li>
+                    <li><strong>De virginibus:</strong> Esortazione alla vita verginale</li>
+                    <li><strong>De viduis:</strong> Sulla condizione delle vedove</li>
+                </ul>
+                
+                <h3>Inni</h3>
+                <p>Ambrogio compose numerosi inni liturgici, dando origine alla cosiddetta "metrica ambrosiana":</p>
+                <ul>
+                    <li>"Aeterne rerum Conditor"</li>
+                    <li>"Deus Creator omnium"</li>
+                    <li>"Veni Redemptor gentium"</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('legacy')">
+                <h2 class="section-title">Eredità e Influenza</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="legacy">
+                <p>L'influsso di Ambrogio sulla Chiesa occidentale è difficilmente sopravvalutabile. La sua azione si estese a molteplici ambiti:</p>
+                
+                <h3>Nella liturgia</h3>
+                <ul>
+                    <li>Introduzione di inni nella liturgia (innografia ambrosiana)</li>
+                    <li>Sviluppo del rito ambrosiano, ancora oggi in uso a Milano</li>
+                    <li>Influenza sulla struttura della messa romana</li>
+                </ul>
+                
+                <h3>Nella teologia</h3>
+                <ul>
+                    <li>Formazione di Agostino d'Ippona, che lo definì "uomo di Dio"</li>
+                    <li>Influenza sulla scolastica medievale, specialmente su Tommaso d'Aquino</li>
+                    <li>Precursore della dottrina dei due poteri (spirituale e temporale)</li>
+                </ul>
+                
+                <h3>Nella cultura</h3>
+                <ul>
+                    <li>Patrono di Milano e della Lombardia</li>
+                    <li>Ispirazione per l'arte medievale e rinascimentale</li>
+                    <li>Modello del vescovo pastore e dottore</li>
+                </ul>
+                
+                <blockquote>
+                    "Quando a Milano venni, trovai il tuo servo Ambrogio... celebre fra i migliori, pio verso di te... E il suo discorso fluiva dinanzi a te miele stillante." - Sant'Agostino, Confessioni
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('conflicts')">
+                <h2 class="section-title">Conflitti e Controversie</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="conflicts">
+                <p>L'episcopato di Ambrogio fu segnato da numerosi conflitti che dimostrano il suo carattere fermo e la sua visione chiara dei rapporti tra Chiesa e Stato.</p>
+                
+                <h3>Scontro con l'arianesimo</h3>
+                <p>Ambrogio difese strenuamente la fede nicena contro l'arianesimo sostenuto dall'imperatrice Giustina:</p>
+                <ul>
+                    <li><strong>385-386:</strong> "Crisi delle basiliche" - rifiuto di consegnare una basilica agli ariani</li>
+                    <li>Organizzazione di veglie di preghiera e canti popolari</li>
+                    <li>Forte opposizione alla corte imperiale filo-ariana</li>
+                </ul>
+                
+                <h3>Rapporti con il potere imperiale</h3>
+                <p>Ambrogio stabilì un nuovo modello di relazione tra vescovi e imperatori:</p>
+                <ul>
+                    <li><strong>390:</strong> Scomunica di Teodosio I dopo il massacro di Tessalonica</li>
+                    <li>Imposizione di una pubblica penitenza all'imperatore</li>
+                    <li>Affermazione dell'indipendenza morale della Chiesa</li>
+                </ul>
+                
+                <h3>Controversia sull'altare della Vittoria</h3>
+                <p>Ambrogio si oppose alla richiesta dei senatori pagani di ripristinare l'altare della Vittoria in Senato:</p>
+                <ul>
+                    <li>Scrisse lettere all'imperatore Valentiniano II</li>
+                    <li>Affermò la superiorità del cristianesimo sul paganesimo</li>
+                    <li>Contribuì al declino definitivo del paganesimo ufficiale</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('spirituality')">
+                <h2 class="section-title">Spiritualità Ambrosiana</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="spirituality">
+                <p>La spiritualità di Ambrogio è caratterizzata da un equilibrio tra ascesi e azione, contemplazione e impegno nel mondo.</p>
+                
+                <h3>Elementi distintivi</h3>
+                <ul>
+                    <li><strong>Cristocentrismo:</strong> Cristo come centro della vita spirituale</li>
+                    <li><strong>Ecclesialità:</strong> La salvezza si realizza nella Chiesa</li>
+                    <li><strong>Mariologia:</strong> Maria come modello di virtù</li>
+                    <li><strong>Etica sociale:</strong> Attenzione ai poveri e alla giustizia</li>
+                </ul>
+                
+                <h3>Esercizi spirituali</h3>
+                <p>Ambrogio promosse diverse pratiche spirituali:</p>
+                <ul>
+                    <li><strong>Lectio divina:</strong> Lettura orante della Scrittura</li>
+                    <li><strong>Digiuno:</strong> Come strumento di purificazione</li>
+                    <li><strong>Verginità consacrata:</strong> Come forma di donazione totale a Cristo</li>
+                    <li><strong>Carità operosa:</strong> Attenzione concreta ai bisognosi</li>
+                </ul>
+                
+                <blockquote>
+                    "Non è ricco chi possiede molto, ma chi dona molto." - Sant'Ambrogio, De Nabuthae
+                </blockquote>
+                
+                <h3>Misticismo sacramentale</h3>
+                <p>Ambrogio sviluppò una profonda teologia mistica centrata sui sacramenti:</p>
+                <ul>
+                    <li>Battesimo come rinascita spirituale</li>
+                    <li>Eucaristia come presenza reale di Cristo</li>
+                    <li>Penitenza come medicina dell'anima</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(sectionId) {
+            const content = document.getElementById(sectionId);
+            const button = content.previousElementSibling.querySelector('.toggle-btn');
+            
+            content.classList.toggle('active');
+            button.classList.toggle('rotated');
+        }
+
+        function setMode(mode) {
+            document.body.className = mode + '-mode';
+            
+            // Cambia stile ai bottoni in base alla modalità
+            const buttons = document.querySelectorAll('.toggle-btn');
+            buttons.forEach(btn => {
+                btn.className = 'toggle-btn';
+                if(mode === 'philosophical') {
+                    btn.classList.add('book');
+                } else if(mode === 'night') {
+                    btn.classList.add('scroll');
+                } else if(mode === 'academic') {
+                    btn.classList.add('cross');
+                }
+                // Per default e minimal rimane lo stile base
+            });
+        }
+
+        // Apri la prima sezione di default
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleSection('biography');
+        });
+    </script>
+</body>
+</html>

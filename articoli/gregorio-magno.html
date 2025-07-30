@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>San Gregorio Magno - Papa e Dottore della Chiesa</title>
+    <style>
+        :root {
+            --primary-color: #5D4037;
+            --secondary-color: #8D6E63;
+            --text-color: #3E2723;
+            --bg-color: #EFEBE9;
+            --card-bg: #D7CCC8;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --font-main: 'Georgia', serif;
+            --font-alt: 'Arial', sans-serif;
+            --papal-accent: #8D6E63;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            transition: all 0.5s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border-bottom: 5px solid var(--papal-accent);
+            position: relative;
+        }
+
+        header:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--papal-accent), var(--primary-color));
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        .subtitle {
+            font-style: italic;
+            color: var(--secondary-color);
+            font-size: 1.3rem;
+            letter-spacing: 0.3px;
+        }
+
+        .reading-modes {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: var(--font-alt);
+            transition: all 0.4s ease;
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mode-btn:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255,255,255,0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        .mode-btn:hover:after {
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+
+        .section-container {
+            margin-bottom: 40px;
+            transition: all 0.4s ease;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--papal-accent));
+            color: white;
+            border-radius: 10px 10px 0 0;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, var(--papal-accent), var(--primary-color));
+            transform: translateY(-3px);
+        }
+
+        .section-title {
+            margin: 0;
+            font-size: 1.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Bottoni creativi */
+        .toggle-btn.dove {
+            background-color: transparent;
+        }
+
+        .toggle-btn.dove:before {
+            content: "✝";
+            transition: all 0.4s ease;
+        }
+
+        .toggle-btn.dove.rotated:before {
+            transform: rotate(45deg);
+            content: "✙";
+        }
+
+        .toggle-btn.key {
+            background-color: transparent;
+        }
+
+        .toggle-btn.key:before {
+            content: "⚷";
+            transition: all 0.4s ease;
+        }
+
+        .toggle-btn.key.rotated:before {
+            transform: scale(1.2);
+            content: "⚶";
+        }
+
+        .toggle-btn.book {
+            background-color: transparent;
+        }
+
+        .toggle-btn.book:before {
+            content: "📖";
+            transition: all 0.4s ease;
+        }
+
+        .toggle-btn.book.rotated:before {
+            transform: rotate(15deg);
+            content: "📘";
+        }
+
+        .section-content {
+            padding: 30px;
+            background-color: var(--card-bg);
+            border-radius: 0 0 10px 10px;
+            box-shadow: var(--shadow);
+            display: none;
+            border-left: 4px solid var(--papal-accent);
+        }
+
+        .section-content.active {
+            display: block;
+            animation: fadeInUp 0.7s ease;
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Modalità di lettura */
+        .night-mode {
+            --primary-color: #5D4037;
+            --secondary-color: #8D6E63;
+            --text-color: #EFEBE9;
+            --bg-color: #121212;
+            --card-bg: #1E1E1E;
+            --shadow: 0 4px 12px rgba(0,0,0,0.3);
+            --papal-accent: #BCAAA4;
+        }
+
+        .philosophical-mode {
+            --font-main: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            --primary-color: #4E342E;
+            --secondary-color: #6D4C41;
+            --text-color: #3E2723;
+            --bg-color: #D7CCC8;
+            --card-bg: #BCAAA4;
+            --papal-accent: #8D6E63;
+        }
+
+        .minimal-mode {
+            --font-main: 'Helvetica Neue', Arial, sans-serif;
+            --primary-color: #5D4037;
+            --secondary-color: #795548;
+            --text-color: #3E2723;
+            --bg-color: #FFFFFF;
+            --card-bg: #EFEBE9;
+            --shadow: 0 2px 6px rgba(0,0,0,0.1);
+            --papal-accent: #A1887F;
+        }
+
+        .academic-mode {
+            --font-main: 'Times New Roman', Times, serif;
+            --primary-color: #3E2723;
+            --secondary-color: #5D4037;
+            --text-color: #212121;
+            --bg-color: #FAFAFA;
+            --card-bg: #EEEEEE;
+            --papal-accent: #8D6E63;
+        }
+
+        .monastic-mode {
+            --primary-color: #3E2723;
+            --secondary-color: #5D4037;
+            --text-color: #212121;
+            --bg-color: #F5F5F5;
+            --card-bg: #E0E0E0;
+            --papal-accent: #6D4C41;
+            --font-main: 'Cardo', 'Times New Roman', serif;
+        }
+
+        /* Stili per contenuto */
+        h2, h3, h4 {
+            color: var(--primary-color);
+            margin-top: 30px;
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--papal-accent);
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+
+        blockquote {
+            border-left: 4px solid var(--papal-accent);
+            padding: 20px;
+            margin: 30px 0;
+            font-style: italic;
+            background-color: rgba(141, 110, 99, 0.1);
+            border-radius: 0 8px 8px 0;
+            position: relative;
+        }
+
+        blockquote:before {
+            content: """;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 4rem;
+            color: rgba(94, 53, 59, 0.1);
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        ul, ol {
+            padding-left: 30px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        li:before {
+            content: "•";
+            color: var(--papal-accent);
+            position: absolute;
+            left: -20px;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background-color: rgba(141, 110, 99, 0.15);
+            padding: 3px 6px;
+            border-radius: 4px;
+            border-bottom: 1px solid var(--papal-accent);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin: 25px 0;
+        }
+
+        .timeline:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--papal-accent), var(--primary-color));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+
+        .timeline-item:before {
+            content: "";
+            position: absolute;
+            left: -8px;
+            top: 5px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: var(--papal-accent);
+            border: 2px solid var(--primary-color);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .section-header {
+                padding: 15px 20px;
+            }
+            
+            .section-title {
+                font-size: 1.3rem;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>San Gregorio Magno</h1>
+            <p class="subtitle">Papa, Dottore della Chiesa e Padre del Medioevo (540-604 d.C.)</p>
+            
+            <div class="reading-modes">
+                <button class="mode-btn" onclick="setMode('default')">Classico</button>
+                <button class="mode-btn" onclick="setMode('night')">Notturno</button>
+                <button class="mode-btn" onclick="setMode('philosophical')">Filosofico</button>
+                <button class="mode-btn" onclick="setMode('minimal')">Minimal</button>
+                <button class="mode-btn" onclick="setMode('academic')">Accademico</button>
+                <button class="mode-btn" onclick="setMode('monastic')">Monastico</button>
+            </div>
+        </header>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('biography')">
+                <h2 class="section-title">Vita e Contesto Storico</h2>
+                <button class="toggle-btn dove">+</button>
+            </div>
+            <div class="section-content" id="biography">
+                <p><span class="highlight">Gregorio I</span>, detto Magno, nacque a Roma intorno al 540 da una ricca famiglia senatoriale degli Anici. Fu il 64° Papa della Chiesa cattolica (590-604) e uno dei quattro grandi Dottori della Chiesa occidentale.</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h3>540 d.C.</h3>
+                        <p>Nasce a Roma dalla nobile famiglia degli Anici</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>572-573 d.C.</h3>
+                        <p>Prefetto di Roma, la più alta carica civile</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>575 d.C.</h3>
+                        <p>Fonda sei monasteri in Sicilia e uno a Roma</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>579-585 d.C.</h3>
+                        <p>Legato pontificio a Costantinopoli</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>590 d.C.</h3>
+                        <p>Eletto Papa in un periodo di carestie e pestilenze</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>596 d.C.</h3>
+                        <p>Invia Agostino di Canterbury a evangelizzare l'Inghilterra</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>604 d.C.</h3>
+                        <p>Muore il 12 marzo, lasciando un'eredità immensa</p>
+                    </div>
+                </div>
+                
+                <h3>Contesto storico</h3>
+                <ul>
+                    <li><strong>Crisi dell'Italia:</strong> Invasioni longobarde, carestie, pestilenze</li>
+                    <li><strong>Declino di Bisanzio:</strong> Distanza dall'Impero d'Oriente</li>
+                    <li><strong>Monachesimo:</strong> Diffusione della Regola benedettina</li>
+                    <li><strong>Missioni:</strong> Evangelizzazione dei popoli barbarici</li>
+                </ul>
+                
+                <blockquote>
+                    "Non sono io che ho cominciato a vivere per gli altri, ma ho continuato a vivere per loro" - Gregorio Magno
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('pontificate')">
+                <h2 class="section-title">Il Pontificato</h2>
+                <button class="toggle-btn key">+</button>
+            </div>
+            <div class="section-content" id="pontificate">
+                <p>Gregorio fu un pontefice rivoluzionario che trasformò il papato da istituzione locale a forza universale, ponendo le basi per il Medioevo cristiano.</p>
+                
+                <h3>Riforme istituzionali</h3>
+                <ul>
+                    <li><strong>Patrimonio di San Pietro:</strong> Riorganizzazione dei beni ecclesiastici</li>
+                    <li><strong>Diplomazia:</strong> Rapporti con Longobardi e Bizantini</li>
+                    <li><strong>Governo di Roma:</strong> Sostituzione delle funzioni civili in decadenza</li>
+                    <li><strong>Missioni:</strong> Evangelizzazione sistematica dell'Inghilterra</li>
+                </ul>
+                
+                <h3>Relazioni con l'Impero</h3>
+                <ul>
+                    <li><strong>Tensione con Bisanzio:</strong> Difesa dell'ortodossia romana</li>
+                    <li><strong>Autonomia:</strong> Affermazione dell'indipendenza della Sede romana</li>
+                    <li><strong>Esarcato:</strong> Complicati rapporti con l'esarca di Ravenna</li>
+                </ul>
+                
+                <h3>Conquiste spirituali</h3>
+                <ul>
+                    <li><strong>Teologia pastorale:</strong> Il papa come "servo dei servi di Dio"</li>
+                    <li><strong>Liturgia:</strong> Riforma del canto gregoriano (attribuita)</li>
+                    <li><strong>Carità:</strong> Sistema organizzato di assistenza ai poveri</li>
+                </ul>
+                
+                <blockquote>
+                    "Il governo delle anime è l'arte delle arti" - Gregorio Magno, Regola Pastorale
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('works')">
+                <h2 class="section-title">Opere Principali</h2>
+                <button class="toggle-btn book">+</button>
+            </div>
+            <div class="section-content" id="works">
+                <p>Gregorio fu un autore prolifico i cui scritti influenzarono profondamente la spiritualità e la teologia medievali.</p>
+                
+                <h3>Opere esegetiche</h3>
+                <ul>
+                    <li><strong>Moralia in Job:</strong> Commento spirituale al libro di Giobbe</li>
+                    <li><strong>Homiliae in Ezechielem:</strong> Omelie su Ezechiele</li>
+                    <li><strong>Homiliae in Evangelia:</strong> Omelie sui Vangeli</li>
+                </ul>
+                
+                <h3>Opere pastorali</h3>
+                <ul>
+                    <li><strong>Regula Pastoralis:</strong> Manuale per vescovi e pastori</li>
+                    <li><strong>Dialogi:</strong> Vita di San Benedetto e altri santi italiani</li>
+                </ul>
+                
+                <h3>Lettere</h3>
+                <ul>
+                    <li><strong>Registrum Epistularum:</strong> Oltre 850 lettere conservate</li>
+                    <li><strong>Lettere a imperatori e vescovi:</strong> Documenti storici fondamentali</li>
+                </ul>
+                
+                <h3>Contributi liturgici</h3>
+                <ul>
+                    <li><strong>Sacramentario Gregoriano:</strong> Base della liturgia romana</li>
+                    <li><strong>Canto Gregoriano:</strong> Riforma e codificazione (attribuita)</li>
+                </ul>
+                
+                <blockquote>
+                    "Le Scritture crescono con chi le legge" - Gregorio Magno, Moralia in Job
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('theology')">
+                <h2 class="section-title">Teologia e Spiritualità</h2>
+                <button class="toggle-btn dove">+</button>
+            </div>
+            <div class="section-content" id="theology">
+                <p>La teologia di Gregorio è eminentemente pratica, orientata alla vita spirituale e all'interpretazione morale della Scrittura.</p>
+                
+                <h3>Esegesi biblica</h3>
+                <ul>
+                    <li><strong>Senso morale:</strong> Interpretazione applicata alla vita cristiana</li>
+                    <li><strong>Quadruplice senso:</strong> Letterale, allegorico, morale, anagogico</li>
+                    <li><strong>Adattamento:</strong> La Scrittura parola viva per ogni epoca</li>
+                </ul>
+                
+                <h3>Teologia pastorale</h3>
+                <ul>
+                    <li><strong>Ministro ideale:</strong> Equilibrio tra contemplazione e azione</li>
+                    <li><strong>Discrezione:</strong> Adattamento alla condizione degli ascoltatori</li>
+                    <li><strong>Umiltà:</strong> Virtù fondamentale del pastore</li>
+                </ul>
+                
+                <h3>Escatologia</h3>
+                <ul>
+                    <li><strong>Purgatorio:</strong> Sviluppo della dottrina</li>
+                    <li><strong>Morte:</strong> Visione come passaggio, non fine</li>
+                    <li><strong>Giudizio:</strong> Importanza della vita presente</li>
+                </ul>
+                
+                <h3>Angelologia e demonologia</h3>
+                <ul>
+                    <li><strong>Gerarchie angeliche:</strong> Ripresa dello Pseudo-Dionigi</li>
+                    <li><strong>Lotta spirituale:</strong> Realtà del male e tentazioni</li>
+                    <li><strong>Miracoli:</strong> Segni della presenza divina nel mondo</li>
+                </ul>
+                
+                <blockquote>
+                    "Dio vuole essere pregato, non perché gli sia sconosciuta la nostra necessità, ma perché il desiderio cresca con la preghiera" - Gregorio Magno
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('legacy')">
+                <h2 class="section-title">Eredità e Influenza</h2>
+                <button class="toggle-btn key">+</button>
+            </div>
+            <div class="section-content" id="legacy">
+                <p>Gregorio Magno fu il vero architetto del Medioevo cristiano, influenzando tutti gli aspetti della vita ecclesiastica e culturale.</p>
+                
+                <h3>Nella Chiesa</h3>
+                <ul>
+                    <li><strong>Modello papale:</strong> "Servus servorum Dei"</li>
+                    <li><strong>Monachesimo:</strong> Diffusione della Regola benedettina</li>
+                    <li><strong>Liturgia:</strong> Forma romana del culto</li>
+                    <li><strong>Missioni:</strong> Metodo di evangelizzazione adattivo</li>
+                </ul>
+                
+                <h3>Nella cultura</h3>
+                <ul>
+                    <li><strong>Musica:</strong> Canto gregoriano come base della musica occidentale</li>
+                    <li><strong>Letteratura:</strong> I Dialoghi come modello di agiografia</li>
+                    <li><strong>Arte:</strong> Iconografia gregoriana (colomba, tiara)</li>
+                    <li><strong>Storiografia:</strong> Concezione provvidenziale della storia</li>
+                </ul>
+                
+                <h3>Riconoscimenti</h3>
+                <ul>
+                    <li><strong>Dottore della Chiesa:</strong> Proclamato nel 1298</li>
+                    <li><strong>Patronati:</strong> Musicisti, insegnanti, studenti</li>
+                    <li><strong>Feste:</strong> 3 settembre (morte), 12 marzo (elezione)</li>
+                </ul>
+                
+                <blockquote>
+                    "Gregorio fu veramente grande, grande nella dottrina, grande nell'umiltà" - San Bernardo di Chiaravalle
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('controversies')">
+                <h2 class="section-title">Questioni Aperte e Critiche</h2>
+                <button class="toggle-btn book">+</button>
+            </div>
+            <div class="section-content" id="controversies">
+                <p>Nonostante la sua grandezza, l'opera di Gregorio presenta aspetti controversi e dibattuti dagli studiosi.</p>
+                
+                <h3>Problemi interpretativi</h3>
+                <ul>
+                    <li><strong>Autenticità:</strong> Quali opere sono veramente sue?</li>
+                    <li><strong>Canto gregoriano:</strong> Quanto ha realmente contribuito?</li>
+                    <li><strong>Missioni:</strong> Metodi di evangelizzazione con elementi pagani</li>
+                </ul>
+                
+                <h3>Critiche storiche</h3>
+                <ul>
+                    <li><strong>Riformatori protestanti:</strong> Critiche al culto dei santi</li>
+                    <li><strong>Illuministi:</strong> Visione troppo miracolistica</li>
+                    <li><strong>Moderni:</strong> Giudizi sul suo pessimismo escatologico</li>
+                </ul>
+                
+                <h3>Rivalutazioni</h3>
+                <p>Studi recenti hanno evidenziato:</p>
+                <ul>
+                    <li>La profondità della sua psicologia spirituale</li>
+                    <li>L'equilibrio tra tradizione e innovazione</li>
+                    <li>La modernità della sua visione pastorale</li>
+                    <li>Il realismo politico nelle relazioni con i Longobardi</li>
+                </ul>
+                
+                <blockquote>
+                    "Gregorio non fu un pensatore sistematico, ma un genio pratico che plasmò il volto della cristianità" - Jean Leclercq
+                </blockquote>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(sectionId) {
+            const content = document.getElementById(sectionId);
+            const button = content.previousElementSibling.querySelector('.toggle-btn');
+            
+            content.classList.toggle('active');
+            button.classList.toggle('rotated');
+        }
+
+        function setMode(mode) {
+            document.body.className = mode + '-mode';
+            
+            // Cambia stile ai bottoni in base alla modalità
+            const buttons = document.querySelectorAll('.toggle-btn');
+            buttons.forEach(btn => {
+                btn.className = 'toggle-btn';
+                if(mode === 'default' || mode === 'monastic') {
+                    btn.classList.add('dove');
+                } else if(mode === 'night' || mode === 'philosophical') {
+                    btn.classList.add('key');
+                } else if(mode === 'minimal' || mode === 'academic') {
+                    btn.classList.add('book');
+                }
+            });
+        }
+
+        // Apri la prima sezione di default
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleSection('biography');
+        });
+    </script>
+</body>
+</html>

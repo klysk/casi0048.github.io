@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boezio: Filosofo tra Antichità e Medioevo</title>
+    <style>
+        :root {
+            --primary-color: #5a3e36;
+            --secondary-color: #c8b6a6;
+            --text-color: #333;
+            --bg-color: #f9f5f0;
+            --card-bg: #fff;
+            --font-main: 'Times New Roman', serif;
+            --font-header: 'Palatino Linotype', 'Book Antiqua', serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            transition: all 0.5s ease;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-header);
+            color: var(--primary-color);
+        }
+
+        h1 {
+            text-align: center;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 15px;
+            font-size: 2.5rem;
+        }
+
+        h2 {
+            margin-top: 40px;
+            font-size: 1.8rem;
+        }
+
+        .section-container {
+            margin: 30px 0;
+        }
+
+        /* Stili per i bottoni di sezione */
+        .section-toggle {
+            background: linear-gradient(145deg, #e6d5c3, #c8b6a6);
+            color: var(--primary-color);
+            border: none;
+            padding: 15px 25px;
+            font-family: var(--font-header);
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-toggle:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.5s ease;
+        }
+
+        .section-toggle:hover:before {
+            left: 100%;
+        }
+
+        .section-toggle:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .section-toggle:after {
+            content: "+";
+            float: right;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .section-toggle.active:after {
+            content: "−";
+            transform: rotate(0deg);
+        }
+
+        .section-content {
+            display: none;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            margin-top: -5px;
+            border-left: 3px solid var(--primary-color);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Stili per le modalità di lettura */
+        .reading-modes {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: var(--font-header);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        /* Stili specifici per ogni modalità */
+        .classic {
+            background: linear-gradient(145deg, #5a3e36, #8a6d5b);
+            color: white;
+        }
+
+        .night {
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            color: #e6f9ff;
+        }
+
+        .philosophical {
+            background: linear-gradient(145deg, #3a4a4f, #5a7684);
+            color: #f0f7f4;
+        }
+
+        .parchment {
+            background: linear-gradient(145deg, #e8d9c5, #d4c4a8);
+            color: #3a3226;
+        }
+
+        /* Stili per la modalità notturna */
+        body.night-mode {
+            --primary-color: #d4b483;
+            --secondary-color: #3a5169;
+            --text-color: #e0e0e0;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+        }
+
+        /* Stili per la modalità filosofica */
+        body.philosophical-mode {
+            --primary-color: #5d737e;
+            --secondary-color: #7a9cc6;
+            --text-color: #333;
+            --bg-color: #f0f7f4;
+            --card-bg: #ffffff;
+            --font-main: 'Garamond', serif;
+        }
+
+        /* Stili per la modalità pergamena */
+        body.parchment-mode {
+            --primary-color: #5a3e36;
+            --secondary-color: #a9927d;
+            --text-color: #3a3226;
+            --bg-color: #f2e8d5;
+            --card-bg: #f9f5e9;
+            background-image: url('https://www.transparenttextures.com/patterns/old-paper.png');
+        }
+
+        .parchment-mode .section-content {
+            background-image: url('https://www.transparenttextures.com/patterns/old-paper.png');
+        }
+
+        /* Stili per citazioni */
+        blockquote {
+            border-left: 4px solid var(--primary-color);
+            padding: 15px 20px;
+            margin: 20px 0;
+            background-color: rgba(90, 62, 54, 0.05);
+            font-style: italic;
+            position: relative;
+        }
+
+        blockquote:before {
+            content: "\201C";
+            font-size: 4rem;
+            color: var(--primary-color);
+            opacity: 0.3;
+            position: absolute;
+            left: 10px;
+            top: -10px;
+        }
+
+        blockquote p {
+            margin: 0;
+            padding-left: 30px;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reading-modes {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .mode-btn {
+                width: 80%;
+            }
+        }
+
+        /* Stili per immagini */
+        .figure {
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        .figure img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border: 1px solid var(--secondary-color);
+        }
+
+        .figure-caption {
+            margin-top: 10px;
+            font-style: italic;
+            color: var(--primary-color);
+        }
+
+        /* Stili per timeline */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 40px auto;
+        }
+
+        .timeline:before {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background-color: var(--primary-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .timeline-item:after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+            top: 15px;
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(odd):after {
+            right: -10px;
+        }
+
+        .timeline-item:nth-child(even):after {
+            left: -10px;
+        }
+
+        /* Note a margine */
+        .footnote {
+            font-size: 0.85rem;
+            color: var(--primary-color);
+            border-top: 1px dashed var(--secondary-color);
+            padding-top: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Anicio Manlio Torquato Severino Boezio</h1>
+        <p class="subtitle">Il filosofo che traghettò il pensiero antico nel Medioevo</p>
+
+        <div class="reading-modes">
+            <button class="mode-btn classic" onclick="setMode('classic')">Classico</button>
+            <button class="mode-btn night" onclick="setMode('night')">Notturno</button>
+            <button class="mode-btn philosophical" onclick="setMode('philosophical')">Filosofico</button>
+            <button class="mode-btn parchment" onclick="setMode('parchment')">Pergamena</button>
+        </div>
+
+        <div class="figure">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Boethius_initial_from_Consolation_of_Philosophie_Manuscript.jpg/320px-Boethius_initial_from_Consolation_of_Philosophie_Manuscript.jpg" alt="Miniatura medievale di Boezio">
+            <p class="figure-caption">Boezio in una miniatura medievale dal manoscritto della Consolazione della Filosofia</p>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle">Introduzione: Vita e Contesto Storico</button>
+            <div class="section-content">
+                <p>Anicio Manlio Torquato Severino Boezio (Roma, 480 circa - Pavia, 524/525) è una figura cardine nella storia del pensiero occidentale, ponte tra l'antichità classica e il medioevo. Nato in una illustre famiglia romana della gens Anicia, ricevette un'educazione raffinata sia in latino che in greco.</p>
+                
+                <p>La sua vita si svolse durante il regno di Teodorico il Grande, re degli Ostrogoti che governava l'Italia in nome dell'imperatore d'Oriente. Boezio ricoprì importanti cariche pubbliche, diventando console nel 510 e magister officiorum (capo dell'amministrazione civile) nel 523.</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>480 d.C.</h3>
+                            <p>Nascita di Boezio a Roma da una famiglia aristocratica</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>510 d.C.</h3>
+                            <p>Diventa console dell'Impero Romano d'Occidente</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>523 d.C.</h3>
+                            <p>Nominato magister officiorum da Teodorico</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>524-525 d.C.</h3>
+                            <p>Imprigionamento e morte a Pavia</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <p>La sua caduta in disgrazia fu improvvisa: accusato di tradimento per aver difeso il senatore Albino e sospettato di cospirare con l'imperatore bizantino Giustino I contro Teodorico, fu imprigionato a Pavia dove compose la sua opera più celebre, <em>La consolazione della filosofia</em>, prima di essere giustiziato.</p>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle">Opere Principali</button>
+            <div class="section-content">
+                <h3>La Consolazione della Filosofia</h3>
+                <p>Scritta durante la prigionia, quest'opera in prosa e versi rappresenta un dialogo tra Boezio e la personificazione della Filosofia, che lo consola dimostrandogli la vanità delle ricchezze e del potere, e la superiorità della virtù e della saggezza.</p>
+                
+                <blockquote>
+                    <p>"Se dunque cerchi la sede sicura, immune da sventure, rispetta le leggi e onora la virtù."</p>
+                    <footer>- Boezio, <cite>La consolazione della filosofia</cite>, Libro IV</footer>
+                </blockquote>
+                
+                <h3>Opere logiche</h3>
+                <p>Boezio tradusse e commentò le opere logiche di Aristotele (le <em>Categorie</em> e il <em>De interpretatione</em>) e scrisse trattati originali sulla logica, tra cui:</p>
+                <ul>
+                    <li><em>De divisione</em> - Sulla divisione dei concetti</li>
+                    <li><em>De syllogismo categorico</em> - Sul sillogismo categorico</li>
+                    <li><em>De hypotheticis syllogismis</em> - Sul sillogismo ipotetico</li>
+                </ul>
+                
+                <h3>Opere teologiche</h3>
+                <p>Gli scritti teologici di Boezio, noti come <em>Opuscula sacra</em>, affrontano questioni come la Trinità e la natura di Cristo:</p>
+                <ul>
+                    <li><em>De Trinitate</em> - Sulla Trinità</li>
+                    <li><em>Utrum Pater et Filius et Spiritus Sanctus</em> - Se il Padre, il Figlio e lo Spirito Santo</li>
+                    <li><em>De fide catholica</em> - Sulla fede cattolica</li>
+                </ul>
+                
+                <div class="footnote">
+                    <p>Nota: Boezio è considerato l'ultimo rappresentante della filosofia romana antica e il primo dei filosofi scolastici medievali.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle">Pensiero Filosofico</button>
+            <div class="section-content">
+                <h3>Filosofia come consolazione</h3>
+                <p>Nella <em>Consolazione</em>, Boezio sviluppa una filosofia pratica che mira a guarire l'anima dalla sofferenza attraverso la ragione. La Filosofia personificata guida Boezio dalla disperazione alla comprensione della vera felicità.</p>
+                
+                <h3>Problema del male e provvidenza</h3>
+                <p>Boezio affronta il classico problema teologico del male in un mondo governato da Dio. Distingue tra:</p>
+                <ul>
+                    <li><strong>Provvidenza</strong>: il piano divino nella sua totalità</li>
+                    <li><strong>Fato</strong>: l'attuazione di questo piano nel mondo temporale</li>
+                </ul>
+                
+                <blockquote>
+                    <p>"Tutto ciò che viene dal fato procede dalla provvidenza, allo stesso modo in cui il particolare deriva dall'universale."</p>
+                    <footer>- Boezio, <cite>La consolazione della filosofia</cite>, Libro IV</footer>
+                </blockquote>
+                
+                <h3>Teoria degli universali</h3>
+                <p>Boezio contribuì al dibattito sugli universali (il problema di come i concetti generali esistano rispetto agli individui particolari) attraverso il suo commento a Porfirio. La sua posizione moderata influenzò il successivo realismo scolastico.</p>
+                
+                <h3>Etica e felicità</h3>
+                <p>Per Boezio, la vera felicità (beatitudo) consiste nell'unione con Dio, il sommo bene. I beni terreni (ricchezza, potere, piacere) sono falsi beni che non possono appagare l'anima razionale.</p>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle">Influenza e Ricezione</button>
+            <div class="section-content">
+                <h3>Trasmettitore della cultura classica</h3>
+                <p>Boezio preservò e trasmise al Medioevo latino una parte significativa del pensiero greco, specialmente aristotelico. Le sue traduzioni e commenti divennero testi fondamentali nell'insegnamento medievale.</p>
+                
+                <h3>Fonte per la filosofia medievale</h3>
+                <p>Il suo pensiero influenzò profondamente filosofi come:</p>
+                <ul>
+                    <li>Giovanni Scoto Eriugena</li>
+                    <li>Anselmo d'Aosta</li>
+                    <li>Tommaso d'Aquino</li>
+                    <li>Dante Alighieri (che lo cita nella <em>Divina Commedia</em>)</li>
+                </ul>
+                
+                <div class="figure">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Dante_Boethius_and_Siger_of_Brabant.jpg/320px-Dante_Boethius_and_Siger_of_Brabant.jpg" alt="Dante, Boezio e Sigieri di Brabante">
+                    <p class="figure-caption">Dante, Boezio e Sigieri di Brabante in un affresco del XIV secolo</p>
+                </div>
+                
+                <h3>Eredità nella cultura occidentale</h3>
+                <p>L'influenza di Boezio si estende oltre la filosofia:</p>
+                <ul>
+                    <li><strong>Musica</strong>: Il suo <em>De institutione musica</em> fu un testo fondamentale per la teoria musicale medievale</li>
+                    <li><strong>Letteratura</strong>: La forma dialogica della <em>Consolazione</em> influenzò generi letterari successivi</li>
+                    <li><strong>Teologia</strong>: I suoi scritti teologici furono considerati autorevoli nel Medioevo</li>
+                </ul>
+                
+                <div class="footnote">
+                    <p>Nota: Per secoli Boezio fu letto e studiato come un'autorità filosofica, al punto che Dante lo colloca nel Paradiso tra gli spiriti sapienti.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle">Curiosità e Approfondimenti</button>
+            <div class="section-content">
+                <h3>Boezio santo?</h3>
+                <p>Sebbene i suoi scritti teologici siano ortodossi e venerati nel Medioevo, Boezio non fu mai ufficialmente canonizzato. Tuttavia, in alcune località è venerato come santo, specialmente a Pavia dove morì.</p>
+                
+                <h3>La prigione di Boezio</h3>
+                <p>La torre dove Boezio fu imprigionato a Pavia divenne meta di pellegrinaggi di studiosi e filosofi nel Medioevo. Oggi non esiste più, ma una chiesa (San Pietro in Ciel d'Oro) conserva quella che si ritiene essere la sua tomba.</p>
+                
+                <h3>Boezio e la musica</h3>
+                <p>La sua classificazione della musica in:</p>
+                <ol>
+                    <li><em>Musica mundana</em> (armonia delle sfere celesti)</li>
+                    <li><em>Musica humana</em> (armonia tra anima e corpo)</li>
+                    <li><em>Musica instrumentalis</em> (musica prodotta dagli strumenti)</li>
+                </ol>
+                <p>dominò il pensiero musicale fino al Rinascimento.</p>
+                
+                <blockquote>
+                    <p>"La musica è parte integrante di noi, e può nobilitarci o degradarci."</p>
+                    <footer>- Boezio, <cite>De institutione musica</cite></footer>
+                </blockquote>
+                
+                <h3>Boezio nella cultura popolare</h3>
+                <p>Riferimenti a Boezio compaiono in opere moderne come:</p>
+                <ul>
+                    <li>Il film <em>Il nome della rosa</em> (1986)</li>
+                    <li>La serie TV <em>Borgia</em> (2011-2014)</li>
+                    <li>Numerosi romanzi storici</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funzione per aprire/chiudere le sezioni
+        document.querySelectorAll('.section-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                button.classList.toggle('active');
+                const content = button.nextElementSibling;
+                if (content.style.display === 'block') {
+                    content.style.display = 'none';
+                } else {
+                    content.style.display = 'block';
+                }
+            });
+        });
+
+        // Funzioni per cambiare modalità di lettura
+        function setMode(mode) {
+            document.body.className = '';
+            if (mode !== 'classic') {
+                document.body.classList.add(mode + '-mode');
+            }
+            
+            // Cambia stile dei bottoni sezione in base alla modalità
+            const sectionToggles = document.querySelectorAll('.section-toggle');
+            sectionToggles.forEach(btn => {
+                btn.className = 'section-toggle'; // Resetta le classi
+                
+                if (mode === 'night') {
+                    btn.style.background = 'linear-gradient(145deg, #2a3a4a, #1a2a3a)';
+                    btn.style.color = '#e6f9ff';
+                } else if (mode === 'philosophical') {
+                    btn.style.background = 'linear-gradient(145deg, #4a5a6a, #3a4a5a)';
+                    btn.style.color = '#f0f7f4';
+                } else if (mode === 'parchment') {
+                    btn.style.background = 'linear-gradient(145deg, #d4c4a8, #c8b6a6)';
+                    btn.style.color = '#3a3226';
+                } else {
+                    btn.style.background = 'linear-gradient(145deg, #e6d5c3, #c8b6a6)';
+                    btn.style.color = '#5a3e36';
+                }
+            });
+        }
+
+        // Apri la prima sezione di default
+        document.addEventListener('DOMContentLoaded', () => {
+            const firstToggle = document.querySelector('.section-toggle');
+            firstToggle.classList.add('active');
+            firstToggle.nextElementSibling.style.display = 'block';
+        });
+    </script>
+</body>
+</html>

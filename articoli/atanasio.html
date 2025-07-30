@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atanasio di Alessandria - Il Campione della Fede</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #2980b9;
+            --text-color: #333333;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 8px rgba(0,0,0,0.1);
+            --font-main: 'Georgia', serif;
+            --font-heading: 'Palatino Linotype', 'Book Antiqua', serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            transition: all 0.4s ease;
+        }
+
+        /* Modalità Notturna */
+        body.night-mode {
+            --primary-color: #3498db;
+            --secondary-color: #9b59b6;
+            --text-color: #f0f0f0;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        /* Modalità Filosofica */
+        body.philosophical {
+            --primary-color: #5d3a6e;
+            --secondary-color: #8e44ad;
+            --text-color: #222222;
+            --bg-color: #f8f5fa;
+            --card-bg: #ffffff;
+        }
+
+        /* Modalità Accademica */
+        body.scholarly {
+            --primary-color: #117864;
+            --secondary-color: #1a7a62;
+            --text-color: #222222;
+            --bg-color: #f0f7f5;
+            --card-bg: #ffffff;
+        }
+
+        /* Modalità Minimalista */
+        body.minimalist {
+            --primary-color: #333333;
+            --secondary-color: #666666;
+            --text-color: #333333;
+            --bg-color: #ffffff;
+            --card-bg: #f5f5f5;
+            --shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        /* Struttura Base */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow);
+            border-radius: 10px;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        h1 {
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 15px;
+            display: inline-block;
+        }
+
+        .article-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Sezioni Espandibili */
+        .section-container {
+            margin-bottom: 25px;
+        }
+
+        .section-header {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 18px 25px;
+            cursor: pointer;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .section-header:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        .section-header::after {
+            content: '+';
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .section-header.active::after {
+            content: '-';
+        }
+
+        .section-content {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            background-color: var(--card-bg);
+            border-radius: 0 0 10px 10px;
+            box-shadow: var(--shadow);
+            color: var(--text-color);
+        }
+
+        .section-content.open {
+            padding: 25px;
+            max-height: 5000px;
+        }
+
+        /* Modalità di Lettura */
+        .reading-modes {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: var(--font-heading);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            font-size: 16px;
+            color: white;
+            font-weight: 500;
+        }
+
+        .default { background-color: #2c3e50; }
+        .night-mode { background-color: #3498db; }
+        .philosophical { background-color: #5d3a6e; }
+        .scholarly { background-color: #117864; }
+        .minimalist { background-color: #333333; }
+
+        /* Elementi di Contenuto */
+        p, li {
+            color: var(--text-color);
+            line-height: 1.8;
+        }
+
+        blockquote {
+            border-left: 5px solid var(--secondary-color);
+            padding: 20px;
+            margin: 25px 0;
+            font-style: italic;
+            background-color: rgba(0,0,0,0.03);
+            color: var(--primary-color);
+        }
+
+        .figure {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .figure img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .caption {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 30px auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background-color: var(--secondary-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--card-bg);
+            border: 3px solid var(--secondary-color);
+            border-radius: 50%;
+            top: 15px;
+            z-index: 1;
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        .left::after {
+            right: -10px;
+        }
+
+        .right::after {
+            left: -10px;
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        @media screen and (max-width: 768px) {
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item::after {
+                left: 21px;
+            }
+
+            .right {
+                left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="article-container">
+        <header>
+            <h1>Atanasio di Alessandria</h1>
+            <p>Il Difensore dell'Ortodossia Nicena (c. 296-373 d.C.)</p>
+        </header>
+
+        <div class="reading-modes">
+            <button class="mode-btn default" onclick="setMode('default')">Classico</button>
+            <button class="mode-btn night-mode" onclick="setMode('night-mode')">Notturno</button>
+            <button class="mode-btn philosophical" onclick="setMode('philosophical')">Filosofico</button>
+            <button class="mode-btn scholarly" onclick="setMode('scholarly')">Accademico</button>
+            <button class="mode-btn minimalist" onclick="setMode('minimalist')">Minimalista</button>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>Introduzione Storica</h2>
+            </div>
+            <div class="section-content">
+                <p>Atanasio di Alessandria, noto come Atanasio il Grande, fu una figura centrale nel IV secolo cristiano. La sua instancabile difesa della dottrina della Trinità contro l'arianesimo lo rese uno dei Padri della Chiesa più influenti.</p>
+                
+                <div class="figure">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Athanasius_of_Alexandria.jpg/320px-Athanasius_of_Alexandria.jpg" alt="Icona di Atanasio di Alessandria">
+                    <div class="caption">Rappresentazione tradizionale di Atanasio di Alessandria</div>
+                </div>
+                
+                <p>La sua celebre affermazione "Atanasio contro il mondo" sintetizza la sua determinazione nel difendere l'ortodossia nicena anche quando sembrava essere l'unico a sostenerla.</p>
+                
+                <blockquote>
+                    "Il Logos si è fatto uomo perché noi potessimo diventare Dio."<br>
+                    <em>- Atanasio, De Incarnatione</em>
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>Biografia</h2>
+            </div>
+            <div class="section-content">
+                <h3>Gli Inizi</h3>
+                <p>Nato ad Alessandria d'Egitto intorno al 296 d.C., Atanasio ricevette un'educazione completa in retorica, filosofia e teologia. La sua intelligenza brillante attirò l'attenzione del patriarca Alessandro.</p>
+                
+                <h3>Il Concilio di Nicea</h3>
+                <p>Come diacono e segretario del vescovo Alessandro, Atanasio partecipò al Concilio di Nicea nel 325, dove emerse come uno dei principali oppositori dell'arianesimo.</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <h3>296 d.C.</h3>
+                            <p>Nascita di Atanasio ad Alessandria</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <h3>325 d.C.</h3>
+                            <p>Partecipa al Concilio di Nicea</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <h3>328 d.C.</h3>
+                            <p>Diventa vescovo di Alessandria</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <h3>335-366 d.C.</h3>
+                            <p>Cinque periodi di esilio</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <h3>373 d.C.</h3>
+                            <p>Morte dopo 45 anni di episcopato</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>Dottrina e Opere</h2>
+            </div>
+            <div class="section-content">
+                <h3>La Difesa della Trinità</h3>
+                <p>Atanasio difese strenuamente la consustanzialità (homoousios) del Figlio con il Padre, affermando che solo un vero Dio poteva offrire la salvezza all'umanità.</p>
+                
+                <h3>Opere Principali</h3>
+                <ul>
+                    <li><strong>Contro i Pagani</strong>: Apologia del cristianesimo</li>
+                    <li><strong>Sull'Incarnazione del Verbo</strong>: Fondamentale trattato cristologico</li>
+                    <li><strong>Contro gli Ariani</strong>: Confutazione in tre discorsi</li>
+                    <li><strong>Vita di Antonio</strong>: Biografia che diffuse il monachesimo</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>Eredità</h2>
+            </div>
+            <div class="section-content">
+                <p>L'influenza di Atanasio si estese ben oltre la sua epoca:</p>
+                
+                <h3>Teologia</h3>
+                <p>La sua difesa della divinità di Cristo divenne dottrina ufficiale al Concilio di Costantinopoli (381).</p>
+                
+                <h3>Monachesimo</h3>
+                <p>La Vita di Antonio ispirò generazioni di monaci in Oriente e Occidente.</p>
+                
+                <h3>Venerazione</h3>
+                <p>Venerato come santo da cattolici e ortodossi, la sua festa si celebra il 2 maggio in Occidente e il 18 gennaio in Oriente.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            header.classList.toggle('active');
+            const content = header.nextElementSibling;
+            content.classList.toggle('open');
+        }
+
+        function setMode(mode) {
+            document.body.className = mode;
+            
+            const buttons = document.querySelectorAll('.mode-btn');
+            buttons.forEach(btn => {
+                btn.style.transform = 'translateY(0)';
+                btn.style.boxShadow = 'var(--shadow)';
+            });
+            
+            const activeBtn = document.querySelector(`.${mode}`);
+            activeBtn.style.transform = 'translateY(-4px)';
+            activeBtn.style.boxShadow = '0 6px 12px rgba(0,0,0,0.15)';
+        }
+
+        window.onload = function() {
+            const firstHeader = document.querySelector('.section-header');
+            toggleSection(firstHeader);
+            setMode('default');
+        };
+    </script>
+</body>
+</html>

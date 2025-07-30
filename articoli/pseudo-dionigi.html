@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pseudo-Dionigi l'Areopagita - Studio Completo</title>
+    <style>
+        :root {
+            --primary-color: #3E2723;
+            --secondary-color: #5D4037;
+            --text-color: #212121;
+            --bg-color: #EFEBE9;
+            --card-bg: #D7CCC8;
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            --font-main: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            --font-alt: 'Arial', sans-serif;
+            --mystic-accent: #6A1B9A;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            transition: all 0.5s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border-top: 5px solid var(--mystic-accent);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--mystic-accent), var(--primary-color));
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 3rem;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            font-style: italic;
+            color: var(--secondary-color);
+            font-size: 1.4rem;
+            letter-spacing: 0.5px;
+        }
+
+        .reading-modes {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: var(--font-alt);
+            transition: all 0.4s ease;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            font-weight: bold;
+            letter-spacing: 0.8px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .mode-btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        .mode-btn:hover:before {
+            opacity: 1;
+        }
+
+        .section-container {
+            margin-bottom: 40px;
+            transition: all 0.4s ease;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--mystic-accent));
+            color: white;
+            border-radius: 10px 10px 0 0;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, var(--mystic-accent), var(--primary-color));
+            transform: translateY(-3px);
+        }
+
+        .section-title {
+            margin: 0;
+            font-size: 1.5rem;
+            letter-spacing: 0.8px;
+        }
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Bottoni creativi */
+        .toggle-btn.mystic {
+            background-color: transparent;
+        }
+
+        .toggle-btn.mystic:before {
+            content: "⌾";
+            transition: all 0.4s ease;
+        }
+
+        .toggle-btn.mystic.rotated:before {
+            transform: rotate(180deg);
+            content: "⌽";
+        }
+
+        .toggle-btn.light {
+            background-color: transparent;
+        }
+
+        .toggle-btn.light:before {
+            content: "✧";
+            text-shadow: 0 0 8px white;
+            transition: all 0.4s ease;
+        }
+
+        .toggle-btn.light.rotated:before {
+            transform: rotate(45deg);
+            content: "✦";
+            text-shadow: 0 0 12px white;
+        }
+
+        .toggle-btn.hierarchic {
+            background-color: transparent;
+        }
+
+        .toggle-btn.hierarchic:before {
+            content: "⌖";
+            transition: all 0.4s ease;
+        }
+
+        .toggle-btn.hierarchic.rotated:before {
+            transform: scale(1.3);
+            content: "⌕";
+        }
+
+        .section-content {
+            padding: 30px;
+            background-color: var(--card-bg);
+            border-radius: 0 0 10px 10px;
+            box-shadow: var(--shadow);
+            display: none;
+            border-left: 4px solid var(--mystic-accent);
+        }
+
+        .section-content.active {
+            display: block;
+            animation: mysticAppear 0.7s ease;
+        }
+
+        @keyframes mysticAppear {
+            0% { opacity: 0; transform: translateY(-20px); }
+            50% { opacity: 0.5; transform: translateY(-10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Modalità di lettura */
+        .night-mode {
+            --primary-color: #7E57C2;
+            --secondary-color: #9575CD;
+            --text-color: #EDE7F6;
+            --bg-color: #121212;
+            --card-bg: #1E1E1E;
+            --shadow: 0 4px 12px rgba(0,0,0,0.3);
+            --mystic-accent: #B39DDB;
+        }
+
+        .philosophical-mode {
+            --font-main: 'Times New Roman', Times, serif;
+            --primary-color: #4A148C;
+            --secondary-color: #6A1B9A;
+            --text-color: #311B92;
+            --bg-color: #F3E5F5;
+            --card-bg: #E1BEE7;
+            --mystic-accent: #7B1FA2;
+        }
+
+        .minimal-mode {
+            --font-main: 'Helvetica Neue', Arial, sans-serif;
+            --primary-color: #5D4037;
+            --secondary-color: #795548;
+            --text-color: #3E2723;
+            --bg-color: #FFFFFF;
+            --card-bg: #EFEBE9;
+            --shadow: 0 2px 6px rgba(0,0,0,0.1);
+            --mystic-accent: #8D6E63;
+        }
+
+        .academic-mode {
+            --font-main: 'Georgia', serif;
+            --primary-color: #4527A0;
+            --secondary-color: #5E35B1;
+            --text-color: #1A237E;
+            --bg-color: #F5F5F5;
+            --card-bg: #E8EAF6;
+            --mystic-accent: #3949AB;
+        }
+
+        .mystic-mode {
+            --primary-color: #4A148C;
+            --secondary-color: #7B1FA2;
+            --text-color: #212121;
+            --bg-color: #F3E5F5;
+            --card-bg: #E1BEE7;
+            --mystic-accent: #9C27B0;
+            --font-main: 'Garamond', serif;
+        }
+
+        /* Stili per contenuto */
+        h2, h3, h4 {
+            color: var(--primary-color);
+            margin-top: 30px;
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--mystic-accent);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        blockquote {
+            border-left: 4px solid var(--mystic-accent);
+            padding: 20px;
+            margin: 30px 0;
+            font-style: italic;
+            background-color: rgba(0,0,0,0.05);
+            border-radius: 0 12px 12px 0;
+            position: relative;
+        }
+
+        blockquote:before {
+            content: """;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 3rem;
+            color: rgba(106, 27, 154, 0.1);
+            font-family: Georgia, serif;
+        }
+
+        ul, ol {
+            padding-left: 30px;
+        }
+
+        li {
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        li:before {
+            content: "›";
+            color: var(--mystic-accent);
+            position: absolute;
+            left: -20px;
+        }
+
+        .highlight {
+            background-color: rgba(106, 27, 154, 0.1);
+            padding: 3px 6px;
+            border-radius: 4px;
+            border-left: 2px solid var(--mystic-accent);
+        }
+
+        .hierarchy {
+            background-color: rgba(255,255,255,0.7);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px dashed var(--mystic-accent);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .section-header {
+                padding: 15px 20px;
+            }
+            
+            .section-title {
+                font-size: 1.2rem;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Pseudo-Dionigi l'Areopagita</h1>
+            <p class="subtitle">Il Corpus Areopagiticum e la Teologia Mistica del V-VI secolo</p>
+            
+            <div class="reading-modes">
+                <button class="mode-btn" onclick="setMode('default')">Classico</button>
+                <button class="mode-btn" onclick="setMode('night')">Notturno</button>
+                <button class="mode-btn" onclick="setMode('philosophical')">Filosofico</button>
+                <button class="mode-btn" onclick="setMode('minimal')">Minimal</button>
+                <button class="mode-btn" onclick="setMode('academic')">Accademico</button>
+                <button class="mode-btn" onclick="setMode('mystic')">Mistico</button>
+            </div>
+        </header>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('identity')">
+                <h2 class="section-title">L'Enigma dell'Identità</h2>
+                <button class="toggle-btn mystic">+</button>
+            </div>
+            <div class="section-content" id="identity">
+                <p>L'autore conosciuto come <span class="highlight">Pseudo-Dionigi l'Areopagita</span> è una delle figure più enigmatiche della letteratura cristiana. Presentandosi come Dionigi l'Areopagita (il convertito da San Paolo in Atti 17:34), in realtà scrisse probabilmente tra il 485 e il 528 d.C. in ambiente siriaco.</p>
+                
+                <h3>Problema dell'attribuzione</h3>
+                <ul>
+                    <li><strong>Pseudonimo:</strong> Scelse deliberatamente di identificarsi con un personaggio del I secolo</li>
+                    <li><strong>Datazione:</strong> Evidenze interne suggeriscono il tardo V/inizio VI secolo</li>
+                    <li><strong>Luogo:</strong> Probabilmente Siria o area siro-palestinese</li>
+                    <li><strong>Influenze:</strong> Neoplatonismo (Proclo), Cristianesimo, misteri pagani</li>
+                </ul>
+                
+                <h3>Ipotesi sull'identità</h3>
+                <p>Gli studiosi hanno avanzato varie ipotesi:</p>
+                <ol>
+                    <li><strong>Pietro l'Iberico:</strong> Vescovo monofisita della Maiuma</li>
+                    <li><strong>Severo di Antiochia:</strong> Importante teologo monofisita</li>
+                    <li><strong>Anonimo:</strong> Membro di circoli neoplatonici cristianizzati</li>
+                    <li><strong>Dionigi:</strong> Teorica (e improbabile) identificazione con il vero Areopagita</li>
+                </ol>
+                
+                <blockquote>
+                    "L'autore del Corpus Areopagiticum ha creato il più riuscito esempio di pseudepigrafia cristiana, influenzando profondamente la teologia medievale" - Jaroslav Pelikan
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('corpus')">
+                <h2 class="section-title">Il Corpus Areopagiticum</h2>
+                <button class="toggle-btn light">+</button>
+            </div>
+            <div class="section-content" id="corpus">
+                <p>Il <span class="highlight">Corpus Dionysiacum</span> comprende quattro opere principali e dieci lettere, che formano un sistema teologico coerente e profondamente mistico.</p>
+                
+                <h3>Opere principali</h3>
+                <ul>
+                    <li><strong>De Divinis Nominibus (I Nomi Divini):</strong> Teologia affermativa</li>
+                    <li><strong>De Mystica Theologia (Teologia Mistica):</strong> Teologia negativa</li>
+                    <li><strong>De Coelesti Hierarchia (Gerarchia Celeste):</strong> Angelologia</li>
+                    <li><strong>De Ecclesiastica Hierarchia (Gerarchia Ecclesiastica):</strong> Liturgia e sacramenti</li>
+                </ul>
+                
+                <h3>Contenuto e struttura</h3>
+                <div class="hierarchy">
+                    <h4>Struttura triadica del Corpus:</h4>
+                    <ol>
+                        <li><strong>Teologia:</strong> Natura di Dio (Nomi Divini, Teologia Mistica)</li>
+                        <li><strong>Angelologia:</strong> Gerarchia Celeste</li>
+                        <li><strong>Ecclesiologia:</strong> Gerarchia Ecclesiastica</li>
+                    </ol>
+                </div>
+                
+                <h3>Stile letterario</h3>
+                <p>Caratteristiche distintive:</p>
+                <ul>
+                    <li>Linguaggio altamente simbolico e allegorico</li>
+                    <li>Uso sistematico del paradosso</li>
+                    <li>Strutture triadiche e gerarchiche</li>
+                    <li>Frequenti neologismi e termini tecnici</li>
+                </ul>
+                
+                <blockquote>
+                    "La teologia più divina e più elevata si compie nel silenzio, nel più profondo silenzio" - De Mystica Theologia, I.1
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('theology')">
+                <h2 class="section-title">Teologia Dionisiana</h2>
+                <button class="toggle-btn hierarchic">+</button>
+            </div>
+            <div class="section-content" id="theology">
+                <p>La teologia dello Pseudo-Dionigi rappresenta una sintesi unica di neoplatonismo e cristianesimo, con un approccio profondamente mistico.</p>
+                
+                <h3>Teologia Negativa (Apophatica)</h3>
+                <ul>
+                    <li>Dio è al di là di ogni affermazione (hyper-ousios)</li>
+                    <li>Conoscenza di Dio attraverso la negazione (via negationis)</li>
+                    <li>Importanza del silenzio mistico</li>
+                    <li>Dio come "Tenebra divina" (De Mystica Theologia)</li>
+                </ul>
+                
+                <h3>Teologia Affermativa (Cataphatica)</h3>
+                <ul>
+                    <li>I Nomi Divini come attributi positivi</li>
+                    <li>Dio come Bene, Luce, Bellezza, Amore</li>
+                    <li>Valore simbolico delle Scritture</li>
+                    <li>Processione e ritorno (exitus-reditus)</li>
+                </ul>
+                
+                <div class="hierarchy">
+                    <h4>Processo conoscitivo triadico:</h4>
+                    <ol>
+                        <li><strong>Purificazione:</strong> Katharsis</li>
+                        <li><strong>Illuminazione:</strong> Photismos</li>
+                        <li><strong>Perfezione:</strong> Teleiosis</li>
+                    </ol>
+                </div>
+                
+                <blockquote>
+                    "Dio è conosciuto meglio attraverso l'ignoranza, quando la mente, separata da tutto il conoscibile, si immerge nell'inconoscibile" - De Mystica Theologia
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('hierarchy')">
+                <h2 class="section-title">Dottrina delle Gerarchie</h2>
+                <button class="toggle-btn hierarchic">+</button>
+            </div>
+            <div class="section-content" id="hierarchy">
+                <p>La concezione gerarchica è centrale nel pensiero dionisiano, applicata sia al mondo angelico che alla Chiesa.</p>
+                
+                <h3>Gerarchia Celeste</h3>
+                <p>Nove cori angelici divisi in tre triadi:</p>
+                <div class="hierarchy">
+                    <ol>
+                        <li><strong>Prima Triade:</strong>
+                            <ul>
+                                <li>Serafini</li>
+                                <li>Cherubini</li>
+                                <li>Troni</li>
+                            </ul>
+                        </li>
+                        <li><strong>Seconda Triade:</strong>
+                            <ul>
+                                <li>Dominazioni</li>
+                                <li>Virtù</li>
+                                <li>Potestà</li>
+                            </ul>
+                        </li>
+                        <li><strong>Terza Triade:</strong>
+                            <ul>
+                                <li>Principati</li>
+                                <li>Arcangeli</li>
+                                <li>Angeli</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+                
+                <h3>Gerarchia Ecclesiastica</h3>
+                <p>Struttura corrispondente alla Chiesa terrena:</p>
+                <div class="hierarchy">
+                    <ol>
+                        <li><strong>Gerarchia Sacerdotale:</strong>
+                            <ul>
+                                <li>Vescovi (corrispondono ai Serafini)</li>
+                                <li>Sacerdoti (Cherubini)</li>
+                                <li>Diaconi (Troni)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Iniziati:</strong>
+                            <ul>
+                                <li>Monaci</li>
+                                <li>Santi</li>
+                                <li>Fedeli perfetti</li>
+                            </ul>
+                        </li>
+                        <li><strong>Purificandi:</strong>
+                            <ul>
+                                <li>Catecumeni</li>
+                                <li>Penitenti</li>
+                                <li>Posseduti</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+                
+                <blockquote>
+                    "Lo scopo di ogni gerarchia è l'imitazione di Dio e l'unione con Lui" - De Coelesti Hierarchia, III.2
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('influence')">
+                <h2 class="section-title">Influenza Storica</h2>
+                <button class="toggle-btn light">+</button>
+            </div>
+            <div class="section-content" id="influence">
+                <p>L'impatto dello Pseudo-Dionigi sulla teologia cristiana è immenso, nonostante la sua identità enigmatica.</p>
+                
+                <h3>Medioevo</h3>
+                <ul>
+                    <li><strong>Scoto Eriugena:</strong> Tradusse le opere in latino nell'IX secolo</li>
+                    <li><strong>Ugo di San Vittore:</strong> Commentò la Gerarchia Celeste</li>
+                    <li><strong>San Tommaso d'Aquino:</strong> Citò Dionigi oltre 1700 volte</li>
+                    <li><strong>Mistici renani:</strong> Eckhart, Tauler, Suso</li>
+                </ul>
+                
+                <h3>Rinascimento e oltre</h3>
+                <ul>
+                    <li><strong>Marsilio Ficino:</strong> Influenza sul neoplatonismo rinascimentale</li>
+                    <li><strong>Pico della Mirandola:</strong> Sintesi con cabala e filosofia</li>
+                    <li><strong>Mistici spagnoli:</strong> San Giovanni della Croce, Teresa d'Avila</li>
+                    <li><strong>Filosofia moderna:</strong> Hegel, Heidegger (concetto di "divina tenebra")</li>
+                </ul>
+                
+                <h3>Ortodossia orientale</h3>
+                <p>Particolarmente venerato nella tradizione bizantina:</p>
+                <ul>
+                    <li>Massimo il Confessore scrisse importanti commenti</li>
+                    <li>Gregorio Palamas si basò sulla teologia apofatica</li>
+                    <li>Influenza sulla teologia esicasta</li>
+                </ul>
+                
+                <blockquote>
+                    "Dionigi è stato per il Medioevo ciò che Platone fu per il Rinascimento" - Paul Rorem
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('controversies')">
+                <h2 class="section-title">Controversie e Critiche</h2>
+                <button class="toggle-btn mystic">+</button>
+            </div>
+            <div class="section-content" id="controversies">
+                <p>Nonostante la sua influenza, lo Pseudo-Dionigi è stato al centro di numerosi dibattiti teologici.</p>
+                
+                <h3>Questioni dottrinali</h3>
+                <ul>
+                    <li><strong>Neoplatonismo:</strong> Quanto è cristiana la sua sintesi?</li>
+                    <li><strong>Pseudonimo:</strong> Problemi etici dell'attribuzione falsa</li>
+                    <li><strong>Gerarchie:</strong> Rigidità della struttura ecclesiastica</li>
+                    <li><strong>Cristologia:</strong> Ruolo marginale di Cristo in alcune parti</li>
+                </ul>
+                
+                <h3>Reazioni storiche</h3>
+                <div class="hierarchy">
+                    <h4>Posizioni contrastanti:</h4>
+                    <ul>
+                        <li><strong>Accettazione:</strong> Tommaso d'Aquino, Bonaventura</li>
+                        <li><strong>Scetticismo:</strong> Lorenzo Valla (dimostrò l'inautenticità)</li>
+                        <li><strong>Rifiuto:</strong> Alcuni riformatori protestanti</li>
+                        <li><strong>Rivalutazione:</strong> Studi moderni sul neoplatonismo cristiano</li>
+                    </ul>
+                </div>
+                
+                <h3>Contributi positivi</h3>
+                <p>Nonostante le critiche, Dionigi ha offerto:</p>
+                <ul>
+                    <li>Un linguaggio per l'esperienza mistica</li>
+                    <li>Una teologia dell'ineffabilità di Dio</li>
+                    <li>Un ponte tra filosofia greca e cristianesimo</li>
+                    <li>Una visione sacramentale del cosmo</li>
+                </ul>
+                
+                <blockquote>
+                    "La grandezza di Dionigi sta nell'aver mostrato come l'uomo possa elevarsi a Dio attraverso la negazione di ogni concetto limitato" - Vladimir Lossky
+                </blockquote>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(sectionId) {
+            const content = document.getElementById(sectionId);
+            const button = content.previousElementSibling.querySelector('.toggle-btn');
+            
+            content.classList.toggle('active');
+            button.classList.toggle('rotated');
+        }
+
+        function setMode(mode) {
+            document.body.className = mode + '-mode';
+            
+            // Cambia stile ai bottoni in base alla modalità
+            const buttons = document.querySelectorAll('.toggle-btn');
+            buttons.forEach(btn => {
+                btn.className = 'toggle-btn';
+                if(mode === 'default' || mode === 'mystic') {
+                    btn.classList.add('mystic');
+                } else if(mode === 'night' || mode === 'philosophical') {
+                    btn.classList.add('light');
+                } else if(mode === 'minimal' || mode === 'academic') {
+                    btn.classList.add('hierarchic');
+                }
+            });
+        }
+
+        // Apri la prima sezione di default
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleSection('identity');
+        });
+    </script>
+</body>
+</html>

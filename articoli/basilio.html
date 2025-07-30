@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>San Basilio Magno: Architetto della Vita Monastica</title>
+    <style>
+        :root {
+            --primary-color: #3a5c6e;
+            --secondary-color: #a5c1b0;
+            --text-color: #2d3b31;
+            --bg-color: #f0f5f1;
+            --card-bg: #ffffff;
+            --font-main: 'Garamond', serif;
+            --font-header: 'Palatino Linotype', serif;
+            --gold-accent: #c0a062;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            transition: all 0.5s ease;
+            background-image: url('https://www.transparenttextures.com/patterns/slightly-speckled.png');
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-header);
+            color: var(--primary-color);
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 30px 0;
+            font-size: 3.2rem;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        h1:before, h1:after {
+            content: "✠";
+            color: var(--gold-accent);
+            margin: 0 15px;
+            font-size: 2rem;
+            vertical-align: middle;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-style: italic;
+            color: var(--primary-color);
+            margin-bottom: 40px;
+            font-size: 1.3rem;
+        }
+
+        /* Bottoni a forma di monastero bizantino */
+        .section-toggle {
+            background: linear-gradient(to right, #e8f0e8 0%, #d0d8d0 100%);
+            color: var(--primary-color);
+            border: none;
+            padding: 20px 30px 20px 80px;
+            font-family: var(--font-header);
+            font-size: 1.3rem;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            border-left: 8px solid var(--gold-accent);
+            clip-path: polygon(0 0, 100% 0, 95% 50%, 100% 100%, 0 100%, 5% 50%);
+        }
+
+        .section-toggle:before {
+            content: "";
+            position: absolute;
+            left: -15px;
+            top: 0;
+            width: 30px;
+            height: 100%;
+            background: linear-gradient(to right, var(--gold-accent), transparent);
+            clip-path: polygon(0 20%, 100% 0, 100% 100%, 0 80%);
+            transition: all 0.4s ease;
+        }
+
+        .section-toggle:hover {
+            transform: translateX(8px);
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.15);
+        }
+
+        .section-toggle:hover:before {
+            left: -18px;
+            width: 35px;
+        }
+
+        .section-toggle:after {
+            content: "⌂";
+            position: absolute;
+            left: 35px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.8rem;
+            color: var(--gold-accent);
+        }
+
+        .section-content {
+            display: none;
+            padding: 30px;
+            background-color: var(--card-bg);
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-top: -5px;
+            border-left: 4px solid var(--gold-accent);
+            animation: unfold 0.6s ease;
+            background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+        }
+
+        @keyframes unfold {
+            from { 
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Modalità di lettura */
+        .reading-modes {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: var(--font-header);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Stili specifici per ogni modalità */
+        .monastic {
+            background: linear-gradient(145deg, #3a5c6e, #2a4c5e);
+            color: white;
+        }
+
+        .theological {
+            background: linear-gradient(145deg, #6e3a5c, #5e2a4c);
+            color: #f8f0f5;
+        }
+
+        .liturgical {
+            background: linear-gradient(145deg, #5c6e3a, #4c5e2a);
+            color: #f5f8f0;
+        }
+
+        .patristic {
+            background: linear-gradient(145deg, #6e5c3a, #5e4c2a);
+            color: #f8f5f0;
+        }
+
+        /* Stili per modalità monastica */
+        body.monastic-mode {
+            --primary-color: #2a4c5e;
+            --secondary-color: #a5c1b0;
+            --text-color: #1d3b4e;
+            --bg-color: #e0f0e8;
+            --card-bg: #ffffff;
+            background-image: url('https://www.transparenttextures.com/patterns/light-paper-fibers.png');
+        }
+
+        /* Stili per modalità teologica */
+        body.theological-mode {
+            --primary-color: #5e2a4c;
+            --secondary-color: #c1a5b8;
+            --text-color: #4e1a3b;
+            --bg-color: #f8f0f5;
+            --card-bg: #f0e8f0;
+        }
+
+        /* Stili per modalità liturgica */
+        body.liturgical-mode {
+            --primary-color: #4c5e2a;
+            --secondary-color: #b8c1a5;
+            --text-color: #3b4e1a;
+            --bg-color: #f0f5e8;
+            --card-bg: #e8f0e0;
+        }
+
+        /* Stili per modalità patristica */
+        body.patristic-mode {
+            --primary-color: #5e4c2a;
+            --secondary-color: #c1b8a5;
+            --text-color: #4e3b1a;
+            --bg-color: #f8f5e8;
+            --card-bg: #f0e8d8;
+        }
+
+        /* Elementi decorativi */
+        .initial {
+            float: left;
+            font-family: 'UnifrakturMaguntia', cursive;
+            font-size: 5rem;
+            line-height: 0.8;
+            color: var(--gold-accent);
+            margin-right: 15px;
+            margin-bottom: -10px;
+            text-shadow: 2px 2px 3px rgba(0,0,0,0.2);
+        }
+
+        .divider {
+            text-align: center;
+            margin: 30px 0;
+            color: var(--gold-accent);
+            font-size: 1.5rem;
+            letter-spacing: 10px;
+        }
+
+        blockquote {
+            border-left: 4px solid var(--gold-accent);
+            padding: 20px;
+            margin: 25px 0;
+            background-color: rgba(192, 160, 98, 0.05);
+            font-style: italic;
+            position: relative;
+            border-radius: 0 10px 10px 0;
+        }
+
+        blockquote:before {
+            content: "\201C";
+            font-size: 5rem;
+            color: var(--gold-accent);
+            opacity: 0.15;
+            position: absolute;
+            left: 10px;
+            top: -20px;
+        }
+
+        blockquote p {
+            margin: 0;
+            padding-left: 40px;
+        }
+
+        blockquote footer {
+            text-align: right;
+            font-style: normal;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            margin-top: 10px;
+        }
+
+        /* Timeline a colonna */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 40px auto;
+        }
+
+        .timeline:before {
+            content: '';
+            position: absolute;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--gold-accent), transparent);
+            top: 0;
+            bottom: 0;
+            left: 50px;
+            margin-left: -1px;
+        }
+
+        .timeline-item {
+            padding: 10px 0 10px 80px;
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .timeline-date {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 70px;
+            text-align: right;
+            padding-right: 15px;
+            font-weight: bold;
+            color: var(--gold-accent);
+            font-family: var(--font-header);
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+            position: relative;
+            border: 1px solid rgba(192, 160, 98, 0.2);
+        }
+
+        .timeline-item:after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--card-bg);
+            border: 3px solid var(--gold-accent);
+            border-radius: 50%;
+            top: 15px;
+            left: 41px;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reading-modes {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .mode-btn {
+                width: 80%;
+            }
+
+            .section-toggle {
+                padding: 15px 20px 15px 60px;
+                font-size: 1.1rem;
+            }
+
+            .section-toggle:after {
+                left: 25px;
+                font-size: 1.5rem;
+            }
+
+            .timeline:before {
+                left: 30px;
+            }
+
+            .timeline-item {
+                padding-left: 60px;
+            }
+
+            .timeline-date {
+                width: 50px;
+                font-size: 0.9rem;
+            }
+
+            .timeline-item:after {
+                left: 21px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Garamond:wght@400;700&family=Palatino+Linotype:wght@400;700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Basilio di Cesarea</h1>
+        <p class="subtitle">Il Grande Padre Cappadocie e Dottore della Chiesa</p>
+
+        <div class="reading-modes">
+            <button class="mode-btn monastic" onclick="setMode('monastic')">Monastico</button>
+            <button class="mode-btn theological" onclick="setMode('theological')">Teologico</button>
+            <button class="mode-btn liturgical" onclick="setMode('liturgical')">Liturgico</button>
+            <button class="mode-btn patristic" onclick="setMode('patristic')">Patristico</button>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle">Vita e Contesto Storico</button>
+            <div class="section-content">
+                <p><span class="initial">B</span>asilio, detto Magno (330-379), fu vescovo di Cesarea in Cappadocia e una delle figure più influenti del cristianesimo del IV secolo. Nato in una ricca famiglia cristiana di Cesarea, ricevette un'educazione raffinata ad Atene, dove strinse amicizia con Gregorio Nazianzeno.</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">330</div>
+                        <div class="timeline-content">
+                            <h3>Nascita</h3>
+                            <p>Nasce a Cesarea in Cappadocia</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">351-355</div>
+                        <div class="timeline-content">
+                            <h3>Studi ad Atene</h3>
+                            <p>Studia retorica e filosofia con Gregorio Nazianzeno</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">356</div>
+                        <div class="timeline-content">
+                            <h3>Vita monastica</h3>
+                            <p>Visita i monasteri d'Egitto e Siria, poi si ritira in solitudine</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">370</div>
+                        <div class="timeline-content">
+                            <h3>Vescovo di Cesarea</h3>
+                            <p>Eletto metropolita di Cappadocia</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">379</div>
+                        <div class="timeline-content">
+                            <h3>Morte</h3>
+                            <p>Muore il 1° gennaio a 49 anni</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <p>Dopo un periodo di vita ascetica, durante il quale elaborò le sue regole monastiche, fu ordinato vescovo di Cesarea nel 370. Combatté l'arianesimo e contribuì a definire la dottrina trinitaria. La sua festa si celebra il 2 gennaio nella Chiesa cattolica e il 1° gennaio in quella ortodossa.</p>
+                
+                <blockquote>
+                    <p>"La gloria di Dio è l'uomo vivente, e la vita dell'uomo è la visione di Dio."</p>
+                    <footer>- San Basilio, <cite>De Spiritu Sancto</cite></footer>
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle">Contributi Teologici</button>
+            <div class="section-content">
+                <h3>Dottrina trinitaria</h3>
+                <p>Basilio difese l'ortodossia nicena contro l'arianesimo:</p>
+                <ul>
+                    <li>Distinzione tra ousia (essenza) e hypostasis (persona)</li>
+                    <li>Uguaglianza delle tre persone divine</li>
+                    <li>Dottrina sullo Spirito Santo nel <em>De Spiritu Sancto</em></li>
+                </ul>
+                
+                <div class="divider">✠ ✠ ✠</div>
+                
+                <h3>Regola monastica</h3>
+                <p>Le sue regole influenzarono tutto il monachesimo orientale:</p>
+                <ol>
+                    <li>Vita comunitaria anziché eremitica</li>
+                    <li>Equilibrio tra preghiera e lavoro manuale</li>
+                    <li>Obbedienza al superiore</li>
+                    <li>Servizio ai poveri e ai malati</li>
+                </ol>
+                
+                <blockquote>
+                    <p>"Se tutti vivessero come monaci, non ci sarebbe bisogno di leggi né di tribunali."</p>
+                    <footer>- San Basilio, <cite>Regulae fusius tractatae</cite></footer>
+                </blockquote>
+                
+                <h3>Opere principali</h3>
+                <table>
+                    <tr>
+                        <th>Opera</th>
+                        <th>Contenuto</th>
+                    </tr>
+                    <tr>
+                        <td>Contro Eunomio</td>
+                        <td>Difesa della divinità del Figlio</td>
+                    </tr>
+                    <tr>
+                        <td>De Spiritu Sancto</td>
+                        <td>Sulla divinità dello Spirito Santo</td>
+                    </tr>
+                    <tr>
+                        <td>Esamerone</td>
+                        <td>Omelie sulla creazione</td>
+                    </tr>
+                    <tr>
+                        <td>Regole monastiche</td>
+                        <td>Norme per la vita comunitaria</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle">Eredità e Culto</button>
+            <div class="section-content">
+                <h3>Influenza sul monachesimo</h3>
+                <p>La regola basiliana influenzò:</p>
+                <ul>
+                    <li>Il monachesimo bizantino</li>
+                    <li>San Benedetto e la regola occidentale</li>
+                    <li>Gli ordini monastici medievali</li>
+                </ul>
+                
+                <h3>Liturgia e carità</h3>
+                <p>Basilio promosse importanti innovazioni:</p>
+                <ol>
+                    <li>La Divina Liturgia di San Basilio</li>
+                    <li>Fondazione della Basiliade, complesso assistenziale</li>
+                    <li>Modello per gli ospedali medievali</li>
+                </ol>
+                
+                <div class="divider">✠ ✠ ✠</div>
+                
+                <h3>Iconografia</h3>
+                <p>Nell'arte è rappresentato con:</p>
+                <table>
+                    <tr>
+                        <th>Attributo</th>
+                        <th>Significato</th>
+                    </tr>
+                    <tr>
+                        <td>Vesti episcopali</td>
+                        <td>Dignità di vescovo</td>
+                    </tr>
+                    <tr>
+                        <td>Rotolo o libro</td>
+                        <td>Dottrina e scritti</td>
+                    </tr>
+                    <tr>
+                        <td>Colomba</td>
+                        <td>Spirito Santo</td>
+                    </tr>
+                    <tr>
+                        <td>Modellino di chiesa</td>
+                        <td>Costruzioni ecclesiastiche</td>
+                    </tr>
+                </table>
+                
+                <blockquote>
+                    <p>"Basilio è stato un gigante, un uomo veramente grande che si erge nella storia della Chiesa."</p>
+                    <footer>- Papa Benedetto XVI</footer>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funzione per aprire/chiudere le sezioni
+        document.querySelectorAll('.section-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                button.classList.toggle('active');
+                const content = button.nextElementSibling;
+                if (content.style.display === 'block') {
+                    content.style.display = 'none';
+                } else {
+                    content.style.display = 'block';
+                }
+            });
+        });
+
+        // Funzioni per cambiare modalità di lettura
+        function setMode(mode) {
+            document.body.className = '';
+            if (mode !== 'monastic') {
+                document.body.classList.add(mode + '-mode');
+            }
+            
+            // Cambia stile dei bottoni sezione in base alla modalità
+            const sectionToggles = document.querySelectorAll('.section-toggle');
+            sectionToggles.forEach(btn => {
+                btn.className = 'section-toggle'; // Resetta le classi
+                
+                if (mode === 'theological') {
+                    btn.style.background = 'linear-gradient(to right, #f8f0f5 0%, #e8e0e8 100%)';
+                    btn.style.borderLeft = '8px solid #6e3a5c';
+                } else if (mode === 'liturgical') {
+                    btn.style.background = 'linear-gradient(to right, #f0f5e8 0%, #e0e5d8 100%)';
+                    btn.style.borderLeft = '8px solid #5c6e3a';
+                } else if (mode === 'patristic') {
+                    btn.style.background = 'linear-gradient(to right, #f8f5e8 0%, #e8e5d8 100%)';
+                    btn.style.borderLeft = '8px solid #6e5c3a';
+                } else {
+                    btn.style.background = 'linear-gradient(to right, #e8f0e8 0%, #d0d8d0 100%)';
+                    btn.style.borderLeft = '8px solid #3a5c6e';
+                }
+            });
+        }
+
+        // Apri la prima sezione di default
+        document.addEventListener('DOMContentLoaded', () => {
+            const firstToggle = document.querySelector('.section-toggle');
+            firstToggle.classList.add('active');
+            firstToggle.nextElementSibling.style.display = 'block';
+        });
+    </script>
+</body>
+</html>

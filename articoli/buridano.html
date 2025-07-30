@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giovanni Buridano: Logica e Libero Arbitrio nel XIV Secolo</title>
+    <style>
+        :root {
+            --primary-color: #5a4a42;
+            --secondary-color: #c8b8aa;
+            --text-color: #3a2e28;
+            --bg-color: #f5f0ec;
+            --card-bg: #fff;
+            --font-main: 'Goudy Bookletter 1911', serif;
+            --font-header: 'UnifrakturCook', cursive;
+            --accent-color: #8c7b6e;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            transition: all 0.5s ease;
+            background-image: url('https://www.transparenttextures.com/patterns/old-mathematics.png');
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-header);
+            color: var(--primary-color);
+            letter-spacing: 1px;
+            font-weight: 400;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 30px 0;
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            position: relative;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        h1:before, h1:after {
+            content: "⚔";
+            color: var(--accent-color);
+            margin: 0 15px;
+            font-size: 2rem;
+            vertical-align: middle;
+            opacity: 0.7;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-style: italic;
+            color: var(--primary-color);
+            margin-bottom: 40px;
+            font-size: 1.4rem;
+            position: relative;
+        }
+
+        /* Bottoni a forma di bilancia medievale */
+        .section-toggle {
+            background: linear-gradient(to right, #f0e6dc 0%, #e0d6cc 100%);
+            color: var(--primary-color);
+            border: none;
+            padding: 20px 30px 20px 70px;
+            font-family: var(--font-header);
+            font-size: 1.4rem;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            margin: 30px 0;
+            border-radius: 0 100px 100px 0;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            border-left: 10px solid var(--accent-color);
+            clip-path: polygon(0 0, 100% 0, 90% 50%, 100% 100%, 0 100%);
+        }
+
+        .section-toggle:before {
+            content: "";
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px var(--bg-color);
+            transition: all 0.4s ease;
+        }
+
+        .section-toggle:hover {
+            transform: translateX(10px);
+            box-shadow: 8px 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .section-toggle:hover:before {
+            left: -20px;
+            background: var(--primary-color);
+        }
+
+        .section-toggle:after {
+            content: "⇄";
+            position: absolute;
+            left: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: var(--accent-color);
+            transition: all 0.3s ease;
+            opacity: 0.8;
+        }
+
+        .section-toggle.active:after {
+            content: "⇆";
+            color: var(--primary-color);
+            opacity: 1;
+        }
+
+        .section-content {
+            display: none;
+            padding: 30px 40px;
+            background-color: var(--card-bg);
+            border-radius: 0 0 30px 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-top: -20px;
+            border-left: 5px solid var(--accent-color);
+            border-right: 5px solid var(--accent-color);
+            border-bottom: 5px solid var(--accent-color);
+            animation: balanceAppear 0.7s ease;
+            position: relative;
+            z-index: 0;
+            background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+        }
+
+        @keyframes balanceAppear {
+            from { 
+                opacity: 0;
+                transform: translateY(20px) rotate(0.5deg);
+                filter: blur(2px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0) rotate(0);
+                filter: blur(0);
+            }
+        }
+
+        /* Modalità di lettura */
+        .reading-modes {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 50px 0;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: var(--font-header);
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            border: 1px solid rgba(140, 123, 110, 0.3);
+            min-width: 150px;
+        }
+
+        .mode-btn:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: all 0.6s ease;
+        }
+
+        .mode-btn:hover:before {
+            left: 100%;
+        }
+
+        /* Stili specifici per ogni modalità */
+        .logical {
+            background: linear-gradient(145deg, #4a423a, #3a322a);
+            color: #f0e6dc;
+        }
+
+        .nominalist {
+            background: linear-gradient(145deg, #6a5a4a, #5a4a3a);
+            color: #f5f0ec;
+        }
+
+        .debate {
+            background: linear-gradient(145deg, #5a4a6a, #4a3a5a);
+            color: #f0ecf5;
+        }
+
+        .scholastic {
+            background: linear-gradient(145deg, #4a5a3a, #3a4a2a);
+            color: #ecf5e0;
+        }
+
+        /* Stili per modalità logica */
+        body.logical-mode {
+            --primary-color: #3a322a;
+            --secondary-color: #a09890;
+            --text-color: #2a221a;
+            --bg-color: #f0e6dc;
+            --card-bg: #fff;
+            --accent-color: #6a5a4a;
+            background-image: url('https://www.transparenttextures.com/patterns/textured-paper.png');
+        }
+
+        /* Stili per modalità nominalista */
+        body.nominalist-mode {
+            --primary-color: #5a4a3a;
+            --secondary-color: #b8a898;
+            --text-color: #4a3a2a;
+            --bg-color: #f5f0ec;
+            --card-bg: #fff;
+            --accent-color: #8c7b6e;
+        }
+
+        .nominalist-mode .section-toggle {
+            background: linear-gradient(to right, #f5f0ec 0%, #e5e0dc 100%);
+            border-left: 10px solid #8c7b6e;
+        }
+
+        /* Stili per modalità dibattito */
+        body.debate-mode {
+            --primary-color: #4a3a5a;
+            --secondary-color: #b8a8c8;
+            --text-color: #3a2a4a;
+            --bg-color: #f0ecf5;
+            --card-bg: #faf5ff;
+            --accent-color: #7b6e8c;
+        }
+
+        .debate-mode .section-content {
+            background-image: url('https://www.transparenttextures.com/patterns/light-paper-fibers.png');
+        }
+
+        /* Stili per modalità scolastica */
+        body.scholastic-mode {
+            --primary-color: #3a4a2a;
+            --secondary-color: #a8b898;
+            --text-color: #2a3a1a;
+            --bg-color: #ecf5e0;
+            --card-bg: #f0ffe0;
+            --accent-color: #7b8c6e;
+        }
+
+        .scholastic-mode .section-toggle {
+            background: linear-gradient(to right, #ecf5e0 0%, #dce5d0 100%);
+            border-left: 10px solid #7b8c6e;
+        }
+
+        /* Elementi decorativi */
+        .initial {
+            float: left;
+            font-family: 'UnifrakturMaguntia', cursive;
+            font-size: 6rem;
+            line-height: 0.7;
+            color: var(--accent-color);
+            margin-right: 15px;
+            margin-bottom: -15px;
+            text-shadow: 2px 2px 3px rgba(0,0,0,0.2);
+        }
+
+        .divider {
+            text-align: center;
+            margin: 40px 0;
+            color: var(--accent-color);
+            font-size: 1.8rem;
+            letter-spacing: 15px;
+        }
+
+        blockquote {
+            border-left: 4px solid var(--accent-color);
+            padding: 25px;
+            margin: 30px 0;
+            background-color: rgba(140, 123, 110, 0.05);
+            font-style: italic;
+            position: relative;
+            border-radius: 0 15px 15px 0;
+            border-right: 1px solid rgba(140, 123, 110, 0.2);
+        }
+
+        blockquote:before {
+            content: "\201C";
+            font-size: 6rem;
+            color: var(--accent-color);
+            opacity: 0.15;
+            position: absolute;
+            left: 10px;
+            top: -30px;
+            font-family: serif;
+        }
+
+        blockquote p {
+            margin: 0;
+            padding-left: 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        blockquote footer {
+            text-align: right;
+            font-style: normal;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            margin-top: 15px;
+        }
+
+        /* Timeline a forma di bilancia */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .timeline:before {
+            content: '';
+            position: absolute;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--accent-color), transparent);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1px;
+            z-index: 1;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+            padding-right: 80px;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            padding-left: 80px;
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            position: relative;
+            border: 1px solid rgba(140, 123, 110, 0.3);
+        }
+
+        .timeline-item:after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background-color: var(--card-bg);
+            border: 4px solid var(--accent-color);
+            border-radius: 50%;
+            top: 15px;
+            z-index: 2;
+        }
+
+        .timeline-item:nth-child(odd):after {
+            right: -12px;
+        }
+
+        .timeline-item:nth-child(even):after {
+            left: -12px;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reading-modes {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .mode-btn {
+                width: 80%;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            h1:before, h1:after {
+                display: none;
+            }
+
+            .section-toggle {
+                padding: 15px 20px 15px 60px;
+                font-size: 1.1rem;
+                clip-path: none;
+                border-radius: 0 50px 50px 0;
+            }
+
+            .section-toggle:after {
+                left: 20px;
+                font-size: 1.5rem;
+            }
+
+            .timeline:before {
+                left: 30px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                left: 0;
+                padding-right: 20px;
+                padding-left: 70px;
+                text-align: left;
+            }
+
+            .timeline-item:nth-child(even) {
+                left: 0;
+                padding-left: 70px;
+            }
+
+            .timeline-item:after {
+                left: 18px;
+            }
+
+            .timeline-item:nth-child(odd):after,
+            .timeline-item:nth-child(even):after {
+                left: 18px;
+                right: auto;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Goudy+Bookletter+1911&family=UnifrakturCook:wght@700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Giovanni Buridano</h1>
+        <p class="subtitle">Il filosofo dell'asino e della logica medievale</p>
+
+        <div class="reading-modes">
+            <button class="mode-btn logical" onclick="setMode('logical')">Logico</button>
+            <button class="mode-btn nominalist" onclick="setMode('nominalist')">Nominalista</button>
+            <button class="mode-btn debate" onclick="setMode('debate')">Dibattito</button>
+            <button class="mode-btn scholastic" onclick="setMode('scholastic')">Scolastico</button>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle">Vita e Contesto Storico</button>
+            <div class="section-content">
+                <p><span class="initial">G</span>iovanni Buridano (1300 circa - 1358/61) fu uno dei principali filosofi e logici del XIV secolo, rappresentante della cosiddetta "via moderna" nella scolastica medievale. Nato probabilmente a Béthune nella contea di Artois, studiò all'Università di Parigi sotto Guglielmo di Ockham, diventando poi maestro di arti e rettore dell'università.</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>1300 ca.</h3>
+                            <p>Nascita a Béthune, Artois (Francia)</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>1320-28</h3>
+                            <p>Studia a Parigi sotto Guglielmo di Ockham</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>1328</h3>
+                            <p>Diventa maestro di arti all'Università di Parigi</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>1340</h3>
+                            <p>Rettore dell'Università di Parigi</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>1358-61</h3>
+                            <p>Morte a Parigi</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <p>Buridano operò nel periodo di massimo splendore della scolastica parigina, contemporaneo di filosofi come Nicola d'Autrecourt e Gregorio da Rimini. La sua fama è legata principalmente ai contributi in logica e filosofia del linguaggio, nonché al celebre paradosso dell'asino che porta il suo nome (anche se probabilmente non è sua l'invenzione).</p>
+                
+                <blockquote>
+                    <p>"La logica è l'arte che dirige l'atto della ragione, per cui l'uomo può procedere con ordine, facilmente e senza errore."</p>
+                    <footer>- Giovanni Buridano, <cite>Summulae de dialectica</cite></footer>
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle">Contributi Filosofici</button>
+            <div class="section-content">
+                <h3>L'asino di Buridano</h3>
+                <p>Il celebre paradosso (attribuito a Buridano ma probabilmente anteriore) illustra il problema del libero arbitrio:</p>
+                <ul>
+                    <li>Un asino egualmente affamato e assetato è posto a uguale distanza tra un secchio d'acqua e un mucchio di fieno</li>
+                    <li>Non avendo ragioni per preferire una cosa all'altra, rimane paralizzato dall'indecisione</li>
+                    <li>Muore sia di fame che di sete</li>
+                </ul>
+                
+                <div class="divider">⚖ ⚖ ⚖</div>
+                
+                <h3>Teoria dell'impetus</h3>
+                <p>Buridano sviluppò una teoria fisica rivoluzionaria che anticipava alcuni concetti della fisica moderna:</p>
+                <ul>
+                    <li>Critica alla teoria aristotelica del moto</li>
+                    <li>Concetto di "impetus" come forza impressa al corpo in movimento</li>
+                    <li>L'impetus si consuma gradualmente per attrito e resistenza dell'aria</li>
+                    <li>Anticipazione del principio d'inerzia</li>
+                </ul>
+                
+                <blockquote>
+                    <p>"L'impetus è una certa forza impressa dal motore nel mobile, tendente a muovere il mobile nella direzione in cui fu mosso."</p>
+                    <footer>- Giovanni Buridano, <cite>Quaestiones super libris physicorum</cite></footer>
+                </blockquote>
+                
+                <h3>Logica e filosofia del linguaggio</h3>
+                <p>Buridano sviluppò una sofisticata teoria della supposizione dei termini:</p>
+                <ol>
+                    <li><strong>Suppositio materialis</strong>: il termine sta per se stesso</li>
+                    <li><strong>Suppositio formalis</strong>: il termine sta per ciò che significa</li>
+                    <li><strong>Suppositio simplex</strong>: il termine sta per il concetto universale</li>
+                    <li><strong>Suppositio personalis</strong>: il termine sta per gli individui</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle">Eredità e Influenza</button>
+            <div class="section-content">
+                <h3>Influenza sulla scienza moderna</h3>
+                <p>La teoria dell'impetus di Buridano influenzò profondamente:</p>
+                <ul>
+                    <li>Nicola Oresme</li>
+                    <li>Galileo Galilei</li>
+                    <li>Giovanni Battista Benedetti</li>
+                    <li>La rivoluzione scientifica del XVI-XVII secolo</li>
+                </ul>
+                
+                <h3>Contributi alla logica</h3>
+                <p>Le sue innovazioni in logica includono:</p>
+                <table>
+                    <tr>
+                        <th>Contributo</th>
+                        <th>Descrizione</th>
+                    </tr>
+                    <tr>
+                        <td>Teoria della supposizione</td>
+                        <td>Sviluppo della semantica medievale</td>
+                    </tr>
+                    <tr>
+                        <td>Logica modale</td>
+                        <td>Analisi dei contesti modali</td>
+                    </tr>
+                    <tr>
+                        <td>Paradossi logici</td>
+                        <td>Soluzioni a paradossi come il mentitore</td>
+                    </tr>
+                </table>
+                
+                <div class="divider">⚖ ⚖ ⚖</div>
+                
+                <h3>Fortuna dell'asino di Buridano</h3>
+                <p>Il paradosso è stato ripreso e discusso da:</p>
+                <ol>
+                    <li>Gottfried Leibniz</li>
+                    <li>Arthur Schopenhauer</li>
+                    <li>John Stuart Mill</li>
+                    <li>Filosofi analitici del XX secolo</li>
+                </ol>
+                
+                <blockquote>
+                    <p>"Buridano non fu l'asino, ma colui che mostrò come anche l'asino possa insegnarci qualcosa sulla natura della scelta."</p>
+                    <footer>- Interpretazione moderna del paradosso</footer>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funzione per aprire/chiudere le sezioni
+        document.querySelectorAll('.section-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                button.classList.toggle('active');
+                const content = button.nextElementSibling;
+                if (content.style.display === 'block') {
+                    content.style.animation = 'balanceAppear 0.5s ease reverse';
+                    setTimeout(() => {
+                        content.style.display = 'none';
+                    }, 450);
+                } else {
+                    content.style.display = 'block';
+                }
+            });
+        });
+
+        // Funzioni per cambiare modalità di lettura
+        function setMode(mode) {
+            document.body.className = '';
+            if (mode !== 'logical') {
+                document.body.classList.add(mode + '-mode');
+            }
+            
+            // Cambia stile dei bottoni sezione in base alla modalità
+            const sectionToggles = document.querySelectorAll('.section-toggle');
+            sectionToggles.forEach(btn => {
+                btn.className = 'section-toggle'; // Resetta le classi
+                
+                if (mode === 'nominalist') {
+                    btn.style.background = 'linear-gradient(to right, #f5f0ec 0%, #e5e0dc 100%)';
+                    btn.style.borderLeft = '10px solid #8c7b6e';
+                } else if (mode === 'debate') {
+                    btn.style.background = 'linear-gradient(to right, #f0ecf5 0%, #e0dce5 100%)';
+                    btn.style.borderLeft = '10px solid #7b6e8c';
+                } else if (mode === 'scholastic') {
+                    btn.style.background = 'linear-gradient(to right, #ecf5e0 0%, #dce5d0 100%)';
+                    btn.style.borderLeft = '10px solid #7b8c6e';
+                } else {
+                    btn.style.background = 'linear-gradient(to right, #f0e6dc 0%, #e0d6cc 100%)';
+                    btn.style.borderLeft = '10px solid #6a5a4a';
+                }
+            });
+        }
+
+        // Apri la prima sezione di default
+        document.addEventListener('DOMContentLoaded', () => {
+            const firstToggle = document.querySelector('.section-toggle');
+            firstToggle.classList.add('active');
+            firstToggle.nextElementSibling.style.display = 'block';
+        });
+    </script>
+</body>
+</html>

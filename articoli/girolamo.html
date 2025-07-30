@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>San Girolamo - Studio Completo</title>
+    <style>
+        :root {
+            --primary-color: #5D4037;
+            --secondary-color: #8D6E63;
+            --text-color: #3E2723;
+            --bg-color: #EFEBE9;
+            --card-bg: #D7CCC8;
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --font-main: 'Georgia', serif;
+            --font-alt: 'Arial', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            transition: all 0.4s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--primary-color);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            font-style: italic;
+            color: var(--secondary-color);
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+        }
+
+        .reading-modes {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: var(--font-alt);
+            transition: all 0.3s ease;
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .section-container {
+            margin-bottom: 35px;
+            transition: all 0.3s ease;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 25px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            transform: translateY(-2px);
+        }
+
+        .section-title {
+            margin: 0;
+            font-size: 1.4rem;
+            letter-spacing: 0.5px;
+        }
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.6rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Stili bottoni creativi */
+        .toggle-btn.quill {
+            background-color: transparent;
+        }
+
+        .toggle-btn.quill:before {
+            content: "✒";
+            transition: all 0.3s ease;
+        }
+
+        .toggle-btn.quill.rotated:before {
+            transform: rotate(45deg);
+            content: "🖋";
+        }
+
+        .toggle-btn.scroll {
+            background-color: transparent;
+        }
+
+        .toggle-btn.scroll:before {
+            content: "📜";
+            transition: all 0.3s ease;
+        }
+
+        .toggle-btn.scroll.rotated:before {
+            transform: rotate(90deg);
+            content: "🎯";
+        }
+
+        .toggle-btn.lion {
+            background-color: transparent;
+        }
+
+        .toggle-btn.lion:before {
+            content: "🦁";
+            transition: all 0.3s ease;
+        }
+
+        .toggle-btn.lion.rotated:before {
+            transform: scale(1.2);
+            content: "📖";
+        }
+
+        .section-content {
+            padding: 25px;
+            background-color: var(--card-bg);
+            border-radius: 0 0 8px 8px;
+            box-shadow: var(--shadow);
+            display: none;
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .section-content.active {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Modalità di lettura */
+        .night-mode {
+            --primary-color: #BCAAA4;
+            --secondary-color: #A1887F;
+            --text-color: #EFEBE9;
+            --bg-color: #212121;
+            --card-bg: #424242;
+            --shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .philosophical-mode {
+            --font-main: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            --primary-color: #4E342E;
+            --secondary-color: #6D4C41;
+            --text-color: #3E2723;
+            --bg-color: #D7CCC8;
+            --card-bg: #BCAAA4;
+        }
+
+        .minimal-mode {
+            --font-main: 'Helvetica Neue', Arial, sans-serif;
+            --primary-color: #5D4037;
+            --secondary-color: #795548;
+            --text-color: #3E2723;
+            --bg-color: #FFFFFF;
+            --card-bg: #EFEBE9;
+            --shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .academic-mode {
+            --font-main: 'Times New Roman', Times, serif;
+            --primary-color: #3E2723;
+            --secondary-color: #5D4037;
+            --text-color: #212121;
+            --bg-color: #FAFAFA;
+            --card-bg: #EEEEEE;
+        }
+
+        .desert-mode {
+            --primary-color: #8D6E63;
+            --secondary-color: #A1887F;
+            --text-color: #4E342E;
+            --bg-color: #FFECB3;
+            --card-bg: #FFE082;
+            --font-main: 'Georgia', serif;
+        }
+
+        /* Stili per contenuto */
+        h2, h3, h4 {
+            color: var(--primary-color);
+            margin-top: 25px;
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 8px;
+        }
+
+        blockquote {
+            border-left: 4px solid var(--primary-color);
+            padding: 15px 20px;
+            margin: 25px 0;
+            font-style: italic;
+            background-color: rgba(0,0,0,0.03);
+            border-radius: 0 8px 8px 0;
+        }
+
+        ul, ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            background-color: rgba(141, 110, 99, 0.2);
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .section-header {
+                padding: 15px;
+            }
+            
+            .section-title {
+                font-size: 1.2rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>San Girolamo</h1>
+            <p class="subtitle">Sacerdote, confessore, teologo e traduttore della Bibbia (347-420 d.C.)</p>
+            
+            <div class="reading-modes">
+                <button class="mode-btn" onclick="setMode('default')">Classico</button>
+                <button class="mode-btn" onclick="setMode('night')">Notturno</button>
+                <button class="mode-btn" onclick="setMode('philosophical')">Filosofico</button>
+                <button class="mode-btn" onclick="setMode('minimal')">Minimal</button>
+                <button class="mode-btn" onclick="setMode('academic')">Accademico</button>
+                <button class="mode-btn" onclick="setMode('desert')">Eremitico</button>
+            </div>
+        </header>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('biography')">
+                <h2 class="section-title">Vita e Biografia</h2>
+                <button class="toggle-btn quill">+</button>
+            </div>
+            <div class="section-content" id="biography">
+                <p>San Girolamo (Eusebio Sofronio Girolamo), nato a Stridone (nell'odierna Croazia) intorno al 347, fu uno dei più importanti Padri della Chiesa e dottori della Chiesa occidentale. La sua vita fu un viaggio intellettuale e spirituale che lo portò dalle scuole romane ai deserti della Siria, fino a Betlemme dove trascorse gli ultimi 34 anni della sua vita.</p>
+                
+                <h3>Formazione e conversione</h3>
+                <p>Girolamo ricevette un'educazione classica a Roma, dove studiò retorica e filosofia sotto Elio Donato. Dopo un periodo di vita mondana, sperimentò una profonda conversione verso il 375 e si dedicò agli studi teologici.</p>
+                
+                <h3>Periodo eremitico</h3>
+                <p>Tra il 375 e il 378 visse come eremita nel deserto della Calcide (Siria), dove:</p>
+                <ul>
+                    <li>Imparò l'ebraico da un convertito ebreo</li>
+                    <li>Iniziò i suoi studi esegetici</li>
+                    <li>Scrisse le sue prime opere</li>
+                    <li>Condusse una vita di severa penitenza</li>
+                </ul>
+                
+                <h3>Carriera ecclesiastica</h3>
+                <ol>
+                    <li><strong>382-385:</strong> Segretario di Papa Damaso I a Roma</li>
+                    <li><strong>386:</strong> Si stabilisce a Betlemme dove fonda un monastero</li>
+                    <li><strong>390-405:</strong> Traduzione della Bibbia in latino (Vulgata)</li>
+                    <li><strong>420:</strong> Muore a Betlemme il 30 settembre</li>
+                </ol>
+                
+                <blockquote>
+                    "Ignorare le Scritture significa ignorare Cristo" - San Girolamo, Commento a Isaia
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('vulgate')">
+                <h2 class="section-title">La Vulgata</h2>
+                <button class="toggle-btn scroll">+</button>
+            </div>
+            <div class="section-content" id="vulgate">
+                <p>La <span class="highlight">Vulgata</span>, la traduzione latina della Bibbia realizzata da Girolamo, rappresenta il suo capolavoro e una delle opere più influenti della storia occidentale. Fu dichiarata testo ufficiale della Chiesa cattolica dal Concilio di Trento (1546).</p>
+                
+                <h3>Caratteristiche principali</h3>
+                <ul>
+                    <li>Prima traduzione completa della Bibbia in latino dall'ebraico e greco originale</li>
+                    <li>Linguaggio elegante ma accessibile (da cui "Vulgata" = per il volgo)</li>
+                    <li>Corregge errori delle precedenti versioni latine (Vetus Latina)</li>
+                    <li>Fonde precisione filologica e sensibilità teologica</li>
+                </ul>
+                
+                <h3>Metodo di lavoro</h3>
+                <p>Girolamo adottò un approccio scientifico alla traduzione:</p>
+                <ul>
+                    <li>Studio diretto dei testi originali (ebraico per l'AT, greco per il NT)</li>
+                    <li>Consultazione dell'Esapla di Origene</li>
+                    <li>Collaborazione con rabbini ebrei per l'Antico Testamento</li>
+                    <li>Revisione continua basata su nuovi manoscritti</li>
+                </ul>
+                
+                <h3>Impatto storico</h3>
+                <div class="subsection">
+                    <p>La Vulgata ha influenzato:</p>
+                    <ul>
+                        <li>La liturgia occidentale per 15 secoli</li>
+                        <li>La teologia medievale (Scoto, Tommaso d'Aquino)</li>
+                        <li>La letteratura europea (Dante, Chaucer)</li>
+                        <li>Le traduzioni bibliche successive (Lutero, Re Giacomo)</li>
+                    </ul>
+                </div>
+                
+                <blockquote>
+                    "Non credo nell'ispirazione delle Settanta, ma nell'autorità dei libri ebraici" - San Girolamo, Prefazione al Pentateuco
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('works')">
+                <h2 class="section-title">Opere e Scritti</h2>
+                <button class="toggle-btn lion">+</button>
+            </div>
+            <div class="section-content" id="works">
+                <p>Oltre alla Vulgata, Girolamo produsse un'immensa quantità di scritti che coprono vari generi letterari e teologici.</p>
+                
+                <h3>Opere esegetiche</h3>
+                <ul>
+                    <li><strong>Commentari biblici:</strong> Su Isaia, Geremia, Ezechiele, Daniele, Matteo, Galati, Efesini</li>
+                    <li><strong>Questioni ebraiche sulla Genesi:</strong> Analisi filologica del testo</li>
+                    <li><strong>Omelie:</strong> Spiegazioni popolari delle Scritture</li>
+                </ul>
+                
+                <h3>Opere storiche</h3>
+                <ul>
+                    <li><strong>De viris illustribus:</strong> Biografie di 135 autori cristiani</li>
+                    <li><strong>Cronaca:</strong> Storia universale fino al 378</li>
+                    <li><strong>Vite di eremiti:</strong> Paolo di Tebe, Ilarione</li>
+                </ul>
+                
+                <h3>Opere polemiche</h3>
+                <ul>
+                    <li><strong>Contro Gioviniano:</strong> Difesa della verginità</li>
+                    <li><strong>Contro Vigilanzio:</strong> Difesa del culto dei santi</li>
+                    <li><strong>Contro Pelagio:</strong> Sulla grazia e il libero arbitrio</li>
+                    <li><strong>Contro Elvidio:</strong> Sulla perpetua verginità di Maria</li>
+                </ul>
+                
+                <h3>Lettere</h3>
+                <p>Oltre 150 lettere conservate, tra cui:</p>
+                <ul>
+                    <li><strong>Lettera 22:</strong> A Eustochio sulla verginità</li>
+                    <li><strong>Lettera 108:</strong> Epitaffio di Santa Paola</li>
+                    <li><strong>Lettera 53:</strong> Sul metodo di studio della Bibbia</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('spirituality')">
+                <h2 class="section-title">Spiritualità e Dottrina</h2>
+                <button class="toggle-btn quill">+</button>
+            </div>
+            <div class="section-content" id="spirituality">
+                <p>La spiritualità di Girolamo unisce ascetismo eremitico, amore per la Scrittura e impegno intellettuale.</p>
+                
+                <h3>Elementi caratteristici</h3>
+                <ul>
+                    <li><strong>Centralità della Bibbia:</strong> "La conoscenza delle Scritture è il cibo dell'anima"</li>
+                    <li><strong>Ascesi radicale:</strong> Digiuno, veglie, povertà</li>
+                    <li><strong>Devozione mariana:</strong> Difesa della perpetua verginità di Maria</li>
+                    <li><strong>Amicizia spirituale:</strong> Con donne come Paola ed Eustochio</li>
+                </ul>
+                
+                <h3>Contributi dottrinali</h3>
+                <div class="subsection">
+                    <h4>Esegesi biblica</h4>
+                    <ul>
+                        <li>Metodo storico-letterario</li>
+                        <li>Attenzione alle lingue originali</li>
+                        <li>Interpretazione letterale e allegorica</li>
+                    </ul>
+                    
+                    <h4>Teologia monastica</h4>
+                    <ul>
+                        <li>Valorizzazione della vita ascetica</li>
+                        <li>Equilibrio tra studio e preghiera</li>
+                        <li>Monachesimo come "fuga mundi"</li>
+                    </ul>
+                </div>
+                
+                <blockquote>
+                    "Sia che mangiamo, sia che beviamo, sia che facciamo qualsiasi altra cosa, facciamo tutto per la gloria di Dio e la lettura divina non cessi mai dalle nostre mani" - San Girolamo, Lettera 125
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('legacy')">
+                <h2 class="section-title">Eredità e Influenza</h2>
+                <button class="toggle-btn scroll">+</button>
+            </div>
+            <div class="section-content" id="legacy">
+                <p>L'influenza di Girolamo si estende ben oltre il suo tempo, toccando vari aspetti della cultura occidentale.</p>
+                
+                <h3>Nella Chiesa</h3>
+                <ul>
+                    <li>Patrono degli studiosi biblici, traduttori e archeologi</li>
+                    <li>Modello per il monachesimo occidentale</li>
+                    <li>Influenza su Agostino, Gregorio Magno e altri Padri</li>
+                    <li>Dottore della Chiesa (titolo conferito nel 1298)</li>
+                </ul>
+                
+                <h3>Nella cultura</h3>
+                <ul>
+                    <li>Iconografia tradizionale con il leone (dalla leggenda)</li>
+                    <li>Rappresentato spesso nello studio con libri e penna</li>
+                    <li>Influenza sull'Umanesimo cristiano (Erasmo, Valla)</li>
+                    <li>Patrono di molte biblioteche e università</li>
+                </ul>
+                
+                <h3>Nell'arte</h3>
+                <p>Girolamo è stato rappresentato da:</p>
+                <ul>
+                    <li>Caravaggio (San Girolamo scrivente)</li>
+                    <li>Leonardo da Vinci (San Girolamo penitente)</li>
+                    <li>Dürer (incisioni e dipinti)</li>
+                    <li>El Greco (vari ritratti)</li>
+                </ul>
+                
+                <blockquote>
+                    "La grandezza di Girolamo consiste nell'aver unito in modo esemplare l'amore per la Parola di Dio con la fedeltà alla grande Chiesa" - Papa Benedetto XVI
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('controversies')">
+                <h2 class="section-title">Controversie e Conflitti</h2>
+                <button class="toggle-btn lion">+</button>
+            </div>
+            <div class="section-content" id="controversies">
+                <p>Girolamo fu figura spesso polemica, coinvolto in numerose dispute dottrinali e personali.</p>
+                
+                <h3>Principali controversie</h3>
+                <ul>
+                    <li><strong>Con Rufino:</strong> Polemica sull'ortodossia di Origene</li>
+                    <li><strong>Con Agostino:</strong> Sull'interpretazione di Galati 2</li>
+                    <li><strong>Con Gioviniano:</strong> Sulla superiorità della verginità</li>
+                    <li><strong>Con Pelagio:</strong> Sulla grazia e il libero arbitrio</li>
+                </ul>
+                
+                <h3>Carattere e personalità</h3>
+                <p>Girolamo era noto per:</p>
+                <ul>
+                    <li>Umore irascibile e linguaggio spesso violento</li>
+                    <li>Intransigenza nelle questioni dottrinali</li>
+                    <li>Lealtà assoluta verso gli amici</li>
+                    <li>Disprezzo per la mediocrità intellettuale</li>
+                </ul>
+                
+                <h3>Critiche e difese</h3>
+                <div class="subsection">
+                    <p>Le principali critiche a Girolamo riguardano:</p>
+                    <ul>
+                        <li>Eccessiva severità verso se stesso e gli altri</li>
+                        <li>Uso di linguaggio ingiurioso nelle polemiche</li>
+                        <li>Rigidità nell'interpretazione biblica</li>
+                    </ul>
+                    
+                    <p>Le sue difese includono:</p>
+                    <ul>
+                        <li>Zelo per la verità</li>
+                        <li>Amore per la Chiesa</li>
+                        <li>Coerenza con la propria conversione</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(sectionId) {
+            const content = document.getElementById(sectionId);
+            const button = content.previousElementSibling.querySelector('.toggle-btn');
+            
+            content.classList.toggle('active');
+            button.classList.toggle('rotated');
+        }
+
+        function setMode(mode) {
+            document.body.className = mode + '-mode';
+            
+            // Cambia stile ai bottoni in base alla modalità
+            const buttons = document.querySelectorAll('.toggle-btn');
+            buttons.forEach(btn => {
+                btn.className = 'toggle-btn';
+                if(mode === 'philosophical' || mode === 'default') {
+                    btn.classList.add('quill');
+                } else if(mode === 'night' || mode === 'academic') {
+                    btn.classList.add('scroll');
+                } else if(mode === 'minimal' || mode === 'desert') {
+                    btn.classList.add('lion');
+                }
+            });
+        }
+
+        // Apri la prima sezione di default
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleSection('biography');
+            // Imposta il primo bottone come attivo
+            document.querySelector('.mode-btn').classList.add('active-mode');
+        });
+    </script>
+</body>
+</html>

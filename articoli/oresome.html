@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nicola d'Oresme: Matematica e Cosmologia nel Medioevo</title>
+    <style>
+        :root {
+            --primary-color: #3a5c6e;
+            --secondary-color: #a5b8c7;
+            --text-color: #2d3b45;
+            --bg-color: #f0f5fa;
+            --card-bg: #ffffff;
+            --font-main: 'EB Garamond', serif;
+            --font-header: 'Almendra SC', serif;
+            --gold-accent: #c0a062;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            transition: all 0.5s ease;
+            background-image: url('https://www.transparenttextures.com/patterns/cartographer.png');
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-header);
+            color: var(--primary-color);
+            letter-spacing: 1px;
+            font-weight: 400;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 30px 0 20px;
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            position: relative;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        h1:before, h1:after {
+            content: "♄";
+            color: var(--gold-accent);
+            margin: 0 15px;
+            font-size: 2rem;
+            vertical-align: middle;
+            opacity: 0.7;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-style: italic;
+            color: var(--primary-color);
+            margin-bottom: 40px;
+            font-size: 1.4rem;
+            position: relative;
+        }
+
+        /* Bottoni a forma di astrolabio */
+        .section-toggle {
+            background: linear-gradient(to right, #f0f5fa 0%, #e0e5ea 100%);
+            color: var(--primary-color);
+            border: none;
+            padding: 20px 30px 20px 80px;
+            font-family: var(--font-header);
+            font-size: 1.4rem;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            margin: 30px 0;
+            border-radius: 0 50px 50px 0;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            border-left: 8px solid var(--gold-accent);
+            clip-path: polygon(0 0, 100% 0, 90% 50%, 100% 100%, 0 100%);
+        }
+
+        .section-toggle:before {
+            content: "";
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: var(--bg-color);
+            border: 4px solid var(--gold-accent);
+            border-radius: 50%;
+            box-shadow: 0 0 0 3px var(--bg-color);
+            transition: all 0.4s ease;
+            background-image: radial-gradient(circle at center, var(--gold-accent) 30%, transparent 30%);
+            background-size: 10px 10px;
+        }
+
+        .section-toggle:hover {
+            transform: translateX(10px) rotate(1deg);
+            box-shadow: 8px 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .section-toggle:hover:before {
+            transform: translateY(-50%) rotate(15deg);
+            left: -20px;
+        }
+
+        .section-toggle:after {
+            content: "⊕";
+            position: absolute;
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: var(--gold-accent);
+            transition: all 0.3s ease;
+            opacity: 0.8;
+        }
+
+        .section-toggle.active:after {
+            content: "⊗";
+            color: var(--primary-color);
+            opacity: 1;
+        }
+
+        .section-content {
+            display: none;
+            padding: 30px 40px;
+            background-color: var(--card-bg);
+            border-radius: 0 0 30px 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-top: -20px;
+            border-left: 5px solid var(--gold-accent);
+            border-right: 5px solid var(--gold-accent);
+            border-bottom: 5px solid var(--gold-accent);
+            animation: celestialAppear 0.7s ease;
+            position: relative;
+            z-index: 0;
+            background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+        }
+
+        @keyframes celestialAppear {
+            from { 
+                opacity: 0;
+                transform: translateY(20px) rotate(0.5deg);
+                filter: blur(3px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0) rotate(0);
+                filter: blur(0);
+            }
+        }
+
+        /* Modalità di lettura */
+        .reading-modes {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 50px 0;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: var(--font-header);
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            border: 1px solid rgba(192, 160, 98, 0.3);
+            min-width: 150px;
+        }
+
+        .mode-btn:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: all 0.6s ease;
+        }
+
+        .mode-btn:hover:before {
+            left: 100%;
+        }
+
+        /* Stili specifici per ogni modalità */
+        .mathematical {
+            background: linear-gradient(145deg, #3a5c6e, #2a4c5e);
+            color: #f0f5fa;
+        }
+
+        .cosmological {
+            background: linear-gradient(145deg, #1a3a6a, #0a2a5a);
+            color: #e6f0fa;
+        }
+
+        .economic {
+            background: linear-gradient(145deg, #5a6e3a, #4a5e2a);
+            color: #f0f5e0;
+        }
+
+        .medieval {
+            background: linear-gradient(145deg, #6e3a5c, #5e2a4c);
+            color: #fae6f5;
+        }
+
+        /* Stili per modalità matematica */
+        body.mathematical-mode {
+            --primary-color: #2a4c5e;
+            --secondary-color: #8aa8ba;
+            --text-color: #1a3b4e;
+            --bg-color: #e0f0fa;
+            --card-bg: #ffffff;
+            --gold-accent: #a58a4a;
+            background-image: url('https://www.transparenttextures.com/patterns/graphy-dark.png');
+        }
+
+        /* Stili per modalità cosmologica */
+        body.cosmological-mode {
+            --primary-color: #0a2a5a;
+            --secondary-color: #7a9cc6;
+            --text-color: #0a1a4a;
+            --bg-color: #e0eafa;
+            --card-bg: #f0f5ff;
+            --gold-accent: #8c7bc6;
+        }
+
+        .cosmological-mode .section-toggle {
+            background: linear-gradient(to right, #e0eafa 0%, #d0d5ea 100%);
+            border-left: 8px solid #8c7bc6;
+        }
+
+        /* Stili per modalità economica */
+        body.economic-mode {
+            --primary-color: #4a5e2a;
+            --secondary-color: #a8ba8a;
+            --text-color: #3a4e1a;
+            --bg-color: #f0f5e0;
+            --card-bg: #e0e5d0;
+            --gold-accent: #8c9c6e;
+        }
+
+        .economic-mode .section-content {
+            background-image: url('https://www.transparenttextures.com/patterns/slightly-speckled.png');
+        }
+
+        /* Stili per modalità medievale */
+        body.medieval-mode {
+            --primary-color: #5e2a4c;
+            --secondary-color: #ba8aa8;
+            --text-color: #4e1a3b;
+            --bg-color: #fae6f5;
+            --card-bg: #f5d0e5;
+            --gold-accent: #9c6e8c;
+        }
+
+        .medieval-mode .section-toggle {
+            background: linear-gradient(to right, #fae6f5 0%, #ead6e5 100%);
+            border-left: 8px solid #9c6e8c;
+        }
+
+        /* Elementi decorativi */
+        .initial {
+            float: left;
+            font-family: 'UnifrakturCook', cursive;
+            font-size: 6rem;
+            line-height: 0.7;
+            color: var(--gold-accent);
+            margin-right: 15px;
+            margin-bottom: -15px;
+            text-shadow: 2px 2px 3px rgba(0,0,0,0.2);
+        }
+
+        .divider {
+            text-align: center;
+            margin: 40px 0;
+            color: var(--gold-accent);
+            font-size: 1.8rem;
+            letter-spacing: 15px;
+        }
+
+        blockquote {
+            border-left: 4px solid var(--gold-accent);
+            padding: 25px;
+            margin: 30px 0;
+            background-color: rgba(192, 160, 98, 0.05);
+            font-style: italic;
+            position: relative;
+            border-radius: 0 15px 15px 0;
+            border-right: 1px solid rgba(192, 160, 98, 0.2);
+        }
+
+        blockquote:before {
+            content: "\201C";
+            font-size: 6rem;
+            color: var(--gold-accent);
+            opacity: 0.15;
+            position: absolute;
+            left: 10px;
+            top: -30px;
+            font-family: serif;
+        }
+
+        blockquote p {
+            margin: 0;
+            padding-left: 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        blockquote footer {
+            text-align: right;
+            font-style: normal;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            margin-top: 15px;
+        }
+
+        /* Timeline a forma di sistema planetario */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .timeline:before {
+            content: '';
+            position: absolute;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--gold-accent), transparent);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1px;
+            z-index: 1;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+            padding-right: 80px;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            padding-left: 80px;
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            position: relative;
+            border: 1px solid rgba(192, 160, 98, 0.3);
+        }
+
+        .timeline-item:after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background-color: var(--card-bg);
+            border: 4px solid var(--gold-accent);
+            border-radius: 50%;
+            top: 15px;
+            z-index: 2;
+        }
+
+        .timeline-item:nth-child(odd):after {
+            right: -12px;
+        }
+
+        .timeline-item:nth-child(even):after {
+            left: -12px;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reading-modes {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .mode-btn {
+                width: 80%;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            h1:before, h1:after {
+                display: none;
+            }
+
+            .section-toggle {
+                padding: 15px 20px 15px 70px;
+                font-size: 1.1rem;
+                clip-path: none;
+                border-radius: 0 50px 50px 0;
+            }
+
+            .section-toggle:after {
+                left: 25px;
+                font-size: 1.5rem;
+            }
+
+            .timeline:before {
+                left: 30px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                left: 0;
+                padding-right: 20px;
+                padding-left: 70px;
+                text-align: left;
+            }
+
+            .timeline-item:nth-child(even) {
+                left: 0;
+                padding-left: 70px;
+            }
+
+            .timeline-item:after {
+                left: 18px;
+            }
+
+            .timeline-item:nth-child(odd):after,
+            .timeline-item:nth-child(even):after {
+                left: 18px;
+                right: auto;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&family=Almendra+SC:wght@400;700&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Nicola d'Oresme</h1>
+        <p class="subtitle">Il matematico che rivoluzionò il pensiero medievale</p>
+
+        <div class="reading-modes">
+            <button class="mode-btn mathematical" onclick="setMode('mathematical')">Matematico</button>
+            <button class="mode-btn cosmological" onclick="setMode('cosmological')">Cosmologico</button>
+            <button class="mode-btn economic" onclick="setMode('economic')">Economico</button>
+            <button class="mode-btn medieval" onclick="setMode('medieval')">Medievale</button>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle">Vita e Contesto Storico</button>
+            <div class="section-content">
+                <p><span class="initial">N</span>icola d'Oresme (1320-1382) fu uno dei più originali pensatori del XIV secolo, matematico, fisico, astronomo, economista e teologo. Nato ad Allemagnes (oggi Fleury-sur-Orne) in Normandia, studiò al Collège de Navarre dell'Università di Parigi, dove divenne maestro di teologia e rettore nel 1356.</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>1320 ca.</h3>
+                            <p>Nascita a Fleury-sur-Orne, Normandia</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>1348</h3>
+                            <p>Studia al Collège de Navarre a Parigi</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>1356</h3>
+                            <p>Diventa rettore del Collège de Navarre</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>1361</h3>
+                            <p>Nominato canonico a Rouen</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>1377</h3>
+                            <p>Vescovo di Lisieux</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>1382</h3>
+                            <p>Morte a Lisieux</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <p>Consigliere del re Carlo V di Francia, tradusse in francese diverse opere di Aristotele, contribuendo alla diffusione del sapere scientifico. La sua opera spazia dalla matematica all'economia, dalla fisica alla teologia, dimostrando una straordinaria versatilità intellettuale.</p>
+                
+                <blockquote>
+                    <p>"La natura opera sempre nel modo più semplice e ordinato possibile."</p>
+                    <footer>- Nicola d'Oresme, <cite>De configurationibus qualitatum</cite></footer>
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle">Contributi Scientifici</button>
+            <div class="section-content">
+                <h3>Matematica innovativa</h3>
+                <p>Oresme sviluppò concetti matematici rivoluzionari:</p>
+                <ul>
+                    <li>Primi abbozzi di coordinate cartesiane</li>
+                    <li>Teoria delle proporzioni</li>
+                    <li>Studio delle serie infinite</li>
+                    <li>Concetti anticipatori del calcolo infinitesimale</li>
+                </ul>
+                
+                <div class="divider">♄ ♄ ♄</div>
+                
+                <h3>Fisica e astronomia</h3>
+                <p>Le sue intuizioni in fisica furono straordinarie:</p>
+                <ul>
+                    <li>Teoria della rotazione terrestre (anticipa Copernico)</li>
+                    <li>Critica al sistema tolemaico</li>
+                    <li>Sviluppo della teoria dell'impetus (con Buridano)</li>
+                    <li>Studio del moto uniformemente accelerato</li>
+                </ul>
+                
+                <blockquote>
+                    <p>"Non c'è alcuna ragione evidente per affermare che il cielo si muove e non la terra."</p>
+                    <footer>- Nicola d'Oresme, <cite>Le livre du ciel et du monde</cite></footer>
+                </blockquote>
+                
+                <h3>Economia monetaria</h3>
+                <p>Pioniere dell'economia moderna:</p>
+                <ol>
+                    <li>Teoria quantitativa della moneta</li>
+                    <li>Analisi dell'inflazione</li>
+                    <li>Critica all'alterazione delle monete</li>
+                    <li>Relazione tra moneta e prezzi</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <button class="section-toggle">Opere Principali</button>
+            <div class="section-content">
+                <h3>Trattati scientifici</h3>
+                <p>Le sue opere più importanti includono:</p>
+                <table>
+                    <tr>
+                        <th>Opera</th>
+                        <th>Contenuto</th>
+                    </tr>
+                    <tr>
+                        <td>De configurationibus qualitatum</td>
+                        <td>Teoria delle configurazioni</td>
+                    </tr>
+                    <tr>
+                        <td>Le livre du ciel et du monde</td>
+                        <td>Commento al De caelo di Aristotele</td>
+                    </tr>
+                    <tr>
+                        <td>De proportionibus proportionum</td>
+                        <td>Teoria delle proporzioni</td>
+                    </tr>
+                    <tr>
+                        <td>Tractatus de origine et natura iuris</td>
+                        <td>Teoria politica ed economica</td>
+                    </tr>
+                </table>
+                
+                <h3>Traduzioni in volgare</h3>
+                <p>Per volere di Carlo V, tradusse in francese:</p>
+                <ul>
+                    <li>Etica Nicomachea</li>
+                    <li>Politica</li>
+                    <li>Economia</li>
+                    <li>De caelo</li>
+                </ul>
+                
+                <div class="divider">♄ ♄ ♄</div>
+                
+                <h3>Eredità intellettuale</h3>
+                <p>L'influenza di Oresme si estende a:</p>
+                <ol>
+                    <li>Leonardo da Vinci</li>
+                    <li>Niccolò Copernico</li>
+                    <li>Galileo Galilei</li>
+                    <li>La rivoluzione scientifica</li>
+                </ol>
+                
+                <blockquote>
+                    <p>"Oresme fu forse il più originale pensatore del XIV secolo, la cui opera anticipò molte scoperte della scienza moderna."</p>
+                    <footer>- Marshall Clagett, storico della scienza</footer>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funzione per aprire/chiudere le sezioni
+        document.querySelectorAll('.section-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                button.classList.toggle('active');
+                const content = button.nextElementSibling;
+                if (content.style.display === 'block') {
+                    content.style.animation = 'celestialAppear 0.5s ease reverse';
+                    setTimeout(() => {
+                        content.style.display = 'none';
+                    }, 450);
+                } else {
+                    content.style.display = 'block';
+                }
+            });
+        });
+
+        // Funzioni per cambiare modalità di lettura
+        function setMode(mode) {
+            document.body.className = '';
+            if (mode !== 'mathematical') {
+                document.body.classList.add(mode + '-mode');
+            }
+            
+            // Cambia stile dei bottoni sezione in base alla modalità
+            const sectionToggles = document.querySelectorAll('.section-toggle');
+            sectionToggles.forEach(btn => {
+                btn.className = 'section-toggle'; // Resetta le classi
+                
+                if (mode === 'cosmological') {
+                    btn.style.background = 'linear-gradient(to right, #e0eafa 0%, #d0d5ea 100%)';
+                    btn.style.borderLeft = '8px solid #8c7bc6';
+                } else if (mode === 'economic') {
+                    btn.style.background = 'linear-gradient(to right, #f0f5e0 0%, #e0e5d0 100%)';
+                    btn.style.borderLeft = '8px solid #8c9c6e';
+                } else if (mode === 'medieval') {
+                    btn.style.background = 'linear-gradient(to right, #fae6f5 0%, #ead6e5 100%)';
+                    btn.style.borderLeft = '8px solid #9c6e8c';
+                } else {
+                    btn.style.background = 'linear-gradient(to right, #f0f5fa 0%, #e0e5ea 100%)';
+                    btn.style.borderLeft = '8px solid #a58a4a';
+                }
+            });
+        }
+
+        // Apri la prima sezione di default
+        document.addEventListener('DOMContentLoaded', () => {
+            const firstToggle = document.querySelector('.section-toggle');
+            firstToggle.classList.add('active');
+            firstToggle.nextElementSibling.style.display = 'block';
+        });
+    </script>
+</body>
+</html>

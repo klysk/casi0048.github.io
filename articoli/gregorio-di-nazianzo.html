@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gregorio di Nazianzo - Il Teologo Poeta</title>
+    <style>
+        :root {
+            --primary-color: #5d4b6a;
+            --secondary-color: #8a6d8b;
+            --text-color: #333333;
+            --bg-color: #f9f6f8;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --font-main: 'Georgia', serif;
+            --font-heading: 'Palatino', serif;
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            transition: var(--transition);
+        }
+
+        /* Modalità di Visualizzazione */
+        body.night-mode {
+            --primary-color: #9a86a5;
+            --secondary-color: #c4adc2;
+            --text-color: #f0e6ff;
+            --bg-color: #1a1620;
+            --card-bg: #2a2438;
+            --shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        body.philosophical {
+            --primary-color: #5f4b66;
+            --secondary-color: #8a6d8b;
+            --text-color: #333333;
+            --bg-color: #f5f0f6;
+            --card-bg: #ffffff;
+        }
+
+        body.scholarly {
+            --primary-color: #556a7f;
+            --secondary-color: #7d8fa1;
+            --text-color: #333333;
+            --bg-color: #f0f4f8;
+            --card-bg: #ffffff;
+        }
+
+        body.minimalist {
+            --primary-color: #5a5a5a;
+            --secondary-color: #8e8e8e;
+            --text-color: #333333;
+            --bg-color: #ffffff;
+            --card-bg: #f8f8f8;
+            --shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        /* Struttura Base */
+        .article-container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow);
+            border-radius: var(--border-radius);
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-heading);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        h1 {
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 12px;
+            display: inline-block;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        /* Bottoni di Modalità */
+        .reading-modes {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: var(--font-heading);
+            transition: var(--transition);
+            font-size: 15px;
+            font-weight: 500;
+            box-shadow: var(--shadow);
+            color: white;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .default { background-color: var(--primary-color); }
+        .night-mode { background-color: #3d3550; }
+        .philosophical { background-color: #5f4b66; }
+        .scholarly { background-color: #4a5d75; }
+        .minimalist { 
+            background-color: #5a5a5a;
+            border: 1px solid #e0e0e0;
+        }
+
+        /* Sezioni Espandibili */
+        .section-container {
+            margin-bottom: 25px;
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 18px 25px;
+            cursor: pointer;
+            border-radius: var(--border-radius);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .section-header:hover {
+            transform: translateY(-3px);
+        }
+
+        .section-header h2 {
+            color: white;
+            margin: 0;
+        }
+
+        .section-header::after {
+            content: '+';
+            font-size: 24px;
+            transition: var(--transition);
+        }
+
+        .section-header.active::after {
+            content: '-';
+        }
+
+        .section-content {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: var(--transition);
+            background-color: var(--card-bg);
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .section-content.open {
+            padding: 25px;
+            max-height: 3000px;
+        }
+
+        /* Contenuto */
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-color);
+        }
+
+        blockquote {
+            border-left: 4px solid var(--secondary-color);
+            padding: 20px;
+            margin: 25px 0;
+            font-style: italic;
+            background-color: rgba(0,0,0,0.03);
+            color: var(--primary-color);
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .figure {
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .figure img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .caption {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 30px auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1.5px;
+        }
+
+        .timeline-item {
+            padding: 15px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--card-bg);
+            border: 4px solid var(--secondary-color);
+            border-radius: 50%;
+            top: 20px;
+            z-index: 1;
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        .left::after {
+            right: -10px;
+        }
+
+        .right::after {
+            left: -10px;
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        @media screen and (max-width: 768px) {
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item::after {
+                left: 21px;
+            }
+
+            .right {
+                left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="article-container">
+        <header>
+            <h1>Gregorio di Nazianzo</h1>
+            <p>Il Teologo Poeta (329-390 d.C.)</p>
+        </header>
+
+        <div class="reading-modes">
+            <button class="mode-btn default" onclick="setMode('default')">Classico</button>
+            <button class="mode-btn night-mode" onclick="setMode('night-mode')">Notturno</button>
+            <button class="mode-btn philosophical" onclick="setMode('philosophical')">Filosofico</button>
+            <button class="mode-btn scholarly" onclick="setMode('scholarly')">Accademico</button>
+            <button class="mode-btn minimalist" onclick="setMode('minimalist')">Minimalista</button>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>Vita e Formazione</h2>
+            </div>
+            <div class="section-content">
+                <p>Gregorio, soprannominato "il Teologo" nella tradizione orientale, nacque nel 329 ad Arianzo, presso Nazianzo in Cappadocia. Figlio del vescovo Gregorio il Vecchio e di Nonna, donna di grande fede, ricevette un'educazione raffinata nelle migliori scuole del tempo.</p>
+                
+                <div class="figure">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Saint_Gregory_of_Nazianzus.jpg/320px-Saint_Gregory_of_Nazianzus.jpg" alt="Icona di Gregorio di Nazianzo">
+                    <div class="caption">Rappresentazione tradizionale di Gregorio di Nazianzo</div>
+                </div>
+                
+                <p>Dopo gli studi ad Alessandria e Atene, dove strinse un profondo legame con Basilio di Cesarea, Gregorio si dedicò alla vita ascetica prima di essere ordinato sacerdote contro la sua volontà dal padre.</p>
+                
+                <blockquote>
+                    "La conoscenza di Dio senza quella delle realtà terrene è splendida ignoranza, mentre la conoscenza delle realtà terrene senza quella di Dio è inutile sapienza."<br>
+                    <em>- Gregorio, Orazioni</em>
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>Opere e Teologia</h2>
+            </div>
+            <div class="section-content">
+                <h3>Le Cinque Orazioni Teologiche</h3>
+                <p>Pronunciate a Costantinopoli nel 380, queste orazioni rappresentano il vertice della sua produzione teologica, difendendo la divinità dello Spirito Santo e la dottrina trinitaria.</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <h3>329 d.C.</h3>
+                            <p>Nascita di Gregorio ad Arianzo</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <h3>348-358 d.C.</h3>
+                            <p>Studi ad Atene con Basilio</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <h3>362 d.C.</h3>
+                            <p>Ordinazione sacerdotale</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <h3>379-381 d.C.</h3>
+                            <p>Episcopato a Costantinopoli</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <h3>390 d.C.</h3>
+                            <p>Morte nel ritiro ad Arianzo</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Principali Opere</h3>
+                <ul>
+                    <li><strong>Orazioni</strong>: 45 discorsi teologici e pastorali</li>
+                    <li><strong>Poemi</strong>: Oltre 17.000 versi su temi teologici e morali</li>
+                    <li><strong>Lettere</strong>: 245 epistole di grande valore storico</li>
+                    <li><strong>Testi Liturgici</strong>: Inni e preghiere</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>Lotte Dottrinali</h2>
+            </div>
+            <div class="section-content">
+                <h3>Contro l'Arianesimo</h3>
+                <p>Gregorio fu protagonista nella difesa della fede nicena durante il controverso periodo del regno di Valente. La sua eloquenza gli valse il titolo di "Demostene cristiano".</p>
+                
+                <h3>Il Concilio di Costantinopoli</h3>
+                <p>Come arcivescovo della capitale (381), Gregorio presiedette il concilio che completò il Credo niceno, ma le tensioni politiche lo spinsero a dimettersi e ritirarsi.</p>
+                
+                <blockquote>
+                    "Quanto a me, sono servo di Dio e servo dei servi di Dio: obbedisco come servo a chi mi comanda, e comando, per quanto posso, a chi ha bisogno del mio aiuto."<br>
+                    <em>- Gregorio, Lettere</em>
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>Poesia Teologica</h2>
+            </div>
+            <div class="section-content">
+                <h3>L'Arte della Parola</h3>
+                <p>Gregorio fuse la tradizione retorica classica con la teologia cristiana, creando opere poetiche di straordinaria profondità:</p>
+                <ul>
+                    <li>Poemi dogmatici sulla Trinità</li>
+                    <li>Versi autobiografici</li>
+                    <li>Composizioni morali ed edificanti</li>
+                    <li>Epitaffi ed epigrammi</li>
+                </ul>
+                
+                <h3>Eredità Letteraria</h3>
+                <p>La sua produzione poetica influenzò profondamente la letteratura bizantina e la poesia religiosa occidentale, ponendo le basi per la poesia teologica cristiana.</p>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>Eredità e Culto</h2>
+            </div>
+            <div class="section-content">
+                <h3>Patrimonio Spirituale</h3>
+                <p>Gregorio è venerato come:</p>
+                <ul>
+                    <li>Uno dei tre Santi Gerarchi con Basilio e Giovanni Crisostomo</li>
+                    <li>Dottore della Chiesa cattolica</li>
+                    <li>Padre della teologia trinitaria</li>
+                    <li>Patrono di poeti e teologi</li>
+                </ul>
+                
+                <h3>Celebrazione</h3>
+                <p>La Chiesa cattolica lo ricorda il 2 gennaio, quella ortodossa il 25 gennaio. Le sue reliquie sono venerate nella basilica vaticana.</p>
+                
+                <blockquote>
+                    "Gregorio di Nazianzo ci mostra che la fede non è contrapposta alla ragione, ma la eleva e la completa."<br>
+                    <em>- Papa Benedetto XVI</em>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            header.classList.toggle('active');
+            const content = header.nextElementSibling;
+            content.classList.toggle('open');
+        }
+
+        function setMode(mode) {
+            document.body.className = mode;
+            
+            const buttons = document.querySelectorAll('.mode-btn');
+            buttons.forEach(btn => {
+                btn.style.transform = 'translateY(0)';
+                btn.style.boxShadow = 'var(--shadow)';
+            });
+            
+            const activeBtn = document.querySelector(`.${mode}`);
+            activeBtn.style.transform = 'translateY(-3px)';
+            activeBtn.style.boxShadow = '0 6px 12px rgba(0,0,0,0.15)';
+        }
+
+        window.onload = function() {
+            const firstHeader = document.querySelector('.section-header');
+            toggleSection(firstHeader);
+            setMode('default');
+        };
+    </script>
+</body>
+</html>
