@@ -3677,7 +3677,282 @@
            ease: "power1.inOut"
          });
       </script>
-      
+     <!-- INIZIO BANNER COOKI -->
+<div id="cookie-banner" style="display:none;">
+  <div id="cookie-modal">
+    <div class="cookie-header">
+      <h2>🍪 Usiamo i cookie</h2>
+      <p>Per migliorare la tua esperienza su <strong>Echi di Sofia</strong>.</p>
+    </div>
+    <div class="cookie-buttons">
+      <button id="accept-cookies" class="pulse">Accetta</button>
+      <button id="customize-cookies" class="glow">Personalizza</button>
+      <button id="reject-cookies">Rifiuta</button>
+    </div>
+    <p class="cookie-policy">
+      <a href="https://casi0048.github.io/pagine/privacy-policy.html" target="_blank">Leggi la Privacy Policy</a>
+    </p>
+  </div>
+</div>
+
+<!-- Finestra modale di personalizzazione -->
+<div id="cookie-settings-modal" class="cookie-settings hidden" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+  <div class="cookie-settings-content">
+    <h3 id="settings-title">🔧 Impostazioni Cookie</h3>
+    <form id="cookie-settings-form">
+      <label><input type="checkbox" checked disabled> Cookie essenziali (sempre attivi)</label>
+      <label><input type="checkbox" id="stat-cb"> Cookie statistici</label>
+      <label><input type="checkbox" id="mkt-cb"> Cookie di marketing</label>
+      <button type="submit" id="save-settings-btn">Salva preferenze</button>
+    </form>
+    <button id="close-settings" style="margin-top:10px;">Chiudi</button>
+  </div>
+</div>
+
+<style>
+  #cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2em 1em;
+    backdrop-filter: blur(8px);
+  }
+
+  #cookie-modal {
+    background: #1c1c1c;
+    border: 2px solid #00ffd5;
+    box-shadow: 0 0 20px #00ffd5;
+    padding: 2em;
+    border-radius: 12px;
+    text-align: center;
+    max-width: 500px;
+    color: white;
+  }
+
+  .cookie-buttons button {
+    margin: 0.5em;
+    padding: 0.7em 1.2em;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: 0.3s;
+  }
+
+  #accept-cookies {
+    background-color: #00c853;
+    color: white;
+  }
+
+  #reject-cookies {
+    background-color: #c62828;
+    color: white;
+  }
+
+  #customize-cookies {
+    background-color: #ffca28;
+    color: black;
+  }
+
+  .cookie-policy a {
+    color: #00e5ff;
+    text-decoration: underline;
+    font-size: 0.9em;
+  }
+
+  .pulse {
+    box-shadow: 0 0 0 0 rgba(0, 200, 83, 0.7);
+    animation: pulse 2s infinite;
+  }
+
+  .glow {
+    box-shadow: 0 0 15px 3px rgba(255, 202, 40, 0.9);
+  }
+
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(0, 200, 83, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(0, 200, 83, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 200, 83, 0); }
+  }
+
+  /* Modale Personalizza */
+  .cookie-settings {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right:0;
+    bottom:0;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+  }
+
+  .cookie-settings-content {
+    background: #111;
+    padding: 2em;
+    border-radius: 10px;
+    color: #fff;
+    box-shadow: 0 0 20px #ffca28;
+    text-align: center;
+    max-width: 400px;
+  }
+
+  .cookie-settings button, #save-settings-btn {
+    margin-top: 1em;
+    padding: 0.5em 1em;
+    font-weight: bold;
+    border: none;
+    background: #ffca28;
+    color: #000;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .hidden {
+    display: none;
+  }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const banner = document.getElementById("cookie-banner");
+    const acceptBtn = document.getElementById("accept-cookies");
+    const rejectBtn = document.getElementById("reject-cookies");
+    const customizeBtn = document.getElementById("customize-cookies");
+    const settingsModal = document.getElementById("cookie-settings-modal");
+    const closeSettings = document.getElementById("close-settings");
+    const saveSettingsBtn = document.getElementById("save-settings-btn");
+    const statCb = document.getElementById("stat-cb");
+    const mktCb = document.getElementById("mkt-cb");
+
+    // Mostra banner se non deciso
+    if (!localStorage.getItem("cookies-choice")) {
+      banner.style.display = "flex";
+      gsap.from("#cookie-modal", {
+        duration: 1,
+        scale: 0.7,
+        opacity: 0,
+        ease: "elastic.out(1, 0.75)"
+      });
+    } else {
+      // Se già deciso, puoi recuperare e impostare checkbox (opzionale)
+      const prefs = JSON.parse(localStorage.getItem("cookies-choice"));
+      if (prefs) {
+        statCb.checked = !!prefs.statistics;
+        mktCb.checked = !!prefs.marketing;
+      }
+    }
+
+    // Accetta tutti i cookie
+    acceptBtn.addEventListener("click", () => {
+      localStorage.setItem("cookies-choice", JSON.stringify({ essential: true, statistics: true, marketing: true }));
+      gsap.to("#cookie-banner", {
+        duration: 0.5,
+        y: 100,
+        opacity: 0,
+        onComplete: () => banner.remove()
+      });
+    });
+
+    // Rifiuta tutti tranne essenziali
+    rejectBtn.addEventListener("click", () => {
+      localStorage.setItem("cookies-choice", JSON.stringify({ essential: true, statistics: false, marketing: false }));
+      gsap.to("#cookie-banner", {
+        duration: 0.5,
+        y: 100,
+        opacity: 0,
+        onComplete: () => banner.remove()
+      });
+    });
+
+    // Apri modale personalizza e imposta checkbox da localStorage
+    customizeBtn.addEventListener("click", () => {
+      const prefs = JSON.parse(localStorage.getItem("cookies-choice"));
+      statCb.checked = prefs ? !!prefs.statistics : false;
+      mktCb.checked = prefs ? !!prefs.marketing : false;
+
+      settingsModal.classList.remove("hidden");
+      gsap.from(".cookie-settings-content", {
+        scale: 0.6,
+        opacity: 0,
+        duration: 0.6,
+        ease: "back.out(1.7)"
+      });
+    });
+
+    // Chiudi modale personalizza
+    closeSettings.addEventListener("click", () => {
+      gsap.to(".cookie-settings-content", {
+        scale: 0.6,
+        opacity: 0,
+        duration: 0.4,
+        ease: "power1.in",
+        onComplete: () => settingsModal.classList.add("hidden")
+      });
+    });
+
+    // Salva preferenze da modale
+    document.getElementById("cookie-settings-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const stats = statCb.checked;
+      const marketing = mktCb.checked;
+      localStorage.setItem("cookies-choice", JSON.stringify({ essential: true, statistics: stats, marketing: marketing }));
+
+      gsap.to(".cookie-settings-content", {
+        scale: 0.6,
+        opacity: 0,
+        duration: 0.4,
+        ease: "power1.in",
+        onComplete: () => {
+          settingsModal.classList.add("hidden");
+          gsap.to("#cookie-banner", {
+            duration: 0.5,
+            y: 100,
+            opacity: 0,
+            onComplete: () => banner.remove()
+          });
+        }
+      });
+    });
+
+    // Chiudi modale cliccando fuori dal contenuto o ESC
+    settingsModal.addEventListener("click", (e) => {
+      if (e.target === settingsModal) {
+        gsap.to(".cookie-settings-content", {
+          scale: 0.6,
+          opacity: 0,
+          duration: 0.4,
+          ease: "power1.in",
+          onComplete: () => settingsModal.classList.add("hidden")
+        });
+      }
+    });
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !settingsModal.classList.contains("hidden")) {
+        gsap.to(".cookie-settings-content", {
+          scale: 0.6,
+          opacity: 0,
+          duration: 0.4,
+          ease: "power1.in",
+          onComplete: () => settingsModal.classList.add("hidden")
+        });
+      }
+    });
+  });
+</script>
+<!-- FINE BANNER COOKI -->
+ 
      
 
 
