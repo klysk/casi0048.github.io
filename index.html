@@ -26,6 +26,102 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/SplitText.min.js"></script>
       <!--     -->
       <!-- Aggiungi questo script dopo il caricamento di GSAP -->
+
+<!-- INIZIO AGGIUNTA  -->
+
+<!--  FINE AGGIUNTA -->
+<script>
+ // Particelle cosmiche
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Simboli filosofici/matematici
+                const symbols = ['Φ', 'Ψ', '∞', '≈', 'Δ', '√', '∑', '∏', '∫', '∂'];
+                const randomSymbol = symbols[Math.floor(Math.random() * symbols.length)];
+                
+                particle.textContent = randomSymbol;
+                particle.style.fontSize = `${Math.random() * 10 + 10}px`;
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.top = `${Math.random() * 100}vh`;
+                particle.style.opacity = Math.random() * 0.7 + 0.3;
+                particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                container.appendChild(particle);
+                
+                // Esplosione di simboli al click
+                particle.addEventListener('click', () => {
+                    explodeSymbols(particle);
+                });
+            }
+        }
+        
+        function explodeSymbols(element) {
+            const symbol = element.textContent;
+            const count = 10;
+            
+            for (let i = 0; i < count; i++) {
+                const newParticle = document.createElement('div');
+                newParticle.classList.add('particle');
+                newParticle.textContent = symbol;
+                newParticle.style.fontSize = `${Math.random() * 15 + 5}px`;
+                newParticle.style.left = element.style.left;
+                newParticle.style.top = element.style.top;
+                newParticle.style.opacity = 1;
+                newParticle.style.animation = `explode ${Math.random() * 2 + 1}s forwards`;
+                
+                document.getElementById('particles').appendChild(newParticle);
+                
+                // Rimuovi dopo l'animazione
+                setTimeout(() => {
+                    newParticle.remove();
+                }, 1000);
+            }
+        }
+        
+        // Animazione esplosione
+        document.head.insertAdjacentHTML('beforeend', `
+            <style>
+                @keyframes explode {
+                    0% {
+                        transform: translate(0, 0) scale(1);
+                        opacity: 1;
+                    }
+                    100% {
+                        transform: translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px) scale(0);
+                        opacity: 0;
+                    }
+                }
+            </style>
+        `);
+        
+        // Inizializzazione
+        window.onload = function() {
+            createParticles();
+            initLeftSlider();
+            
+            // Gestione cookie banner
+            document.getElementById('accept-cookies').addEventListener('click', () => {
+                document.querySelector('.cookie-banner').style.display = 'none';
+                // Qui aggiungi il codice per accettare i cookie
+            });
+            
+            document.getElementById('reject-cookies').addEventListener('click', () => {
+                document.querySelector('.cookie-banner').style.display = 'none';
+                // Qui aggiungi il codice per rifiutare i cookie
+            });
+        };
+    </script>
+
+
+
+
+
       <script>
          // CONFIGURAZIONE PARTICELLE
          const symbols = [
@@ -2822,7 +2918,116 @@ nav.menu-desktop > ul > li > button.menu-btn:hover {
          });
       </script>
       <!-- Tutto il contenuto già presente nel tuo <body> -->
+<!-- INIZIO MINI PLAYER -->
+<div id="audio-player" class="audio-player">
+<audio id="myAudio" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/suoni/01%20allegro-maestoso.mp3"></audio>
 
+  <div class="controls">
+    <button id="playPause" title="Riproduci/Pausa">▶️</button>
+    <span id="time">0:00 / 0:00</span>
+    <input type="range" id="volume" min="0" max="1" step="0.01" title="Volume">
+  </div>
+</div>
+
+
+
+<style>
+.audio-player {
+  position: fixed;
+  bottom: 250px;
+  left: 20px;
+  background: rgba(10, 10, 30, 0.85);
+  color: #aef;
+  border: 1px solid #3cf;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-family: 'Georgia', serif;
+  font-size: 14px;
+  z-index: 9999;
+  box-shadow: 0 0 12px #3cf;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.audio-player .controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.audio-player button {
+  background: none;
+  border: none;
+  color: #aef;
+  font-size: 18px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.audio-player button:hover {
+  transform: scale(1.3);
+  color: #fff;
+}
+
+.audio-player input[type="range"] {
+  width: 70px;
+}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const audio = document.getElementById("myAudio");
+  const playPauseBtn = document.getElementById("playPause");
+  const volumeSlider = document.getElementById("volume");
+  const timeDisplay = document.getElementById("time");
+
+  // Mostra con GSAP
+  gsap.to(".audio-player", {
+    opacity: 1,
+    y: 0,
+    duration: 1.2,
+    ease: "power3.out"
+  });
+
+  // Formatta il tempo in mm:ss
+  function formatTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return `${m}:${s.toString().padStart(2, '0')}`;
+  }
+
+  // Aggiorna cronometro
+  function updateTime() {
+    timeDisplay.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
+  }
+
+  // Riproduci/Pausa
+  playPauseBtn.addEventListener("click", () => {
+    if (audio.paused) {
+      audio.play();
+      playPauseBtn.textContent = "⏸️";
+    } else {
+      audio.pause();
+      playPauseBtn.textContent = "▶️";
+    }
+  });
+
+  // Volume
+  volumeSlider.addEventListener("input", () => {
+    audio.volume = volumeSlider.value;
+  });
+
+  // Aggiorna tempo mentre suona
+  audio.addEventListener("timeupdate", updateTime);
+  audio.addEventListener("loadedmetadata", updateTime);
+});
+</script>
+
+<!-- FINE MINIPLAYER>
 <!-- INIZIO Box Bertrand Russell -->
 <!-- Box Bertrand Russell -->
 <div id="russell-box">
@@ -2840,7 +3045,7 @@ nav.menu-desktop > ul > li > button.menu-btn:hover {
     bottom: 20px;
     left: 20px;
     z-index: 9999;
-    max-width: 320px;
+    max-width: 220px;
     font-size: 1.1rem;
   }
 
@@ -2980,35 +3185,47 @@ nav.menu-desktop > ul > li > button.menu-btn:hover {
          }
          }
       </style>
-      <!-- INIZIO PLAYER-->
-      <div class="video-container">
-         <iframe width="280" height="264" src="https://www.youtube.com/embed/G_REgkOuQfw" title="Schopenhauer e Nietzsche (Hans-Georg Gadamer) - 3x4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-      </div>
-      <style>
-         /* 🎨 Stile Video Elegante a Sinistra */
-         .video-container {
-         position: fixed;
-         top: 65%;
-         left: 1180px; /* distanza dal bordo sinistro */
-         width: 320px;
-         max-width: 90%;
-         z-index: 99;
-         margin-left: 0;
-         padding: 8px;
-         border-radius: 12px;
-         border: 0px solid rgba(212, 175, 55, 0.4); /* oro trasparente */
-         background-color:transparent;    rgba(14, 14, 14, 0.3); /* trasparente ma leggibile */
-         backdrop-filter: blur(8px);
-         -webkit-backdrop-filter: blur(8px);
-         box-shadow: 0 0 10px rgba(212, 175, 55, 0.3)
-         }
-         .video-frame {
-         width: 100%;
-         height: 180px;
-         border: none;
-         border-radius: 8px;
-         }
-      </style>
+      
+     <!-- 🎬 INIZIO PLAYER -->
+<div class="video-container">
+  <iframe width="280" height="264"
+    src="https://www.youtube.com/embed/G_REgkOuQfw"
+    title="Schopenhauer e Nietzsche (Hans-Georg Gadamer) - 3x4"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen>
+  </iframe>
+</div>
+
+<style>
+  .video-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px; /* 🡸 posizione elegante e responsiva in basso a destra */
+    width: 280px;
+    z-index: 99;
+    padding: 8px;
+    border-radius: 12px;
+    background-color: rgba(14, 14, 14, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+    transition: transform 0.3s ease;
+  }
+
+  .video-container:hover {
+    transform: scale(1.02);
+  }
+
+  .video-container iframe {
+    width: 100%;
+    height: 180px;
+    border: none;
+    border-radius: 8px;
+  }
+</style>
+
       <!--  FINE PLAYER -->
       <script>
          // Animazione GSAP per titolo e sottotitolo
@@ -4325,12 +4542,6 @@ nav.menu-desktop > ul > li > button.menu-btn:hover {
             });
         });
     </script>
-</body>
-</html>
-<!-- FINE BANNER COOKI -->
- 
-     
-
 
 
          </body>
