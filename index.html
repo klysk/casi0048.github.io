@@ -2073,35 +2073,34 @@ nav.menu-desktop > ul > li > button.menu-btn:hover {
 <body>
 
   <!-- Pulsante per mostrare il selettore -->
-  <div id="translate-btn" title="Traduci">🌐 Traduci</div>
+
 
   <!-- Contenitore del selettore -->
-  <div id="google_translate_element"></div>
+ <div id="google_translate_element" style="display:none;"></div>
+<div id="translate-btn" title="Traduci">🌐</div>
 
-  <!-- Script Google Translate -->
-  <script type="text/javascript">
-    function googleTranslateElementInit() {
-      new google.translate.TranslateElement({
-        pageLanguage: 'it',
-        includedLanguages: '', // lascia vuoto per tutte le lingue
-        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-      }, 'google_translate_element');
-    }
-  </script>
-  <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-  <!-- Script per mostrare/nascondere -->
-  <script>
-    document.getElementById('translate-btn').addEventListener('click', () => {
-      const container = document.getElementById('google_translate_element');
-      container.style.display = container.style.display === 'block' ? 'none' : 'block';
-    });
-  </script>
-
-
-
-
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'it',
+      layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+    }, 'google_translate_element');
+  }
 </script>
+
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<script>
+  document.getElementById('translate-btn').addEventListener('click', () => {
+    const el = document.getElementById('google_translate_element');
+    el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+  });
+</script>
+
+
+
+
+
 
 
 <!-- FINE AGGIUNTA GOOGLE TRADUTTORE-->
@@ -4212,10 +4211,10 @@ document.addEventListener("DOMContentLoaded", () => {
       <script type="text/javascript">
          function googleTranslateElementInit() {
            new google.translate.TranslateElement({
-             pageLanguage: 'it',
-             layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-           }, 'google_translate_element');
-         }
+  pageLanguage: 'it',
+  layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+}, 'google_translate_element');
+
       </script>
       <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
       <script>
