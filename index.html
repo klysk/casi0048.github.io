@@ -28,7 +28,7 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/SplitText.min.js"></script>
       <!--     -->
       <!-- Aggiungi questo script dopo il caricamento di GSAP -->
-
+<canvas id="shooting-stars"></canvas>
 <!-- INIZIO AGGIUNTA  -->
 
 <!--  FINE AGGIUNTA -->
@@ -414,7 +414,7 @@
          }
          .welcome-content {
          margin-top: 100px;
-         text-align: ;
+         text-align: center;
          }
          body {
          background: var(--bg-dark);
@@ -456,10 +456,28 @@
          bottom: -10px;
          z-index: -1;
          }
-         <!---   -->
+         <!---  ///////////////////////////////////////////// -->
 
+.nebula {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  animation: spin 60s linear infinite;
+  opacity: 0.5;
+  pointer-events: none;
+}
 
-         <!--   -->
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+         <!--  ///////////////////////////////////////////////////// -->
          /* CORREZIONE CSS ESISTENTE */
          /* Animazione più lenta */
          .mega-menu {
@@ -1524,8 +1542,8 @@ nav.menu-desktop > ul > li > button.menu-btn:hover {
          }
          /* Esempio di contenuto visibile sopra */
          .content {
-         position: relative;
-         z-index: 1;
+         position: relative;<head>
+         z-index: 10;
          color: white;
          text-align: center;
          margin-top: 20%;
@@ -1654,7 +1672,7 @@ nav.menu-desktop > ul > li > button.menu-btn:hover {
          opacity: 0.35;
          z-index: -1; /* Meno negativo */
          pointer-events: none;
-         animation: nebulosa-float 40s infinite alternate ease-in-out;
+         animation: nebulosa-float 60s infinite alternate ease-in-out;
          /* mix-blend-mode: screen; RIMOSSO per test */
          }
          @keyframes nebulosa-float {
@@ -1898,8 +1916,10 @@ nav.menu-desktop > ul > li > button.menu-btn:hover {
 
  </head>
    <body>
-      <div id="nebulosa-bg"></div>
-      <div id="guaranteed-nebula"></div>
+ 
+  <!-- Aggiungi questo DIV subito dopo l'apertura del <body> -->
+      <div class="nebula-overlay"></div>
+    
       <style>
          #nebulosa-bg {
          position: fixed;
@@ -1933,40 +1953,39 @@ nav.menu-desktop > ul > li > button.menu-btn:hover {
          100% { background-position: 0% 50%; }
          }
       </style>
-      <!-- Aggiungi questo DIV subito dopo l'apertura del <body> -->
-      <div class="nebula-overlay"></div>
+     
       <style>
          /* STILE DEFINITIVO NEBULOSA */
-         .nebula-overlay {
-         position: fixed;
-         top: 0;
-         left: 0;
-         width: 100%;
-         height: 100%;
-         background: 
-         url('https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/nebulosa.avif')
-         center/cover no-repeat;
-         opacity: 0.3;
-         z-index: -2;
-         pointer-events: none;
-         animation: nebula-float 90s infinite alternate ease-in-out;
-         mix-blend-mode: screen;
-         }
-         .nebula-overlay {
-         z-index: -2 !important; /* Deve essere:
-         -1 (particelle)
-         -2 (nebulosa)
-         -10 (stelle) */
-         }
-         .philo-particles { z-index: -1 !important; }
-         #star-canvas { z-index: -3 !important; }
-         #space-canvas { z-index: -10 !important; }
-         @keyframes nebula-float {
-         0% { transform: scale(1) translate(0, 0); }
-         50% { transform: scale(1.03) translate(2%, 2%); }
-         100% { transform: scale(1) translate(0, 0); }
-         }
-      </style>
+      
+
+  <style>
+<style>
+  .nebula-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 150%;
+    height: 150%;
+    background: url('https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/nebulosa.avif') center/cover no-repeat;
+    opacity: 0.6; /* meno invadente */
+    z-index: 1;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    animation: nebula-float 10s infinite linear; /* velocizzata */
+    transform-origin: center;
+  }
+
+  @keyframes nebula-float {
+    0%   { transform: scale(1.05) translate(0%, 0%) rotate(0deg); }
+    100% { transform: scale(1.05) translate(-10%, -10%) rotate(360deg); }
+  }
+</style>
+
+</style>
+
+
+
+     
       <script>
          // GARANZIA DI CARICAMENTO (senza console.log)
          // SOSTITUISCI lo script esistente con questo:
@@ -1996,7 +2015,9 @@ nav.menu-desktop > ul > li > button.menu-btn:hover {
       <canvas id="nebula-canvas"></canvas>
       <canvas id="star-canvas" style="position: fixed; top: 0; left: 0; z-index: -1;"></canvas>
       <div id="cosmic-canvas">
-         <div class="nebula" style="top:20%; left:10%; background: radial-gradient(circle, rgba(123,104,238,0.4) 0%, transparent 70%);"></div>
+<div class="nebula" style="top:20%; left:10%; background: radial-gradient(circle, rgba(123,104,238,0.4) 0%, transparent 70%); animation-duration: 20s;"></div>
+
+
          <div class="nebula" style="top:60%; left:70%; background: radial-gradient(circle, rgba(255,182,193,0.4) 0%, transparent 70%);"></div>
          <div class="nebula" style="top:40%; left:40%; background: radial-gradient(circle, rgba(173,216,230,0.3) 0%, transparent 70%);"></div>
       </div>
@@ -2851,6 +2872,14 @@ nav.menu-desktop > ul > li > button.menu-btn:hover {
            duration: 2.5,
            ease: "power1.inOut"
          });
+gsap.to(".nebula", {
+  rotation: 360,
+  repeat: -1,
+  ease: "linear",
+  duration: 20, // più basso = più veloce
+  transformOrigin: "50% 50%"
+});
+
       </script>
       <div class="exploding-text">
          <h1 id="title">🏛️Pensare, dunque è ancora possibile ⚖️</h1>
@@ -3046,6 +3075,9 @@ nav.menu-desktop > ul > li > button.menu-btn:hover {
            });
          });
       </script>
+<canvas id="lightning-canvas"></canvas>
+<canvas id="shooting-stars-canvas"></canvas>
+
       <!-- Tutto il contenuto già presente nel tuo <body> -->
 <!-- INIZIO MINI PLAYER -->
 <div id="audio-player" class="audio-player">
@@ -4173,7 +4205,7 @@ document.addEventListener("DOMContentLoaded", () => {
             transform: translateY(100%);
             opacity: 0;
             transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
             display: flex;
             flex-wrap: wrap;
@@ -4475,29 +4507,26 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 #nebulosa {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-image: url('https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/nebula.png');
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background-image: url('https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/nebulosa3.avif');
   background-size: cover;
+  background-repeat: no-repeat;
   background-position: center;
-  opacity: 0.25;
-  pointer-events: none;
-  z-index: 0.5; /* sotto menu ma sopra sfondo */
-  filter: blur(4px) brightness(1.2) saturate(1.5);
-  animation: nebulosaFloat 60s infinite linear;
+  opacity: 0.4;
+  z-index: -1;
+  animation: rotateBg 120s linear infinite;
+  transform-origin: center center;
+}
+@keyframes rotateBg {
+  0% { transform: scale(1.05) rotate(0deg); }
+  100% { transform: scale(1.05) rotate(360deg); }
 }
 
-@keyframes nebulosaFloat {
-  0% { background-position: center top; }
-  50% { background-position: center bottom; }
-  100% { background-position: center top; }
-}
 
     </style>
 </head>
-<body>
+
     <!-- Banner Cookie -->
     <div class="cookie-banner" id="cookieBanner">
         <div class="cookie-content">
@@ -4709,7 +4738,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 <!-- INIZIO Lampi Visivi -->
-<canvas id="lightning-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none;"></canvas>
+<canvas id="lightning-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></canvas>
 <script>
   const canvas = document.getElementById("lightning-canvas");
   const ctx = canvas.getContext("2d");
@@ -4753,7 +4782,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <!-- FINE Lampi Visivi -->
 
 <!-- INIZIO: Lampo + Shake + Suono -->
-<canvas id="lightning-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none;"></canvas>
+<canvas id="lightning-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></canvas>
 <audio id="thunder-sound" src="https://cdn.pixabay.com/download/audio/2022/03/25/audio_f7efc7fc85.mp3?filename=thunder-109557.mp3" preload="auto"></audio>
 
 <script>
@@ -4809,12 +4838,233 @@ document.addEventListener("DOMContentLoaded", () => {
   loopFlashes();
 </script>
 <!-- FINE: Lampo + Shake + Suono -->
+<!-- IIIIIIIIIIIIIIIIIIIIIIInizio aggiunta-->
+<canvas id="shooting-stars-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></canvas>
+
+<script>
+  const canvasStars = document.getElementById("shooting-stars-canvas");
+  const ctxStars = canvasStars.getContext("2d");
+
+  canvasStars.width = window.innerWidth;
+  canvasStars.height = window.innerHeight;
+
+  window.addEventListener("resize", () => {
+    canvasStars.width = window.innerWidth;
+    canvasStars.height = window.innerHeight;
+  });
+
+  class ShootingStar {
+    constructor() {
+      this.reset();
+    }
+
+    reset() {
+      this.x = Math.random() * canvasStars.width;
+      this.y = 0;
+      this.len = Math.random() * 80 + 10;
+      this.speed = Math.random() * 10 + 6;
+      this.angle = Math.PI / 4;
+      this.alpha = 1;
+    }
+
+    update() {
+      this.x += this.speed * Math.cos(this.angle);
+      this.y += this.speed * Math.sin(this.angle);
+      this.alpha -= 0.005;
+
+      if (this.alpha <= 0) this.reset();
+    }
+
+    draw(ctx) {
+      ctx.beginPath();
+      ctx.moveTo(this.x, this.y);
+      ctx.lineTo(this.x - this.len * Math.cos(this.angle), this.y - this.len * Math.sin(this.angle));
+      ctx.strokeStyle = `rgba(255, 255, 255, ${this.alpha})`;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+  }
+
+  const stars = Array.from({ length: 10 }, () => new ShootingStar());
+
+  function animateStars() {
+    ctxStars.clearRect(0, 0, canvasStars.width, canvasStars.height);
+    stars.forEach(star => {
+      star.update();
+      star.draw(ctxStars);
+    });
+    requestAnimationFrame(animateStars);
+  }
+
+  animateStars();
+</script>
+
+
+<!-- FFFFFFFFFFFFFFF ine aggiunta-->
+
+
+<canvas id="background-canvas"></canvas>
+
+<script>
+  const canvas = document.getElementById("background-canvas");
+  const ctx = canvas.getContext("2d");
+  let width = window.innerWidth;
+  let height = window.innerHeight;
+  canvas.width = width;
+  canvas.height = height;
+
+  const stars = [];
+  const shootingStars = [];
+
+  // Crea stelle statiche
+  for (let i = 0; i < 200; i++) {
+    stars.push({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      radius: Math.random() * 1.2,
+      alpha: Math.random(),
+    });
+  }
+
+  // Genera stelle cadenti a intervalli
+  function spawnShootingStar() {
+    shootingStars.push({
+      x: Math.random() * width,
+      y: 0,
+      dx: -6 - Math.random() * 4,
+      dy: 6 + Math.random() * 4,
+      length: 150 + Math.random() * 100,
+      life: 0,
+      maxLife: 80 + Math.random() * 40,
+    });
+  }
+
+  setInterval(spawnShootingStar, 2000);
+
+  function draw() {
+    // Sfondo semitrasparente per scie luminose
+    ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
+    ctx.fillRect(0, 0, width, height);
+
+    // Stelle statiche
+    ctx.fillStyle = "white";
+    stars.forEach((star) => {
+      ctx.globalAlpha = star.alpha;
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    ctx.globalAlpha = 1;
+
+    // Stelle cadenti con scia luminosa
+    shootingStars.forEach((star, i) => {
+      ctx.strokeStyle = "white";
+      ctx.lineWidth = 2;
+      ctx.shadowBlur = 10;
+      ctx.shadowColor = "white";
+
+      ctx.beginPath();
+      ctx.moveTo(star.x, star.y);
+      ctx.lineTo(star.x + star.length * star.dx / 10, star.y + star.length * star.dy / 10);
+      ctx.stroke();
+
+      star.x += star.dx;
+      star.y += star.dy;
+      star.life++;
+
+      if (star.life > star.maxLife) {
+        shootingStars.splice(i, 1);
+      }
+    });
+
+    ctx.shadowBlur = 0; // reset effetto
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener("resize", () => {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+  });
+
+  draw();
+</script>
+
+<style>
+  #background-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+</style>
+
+
+
+
+
+
 
 <!-- 🌌 INIZIO Effetti Galattici Completi -->
 <canvas id="background-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none;"></canvas>
 <canvas id="lightning-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; pointer-events: none;"></canvas>
 <audio id="thunder-sound" src="https://cdn.pixabay.com/download/audio/2022/03/25/audio_f7efc7fc85.mp3?filename=thunder-109557.mp3" preload="auto"></audio>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<style>
+.nebula-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url('https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/nebulosa.avif') center/cover no-repeat;
+  opacity: 0.1;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  z-index: -2; /* Sopra background-canvas (z=0), sotto lightning-canvas (z=1) */
+  animation: nebula-float 40s infinite alternate ease-in-out;
+}
+
+@keyframes nebula-float {
+  0%   { transform: scale(1.05) translate(0, 0) rotate(0deg); }
+  25%  { transform: scale(1.07) translate(-3%, 2%) rotate(0.5deg); }
+  50%  { transform: scale(1.1) translate(2%, -3%) rotate(1deg); }
+  75%  { transform: scale(1.07) translate(-2%, -1%) rotate(0.5deg); }
+  100% { transform: scale(1.05) translate(0, 0) rotate(0deg); }
+}
+
+<!--============================================-->
+#shooting-stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0; /* sotto contenuto ma sopra sfondo */
+  pointer-events: none;
+}
+
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <script>
   const starsCanvas = document.getElementById("background-canvas");
@@ -4842,6 +5092,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }));
 
   // 🌠 Stelle cadenti
+const canvas = document.getElementById("shooting-stars-canvas");
+const ctx = canvas.getContext("2d");
+canvas.style.zIndex = "0"; // o "1" se hai un background
+canvas.style.pointerEvents = "none"; // così clicchi "attraverso"
+
   const meteors = [];
 
   function spawnMeteor() {
@@ -4949,6 +5204,13 @@ starsCtx.fillRect(0, 0, starsCanvas.width, starsCanvas.height);
   loopFlashes();
 </script>
 <!-- 🌌 INIZIO Effetti Galattici Cinematografici -->
+
+
+
+
+<canvas id="shooting-stars-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none;"></canvas>
+
+
 <canvas id="background-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none;"></canvas>
 <canvas id="lightning-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; pointer-events: none;"></canvas>
 <audio id="thunder-sound" src="https://cdn.pixabay.com/download/audio/2022/03/25/audio_f7efc7fc85.mp3?filename=thunder-109557.mp3" preload="auto"></audio>
@@ -5124,6 +5386,316 @@ playBtn.addEventListener('click', () => {
 
 
 <!-- 🌌 FINE Effetti Galattici Cinematografici -->
+
+<script>
+  const canvas = document.getElementById("background-canvas");
+  const ctx = canvas.getContext("2d");
+
+  let width = window.innerWidth;
+  let height = window.innerHeight;
+  canvas.width = width;
+  canvas.height = height;
+
+  window.addEventListener("resize", () => {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+  });
+
+  class ShootingStar {
+    constructor() {
+      this.reset();
+    }
+
+    reset() {
+      this.x = Math.random() * width;
+      this.y = Math.random() * height / 2;
+      this.len = Math.random() * 100 + 100;
+      this.speed = Math.random() * 10 + 6;
+      this.angle = Math.PI / 4; // 45°
+      this.opacity = 1;
+      this.trail = [];
+    }
+
+    update() {
+      this.trail.unshift({ x: this.x, y: this.y, opacity: this.opacity });
+      if (this.trail.length > 10) this.trail.pop();
+
+      this.x += Math.cos(this.angle) * this.speed;
+      this.y += Math.sin(this.angle) * this.speed;
+      this.opacity -= 0.01;
+
+      if (this.opacity <= 0) this.reset();
+    }
+
+    draw(ctx) {
+      for (let i = 0; i < this.trail.length; i++) {
+        const t = this.trail[i];
+        ctx.beginPath();
+        ctx.moveTo(t.x, t.y);
+        ctx.lineTo(this.x, this.y);
+        ctx.strokeStyle = `rgba(255, 255, 255, ${t.opacity})`;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+      ctx.fillStyle = "white";
+      ctx.fill();
+    }
+  }
+
+  const stars = [];
+  for (let i = 0; i < 10; i++) stars.push(new ShootingStar());
+
+  function animate() {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
+    ctx.fillRect(0, 0, width, height);
+
+    for (let star of stars) {
+      star.update();
+      star.draw(ctx);
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+
+
+
+<script>
+  const canvas = document.getElementById('background-canvas');
+  const ctx = canvas.getContext('2d');
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+
+  class ShootingStar {
+    constructor() {
+      this.reset();
+    }
+
+    reset() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height * 0.5;
+      this.len = Math.random() * 80 + 50;
+      this.speed = Math.random() * 2 + 1;
+      this.angle = Math.PI / 3; // 60°
+      this.trail = []; // scia
+      this.maxTrail = 10; // numero massimo punti scia
+    }
+
+    update() {
+      const vx = Math.cos(this.angle) * this.speed;
+      const vy = Math.sin(this.angle) * this.speed;
+
+      this.trail.unshift({ x: this.x, y: this.y });
+      if (this.trail.length > this.maxTrail) {
+        this.trail.pop();
+      }
+
+      this.x += vx;
+      this.y += vy;
+
+      if (this.x > canvas.width || this.y > canvas.height) {
+        this.reset();
+      }
+    }
+
+    draw(ctx) {
+      for (let i = this.trail.length - 1; i > 0; i--) {
+        const p = this.trail[i];
+        const alpha = i / this.trail.length;
+        ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+        ctx.beginPath();
+        ctx.moveTo(this.trail[i - 1].x, this.trail[i - 1].y);
+        ctx.lineTo(p.x, p.y);
+        ctx.stroke();
+      }
+
+      // testa della stella
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, 2, 0, 2 * Math.PI);
+      ctx.fillStyle = 'white';
+      ctx.fill();
+    }
+  }
+
+  const shootingStars = Array.from({ length: 6 }, () => new ShootingStar());
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    shootingStars.forEach(star => {
+      star.update();
+      star.draw(ctx);
+    });
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+</script>
+
+</script>
+
+
+<script>
+const canvas = document.getElementById('shooting-stars');
+const ctx = canvas.getContext('2d');
+let stars = [];
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+function createStar() {
+  const x = Math.random() * canvas.width;
+  const y = Math.random() * canvas.height / 2;
+  const length = Math.random() * 80 + 20;
+  const speed = Math.random() * 10 + 6;
+  stars.push({ x, y, length, speed });
+}
+
+function drawStars() {
+ ctx.fillStyle = "rgba(0, 0, 0, 0.2)"; // il valore alpha controlla la lunghezza della scia
+ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  ctx.strokeStyle = 'white';
+  ctx.lineWidth = 2;
+  for (let i = 0; i < stars.length; i++) {
+    let s = stars[i];
+    ctx.beginPath();
+    ctx.moveTo(s.x, s.y);
+    ctx.lineTo(s.x - s.length, s.y + s.length);
+    ctx.stroke();
+    s.x -= s.speed;
+    s.y += s.speed;
+  }
+  stars = stars.filter(s => s.x + s.length > 0 && s.y - s.length < canvas.height);
+}
+
+setInterval(() => {
+  if (Math.random() < 0.3) createStar();
+}, 300);
+
+function animate() {
+  drawStars();
+  requestAnimationFrame(animate);
+}
+animate();
+
+
+ctx.shadowColor = "rgba(173,216,230,0.8)"; // azzurrino
+
+
+
+
+const canvas = document.getElementById("shooting-stars-canvas");
+const ctx = canvas.getContext("2d");
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resize);
+resize();
+
+let shootingStars = [];
+
+function createShootingStar() {
+  shootingStars.push({
+    x: Math.random() * canvas.width,
+    y: 0,
+    length: 400,
+    speed: 10,
+    angle: Math.PI / 4,
+    alpha: 1
+  });
+}
+
+function drawShootingStars() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  for (let star of shootingStars) {
+    ctx.save();
+    ctx.globalAlpha = star.alpha;
+    ctx.strokeStyle = "white";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(star.x, star.y);
+    ctx.lineTo(
+      star.x - star.length * Math.cos(star.angle),
+      star.y + star.length * Math.sin(star.angle)
+    );
+    ctx.stroke();
+    ctx.restore();
+
+    star.x += star.speed;
+    star.y += star.speed;
+    star.alpha -= 0.01;
+  }
+  shootingStars = shootingStars.filter(s => s.alpha > 0);
+}
+
+function animate() {
+  drawShootingStars();
+  requestAnimationFrame(animate);
+}
+animate();
+
+setInterval(createShootingStar, Math.random() * 3000 + 2000);
+
+
+
+
+
+const shootingCanvas = document.getElementById("shooting-stars-canvas");
+const shootingCtx = shootingCanvas.getContext("2d");
+
+function drawShootingStars() {
+  shootingCtx.clearRect(0, 0, shootingCanvas.width, shootingCanvas.height);
+  for (let star of shootingStars) {
+    shootingCtx.save();
+    shootingCtx.globalAlpha = star.alpha;
+    shootingCtx.strokeStyle = "white";
+    shootingCtx.lineWidth = 2;
+    shootingCtx.beginPath();
+    shootingCtx.moveTo(star.x, star.y);
+    shootingCtx.lineTo(
+      star.x - star.length * Math.cos(star.angle),
+      star.y + star.length * Math.sin(star.angle)
+    );
+    shootingCtx.stroke();
+    shootingCtx.restore();
+
+    star.x += star.speed;
+    star.y += star.speed;
+    star.alpha -= 0.01;
+  }
+  shootingStars = shootingStars.filter(s => s.alpha > 0);
+}
+
+function animateShootingStars() {
+  drawShootingStars();
+  requestAnimationFrame(animateShootingStars);
+}
+animateShootingStars();
+
+
+
+
+
 
          </body>
       </html>
