@@ -2028,7 +2028,85 @@ nav.menu-desktop > ul > li > button.menu-btn:hover {
       <canvas id="star-canvas"></canvas>
       <script src="script.js"></script> <!-- caricalo DOPO il canvas -->
       <div id="google_translate_element"></div>
-      <div id="translate-btn" title="Traduci">🌐</div>
+     
+
+
+<!-- INIZIO AGGIUNTA GOOGLE TRADUTTORE-->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Traduzione Google</title>
+  <style>
+    #translate-btn {
+      cursor: pointer;
+      font-size: 24px;
+      display: inline-block;
+      padding: 8px;
+      background-color: #222;
+      color: #fff;
+      border-radius: 8px;
+      transition: background-color 0.3s;
+    }
+
+    #translate-btn:hover {
+      background-color: #444;
+    }
+
+    #google_translate_element {
+      margin-top: 10px;
+      display: none;
+    }
+
+    /* Evita che il widget modifichi font e layout */
+    .goog-te-gadget {
+      font-family: inherit !important;
+      font-size: inherit !important;
+    }
+
+    .goog-te-combo {
+      font-size: 16px;
+      padding: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Pulsante per mostrare il selettore -->
+  <div id="translate-btn" title="Traduci">🌐 Traduci</div>
+
+  <!-- Contenitore del selettore -->
+  <div id="google_translate_element"></div>
+
+  <!-- Script Google Translate -->
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'it',
+        includedLanguages: '', // lascia vuoto per tutte le lingue
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+      }, 'google_translate_element');
+    }
+  </script>
+  <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+  <!-- Script per mostrare/nascondere -->
+  <script>
+    document.getElementById('translate-btn').addEventListener('click', () => {
+      const container = document.getElementById('google_translate_element');
+      container.style.display = container.style.display === 'block' ? 'none' : 'block';
+    });
+  </script>
+
+
+
+
+</script>
+
+
+<!-- FINE AGGIUNTA GOOGLE TRADUTTORE-->
+
+
       </style>
       <!-- inizio slider verticale -->
       <div class="slider-vertical">
@@ -4858,6 +4936,24 @@ document.addEventListener("DOMContentLoaded", () => {
       this.reset();
     }
 
+
+reset() {
+  this.x = Math.random() * canvas.width;
+  this.y = canvas.height + Math.random() * 100; // Deve partire da **sotto** il canvas
+  this.length = Math.random() * 80 + 20;
+  this.speed = Math.random() * 2 + 1;
+  this.opacity = Math.random() * 0.5 + 0.5;
+  this.angle = Math.PI / 4; // Angolo 45° verso sinistra e in alto
+}
+
+
+
+
+
+
+
+
+
     reset() {
       this.x = Math.random() * canvasStars.width;
       this.y = 0;
@@ -5544,8 +5640,50 @@ playBtn.addEventListener('click', () => {
 
   animate();
 </script>
+<!--INIZIO CAMBIO DIREZIONE STELLE CADENTI DAL BASSO VERSO ALTO-->
 
+class FallingStar {
+  constructor() {
+    this.reset();
+  }
+
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = canvas.height + Math.random() * 100; // parte da sotto
+    this.length = Math.random() * 80 + 20;
+    this.speed = Math.random() * 2 + 1;
+    this.opacity = Math.random() * 0.5 + 0.5;
+    this.angle = Math.PI / 4; // angolo della scia
+  }
+
+
+
+
+
+ update() {
+   // movimento verso l’alto e leggermente verso sinistra
+    this.x -= this.speed * Math.cos(this.angle);
+    this.y -= this.speed * Math.sin(this.angle);
+
+    // se esce fuori dallo schermo sopra o ai lati, resetta
+    if (this.y < -this.length || this.x < -this.length) {
+      this.reset();
+    }
+  }
+
+  draw(ctx) {
+    ctx.beginPath();
+    ctx.moveTo(this.x, this.y);
+    ctx.lineTo(this.x + this.length * Math.cos(this.angle), this.y + this.length * Math.sin(this.angle));
+    ctx.strokeStyle = `rgba(255, 255, 255, ${this.opacity})`;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  }
+}
 </script>
+<!--FINE CAMBIO DIREZIONE STELLE CADENTI DAL BASSO VERSO ALTO-->
+
+
 
 
 <script>
@@ -5695,7 +5833,15 @@ animateShootingStars();
 
 
 
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  for (const star of fallingStars) {
+    star.update();
+    star.draw(ctx);
+  }
+  requestAnimationFrame(animate);
+}
 
-
+</script>
          </body>
       </html>
