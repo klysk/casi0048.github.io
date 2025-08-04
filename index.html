@@ -1904,6 +1904,10 @@ main {
       </style>
       </head>
       <body>
+
+<!-- Particelle cosmiche -->
+    <div id="particles"></div>
+    
  <!--  INIZIO TUONO-->
 <style>
     /* Stile del bottone in alto a sinistra */
@@ -5769,6 +5773,202 @@ main {
     delay: 2,
     ease: "power2.in"
   });
+<!------------------------------->
+<style>
+/* Animazione particelle cosmiche */
+        .particle {
+            position: absolute;
+            pointer-events: none;
+            animation: float 15s infinite ease-in-out;
+            will-change: transform;
+        }
+        
+        .symbol-particle {
+            color: rgba(255, 215, 0, 0.7);
+            font-size: 1rem;
+        }
+        
+        .word-particle {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(-20px, -30px) rotate(5deg); }
+            50% { transform: translate(20px, -60px) rotate(-5deg); }
+            75% { transform: translate(-10px, -40px) rotate(3deg); }
+        }
+        
+        /* Slider citazioni */
+        .quote-slider {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background: var(--opaque-bg);
+            border-left: 3px solid var(--gold);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .quotes {
+            animation: slide 20s infinite;
+        }
+        
+        @keyframes slide {
+            0%, 20% { transform: translateY(0); }
+            25%, 45% { transform: translateY(-100%); }
+            50%, 70% { transform: translateY(-200%); }
+            75%, 95% { transform: translateY(-300%); }
+            100% { transform: translateY(-400%); }
+        }
+      @keyframes stars {
+            0% { background-position: 0 0, 0 0; }
+            100% { background-position: -600px 600px, -1200px 1200px; }
+        }
+ /* Animazione particelle cosmiche */
+        .particle {
+            position: absolute;
+            pointer-events: none;
+            animation: float 15s infinite ease-in-out;
+            will-change: transform;
+        }
+        
+        .symbol-particle {
+            color: rgba(255, 215, 0, 0.7);
+            font-size: 1rem;
+        }
+        
+        .word-particle {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(-20px, -30px) rotate(5deg); }
+            50% { transform: translate(20px, -60px) rotate(-5deg); }
+            75% { transform: translate(-10px, -40px) rotate(3deg); }
+        }
+            
+</style>
+ <script>
+        // Simboli e parole per le particelle
+        const symbols = [
+            '∞', 'Φ', 'Ψ', 'Λ', 'Δ', 'Ω', 'π', '∑', '∏', '√',
+            '≡', '≈', '∴', '∀', '∃', '∈', '∧', '∨', '⊕', '⊗',
+            '⊖', '⊙', '⊘', '⊚', '⊛', '⊜', '⊝', '⊞', '⊟', '⊠',
+            '⊡', '⊢', '⊣', '⊤', '⊥', '⊧', '⊨', '⊩', '⊪', '⊫',
+            'Σ', 'Δ', 'Θ', 'Ξ', 'ℵ', '∂', '∇', '∫', '∬', '∭',
+            'Sapienza', 'Verità', 'Logos', 'Eros', 'Mito', 'Essere',
+            'Divenire', 'Idee', 'Armonia', 'Principio', 'Destino',
+            'Libertà', 'Giustizia', 'Virtù', 'Pensiero', 'Domanda',
+            'Risposta', 'Silenzio', 'Dialogo', 'Socratico', 'Platone',
+            'Aristotele', 'Epicuro', 'Stoà', 'Atomos', 'Nous',
+            'Anima', 'Cosmo', 'Apeiron', 'Arché', 'Physis', 'Ethos',
+            'Stoicismo', 'Epicureismo', 'Platonismo', 'Aristotelismo',
+            'Dialettica', 'Ontologia', 'Metafisica', 'Etica', 'Estetica', 'Logica'
+        ];
+// Particelle cosmiche
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 80;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Scegli casualmente tra simbolo o parola
+                const isSymbol = Math.random() > 0.3;
+                const randomIndex = Math.floor(Math.random() * symbols.length);
+                const content = symbols[randomIndex];
+                
+                if (isSymbol || content.length > 8) {
+                    particle.classList.add('symbol-particle');
+                    particle.textContent = content;
+                    particle.style.fontSize = `${Math.random() * 20 + 10}px`;
+                } else {
+                    particle.classList.add('word-particle');
+                    particle.textContent = content;
+                }
+                
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.top = `${Math.random() * 100}vh`;
+                particle.style.opacity = Math.random() * 0.7 + 0.3;
+                particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                container.appendChild(particle);
+                
+                // Esplosione di simboli al click
+                particle.addEventListener('click', () => {
+                    explodeParticle(particle);
+                });
+            }
+        }
+        
+        function explodeParticle(element) {
+            const content = element.textContent;
+            const isWord = element.classList.contains('word-particle');
+            const count = isWord ? 5 : 10;
+            
+            for (let i = 0; i < count; i++) {
+                const newParticle = document.createElement('div');
+                newParticle.classList.add('particle');
+                newParticle.classList.add(isWord ? 'word-particle' : 'symbol-particle');
+                newParticle.textContent = content;
+                newParticle.style.fontSize = element.style.fontSize || `${Math.random() * 15 + 5}px`;
+                newParticle.style.left = element.style.left;
+                newParticle.style.top = element.style.top;
+                newParticle.style.opacity = 1;
+                newParticle.style.animation = `explode ${Math.random() * 2 + 1}s forwards`;
+                
+                document.getElementById('particles').appendChild(newParticle);
+                
+                // Rimuovi dopo l'animazione
+                setTimeout(() => {
+                    newParticle.remove();
+                }, 1000);
+            }
+            
+            // Rimuovi la particella originale
+            element.remove();
+        }
+ // Particelle cosmiche - VERSIONE AGGIORNATA
+        function createParticles() {
+            const container = document.getElementById('particles');
+            if (!container) return;
+            
+            const particleCount = 80;
+            const symbols = [
+                '∞', 'Φ', 'Ψ', 'Λ', 'Δ', 'Ω', 'π', '∑', '∏', '√',
+ '∞', 'Φ', 'Ψ', 'Λ', 'Δ', 'Ω', 'π', '∑', '∏', '√',
+           '≡', '≈', '∴', '∀', '∃', '∈', '∧', '∨', '⊕', '⊗',
+           '⊖', '⊙', '⊘', '⊚', '⊛', '⊜', '⊝', '⊞', '⊟', '⊠',
+           '⊡', '⊢', '⊣', '⊤', '⊥', '⊧', '⊨', '⊩', '⊪', '⊫',
+           'Σ', 'Δ', 'Θ', 'Ξ', 'ℵ', '∂', '∇', '∫', '∬', '∭',
+           'Sapienza', 'Verità', 'Logos', 'Mito', 'Essere',
+           'Divenire', 'Idee', 'Armonia', 'Principio', 'Destino',
+           'Libertà', 'Giustizia', 'Virtù', 'Pensiero', 'Domanda',
+           'Risposta', 'Silenzio', 'Dialogo', 'Socratico', 'Platone',
+           'Aristotele', 'Epicuro', 'Stoà', 'Atomos', 'Nous',
+           'Anima', 'Cosmo', 'Apeiron', 'Arché', 'Physis', 'Ethos',
+           'Stoicismo', 'Epicureismo', 'Platonismo', 'Aristotelismo',
+                // ... (altri simboli)
+            ];
+            
+            for (let i = 0; i < particleCount; i++) {
+                // ... (codice particelle esistente)
+            }
+        }
+
+        // Inizializzazione completa - VERSIONE AGGIORNATA
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            initLeftSlider();
+            
 </script>
 
             </body>
