@@ -968,116 +968,112 @@
       min-height: 100vh;
       line-height: 1.6;
       }
-      /* BARRA SUPERIORE CON RICERCA E TRADUTTORE */
-      .top-bar {
-      display: flex;               /* layout orizzontale */
-      justify-content: center;     /* centra orizzontalmente i contenuti */
-      align-items: center;         /* centra verticalmente i contenuti */
-      padding: 5px 20px;           /* padding verticale 5px, orizzontale 20px (interno) */
-      margin-top: 50px;            /* distanza dall'elemento sopra */
-      margin-bottom: 30px;         /* distanza dall'elemento sotto */
-      margin-left: 5px;           /* distanza da sinistra */
-      margin-right: 390px;         /* distanza da destra */
-      background-color: transparent !important;
-      gap: 12px;                   /* distanza tra i singoli elementi figli */
-Z-INDEX: 1000;
-      }
-      /* Input di ricerca */
-      .top-bar input {
-      padding: 10px 10px;          /* spazio interno dentro l'input */
-      font-size: 1rem;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-      }
-      /* Contenitore con ricerca e traduttore */
-      .search-translate-container {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;                 /* distanza tra ricerca e traduttore */
-      }
-      /* Esempio aggiuntivo per regolare margini singoli elementi */
-      .top-bar > * {
-      margin: 0 5px;               /* margine orizzontale tra ogni elemento */
-      }
-      .top-bar input {
-      padding: 10px 10px;
-      }
-      .search-translate-container {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      }
-      .search-container {
-      display: flex;
-      align-items: center;
-      position: relative;
-      }
-      .search-container input {
-      padding: 0.6rem 1rem 0.6rem 2.5rem;
-      background: rgba(20, 20, 40, 0.7);
-      border: 1px solid rgba(255, 215, 0, 0.2);
-      border-radius: 4px;
-      color: #e0e0e0;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 300;
-      font-size: 0.95rem;
-      transition: all 0.4s ease-out;
-      width: 250px;
-      }
-      .search-container input:focus {
-      outline: none;
-      border-color: rgba(255, 215, 0, 0.5);
-      box-shadow: 0 0 12px rgba(255, 215, 0, 0.2);
-      background: rgba(20, 20, 40, 0.9);
-      }
-      .search-icon {
-      position: absolute;
-      left: 1rem;
-      color: rgba(255, 215, 0, 0.6);
-      font-size: 0.9rem;
-      transition: all 0.3s ease;
-      }
-      .search-container input:focus+.search-icon {
-      color: rgba(255, 215, 0, 0.9);
-      transform: scale(1.1);
-      }
-      /* Stile per il traduttore Google */
-      /* Contenitore traduttore Google */
-      #google_translate_element {
-      display: inline-block;
-      /* Puoi usare qui margini o posizionamenti se serve */
-      }
-      /* Stile dropdown lingua */
-      .goog-te-combo {
-      font-family: 'Montserrat', sans-serif !important;
-      font-weight: 100 !important;
-      background: rgba(20, 20, 40, 0.7) !important;
-      color: #e0e0e0 !important;
-      border: 1px solid rgba(255, 215, 0, 0.2) !important;
-      border-radius: 4px !important;
-      padding: 3px 15px !important;
-      cursor: pointer !important;
-      height: 40px;
-      transition: all 0.4s ease-out !important;
-      }
-      .goog-te-combo:hover {
-      background: rgba(20, 20, 40, 0.9) !important;
-      border-color: rgba(255, 215, 0, 0.5) !important;
-      }
-      /* Nasconde il banner automatico di Google Translate */
-      .goog-te-banner-frame {
-      display: none !important;
-      }
-      /* Posizionamento gadget traduttore */
-      /* Esempio posizione fissa in alto a destra */
-      .goog-te-gadget {
-      position: fixed;  /* fixed per stare sempre visibile */
-      top: 50px;        /* distanza dal bordo superiore */
-      right: 215px;      /* distanza dal bordo destro */
-      margin: 0;        /* annulla margini */
-      color: transparent !important; /* per nascondere testo non necessario */
-      z-index: 10000;   /* per essere sopra altri elementi */
-      background: transparent; /* sfondo trasparente */
+      /* Barra superiore con ricerca e traduttore */
+.top-bar {
+  display: flex;               /* layout orizzontale */
+  justify-content: center;     /* centra orizzontalmente i contenuti */
+  align-items: center;         /* centra verticalmente i contenuti */
+  padding: 5px 20px;
+  margin: 50px 390px 30px 5px; /* top, right, bottom, left */
+  background-color: transparent !important;
+  gap: 12px;                   /* distanza tra elementi figli */
+  z-index: 1000;
+}
+
+/* Margine orizzontale tra elementi diretti di .top-bar */
+.top-bar > * {
+  margin: 0 5px;
+}
+
+/* Contenitore con ricerca e traduttore */
+.search-translate-container {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Contenitore della ricerca */
+.search-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* Input di ricerca */
+.search-container input {
+  width: 250px;
+  padding: 0.6rem 1rem 0.6rem 2.5rem;
+  background: rgba(20, 20, 40, 0.7);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 4px;
+  color: #e0e0e0;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  font-size: 0.95rem;
+  transition: all 0.4s ease-out;
+}
+
+.search-container input:focus {
+  outline: none;
+  border-color: rgba(255, 215, 0, 0.5);
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.2);
+  background: rgba(20, 20, 40, 0.9);
+}
+
+/* Icona di ricerca */
+.search-icon {
+  position: absolute;
+  left: 1rem;
+  color: rgba(255, 215, 0, 0.6);
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.search-container input:focus + .search-icon {
+  color: rgba(255, 215, 0, 0.9);
+  transform: scale(1.1);
+}
+
+/* Traduttore Google */
+#google_translate_element {
+  display: inline-block;
+}
+
+/* Dropdown lingua */
+.goog-te-combo {
+  font-family: 'Montserrat', sans-serif !important;
+  font-weight: 100 !important;
+  background: rgba(20, 20, 40, 0.7) !important;
+  color: #e0e0e0 !important;
+  border: 1px solid rgba(255, 215, 0, 0.2) !important;
+  border-radius: 4px !important;
+  padding: 3px 15px !important;
+  cursor: pointer !important;
+  height: 40px;
+  transition: all 0.4s ease-out !important;
+}
+
+.goog-te-combo:hover {
+  background: rgba(20, 20, 40, 0.9) !important;
+  border-color: rgba(255, 215, 0, 0.5) !important;
+}
+
+/* Nasconde il banner automatico di Google Translate */
+.goog-te-banner-frame {
+  display: none !important;
+}
+
+/* Gadget traduttore */
+.goog-te-gadget {
+  position: fixed;
+  top: 50px;
+  right: 215px;
+  margin: 0;
+  color: transparent !important;
+  z-index: 10000;
+  background: transparent;
+}
+
       }
       /* Se vuoi invece spostare il box in basso a sinistra ad esempio: */
       /*
@@ -4697,12 +4693,23 @@ Z-INDEX: 2;
                }
             </style>
             <!--  FINE PLAYER -->
+
            <!-- INIZIO IFRAME SISTEMA SOLARE -->
 <div style="display: flex; justify-content: center; margin: 130px 0; position: relative; z-index: 9;">
-   <iframe src="https://www.solarsystemscope.com/iframe" width="500" height="400" style="border: 2px solid #0f5c6e;">
-   </iframe>
+  <iframe id="solar-frame" src="https://www.solarsystemscope.com/iframe" 
+          width="500" height="400" style="border: 2px solid #0f5c6e; pointer-events: none;">
+  </iframe>
 </div>
+
+<script>
+  const iframe = document.getElementById('solar-frame');
+  iframe.addEventListener('click', () => {
+    iframe.style.pointerEvents = 'auto';
+  });
+</script>
+
 <!-- FINE IFRAME SISTEMA SOLARE -->
+
             <script>
                // Animazione GSAP per titolo e sottotitolo
                window.addEventListener('DOMContentLoaded', () => {
