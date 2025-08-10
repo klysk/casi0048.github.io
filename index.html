@@ -26,6 +26,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/SplitText.min.js"></script>
     <!-- Canvas per stelle cadenti -->
+
+
     <canvas id="shooting-stars"></canvas>
     <style>
       .particle {
@@ -151,9 +153,7 @@
             opacity: 0;
         }
     }
-    
-    
-           
+              
            // Inizializzazione
            window.onload = function() {
                createParticles();
@@ -196,10 +196,7 @@
     'Dialettica', 'Ontologia', 'Metafisica', 'Etica', 'Estetica', 'Logica'
     ];
     
-    
-    
-    
-    const config = {
+      const config = {
       particleCount: 50,
       minSize: 0.6,
       maxSize: 2,
@@ -495,7 +492,7 @@
     color: #00FFFF;
     text-shadow: var(--glow-cyan);
     }
-    < !-- ////////////////////////////-->
+    
     /* CORREZIONE AREA CLICCABILE a href="" role="menuitem">Massimo Cacciari </a>*/
     .menu-desktop>ul>li>a,
     .menu-desktop>ul>li>button.menu-btn {
@@ -907,7 +904,7 @@
     background: rgba(255, 255, 255, 0.3);
     border-radius: 3px;
     }
-    < !------------------------------------------------->.mega-menu a::after {
+    .mega-menu a::after {
     margin-left: 5px;
     color: #d4af37;
     /* oro, personalizzabile */
@@ -956,10 +953,10 @@
     justify-content: center;     /* centra orizzontalmente i contenuti */
     align-items: center;         /* centra verticalmente i contenuti */
     padding: 5px 20px;           /* padding verticale 5px, orizzontale 20px (interno) */
-    margin-top: 17px;            /* distanza dall'elemento sopra */
+    margin-top: 50px;            /* distanza dall'elemento sopra */
     margin-bottom: 30px;         /* distanza dall'elemento sotto */
     margin-left: 5px;           /* distanza da sinistra */
-    margin-right: 90px;         /* distanza da destra */
+    margin-right: 390px;         /* distanza da destra */
     background-color: transparent !important;
     gap: 12px;                   /* distanza tra i singoli elementi figli */
     }
@@ -1053,8 +1050,8 @@
     /* Esempio posizione fissa in alto a destra */
     .goog-te-gadget {
     position: fixed;  /* fixed per stare sempre visibile */
-    top: 25px;        /* distanza dal bordo superiore */
-    right: 25px;      /* distanza dal bordo destro */
+    top: 60px;        /* distanza dal bordo superiore */
+    right: 215px;      /* distanza dal bordo destro */
     margin: 0;        /* annulla margini */
     color: transparent !important; /* per nascondere testo non necessario */
     z-index: 10000;   /* per essere sopra altri elementi */
@@ -2079,6 +2076,169 @@
     });
   </script>
   <!--FINE METEORE CHE ATTRAVERSANO SPAZIO-->
+<!--1111111111111111111111111111111111111111-->
+     <!--INIZIO LEMPI-->
+<canvas id="lightning-canvas"></canvas>
+<STYLE>
+
+
+#lightning-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0; /* sopra tutto per illuminare */
+  background: transparent;
+}
+</STYLE>
+<SCRIPT>
+window.onload = function () {
+  const canvas = document.getElementById('lightning-canvas');
+  const ctx = canvas.getContext('2d');
+
+  let W = canvas.width = window.innerWidth;
+  let H = canvas.height = window.innerHeight;
+
+  window.addEventListener('resize', () => {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  });
+
+  function lightningFlash(x, y, radius) {
+    const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
+    gradient.addColorStop(0, 'rgba(255,255,255,1)');
+    gradient.addColorStop(0.3, 'rgba(255,255,255,0.6)');
+    gradient.addColorStop(1, 'rgba(255,255,255,0)');
+
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, W, H);
+
+    setTimeout(() => {
+      ctx.clearRect(0, 0, W, H);
+    }, 150);
+  }
+
+  function randomLightning() {
+    const x = Math.random() * W;
+    const y = Math.random() * H * 0.7;
+    const radius = 250 + Math.random() * 500;
+    lightningFlash(x, y, radius);
+  }
+
+  // Primo lampo subito per test
+  randomLightning();
+  setTimeout(randomLightning, 500);
+
+  // Lampi frequenti (ogni 1-2 sec)
+  setInterval(() => {
+    if (Math.random() > 0.7) {
+      randomLightning();
+    }
+  }, 1000 + Math.random() * 1000);
+};
+</SCRIPT>
+
+<!--FINE LAMPPI-->
+
+ 
+  <!--INIZIO EFFETTO GALASSIA-->
+<canvas id="nebula" style="position: fixed; top: 0; left: 0; z-index: -1;"></canvas>
+<STYLE>
+.galaxy {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 100;
+        overflow: hidden;
+    }
+    .star {
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+        filter: blur(0.5px);
+        animation: twinkle 3s infinite alternate;
+    }
+    @keyframes twinkle {
+        0% { opacity: 0.2; }
+        100% { opacity: 1; }
+    }
+</STYLE>
+<SCRIPT>
+ const canvas = document.getElementById('nebula');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles = [];
+    const colors = ['#3a0ca3', '#7209b7', '#f72585', '#4cc9f0', '#4895ef'];
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 3 + 1;
+            this.color = colors[Math.floor(Math.random() * colors.length)];
+            this.speedX = Math.random() * 2 - 1;
+            this.speedY = Math.random() * 2 - 1;
+        }
+
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            if (this.size > 0.2) this.size -= 0.01;
+        }
+
+        draw() {
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    function init() {
+        for (let i = 0; i < 100; i++) {
+            particles.push(new Particle());
+        }
+    }
+
+    function animate() {
+        ctx.fillStyle = 'rgba(10, 10, 20, 0.1)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        for (let i = 0; i < particles.length; i++) {
+            particles[i].update();
+            particles[i].draw();
+
+            if (particles[i].size <= 0.2 || 
+                particles[i].x < 0 || particles[i].x > canvas.width || 
+                particles[i].y < 0 || particles[i].y > canvas.height) {
+                particles.splice(i, 1);
+                i--;
+            }
+        }
+
+        if (particles.length < 100 && Math.random() < 0.1) {
+            particles.push(new Particle());
+        }
+
+        requestAnimationFrame(animate);
+    }
+
+    init();
+    animate();
+
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+</SCRIPT>
+    <!--FINE EFFETTO GALASSIA-->
+<!--111111111111111111111111111111111111111-->
   <style>
   #comet-canvas {
   position: fixed;
@@ -2183,6 +2343,7 @@
   <p id="quote-author"></p>
   </div>
   <canvas id="nebula-canvas"></canvas>
+  <canvas id="nebula" style="position: fixed; top: 0; left: 0; z-index: -1;"></canvas>
   <canvas id="star-canvas" style="position: fixed; top: 0; left: 0; z-index: -1;"></canvas>
   <div id="cosmic-canvas">
   <div class="nebula" style="top:20%; left:10%; background: radial-gradient(circle, rgba(123,104,238,0.4) 0%, transparent 70%); animation-duration: 20s;"></div>
@@ -2206,7 +2367,7 @@
   #play-thunder {
   position: fixed;
   top: 17px;
-  left: 10px;
+  left: 500px;
   z-index: 1000;
   padding: 10px 2px;
   background-color: transparent !important;
@@ -2225,101 +2386,348 @@
   </style>
   </HEAD>
   <BODY>
-    <!--INIZIO EFFETTO GALASSIA-->
-    <canvas id="nebula" style="position: fixed; top: 0; left: 0; z-index: -1;"></canvas>
-    <STYLE>
-      .galaxy {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      overflow: hidden;
-      }
-      .star {
-      position: absolute;
-      background: white;
-      border-radius: 50%;
-      filter: blur(0.5px);
-      animation: twinkle 3s infinite alternate;
-      }
-      @keyframes twinkle {
-      0% { opacity: 0.2; }
-      100% { opacity: 1; }
-      }
-    </STYLE>
-    <SCRIPT>
-      const canvas = document.getElementById('nebula');
-         const ctx = canvas.getContext('2d');
-         canvas.width = window.innerWidth;
-         canvas.height = window.innerHeight;
-      
-         const particles = [];
-         const colors = ['#3a0ca3', '#7209b7', '#f72585', '#4cc9f0', '#4895ef'];
-      
-         class Particle {
-             constructor() {
-                 this.x = Math.random() * canvas.width;
-                 this.y = Math.random() * canvas.height;
-                 this.size = Math.random() * 3 + 1;
-                 this.color = colors[Math.floor(Math.random() * colors.length)];
-                 this.speedX = Math.random() * 2 - 1;
-                 this.speedY = Math.random() * 2 - 1;
-             }
-      
-             update() {
-                 this.x += this.speedX;
-                 this.y += this.speedY;
-                 if (this.size > 0.2) this.size -= 0.01;
-             }
-      
-             draw() {
-                 ctx.fillStyle = this.color;
-                 ctx.beginPath();
-                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                 ctx.fill();
-             }
-         }
-      
-         function init() {
-             for (let i = 0; i < 100; i++) {
-                 particles.push(new Particle());
-             }
-         }
-      
-         function animate() {
-             ctx.fillStyle = 'rgba(10, 10, 20, 0.1)';
-             ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-             for (let i = 0; i < particles.length; i++) {
-                 particles[i].update();
-                 particles[i].draw();
-      
-                 if (particles[i].size <= 0.2 || 
-                     particles[i].x < 0 || particles[i].x > canvas.width || 
-                     particles[i].y < 0 || particles[i].y > canvas.height) {
-                     particles.splice(i, 1);
-                     i--;
-                 }
-             }
-      
-             if (particles.length < 100 && Math.random() < 0.1) {
-                 particles.push(new Particle());
-             }
-      
-             requestAnimationFrame(animate);
-         }
-      
-         init();
-         animate();
-      
-         window.addEventListener('resize', () => {
-             canvas.width = window.innerWidth;
-             canvas.height = window.innerHeight;
-         });
-    </SCRIPT>
-    <!--FINE EFFETTO GALASSIA-->
+<!-- Bottone suona tuono -->
+            <button id="play-thunder">🖱️ Clicca QUI per 📢 sentire 🚀 il tuono</button>
+            <!-- Audio del tuono -->
+            <audio id="thunder-sound" src="https://casi0048.github.io/suoni/thunder-sound.mp3" preload="auto"></audio>
+            <!-- Script per il suono -->
+            <script>
+                const thunder = document.getElementById('thunder-sound');
+                const playBtn = document.getElementById('play-thunder');
+                
+                playBtn.addEventListener('click', () => {
+                  thunder.currentTime = 0;
+                  thunder.play();
+                });
+</SCRIPT>
+            <!-- FINE TUONO-->
+<!--  INIZIO ESLOSIONI PRIMORDIALI-->
+<div id="universe"></div>
+<style>
+  body {
+    margin: 0;
+    background: #0a0c12;
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  #universe {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: contrast(120%);
+    z-index: 1; /* Strati base */
+  }
+
+  .star {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0;
+    animation: twinkle 5-15s infinite;
+    z-index: 2; /* Sopra lo sfondo */
+  }
+
+  .nebula {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(15px);
+    opacity: 0;
+    transform: scale(0);
+    mix-blend-mode: screen;
+    z-index: 3; /* Sopra le stelle */
+  }
+
+  .nova-core {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(5px);
+    opacity: 0;
+    transform: scale(0);
+    mix-blend-mode: plus-lighter;
+    z-index: 9999; /* Livello più alto */
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.1; }
+    50% { opacity: 0.8; }
+  }
+
+  @keyframes nova-burst {
+    0% { 
+      transform: scale(0.1); 
+      opacity: 0;
+      filter: blur(5px);
+    }
+    20% { 
+      transform: scale(1.2); 
+      opacity: 0.9;
+      filter: blur(20px);
+    }
+    100% { 
+      transform: scale(3); 
+      opacity: 0;
+      filter: blur(40px);
+    }
+  }
+
+  @keyframes core-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.3); opacity: 1; }
+  }
+
+  @keyframes star-birth {
+    0% { transform: scale(0); opacity: 0; }
+    30% { transform: scale(1.5); opacity: 1; }
+    100% { transform: scale(1); opacity: 0.8; }
+  }
+</style>
+
+
+
+<script>
+// Configurazione con z-index controllati
+const config = {
+  layers: {
+    background: 1,
+    stars: 2,
+    nebulae: 3,
+    explosions: 4
+  },
+  starDensity: 0.0003,
+  nebulaColors: [
+    { core: '#9c27b0', halo: 'rgba(156,39,176,0.3)' },
+    { core: '#3f51b5', halo: 'rgba(63,81,181,0.3)' },
+    { core: '#009688', halo: 'rgba(0,150,136,0.3)' },
+    { core: '#ff5722', halo: 'rgba(255,87,34,0.3)' },
+    { core: '#ffeb3b', halo: 'rgba(255,235,59,0.3)' }
+  ],
+  timing: {
+    minDelay: 1500,
+    maxDelay: 4000,
+    clusterChance: 0.4,
+    clusterSize: { min: 3, max: 7 }
+  }
+};
+
+const universe = document.getElementById('universe');
+const width = window.innerWidth;
+const height = window.innerHeight;
+const starCount = Math.floor(width * height * config.starDensity);
+let explosionQueue = [];
+let lastExplosionTime = 0;
+
+function createStars() {
+  for (let i = 0; i < starCount; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    
+    const angle = Math.random() * Math.PI * 2;
+    const distance = Math.pow(Math.random(), 2) * Math.min(width, height) * 0.4;
+    
+    star.style.left = `${width/2 + Math.cos(angle) * distance}px`;
+    star.style.top = `${height/2 + Math.sin(angle) * distance}px`;
+    star.style.width = `${Math.random() * 1.5 + 0.5}px`;
+    star.style.height = star.style.width;
+    star.style.animationDuration = `${5 + Math.random() * 10}s`;
+    star.style.animationDelay = `${Math.random() * 20}s`;
+    star.style.zIndex = config.layers.stars;
+    
+    universe.appendChild(star);
+  }
+}
+
+function createNova(x, y, isCluster = false) {
+  const color = config.nebulaColors[Math.floor(Math.random() * config.nebulaColors.length)];
+  const sizeBase = isCluster ? 50 : 80;
+  const size = sizeBase * (0.8 + Math.random() * 0.4);
+  
+  // Nucleo brillante
+  const core = document.createElement('div');
+  core.className = 'nova-core';
+  core.style.left = `${x - size/3}px`;
+  core.style.top = `${y - size/3}px`;
+  core.style.width = `${size/1.5}px`;
+  core.style.height = `${size/1.5}px`;
+  core.style.background = `radial-gradient(circle, 
+    ${color.core} 0%, 
+    rgba(255,255,255,0.8) 50%, 
+    transparent 100%)`;
+  core.style.animation = `core-pulse ${0.5 + Math.random() * 0.5}s ease-in-out infinite`;
+  core.style.zIndex = config.layers.explosions;
+  
+  // Nebulosa
+  const nebula = document.createElement('div');
+  nebula.className = 'nebula';
+  nebula.style.left = `${x - size/2}px`;
+  nebula.style.top = `${y - size/2}px`;
+  nebula.style.width = `${size}px`;
+  nebula.style.height = `${size}px`;
+  nebula.style.background = `radial-gradient(circle, 
+    transparent 0%, 
+    ${color.halo} 70%, 
+    transparent 100%)`;
+  nebula.style.animation = `nova-burst ${2 + Math.random() * 2}s ease-out forwards`;
+  nebula.style.zIndex = config.layers.nebulae;
+  
+  universe.appendChild(nebula);
+  universe.appendChild(core);
+
+  setTimeout(() => {
+    createStarField(x, y, size * 1.5, 5 + Math.floor(Math.random() * 10));
+    nebula.remove();
+    core.remove();
+  }, 3000);
+
+  if (!isCluster && Math.random() < config.timing.clusterChance) {
+    explosionQueue.push({ 
+      x, y, 
+      count: Math.floor(config.timing.clusterSize.min + 
+        Math.random() * (config.timing.clusterSize.max - config.timing.clusterSize.min)) 
+    });
+  }
+}
+
+function createStarField(x, y, radius, count) {
+  for (let i = 0; i < count; i++) {
+    const angle = Math.random() * Math.PI * 2;
+    const distance = Math.random() * radius;
+    const starX = x + Math.cos(angle) * distance;
+    const starY = y + Math.sin(angle) * distance;
+    
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.style.left = `${starX}px`;
+    star.style.top = `${starY}px`;
+    star.style.width = `${0.5 + Math.random() * 1.5}px`;
+    star.style.height = star.style.width;
+    star.style.animation = `star-birth ${2 + Math.random() * 3}s ease-out forwards`;
+    star.style.zIndex = config.layers.stars;
+    
+    universe.appendChild(star);
+  }
+}
+
+function processExplosionQueue(currentTime) {
+  if (explosionQueue.length > 0 && currentTime - lastExplosionTime > 500) {
+    const next = explosionQueue[0];
+    const angle = Math.random() * Math.PI * 2;
+    const distance = 30 + Math.random() * 50;
+    
+    createNova(
+      next.x + Math.cos(angle) * distance,
+      next.y + Math.sin(angle) * distance,
+      true
+    );
+    
+    next.count--;
+    if (next.count <= 0) explosionQueue.shift();
+    lastExplosionTime = currentTime;
+  }
+}
+
+function cosmicCycle(timestamp) {
+  if (Math.random() < 0.02) {
+    const margin = 100;
+    createNova(
+      margin + Math.random() * (width - margin * 2),
+      margin + Math.random() * (height - margin * 2)
+    );
+  }
+  
+  processExplosionQueue(timestamp);
+  requestAnimationFrame(cosmicCycle);
+}
+
+window.onload = function() {
+  createStars();
+  
+  setTimeout(() => {
+    createNova(width * 0.3, height * 0.4);
+    setTimeout(() => {
+      createNova(width * 0.7, height * 0.6);
+    }, 1500);
+  }, 1000);
+  
+  requestAnimationFrame(cosmicCycle);
+  
+  universe.addEventListener('click', (e) => {
+    createNova(e.clientX, e.clientY);
+  });
+};
+
+window.addEventListener('resize', function() {
+  width = window.innerWidth;
+  height = window.innerHeight;
+});
+</script>
+
+<!-- FINE ESPLOSIONI PRIMORDIALI-->
+<!-- FINE ESPLOSIONI PRIMORDIALI-->
+  
+            <!-- INIZIO: Lampo + Shake + Suono -->
+            <canvas id="lightning-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none;"></canvas>
+            <audio id="thunder-sound" src="https://cdn.pixabay.com/download/audio/2022/03/25/audio_f7efc7fc85.mp3?filename=thunder-109557.mp3" preload="auto"></audio>
+            <script>
+               const canvas = document.getElementById("lightning-canvas");
+               const ctx = canvas.getContext("2d");
+               const thunder = document.getElementById("thunder-sound");
+               
+               function resizeCanvas() {
+                 canvas.width = window.innerWidth;
+                 canvas.height = window.innerHeight;
+               }
+               window.addEventListener("resize", resizeCanvas);
+               resizeCanvas();
+               
+               function flashLightning() {
+                 const x = Math.random() * canvas.width;
+                 const y = Math.random() * canvas.height;
+                 const radius = Math.random() * 300 + 200;
+               
+                 const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
+                 gradient.addColorStop(0, "rgba(255, 255, 255, 1)");
+                 gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
+                 ctx.fillStyle = gradient;
+                 ctx.fillRect(0, 0, canvas.width, canvas.height);
+               
+                 // Shake GSAP
+                 gsap.to("body", {
+                   x: () => gsap.utils.random(-10, 10),
+                   y: () => gsap.utils.random(-10, 10),
+                   duration: 0.1,
+                   repeat: 5,
+                   yoyo: true,
+                   ease: "power2.inOut"
+                 });
+               
+                 // Suono
+                 thunder.currentTime = 0;
+                 thunder.play();
+               
+                 // Rimuovi lampo dopo poco
+                 setTimeout(() => {
+                   ctx.clearRect(0, 0, canvas.width, canvas.height);
+                 }, 150);
+               }
+               
+               function loopFlashes() {
+                 setTimeout(() => {
+                   flashLightning();
+                   loopFlashes();
+                 }, Math.random() * 7000 + 5000); // ogni 5–12 sec
+               }
+               
+               loopFlashes();
+            </script>
+            <!-- FINE: Lampo + Shake + Suono -->
+  <!-------------------------------=====================================================------------>
     <!--INIZIO PICCOLE COMETE CON CODA -->
     <div id="sky"></div>
     <STYLE>
@@ -2631,108 +3039,10 @@
       }
     </SCRIPT>
     <!--FINE Stelle Twinkling -->
-    <!--INIZIO COMETE TRASVERSALI-->
-    <canvas id="comete-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:-1;"></canvas>
-    <script>
-      (function(){
-       const canvas = document.getElementById("comete-canvas");
-       const ctx = canvas.getContext("2d");
-       let width, height;
-       const comete = [];
-      
-       // Parametri direzione/velocità globali per sincronizzare con particelle.js
-       const vento = {
-           dx: -2.5,  // velocità orizzontale media
-           dy: 1.2    // velocità verticale media
-       };
-      
-       function resize() {
-           width = canvas.width = window.innerWidth;
-           height = canvas.height = window.innerHeight;
-       }
-       window.addEventListener("resize", resize);
-       resize();
-      
-       function creaCometa() {
-           const colori = [
-               "hsl(195, 100%, 80%)",
-               "hsl(210, 100%, 75%)",
-               "hsl(260, 100%, 85%)",
-               "hsl(180, 100%, 70%)"
-           ];
-           return {
-               x: Math.random() * width,
-               y: Math.random() * height * 0.4,
-               dx: vento.dx + (-0.5 + Math.random()), // piccola variazione
-               dy: vento.dy + (-0.5 + Math.random()),
-               lunghezza: 90 + Math.random() * 40,
-               opacita: 0.9,
-               colore: colori[Math.floor(Math.random() * colori.length)]
-           };
-       }
-      
-       function disegnaCometa(c) {
-           ctx.globalAlpha = c.opacita;
-           ctx.shadowBlur = 8;
-           ctx.shadowColor = c.colore;
-      
-           const grad = ctx.createLinearGradient(c.x, c.y, c.x + c.lunghezza, c.y - c.lunghezza);
-           grad.addColorStop(0, c.colore);
-           grad.addColorStop(1, "transparent");
-      
-           ctx.strokeStyle = grad;
-           ctx.lineWidth = 2;
-           ctx.beginPath();
-           ctx.moveTo(c.x, c.y);
-           ctx.lineTo(c.x + c.lunghezza, c.y - c.lunghezza);
-           ctx.stroke();
-      
-           ctx.shadowBlur = 0;
-           ctx.globalAlpha = 1;
-       }
-      
-       function animazione() {
-           ctx.clearRect(0, 0, width, height);
-      
-           for (let i = comete.length - 1; i >= 0; i--) {
-               const c = comete[i];
-               disegnaCometa(c);
-               c.x += c.dx;
-               c.y += c.dy;
-               c.opacita -= 0.004;
-               if (c.x < -c.lunghezza || c.y > height || c.opacita <= 0) {
-                   comete.splice(i, 1);
-               }
-           }
-      
-           if (Math.random() < 0.015) {
-               comete.push(creaCometa());
-           }
-      
-           requestAnimationFrame(animazione);
-       }
-      
-       animazione();
-      })();   
-        
-    </script>
-    <!--FINE COMETE TRASVERSALI-->
-    <canvas id="nebula" style="position: fixed; top: 0; left: 0; z-index: -1;"></canvas>
+
     <div id="particles"></div>
-    <!-- Bottone suona tuono -->
-    <button id="play-thunder">🖱️ Clicca QUI per 📢 sentire 🚀 il tuono</button>
-    <!-- Audio del tuono -->
-    <audio id="thunder-sound" src="https://casi0048.github.io/suoni/thunder-sound.mp3" preload="auto"></audio>
-    <!-- Script per il suono -->
-    <script>
-      const thunder = document.getElementById('thunder-sound');
-      const playBtn = document.getElementById('play-thunder');
-      
-      playBtn.addEventListener('click', () => {
-        thunder.currentTime = 0;
-        thunder.play();
-      });
-    </script>
+
+  </script>
     <!-- FINE TUONO-->
     <div class="nebula-overlay"></div>
     <!-- Google Translate widget -->
@@ -3702,12 +4012,14 @@
         }
       </style>
       <head>
+
         <section class="welcome-section">
           <!-- 10 comete -->
           <div class="comet"></div>
-          <div class="comet"></div>
+          
           <!-- Titolo e sottotitoli -->
         </section>
+<!--
         <style>
           .glow-animated {
           animation: glowPulse 4s ease-in-out infinite;
@@ -3806,6 +4118,7 @@
             });
           });
         </script>
+-->
         <!-- 🌟 INIZIO EXPLODING TEXT AUTONOMO -->
         <div class="exploding-text">
           <h1 id="title">📖 Pensare, dunque è ancora possibile ⚖️<br>✨ Frammenti di sapere ✨</h1>
@@ -4102,6 +4415,7 @@
             });
           });
         </script>
+
         <canvas id="lightning-canvas"></canvas>
         <canvas id="shooting-stars-canvas"></canvas>
         <!-- Tutto il contenuto già presente nel tuo <body> -->
@@ -5705,49 +6019,7 @@
       });
     </script>
     <!--  FINE BANNER COOKI-->
-    <!-- INIZIO Lampi Visivi -->
-    <canvas id="lightning-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></canvas>
-    <script>
-      const canvas = document.getElementById("lightning-canvas");
-      const ctx = canvas.getContext("2d");
-      
-      function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-      }
-      
-      window.addEventListener("resize", resizeCanvas);
-      resizeCanvas();
-      
-      function flashLightning() {
-        const x = Math.random() * canvas.width;
-        const y = Math.random() * canvas.height;
-      
-        const flashRadius = Math.random() * 300 + 200;
-      
-        const gradient = ctx.createRadialGradient(x, y, 0, x, y, flashRadius);
-        gradient.addColorStop(0, "rgba(255, 255, 255, 0.9)");
-        gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
-      
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-        // Dissolvenza graduale
-        setTimeout(() => {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }, 150);
-      }
-      
-      function loopFlashes() {
-        setTimeout(() => {
-          flashLightning();
-          loopFlashes();
-        }, Math.random() * 1000 + 5000); // ogni 6-11 sec
-      }
-      
-      loopFlashes();
-    </script>
-    <!-- FINE Lampi Visivi -->
+    
     <!-- INIZIO: Lampo + Shake + Suono -->
     <canvas id="lightning-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></canvas>
     <audio id="thunder-sound" src="https://cdn.pixabay.com/download/audio/2022/03/25/audio_f7efc7fc85.mp3?filename=thunder-109557.mp3" preload="auto"></audio>
@@ -5832,15 +6104,7 @@
       this.opacity = Math.random() * 0.5 + 0.5;
       this.angle = Math.PI / 4; // Angolo 45° verso sinistra e in alto
       }
-      
-      
-      
-      
-      
-      
-      
-      
-      
+         
         reset() {
           this.x = Math.random() * canvasStars.width;
           this.y = 0;
@@ -5975,7 +6239,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: -3; /* O anche -1 */
+    z-index: -1; /* O anche -1 */
     width: 100%;
     height: 100%;
     pointer-events: none;
@@ -6995,6 +7259,7 @@
       symbol.style.color = randomColor();
       
     </script>
+<!--
     <script>
       function createComet() {
           const comet = document.createElement('div');
@@ -7013,6 +7278,7 @@
       setInterval(createExplosion, 10000); // ogni 10 secondi
       
     </script>
+-->
     <script>
       // Particelle cosmiche con simboli e parole filosofiche
       function createParticles() {
