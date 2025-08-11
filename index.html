@@ -1168,13 +1168,17 @@ nav.menu-desktop{
       </div>
     </div>
     <div class="footer-legal">
-      <span>© <span id="year"></span> Echi di Sofia</span>
-      <span class="dot">•</span>
-      <a href="https://casi0048.github.io/pagine/privacy-policy.html">Privacy</a>
-      <span class="dot">•</span>
-      <a href="credits.html">Crediti</a>
-    </div>
-  </div>
+  <span>© <span id="year"></span> Echi di Sofia</span>
+  <span class="dot">•</span>
+  <a href="https://casi0048.github.io/pagine/privacy-policy.html">Privacy</a>
+  <span class="dot">•</span>
+  <a href="credits.html">Crediti</a>
+  <span class="dot">•</span>
+ 
+</div>
+
+
+
 </footer>
 
 
@@ -2026,7 +2030,10 @@ document.getElementById('btn-thunder')
 </div>
 
 <!-- Pulsante per riaprire -->
-<button id="cookie-manage" class="cookie-manage" hidden>Gestisci cookie</button>
+ <button id="manage-cookies" class="ctrl-btn btn-link" type="button" title="Gestisci consenso cookie">
+    Gestione cookie
+  </button>
+
 
 <script>
 (function(){
@@ -2317,6 +2324,20 @@ document.getElementById('btn-thunder')
 
   updateLabel();
 })();
+</script>
+
+
+<script>
+document.getElementById('manage-cookies')?.addEventListener('click', () => {
+  const modal  = document.querySelector('.cookie-modal, #cookie-modal');
+  const banner = document.getElementById('cookie-banner');
+  if (modal) {
+    modal.style.display = 'block';      // apre le preferenze
+  } else if (banner) {
+    localStorage.removeItem('cookieConsent');
+    banner.style.display = 'block';     // ripropone il banner
+  }
+});
 </script>
 
 </body>
