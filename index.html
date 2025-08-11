@@ -17,6 +17,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 
   <style>
+
     :root{
       --bg:#0a0a1a;
       --gold:#d4af37;
@@ -216,7 +217,7 @@
       .ctrl-btn{ padding:.35rem .5rem }
       .quotes-bar{ width:92% }
     }
-<!--INIZIO AGGIUNTE RESTRINGIMENTO COLONNE SUBMENU-->
+/* INIZIO AGGIUNTE RESTRINGIMENTO COLONNE SUBMENU */
 /* === Mega-menu più stretto (4 colonne compatte) === */
 .menu-desktop .mega-menu.columns-4{
   width: 700px !important;                         /* prima ~980px */
@@ -495,8 +496,13 @@ nav.menu-desktop{
   .cookie-banner, .cookie-modal, .cookie-manage{ transition:none }
 }
 
-<!--FINE AGGIUNTE RESTRINGIMENTO COLONNE SUBMENU-->
-  </style>
+/* FINE AGGIUNTE RESTRINGIMENTO COLONNE SUBMENU */
+ .ctrl-btn.active{
+  border-color:#ffd86a;
+  box-shadow:0 0 18px rgba(255,215,0,.45), inset 0 0 10px rgba(255,215,0,.25);
+}
+ 
+</style>
 </head>
 <body>
   <!-- GALASSIA dietro -->
@@ -518,6 +524,82 @@ nav.menu-desktop{
       </svg>
       <span>Echi di Sofia</span>
     </a>
+
+<!-- ⬇️ BARRA DESTRA (traduttore + cerca + pulsanti) -->
+<div class="bar-right">
+  <div id="google_translate_element" title="Traduci pagina"></div>
+
+  <!-- BOX CERCA (UI tua, non Google) -->
+  <div class="search-container" role="search">
+    <input type="search" id="site-search" placeholder="Cerca nel sito..." aria-label="Cerca" />
+    <i class="fa-solid fa-magnifying-glass search-icon" aria-hidden="true"></i>
+  </div>
+
+  <!-- Pulsanti -->
+  <button id="btn-thunder" class="ctrl-btn" title="Riproduci tuono">⚡ Tuono</button>
+  <button id="btn-explode" class="ctrl-btn" title="Esplodi testo">💥 Esplodi</button>
+</div>
+</div>
+
+<!-- CONTENITORE RISULTATI CSE (comparirà dopo la ricerca) -->
+<div id="cse-results" style="display:none;max-width:900px;margin:20px auto;"></div>
+
+<!-- Loader Google CSE (inserisci UNA SOLA volta per pagina) -->
+<script async src="https://cse.google.com/cse.js?cx=87b07564ab3cb462a"></script>
+
+<!-- Script integrazione CSE con il tuo input -->
+<script>
+(function(){
+  const input = document.getElementById('site-search');
+  const icon  = document.querySelector('.search-icon');
+  const resultsBox = document.getElementById('cse-results');
+
+  if (!input || !resultsBox) return;
+
+  // Esegue la ricerca CSE mostrando i risultati nel box dedicato
+  function runSearch(query){
+    if (!query) return;
+    resultsBox.style.display = 'block';
+    // Inietto il contenitore "results-only" di CSE
+    resultsBox.innerHTML = '<div class="gcse-searchresults-only" data-queryParameterName="q" data-linkTarget="_self"></div>';
+
+    // Dispatch dell'evento di ricerca Google (supportato da CSE)
+    const ev = new Event('gcse-search');
+    ev.query = query;
+    window.dispatchEvent(ev);
+  }
+
+  function onSearch(){
+    const term = input.value.trim();
+    if (term) runSearch(term);
+  }
+
+  // Invio con ENTER
+  input.addEventListener('keydown', (e)=>{ if (e.key === 'Enter') onSearch(); });
+  // Click sulla lente
+  if (icon) icon.addEventListener('click', onSearch);
+})();
+</script>
+
+<!-- Stile scuro per i risultati CSE -->
+<style>
+  .gsc-control-cse, .gsc-control-cse .gsc-table-result { background: transparent !important; }
+  input.gsc-input { background:#0b0c10 !important; color:#f0f0f0 !important; }
+  .gsc-search-button-v2 { background:#1f2937 !important; border:1px solid #334155 !important; border-radius:8px !important; }
+  .gsc-webResult.gsc-result {
+    background: rgba(255,255,255,0.03) !important;
+    border:1px solid rgba(255,255,255,0.08) !important;
+    border-radius:10px !important;
+    padding:8px !important;
+    margin-bottom:8px !important;
+  }
+  .gs-title, .gs-snippet { color:#eaeaea !important; }
+</style>
+
+
+
+
+<!-- 
     <div class="bar-right">
       <div id="google_translate_element" title="Traduci pagina"></div>
       <div class="search-container" role="search">
@@ -528,7 +610,7 @@ nav.menu-desktop{
       <button id="btn-explode" class="ctrl-btn" title="Esplodi testo">💥 Esplodi</button>
     </div>
   </div>
-
+-->
   <!-- Header & Mega Menu -->
   <header>
     <div class="menu-container">
@@ -1025,12 +1107,11 @@ nav.menu-desktop{
   <aside class="articles-blob" aria-label="Ultimi articoli">
     <h3>📰 Ultimi articoli</h3>
     <ul>
-      <li><i class="fa-regular fa-star"></i> <a href="#art1">Socrate: il demone interiore e l'ironia</a></li>
-      <li><i class="fa-regular fa-star"></i> <a href="#art2">Aristotele: Metafisica e prime cause</a></li>
-      <li><i class="fa-regular fa-star"></i> <a href="#art3">Cartesio: il dubbio metodico</a></li>
-      <li><i class="fa-regular fa-star"></i> <a href="#art4">Nietzsche: eterno ritorno e prospettivismo</a></li>
-      <li><i class="fa-regular fa-star"></i> <a href="#art5">Foucault: potere, sapere, disciplina</a></li>
-      <li><i class="fa-regular fa-star"></i> <a href="#art6">Platone: il mito della caverna oggi</a></li>
+      <li><a href="articoli/ipazia.html">Ipazia di Alessandria</a></li>
+                  <li><a href="articoli/2nietzsche.html">Nietzsche filosofo folgorante</a></li>
+                  <li><a href="articoli/hegel.html">Hegel</a></li>
+                  <li><a href="articoli/heidegger.html">Martin Heidegger</a></li>
+                  <li><a href="articoli/schelling.html">Friedrich Schelling:</a></li>
     </ul>
   </aside>
 
@@ -1234,19 +1315,27 @@ nav.menu-desktop{
 <script>
 (function lightning(){
   const overlay = document.getElementById('lightning');
-  const bolt = document.getElementById('bolt');
+  const bolt    = document.getElementById('bolt');
+  const audio   = document.getElementById('thunder-sound');
 
-  function thunder(){
-    try{
-      const a = document.getElementById('thunder-sound');
-      if (a){ a.currentTime = 0; a.play().catch(()=>{}); }
-    }catch(e){}
+  // --- stato solo per l'AUDIO ---
+  let thunderOn = false;
+
+  function playThunder(){
+    if (!thunderOn || !audio) return;
+    try { audio.currentTime = 0; audio.play().catch(()=>{}); } catch(e){}
+  }
+
+  function stopThunderAudio(){
+    if (!audio) return;
+    try { audio.pause(); audio.currentTime = 0; } catch(e){}
   }
 
   function flash(){
-    const xPerc = 15 + Math.random()*70;  // 15% - 85%
-    const yPerc = 10 + Math.random()*65;  // 10% - 75%
-    const angle = -25 + Math.random()*50;
+    // posizione/parametri casuali
+    const xPerc = 15 + Math.random()*70;
+    const yPerc = 10 + Math.random()*65;
+    const angle  = -25 + Math.random()*50;
     const scaleY = 0.8 + Math.random()*1.2;
 
     // overlay
@@ -1256,7 +1345,7 @@ nav.menu-desktop{
     overlay.style.transition = 'opacity 80ms ease-out';
     setTimeout(()=> overlay.style.opacity = '0', 140);
 
-    // bolt
+    // saetta
     bolt.style.left = xPerc + '%';
     bolt.style.top  = yPerc + '%';
     bolt.style.transform = `translate(-50%,-50%) rotate(${angle}deg) scaleY(${scaleY})`;
@@ -1264,25 +1353,79 @@ nav.menu-desktop{
     bolt.style.opacity = '1';
     setTimeout(()=> bolt.style.opacity = '0', 180);
 
-    // audio
-    setTimeout(thunder, 120);
+    // audio (solo se ON)
+    setTimeout(playThunder, 120);
   }
 
-  // API per bottone
-  window.triggerThunder = flash;
-
-  // Fulmini casuali ogni 7-14s
+  // --- loop VISIVO sempre attivo (cambia qui gli intervalli) ---
+  const MIN = 30000, MAX = 40000; // 30–40s
+  let flashTimer = null;
   (function schedule(){
-    const next = 7000 + Math.random()*7000;
-    setTimeout(()=>{ flash(); schedule(); }, next);
+    const delay = MIN + Math.random()*(MAX-MIN);
+    flashTimer = setTimeout(()=>{ flash(); schedule(); }, delay);
   })();
+
+  // --- API per il bottone: solo audio ---
+  function updateBtn(){
+    const btn = document.getElementById('btn-thunder');
+    if (!btn) return;
+    btn.classList.toggle('active', thunderOn);
+    btn.setAttribute('aria-pressed', thunderOn ? 'true' : 'false');
+  }
+
+  window.toggleThunder = function(){
+    thunderOn = !thunderOn;
+    updateBtn();
+    if (!thunderOn) {
+      stopThunderAudio();
+    } else {
+      // feedback immediato: un lampo con suono
+      flash();
+    }
+  };
+
+
+// --- toggle audio tuono (ON/OFF) ---
+let thunderOn = false;
+
+function updateThunderBtn(on){
+  const b = document.getElementById('btn-thunder');
+  if (b){
+    b.textContent = on ? '⚡ Tuono: ON' : '⚡ Tuono';
+    b.setAttribute('aria-pressed', on ? 'true' : 'false');
+  }
+}
+
+window.toggleThunder = function(){
+  const a = document.getElementById('thunder-sound'); // deve esistere in HTML
+  if (!a) return;
+
+  if (!thunderOn){
+    a.currentTime = 0;
+    a.play().then(() => {
+      thunderOn = true;
+      updateThunderBtn(true);
+    }).catch(()=>{ /* silenzio in caso di blocco */ });
+  } else {
+    a.pause();
+    a.currentTime = 0;
+    thunderOn = false;
+    updateThunderBtn(false);
+  }
+};
+
 })();
 </script>
 
 
+
   <!-- Buttons binding -->
   <script>
-    document.getElementById('btn-thunder').addEventListener('click', ()=> window.triggerThunder && window.triggerThunder());
+document.getElementById('btn-thunder')
+  .addEventListener('click', ()=> window.toggleThunder && window.toggleThunder());
+
+
+
     document.getElementById('btn-explode').addEventListener('click', ()=> window.triggerExplosion && window.triggerExplosion());
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
@@ -1544,6 +1687,7 @@ nav.menu-desktop{
 <audio id="russell-audio" src="https://casi0048.github.io/suoni/gitarra.mp3" preload="auto"></audio>
 
 <style>
+
   #russell-box {
     position: fixed;
     bottom: 40px;
@@ -1569,7 +1713,7 @@ nav.menu-desktop{
   #russell-btn:hover {
     background-color: #00d9ff;
     color: #0a0a3c;
-    box-shadow: 0 0 25px rgba(0, 255, 255, 1);
+    box-shadow: 0 0 25px rgba(0,255,255,1);
   }
   #russell-hint {
     margin-top: 6px;
@@ -1588,6 +1732,7 @@ nav.menu-desktop{
   @media (max-width: 980px) {
     #russell-box, #russell-hint { display:none; }
   }
+
 </style>
 <script>
   window.addEventListener("load", () => {
@@ -1631,6 +1776,7 @@ nav.menu-desktop{
 
 
 <style>
+
   footer{ background:#06060d; color:#e9eef5; margin-top:auto; position:relative; z-index:1; }
   footer::before{
     content:""; position:absolute; top:0; left:0; width:100%; height:1px;
@@ -1652,6 +1798,7 @@ nav.menu-desktop{
   @media (max-width: 980px){
     .footer-columns{ grid-template-columns:1fr; gap:14px }
   }
+
 </style>
 
 
@@ -1660,6 +1807,7 @@ nav.menu-desktop{
   <iframe width="280" height="264" src="https://www.youtube.com/embed/G_REgkOuQfw" title="Schopenhauer e Nietzsche (Hans-Georg Gadamer) - 3x4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 <style>
+
   .video-container{
     position: fixed;
     bottom: 40px;
@@ -1707,6 +1855,7 @@ nav.menu-desktop{
     .video-container-left{ display:none; } /* su mobile lo slider è nascosto, nascondo anche il player sinistro */
     .video-container{ right: 12px; bottom: 12px; width: 70vw; }
   }
+
 </style>
 <!-- 🎬 FINE PLAYER (destro) -->
 
@@ -1721,6 +1870,7 @@ nav.menu-desktop{
   </div>
 </div>
 <style>
+
   .audio-player {
     position: fixed;
     bottom: 250px;
@@ -1763,6 +1913,7 @@ nav.menu-desktop{
   @media (max-width: 980px){
     #audio-player{ display:none; }
   }
+
 </style>
 <script>
   // Inizializzazione mini player
@@ -1955,6 +2106,216 @@ nav.menu-desktop{
   const consent = getConsent();
   if(consent){ hideBanner(); $manage.hidden = false; applyConsent(consent); }
   else { showBanner(); }
+})();
+</script>
+
+
+<!-- injected: universal thunder + lightning + cookie controller -->
+<script>
+(function(){
+  // avoid double-injection
+  if (window.__echiThunder) return;
+  window.__echiThunder = true;
+
+  // ---------- helpers
+  function $(sel, ctx){ return (ctx||document).querySelector(sel); }
+  function $all(sel, ctx){ return Array.prototype.slice.call((ctx||document).querySelectorAll(sel)); }
+  function createEl(tag, attrs, css){
+    var el = document.createElement(tag);
+    if (attrs) for (var k in attrs){ try{ el.setAttribute(k, attrs[k]); }catch(e){} }
+    if (css) el.style.cssText = css;
+    return el;
+  }
+  function containsText(el, words){
+    if (!el) return false;
+    var t = (el.innerText || el.textContent || '').toLowerCase();
+    return words.some(function(w){ return t.indexOf(w) !== -1; });
+  }
+
+  // ---------- audio
+  var audio = document.getElementById('thunder-sound');
+  if (!audio){
+    audio = createEl('audio', { id:'thunder-sound', preload:'auto', crossorigin:'anonymous' });
+    var src = createEl('source', { src:'https://cdn.pixabay.com/download/audio/2022/03/25/audio_f7efc7fc85.mp3', type:'audio/mpeg' });
+    audio.appendChild(src);
+    audio.style.display = 'none';
+    document.body.appendChild(audio);
+  }
+
+  var thunderOn = false;
+  function playThunder(){
+    if (!thunderOn || !audio) return;
+    try { audio.currentTime = 0; audio.play().catch(function(){}); } catch(e){}
+  }
+  function stopThunder(){
+    if (!audio) return;
+    try { audio.pause(); audio.currentTime = 0; } catch(e){}
+  }
+  function setBtnState(btn, on){
+    if (!btn) return;
+    btn.classList.toggle('active', on);
+    btn.setAttribute('aria-pressed', on ? 'true':'false');
+    if (!btn.dataset._label) btn.dataset._label = (btn.innerText||btn.textContent||'⚡ Tuono').trim();
+    btn.textContent = on ? '⚡ Tuono: ON' : (btn.dataset._label || '⚡ Tuono');
+  }
+
+  // Find candidate thunder buttons (various heuristics: id/class/name contains thunder/tuono/fulmine; or text has ⚡/tuono)
+  function findThunderButtons(){
+    var candidates = $all('button, a, [role="button"], .btn, .button');
+    return candidates.filter(function(el){
+      var idc = (el.id||'') + ' ' + (el.className||'') + ' ' + (el.getAttribute('name')||'');
+      idc = idc.toLowerCase();
+      var hitsAttr = /thunder|tuono|fulmine|lightning|saetta/.test(idc);
+      var hitsText = containsText(el, ['⚡','tuono']);
+      return hitsAttr || hitsText;
+    });
+  }
+
+  // Wire up buttons (and re-run after a delay to catch late DOM)
+  function wireButtons(){
+    findThunderButtons().forEach(function(btn){
+      if (btn._thBound) return;
+      btn.addEventListener('click', function(ev){
+        // don't steal clicks meant for navigation if it's an <a> without #
+        if (btn.tagName === 'A' && btn.getAttribute('href') && btn.getAttribute('href').trim().charAt(0) !== '#') return;
+        ev.preventDefault();
+        thunderOn = !thunderOn;
+        if (thunderOn) playThunder(); else stopThunder();
+        setBtnState(btn, thunderOn);
+      }, false);
+      btn._thBound = true;
+      // initial paint
+      setBtnState(btn, thunderOn);
+    });
+  }
+  wireButtons();
+  setTimeout(wireButtons, 800); // catch late-rendered UI
+  setTimeout(wireButtons, 2000);
+
+  // Also expose a global toggle for any existing handlers
+  window.toggleThunder = function(){
+    thunderOn = !thunderOn;
+    if (thunderOn) playThunder(); else stopThunder();
+    // update all wired buttons
+    findThunderButtons().forEach(function(b){ setBtnState(b, thunderOn); });
+  };
+
+  // ---------- lightning (10–15s), always on
+  var overlay = document.getElementById('lightning');
+  if (!overlay){
+    overlay = createEl('div', { id:'lightning' }, 'position:fixed;inset:0;pointer-events:none;opacity:0;z-index:5;background:transparent;');
+    document.body.appendChild(overlay);
+  }
+  var bolt = document.getElementById('bolt');
+  if (!bolt){
+    bolt = createEl('div', { id:'bolt' }, 'position:fixed;left:50%;top:50%;width:3px;height:56vh;background:linear-gradient(#fff,rgba(255,255,255,0));box-shadow:0 0 16px rgba(255,255,255,.9),0 0 32px rgba(255,255,255,.6);opacity:0;pointer-events:none;z-index:6;transform-origin:top;');
+    document.body.appendChild(bolt);
+  }
+  function flash(){
+    var xPerc = 15 + Math.random()*70;
+    var yPerc = 10 + Math.random()*65;
+    var angle  = -25 + Math.random()*50;
+    var scaleY = 0.8 + Math.random()*1.2;
+
+    overlay.style.transition = 'none'; overlay.offsetHeight;
+    overlay.style.background = 'radial-gradient(circle at '+xPerc+'% '+yPerc+'%, rgba(255,255,255,.95), rgba(255,255,255,.22) 40%, transparent 65%)';
+    overlay.style.opacity = '1';
+    overlay.style.transition = 'opacity 80ms ease-out';
+    setTimeout(function(){ overlay.style.opacity = '0'; }, 140);
+
+    bolt.style.left = xPerc + '%';
+    bolt.style.top  = yPerc + '%';
+    bolt.style.transform = 'translate(-50%,-50%) rotate('+angle+'deg) scaleY('+scaleY+')';
+    bolt.style.transition = 'transform 90ms ease-out, opacity 280ms ease-out';
+    bolt.style.opacity = '1';
+    setTimeout(function(){ bolt.style.opacity = '0'; }, 180);
+
+    setTimeout(playThunder, 120);
+  }
+  (function schedule(){
+    var MIN = 10000, MAX = 15000; // 10–15s
+    setTimeout(function(){ flash(); schedule(); }, MIN + Math.random()*(MAX-MIN));
+  })();
+
+  // ---------- cookie banner compatibility
+  (function(){
+    function hideAll(){
+      var b = document.getElementById('cookie-banner'); if (b) b.style.display = 'none';
+      var m = document.querySelector('.cookie-modal, #cookie-modal'); if (m) m.style.display = 'none';
+    }
+    function setConsent(v){ try{ localStorage.setItem('cookieConsent', JSON.stringify({ v:v, at: Date.now() })); }catch(e){} }
+    function getConsent(){ try{ return JSON.parse(localStorage.getItem('cookieConsent')||'null'); }catch(e){ return null; } }
+    var c = getConsent(); if (c && (c.v==='accepted'||c.v==='rejected')) hideAll();
+    function bind(sel, fn){
+      document.querySelectorAll(sel).forEach(function(el){
+        if (el._ckBound) return;
+        el.addEventListener('click', function(ev){ ev.preventDefault(); fn(); }, false);
+        el._ckBound = true;
+      });
+    }
+    bind('#cookie-accept, #btn-accept-cookies, [data-consent=\"accepted\"]', function(){ setConsent('accepted'); hideAll(); });
+    bind('#cookie-reject, #btn-reject-cookies, [data-consent=\"rejected\"]', function(){ setConsent('rejected'); hideAll(); });
+    bind('#cookie-save', function(){ setConsent('accepted'); hideAll(); });
+    bind('[data-open=\"cookie-modal\"]', function(){ var m = document.querySelector('.cookie-modal, #cookie-modal'); if (m) m.style.display='block'; });
+    bind('[data-close=\"cookie-modal\"]', function(){ var m = document.querySelector('.cookie-modal, #cookie-modal'); if (m) m.style.display='none'; });
+  })();
+})();
+</script>
+<script>
+(function(){
+  // Prendi elementi
+  const btn = document.getElementById('btn-thunder');
+  const audio = document.getElementById('thunder-sound');
+  if (!btn || !audio) return;
+
+  // Normalizza audio (alcuni browser sono schizzinosi)
+  audio.preload = 'auto';
+  audio.muted = false;
+  audio.volume = 1.0;
+  audio.setAttribute('playsinline',''); // iOS
+  audio.setAttribute('type','audio/mpeg');
+
+  // Rimuovi eventuali vecchi event listener attaccati al bottone
+  const clone = btn.cloneNode(true);
+  btn.parentNode.replaceChild(clone, btn);
+  const thBtn = document.getElementById('btn-thunder');
+
+  // Stato ON/OFF solo per il suono (i lampi restano indipendenti)
+  let thunderOn = false;
+
+  function updateLabel(){
+    thBtn.classList.toggle('active', thunderOn);
+    thBtn.setAttribute('aria-pressed', thunderOn ? 'true' : 'false');
+    thBtn.textContent = thunderOn ? '⚡ Tuono: ON' : '⚡ Tuono';
+  }
+
+  async function playOnce(){
+    try {
+      audio.currentTime = 0;
+      await audio.play();      // dentro il click => sbloccato ovunque
+    } catch(e) {
+      console.warn('Playback bloccato:', e);
+    }
+  }
+
+  function stopNow(){
+    try { audio.pause(); audio.currentTime = 0; } catch(e){}
+  }
+
+  // Toggle ON/OFF al click
+  thBtn.addEventListener('click', async function(ev){
+    ev.preventDefault();
+    thunderOn = !thunderOn;
+    if (thunderOn) await playOnce(); else stopNow();
+    updateLabel();
+  });
+
+  // (Opzionale) se hai uno script di lampi che chiama il tuono, usa questo hook globale:
+  window.playThunderIfOn = function(){
+    if (thunderOn) { try { audio.currentTime = 0; audio.play().catch(()=>{}); } catch(e){} }
+  };
+
+  updateLabel();
 })();
 </script>
 
