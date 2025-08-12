@@ -1,23 +1,24 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="it">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Echi di Sofia — Slider laterale + Blob articoli</title>
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:wght@600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="favicon_io/favicon-32x32.png">
-    <!-- Preconnessioni per caricamento font più rapido -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- GSAP -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-    <style>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Echi di Sofia — Slider laterale + Blob articoli</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&amp;family=Cinzel+Decorative:wght@700&amp;family=Cormorant+Garamond:wght@600&amp;family=EB+Garamond:ital,wght@0,400;0,500;1,400&amp;family=Montserrat:wght@300;400;600&amp;display=swap" rel="stylesheet"/>
+<!-- Favicon -->
+<link href="favicon_io/favicon-32x32.png" rel="icon" type="image/png"/>
+<!-- Preconnessioni per caricamento font più rapido -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<!-- Icons -->
+<link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
+<!-- GSAP -->
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<style>
       :root{
       --bg:#0a0a1a;
       --gold:#d4af37;
@@ -459,44 +460,52 @@
       box-shadow:0 0 18px rgba(255,215,0,.45), inset 0 0 10px rgba(255,215,0,.25);
       }
     </style>
-  </head>
-  <body>
-    <!-- GALASSIA dietro -->
-    <canvas id="nebula"></canvas>
-    <!-- Stelle + Comete sopra la galassia -->
-    <canvas id="star-canvas"></canvas>
-    <!-- Lightning overlay -->
-    <div id="lightning"></div>
-    <div id="bolt" class="bolt" aria-hidden="true"></div>
-    <!-- Top bar -->
-    <div class="top-bar">
-      <a class="brand" href="#" aria-label="Home">
-        <svg viewBox="0 0 64 64" role="img" aria-hidden="true">
-          <circle cx="32" cy="32" r="30" fill="none" stroke="#ffd700" stroke-width="2"/>
-          <path d="M18 40 Q32 12 46 40" fill="none" stroke="#ffd700" stroke-width="2"/>
-          <circle cx="32" cy="28" r="3" fill="#ffd700"/>
-        </svg>
-        <span>Echi di Sofia</span>
-      </a>
-      <!-- ⬇️ BARRA DESTRA (traduttore + cerca + pulsanti) -->
-      <div class="bar-right">
-        <div id="google_translate_element" title="Traduci pagina"></div>
-        <!-- BOX CERCA (UI tua, non Google) -->
-        <div class="search-container" role="search">
-          <input type="search" id="site-search" placeholder="Cerca nel sito..." aria-label="Cerca" />
-          <i class="fa-solid fa-magnifying-glass search-icon" aria-hidden="true"></i>
-        </div>
-        <!-- Pulsanti -->
-        <button id="btn-thunder" class="ctrl-btn" title="Riproduci tuono">⚡ Tuono</button>
-        <button id="btn-explode" class="ctrl-btn" title="Esplodi testo">💥 Esplodi</button>
-      </div>
-    </div>
-    <!-- CONTENITORE RISULTATI CSE (comparirà dopo la ricerca) -->
-    <div id="cse-results" style="display:none;max-width:900px;margin:20px auto;"></div>
-    <!-- Loader Google CSE (inserisci UNA SOLA volta per pagina) -->
-    <script async src="https://cse.google.com/cse.js?cx=87b07564ab3cb462a"></script>
-    <!-- Script integrazione CSE con il tuo input -->
-    <script>
+<style>
+.translate-box{display:inline-flex;align-items:center;gap:.5rem}
+.translate-select{
+  appearance:none; padding:.45rem .8rem;
+  border:1px solid var(--menu-border, #2f3a3f); border-radius:10px;
+  background:rgba(20,20,40,.78); color:#e6f0f3; font-size:.95rem; cursor:pointer
+}
+.translate-select:focus{outline:2px solid #2a7c9c}
+</style></head>
+<body>
+<!-- GALASSIA dietro -->
+<canvas id="nebula"></canvas>
+<!-- Stelle + Comete sopra la galassia -->
+<canvas id="star-canvas"></canvas>
+<!-- Lightning overlay -->
+<div id="lightning"></div>
+<div aria-hidden="true" class="bolt" id="bolt"></div>
+<!-- Top bar -->
+<div class="top-bar">
+<a aria-label="Home" class="brand" href="#">
+<svg aria-hidden="true" role="img" viewbox="0 0 64 64">
+<circle cx="32" cy="32" fill="none" r="30" stroke="#ffd700" stroke-width="2"></circle>
+<path d="M18 40 Q32 12 46 40" fill="none" stroke="#ffd700" stroke-width="2"></path>
+<circle cx="32" cy="28" fill="#ffd700" r="3"></circle>
+</svg>
+<span>Echi di Sofia</span>
+</a>
+<!-- ⬇️ BARRA DESTRA (traduttore + cerca + pulsanti) -->
+<div class="bar-right">
+<div class="translate-box"><span>🌐</span><select aria-label="Traduci pagina" class="translate-select" id="customTranslate"><option value="it">Italiano</option><option value="en">English</option><option value="fr">Français</option><option value="de">Deutsch</option><option value="es">Español</option><option value="pl">Polski</option><option value="pt">Português</option><option value="ru">Русский</option><option value="ja">日本語</option><option value="zh-CN">中文 (简体)</option><option value="ar">العربية</option><option value="nl">Nederlands</option><option value="tr">Türkçe</option><option value="ro">Română</option><option value="sv">Svenska</option><option value="el">Ελληνικά</option><option value="hu">Magyar</option><option value="cs">Čeština</option></select><div aria-hidden="true" id="google_translate_element" style="position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden"></div></div>
+<!-- BOX CERCA (UI tua, non Google) -->
+<div class="search-container" role="search">
+<input aria-label="Cerca" id="site-search" placeholder="Cerca nel sito..." type="search"/>
+<i aria-hidden="true" class="fa-solid fa-magnifying-glass search-icon"></i>
+</div>
+<!-- Pulsanti -->
+<button class="ctrl-btn" id="btn-thunder" title="Riproduci tuono">⚡ Tuono</button>
+<button class="ctrl-btn" id="btn-explode" title="Esplodi testo">💥 Esplodi</button>
+</div>
+</div>
+<!-- CONTENITORE RISULTATI CSE (comparirà dopo la ricerca) -->
+<div id="cse-results" style="display:none;max-width:900px;margin:20px auto;"></div>
+<!-- Loader Google CSE (inserisci UNA SOLA volta per pagina) -->
+<script async="" src="https://cse.google.com/cse.js?cx=87b07564ab3cb462a"></script>
+<!-- Script integrazione CSE con il tuo input -->
+<script>
       (function(){
         const input = document.getElementById('site-search');
         const icon  = document.querySelector('.search-icon');
@@ -528,8 +537,8 @@
         if (icon) icon.addEventListener('click', onSearch);
       })();
     </script>
-    <!-- Stile scuro per i risultati CSE -->
-    <style>
+<!-- Stile scuro per i risultati CSE -->
+<style>
       .gsc-control-cse, .gsc-control-cse .gsc-table-result { background: transparent !important; }
       input.gsc-input { background:#0b0c10 !important; color:#f0f0f0 !important; }
       .gsc-search-button-v2 { background:#1f2937 !important; border:1px solid #334155 !important; border-radius:8px !important; }
@@ -542,7 +551,7 @@
       }
       .gs-title, .gs-snippet { color:#eaeaea !important; }
     </style>
-    <!-- 
+<!-- 
       <div class="bar-right">
         <div id="google_translate_element" title="Traduci pagina"></div>
         <div class="search-container" role="search">
@@ -554,569 +563,568 @@
       </div>
       </div>
       -->
-    <!-- Header & Mega Menu -->
-    <header>
-      <div class="menu-container">
-        <nav class="menu-desktop">
-          <ul role="menu">
-            <li class="dropdown">
-              <a href="https://casi0048.github.io/pagine/benvenuti.html" role="menuitem" class="menu-btn underline-effect"> 🗝️ INCIPIT</a>
-            </li>
-            <li class="dropdown">
-              <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
+<!-- Header & Mega Menu -->
+<header>
+<div class="menu-container">
+<nav class="menu-desktop">
+<ul role="menu">
+<li class="dropdown">
+<a class="menu-btn underline-effect" href="https://casi0048.github.io/pagine/benvenuti.html" role="menuitem"> 🗝️ INCIPIT</a>
+</li>
+<li class="dropdown">
+<button aria-expanded="false" aria-haspopup="true" class="menu-btn underline-effect" role="menuitem">
               🏛️Filosofia antica <span class="arrow">▼</span>
-              </button>
-              <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia antica">
-                <div>
-                  <h4>Presocratici</h4>
-                  <a href="Presocratici/talete.html" role="menuitem">Talete</a>
-                  <a href="Presocratici/anassimandro.html" role="menuitem">Anassimandro</a>
-                  <a href="Presocratici/anassimene.html" role="menuitem">Anassimene</a>
-                  <a href="articoli/eraclito.html" role="menuitem">Eraclito</a>
-                </div>
-                <div>
-                  <h4>Eleatismo</h4>
-                  <a href="Presocratici/senofane.html" role="menuitem">Senofane</a>
-                  <a href="Presocratici/parmenide.html" role="menuitem">Parmenide</a>
-                  <a href="articoli/zenone.html" role="menuitem">Zenone</a>
-                  <a href="articoli/melisso.html" role="menuitem">Melisso</a>
-                </div>
-                <div>
-                  <h4>Sofisti</h4>
-                  <a href="articoli/gorgia.html" role="menuitem">Gorgia</a>
-                  <a href="articoli/ippia.html" role="menuitem">Ippia</a>
-                  <a href="articoli/prodico.html" role="menuitem">Prodico</a>
-                </div>
-                <div>
-                  <h4>Pitagorici</h4>
-                  <a href="articoli/pitagora.html" role="menuitem">Pitagora</a>
-                  <a href="articoli/filolao.html" role="menuitem">Filolao</a>
-                  <a href="articoli/alcmeone.html" role="menuitem">Alcmeone</a>
-                  <a href="articoli/archita.html" role="menuitem">Archita</a>
-                  <a href="articoli/ippaso.html" role="menuitem">Ippaso</a>
-                </div>
-                <div>
-                  <h4>Scuola cinica</h4>
-                  <a href="articoli/antistene.html" role="menuitem">Antistene</a>
-                  <a href="articoli/diogene.html" role="menuitem">Diogene di Sinope</a>
-                  <a href="articoli/cratete.html" role="menuitem">Cratete di Tebe</a>
-                  <a href="articoli/iparchia.html" role="menuitem">Ipparchia</a>
-                  <a href="articoli/metrocle.html" role="menuitem">Metrocle di Maronea</a>
-                </div>
-                <div>
-                  <h4>🚀Approfondimenti</h4>
-                  <a href="https://www.worldhistory.org/trans/it/1-13310/democrazia-ateniese/" role="menuitem">Democrazia Ateniese</a>
-                  <a href="https://www.worldhistory.org/trans/it/2-927/donne-nellantica-grecia/" role="menuitem">Donne nell'Antica Grecia</a>
-                  <a href="https://www.worldhistory.org/trans/it/1-11373/magna-grecia/" role="menuitem">Magna Grecia</a>
-                  <a href="https://www.worldhistory.org/trans/it/1-14956/il-teatro-dellantica-grecia/" role="menuitem">Il teatro dell'antica Grecia</a>
-                  <a href="https://www.worldhistory.org/trans/it/1-10553/la-religione-nellantica-grecia/" role="menuitem">La religione nell'antica Grecia</a>
-                  <a href="https://www.worldhistory.org/trans/it/1-19269/la-danza-nellantica-grecia/" role="menuitem">La danza nell'Antica Grecia</a>
-                </div>
-              </div>
-            </li>
-            <li class="dropdown">
-              <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
+</button>
+<div aria-label="Sottomenu Filosofia antica" class="mega-menu columns-4" role="menu">
+<div>
+<h4>Presocratici</h4>
+<a href="Presocratici/talete.html" role="menuitem">Talete</a>
+<a href="Presocratici/anassimandro.html" role="menuitem">Anassimandro</a>
+<a href="Presocratici/anassimene.html" role="menuitem">Anassimene</a>
+<a href="articoli/eraclito.html" role="menuitem">Eraclito</a>
+</div>
+<div>
+<h4>Eleatismo</h4>
+<a href="Presocratici/senofane.html" role="menuitem">Senofane</a>
+<a href="Presocratici/parmenide.html" role="menuitem">Parmenide</a>
+<a href="articoli/zenone.html" role="menuitem">Zenone</a>
+<a href="articoli/melisso.html" role="menuitem">Melisso</a>
+</div>
+<div>
+<h4>Sofisti</h4>
+<a href="articoli/gorgia.html" role="menuitem">Gorgia</a>
+<a href="articoli/ippia.html" role="menuitem">Ippia</a>
+<a href="articoli/prodico.html" role="menuitem">Prodico</a>
+</div>
+<div>
+<h4>Pitagorici</h4>
+<a href="articoli/pitagora.html" role="menuitem">Pitagora</a>
+<a href="articoli/filolao.html" role="menuitem">Filolao</a>
+<a href="articoli/alcmeone.html" role="menuitem">Alcmeone</a>
+<a href="articoli/archita.html" role="menuitem">Archita</a>
+<a href="articoli/ippaso.html" role="menuitem">Ippaso</a>
+</div>
+<div>
+<h4>Scuola cinica</h4>
+<a href="articoli/antistene.html" role="menuitem">Antistene</a>
+<a href="articoli/diogene.html" role="menuitem">Diogene di Sinope</a>
+<a href="articoli/cratete.html" role="menuitem">Cratete di Tebe</a>
+<a href="articoli/iparchia.html" role="menuitem">Ipparchia</a>
+<a href="articoli/metrocle.html" role="menuitem">Metrocle di Maronea</a>
+</div>
+<div>
+<h4>🚀Approfondimenti</h4>
+<a href="https://www.worldhistory.org/trans/it/1-13310/democrazia-ateniese/" role="menuitem">Democrazia Ateniese</a>
+<a href="https://www.worldhistory.org/trans/it/2-927/donne-nellantica-grecia/" role="menuitem">Donne nell'Antica Grecia</a>
+<a href="https://www.worldhistory.org/trans/it/1-11373/magna-grecia/" role="menuitem">Magna Grecia</a>
+<a href="https://www.worldhistory.org/trans/it/1-14956/il-teatro-dellantica-grecia/" role="menuitem">Il teatro dell'antica Grecia</a>
+<a href="https://www.worldhistory.org/trans/it/1-10553/la-religione-nellantica-grecia/" role="menuitem">La religione nell'antica Grecia</a>
+<a href="https://www.worldhistory.org/trans/it/1-19269/la-danza-nellantica-grecia/" role="menuitem">La danza nell'Antica Grecia</a>
+</div>
+</div>
+</li>
+<li class="dropdown">
+<button aria-expanded="false" aria-haspopup="true" class="menu-btn underline-effect" role="menuitem">
               📜Filosofia classica <span class="arrow">▼</span>
-              </button>
-              <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia classica">
-                <div>
-                  <h4>Socrate e Scuola</h4>
-                  <a href="articoli/socrate.html" role="menuitem">Socrate</a>
-                  <a href="articoli/senofonte.html" role="menuitem">Senofonte</a>
-                  <a href="articoli/antistene.html" role="menuitem">Antistene</a>
-                </div>
-                <div>
-                  <h4>Platone e Accademia</h4>
-                  <a href="articoli/platone.html" role="menuitem">Platone</a>
-                  <a href="articoli/aristippo.html" role="menuitem">Aristippo</a>
-                  <a href="articoli/diotima.html" role="menuitem">Diotima</a>
-                </div>
-                <div>
-                  <h4>Aristotele e Peripatetici</h4>
-                  <a href="articoli/aristotele.html" role="menuitem">Aristotele</a>
-                  <a href="articoli/teofrasto.html" role="menuitem">Teofrasto</a>
-                  <a href="articoli/eudemo.html" role="menuitem">Eudemo di Rodi </a>
-                  <a href="articoli/stratone.html" role="menuitem">Stratone di Lampsaco</a>
-                  <a href="articoli/demetrio.html" role="menuitem">Demetrio Falereo</a>
-                  <a href="articoli/andronico.html" role="menuitem">Andronico di Rodi</a>
-                  <a href="articoli/alessandro-afrodisia.html" role="menuitem">Alessandro di Afrodisia </a>
-                </div>
-                <div>
-                  <h4>Stoicismo</h4>
-                  <a href="articoli/zenone.html" role="menuitem">Zenone di Cizio</a>
-                  <a href="articoli/epitteto.html" role="menuitem">Epitteto</a>
-                  <a href="articoli/seneca.html" role="menuitem">Seneca</a>
-                  <a href="articoli/cleante.html" role="menuitem">Cleante di Asso </a>
-                  <a href="articoli/crisippo.html" role="menuitem">Crisippo di Soli </a>
-                  <a href="articoli/panezio.html" role="menuitem">Panezio di Rodi</a>
-                  <a href="articoli/posidonio.html" role="menuitem">Posidonio di Apamea </a>
-                </div>
-                <div>
-                  <h4>Epicureismo</h4>
-                  <a href="articoli/epicuro.html" role="menuitem">Epicuro</a>
-                  <a href="articoli/lucrezio.html" role="menuitem">Lucrezio</a>
-                  <a href="articoli/cicerone.html" role="menuitem">Cicerone</a>
-                  <a href="articoli/ermarco.html" role="menuitem">Ermarco di Mitilene</a>
-                  <a href="articoli/colote.html" role="menuitem">Colote di Lampsaco</a>
-                  <a href="articoli/zenone_di_sidone.html " role="menuitem">Zenone di Sidone </a>
-                </div>
-                <div>
-                  <h4>Neoplatonismo</h4>
-                  <a href="articoli/plotino.html" role="menuitem">Plotino</a>
-                  <a href="articoli/giamblico.html" role="menuitem">Giamblico di Calcide </a>
-                  <a href="articoli/proclo.html" role="menuitem">Proclo</a>
-                  <a href="articoli/ipazia.html" role="menuitem">Ipatia di Alessandria</a>
-                  <a href="articoli/simplicio.html" role="menuitem">Simplicio di Cilicia </a>
-                  <a href="articoli/orfismo.html" role="menuitem">Orfismo</a>
-                  <a href="articoli/eleusi.html" role="menuitem">Misteri Eleusini</a>
-                </div>
-              </div>
-            </li>
-            <li class="dropdown">
-              <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
+</button>
+<div aria-label="Sottomenu Filosofia classica" class="mega-menu columns-4" role="menu">
+<div>
+<h4>Socrate e Scuola</h4>
+<a href="articoli/socrate.html" role="menuitem">Socrate</a>
+<a href="articoli/senofonte.html" role="menuitem">Senofonte</a>
+<a href="articoli/antistene.html" role="menuitem">Antistene</a>
+</div>
+<div>
+<h4>Platone e Accademia</h4>
+<a href="articoli/platone.html" role="menuitem">Platone</a>
+<a href="articoli/aristippo.html" role="menuitem">Aristippo</a>
+<a href="articoli/diotima.html" role="menuitem">Diotima</a>
+</div>
+<div>
+<h4>Aristotele e Peripatetici</h4>
+<a href="articoli/aristotele.html" role="menuitem">Aristotele</a>
+<a href="articoli/teofrasto.html" role="menuitem">Teofrasto</a>
+<a href="articoli/eudemo.html" role="menuitem">Eudemo di Rodi </a>
+<a href="articoli/stratone.html" role="menuitem">Stratone di Lampsaco</a>
+<a href="articoli/demetrio.html" role="menuitem">Demetrio Falereo</a>
+<a href="articoli/andronico.html" role="menuitem">Andronico di Rodi</a>
+<a href="articoli/alessandro-afrodisia.html" role="menuitem">Alessandro di Afrodisia </a>
+</div>
+<div>
+<h4>Stoicismo</h4>
+<a href="articoli/zenone.html" role="menuitem">Zenone di Cizio</a>
+<a href="articoli/epitteto.html" role="menuitem">Epitteto</a>
+<a href="articoli/seneca.html" role="menuitem">Seneca</a>
+<a href="articoli/cleante.html" role="menuitem">Cleante di Asso </a>
+<a href="articoli/crisippo.html" role="menuitem">Crisippo di Soli </a>
+<a href="articoli/panezio.html" role="menuitem">Panezio di Rodi</a>
+<a href="articoli/posidonio.html" role="menuitem">Posidonio di Apamea </a>
+</div>
+<div>
+<h4>Epicureismo</h4>
+<a href="articoli/epicuro.html" role="menuitem">Epicuro</a>
+<a href="articoli/lucrezio.html" role="menuitem">Lucrezio</a>
+<a href="articoli/cicerone.html" role="menuitem">Cicerone</a>
+<a href="articoli/ermarco.html" role="menuitem">Ermarco di Mitilene</a>
+<a href="articoli/colote.html" role="menuitem">Colote di Lampsaco</a>
+<a href="articoli/zenone_di_sidone.html " role="menuitem">Zenone di Sidone </a>
+</div>
+<div>
+<h4>Neoplatonismo</h4>
+<a href="articoli/plotino.html" role="menuitem">Plotino</a>
+<a href="articoli/giamblico.html" role="menuitem">Giamblico di Calcide </a>
+<a href="articoli/proclo.html" role="menuitem">Proclo</a>
+<a href="articoli/ipazia.html" role="menuitem">Ipatia di Alessandria</a>
+<a href="articoli/simplicio.html" role="menuitem">Simplicio di Cilicia </a>
+<a href="articoli/orfismo.html" role="menuitem">Orfismo</a>
+<a href="articoli/eleusi.html" role="menuitem">Misteri Eleusini</a>
+</div>
+</div>
+</li>
+<li class="dropdown">
+<button aria-expanded="false" aria-haspopup="true" class="menu-btn underline-effect" role="menuitem">
               ⛪Filosofia medievale <span class="arrow">▼</span>
-              </button>
-              <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia medievale">
-                <div>
-                  <h4>Medievale</h4>
-                  <a href="articoli/eriugena.html" role="menuitem">Giovanni Scoto Eriugena</a>
-                  <a href="articoli/anselmo.html" role="menuitem">Sant'Anselmo d'Aosta</a>
-                  <a href="articoli/abelardo.html" role="menuitem">Pietro Abelardo</a>
-                  <a href="articoli/alberto-m.html" role="menuitem">Alberto Magno</a>
-                  <a href="articoli/tommaso%20d'aquino.html" role="menuitem">Tommaso d'Aquino</a>
-                  <a href="articoli/bonaventura.html" role="menuitem">Bonaventura da Bagnoregio</a>
-                  <a href="articoli/duns%20scoto.html" role="menuitem">Duns Scoto</a>
-                  <a href="articoli/guglielmo%20di%20ockham.html" role="menuitem">Guglielmo di Ockham</a>
-                  <a href="articoli/buridano.html" role="menuitem">Giovanni Buridano</a>
-                  <a href="articoli/oresome.html" role="menuitem">Nicola d'Oresme</a>
-                </div>
-                <div>
-                  <h4>Patristica</h4>
-                  <a href="articoli/clemente.html" role="menuitem">Clemente Alessandrino</a>
-                  <a href="articoli/tertulliano.html" role="menuitem">Tertulliano</a>
-                  <a href="articoli/origene.html" role="menuitem">Origene</a>
-                  <a href="articoli/cipriano.html" role="menuitem">Cipriano di Cartagine</a>
-                  <a href="articoli/atanasio.html" role="menuitem">Atanasio di Alessandria</a>
-                  <a href="articoli/basilio.html" role="menuitem">Basilio di Cesarea</a>
-                  <a href="articoli/gregorio-di-nazianzo.html" role="menuitem">Gregorio di Nazianzo</a>
-                  <a href="articoli/gregorio-di-nizza.html" role="menuitem">Gregorio di Nissa</a>
-                  <a href="articoli/ambrogio.html" role="menuitem">Ambrogio di Milano</a>
-                  <a href="articoli/girolamo.html" role="menuitem">Girolamo</a>
-                  <a href="articoli/agostino.html" role="menuitem">Agostino</a>
-                  <a href="articoli/pseudo-dionigi.html" role="menuitem">Pseudo-Dionigi Areopagita</a>
-                  <a href="articoli/boezio.html" role="menuitem">Boezio</a>
-                  <a href="articoli/alberto-m.html" role="menuitem">Gregorio Magno</a>
-                </div>
-                <div>
-                  <h4>Filosofia Islamica</h4>
-                  <a href="articoli/avicenna.html" role="menuitem">Avicenna</a>
-                  <a href="articoli/averroe.html" role="menuitem">Averroè</a>
-                  <a href="articoli/al-farabi.html" role="menuitem">Al-Farabi</a>
-                  <a href="articoli/al-ghazali.html" role="menuitem">Al-Ghazali</a>
-                </div>
-                <div>
-                  <h4>Filosofia Ebraica</h4>
-                  <a href="articoli/maimonide.html" role="menuitem">Maimonide</a>
-                  <a href="articoli/saadia%20goan.html" role="menuitem">Saadia Gaon</a>
-                  <a href="articoli/gersonide.html" role="menuitem">Gersonide</a>
-                  <a href="articoli/hasdai%20crescas.html" role="menuitem">Hasdai Crescas</a>
-                </div>
-              </div>
-            </li>
-            <li class="dropdown">
-              <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
+</button>
+<div aria-label="Sottomenu Filosofia medievale" class="mega-menu columns-4" role="menu">
+<div>
+<h4>Medievale</h4>
+<a href="articoli/eriugena.html" role="menuitem">Giovanni Scoto Eriugena</a>
+<a href="articoli/anselmo.html" role="menuitem">Sant'Anselmo d'Aosta</a>
+<a href="articoli/abelardo.html" role="menuitem">Pietro Abelardo</a>
+<a href="articoli/alberto-m.html" role="menuitem">Alberto Magno</a>
+<a href="articoli/tommaso%20d'aquino.html" role="menuitem">Tommaso d'Aquino</a>
+<a href="articoli/bonaventura.html" role="menuitem">Bonaventura da Bagnoregio</a>
+<a href="articoli/duns%20scoto.html" role="menuitem">Duns Scoto</a>
+<a href="articoli/guglielmo%20di%20ockham.html" role="menuitem">Guglielmo di Ockham</a>
+<a href="articoli/buridano.html" role="menuitem">Giovanni Buridano</a>
+<a href="articoli/oresome.html" role="menuitem">Nicola d'Oresme</a>
+</div>
+<div>
+<h4>Patristica</h4>
+<a href="articoli/clemente.html" role="menuitem">Clemente Alessandrino</a>
+<a href="articoli/tertulliano.html" role="menuitem">Tertulliano</a>
+<a href="articoli/origene.html" role="menuitem">Origene</a>
+<a href="articoli/cipriano.html" role="menuitem">Cipriano di Cartagine</a>
+<a href="articoli/atanasio.html" role="menuitem">Atanasio di Alessandria</a>
+<a href="articoli/basilio.html" role="menuitem">Basilio di Cesarea</a>
+<a href="articoli/gregorio-di-nazianzo.html" role="menuitem">Gregorio di Nazianzo</a>
+<a href="articoli/gregorio-di-nizza.html" role="menuitem">Gregorio di Nissa</a>
+<a href="articoli/ambrogio.html" role="menuitem">Ambrogio di Milano</a>
+<a href="articoli/girolamo.html" role="menuitem">Girolamo</a>
+<a href="articoli/agostino.html" role="menuitem">Agostino</a>
+<a href="articoli/pseudo-dionigi.html" role="menuitem">Pseudo-Dionigi Areopagita</a>
+<a href="articoli/boezio.html" role="menuitem">Boezio</a>
+<a href="articoli/alberto-m.html" role="menuitem">Gregorio Magno</a>
+</div>
+<div>
+<h4>Filosofia Islamica</h4>
+<a href="articoli/avicenna.html" role="menuitem">Avicenna</a>
+<a href="articoli/averroe.html" role="menuitem">Averroè</a>
+<a href="articoli/al-farabi.html" role="menuitem">Al-Farabi</a>
+<a href="articoli/al-ghazali.html" role="menuitem">Al-Ghazali</a>
+</div>
+<div>
+<h4>Filosofia Ebraica</h4>
+<a href="articoli/maimonide.html" role="menuitem">Maimonide</a>
+<a href="articoli/saadia%20goan.html" role="menuitem">Saadia Gaon</a>
+<a href="articoli/gersonide.html" role="menuitem">Gersonide</a>
+<a href="articoli/hasdai%20crescas.html" role="menuitem">Hasdai Crescas</a>
+</div>
+</div>
+</li>
+<li class="dropdown">
+<button aria-expanded="false" aria-haspopup="true" class="menu-btn underline-effect" role="menuitem">
               💡Filosofia moderna <span class="arrow">▼</span>
-              </button>
-              <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia moderna">
-                <div>
-                  <h4>Razionalismo</h4>
-                  <a href="articoli/cartesio.html" role="menuitem">Cartesio</a>
-                  <a href="articoli/spinoza.html" role="menuitem">Spinoza</a>
-                  <a href="articoli/leibniz.html" role="menuitem">Leibniz</a>
-                </div>
-                <div>
-                  <h4>Empirismo</h4>
-                  <a href="articoli/locke.html" role="menuitem">Locke</a>
-                  <a href="articoli/hume.html" role="menuitem">Hume</a>
-                  <a href="articoli/berkeley.html" role="menuitem">Berkeley</a>
-                </div>
-                <div>
-                  <h4>Illuminismo</h4>
-                  <a href="articoli/rousseau.html" role="menuitem">Rousseau</a>
-                  <a href="articoli/montesquieu.html" role="menuitem">Montesquieu</a>
-                  <a href="articoli/voltaire.html" role="menuitem">Voltaire</a>
-                </div>
-                <div>
-                  <h4>Idealismo</h4>
-                  <a href="articoli/hegel.html" role="menuitem">Hegel</a>
-                  <a href="articoli/kant.html" role="menuitem">Kant</a>
-                  <a href="articoli/fichte.html" role="menuitem">Fichte</a>
-                  <a href="articoli/schelling.html" role="menuitem">Schelling</a>
-                </div>
-                <div>
-                  <h4>Filosofia russa</h4>
-                  <a href="articoli/dostoevskij.html" role="menuitem">Fëdor Dostoevskij</a>
-                  <a href="articoli/solov'%C3%ABv.html" role="menuitem">Vladimir Solov'ëv </a>
-                  <a href="articoli/rozanov.html" role="menuitem">Vasilij Rozanov </a>
-                  <a href="articoli/sestov.html" role="menuitem">Lev Šestov</a>
-                  <a href="articoli/bulgakov.html" role="menuitem">Sergej Bulgakov</a>
-                </div>
-                <div>
-                  <h4>Positivismo</h4>
-                  <a href="articoli/comte.html" role="menuitem">Auguste Comte </a>
-                  <a href="articoli/mill.html" role="menuitem">John Stuart Mill </a>
-                  <a href="articoli/spencer.html" role="menuitem">Herbert Spencer</a>
-                  <a href="articoli/mach.html" role="menuitem">Ernst Mach</a>
-                  <a href="articoli/adrig%C3%B2.html" role="menuitem">Roberto Ardigò</a>
-                </div>
-              </div>
-            </li>
-            <li class="dropdown">
-              <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
+</button>
+<div aria-label="Sottomenu Filosofia moderna" class="mega-menu columns-4" role="menu">
+<div>
+<h4>Razionalismo</h4>
+<a href="articoli/cartesio.html" role="menuitem">Cartesio</a>
+<a href="articoli/spinoza.html" role="menuitem">Spinoza</a>
+<a href="articoli/leibniz.html" role="menuitem">Leibniz</a>
+</div>
+<div>
+<h4>Empirismo</h4>
+<a href="articoli/locke.html" role="menuitem">Locke</a>
+<a href="articoli/hume.html" role="menuitem">Hume</a>
+<a href="articoli/berkeley.html" role="menuitem">Berkeley</a>
+</div>
+<div>
+<h4>Illuminismo</h4>
+<a href="articoli/rousseau.html" role="menuitem">Rousseau</a>
+<a href="articoli/montesquieu.html" role="menuitem">Montesquieu</a>
+<a href="articoli/voltaire.html" role="menuitem">Voltaire</a>
+</div>
+<div>
+<h4>Idealismo</h4>
+<a href="articoli/hegel.html" role="menuitem">Hegel</a>
+<a href="articoli/kant.html" role="menuitem">Kant</a>
+<a href="articoli/fichte.html" role="menuitem">Fichte</a>
+<a href="articoli/schelling.html" role="menuitem">Schelling</a>
+</div>
+<div>
+<h4>Filosofia russa</h4>
+<a href="articoli/dostoevskij.html" role="menuitem">Fëdor Dostoevskij</a>
+<a href="articoli/solov'%C3%ABv.html" role="menuitem">Vladimir Solov'ëv </a>
+<a href="articoli/rozanov.html" role="menuitem">Vasilij Rozanov </a>
+<a href="articoli/sestov.html" role="menuitem">Lev Šestov</a>
+<a href="articoli/bulgakov.html" role="menuitem">Sergej Bulgakov</a>
+</div>
+<div>
+<h4>Positivismo</h4>
+<a href="articoli/comte.html" role="menuitem">Auguste Comte </a>
+<a href="articoli/mill.html" role="menuitem">John Stuart Mill </a>
+<a href="articoli/spencer.html" role="menuitem">Herbert Spencer</a>
+<a href="articoli/mach.html" role="menuitem">Ernst Mach</a>
+<a href="articoli/adrig%C3%B2.html" role="menuitem">Roberto Ardigò</a>
+</div>
+</div>
+</li>
+<li class="dropdown">
+<button aria-expanded="false" aria-haspopup="true" class="menu-btn underline-effect" role="menuitem">
               🌀Filosofia contemporanea <span class="arrow">▼</span>
-              </button>
-              <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia contemporanea">
-                <div>
-                  <h4>Filosofia analitica</h4>
-                  <a href="articoli/frege.html" role="menuitem">Frege</a>
-                  <a href="articoli/russell.html" role="menuitem">Russell</a>
-                  <a href="articoli/wittgenstein.html" role="menuitem">Wittgenstein</a>
-                  <a href="articoli/moore.html" role="menuitem">G.E. Moore</a>
-                </div>
-                <div>
-                  <h4>Filosofia Continentale</h4>
-                  <a href="articoli/husserl.html" role="menuitem">Husserl</a>
-                  <a href="articoli/heidegger.html" role="menuitem">Heidegger</a>
-                  <a href="articoli/merleau-ponty.html" role="menuitem">Merleau-Ponty</a>
-                  <a href="articoli/sartre.html" role="menuitem">Sartre</a>
-                  <a href="articoli/adorno.html" role="menuitem">Adorno</a>
-                  <a href="articoli/horkheimer.html" role="menuitem">Horkheimer</a>
-                </div>
-                <div>
-                  <h4>Pragmatismo Americano</h4>
-                  <a href="articoli/peirce.html" role="menuitem">Peirce</a>
-                  <a href="articoli/james.html" role="menuitem">W. James</a>
-                  <a href="articoli/dewey.html" role="menuitem">Dewey</a>
-                  <a href="articoli/rorty.html" role="menuitem">R. Rorty</a>
-                </div>
-                <div>
-                  <h4>Filosofia postmoderna</h4>
-                  <a href="articoli/derrida.html" role="menuitem">Derrida</a>
-                  <a href="articoli/foucault.html" role="menuitem">Foucault</a>
-                  <a href="articoli/lyotard.html" role="menuitem">Lyotard</a>
-                  <a href="articoli/deleuze.html" role="menuitem">Deleuze</a>
-                  <a href="articoli/butler.html" role="menuitem">Butler</a>
-                </div>
-                <div>
-                  <h4>Filosofia italiana</h4>
-                  <a href="articoli/severino.html" role="menuitem">Emmanuele Severino</a>
-                  <a href="articoli/eco.html" role="menuitem">Umberto Eco</a>
-                  <a href="articoli/vattimo.html" role="menuitem">Gianni Vattimo</a>
-                  <a href="articoli/bodei.html" role="menuitem">Remo Bodei</a>
-                  <a href="articoli/cacciari.html" role="menuitem">Massimo Cacciari</a>
-                  <a href="articoli/galimberti.html" role="menuitem">Umberto Galimberti</a>
-                </div>
-                <div>
-                  <h4>Socioetica</h4>
-                  <a href="articoli/rawls.html" role="menuitem">John Rawls:</a>
-                  <a href="articoli/nozick.html" role="menuitem">Robert Nozick</a>
-                  <a href="articoli/singer.html" role="menuitem">Peter Singer</a>
-                  <a href="articoli/jonas.html" role="menuitem">Hans Jonas</a>
-                  <a href="articoli/beauvoir.html" role="menuitem">Simone de Beauvoir</a>
-                  <a href="articoli/fraser.html" role="menuitem">Nancy Fraser</a>
-                  <a href="articoli/said.html" role="menuitem">Edward Said</a>
-                </div>
-              </div>
-            </li>
-            <li class="dropdown">
-              <button class="menu-btn underline-effect" role="menuitem" aria-haspopup="true" aria-expanded="false">
+</button>
+<div aria-label="Sottomenu Filosofia contemporanea" class="mega-menu columns-4" role="menu">
+<div>
+<h4>Filosofia analitica</h4>
+<a href="articoli/frege.html" role="menuitem">Frege</a>
+<a href="articoli/russell.html" role="menuitem">Russell</a>
+<a href="articoli/wittgenstein.html" role="menuitem">Wittgenstein</a>
+<a href="articoli/moore.html" role="menuitem">G.E. Moore</a>
+</div>
+<div>
+<h4>Filosofia Continentale</h4>
+<a href="articoli/husserl.html" role="menuitem">Husserl</a>
+<a href="articoli/heidegger.html" role="menuitem">Heidegger</a>
+<a href="articoli/merleau-ponty.html" role="menuitem">Merleau-Ponty</a>
+<a href="articoli/sartre.html" role="menuitem">Sartre</a>
+<a href="articoli/adorno.html" role="menuitem">Adorno</a>
+<a href="articoli/horkheimer.html" role="menuitem">Horkheimer</a>
+</div>
+<div>
+<h4>Pragmatismo Americano</h4>
+<a href="articoli/peirce.html" role="menuitem">Peirce</a>
+<a href="articoli/james.html" role="menuitem">W. James</a>
+<a href="articoli/dewey.html" role="menuitem">Dewey</a>
+<a href="articoli/rorty.html" role="menuitem">R. Rorty</a>
+</div>
+<div>
+<h4>Filosofia postmoderna</h4>
+<a href="articoli/derrida.html" role="menuitem">Derrida</a>
+<a href="articoli/foucault.html" role="menuitem">Foucault</a>
+<a href="articoli/lyotard.html" role="menuitem">Lyotard</a>
+<a href="articoli/deleuze.html" role="menuitem">Deleuze</a>
+<a href="articoli/butler.html" role="menuitem">Butler</a>
+</div>
+<div>
+<h4>Filosofia italiana</h4>
+<a href="articoli/severino.html" role="menuitem">Emmanuele Severino</a>
+<a href="articoli/eco.html" role="menuitem">Umberto Eco</a>
+<a href="articoli/vattimo.html" role="menuitem">Gianni Vattimo</a>
+<a href="articoli/bodei.html" role="menuitem">Remo Bodei</a>
+<a href="articoli/cacciari.html" role="menuitem">Massimo Cacciari</a>
+<a href="articoli/galimberti.html" role="menuitem">Umberto Galimberti</a>
+</div>
+<div>
+<h4>Socioetica</h4>
+<a href="articoli/rawls.html" role="menuitem">John Rawls:</a>
+<a href="articoli/nozick.html" role="menuitem">Robert Nozick</a>
+<a href="articoli/singer.html" role="menuitem">Peter Singer</a>
+<a href="articoli/jonas.html" role="menuitem">Hans Jonas</a>
+<a href="articoli/beauvoir.html" role="menuitem">Simone de Beauvoir</a>
+<a href="articoli/fraser.html" role="menuitem">Nancy Fraser</a>
+<a href="articoli/said.html" role="menuitem">Edward Said</a>
+</div>
+</div>
+</li>
+<li class="dropdown">
+<button aria-expanded="false" aria-haspopup="true" class="menu-btn underline-effect" role="menuitem">
               🇵🇱 Filosofia polacca <span class="arrow">▼</span>
-              </button>
-              <div class="mega-menu columns-4" role="menu" aria-label="Sottomenu Filosofia polacca">
-                <div>
-                  <h4>Romanticismo</h4>
-                  <a href="articoli/wronski.html" role="menuitem">Józef Hoene-Wroński</a>
-                  <a href="articoli/cieszkowski.html" role="menuitem">August Cieszkowski</a>
-                  <a href="articoli/mickiewicz.html" role="menuitem">Adam Mickiewicz</a>
-                  <a href="articoli/rzewuski.html" role="menuitem">Henryk Rzewuski</a>
-                  <a href="articoli/potocki.html" role="menuitem">Stanisław Kostka Potocki</a>
-                </div>
-                <div>
-                  <h4>Logica e Analitica</h4>
-                  <a href="articoli/twardowski.html" role="menuitem">Kazimierz Twardowski</a>
-                  <a href="articoli/lukasiewicz.html" role="menuitem">Jan Łukasiewicz</a>
-                  <a href="articoli/tarski.html" role="menuitem">Alfred Tarski</a>
-                  <a href="articoli/kotarbinski.html" role="menuitem">Tadeusz Kotarbiński</a>
-                  <a href="articoli/ingarden.html" role="menuitem">Roman Ingarden</a>
-                </div>
-                <div>
-                  <h4>Periodo comunista</h4>
-                  <a href="articoli/kolakowski.html" role="menuitem">Leszek Kołakowski</a>
-                  <a href="articoli/wojtyla.html" role="menuitem">Karol Wojtyła<br>(Papa Giovanni Paolo II)</a>
-                </div>
-                <div>
-                  <h4>Post-Comunista</h4>
-                  <a href="articoli/tischner.html" role="menuitem">Józef Tischner</a>
-                  <a href="articoli/bauman.html" role="menuitem">Zygmunt Bauman</a>
-                </div>
-              </div>
-            </li>
-            <li class="dropdown">
-              <a href="https://casi0048.github.io/pagine/pagina-contatti.html" class="menu-btn underline-effect" role="menuitem">📧Contatti</a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </header>
-    <!-- QUOTES BAR sotto la barra del menu -->
-    <div class="quotes-bar" id="quotesBar" aria-live="polite">
-      <span class="quote-text" id="quotesText"></span>
-      <span class="author" id="quotesAuthor"></span>
-    </div>
-    <!-- ===== SLIDER VERTICALE SINISTRA ===== -->
-    <div class="slider-vertical">
-      <div class="slider-inner">
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Socrates_Louvre.jpg" alt="Socrate">
-          <p>Socrate</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/platone.png" alt="Platone">
-          <p>Platone</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Aristotle_.jpg" alt="Aristotele">
-          <p>Aristotele</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/maria_teresa.jpg" alt="Maria Teresa">
-          <p>🕯️Maria Teresa: intreccio armonioso di virtù e bellezza✝️</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/cartesio.jpg" alt="Cartesio">
-          <p>Cartesio</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/kant.webp" alt="Kant">
-          <p>Kant - il più zoppo tra gli storpi del concetto</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/s.Tommaso.jpg" alt="San Tommaso">
-          <p>San Tommaso</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/cerbero.webp" alt="Cerbero">
-          <p>Cerbero - Guardiano dell'Ade</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/friedrich-nietzsche.jpg" alt="Nietzsche">
-          <p>Nietzsche</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Livia.jpeg" alt="Livia">
-          <p>⚖👑𓃹Livia🦅DEA🐍 egizia🏛️🔱</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/dea.jpeg" alt="Dea">
-          <p>𓍝Divinità mesopotamica⚯</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/vattimo.png" alt="Gianni Vattimo">
-          <p>Gianni Vattimo</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/krk.jpg" alt="Testa di...">
-          <p>Testa di ...</p>
-        </div>
-        <!-- nuovi elementi -->
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Democritus.jpg" alt="Democrito">
-          <p>Democrito</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Talete.jpg" alt="Talete">
-          <p>Talete</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/aristippo.webp" alt="Aristippo">
-          <p>Aristippo</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/cacciari.jpg" alt="Massimo Cacciari">
-          <p>Massimo Cacciari</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/cicerone.jpg" alt="Cicerone">
-          <p>Cicerone</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/dante.jpg" alt="Dante Alighieri">
-          <p>Dante Alighieri - la iena che fa poesia nelle tombe</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/deleuze.jpg" alt="Gilles Deleuze">
-          <p>Gilles Deleuze</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/derrida.jpg" alt="Jacques Derrida">
-          <p>Jacques Derrida</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/dewey.jpg" alt="John Dewey">
-          <p>John Dewey</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/foucault.jpg" alt="Michel Foucault">
-          <p>Michel Foucault</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/hegel.avif" alt="G.W.F. Hegel">
-          <p>G.W.F. Hegel</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/heidegger.jpg" alt="Martin Heidegger">
-          <p>Martin Heidegger</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/horkheimer.jpg" alt="Max Horkheimer">
-          <p>Max Horkheimer</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/husserl.jpg" alt="Edmund Husserl">
-          <p>Edmund Husserl</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/merleau-ponty.avif" alt="Maurice Merleau-Ponty">
-          <p>Maurice Merleau-Ponty</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/peirce.jpg" alt="Charles Sanders Peirce">
-          <p>Charles S. Peirce</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/pirrone.jpg" alt="Pirrone">
-          <p>Pirrone</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/pitagora.avif" alt="Pitagora">
-          <p>Pitagora</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/richard_rorty.jpg" alt="Richard Rorty">
-          <p>Richard Rorty</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/russell.jpeg" alt="Bertrand Russell">
-          <p>Bertrand Russell</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Severino.png" alt="Emanuele Severino">
-          <p>Emanuele Severino</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/bulgakov.jpg" alt="Michail Bulgakov">
-          <p>Michail Bulgakov</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/dostoevskij.gif" alt="Fëdor Dostoevskij">
-          <p>Fëdor Dostoevskij</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/galimberti.png" alt="Umberto Galimberti">
-          <p>Umberto Galimberti</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/max%20weber.jpg" alt="Max Weber">
-          <p>Max Weber</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/sestov.jpg" alt="Lev Šestov">
-          <p>Lev Šestov</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/schelling.jpg" alt="F.W.J. Schelling">
-          <p>F.W.J. Schelling</p>
-        </div>
-        <div class="slide-vertical">
-          <img src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/wittgenstein.jpg" alt="Ludwig Wittgenstein">
-          <p>Ludwig Wittgenstein</p>
-        </div>
-      </div>
-    </div>
-    <!-- ===== BLOB ANIMATO DESTRA (Ultimi articoli) ===== -->
-    <aside class="articles-blob" aria-label="Ultimi articoli">
-      <h3>📰 Ultimi articoli</h3>
-      <ul>
-        <li><a href="articoli/ipazia.html">Ipazia di Alessandria</a></li>
-        <li><a href="articoli/2nietzsche.html">Nietzsche filosofo folgorante</a></li>
-        <li><a href="articoli/hegel.html">Hegel</a></li>
-        <li><a href="articoli/heidegger.html">Martin Heidegger</a></li>
-        <li><a href="articoli/schelling.html">Friedrich Schelling:</a></li>
-      </ul>
-    </aside>
-    <!-- Main -->
-    <main>
-      <section class="welcome-section">
-        <h1 id="title" class="welcome-title">Benvenuto<br>in Echi di Sofia</h1>
-        <p class="welcome-subtitle" id="subtitle">Un viaggio tra stelle e pensiero</p>
-        <!-- Citazioni typing sotto titolo (restano) -->
-        <div class="typing-wrap">
-          <div class="typing-effect"></div>
-          <span class="caret" aria-hidden="true"></span>
-        </div>
-        <!-- Testo esplosivo -->
-        <div id="exploding" class="exploding-text" title="Clicca per esplodere">
+</button>
+<div aria-label="Sottomenu Filosofia polacca" class="mega-menu columns-4" role="menu">
+<div>
+<h4>Romanticismo</h4>
+<a href="articoli/wronski.html" role="menuitem">Józef Hoene-Wroński</a>
+<a href="articoli/cieszkowski.html" role="menuitem">August Cieszkowski</a>
+<a href="articoli/mickiewicz.html" role="menuitem">Adam Mickiewicz</a>
+<a href="articoli/rzewuski.html" role="menuitem">Henryk Rzewuski</a>
+<a href="articoli/potocki.html" role="menuitem">Stanisław Kostka Potocki</a>
+</div>
+<div>
+<h4>Logica e Analitica</h4>
+<a href="articoli/twardowski.html" role="menuitem">Kazimierz Twardowski</a>
+<a href="articoli/lukasiewicz.html" role="menuitem">Jan Łukasiewicz</a>
+<a href="articoli/tarski.html" role="menuitem">Alfred Tarski</a>
+<a href="articoli/kotarbinski.html" role="menuitem">Tadeusz Kotarbiński</a>
+<a href="articoli/ingarden.html" role="menuitem">Roman Ingarden</a>
+</div>
+<div>
+<h4>Periodo comunista</h4>
+<a href="articoli/kolakowski.html" role="menuitem">Leszek Kołakowski</a>
+<a href="articoli/wojtyla.html" role="menuitem">Karol Wojtyła<br/>(Papa Giovanni Paolo II)</a>
+</div>
+<div>
+<h4>Post-Comunista</h4>
+<a href="articoli/tischner.html" role="menuitem">Józef Tischner</a>
+<a href="articoli/bauman.html" role="menuitem">Zygmunt Bauman</a>
+</div>
+</div>
+</li>
+<li class="dropdown">
+<a class="menu-btn underline-effect" href="https://casi0048.github.io/pagine/pagina-contatti.html" role="menuitem">📧Contatti</a>
+</li>
+</ul>
+</nav>
+</div>
+</header>
+<!-- QUOTES BAR sotto la barra del menu -->
+<div aria-live="polite" class="quotes-bar" id="quotesBar">
+<span class="quote-text" id="quotesText"></span>
+<span class="author" id="quotesAuthor"></span>
+</div>
+<!-- ===== SLIDER VERTICALE SINISTRA ===== -->
+<div class="slider-vertical">
+<div class="slider-inner">
+<div class="slide-vertical">
+<img alt="Socrate" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Socrates_Louvre.jpg"/>
+<p>Socrate</p>
+</div>
+<div class="slide-vertical">
+<img alt="Platone" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/platone.png"/>
+<p>Platone</p>
+</div>
+<div class="slide-vertical">
+<img alt="Aristotele" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Aristotle_.jpg"/>
+<p>Aristotele</p>
+</div>
+<div class="slide-vertical">
+<img alt="Maria Teresa" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/maria_teresa.jpg"/>
+<p>🕯️Maria Teresa: intreccio armonioso di virtù e bellezza✝️</p>
+</div>
+<div class="slide-vertical">
+<img alt="Cartesio" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/cartesio.jpg"/>
+<p>Cartesio</p>
+</div>
+<div class="slide-vertical">
+<img alt="Kant" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/kant.webp"/>
+<p>Kant - il più zoppo tra gli storpi del concetto</p>
+</div>
+<div class="slide-vertical">
+<img alt="San Tommaso" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/s.Tommaso.jpg"/>
+<p>San Tommaso</p>
+</div>
+<div class="slide-vertical">
+<img alt="Cerbero" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/cerbero.webp"/>
+<p>Cerbero - Guardiano dell'Ade</p>
+</div>
+<div class="slide-vertical">
+<img alt="Nietzsche" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/friedrich-nietzsche.jpg"/>
+<p>Nietzsche</p>
+</div>
+<div class="slide-vertical">
+<img alt="Livia" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Livia.jpeg"/>
+<p>⚖👑𓃹Livia🦅DEA🐍 egizia🏛️🔱</p>
+</div>
+<div class="slide-vertical">
+<img alt="Dea" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/dea.jpeg"/>
+<p>𓍝Divinità mesopotamica⚯</p>
+</div>
+<div class="slide-vertical">
+<img alt="Gianni Vattimo" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/vattimo.png"/>
+<p>Gianni Vattimo</p>
+</div>
+<div class="slide-vertical">
+<img alt="Testa di..." src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/krk.jpg"/>
+<p>Testa di ...</p>
+</div>
+<!-- nuovi elementi -->
+<div class="slide-vertical">
+<img alt="Democrito" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Democritus.jpg"/>
+<p>Democrito</p>
+</div>
+<div class="slide-vertical">
+<img alt="Talete" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Talete.jpg"/>
+<p>Talete</p>
+</div>
+<div class="slide-vertical">
+<img alt="Aristippo" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/aristippo.webp"/>
+<p>Aristippo</p>
+</div>
+<div class="slide-vertical">
+<img alt="Massimo Cacciari" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/cacciari.jpg"/>
+<p>Massimo Cacciari</p>
+</div>
+<div class="slide-vertical">
+<img alt="Cicerone" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/cicerone.jpg"/>
+<p>Cicerone</p>
+</div>
+<div class="slide-vertical">
+<img alt="Dante Alighieri" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/dante.jpg"/>
+<p>Dante Alighieri - la iena che fa poesia nelle tombe</p>
+</div>
+<div class="slide-vertical">
+<img alt="Gilles Deleuze" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/deleuze.jpg"/>
+<p>Gilles Deleuze</p>
+</div>
+<div class="slide-vertical">
+<img alt="Jacques Derrida" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/derrida.jpg"/>
+<p>Jacques Derrida</p>
+</div>
+<div class="slide-vertical">
+<img alt="John Dewey" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/dewey.jpg"/>
+<p>John Dewey</p>
+</div>
+<div class="slide-vertical">
+<img alt="Michel Foucault" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/foucault.jpg"/>
+<p>Michel Foucault</p>
+</div>
+<div class="slide-vertical">
+<img alt="G.W.F. Hegel" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/hegel.avif"/>
+<p>G.W.F. Hegel</p>
+</div>
+<div class="slide-vertical">
+<img alt="Martin Heidegger" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/heidegger.jpg"/>
+<p>Martin Heidegger</p>
+</div>
+<div class="slide-vertical">
+<img alt="Max Horkheimer" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/horkheimer.jpg"/>
+<p>Max Horkheimer</p>
+</div>
+<div class="slide-vertical">
+<img alt="Edmund Husserl" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/husserl.jpg"/>
+<p>Edmund Husserl</p>
+</div>
+<div class="slide-vertical">
+<img alt="Maurice Merleau-Ponty" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/merleau-ponty.avif"/>
+<p>Maurice Merleau-Ponty</p>
+</div>
+<div class="slide-vertical">
+<img alt="Charles Sanders Peirce" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/peirce.jpg"/>
+<p>Charles S. Peirce</p>
+</div>
+<div class="slide-vertical">
+<img alt="Pirrone" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/pirrone.jpg"/>
+<p>Pirrone</p>
+</div>
+<div class="slide-vertical">
+<img alt="Pitagora" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/pitagora.avif"/>
+<p>Pitagora</p>
+</div>
+<div class="slide-vertical">
+<img alt="Richard Rorty" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/richard_rorty.jpg"/>
+<p>Richard Rorty</p>
+</div>
+<div class="slide-vertical">
+<img alt="Bertrand Russell" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/russell.jpeg"/>
+<p>Bertrand Russell</p>
+</div>
+<div class="slide-vertical">
+<img alt="Emanuele Severino" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Severino.png"/>
+<p>Emanuele Severino</p>
+</div>
+<div class="slide-vertical">
+<img alt="Michail Bulgakov" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/bulgakov.jpg"/>
+<p>Michail Bulgakov</p>
+</div>
+<div class="slide-vertical">
+<img alt="Fëdor Dostoevskij" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/dostoevskij.gif"/>
+<p>Fëdor Dostoevskij</p>
+</div>
+<div class="slide-vertical">
+<img alt="Umberto Galimberti" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/galimberti.png"/>
+<p>Umberto Galimberti</p>
+</div>
+<div class="slide-vertical">
+<img alt="Max Weber" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/max%20weber.jpg"/>
+<p>Max Weber</p>
+</div>
+<div class="slide-vertical">
+<img alt="Lev Šestov" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/sestov.jpg"/>
+<p>Lev Šestov</p>
+</div>
+<div class="slide-vertical">
+<img alt="F.W.J. Schelling" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/schelling.jpg"/>
+<p>F.W.J. Schelling</p>
+</div>
+<div class="slide-vertical">
+<img alt="Ludwig Wittgenstein" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/wittgenstein.jpg"/>
+<p>Ludwig Wittgenstein</p>
+</div>
+</div>
+</div>
+<!-- ===== BLOB ANIMATO DESTRA (Ultimi articoli) ===== -->
+<aside aria-label="Ultimi articoli" class="articles-blob">
+<h3>📰 Ultimi articoli</h3>
+<ul>
+<li><a href="articoli/ipazia.html">Ipazia di Alessandria</a></li>
+<li><a href="articoli/2nietzsche.html">Nietzsche filosofo folgorante</a></li>
+<li><a href="articoli/hegel.html">Hegel</a></li>
+<li><a href="articoli/heidegger.html">Martin Heidegger</a></li>
+<li><a href="articoli/schelling.html">Friedrich Schelling:</a></li>
+</ul>
+</aside>
+<!-- Main -->
+<main>
+<section class="welcome-section">
+<h1 class="welcome-title" id="title">Benvenuto<br/>in Echi di Sofia</h1>
+<p class="welcome-subtitle" id="subtitle">Un viaggio tra stelle e pensiero</p>
+<!-- Citazioni typing sotto titolo (restano) -->
+<div class="typing-wrap">
+<div class="typing-effect"></div>
+<span aria-hidden="true" class="caret"></span>
+</div>
+<!-- Testo esplosivo -->
+<div class="exploding-text" id="exploding" title="Clicca per esplodere">
           Φ Pensare, dunque è ancora possibile Φ
         </div>
-      </section>
-    </main>
-    <!-- Particelle layer -->
-    <div id="philoParticles" aria-hidden="true"></div>
-    <!-- Footer -->
-    <footer>
-      <div class="footer-wrap">
-      <div class="footer-columns">
-        <div class="col about">
-          <h3>Echi di Sofia</h3>
-          <p>Tra pensiero e stelle: un percorso tra scuole, autori e temi della filosofia, dalla classicità al contemporaneo.</p>
-        </div>
-        <div class="col links">
-          <h4>Sezioni</h4>
-          <ul>
-            <li><a href="pagine/benvenuti.html">Incipit</a></li>
-            <li><a href="articoli/cinismo.html">Cinismo</a></li>
-            <li><a href="articoli/epicureismo.html">Epicureismo</a></li>
-            <li><a href="articoli/filosofia-indiana.html">Filosofia indiana</a></li>
-            <li><a href="articoli/platonismo.html">Platonismo</a></li>
-            <li><a href="articoli/scetticismo.html">Scetticismo</a></li>
-            <li><a href="articoli/stoicismo.html">Stoicismo</a></li>
-          </ul>
-        </div>
-        <div class="col contact">
-          <h4>Contatti</h4>
-          <ul>
-            <li><a href="mailto:info@echidisofia.example">info@echidisofia.example</a></li>
-            <li><a href="contatti.html">Modulo contatti</a></li>
-          </ul>
-          <div class="social">
-            <a aria-label="Instagram" href="#"><i class="fa-brands fa-instagram"></i></a>
-            <a aria-label="YouTube" href="#"><i class="fa-brands fa-youtube"></i></a>
-            <a aria-label="X/Twitter" href="#"><i class="fa-brands fa-x-twitter"></i></a>
-          </div>
-        </div>
-      </div>
-      <div class="footer-legal">
-        <span>© <span id="year"></span> Echi di Sofia</span>
-        <span class="dot">•</span>
-        <a href="https://casi0048.github.io/pagine/privacy-policy.html">Privacy</a>
-        <span class="dot">•</span>
-       <a href="https://casi0048.github.io/pagine/credits.html">Crediti</a>
-
-        <span class="dot">•</span>
-      </div>
-    </footer>
-    <!-- GALASSIA (canvas particelle colorate) -->
-    <script>
+</section>
+</main>
+<!-- Particelle layer -->
+<div aria-hidden="true" id="philoParticles"></div>
+<!-- Footer -->
+<footer>
+<div class="footer-wrap">
+<div class="footer-columns">
+<div class="col about">
+<h3>Echi di Sofia</h3>
+<p>Tra pensiero e stelle: un percorso tra scuole, autori e temi della filosofia, dalla classicità al contemporaneo.</p>
+</div>
+<div class="col links">
+<h4>Sezioni</h4>
+<ul>
+<li><a href="pagine/benvenuti.html">Incipit</a></li>
+<li><a href="articoli/cinismo.html">Cinismo</a></li>
+<li><a href="articoli/epicureismo.html">Epicureismo</a></li>
+<li><a href="articoli/filosofia-indiana.html">Filosofia indiana</a></li>
+<li><a href="articoli/platonismo.html">Platonismo</a></li>
+<li><a href="articoli/scetticismo.html">Scetticismo</a></li>
+<li><a href="articoli/stoicismo.html">Stoicismo</a></li>
+</ul>
+</div>
+<div class="col contact">
+<h4>Contatti</h4>
+<ul>
+<li><a href="mailto:info@echidisofia.example">info@echidisofia.example</a></li>
+<li><a href="contatti.html">Modulo contatti</a></li>
+</ul>
+<div class="social">
+<a aria-label="Instagram" href="#"><i class="fa-brands fa-instagram"></i></a>
+<a aria-label="YouTube" href="#"><i class="fa-brands fa-youtube"></i></a>
+<a aria-label="X/Twitter" href="#"><i class="fa-brands fa-x-twitter"></i></a>
+</div>
+</div>
+</div>
+<div class="footer-legal">
+<span>© <span id="year"></span> Echi di Sofia</span>
+<span class="dot">•</span>
+<a href="https://casi0048.github.io/pagine/privacy-policy.html">Privacy</a>
+<span class="dot">•</span>
+<a href="https://casi0048.github.io/pagine/credits.html">Crediti</a>
+<span class="dot">•</span>
+</div>
+</div></footer>
+<!-- GALASSIA (canvas particelle colorate) -->
+<script>
       (function(){
         const canvas = document.getElementById('nebula');
         const ctx = canvas.getContext('2d');
@@ -1166,8 +1174,8 @@
         addEventListener('resize', resize);
       })();
     </script>
-    <!-- STELLE + COMETE -->
-    <script>
+<!-- STELLE + COMETE -->
+<script>
       (function starComets(){
         const canvas = document.getElementById('star-canvas');
         const ctx = canvas.getContext('2d');
@@ -1221,8 +1229,8 @@
         resize(); draw();
       })();
     </script>
-    <!-- SLIDER VERTICALE: autoplay continuo con pausa on-hover -->
-    <script>
+<!-- SLIDER VERTICALE: autoplay continuo con pausa on-hover -->
+<script>
       (function initVerticalSlider(){
         const wrap = document.querySelector('.slider-vertical');
         if(!wrap) return;
@@ -1244,8 +1252,8 @@
         step();
       })();
     </script>
-    <!-- Lightning + Thunder -->
-    <script>
+<!-- Lightning + Thunder -->
+<script>
       (function lightning(){
         const overlay = document.getElementById('lightning');
         const bolt    = document.getElementById('bolt');
@@ -1349,8 +1357,8 @@
       
       })();
     </script>
-    <!-- Buttons binding -->
-    <script>
+<!-- Buttons binding -->
+<script>
       document.getElementById('btn-thunder')
         .addEventListener('click', ()=> window.toggleThunder && window.toggleThunder());
       
@@ -1360,8 +1368,8 @@
           document.getElementById('year').textContent = new Date().getFullYear();
         
     </script>
-    <!-- QUOTES BAR: lista fornita -->
-    <script>
+<!-- QUOTES BAR: lista fornita -->
+<script>
       (function quotesBar(){
         const QUOTES = [
           { text: "Conosci te stesso e conoscerai l'universo e gli dei.", author: "Socrate" },
@@ -1421,8 +1429,8 @@
         next(); setInterval(next, 5000);
       })();
     </script>
-    <!-- Exploding text -->
-    <script>
+<!-- Exploding text -->
+<script>
       (function explodingText(){
         const host = document.getElementById('exploding');
         const text = host.textContent.trim();
@@ -1471,8 +1479,8 @@
         });
       })();
     </script>
-    <!-- Typing sotto titolo -->
-    <script>
+<!-- Typing sotto titolo -->
+<script>
       document.addEventListener("DOMContentLoaded", function() {
         const el = document.querySelector(".typing-effect");
         const texts = [
@@ -1507,8 +1515,8 @@
         animate();
       });
     </script>
-    <!-- Particelle filosofiche: symbols + colors aggiornati -->
-    <script>
+<!-- Particelle filosofiche: symbols + colors aggiornati -->
+<script>
       (function philoParticles(){
         const container = document.getElementById('philoParticles');
         const symbols = [
@@ -1587,30 +1595,16 @@
         create(); render();
       })();
     </script>
-    <!-- Google Translate -->
-    <script>
-      function googleTranslateElementInit() {
-        if (window.google && google.translate) {
-          new google.translate.TranslateElement({
-            pageLanguage: 'it',
-            includedLanguages: 'it,en,fr,de,es,pl,pt,ro',
-            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-            autoDisplay: false
-          }, 'google_translate_element');
-        }
-      }
-      window.googleTranslateElementInit = googleTranslateElementInit;
-    </script>
-    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <!-- INIZIO Box Bertrand Russell -->
-    <div id="russell-box">
-      <button id="russell-btn" title="Clicca per ascoltare la citazione">
-      🎵 “Se un filosofo è un uomo cieco, in una stanza buia, che cerca un gatto nero che non c’è, un teologo è l’uomo che riesce a trovare quel gatto.”<br><strong>– Bertrand Russell</strong>
-      </button>
-    </div>
-    <div id="russell-hint">Clicca per ascoltare la chitarra 🎸</div>
-    <audio id="russell-audio" src="https://casi0048.github.io/suoni/gitarra.mp3" preload="auto"></audio>
-    <style>
+<!-- Google Translate -->
+<!-- INIZIO Box Bertrand Russell -->
+<div id="russell-box">
+<button id="russell-btn" title="Clicca per ascoltare la citazione">
+      🎵 “Se un filosofo è un uomo cieco, in una stanza buia, che cerca un gatto nero che non c’è, un teologo è l’uomo che riesce a trovare quel gatto.”<br/><strong>– Bertrand Russell</strong>
+</button>
+</div>
+<div id="russell-hint">Clicca per ascoltare la chitarra 🎸</div>
+<audio id="russell-audio" preload="auto" src="https://casi0048.github.io/suoni/gitarra.mp3"></audio>
+<style>
       #russell-box {
       position: fixed;
       bottom: 40px;
@@ -1656,7 +1650,7 @@
       #russell-box, #russell-hint { display:none; }
       }
     </style>
-    <script>
+<script>
       window.addEventListener("load", () => {
         if (window.gsap) {
           gsap.from("#russell-box", { x: -150, opacity: 0, duration: 1.2, ease: "power3.out" });
@@ -1676,8 +1670,8 @@
         }
       });
     </script>
-    <!-- FINE Box Bertrand Russell -->
-    <script>
+<!-- FINE Box Bertrand Russell -->
+<script>
       window.addEventListener('load', () => {
         if (window.gsap) {
           try {
@@ -1806,11 +1800,11 @@ footer::before {
 }
 
     </style>
-    <!-- 🎬 INIZIO PLAYER (destro) -->
-    <div class="video-container" id="video-right">
-      <iframe width="280" height="264" src="https://www.youtube.com/embed/G_REgkOuQfw" title="Schopenhauer e Nietzsche (Hans-Georg Gadamer) - 3x4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    </div>
-    <style>
+<!-- 🎬 INIZIO PLAYER (destro) -->
+<div class="video-container" id="video-right">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="264" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/G_REgkOuQfw" title="Schopenhauer e Nietzsche (Hans-Georg Gadamer) - 3x4" width="280"></iframe>
+</div>
+<style>
       .video-container{
       position: fixed;
       bottom: 40px;
@@ -1859,17 +1853,17 @@ footer::before {
       .video-container{ right: 12px; bottom: 12px; width: 70vw; }
       }
     </style>
-    <!-- 🎬 FINE PLAYER (destro) -->
-    <!-- INIZIO MINI PLAYER (sinistra) -->
-    <div id="audio-player" class="audio-player">
-      <audio id="myAudio" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/suoni/Strauss.mp3"></audio>
-      <div class="controls">
-        <button id="playPause" title="Riproduci/Pausa">▶️</button>
-        <span id="time">0:00 / 0:00</span>
-        <input type="range" id="volume" min="0" max="1" step="0.01" title="Volume">
-      </div>
-    </div>
-    <style>
+<!-- 🎬 FINE PLAYER (destro) -->
+<!-- INIZIO MINI PLAYER (sinistra) -->
+<div class="audio-player" id="audio-player">
+<audio id="myAudio" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/suoni/Strauss.mp3"></audio>
+<div class="controls">
+<button id="playPause" title="Riproduci/Pausa">▶️</button>
+<span id="time">0:00 / 0:00</span>
+<input id="volume" max="1" min="0" step="0.01" title="Volume" type="range"/>
+</div>
+</div>
+<style>
       .audio-player {
       position: fixed;
       bottom: 250px;
@@ -1913,7 +1907,7 @@ footer::before {
       #audio-player{ display:none; }
       }
     </style>
-    <script>
+<script>
       // Inizializzazione mini player
       window.addEventListener('load', () => {
         const box = document.getElementById('audio-player');
@@ -1961,8 +1955,8 @@ footer::before {
         audio.addEventListener('ended', () => { btn.textContent = '▶️'; });
       });
     </script>
-    <!-- FINE MINI PLAYER (sinistra) -->
-    <script>
+<!-- FINE MINI PLAYER (sinistra) -->
+<script>
       window.addEventListener('load', () => {
         if (window.gsap){
           try{
@@ -1971,55 +1965,55 @@ footer::before {
         }
       });
     </script>
-    <!-- Audio effetti -->
-    <audio id="thunder-sound" src="https://casi0048.github.io/suoni/thunder-sound.mp3" preload="auto"></audio>
-    <audio id="explosionSound" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/suoni/explosion-1.mp3" preload="auto"></audio>
-    <!-- COOKIE BANNER -->
-    <div id="cookie-banner" class="cookie-banner" role="region" aria-label="Consenso cookie" hidden>
-      <div class="cookie-text">
-        <strong>Cookie.</strong> Usiamo cookie tecnici e, con il tuo consenso, analitici e di profilazione per migliorare l’esperienza.
-        <a href="https://casi0048.github.io/pagine/privacy-policy.html" target="_blank" rel="noopener">Scopri di più</a>.
+<!-- Audio effetti -->
+<audio id="thunder-sound" preload="auto" src="https://casi0048.github.io/suoni/thunder-sound.mp3"></audio>
+<audio id="explosionSound" preload="auto" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/suoni/explosion-1.mp3"></audio>
+<!-- COOKIE BANNER -->
+<div aria-label="Consenso cookie" class="cookie-banner" hidden="" id="cookie-banner" role="region">
+<div class="cookie-text">
+<strong>Cookie.</strong> Usiamo cookie tecnici e, con il tuo consenso, analitici e di profilazione per migliorare l’esperienza.
+        <a href="https://casi0048.github.io/pagine/privacy-policy.html" rel="noopener" target="_blank">Scopri di più</a>.
       </div>
-      <div class="cookie-actions">
-        <button id="cookie-decline" class="btn ghost">Rifiuta</button>
-        <button id="cookie-customize" class="btn outline">Personalizza</button>
-        <button id="cookie-accept" class="btn solid">Accetta</button>
-      </div>
-    </div>
-    <!-- MODAL PREFERENZE -->
-    <div id="cookie-modal" class="cookie-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="cookie-modal-title">
-      <div class="cookie-modal__panel">
-        <button id="cookie-close" class="cookie-close" aria-label="Chiudi">×</button>
-        <h3 id="cookie-modal-title">Preferenze cookie</h3>
-        <p class="muted">Puoi modificare le tue scelte in qualsiasi momento.</p>
-        <ul class="cookie-list">
-          <li>
-            <label><input type="checkbox" checked disabled> Essenziali (sempre attivi)</label>
-          </li>
-          <li>
-            <label><input type="checkbox" id="consent-analytics"> Analitici</label>
-            <small>Ci aiutano a capire come usi il sito.</small>
-          </li>
-          <li>
-            <label><input type="checkbox" id="consent-preferences"> Preferenze</label>
-            <small>Ricordano impostazioni e scelte.</small>
-          </li>
-          <li>
-            <label><input type="checkbox" id="consent-marketing"> Marketing</label>
-            <small>Contenuti e misurazioni personalizzate.</small>
-          </li>
-        </ul>
-        <div class="cookie-modal__actions">
-          <button id="cookie-cancel" class="btn outline">Annulla</button>
-          <button id="cookie-save" class="btn solid">Salva preferenze</button>
-        </div>
-      </div>
-    </div>
-    <!-- Pulsante per riaprire -->
-    <button id="manage-cookies" class="ctrl-btn btn-link" type="button" title="Gestisci consenso cookie">
+<div class="cookie-actions">
+<button class="btn ghost" id="cookie-decline">Rifiuta</button>
+<button class="btn outline" id="cookie-customize">Personalizza</button>
+<button class="btn solid" id="cookie-accept">Accetta</button>
+</div>
+</div>
+<!-- MODAL PREFERENZE -->
+<div aria-hidden="true" aria-labelledby="cookie-modal-title" aria-modal="true" class="cookie-modal" id="cookie-modal" role="dialog">
+<div class="cookie-modal__panel">
+<button aria-label="Chiudi" class="cookie-close" id="cookie-close">×</button>
+<h3 id="cookie-modal-title">Preferenze cookie</h3>
+<p class="muted">Puoi modificare le tue scelte in qualsiasi momento.</p>
+<ul class="cookie-list">
+<li>
+<label><input checked="" disabled="" type="checkbox"/> Essenziali (sempre attivi)</label>
+</li>
+<li>
+<label><input id="consent-analytics" type="checkbox"/> Analitici</label>
+<small>Ci aiutano a capire come usi il sito.</small>
+</li>
+<li>
+<label><input id="consent-preferences" type="checkbox"/> Preferenze</label>
+<small>Ricordano impostazioni e scelte.</small>
+</li>
+<li>
+<label><input id="consent-marketing" type="checkbox"/> Marketing</label>
+<small>Contenuti e misurazioni personalizzate.</small>
+</li>
+</ul>
+<div class="cookie-modal__actions">
+<button class="btn outline" id="cookie-cancel">Annulla</button>
+<button class="btn solid" id="cookie-save">Salva preferenze</button>
+</div>
+</div>
+</div>
+<!-- Pulsante per riaprire -->
+<button class="ctrl-btn btn-link" id="manage-cookies" title="Gestisci consenso cookie" type="button">
     Gestione cookie
     </button>
-    <script>
+<script>
       (function(){
         const KEY = 'cookieConsent.v1';
       
@@ -2099,8 +2093,8 @@ footer::before {
         else { showBanner(); }
       })();
     </script>
-    <!-- injected: universal thunder + lightning + cookie controller -->
-    <script>
+<!-- injected: universal thunder + lightning + cookie controller -->
+<script>
       (function(){
         // avoid double-injection
         if (window.__echiThunder) return;
@@ -2250,7 +2244,7 @@ footer::before {
         })();
       })();
     </script>
-    <script>
+<script>
       (function(){
         // Prendi elementi
         const btn = document.getElementById('btn-thunder');
@@ -2307,7 +2301,7 @@ footer::before {
         updateLabel();
       })();
     </script>
-    <script>
+<script>
       document.getElementById('manage-cookies')?.addEventListener('click', () => {
         const modal  = document.querySelector('.cookie-modal, #cookie-modal');
         const banner = document.getElementById('cookie-banner');
@@ -2319,21 +2313,71 @@ footer::before {
         }
       });
     </script>
-    <script>
-function loadGoogleTranslate() {
-    new google.translate.TranslateElement({
+<!-- ▼▼▼ TRADUZIONE ROBUSTA: UI personalizzata + motore Google nascosto ▼▼▼ -->
+<script>
+(function(){
+  function setCookie(name, value){
+    var domain = location.hostname.replace(/^www\./,'');
+    var exp = "; expires=" + new Date(Date.now()+365*24*60*60*1000).toUTCString();
+    document.cookie = name + "=" + value + exp + "; path=/";
+    document.cookie = name + "=" + value + exp + "; path=/; domain=." + domain;
+  }
+  function getCookie(name){
+    return (document.cookie.match('(^|;)\\s*'+name+'\\s*=\\s*([^;]+)')||[])[2] || "";
+  }
+  window.__initGoogleTranslate = function(){
+    if (window.google && google.translate && google.translate.TranslateElement) {
+      var host = document.getElementById('google_translate_element');
+      if (!host) {
+        host = document.createElement('div'); host.id='google_translate_element';
+        host.setAttribute('aria-hidden','true');
+        host.style.cssText="position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden";
+        document.body.appendChild(host);
+      } else { host.innerHTML = ""; }
+      new google.translate.TranslateElement({
         pageLanguage: 'it',
-        includedLanguages: 'en,fr,de,es,pl',
-        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-    }, 'google_translate_element');
-}
-
-window.addEventListener('pageshow', function(event) {
-    if (event.persisted) { // se viene dalla cache del browser (Back/Forward)
-        loadGoogleTranslate();
+        includedLanguages: 'it,en,fr,de,es,pl,pt,ru,ja,zh-CN,ar,nl,tr,ro,sv,el,hu,cs',
+        autoDisplay: false
+      }, 'google_translate_element');
+      var c = getCookie("googtrans");
+      var lang = (c.split("/")[2] || "it");
+      var internal = document.querySelector(".goog-te-combo");
+      if (internal && lang) { internal.value = lang; internal.dispatchEvent(new Event('change')); }
+    } else {
+      setTimeout(window.__initGoogleTranslate, 120);
     }
-});
+  };
+  (function injectOnce(){
+    if (document.querySelector('script[data-gtr]')) return;
+    var s = document.createElement('script');
+    s.src = "https://translate.google.com/translate_a/element.js?cb=__initGoogleTranslate";
+    s.async = true; s.defer = true; s.setAttribute('data-gtr','1');
+    document.head.appendChild(s);
+  })();
+  function applyLang(lang){
+    var val = (lang && lang !== 'it') ? ("/it/"+lang) : "/it/it";
+    setCookie("googtrans", val);
+    var internal = document.querySelector(".goog-te-combo");
+    if (internal) { internal.value = lang; internal.dispatchEvent(new Event('change')); }
+    else { location.reload(); }
+  }
+  function syncUI(){
+    var sel = document.getElementById('customTranslate');
+    if (!sel) return;
+    var c = getCookie("googtrans");
+    var current = (c.split("/")[2] || "it");
+    if ([...sel.options].some(o=>o.value===current)) sel.value = current;
+  }
+  document.addEventListener('change', function(e){
+    if (e.target && e.target.id === 'customTranslate') {
+      applyLang(e.target.value);
+    }
+  });
+  window.addEventListener('pageshow', syncUI);
+  document.addEventListener('visibilitychange', function(){ if (!document.hidden) syncUI(); });
+  syncUI();
+})();
 </script>
-
-  </body>
+<!-- ▲▲▲ FINE BLOCCO TRADUZIONE ROBUSTA ▲▲▲ -->
+</body>
 </html>
