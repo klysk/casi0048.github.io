@@ -503,40 +503,79 @@
 <!-- CONTENITORE RISULTATI CSE (comparirà dopo la ricerca) -->
 <div id="cse-results" style="display:none;max-width:900px;margin:20px auto;"></div>
 <!-- Loader Google CSE (inserisci UNA SOLA volta per pagina) -->
-<script async="" src="https://cse.google.com/cse.js?cx=87b07564ab3cb462a"></script>
+<script async="" src="https://cse.google.com/cse.js?cx=87b07564ab3cb462a"></script><script>
+(function(){
+  var READY = false;
+  window.__gcse = {
+    callback: function() {
+      READY = true;
+    }
+  };
+  var input = document.getElementById('site-search');
+  var box = document.getElementById('cse-results');
+  if (!box) return;
+  // Prepare static results container with gname
+  function ensureResultsContainer(){
+    if (!box.querySelector('.gcse-searchresults-only')) {
+      var d = document.createElement('div');
+      d.className = 'gcse-searchresults-only';
+      d.setAttribute('data-gname', 'results');
+      d.setAttribute('data-linkTarget', '_self');
+      d.setAttribute('data-queryParameterName', 'q');
+      box.appendChild(d);
+    }
+  }
+  ensureResultsContainer();
+
+  function executeQuery(q){
+    function tryExec(){
+      if (READY && window.google && google.search && google.search.cse && google.search.cse.element) {
+        var el = google.search.cse.element.getElement('results');
+        if (!el) {
+          // Render explicitly if element not initialized
+          google.search.cse.element.render({ div: 'cse-results', tag: 'searchresults-only', gname: 'results' });
+          el = google.search.cse.element.getElement('results');
+        }
+        if (el) {
+          el.execute(q);
+          box.style.display = 'block';
+          return true;
+        }
+      }
+      return false;
+    }
+    if (!tryExec()){
+      var tries = 0;
+      var iv = setInterval(function(){
+        tries++;
+        if (tryExec() || tries > 50) clearInterval(iv);
+      }, 120);
+    }
+  }
+
+  function onSearch(){
+    if (!input) return;
+    var term = input.value.trim();
+    if (term) executeQuery(term);
+  }
+
+  if (input) {
+    input.addEventListener('keydown', function(e){ if (e.key === 'Enter') onSearch(); });
+    var icon = document.querySelector('.search-icon');
+    if (icon) icon.addEventListener('click', onSearch);
+  }
+})();
+    </script><style>
+/* CSE results dark compatibility */
+#gsc-iw-id1, .gsc-control-cse, .gsc-webResult.gsc-result, .gsc-card-box { background: transparent !important; }
+.gsc-input, input.gsc-input { background: transparent !important; color: #e6f0f3 !important; }
+.gsc-result .gs-title, .gsc-result .gs-snippet { color: #e6f0f3 !important; }
+.gsc-refinementsGradient, .gcsc-find-more-on-google-root, .gcsc-find-more-on-google { background: transparent !important; }
+.gsc-cursor-page { color: #e6f0f3 !important; }
+.gsc-results .gsc-cursor-box .gsc-cursor-page.gsc-cursor-current-page { border-color:#2a7c9c !important; }
+</style>
 <!-- Script integrazione CSE con il tuo input -->
-<script>
-      (function(){
-        const input = document.getElementById('site-search');
-        const icon  = document.querySelector('.search-icon');
-        const resultsBox = document.getElementById('cse-results');
-      
-        if (!input || !resultsBox) return;
-      
-        // Esegue la ricerca CSE mostrando i risultati nel box dedicato
-        function runSearch(query){
-          if (!query) return;
-          resultsBox.style.display = 'block';
-          // Inietto il contenitore "results-only" di CSE
-          resultsBox.innerHTML = '<div class="gcse-searchresults-only" data-queryParameterName="q" data-linkTarget="_self"></div>';
-      
-          // Dispatch dell'evento di ricerca Google (supportato da CSE)
-          const ev = new Event('gcse-search');
-          ev.query = query;
-          window.dispatchEvent(ev);
-        }
-      
-        function onSearch(){
-          const term = input.value.trim();
-          if (term) runSearch(term);
-        }
-      
-        // Invio con ENTER
-        input.addEventListener('keydown', (e)=>{ if (e.key === 'Enter') onSearch(); });
-        // Click sulla lente
-        if (icon) icon.addEventListener('click', onSearch);
-      })();
-    </script>
+
 <!-- Stile scuro per i risultati CSE -->
 <style>
       .gsc-control-cse, .gsc-control-cse .gsc-table-result { background: transparent !important; }
