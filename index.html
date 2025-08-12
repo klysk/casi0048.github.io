@@ -492,7 +492,7 @@
 <div class="translate-box"><span>🌐</span><select aria-label="Traduci pagina" class="translate-select" id="customTranslate"><option value="it">Italiano</option><option value="en">English</option><option value="fr">Français</option><option value="de">Deutsch</option><option value="es">Español</option><option value="pl">Polski</option><option value="pt">Português</option><option value="ru">Русский</option><option value="ja">日本語</option><option value="zh-CN">中文 (简体)</option><option value="ar">العربية</option><option value="nl">Nederlands</option><option value="tr">Türkçe</option><option value="ro">Română</option><option value="sv">Svenska</option><option value="el">Ελληνικά</option><option value="hu">Magyar</option><option value="cs">Čeština</option></select><div aria-hidden="true" id="google_translate_element" style="position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden"></div></div>
 <!-- BOX CERCA (UI tua, non Google) -->
 <div class="search-container" role="search">
-<input aria-label="Cerca" id="site-search" placeholder="Cerca nel sito..." type="search"/>
+<input aria-label="Cerca" id="site-search" placeholder="Cerca nel sito..." type="search"/><button id="cse-open" style="margin-left:8px;padding:6px 10px;border-radius:10px;border:1px solid rgba(120,140,220,0.4);background:rgba(120,140,220,0.15);color:#e6f0f3;cursor:pointer;font-size:.9rem;" type="button">Risultati</button>
 <i aria-hidden="true" class="fa-solid fa-magnifying-glass search-icon"></i>
 </div>
 <!-- Pulsanti -->
@@ -501,7 +501,28 @@
 </div>
 </div>
 <!-- CONTENITORE RISULTATI CSE (comparirà dopo la ricerca) -->
-<div id="cse-results" style="display:none;max-width:900px;margin:20px auto;"></div>
+<style>
+/* ===== CSE Dark Theme - High Contrast ===== */
+#cse-results { background: rgba(10,10,26,0.6); padding: 8px 10px; border-radius: 12px; border: 1px solid rgba(120,140,220,0.25); }
+.gsc-control-cse, .gsc-control-cse .gsc-table-result, .gsc-results-wrapper-visible { background: transparent !important; }
+.gsc-result, .gsc-webResult.gsc-result, .gsc-results .gsc-imageResult { background: rgba(20,22,40,0.55) !important; border: 1px solid rgba(120,140,220,0.2) !important; border-radius: 10px !important; padding: 10px !important; }
+.gsc-webResult.gsc-result:hover { background: rgba(30,35,70,0.6) !important; }
+.gsc-result .gs-title, .gsc-result .gs-title * { color: #eaf2ff !important; text-decoration: none !important; }
+.gsc-result .gs-snippet { color: #cfd8ff !important; }
+.gsc-url-top, .gsc-url-bottom, .gsc-url-top * { color: #96ffa6 !important; }
+.gsc-cursor-page { color: #e6f0f3 !important; border-color: rgba(120,140,220,0.3) !important; }
+.gsc-results .gsc-cursor-box .gsc-cursor-page.gsc-cursor-current-page { background: rgba(120,140,220,0.15) !important; border-color: rgba(120,140,220,0.45) !important; }
+.gs-no-results-result .gs-snippet, .gs-error-result .gs-snippet { color: #ffd1d1 !important; }
+.gcsc-find-more-on-google, .gcsc-find-more-on-google-root { background: transparent !important; }
+input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus { background: rgba(20,22,40,0.55) !important; color: #e6f0f3 !important; border-color: rgba(120,140,220,0.3) !important; }
+.gsc-search-button, input.gsc-search-button-v2 { background: rgba(120,140,220,0.2) !important; border: 1px solid rgba(120,140,220,0.4) !important; }
+.gsc-selected-option-container { color: #e6f0f3 !important; }
+.gsc-tabHeader.gsc-tabhInactive { background: transparent !important; color: #aeb6ff !important; }
+.gsc-tabHeader.gsc-tabhActive { background: rgba(120,140,220,0.18) !important; color: #ffffff !important; }
+.gsc-refinementsArea { background: transparent !important; }
+.gsc-table-result, .gsc-thumbnail-inside, .gs-image, .gs-promotion-image { background: transparent !important; }
+.gs-spelling a { color: #a6c8ff !important; }
+</style>
 <!-- Loader Google CSE (inserisci UNA SOLA volta per pagina) -->
 <script async="" src="https://cse.google.com/cse.js?cx=87b07564ab3cb462a"></script><script>
 (function(){
@@ -509,38 +530,37 @@
   window.__gcse = {
     callback: function() {
       READY = true;
+      // Force inline render of results in our container
+      try {
+        google.search.cse.element.render({
+          div: 'cse-results',
+          tag: 'searchresults-only',
+          gname: 'results'
+        });
+      } catch(e){}
     }
   };
+
   var input = document.getElementById('site-search');
   var box = document.getElementById('cse-results');
-  if (!box) return;
-  // Prepare static results container with gname
-  function ensureResultsContainer(){
-    if (!box.querySelector('.gcse-searchresults-only')) {
-      var d = document.createElement('div');
-      d.className = 'gcse-searchresults-only';
-      d.setAttribute('data-gname', 'results');
-      d.setAttribute('data-linkTarget', '_self');
-      d.setAttribute('data-queryParameterName', 'q');
-      box.appendChild(d);
+
+  function ensureInlineRendered(){
+    if (!(window.google && google.search && google.search.cse && google.search.cse.element)) return false;
+    var el = google.search.cse.element.getElement('results');
+    if (!el) {
+      google.search.cse.element.render({ div: 'cse-results', tag: 'searchresults-only', gname: 'results' });
+      el = google.search.cse.element.getElement('results');
     }
+    return !!el;
   }
-  ensureResultsContainer();
 
   function executeQuery(q){
     function tryExec(){
-      if (READY && window.google && google.search && google.search.cse && google.search.cse.element) {
+      if (ensureInlineRendered()) {
         var el = google.search.cse.element.getElement('results');
-        if (!el) {
-          // Render explicitly if element not initialized
-          google.search.cse.element.render({ div: 'cse-results', tag: 'searchresults-only', gname: 'results' });
-          el = google.search.cse.element.getElement('results');
-        }
-        if (el) {
-          el.execute(q);
-          box.style.display = 'block';
-          return true;
-        }
+        el.execute(q);
+        if (box) box.style.display = 'block';
+        return true;
       }
       return false;
     }
@@ -548,8 +568,8 @@
       var tries = 0;
       var iv = setInterval(function(){
         tries++;
-        if (tryExec() || tries > 50) clearInterval(iv);
-      }, 120);
+        if (tryExec() || tries > 80) clearInterval(iv);
+      }, 100);
     }
   }
 
@@ -565,7 +585,7 @@
     if (icon) icon.addEventListener('click', onSearch);
   }
 })();
-    </script><style>
+</script><style>
 /* CSE results dark compatibility */
 #gsc-iw-id1, .gsc-control-cse, .gsc-webResult.gsc-result, .gsc-card-box { background: transparent !important; }
 .gsc-input, input.gsc-input { background: transparent !important; color: #e6f0f3 !important; }
@@ -575,7 +595,6 @@
 .gsc-results .gsc-cursor-box .gsc-cursor-page.gsc-cursor-current-page { border-color:#2a7c9c !important; }
 </style>
 <!-- Script integrazione CSE con il tuo input -->
-
 <!-- Stile scuro per i risultati CSE -->
 <style>
       .gsc-control-cse, .gsc-control-cse .gsc-table-result { background: transparent !important; }
@@ -2418,5 +2437,71 @@ footer::before {
 })();
 </script>
 <!-- ▲▲▲ FINE BLOCCO TRADUZIONE ROBUSTA ▲▲▲ -->
-</body>
+<div aria-hidden="true" id="cse-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);backdrop-filter: blur(2px);z-index:9998;"></div><div aria-labelledby="cse-title" aria-modal="true" id="cse-panel" role="dialog" style="display:none;position:fixed;top:6vh;right:4vw;width:88vw;max-width:980px;height:88vh;z-index:9999;background:rgba(10,10,26,0.9);border:1px solid rgba(120,140,220,0.3);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.6);overflow:hidden;"><div id="cse-header" style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;border-bottom:1px solid rgba(120,140,220,0.2);"><h3 id="cse-title" style="margin:0;font-size:1rem;color:#eaf2ff;letter-spacing:.3px;">Risultati di ricerca</h3><div id="cse-controls" style="display:flex;align-items:center;gap:10px;"><button id="cse-theme-toggle" style="padding:6px 10px;border-radius:10px;border:1px solid rgba(120,140,220,0.4);background:rgba(120,140,220,0.15);color:#e6f0f3;cursor:pointer;font-size:.9rem;" type="button">Tema: Scuro</button><button aria-label="Chiudi risultati" id="cse-close" style="padding:6px 10px;border-radius:10px;border:1px solid rgba(220,120,120,0.5);background:rgba(220,120,120,0.15);color:#ffdede;cursor:pointer;font-size:.9rem;" type="button">✕ Chiudi</button></div></div><div id="cse-content" style="position:absolute;inset:52px 0 0 0;overflow:auto;padding:10px 12px;"><div id="cse-results" style="display:block;max-width:unset;margin:0;"><div class="gcse-searchresults-only" data-gname="results" data-linktarget="_self" data-queryparametername="q"></div></div></div></div><style>
+/* === CSE Panel Themes === */
+:root { --cse-bg:#0a0a1a; --cse-panel:#0a0a1a; --cse-card:#141628; --cse-txt:#eaf2ff; --cse-sub:#cfd8ff; --cse-url:#96ffa6; }
+.cse-light { --cse-bg:#f7f9ff; --cse-panel:#ffffff; --cse-card:#f3f6ff; --cse-txt:#0b0e19; --cse-sub:#2b3550; --cse-url:#0e6b2c; }
+#cse-panel { background:var(--cse-panel) !important; }
+#cse-results { background: color-mix(in oklab, var(--cse-panel), transparent 20%) !important; }
+.gsc-result, .gsc-webResult.gsc-result, .gsc-results .gsc-imageResult {
+  background: var(--cse-card) !important; border: 1px solid color-mix(in oklab, var(--cse-txt), transparent 70%) !important;
+}
+.gsc-result .gs-title, .gsc-result .gs-title * { color: var(--cse-txt) !important; }
+.gsc-result .gs-snippet { color: var(--cse-sub) !important; }
+.gsc-url-top, .gsc-url-bottom, .gsc-url-top * { color: var(--cse-url) !important; }
+</style><script>
+(function(){
+  var overlay = document.getElementById('cse-overlay');
+  var panel = document.getElementById('cse-panel');
+  var openBtn = document.getElementById('cse-open');
+  var closeBtn = document.getElementById('cse-close');
+  var themeBtn = document.getElementById('cse-theme-toggle');
+  function openPanel(){
+    if (!overlay || !panel) return;
+    overlay.style.display = 'block';
+    panel.style.display = 'block';
+    // small focus management
+    (closeBtn||panel).focus?.();
+  }
+  function closePanel(){
+    if (!overlay || !panel) return;
+    overlay.style.display = 'none';
+    panel.style.display = 'none';
+  }
+  if (overlay) overlay.addEventListener('click', closePanel);
+  if (openBtn) openBtn.addEventListener('click', openPanel);
+  if (closeBtn) closeBtn.addEventListener('click', closePanel);
+
+  // Auto-open panel when results are executed (hook existing execute)
+  var originalExecute = null;
+  function hookExecute(){
+    try {
+      if (window.google && google.search && google.search.cse && google.search.cse.element) {
+        var el = google.search.cse.element.getElement('results');
+        if (el && !originalExecute) {
+          originalExecute = el.execute;
+          el.execute = function(q){
+            openPanel();
+            return originalExecute.call(this, q);
+          };
+        }
+      }
+    } catch(e) {}
+  }
+  var iv = setInterval(function(){
+    hookExecute();
+    if (originalExecute) clearInterval(iv);
+  }, 150);
+
+  // Theme toggle
+  var light = false;
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function(){
+      light = !light;
+      document.body.classList.toggle('cse-light', light);
+      themeBtn.textContent = light ? 'Tema: Chiaro' : 'Tema: Scuro';
+    });
+  }
+})();
+</script></body>
 </html>
