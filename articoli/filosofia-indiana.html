@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filosofia Indiana: Tra Dharma, Karma e Moksha</title>
+    <style>
+        :root {
+            --primary-color: #4b5320; /* Verde militare indiano */
+            --secondary-color: #8b4513; /* Marrone terra */
+            --accent-color: #ff9933; /* Zafferano indiano */
+            --text-color: #f5f5dc; /* Beige chiaro */
+            --bg-color: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --philosophy-bg: #3a2f0b;
+            --meditative-bg: #1e3d59;
+            --night-bg: #0f0c29;
+            --yogic-bg: #2e5266;
+        }
+
+        body {
+            font-family: 'Cambria', 'Garamond', serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            transition: all 0.5s ease;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2.5rem;
+            text-align: center;
+            border-bottom: 5px solid var(--accent-color);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.8rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .subtitle {
+            font-style: italic;
+            opacity: 0.9;
+            font-size: 1.2rem;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 2.5rem auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Bottoni variabili */
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            margin: 0.6rem;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: #1a1a1a;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        /* Forme diverse di bottoni */
+        .btn-lotus {
+            border-radius: 50% 50% 5px 5px;
+            background: radial-gradient(circle, var(--accent-color) 60%, #e68a00 100%);
+        }
+
+        .btn-mandala {
+            border-radius: 20px 0 20px 0;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .btn-ashram {
+            border-radius: 0;
+            background-color: var(--primary-color);
+            color: white;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        /* Sezioni espandibili */
+        .accordion {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .accordion-header {
+            padding: 1.8rem;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.3rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .accordion-content {
+            padding: 0 2rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .accordion.active .accordion-content {
+            padding: 2rem;
+            max-height: 2000px;
+            transition: max-height 0.6s ease-in-out;
+        }
+
+        /* Modalità di lettura */
+        .reading-modes {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2.5rem 0;
+            gap: 1rem;
+        }
+
+        .mode-btn {
+            margin: 0.5rem;
+            padding: 1rem 2rem;
+            border: 2px solid transparent;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            min-width: 150px;
+            text-align: center;
+        }
+
+        .mode-default {
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 8px;
+        }
+
+        .mode-philosophy {
+            background-color: var(--philosophy-bg);
+            color: #ffcc66;
+            border-radius: 20px 0 20px 0;
+        }
+
+        .mode-meditative {
+            background-color: var(--meditative-bg);
+            color: #c9d6df;
+            border-radius: 50% 20% / 10% 40%;
+        }
+
+        .mode-night {
+            background-color: var(--night-bg);
+            color: #a7b8d1;
+            border-radius: 0 15px 0 15px;
+        }
+
+        .mode-yogic {
+            background-color: var(--yogic-bg);
+            color: #d4e6f5;
+            border-radius: 30px 5px 30px 5px;
+        }
+
+        .mode-btn.active {
+            border: 2px solid var(--accent-color);
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 153, 51, 0.5);
+        }
+
+        /* Elementi speciali */
+        .sanskrit {
+            font-style: italic;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        blockquote {
+            border-left: 5px solid var(--accent-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            background-color: rgba(0, 0, 0, 0.2);
+            font-style: italic;
+            position: relative;
+        }
+
+        blockquote:before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--accent-color);
+            opacity: 0.2;
+            position: absolute;
+            left: 10px;
+            top: -10px;
+        }
+
+        .deva-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .deva-table th {
+            background-color: var(--primary-color);
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .deva-table td {
+            padding: 0.8rem;
+            border-bottom: 1px solid var(--secondary-color);
+        }
+
+        .deva-table tr:hover {
+            background-color: rgba(139, 69, 19, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            margin-top: 4rem;
+            color: white;
+            border-top: 3px solid var(--accent-color);
+        }
+
+        /* Effetti modalità */
+        body.philosophy-mode {
+            background-color: var(--philosophy-bg);
+            --card-bg: #2a2408;
+        }
+
+        body.meditative-mode {
+            background-color: var(--meditative-bg);
+            --card-bg: #15314d;
+        }
+
+        body.night-mode {
+            background-color: var(--night-bg);
+            --card-bg: #06051a;
+        }
+
+        body.yogic-mode {
+            background-color: var(--yogic-bg);
+            --card-bg: #1d3b4d;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .accordion-header {
+                padding: 1.2rem;
+                font-size: 1.1rem;
+            }
+            
+            .reading-modes {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .mode-btn {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+<body class="default-mode">
+    <header>
+        <h1>Filosofia Indiana: Un Viaggio tra Dharma, Karma e Moksha</h1>
+        <p class="subtitle">"Tat Tvam Asi" - Tu sei Quello (Chandogya Upanishad)</p>
+    </header>
+
+    <div class="container">
+        <div class="reading-modes">
+            <button class="mode-btn mode-default active" onclick="setMode('default')">Classico</button>
+            <button class="mode-btn mode-philosophy" onclick="setMode('philosophy')">Filosofico</button>
+            <button class="mode-btn mode-meditative" onclick="setMode('meditative')">Meditativo</button>
+            <button class="mode-btn mode-night" onclick="setMode('night')">Notturno</button>
+            <button class="mode-btn mode-yogic" onclick="setMode('yogic')">Yogico</button>
+        </div>
+
+        <div class="accordion active">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span>Introduzione alla Filosofia Indiana</span>
+                <span>ॐ</span>
+            </div>
+            <div class="accordion-content">
+                <p>La filosofia indiana, sviluppatasi nel corso di millenni, rappresenta uno dei sistemi di pensiero più complessi e articolati della storia umana. Radicata nei <span class="sanskrit">Veda</span>, i testi sacri dell'induismo, si è evoluta attraverso sei sistemi ortodossi (<span class="sanskrit">Darshana</span>) e tre eterodossi.</p>
+                
+                <blockquote>
+                    "Come i fiumi fluiscono verso l'oceano e vi si dissolvono, perdendo il loro nome e la loro forma, così il saggio, liberato dal nome e dalla forma, raggiunge il Divino, che è più alto dell'alto."<br>
+                    — Mundaka Upanishad
+                </blockquote>
+                
+                <p>Le scuole principali includono:</p>
+                <ul>
+                    <li><span class="sanskrit">Nyaya</span> (logica)</li>
+                    <li><span class="sanskrit">Vaisheshika</span> (atomismo)</li>
+                    <li><span class="sanskrit">Samkhya</span> (dualismo)</li>
+                    <li><span class="sanskrit">Yoga</span> (disciplina)</li>
+                    <li><span class="sanskrit">Purva Mimamsa</span> (rituali)</li>
+                    <li><span class="sanskrit">Vedanta</span> (conclusione dei Veda)</li>
+                </ul>
+                
+                <button class="btn btn-primary btn-lotus" onclick="showSanskritTerm()">Termine Sanscrito</button>
+                <button class="btn btn-secondary btn-mandala" onclick="showTimeline()">Linea del Tempo</button>
+            </div>
+        </div>
+
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span>Concetti Fondamentali</span>
+                <span>ॐ</span>
+            </div>
+            <div class="accordion-content">
+                <h3>I Quattro <span class="sanskrit">Purushartha</span> (Scopi della Vita)</h3>
+                
+                <table class="deva-table">
+                    <tr>
+                        <th>Concetto</th>
+                        <th>Significato</th>
+                        <th>Descrizione</th>
+                    </tr>
+                    <tr>
+                        <td><span class="sanskrit">Dharma</span></td>
+                        <td>Dovere/Virtù</td>
+                        <td>Legge cosmica e ordine sociale, il dovere individuale</td>
+                    </tr>
+                    <tr>
+                        <td><span class="sanskrit">Artha</span></td>
+                        <td>Prosperità</td>
+                        <td>Ricchezza materiale e sicurezza economica</td>
+                    </tr>
+                    <tr>
+                        <td><span class="sanskrit">Kama</span></td>
+                        <td>Desiderio</td>
+                        <td>Piacere sensuale, amore e godimento estetico</td>
+                    </tr>
+                    <tr>
+                        <td><span class="sanskrit">Moksha</span></td>
+                        <td>Liberazione</td>
+                        <td>Liberazione dal ciclo delle rinascite (<span class="sanskrit">samsara</span>)</td>
+                    </tr>
+                </table>
+                
+                <h3>Altri Concetti Chiave</h3>
+                <p><strong><span class="sanskrit">Karma</span>:</strong> La legge di causa ed effetto dove le azioni determinano il destino futuro.</p>
+                <p><strong><span class="sanskrit">Samsara</span>:</strong> Il ciclo di nascita, morte e rinascita.</p>
+                <p><strong><span class="sanskrit">Atman</span>:</strong> L'anima individuale che è identica a <span class="sanskrit">Brahman</span> (l'Assoluto).</p>
+                
+                <button class="btn btn-primary btn-ashram" onclick="showConceptDetail()">Approfondisci Concetto</button>
+            </div>
+        </div>
+
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span>Scuole di Pensiero</span>
+                <span>ॐ</span>
+            </div>
+            <div class="accordion-content">
+                <h3>Le Sei <span class="sanskrit">Darshana</span> (Visioni Ortodosse)</h3>
+                
+                <div class="school-grid">
+                    <div class="school-card">
+                        <h4>1. <span class="sanskrit">Nyaya</span> (Logica)</h4>
+                        <p>Fondata da Gautama, si concentra sulla logica, l'epistemologia e il metodo di indagine.</p>
+                    </div>
+                    
+                    <div class="school-card">
+                        <h4>2. <span class="sanskrit">Vaisheshika</span> (Atomismo)</h4>
+                        <p>Sviluppata da Kanada, propone un'ontologia pluralista basata su atomi eterni.</p>
+                    </div>
+                    
+                    <div class="school-card">
+                        <h4>3. <span class="sanskrit">Samkhya</span> (Dualismo)</h4>
+                        <p>Attribuita a Kapila, distingue tra <span class="sanskrit">Purusha</span> (coscienza) e <span class="sanskrit">Prakriti</span> (materia).</p>
+                    </div>
+                    
+                    <div class="school-card">
+                        <h4>4. <span class="sanskrit">Yoga</span> (Disciplina)</h4>
+                        <p>Codificato da Patanjali, offre un percorso pratico verso la liberazione.</p>
+                    </div>
+                    
+                    <div class="school-card">
+                        <h4>5. <span class="sanskrit">Mimamsa</span> (Esegesi)</h4>
+                        <p>Focalizzata sull'interpretazione corretta dei rituali vedici.</p>
+                    </div>
+                    
+                    <div class="school-card">
+                        <h4>6. <span class="sanskrit">Vedanta</span> (Fine dei Veda)</h4>
+                        <p>Basata sulle Upanishad, con sottoscuole come Advaita (non-dualità) e Dvaita (dualità).</p>
+                    </div>
+                </div>
+                
+                <h3>Scuole Eterodosse</h3>
+                <p><strong>Buddhismo:</strong> Fondato da Siddhartha Gautama, enfatizza le Quattro Nobili Verità e l'Ottuplice Sentiero.</p>
+                <p><strong>Giainismo:</strong> Insegna la non-violenza (<span class="sanskrit">Ahimsa</span>) estrema e il pluralismo.</p>
+                <p><strong>Charvaka:</strong> Scuola materialista che rifiuta l'aldilà e la spiritualità.</p>
+                
+                <button class="btn btn-secondary btn-mandala" onclick="compareSchools()">Confronta Scuole</button>
+            </div>
+        </div>
+
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span>Testi Fondamentali</span>
+                <span>ॐ</span>
+            </div>
+            <div class="accordion-content">
+                <h3>La Tradizione Scritta</h3>
+                
+                <h4>1. <span class="sanskrit">Shruti</span> (Rivelati)</h4>
+                <ul>
+                    <li><strong>Veda</strong> (Rig, Sama, Yajur, Atharva)</li>
+                    <li><strong>Upanishad</strong> (108 testi filosofici)</li>
+                    <li><strong>Brahmana</strong> (Commentari rituali)</li>
+                    <li><strong>Aranyaka</strong> (Testi forestali)</li>
+                </ul>
+                
+                <h4>2. <span class="sanskrit">Smriti</span> (Tradizionali)</h4>
+                <ul>
+                    <li><strong>Puranas</strong> (18 maggiori e 18 minori)</li>
+                    <li><strong>Itihasa</strong> (Epici: Mahabharata e Ramayana)</li>
+                    <li><strong>Dharma Shastra</strong> (Leggi di Manu)</li>
+                    <li><strong>Agama</strong> (Testi tantrici)</li>
+                </ul>
+                
+                <h4>3. Testi Specifici delle Scuole</h4>
+                <ul>
+                    <li><strong>Yoga Sutra</strong> di Patanjali</li>
+                    <li><strong>Brahma Sutra</strong> di Badarayana</li>
+                    <li><strong>Bhagavad Gita</strong> (parte del Mahabharata)</li>
+                </ul>
+                
+                <blockquote>
+                    "Il saggio che ha realizzato la Verità mi dice: 'Il tuo sé non è altro che il Sé universale'. Perciò, chi conosce questo diventa tutto; nessuno nella sua stirpe rimane senza conoscere Brahman."<br>
+                    — Chandogya Upanishad
+                </blockquote>
+                
+                <button class="btn btn-primary btn-lotus" onclick="showRandomQuote()">Citazione Sacra</button>
+            </div>
+        </div>
+
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span>Influenze Moderne</span>
+                <span>ॐ</span>
+            </div>
+            <div class="accordion-content">
+                <h3>Impatto Globale</h3>
+                <p>La filosofia indiana ha influenzato profondamente il pensiero occidentale attraverso:</p>
+                <ul>
+                    <li>La traduzione dei testi vedici nel XVIII-XIX secolo</li>
+                    <li>Il movimento della Teosofia</li>
+                    <li>L'opera di pensatori come Schopenhauer, Emerson e Thoreau</li>
+                    <li>La diffusione dello Yoga e della Meditazione</li>
+                    <li>La psicologia transpersonale (Maslow, Grof)</li>
+                    <li>La fisica quantistica (dialogo con il Vedanta)</li>
+                </ul>
+                
+                <h3>Figure Chiave del XX Secolo</h3>
+                <ul>
+                    <li><strong>Swami Vivekananda</strong> - Presentò il Vedanta al Parlamento delle Religioni (1893)</li>
+                    <li><strong>Ramana Maharshi</strong> - Maestro dell'Advaita Vedanta</li>
+                    <li><strong>Aurobindo Ghose</strong> - Sviluppò lo Yoga Integrale</li>
+                    <li><strong>Jiddu Krishnamurti</strong> - Filosofo della liberazione psicologica</li>
+                </ul>
+                
+                <button class="btn btn-secondary btn-ashram" onclick="showModernInfluence()">Esempio Moderno</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Filosofia Indiana - Tutti i diritti riservati</p>
+        <p>Per approfondire questa affascinante tradizione filosofica:</p>
+        <button class="btn btn-primary btn-mandala" onclick="window.open('https://plato.stanford.edu/entries/indian-philosophy/', '_blank')">Risorse Accademiche</button>
+        <button class="btn btn-secondary btn-lotus" onclick="window.open('https://www.sacred-texts.com/hin/index.htm', '_blank')">Testi Sacri Online</button>
+    </footer>
+
+    <script>
+        // Funzioni per le sezioni espandibili
+        function toggleAccordion(header) {
+            const accordion = header.parentElement;
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('span:last-child');
+            
+            accordion.classList.toggle('active');
+            
+            if (accordion.classList.contains('active')) {
+                icon.textContent = '−';
+            } else {
+                icon.textContent = 'ॐ';
+            }
+        }
+        
+        // Modalità di lettura
+        function setMode(mode) {
+            document.body.className = mode + '-mode';
+            
+            // Aggiorna bottoni attivi
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+        
+        // Funzioni interattive
+        function showSanskritTerm() {
+            const terms = [
+                {term: "Maya", meaning: "L'illusione cosmica che ci fa percepire il molteplice invece dell'Uno"},
+                {term: "Bhakti", meaning: "Devozione amorosa verso la Divinità"},
+                {term: "Jnana", meaning: "Conoscenza spirituale diretta"},
+                {term: "Guru", meaning: "Maestro spirituale che dissipa l'oscurità"},
+                {term: "Prana", meaning: "Energia vitale che permea l'universo"}
+            ];
+            
+            const randomTerm = terms[Math.floor(Math.random() * terms.length)];
+            alert(`Sanscrito: ${randomTerm.term}\n\nSignificato: ${randomTerm.meaning}`);
+        }
+        
+        function showTimeline() {
+            alert("Linea del Tempo della Filosofia Indiana:\n\n" +
+                  "• 1500-500 a.C. - Periodo Vedico\n" +
+                  "• 800-200 a.C. - Upanishad\n" +
+                  "• 500 a.C.-200 d.C. - Sistemi Classici\n" +
+                  "• 200-800 d.C. - Periodo Epico\n" +
+                  "• 800-1200 d.C. - Scolastica\n" +
+                  "• 1200-1750 d.C. - Periodo Bhakti\n" +
+                  "• 1750-oggi - Periodo Moderno");
+        }
+        
+        function showConceptDetail() {
+            const concepts = [
+                "Dharma: Non è solo legge religiosa, ma il principio che sostiene l'universo e guida l'individuo verso l'armonia cosmica.",
+                "Karma: Non è destino immutabile, ma energia in azione che può essere trasformata attraverso scelte consapevoli.",
+                "Moksha: Non è semplicemente la liberazione dalla rinascita, ma la realizzazione della propria natura divina.",
+                "Atman: L'essenza individuale che, quando realizzata, si rivela identica a Brahman, l'Assoluto universale."
+            ];
+            
+            alert(concepts[Math.floor(Math.random() * concepts.length)]);
+        }
+        
+        function showRandomQuote() {
+            const quotes = [
+                "L'Atman (anima) non può essere afferrato dagli insegnamenti, dall'intelletto o dalla grande erudizione. Può essere ottenuto solo da colui che Lo desidera. A lui l'Atman rivela la Sua vera natura. — Katha Upanishad",
+                "Come un ragno emette e riassorbe la sua tela, come le piante nascono dalla terra e come i capelli crescono sulla testa di un uomo vivente, così dall'Imperituro sorge tutto questo mondo. — Mundaka Upanishad",
+                "Colui che vede tutto negli altri esseri e gli altri esseri in sé, non nutre più odio né avversione. — Isha Upanishad",
+                "Il saggio non si rallegra nell'ottenere ciò che è piacevole né si addolora nell'ottenere ciò che è spiacevole. — Bhagavad Gita",
+                "Dove c'è unità, c'è beatitudine. — Taittiriya Upanishad"
+            ];
+            
+            alert(quotes[Math.floor(Math.random() * quotes.length)]);
+        }
+        
+        function compareSchools() {
+            alert("Confronto tra Scuole:\n\n" +
+                  "Advaita Vedanta (Non-dualità):\n" +
+                  "- Realtà ultima: Solo Brahman è reale\n" +
+                  "- Obiettivo: Realizzare l'identità Atman=Brahman\n\n" +
+                  "Dvaita Vedanta (Dualismo):\n" +
+                  "- Realtà ultima: Dio, anime e mondo separati\n" +
+                  "- Obiettivo: Servizio devozionale a Vishnu\n\n" +
+                  "Buddhismo:\n" +
+                  "- Realtà ultima: Sunyata (Vacuità)\n" +
+                  "- Obiettivo: Risveglio (Bodhi) e cessazione della sofferenza");
+        }
+        
+        function showModernInfluence() {
+            const examples = [
+                "Fisica Quantistica: Schrödinger e Heisenberg trovarono paralleli tra la loro visione della realtà e il Vedanta.",
+                "Psicologia: Jung integrò concetti come l'inconscio collettivo con l'idea di 'mente universale'.",
+                "Ecologia Profonda: L'idea di interconnessione di tutti gli esseri ha radici nel pensiero upanishadico.",
+                "Neuroscienze: Lo studio degli stati meditativi ha rivoluzionato la comprensione della plasticità cerebrale."
+            ];
+            
+            alert("Influenza Moderna:\n\n" + examples[Math.floor(Math.random() * examples.length)]);
+        }
+        
+        // Inizializza la prima sezione come aperta
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstAccordion = document.querySelector('.accordion');
+            const firstIcon = firstAccordion.querySelector('.accordion-header span:last-child');
+            
+            firstAccordion.classList.add('active');
+            firstIcon.textContent = '−';
+        });
+    </script>
+</body>
+</html>

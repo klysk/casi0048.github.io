@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Il Platonismo: Un Viaggio nella Filosofia delle Idee</title>
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+            --card-bg: #fff;
+            --shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+            font-weight: normal;
+        }
+
+        h1 {
+            text-align: center;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        .theme-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .theme-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .theme-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        #default-theme {
+            background-color: #4a6fa5;
+            color: white;
+        }
+
+        #night-theme {
+            background-color: #1a1a2e;
+            color: #e6e6e6;
+        }
+
+        #philosophy-theme {
+            background-color: #3d5a80;
+            color: #f8f9fa;
+        }
+
+        #meditation-theme {
+            background-color: #588157;
+            color: #f8f9fa;
+        }
+
+        .section-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 15px 20px;
+            background-color: #4faf75;   
+            color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        .section-header:hover {
+            background-color: #c79e83;  
+
+        }
+
+        .section-content {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+        }
+
+        .section-content.show {
+            padding: 20px;
+            max-height: 2000px;
+        }
+
+        .toggle-icon {
+            transition: transform 0.3s;
+        }
+
+        .toggle-icon.rotate {
+            transform: rotate(180deg);
+        }
+
+        .quote {
+            font-style: italic;
+            border-left: 3px solid var(--primary-color);
+            padding-left: 15px;
+            margin: 20px 0;
+            color: var(--secondary-color);
+        }
+
+        /* Night Theme */
+        body.night-theme {
+            --primary-color: #6b8cae;
+            --secondary-color: #4a6fa5;
+            --text-color: #e6e6e6;
+            --bg-color: #1a1a2e;
+            --card-bg: #16213e;
+        }
+
+        /* Philosophy Theme */
+        body.philosophy-theme {
+            --primary-color: #3d5a80;
+            --secondary-color: #98c1d9;
+            --text-color: #293241;
+            --bg-color: #e0fbfc;
+            --card-bg: #ffffff;
+        }
+
+        /* Meditation Theme */
+        body.meditation-theme {
+            --primary-color: #588157;
+            --secondary-color: #3a5a40;
+            --text-color: #344e41;
+            --bg-color: #dad7cd;
+            --card-bg: #f8f9fa;
+        }
+
+        .highlight {
+            background-color: rgba(74, 111, 165, 0.1);
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--primary-color);
+            color: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Il Platonismo: Un Viaggio nella Filosofia delle Idee</h1>
+        
+        <div class="theme-buttons">
+            <button id="default-theme" class="theme-btn">Classico</button>
+            <button id="night-theme" class="theme-btn">Notturno</button>
+            <button id="philosophy-theme" class="theme-btn">Filosofico</button>
+            <button id="meditation-theme" class="theme-btn">Meditativo</button>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>Introduzione al Platonismo</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <p>Il Platonismo è la filosofia sviluppata da <span class="highlight">Platone</span> (428/427 a.C. - 348/347 a.C.) e dai suoi seguaci. Rappresenta una delle correnti filosofiche più influenti nella storia del pensiero occidentale.</p>
+                
+                <p>Al centro del platonismo troviamo la <span class="highlight">teoria delle Idee</span>, secondo la quale la realtà che percepiamo con i sensi è solo un'ombra imperfetta di una dimensione superiore, eterna e immutabile.</p>
+                
+                <div class="quote">
+                    "Il bene è quella cosa alla quale ogni anima tende e per la quale compie tutte le sue azioni, presentendola confusamente, ma trovando difficoltà a comprenderla con chiarezza."
+                    <br>- Platone, La Repubblica
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>La Teoria delle Idee</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Il Mondo Intelligibile</h3>
+                <p>Platone distingue tra:</p>
+                <ul>
+                    <li><strong>Mondo sensibile:</strong> il mondo fisico che percepiamo con i sensi, soggetto al cambiamento e alla corruzione</li>
+                    <li><strong>Mondo intelligibile:</strong> il regno delle Idee (o Forme), perfette, eterne e immutabili</li>
+                </ul>
+                
+                <h3>Caratteristiche delle Idee</h3>
+                <ol>
+                    <li><strong>Trascendenza:</strong> esistono indipendentemente dagli oggetti sensibili</li>
+                    <li><strong>Perfezione:</strong> sono modelli perfetti di cui le cose sensibili sono copie imperfette</li>
+                    <li><strong>Univocità:</strong> ciascuna Idea è unica nel suo genere</li>
+                    <li><strong>Immobilità:</strong> non sono soggette al divenire</li>
+                </ol>
+                
+                <div class="quote">
+                    "Chi vede le cose nella loro crescita e nella loro origine, le vedrà nella luce più bella."
+                    <br>- Platone, Repubblica
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>L'Allegoria della Caverna</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <p>Presentata nel libro VII de <em>La Repubblica</em>, è una delle metafore più celebri della filosofia occidentale.</p>
+                
+                <h3>Interpretazione</h3>
+                <p>I prigionieri incatenati nella caverna rappresentano l'umanità che vive nell'ignoranza, scambiando le ombre per realtà. Il filosofo che esce dalla caverna simboleggia il percorso verso la conoscenza della verità.</p>
+                
+                <h3>Fasi dell'Illuminazione</h3>
+                <ol>
+                    <li>Liberazione dalle catene</li>
+                    <li>Uscita dalla caverna</li>
+                    <li>Visione delle cose reali</li>
+                    <li>Visione del sole (Idea del Bene)</li>
+                    <li>Ritorno nella caverna per liberare gli altri</li>
+                </ol>
+                
+                <div class="quote">
+                    "E se qualcuno, liberato dalle catene e costretto ad alzarsi improvvisamente, volgesse lo sguardo verso la luce, proverebbe dolore e, per il barbaglio, non sarebbe capace di scorgere quelle cose di cui prima vedeva le ombre."
+                    <br>- Platone, Repubblica
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>L'Idea del Bene</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <p>Nella gerarchia platonica delle Idee, l'Idea del Bene occupa il vertice assoluto. Platone la paragona al sole nel mondo sensibile: come il sole rende possibile la vista e la vita, così il Bene rende possibile la conoscenza e l'esistenza stessa delle Idee.</p>
+                
+                <h3>Caratteristiche principali:</h3>
+                <ul>
+                    <li>Principio unificante di tutte le Idee</li>
+                    <li>Fonte di intelligibilità e verità</li>
+                    <li>Fine ultimo della conoscenza filosofica</li>
+                    <li>Principio etico e metafisico insieme</li>
+                </ul>
+                
+                <div class="quote">
+                    "Il Bene non è l'essenza, ma qualcosa che la trascende per dignità e potenza."
+                    <br>- Platone, Repubblica
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>L'Eros Platonico</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <p>Nel <em>Simposio</em>, Platone sviluppa una complessa teoria dell'amore come forza motrice che spinge l'anima verso la bellezza e la verità.</p>
+                
+                <h3>La Scala dell'Amore</h3>
+                <ol>
+                    <li>Amore per la bellezza fisica individuale</li>
+                    <li>Amore per la bellezza fisica in generale</li>
+                    <li>Amore per la bellezza dell'anima</li>
+                    <li>Amore per la bellezza delle leggi e delle istituzioni</li>
+                    <li>Amore per la bellezza delle scienze</li>
+                    <li>Amore per la Bellezza in sé (Idea del Bello)</li>
+                </ol>
+                
+                <div class="quote">
+                    "L'amore è desiderio di generare nel bello secondo il corpo e secondo l'anima."
+                    <br>- Platone, Simposio
+                </div>
+                
+                <p>Questa concezione dell'amore come <span class="highlight">via ascensionale</span> verso il vero e il bello ha influenzato profondamente tutta la cultura occidentale.</p>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>L'Anima nel Platonismo</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <p>Platone concepisce l'anima come immortale e preesistente al corpo. Nel <em>Fedro</em> la rappresenta come una biga alata:</p>
+                
+                <h3>La Tripartizione dell'Anima</h3>
+                <ul>
+                    <li><strong>Parte razionale</strong> (auriga): guida l'anima verso la verità</li>
+                    <li><strong>Parte irascibile</strong> (cavallo bianco): impulso nobile e coraggioso</li>
+                    <li><strong>Parte concupiscibile</strong> (cavallo nero): desideri bassi e materiali</li>
+                </ul>
+                
+                <h3>La Reminiscenza</h3>
+                <p>Platone sostiene che <span class="highlight">conoscere è ricordare</span> (anamnesi). L'anima, avendo contemplato le Idee prima di incarnarsi, può ricordarle attraverso un opportuno dialogo filosofico.</p>
+                
+                <div class="quote">
+                    "L'anima è simile a quelle idee che sempre sono, mentre il corpo è simile a quelle cose che mai permangono nello stesso stato."
+                    <br>- Platone, Fedone
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>Influenza Storica del Platonismo</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Platonismo Antico</h3>
+                <ul>
+                    <li>Accademia di Platone (387 a.C. - 529 d.C.)</li>
+                    <li>Medioplatonismo (I sec. a.C. - II sec. d.C.)</li>
+                    <li>Neoplatonismo (Plotino, Porfirio, Proclo)</li>
+                </ul>
+                
+                <h3>Platonismo Medievale</h3>
+                <ul>
+                    <li>Agostino d'Ippona e la sintesi con il cristianesimo</li>
+                    <li>Scuola di Chartres</li>
+                    <li>Pseudo-Dionigi l'Areopagita</li>
+                </ul>
+                
+                <h3>Rinascimento</h3>
+                <ul>
+                    <li>Accademia Platonica Fiorentina (Marsilio Ficino, Pico della Mirandola)</li>
+                    <li>Influenza sull'arte e la letteratura</li>
+                </ul>
+                
+                <h3>Età Moderna e Contemporanea</h3>
+                <ul>
+                    <li>Cambridge Platonists</li>
+                    <li>Influenza su Hegel e l'idealismo tedesco</li>
+                    <li>Platonismo matematico (Gödel)</li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2023 Articolo sul Platonismo - Tutti i diritti riservati</p>
+            <p>Fonti: Dialoghi di Platone, Stanford Encyclopedia of Philosophy, Storia della Filosofia Occidentale</p>
+        </footer>
+    </div>
+
+    <script>
+        // Funzione per aprire/chiudere le sezioni
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.toggle-icon');
+            
+            content.classList.toggle('show');
+            icon.classList.toggle('rotate');
+        }
+
+        // Funzioni per cambiare tema
+        document.getElementById('default-theme').addEventListener('click', function() {
+            document.body.className = '';
+        });
+
+        document.getElementById('night-theme').addEventListener('click', function() {
+            document.body.className = 'night-theme';
+        });
+
+        document.getElementById('philosophy-theme').addEventListener('click', function() {
+            document.body.className = 'philosophy-theme';
+        });
+
+        document.getElementById('meditation-theme').addEventListener('click', function() {
+            document.body.className = 'meditation-theme';
+        });
+
+        // Apri la prima sezione di default
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstSection = document.querySelector('.section-header');
+            toggleSection(firstSection);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epicureismo: La Filosofia del Piacere Saggio</title>
+    <style>
+        :root {
+            --primary-color: #9c7a97;
+            --secondary-color: #7d5a68;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+            --card-bg: #fff;
+            --shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+            font-weight: normal;
+        }
+
+        h1 {
+            text-align: center;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        .theme-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .theme-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            color: #fff; /* Colore testo bianco per default */
+        }
+
+        .theme-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        #default-theme {
+            background-color: #9c7a97;
+        }
+
+        #night-theme {
+            background-color: #4a3e4f;
+        }
+
+        #philosophy-theme {
+            background-color: #6d6875;
+        }
+
+        #meditation-theme {
+            background-color: #b5838d;
+        }
+
+        .section-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 15px 20px;
+            background-color: #fb7f75; var(--primary-color);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        .section-header:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .section-content {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+        }
+
+        .section-content.show {
+            padding: 20px;
+            max-height: 2000px;
+        }
+
+        .toggle-icon {
+            transition: transform 0.3s;
+        }
+
+        .toggle-icon.rotate {
+            transform: rotate(180deg);
+        }
+
+        .quote {
+            font-style: italic;
+            border-left: 3px solid var(--primary-color);
+            padding-left: 15px;
+            margin: 20px 0;
+            color: var(--secondary-color);
+        }
+
+        /* Night Theme */
+        body.night-theme {
+            --primary-color: #7d5a68;
+            --secondary-color: #4a3e4f;
+            --text-color: #e6e6e6;
+            --bg-color: #2d2327;
+            --card-bg: #3a2e32;
+        }
+
+        /* Philosophy Theme */
+        body.philosophy-theme {
+            --primary-color: #6d6875;
+            --secondary-color: #b5838d;
+            --text-color: #293241;
+            --bg-color: #f8edeb;
+            --card-bg: #ffffff;
+        }
+
+        /* Meditation Theme */
+        body.meditation-theme {
+            --primary-color: #b5838d;
+            --secondary-color: #9c7a97;
+            --text-color: #4a3e4f;
+            --bg-color: #f9f5f0;
+            --card-bg: #fff9f5;
+        }
+
+        .highlight {
+            background-color: rgba(156, 122, 151, 0.1);
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--primary-color);
+            color: var(--secondary-color);
+        }
+
+        .tetrapharmakos {
+            background-color: rgba(156, 122, 151, 0.05);
+            border: 1px dashed var(--primary-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .tetrapharmakos h3 {
+            text-align: center;
+            color: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Epicureismo: La Filosofia del Piacere Saggio</h1>
+        
+        <div class="theme-buttons">
+            <button id="default-theme" class="theme-btn">Classico</button>
+            <button id="night-theme" class="theme-btn">Notturno</button>
+            <button id="philosophy-theme" class="theme-btn">Filosofico</button>
+            <button id="meditation-theme" class="theme-btn">Meditativo</button>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>Introduzione all'Epicureismo</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <p>L'<span class="highlight">Epicureismo</span> è la filosofia fondata da <span class="highlight">Epicuro</span> (341-270 a.C.) che propone un sistema etico basato sul raggiungimento della felicità attraverso il piacere, inteso però come assenza di dolore (<em>aponìa</em>) e di turbamento dell'anima (<em>atarassìa</em>).</p>
+                
+                <p>Contrariamente a quanto spesso si crede, l'Epicureismo non è una filosofia edonista sfrenata, ma propone piuttosto una <span class="highlight">ricerca equilibrata del piacere</span>, privilegiando quelli naturali e necessari.</p>
+                
+                <div class="quote">
+                    "Non è giovane chi sta bene, ma chi sta bene è giovane, anche se vecchio di anni."
+                    <br>- Epicuro, Massima Capitale XXIII
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>La Tetrapharmakos: i Quattro Rimedi</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="tetrapharmakos">
+                    <h3>I Quattro Farmaci dell'Anima</h3>
+                    <ol>
+                        <li><strong>Non temere gli dèi</strong> - Gli dèi esistono ma non si interessano delle vicende umane</li>
+                        <li><strong>Non temere la morte</strong> - "Dove ci siamo noi non c'è la morte, dove c'è la morte non ci siamo noi"</li>
+                        <li><strong>Il bene è facile a ottenersi</strong> - I veri bisogni sono semplici da soddisfare</li>
+                        <li><strong>Il male è facile a sopportarsi</strong> - Se è intenso è breve, se è lungo è sopportabile</li>
+                    </ol>
+                </div>
+                
+                <p>Questi quattro principi costituiscono la base della terapia filosofica epicurea per liberare l'uomo dalle sue principali paure e ansie.</p>
+                
+                <div class="quote">
+                    "Vanità è il desiderare la longevità e trascurare di rendere dolce la vita."
+                    <br>- Epicuro, Sentenze Vaticane
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>La Fisica Epicurea</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Atomismo</h3>
+                <p>Epicuro riprende la teoria atomistica di Democrito, secondo cui:</p>
+                <ul>
+                    <li>La realtà è composta da atomi e vuoto</li>
+                    <li>Gli atomi sono eterni, indivisibili e in movimento</li>
+                    <li>Il mondo è frutto di combinazioni casuali di atomi</li>
+                </ul>
+                
+                <h3>Clinamen: la Deviazione degli Atomi</h3>
+                <p>Epicuro introduce l'innovativo concetto di <span class="highlight">clinamen</span>, una lieve deviazione spontanea nel moto degli atomi che:</p>
+                <ul>
+                    <li>Spiega la libertà umana (evitando il determinismo)</li>
+                    <li>Giustifica la formazione dei mondi</li>
+                </ul>
+                
+                <div class="quote">
+                    "Gli atomi si muovono con uguale velocità, quando attraversano il vuoto, perché né i pesanti vengono trasportati più velocemente dei piccoli e leggeri, né i piccoli più dei grandi."
+                    <br>- Epicuro, Lettera a Erodoto
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>L'Etica del Piacere</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Classificazione dei Desideri</h3>
+                <ol>
+                    <li><strong>Naturali e necessari</strong> (es. cibo, riparo) - Da soddisfare sempre</li>
+                    <li><strong>Naturali ma non necessari</strong> (es. cibi raffinati) - Da soddisfare con moderazione</li>
+                    <li><strong>Né naturali né necessari</strong> (es. fama, ricchezza) - Da evitare</li>
+                </ol>
+                
+                <h3>Il Calcolo dei Piaceri</h3>
+                <p>Epicuro propone un <span class="highlight">approccio razionale al piacere</span>:</p>
+                <ul>
+                    <li>Valutare le conseguenze di ogni piacere</li>
+                    <li>Preferire i piaceri duraturi a quelli intensi ma brevi</li>
+                    <li>Evitare i piaceri che portano a dolori maggiori</li>
+                </ul>
+                
+                <div class="quote">
+                    "Non rovinare ciò che hai desiderando ciò che non hai; ricorda che ciò che hai ora era tra le cose che speravi."
+                    <br>- Epicuro, Sentenze Vaticane
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>Il Giardino di Epicuro</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <p>Epicuro fondò ad Atene una scuola filosofica chiamata <span class="highlight">"Il Giardino"</span>, che rappresentava un modello di vita comunitaria basato sui principi epicurei.</p>
+                
+                <h3>Caratteristiche della Comunità</h3>
+                <ul>
+                    <li>Vita semplice e frugale</li>
+                    <li>Amicizia come valore fondamentale</li>
+                    <li>Uguaglianza tra uomini e donne</li>
+                    <li>Allontanamento dalla vita politica</li>
+                </ul>
+                
+                <h3>Pratiche Filosofiche</h3>
+                <ul>
+                    <li>Dialogo continuo tra maestro e discepoli</li>
+                    <li>Esercizi spirituali per raggiungere l'atarassia</li>
+                    <li>Studio della natura per liberarsi dalle superstizioni</li>
+                </ul>
+                
+                <div class="quote">
+                    "Di tutte le cose che la saggezza procura per ottenere un'esistenza felice, la più grande è l'amicizia."
+                    <br>- Epicuro, Massime Capitali
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>Epicureismo vs Stoicismo</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
+                    <tr style="background-color: var(--primary-color); color: white;">
+                        <th style="padding: 10px; text-align: left;">Aspetto</th>
+                        <th style="padding: 10px; text-align: left;">Epicureismo</th>
+                        <th style="padding: 10px; text-align: left;">Stoicismo</th>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--secondary-color);">
+                        <td style="padding: 10px;">Scopo della vita</td>
+                        <td style="padding: 10px;">Piacere (assenza di dolore)</td>
+                        <td style="padding: 10px;">Virtù in accordo con la natura</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--secondary-color);">
+                        <td style="padding: 10px;">Atteggiamento verso le emozioni</td>
+                        <td style="padding: 10px;">Moderazione dei piaceri</td>
+                        <td style="padding: 10px;">Controllo totale delle passioni</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--secondary-color);">
+                        <td style="padding: 10px;">Ruolo della divinità</td>
+                        <td style="padding: 10px;">Dèi indifferenti</td>
+                        <td style="padding: 10px;">Logos divino che governa tutto</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--secondary-color);">
+                        <td style="padding: 10px;">Approccio alla politica</td>
+                        <td style="padding: 10px;">Vita appartata</td>
+                        <td style="padding: 10px;">Partecipazione attiva</td>
+                    </tr>
+                </table>
+                
+                <div class="quote">
+                    "Il saggio non si affannerà per la patria e per gli amici più di quanto non faccia per degli sconosciuti."
+                    <br>- Epicuro (in contrasto con l'ideale stoico del dovere civico)
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>L'Eredità dell'Epicureismo</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Influenza Storica</h3>
+                <ul>
+                    <li><strong>Antichità:</strong> Lucrezio (De rerum natura), Filodemo di Gadara</li>
+                    <li><strong>Rinascimento:</strong> Riscoperta di Lucrezio, influenza su Montaigne</li>
+                    <li><strong>Illuminismo:</strong> Influenza su Diderot, d'Holbach</li>
+                    <li><strong>Età Moderna:</strong> Nietzsche, Marx (tesi di dottorato su Epicuro)</li>
+                </ul>
+                
+                <h3>Epicureismo Contemporaneo</h3>
+                <p>Oggi l'Epicureismo viene reinterpretato come:</p>
+                <ul>
+                    <li>Filosofia della moderazione e della semplicità volontaria</li>
+                    <li>Antidoto alla società consumistica</li>
+                    <li>Approccio razionale alla felicità</li>
+                </ul>
+                
+                <div class="quote">
+                    "Epicuro ci insegna che la felicità non è un dono degli dèi, ma il frutto di una saggezza umana."
+                    <br>- Michel Onfray, filosofo contemporaneo
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2023 Articolo sull'Epicureismo - Tutti i diritti riservati</p>
+            <p>Fonti: Lettere di Epicuro, De rerum natura di Lucrezio, Stanford Encyclopedia of Philosophy</p>
+        </footer>
+    </div>
+
+    <script>
+        // Funzione per aprire/chiudere le sezioni
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.toggle-icon');
+            
+            content.classList.toggle('show');
+            icon.classList.toggle('rotate');
+        }
+
+        // Funzioni per cambiare tema
+        document.getElementById('default-theme').addEventListener('click', function() {
+            document.body.className = '';
+        });
+
+        document.getElementById('night-theme').addEventListener('click', function() {
+            document.body.className = 'night-theme';
+        });
+
+        document.getElementById('philosophy-theme').addEventListener('click', function() {
+            document.body.className = 'philosophy-theme';
+        });
+
+        document.getElementById('meditation-theme').addEventListener('click', function() {
+            document.body.className = 'meditation-theme';
+        });
+
+        // Apri la prima sezione di default
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstSection = document.querySelector('.section-header');
+            toggleSection(firstSection);
+        });
+    </script>
+</body>
+</html>

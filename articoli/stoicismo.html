@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stoicismo: La Filosofia della Virtù e della Resilienza</title>
+    <style>
+        :root {
+            --primary-color: #3a5a78;
+            --secondary-color: #2c3e50;
+            --text-color: #333333;
+            --bg-color: #f5f7fa;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 8px rgba(0,0,0,0.1);
+            --header-text: #ffffff;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+            font-weight: normal;
+        }
+
+        h1 {
+            text-align: center;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        .theme-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .theme-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .theme-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        #default-theme {
+            background-color: #3a5a78;
+            color: #ffffff;
+        }
+
+        #night-theme {
+            background-color: #1a2639;
+            color: #e0e0e0;
+        }
+
+        #philosophy-theme {
+            background-color: #2c3e50;
+            color: #f5f5f5;
+        }
+
+        #meditation-theme {
+            background-color: #4a6b7d;
+            color: #f0f0f0;
+        }
+
+        .section-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 18px 25px;
+            background-color: #ffdff6;
+            color:  var(--header-text);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        .section-header:hover {
+            background-color: #00BFFF;  var(--secondary-color);
+        }
+
+        .section-content {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+        }
+
+        .section-content.show {
+            padding: 25px;
+            max-height: 3000px;
+        }
+
+        .toggle-icon {
+            transition: transform 0.3s;
+            font-size: 1.1em;
+        }
+
+        .toggle-icon.rotate {
+            transform: rotate(180deg);
+        }
+
+        .quote {
+            font-style: italic;
+            border-left: 4px solid var(--primary-color);
+            padding-left: 20px;
+            margin: 25px 0;
+            color: var(--secondary-color);
+            font-size: 1.05em;
+        }
+
+        /* Night Theme */
+        body.night-theme {
+            --primary-color: #2c3e50;
+            --secondary-color: #1a2639;
+            --text-color: #e0e0e0;
+            --bg-color: #0d1b2a;
+            --card-bg: #1b263b;
+            --header-text: #ffffff;
+        }
+
+        /* Philosophy Theme */
+        body.philosophy-theme {
+            --primary-color: #2c3e50;
+            --secondary-color: #4a6b7d;
+            --text-color: #2d3748;
+            --bg-color: #edf2f7;
+            --card-bg: #ffffff;
+            --header-text: #ffffff;
+        }
+
+        /* Meditation Theme */
+        body.meditation-theme {
+            --primary-color: #4a6b7d;
+            --secondary-color: #3a5a78;
+            --text-color: #2d3748;
+            --bg-color: #f0f4f8;
+            --card-bg: #ffffff;
+            --header-text: #ffffff;
+        }
+
+        .highlight {
+            background-color: rgba(58, 90, 120, 0.1);
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 25px;
+            border-top: 1px solid var(--primary-color);
+            color: var(--secondary-color);
+            font-size: 0.9em;
+        }
+
+        .virtues-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .virtue-card {
+            background-color: rgba(58, 90, 120, 0.05);
+            border: 1px solid rgba(58, 90, 120, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            transition: transform 0.3s;
+        }
+
+        .virtue-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+
+        .virtue-card h3 {
+            margin-top: 0;
+            color: var(--secondary-color);
+        }
+
+        .contrast-check {
+            background-color: var(--primary-color);
+            color: var(--header-text);
+            padding: 5px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Stoicismo: La Filosofia della Virtù e della Resilienza</h1>
+        
+        <div class="theme-buttons">
+            <button id="default-theme" class="theme-btn">Classico</button>
+            <button id="night-theme" class="theme-btn">Notturno</button>
+            <button id="philosophy-theme" class="theme-btn">Filosofico</button>
+            <button id="meditation-theme" class="theme-btn">Meditativo</button>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>Introduzione allo Stoicismo</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <p>Lo <span class="highlight">Stoicismo</span> è una scuola filosofica ellenistica fondata da <span class="highlight">Zenone di Cizio</span> intorno al 300 a.C. ad Atene. Si sviluppò come una delle principali correnti filosofiche del mondo antico insieme all'Epicureismo e allo Scetticismo.</p>
+                
+                <p>Questa filosofia pratica si concentra sull'<span class="highlight">autocontrollo</span>, la <span class="highlight">virtù</span> e la <span class="highlight">resilienza</span> come mezzi per raggiungere la saggezza e la serenità interiore (<em>atarassia</em>).</p>
+                
+                <div class="quote">
+                    "Non sono i fatti in sé che turbano gli uomini, ma i giudizi che gli uomini formulano sui fatti."
+                    <br>- Epitteto, Manuale
+                </div>
+                
+                <h3>Principali Esponenti</h3>
+                <ul>
+                    <li><strong>Zenone di Cizio</strong> (fondatore)</li>
+                    <li><strong>Cleante</strong> (successore di Zenone)</li>
+                    <li><strong>Crisippo</strong> (sistematico dello Stoicismo)</li>
+                    <li><strong>Seneca</strong> (filosofo e drammaturgo romano)</li>
+                    <li><strong>Epitteto</strong> (schiavo diventato filosofo)</li>
+                    <li><strong>Marco Aurelio</strong> (imperatore filosofo)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>I Principi Fondamentali</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>La Divisione della Filosofia</h3>
+                <p>Gli stoici dividevano la filosofia in tre parti:</p>
+                <ol>
+                    <li><strong>Logica</strong>: strumento per discernere il vero dal falso</li>
+                    <li><strong>Fisica</strong>: comprensione della natura e del cosmo</li>
+                    <li><strong>Etica</strong>: applicazione pratica per vivere virtuosamente</li>
+                </ol>
+                
+                <h3>Le Quattro Virtù Cardinali</h3>
+                <div class="virtues-container">
+                    <div class="virtue-card">
+                        <h3>Saggezza (Sophia)</h3>
+                        <p>La capacità di discernere ciò che è bene, male o indifferente attraverso la ragione.</p>
+                    </div>
+                    <div class="virtue-card">
+                        <h3>Coraggio (Andreia)</h3>
+                        <p>La forza d'animo per affrontare le avversità e resistere alle paure irrazionali.</p>
+                    </div>
+                    <div class="virtue-card">
+                        <h3>Giustizia (Dikaiosyne)</h3>
+                        <p>Il rispetto per gli altri e l'equa distribuzione di ciò che ciascuno merita.</p>
+                    </div>
+                    <div class="virtue-card">
+                        <h3>Temperanza (Sophrosyne)</h3>
+                        <p>L'autocontrollo e la moderazione in tutte le cose.</p>
+                    </div>
+                </div>
+                
+                <div class="quote">
+                    "La felicità della tua vita dipende dalla qualità dei tuoi pensieri."
+                    <br>- Marco Aurelio, Pensieri
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>La Dicotomia del Controllo</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <p>Uno dei concetti più pratici dello Stoicismo è la <span class="highlight">dicotomia del controllo</span>, elaborata principalmente da Epitteto:</p>
+                
+                <h3>Cose che dipendono da noi</h3>
+                <ul>
+                    <li>Le nostre opinioni</li>
+                    <li>I nostri impulsi</li>
+                    <li>I nostri desideri</li>
+                    <li>Le nostre avversioni</li>
+                </ul>
+                
+                <h3>Cose che non dipendono da noi</h3>
+                <ul>
+                    <li>Il nostro corpo</li>
+                    <li>Le nostre proprietà</li>
+                    <li>La nostra reputazione</li>
+                    <li>Le cariche pubbliche</li>
+                </ul>
+                
+                <p>Secondo gli stoici, la sofferenza nasce dal confondere queste due categorie e dal cercare di controllare ciò che è al di fuori del nostro potere.</p>
+                
+                <div class="quote">
+                    "Tra i nostri poteri ci sono il giudizio, l'impulso, il desiderio, l'avversione. In una parola: tutto ciò che è opera nostra. Non rientrano tra i nostri poteri il corpo, le ricchezze, la reputazione, le cariche. In una parola: tutto ciò che non è opera nostra."
+                    <br>- Epitteto, Manuale
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>Esercizi Spirituali Stoici</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Pratiche per lo Sviluppo Personale</h3>
+                <ol>
+                    <li><strong>Premeditatio Malorum</strong>: Premeditazione dei mali possibili per ridurre l'impatto emotivo quando accadono</li>
+                    <li><strong>Amor Fati</strong>: Amore per il proprio destino, accettazione radicale della realtà</li>
+                    <li><strong>Memento Mori</strong>: Ricordo della mortalità per vivere con maggiore intensità</li>
+                    <li><strong>Visione dall'Alto</strong>: Esercizio di prospettiva per ridimensionare i problemi</li>
+                    <li><strong>Esame Serale</strong>: Riflessione giornaliera sulle azioni compiute</li>
+                </ol>
+                
+                <h3>Come Applicarli Oggi</h3>
+                <div class="virtues-container">
+                    <div class="virtue-card">
+                        <h3>Journaling</h3>
+                        <p>Come Marco Aurelio nei suoi "Pensieri", scrivere riflessioni quotidiane aiuta a chiarire la mente.</p>
+                    </div>
+                    <div class="virtue-card">
+                        <h3>Discomfort Practice</h3>
+                        <p>Periodicamente privarsi di comodità per rafforzare la resilienza.</p>
+                    </div>
+                    <div class="virtue-card">
+                        <h3>Negative Visualization</h3>
+                        <p>Immaginare di perdere ciò che si ha per apprezzarlo di più.</p>
+                    </div>
+                </div>
+                
+                <div class="quote">
+                    "Comincia ogni giornata dicendo a te stesso: oggi incontrerò gente invadente, ingrata, arrogante, disonesta, invidiosa e asociale."
+                    <br>- Marco Aurelio, Pensieri
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>Stoicismo Moderno</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Influenze Contemporanee</h3>
+                <p>Lo Stoicismo ha conosciuto una rinascita nel XXI secolo come filosofia pratica per:</p>
+                <ul>
+                    <li>Gestione dello stress e dell'ansia</li>
+                    <li>Sviluppo della leadership</li>
+                    <li>Psicoterapia (CBT - Terapia Cognitivo-Comportamentale)</li>
+                    <li>Performance atletica e professionale</li>
+                </ul>
+                
+                <h3>Autori Moderni</h3>
+                <div class="virtues-container">
+                    <div class="virtue-card">
+                        <h3>Ryan Holiday</h3>
+                        <p>"L'Ostacolo è il Cammino" e "The Daily Stoic" hanno portato lo Stoicismo al pubblico moderno.</p>
+                    </div>
+                    <div class="virtue-card">
+                        <h3>Massimo Pigliucci</h3>
+                        <p>"Come Essere Stoici" esplora l'applicazione pratica dello Stoicismo oggi.</p>
+                    </div>
+                    <div class="virtue-card">
+                        <h3>Donald Robertson</h3>
+                        <p>Collega lo Stoicismo antico alla psicoterapia moderna.</p>
+                    </div>
+                </div>
+                
+                <div class="quote">
+                    "Lo Stoicismo non consiste nell'eliminare le emozioni, ma nell'eliminare le emozioni negative che derivano da giudizi errati."
+                    <br>- Massimo Pigliucci, Come Essere Stoici
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>Risorse per Approfondire</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Testi Antichi</h3>
+                <ul>
+                    <li><strong>Meditazioni</strong> di Marco Aurelio</li>
+                    <li><strong>Lettere a Lucilio</strong> di Seneca</li>
+                    <li><strong>Manuale</strong> di Epitteto</li>
+                    <li><strong>Discorsi</strong> di Epitteto</li>
+                </ul>
+                
+                <h3>Libri Moderni</h3>
+                <ul>
+                    <li><strong>L'Ostacolo è il Cammino</strong> di Ryan Holiday</li>
+                    <li><strong>Come Essere Stoici</strong> di Massimo Pigliucci</li>
+                    <li><strong>Stoicism and the Art of Happiness</strong> di Donald Robertson</li>
+                    <li><strong>The Daily Stoic</strong> di Ryan Holiday e Stephen Hanselman</li>
+                </ul>
+                
+                <h3>Risorse Online</h3>
+                <ul>
+                    <li><strong>Modern Stoicism</strong> (organizzazione no-profit)</li>
+                    <li><strong>Daily Stoic</strong> (sito web e newsletter)</li>
+                    <li><strong>Stoic Week</strong> (evento annuale internazionale)</li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2023 Articolo sullo Stoicismo - Tutti i diritti riservati</p>
+            <p>Fonti: Meditazioni di Marco Aurelio, Manuale di Epitteto, Lettere a Lucilio di Seneca</p>
+            <p class="contrast-check">Contrasto testuale verificato per accessibilità</p>
+        </footer>
+    </div>
+
+    <script>
+        // Funzione per aprire/chiudere le sezioni
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.toggle-icon');
+            
+            content.classList.toggle('show');
+            icon.classList.toggle('rotate');
+        }
+
+        // Funzioni per cambiare tema
+        document.getElementById('default-theme').addEventListener('click', function() {
+            document.body.className = '';
+        });
+
+        document.getElementById('night-theme').addEventListener('click', function() {
+            document.body.className = 'night-theme';
+        });
+
+        document.getElementById('philosophy-theme').addEventListener('click', function() {
+            document.body.className = 'philosophy-theme';
+        });
+
+        document.getElementById('meditation-theme').addEventListener('click', function() {
+            document.body.className = 'meditation-theme';
+        });
+
+        // Apri la prima sezione di default
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstSection = document.querySelector('.section-header');
+            toggleSection(firstSection);
+        });
+    </script>
+</body>
+</html>

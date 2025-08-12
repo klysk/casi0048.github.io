@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Il Cinismo: Tra Filosofia Antica e Moderna</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #e74c3c;
+            --text-color: #ecf0f1;
+            --bg-color: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --philosophy-bg: #3a5169;
+            --meditative-bg: #4a6b7d;
+            --night-bg: #1a1a2e;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 4px solid var(--accent-color);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        .subtitle {
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Stili per i bottoni */
+        .btn {
+            display: inline-block;
+            padding: 0.7rem 1.5rem;
+            margin: 0.5rem;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-rounded {
+            border-radius: 30px;
+        }
+
+        .btn-square {
+            border-radius: 5px;
+        }
+
+        .btn-pill {
+            border-radius: 50px;
+        }
+
+        /* Stili per le sezioni espandibili */
+        .accordion {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .accordion-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .accordion-content {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .accordion.active .accordion-content {
+            padding: 1.5rem;
+            max-height: 1000px;
+            transition: max-height 0.5s ease-in;
+        }
+
+        /* Stili per le modalità di lettura */
+        .reading-modes {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .mode-btn {
+            margin: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mode-default {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .mode-philosophy {
+            background-color: var(--philosophy-bg);
+            color: white;
+        }
+
+        .mode-meditative {
+            background-color: var(--meditative-bg);
+            color: white;
+        }
+
+        .mode-night {
+            background-color: var(--night-bg);
+            color: white;
+        }
+
+        .mode-btn.active {
+            border: 2px solid white;
+            transform: scale(1.05);
+        }
+
+        /* Stili per citazioni */
+        blockquote {
+            border-left: 4px solid var(--accent-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            background-color: rgba(255, 255, 255, 0.05);
+            font-style: italic;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--primary-color);
+            margin-top: 3rem;
+        }
+
+        /* Effetti per le diverse modalità */
+        body.philosophy-mode {
+            background-color: var(--philosophy-bg);
+        }
+
+        body.meditative-mode {
+            background-color: var(--meditative-bg);
+        }
+
+        body.night-mode {
+            background-color: var(--night-bg);
+        }
+    </style>
+</head>
+<body class="default-mode">
+    <header>
+        <h1>Il Cinismo: Tra Filosofia Antica e Moderna</h1>
+        <p class="subtitle">"Quando Diogene cercava un uomo con una lanterna"</p>
+    </header>
+
+    <div class="container">
+        <div class="reading-modes">
+            <button class="mode-btn mode-default active" onclick="setMode('default')">Default</button>
+            <button class="mode-btn mode-philosophy" onclick="setMode('philosophy')">Filosofico</button>
+            <button class="mode-btn mode-meditative" onclick="setMode('meditative')">Meditativo</button>
+            <button class="mode-btn mode-night" onclick="setMode('night')">Notturno</button>
+        </div>
+
+        <div class="accordion active">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span>Introduzione al Cinismo</span>
+                <span>+</span>
+            </div>
+            <div class="accordion-content">
+                <p>Il cinismo è una corrente filosofica nata nell'antica Grecia nel V secolo a.C., fondata da Antistene e resa celebre dal suo allievo Diogene di Sinope. Il termine "cinico" deriva dal greco "kynikos", che significa "simile a un cane", un appellativo che i cinici stessi accettavano con orgoglio, vedendo nell'animale un modello di vita libero da convenzioni sociali.</p>
+                
+                <blockquote>
+                    "Chiesero a Diogene perché la gente desse elemosina ai mendicanti e non ai filosofi. Rispose: 'Perché pensano che possano diventare ciechi e zoppi, ma mai filosofi'."
+                </blockquote>
+                
+                <p>Il cinismo proponeva un ritorno alla natura e un rifiuto delle convenzioni sociali, della ricchezza e del potere. I cinici vivevano in estrema povertà, spesso mendicando, e praticavano un'ascesi volta all'autosufficienza e alla libertà interiore.</p>
+            </div>
+        </div>
+
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span>Principi Fondamentali</span>
+                <span>+</span>
+            </div>
+            <div class="accordion-content">
+                <h3>Autarchia: l'autosufficienza</h3>
+                <p>I cinici cercavano di raggiungere l'autarchia, cioè l'autosufficienza assoluta, liberandosi da ogni dipendenza materiale o sociale. Diogene viveva in una botte e possedeva solo un mantello, una bisaccia e una ciotola (che gettò via quando vide un bambino bere con le mani).</p>
+                
+                <h3>Parresia: la libertà di parola</h3>
+                <p>La parresia era il coraggio di dire la verità senza mezzi termini, anche a rischio di offendere o scandalizzare. I cinici usavano spesso l'ironia e la provocazione per smascherare l'ipocrisia sociale.</p>
+                
+                <h3>Askesis: l'esercizio spirituale</h3>
+                <p>L'ascesi cinica consisteva nell'abituarsi alla fatica, al dolore e alla privazione per rafforzare il carattere e raggiungere l'apatia, l'assenza di turbamenti.</p>
+                
+                <button class="btn btn-primary btn-rounded" onclick="alert('Diogene dice: "Sono cittadino del mondo" (cosmopolites)')">Citazione famosa</button>
+                <button class="btn btn-secondary btn-square" onclick="alert('Antistene insegnava nel Cinosarge, la palestra "del cane bianco"')">Curiosità</button>
+            </div>
+        </div>
+
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span>Diogene di Sinope: il Cane Filosofo</span>
+                <span>+</span>
+            </div>
+            <div class="accordion-content">
+                <p>Diogene (412-323 a.C.) è la figura più emblematica del cinismo. Nato a Sinope, fu esiliato e si trasferì ad Atene, dove divenne discepolo di Antistene. Le sue gesta leggendarie lo resero celebre:</p>
+                
+                <ul>
+                    <li>Viveva in una botte (pithos) nel santuario di Cinosarge</li>
+                    <li>Si masturbava in pubblico, rispondendo alle critiche: "Se solo si potesse sfamare la fame strofinandosi il ventre!"</li>
+                    <li>Ad Alessandro Magno che gli chiedeva cosa volesse, rispose: "Che ti sposti dal mio sole"</li>
+                    <li>Andava in giro di giorno con una lanterna "cercando un uomo" (onesto)</li>
+                </ul>
+                
+                <blockquote>
+                    "Diogene vide un ragazzo che beveva con le mani, allora gettò via la sua ciotola dicendo: 'Un fanciullo mi ha battuto in semplicità di vita!'."
+                </blockquote>
+                
+                <button class="btn btn-primary btn-pill" onclick="showRandomQuote()">Citazione casuale</button>
+            </div>
+        </div>
+
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span>Cinismo Moderno</span>
+                <span>+</span>
+            </div>
+            <div class="accordion-content">
+                <p>Nell'uso contemporaneo, il termine "cinismo" ha assunto un significato diverso dall'originario filosofico, indicando spesso un atteggiamento di sfiducia generalizzata verso le motivazioni altrui, con toni di disincanto e ironia amara.</p>
+                
+                <h3>Differenze tra antico e moderno:</h3>
+                <table>
+                    <tr>
+                        <th>Cinismo Antico</th>
+                        <th>Cinismo Moderno</th>
+                    </tr>
+                    <tr>
+                        <td>Ricerca della virtù</td>
+                        <td>Sfiducia nelle virtù</td>
+                    </tr>
+                    <tr>
+                        <td>Liberazione dalle convenzioni</td>
+                        <td>Disillusione verso le istituzioni</td>
+                    </tr>
+                    <tr>
+                        <td>Provocazione costruttiva</td>
+                        <td>Ironia distruttiva</td>
+                    </tr>
+                </table>
+                
+                <p>Tuttavia, alcuni autori moderni come Nietzsche hanno visto nel cinismo antico un precursore del loro pensiero critico verso la morale tradizionale.</p>
+            </div>
+        </div>
+
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span>Eredita e Influenza</span>
+                <span>+</span>
+            </div>
+            <div class="accordion-content">
+                <h3>Lo Stoicismo</h3>
+                <p>Lo stoicismo ereditò molti elementi del cinismo, soprattutto l'ideale di autosufficienza e l'indifferenza verso i beni esterni, ma in una forma meno radicale e più adatta alla vita sociale.</p>
+                
+                <h3>Nella cultura contemporanea</h3>
+                <p>Figure come i punk, gli hobo o alcuni tipi di attivisti radicali possono essere visti come eredi moderni dello spirito cinico nella loro opposizione alle convenzioni sociali e al consumismo.</p>
+                
+                <h3>Cinismo e Satira</h3>
+                <p>La tradizione satirica e grottesca, da Rabelais a Swift fino a George Carlin, porta avanti lo spirito cinico di smascheramento delle ipocrisie sociali attraverso l'umorismo e l'esagerazione.</p>
+                
+                <button class="btn btn-secondary btn-rounded" onclick="alert('Il filosofo Peter Sloterdijk ha scritto un libro chiamato "Critica della ragion cinica"')">Approfondimento</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Articolo sul Cinismo - Tutti i diritti riservati</p>
+        <p>Per ulteriori approfondimenti sulla filosofia antica</p>
+        <button class="btn btn-primary" onclick="window.open('https://plato.stanford.edu/entries/cynics/', '_blank')">Risorse Online</button>
+    </footer>
+
+    <script>
+        // Funzione per aprire/chiudere le sezioni
+        function toggleAccordion(header) {
+            const accordion = header.parentElement;
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('span:last-child');
+            
+            accordion.classList.toggle('active');
+            
+            if (accordion.classList.contains('active')) {
+                icon.textContent = '-';
+            } else {
+                icon.textContent = '+';
+            }
+        }
+        
+        // Funzione per cambiare modalità di lettura
+        function setMode(mode) {
+            document.body.className = mode + '-mode';
+            
+            // Aggiorna lo stato attivo dei bottoni
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+        
+        // Funzione per citazioni casuali
+        function showRandomQuote() {
+            const quotes = [
+                "La proprietà è un furto. - Diogene (riferito a Platone)",
+                "L'uomo è la più intelligente delle bestie e la più bestiale degli intelligenti. - Diogene",
+                "La filosofia mi ha insegnato a essere pronto a ogni evenienza. - Diogene",
+                "La moneta è la falsa misura di tutte le cose. - Antistene",
+                "Meglio essere pazzo da solo che con molti. - Diogene",
+                "La virtù non ha bisogno di nulla ed è fatta di pietre e di povertà. - Antistene"
+            ];
+            
+            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            alert(randomQuote);
+        }
+        
+        // Inizializza la prima sezione come aperta
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstAccordion = document.querySelector('.accordion');
+            const firstContent = firstAccordion.querySelector('.accordion-content');
+            const firstIcon = firstAccordion.querySelector('.accordion-header span:last-child');
+            
+            firstAccordion.classList.add('active');
+            firstIcon.textContent = '-';
+        });
+    </script>
+</body>
+</html>
