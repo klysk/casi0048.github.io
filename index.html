@@ -2319,5 +2319,21 @@ footer::before {
         }
       });
     </script>
+    <script>
+function loadGoogleTranslate() {
+    new google.translate.TranslateElement({
+        pageLanguage: 'it',
+        includedLanguages: 'en,fr,de,es,pl',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+    }, 'google_translate_element');
+}
+
+window.addEventListener('pageshow', function(event) {
+    if (event.persisted) { // se viene dalla cache del browser (Back/Forward)
+        loadGoogleTranslate();
+    }
+});
+</script>
+
   </body>
 </html>
