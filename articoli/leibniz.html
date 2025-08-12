@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gottfried Wilhelm Leibniz: Il Genio Universale</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #1a252f;
+            --font-main: 'Georgia', serif;
+            --font-heading: 'Palatino Linotype', 'Book Antiqua', serif;
+        }
+        
+        body {
+            font-family: var(--font-main);
+            line-height: 1.8;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 30px;
+        }
+        
+        h1 {
+            font-family: var(--font-heading);
+            color: var(--primary-color);
+            text-align: center;
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 15px;
+        }
+        
+        h2 {
+            font-family: var(--font-heading);
+            color: var(--secondary-color);
+            margin-top: 30px;
+            font-size: 1.8em;
+            cursor: pointer;
+            padding: 10px 15px;
+            background-color: rgba(52, 152, 219, 0.1);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        h2:hover {
+            background-color: rgba(52, 152, 219, 0.2);
+            transform: translateX(5px);
+        }
+        
+        h3 {
+            color: var(--accent-color);
+            font-size: 1.4em;
+            margin-top: 25px;
+        }
+        
+        .section-content {
+            display: none;
+            padding: 15px 20px;
+            animation: fadeIn 0.5s ease;
+            border-left: 3px solid var(--secondary-color);
+            margin-left: 10px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .active {
+            display: block;
+        }
+        
+        .quote {
+            font-style: italic;
+            color: var(--primary-color);
+            border-left: 4px solid var(--accent-color);
+            padding-left: 20px;
+            margin: 20px 0;
+            background-color: rgba(231, 76, 60, 0.05);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .image-container {
+            text-align: center;
+            margin: 25px 0;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .image-container img:hover {
+            transform: scale(1.02);
+        }
+        
+        .image-caption {
+            font-style: italic;
+            color: #666;
+            margin-top: 8px;
+            font-size: 0.9em;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 30px auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 3px;
+            background-color: var(--secondary-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1.5px;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 3px solid var(--accent-color);
+            border-radius: 50%;
+            top: 15px;
+            z-index: 1;
+        }
+        
+        .left {
+            left: 0;
+        }
+        
+        .right {
+            left: 50%;
+        }
+        
+        .left::after {
+            right: -13px;
+        }
+        
+        .right::after {
+            left: -13px;
+        }
+        
+        .timeline-content {
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .timeline-date {
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+        
+        .reading-options {
+            background-color: rgba(52, 152, 219, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+        
+        .reading-options h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+        
+        .option-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--font-main);
+        }
+        
+        .option-btn:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        
+        .highlight {
+            background-color: rgba(255, 255, 0, 0.3);
+            padding: 0 3px;
+        }
+        
+        .footnotes {
+            font-size: 0.9em;
+            color: #666;
+            border-top: 1px dashed #ccc;
+            margin-top: 40px;
+            padding-top: 20px;
+        }
+        
+        .concept-box {
+            background-color: rgba(46, 204, 113, 0.1);
+            border-left: 4px solid #2ecc71;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .concept-box h4 {
+            margin-top: 0;
+            color: #27ae60;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 768px) {
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item::after {
+                left: 18px;
+            }
+            
+            .left::after, .right::after {
+                left: 18px;
+            }
+            
+            .right {
+                left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gottfried Wilhelm Leibniz: Il Genio Universale</h1>
+        
+        <div class="image-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Gottfried_Wilhelm_Leibniz%2C_Bernhard_Christoph_Francke.jpg/440px-Gottfried_Wilhelm_Leibniz%2C_Bernhard_Christoph_Francke.jpg" alt="Ritratto di Gottfried Wilhelm Leibniz">
+            <div class="image-caption">Ritratto di Gottfried Wilhelm Leibniz (1646-1716)</div>
+        </div>
+        
+        <p>Gottfried Wilhelm Leibniz è stato uno dei più grandi geni della storia occidentale, un polimata le cui contribuzioni spaziano dalla matematica alla filosofia, dalla logica alla fisica, dalla teologia alla politica. Questo articolo esplora la vita, le idee e l'eredità di questo straordinario pensatore.</p>
+        
+        <div class="reading-options">
+            <h3>Modalità di lettura</h3>
+            <button class="option-btn" onclick="expandAll()">Espandi tutto</button>
+            <button class="option-btn" onclick="collapseAll()">Comprimi tutto</button>
+            <button class="option-btn" onclick="highlightKeyTerms()">Evidenzia termini chiave</button>
+            <button class="option-btn" onclick="toggleDarkMode()">Modalità scura</button>
+        </div>
+        
+        <h2 onclick="toggleSection('biografia')">1. Biografia</h2>
+        <div id="biografia" class="section-content">
+            <h3>Gli inizi (1646-1666)</h3>
+            <p>Gottfried Wilhelm Leibniz nacque il 1° luglio 1646 a Lipsia, in Sassonia (nell'attuale Germania). Figlio di Friedrich Leibniz, professore di filosofia morale all'Università di Lipsia, e di Catharina Schmuck, mostrò un precoce talento intellettuale.</p>
+            
+            <div class="concept-box">
+                <h4>Curiosità giovanile</h4>
+                <p>A soli 8 anni, Leibniz imparò il latino da autodidatta utilizzando un'edizione illustrata della storia di Livio dalla biblioteca paterna. A 12 anni compose 300 esametri in un solo giorno per un concorso scolastico.</p>
+            </div>
+            
+            <h3>Formazione universitaria</h3>
+            <p>Nel 1661, a soli 15 anni, si iscrisse all'Università di Lipsia dove studiò filosofia e legge. La sua tesi di dottorato, <em>Disputatio Metaphysica de Principio Individui</em> (1663), già mostrava la sua inclinazione verso problemi metafisici fondamentali.</p>
+            
+            <h3>Carriera e maturità</h3>
+            <p>Dopo aver rifiutato una cattedra universitaria, Leibniz intraprese una carriera come consigliere e diplomatico presso varie corti tedesche. Lavorò principalmente per il duca Giovanni Federico di Brunswick-Lüneburg ad Hannover, dove rimase per 40 anni.</p>
+            
+            <div class="timeline">
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <div class="timeline-date">1672-1676</div>
+                        <p>Missione diplomatica a Parigi, dove entrò in contatto con i maggiori intellettuali dell'epoca e sviluppò il calcolo infinitesimale.</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <div class="timeline-date">1676</div>
+                        <p>Incontro con Spinoza ad Amsterdam, dove discusse del suo <em>Ethica</em> ancora inedito.</p>
+                    </div>
+                </div>
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <div class="timeline-date">1684</div>
+                        <p>Pubblicazione del <em>Nova Methodus pro Maximis et Minimis</em>, il primo lavoro sul calcolo differenziale.</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <div class="timeline-date">1710</div>
+                        <p>Pubblicazione della <em>Teodicea</em>, la sua principale opera filosofica pubblicata in vita.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Gli ultimi anni</h3>
+            <p>Negli ultimi anni della sua vita, Leibniz cadde in disgrazia presso la corte di Hannover. Morì il 14 novembre 1716, quasi dimenticato, e il suo funerale fu seguito solo dal suo segretario personale.</p>
+            
+            <div class="quote">
+                "La natura non fa salti." — Leibniz, <em>Nuovi saggi sull'intelletto umano</em>
+            </div>
+        </div>
+        
+        <h2 onclick="toggleSection('matematica')">2. Contributi matematici</h2>
+        <div id="matematica" class="section-content">
+            <h3>Il calcolo infinitesimale</h3>
+            <p>Leibniz sviluppò indipendentemente da Newton il calcolo infinitesimale, introducendo una notazione (<em>dx</em>, <em>∫</em>) che è ancora oggi in uso. La controversia sulla priorità della scoperta con Newton fu una delle più famose dispute nella storia della scienza.</p>
+            
+            <div class="image-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Leibniz_calculus_notation.jpg/440px-Leibniz_calculus_notation.jpg" alt="Notazione di Leibniz per il calcolo">
+                <div class="image-caption">La notazione di Leibniz per il calcolo differenziale e integrale</div>
+            </div>
+            
+            <h3>Altri contributi matematici</h3>
+            <ul>
+                <li>Sistema binario: Leibniz sviluppò il sistema numerico binario (base 2), fondamentale per l'informatica moderna.</li>
+                <li>Determinanti: Pose le basi per la teoria dei determinanti in algebra lineare.</li>
+                <li>Geometria analitica: Estese i lavori di Cartesio sulla geometria analitica.</li>
+                <li>Topologia: Anticipò concetti che sarebbero diventati fondamentali in topologia.</li>
+            </ul>
+            
+            <div class="concept-box">
+                <h4>Leibniz e l'informatica</h4>
+                <p>Leibniz è considerato un precursore dell'informatica non solo per il sistema binario, ma anche per aver concepito l'idea di una "characteristica universalis", un linguaggio formale universale che avrebbe permesso di risolvere qualsiasi disputa attraverso il calcolo.</p>
+            </div>
+        </div>
+        
+        <h2 onclick="toggleSection('filosofia')">3. Filosofia</h2>
+        <div id="filosofia" class="section-content">
+            <h3>Metafisica: Monadologia</h3>
+            <p>La <em>Monadologia</em> (1714) è l'opera che espone la celebre teoria delle monadi, le sostanze semplici che costituiscono la realtà. Le monadi sono:</p>
+            <ul>
+                <li><strong>Semplici</strong>: senza parti</li>
+                <li><strong>Uniche</strong>: non ve ne sono due identiche</li>
+                <li><strong>Autosufficienti</strong>: non interagiscono tra loro</li>
+                <li><strong>Dinamiche</strong>: in perenne cambiamento</li>
+            </ul>
+            
+            <div class="quote">
+                "Le monadi non hanno finestre attraverso le quale qualcosa possa entrare o uscire." — Leibniz, <em>Monadologia</em>
+            </div>
+            
+            <h3>Teodicea e ottimismo</h3>
+            <p>Nella <em>Teodicea</em> (1710), Leibniz affronta il problema del male sostenendo che viviamo nel <em>migliore dei mondi possibili</em>, concetto che Voltaire satireggerà nel <em>Candido</em>.</p>
+            
+            <h3>Principio di ragion sufficiente</h3>
+            <p>Secondo Leibniz, <em>niente avviene senza una ragione sufficiente</em>. Questo principio, insieme al principio di non-contraddizione, costituisce il fondamento della sua filosofia.</p>
+            
+            <div class="concept-box">
+                <h4>Identità degli indiscernibili</h4>
+                <p>Principio secondo il quale non possono esistere due entità perfettamente identiche, poiché se fossero davvero identiche sotto ogni aspetto, sarebbero in realtà la stessa entità.</p>
+            </div>
+        </div>
+        
+        <h2 onclick="toggleSection('scienza')">4. Contributi scientifici</h2>
+        <div id="scienza" class="section-content">
+            <h3>Fisica</h3>
+            <p>Leibniz criticò la concezione newtoniana dello spazio e del tempo assoluti, anticipando in qualche modo la relatività. Formulò inoltre il principio della conservazione dell'energia cinetica.</p>
+            
+            <h3>Geologia e paleontologia</h3>
+            <p>Fu tra i primi a proporre che la Terra avesse una lunga storia geologica e che i fossili fossero resti di organismi viventi.</p>
+            
+            <h3>Tecnologia</h3>
+            <p>Progettò macchine calcolatrici migliori di quelle di Pascal, pompe idrauliche e persino un prototipo di sottomarino.</p>
+            
+            <div class="image-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Leibniz_Stepped_Reckoner.jpg/440px-Leibniz_Stepped_Reckoner.jpg" alt="Macchina calcolatrice di Leibniz">
+                <div class="image-caption">Ricostruzione della macchina calcolatrice di Leibniz</div>
+            </div>
+        </div>
+        
+        <h2 onclick="toggleSection('logica')">5. Logica e linguaggio</h2>
+        <div id="logica" class="section-content">
+            <h3>Logica formale</h3>
+            <p>Leibniz è considerato il padre della logica simbolica moderna. Immaginò un "calcolo logico" che avrebbe permesso di risolvere qualsiasi disputa attraverso la manipolazione di simboli.</p>
+            
+            <h3>Lingua universalis</h3>
+            <p>Sognava la creazione di un linguaggio universale basato su simboli matematici che avrebbe facilitato la comunicazione tra tutti i popoli e promosso la pace mondiale.</p>
+            
+            <div class="quote">
+                "Se avessimo un linguaggio perfetto, non ci sarebbero dispute, perché sarebbe possibile calcolare la verità o la falsità di qualsiasi affermazione." — Leibniz
+            </div>
+        </div>
+        
+        <h2 onclick="toggleSection('eredita')">6. Eredità e influenza</h2>
+        <div id="eredita" class="section-content">
+            <h3>Impatto sulla filosofia moderna</h3>
+            <p>Leibniz influenzò profondamente Kant, che riconobbe il suo debito verso il filosofo tedesco. Nel XX secolo, la sua filosofia è stata ripresa da Whitehead e dalla filosofia processuale.</p>
+            
+            <h3>Matematica e scienze</h3>
+            <p>La sua notazione per il calcolo è ancora quella standard, e molti concetti da lui introdotti sono fondamentali in vari campi della matematica.</p>
+            
+            <h3>Informatica</h3>
+            <p>Il sistema binario e le sue idee sul calcolo simbolico lo rendono una figura cruciale nella preistoria dell'informatica.</p>
+            
+            <div class="concept-box">
+                <h4>Leibniz nell'era digitale</h4>
+                <p>Oggi Leibniz è celebrato come un visionario le cui idee anticiparono l'era digitale. Molti vedono nella sua "characteristica universalis" un precursore dei linguaggi di programmazione e della semantica formale.</p>
+            </div>
+        </div>
+        
+        <div class="footnotes">
+            <h3>Note</h3>
+            <p>1. La maggior parte delle opere di Leibniz fu pubblicata postuma. Durante la sua vita pubblicò principalmente brevi articoli e corrispondenze.</p>
+            <p>2. Leibniz scrisse principalmente in latino e francese, raramente in tedesco.</p>
+            <p>3. La disputa con Newton sul calcolo infinitesimale coinvolse anche le rispettive comunità scientifiche nazionali, dividendo matematici inglesi e continentali per oltre un secolo.</p>
+        </div>
+        
+        <footer>
+            <p>© 2023 Articolo su Gottfried Wilhelm Leibniz - Tutti i diritti riservati</p>
+            <p>Fonti: Stanford Encyclopedia of Philosophy, Leibniz Gesammelte Werke, vari studi accademici</p>
+        </footer>
+    </div>
+    
+    <script>
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.classList.toggle('active');
+            
+            // Animazione fluida
+            if (section.classList.contains('active')) {
+                section.style.display = 'block';
+                section.style.animation = 'fadeIn 0.5s ease';
+            } else {
+                section.style.animation = 'fadeOut 0.5s ease';
+                setTimeout(() => {
+                    section.style.display = 'none';
+                }, 500);
+            }
+        }
+        
+        function expandAll() {
+            const sections = document.querySelectorAll('.section-content');
+            sections.forEach(section => {
+                section.classList.add('active');
+                section.style.display = 'block';
+                section.style.animation = 'fadeIn 0.5s ease';
+            });
+        }
+        
+        function collapseAll() {
+            const sections = document.querySelectorAll('.section-content');
+            sections.forEach(section => {
+                section.classList.remove('active');
+                section.style.animation = 'fadeOut 0.5s ease';
+                setTimeout(() => {
+                    section.style.display = 'none';
+                }, 500);
+            });
+        }
+        
+        function highlightKeyTerms() {
+            const terms = ['monade', 'calcolo infinitesimale', 'principio di ragion sufficiente', 'teodicea', 'ottimismo', 'sistema binario', 'characteristica universalis'];
+            
+            terms.forEach(term => {
+                const regex = new RegExp(term, 'gi');
+                document.body.innerHTML = document.body.innerHTML.replace(
+                    regex, 
+                    match => `<span class="highlight">${match}</span>`
+                );
+            });
+        }
+        
+        function toggleDarkMode() {
+            const body = document.body;
+            const container = document.querySelector('.container');
+            
+            body.classList.toggle('dark-mode');
+            container.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                body.style.backgroundColor = '#121212';
+                body.style.color = '#e0e0e0';
+                container.style.backgroundColor = '#1e1e1e';
+                container.style.color = '#f0f0f0';
+            } else {
+                body.style.backgroundColor = '';
+                body.style.color = '';
+                container.style.backgroundColor = '';
+                container.style.color = '';
+            }
+        }
+        
+        // Aggiungi animazione fadeOut
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes fadeOut {
+                from { opacity: 1; transform: translateY(0); }
+                to { opacity: 0; transform: translateY(-10px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
