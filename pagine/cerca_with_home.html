@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Ricerca — Echi di Sofia</title>
+<meta content="noindex,follow" name="robots"/>
+<style>
+    :root { --bg:#0a0a1a; --txt:#eaf2ff; --sub:#cfd8ff; --card:#141628; --url:#96ffa6; --accent:rgba(120,140,220,0.45); }
+    body { margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--bg); color: var(--txt); }
+    header { position:sticky; top:0; background: color-mix(in oklab, var(--bg), white 4%); border-bottom: 1px solid color-mix(in oklab, var(--txt), transparent 80%); padding: 14px 16px; z-index: 10; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 12px; }
+    .topbar { display:flex; align-items:center; gap: 10px; }
+    h1 { font-size: 1.1rem; margin: 0 10px 0 0; letter-spacing: .3px; color: var(--sub); }
+    form.search { display:flex; align-items:center; gap:8px; flex:1; }
+    form.search input[type="search"] { flex:1; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--accent); background: color-mix(in oklab, var(--card), transparent 10%); color: var(--txt); }
+    form.search button { padding: 10px 14px; border-radius: 12px; border: 1px solid var(--accent); background: color-mix(in oklab, var(--card), transparent 0%); color: var(--txt); cursor: pointer; }
+    .actions { display:flex; align-items:center; gap:8px; }
+    .actions button { padding: 8px 12px; border-radius: 10px; border: 1px solid var(--accent); background: color-mix(in oklab, var(--card), transparent 0%); color: var(--txt); cursor: pointer; }
+    main { padding: 14px 0 40px; }
+    #results-wrap { background: color-mix(in oklab, var(--card), transparent 20%); border: 1px solid color-mix(in oklab, var(--txt), transparent 75%); border-radius: 14px; padding: 10px 12px; }
+    /* CSE high-contrast styles (inline mode) */
+    .gsc-control-cse, .gsc-control-cse .gsc-table-result, .gsc-results-wrapper-visible { background: transparent !important; }
+    .gsc-result, .gsc-webResult.gsc-result, .gsc-results .gsc-imageResult { background: var(--card) !important; border: 1px solid color-mix(in oklab, var(--txt), transparent 70%) !important; border-radius: 12px !important; padding: 12px !important; }
+    .gsc-webResult.gsc-result:hover { outline: 2px solid color-mix(in oklab, var(--txt), transparent 70%); }
+    .gsc-result .gs-title, .gsc-result .gs-title * { color: var(--txt) !important; text-decoration: none !important; }
+    .gsc-result .gs-snippet { color: var(--sub) !important; }
+    .gsc-url-top, .gsc-url-bottom, .gsc-url-top * { color: var(--url) !important; }
+    .gsc-cursor-page { color: var(--txt) !important; border-color: color-mix(in oklab, var(--txt), transparent 70%) !important; }
+    .gsc-results .gsc-cursor-box .gsc-cursor-page.gsc-cursor-current-page { background: color-mix(in oklab, var(--txt), transparent 85%) !important; color: var(--bg) !important; }
+    .gcsc-find-more-on-google, .gcsc-find-more-on-google-root { background: transparent !important; }
+    input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus { background: color-mix(in oklab, var(--card), transparent 5%) !important; color: var(--txt) !important; border-color: var(--accent) !important; }
+    .gsc-selected-option-container { color: var(--txt) !important; }
+
+    /* Light theme toggle */
+    body.light { --bg:#f7f9ff; --txt:#0b0e19; --sub:#2b3550; --card:#ffffff; --url:#0e6b2c; --accent:rgba(8, 37, 143, 0.35); }
+    body.light h1 { color: #0b0e19; }
+    body.light #results-wrap { background: #ffffff; border-color: rgba(8,37,143,.25); }
+  </style>
+</head>
+<body>
+<header>
+<div class="container">
+<div class="topbar">
+<h1>Ricerca</h1>
+<form action="" class="search" method="get" role="search">
+<input autocomplete="on" id="search-input" name="q" placeholder="Cerca su Echi di Sofia…" type="search"/>
+<button type="submit">Cerca</button>
+</form>
+<div class="actions">
+<button id="toggle-theme" title="Cambia tema" type="button">Tema: Scuro</button>
+<a href="/" id="home-link" style="text-decoration:none;"><button type="button">Home</button></a>
+<a href="index.html" style="text-decoration:none;"><button style="padding:8px 14px;border-radius:10px;border:1px solid var(--accent);background:rgba(120,140,220,0.15);color:var(--txt);cursor:pointer;font-size:.9rem;" type="button">🏠 Torna alla Homepage</button></a></div>
+</div>
+</div>
+</header>
+<main class="container">
+<div id="results-wrap">
+<div id="cse-results">
+<div class="gcse-searchresults-only" data-gname="results" data-linktarget="_self" data-queryparametername="q"></div>
+</div>
+</div>
+</main>
+<!-- Google CSE loader: usa il tuo cx -->
+<script>
+    // Inserisci qui il tuo ID CSE se diverso
+    var CSE_CX = "87b07564ab3cb462a";
+    // Supporto per sostituire via query string: ?cx=IDPERSONALE
+    (function(){
+      var p = new URLSearchParams(location.search);
+      if (p.has("cx")) CSE_CX = p.get("cx");
+    })();
+  </script>
+<script>
+    (function(w,d,t,cb){
+      var s = d.createElement(t);
+      s.src = "https://cse.google.com/cse.js?cx=" + encodeURIComponent(CSE_CX);
+      s.async = true; s.defer = true;
+      d.head.appendChild(s);
+      w.__gcse = { callback: function(){ try { cb(); } catch(e){} } };
+    })(window, document, "script", function(){
+      // Render inline results in our container
+      try {
+        google.search.cse.element.render({ div: "cse-results", tag: "searchresults-only", gname: "results" });
+      } catch(e){}
+      // If a query is present in URL, execute it and fill the input
+      var params = new URLSearchParams(location.search);
+      var q = params.get("q") || "";
+      var input = document.getElementById("search-input");
+      if (input) input.value = q;
+      if (q) {
+        var el = google.search.cse.element.getElement("results");
+        if (!el) {
+          google.search.cse.element.render({ div: "cse-results", tag: "searchresults-only", gname: "results" });
+          el = google.search.cse.element.getElement("results");
+        }
+        if (el) el.execute(q);
+      }
+    });
+  </script>
+<script>
+    // Theme toggle
+    (function(){
+      var btn = document.getElementById("toggle-theme");
+      var light = false;
+      function sync(){
+        document.body.classList.toggle("light", light);
+        btn.textContent = light ? "Tema: Chiaro" : "Tema: Scuro";
+      }
+      if (btn) btn.addEventListener("click", function(){ light = !light; sync(); });
+      sync();
+    })();
+  </script>
+</body>
+</html>
