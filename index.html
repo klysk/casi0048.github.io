@@ -2765,61 +2765,71 @@ input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus { ba
 </script>
 
 
-<!-- Uniform Google Search: ENTER & LENS CLICK -> Google (site-restricted) -->
+
+<!-- Improved Uniform Google Search: both ENTER & LENS open Google (site-restricted, exact term) -->
 <script>
 (function(){
-  // Try to locate your search input & button without relying strictly on IDs
+  // Try to locate the main search input conservatively
   var input = document.getElementById('cse-input')
-           || document.querySelector('header input[type="search"]')
-           || document.querySelector('input[type="search"]')
-           || document.querySelector('input[name="q"], input[name="s"]');
-  var btn = document.getElementById('cse-search-btn')
-         || document.querySelector('[data-cse-search-btn], .cse-search-btn, header .search button, .search button');
+         || (document.querySelector('header input[type="search"]'))
+         || document.querySelector('input[type="search"]')
+         || document.querySelector('input[name="q"], input[name="s"]');
 
-  function googleUrl(q){
-    var site = '(site:echidisofia.org OR site:casi0048.github.io)';
-    return 'https://www.google.com/search?q=' + encodeURIComponent(q + ' ' + site);
+  function normalizeTerm(raw){
+    var t = (raw || '').trim();
+    if (!t) return '';
+    var hasQuote = /["]/.test(t);
+    var hasOp = /(site:|intitle:|inurl:|OR|AND|NOT)/i.test(t);
+    if (!hasQuote && !hasOp){
+      t = '"' + t.replace(/"/g, '') + '"';
+    }
+    return t;
   }
-  function openGoogle(q){
-    if (!q) return;
-    var url = googleUrl(q);
+  function googleUrl(q){
+    var site = 'site:echidisofia.org OR site:casi0048.github.io';
+    var term = normalizeTerm(q);
+    return 'https://www.google.com/search?q=' + encodeURIComponent(term + ' ' + site) + '&hl=it';
+  }
+  function openGoogleFromInput(){
+    var term = (input && input.value) ? input.value.trim() : '';
+    if (!term) return;
+    var url = googleUrl(term);
     try{
       var w = window.open(url, '_blank', 'noopener');
       if(!w){ location.href = url; }
     }catch(_){ location.href = url; }
   }
-  function getTerm(){ return (input && input.value ? input.value.trim() : ''); }
 
-  // ENTER on input -> Google (capture, stop propagation)
-  if (input && !input.dataset._wiredUniform){
-    input.addEventListener('keydown', function(e){
-      if (e.key === 'Enter'){
-        e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-        var term = getTerm(); if (!term) return;
-        openGoogle(term);
-      }
-    }, true); // capture
-    // Intercept form submit too
-    var form = input.form || (input.closest && input.closest('form'));
-    if (form && !form.dataset._wiredUniform){
-      form.addEventListener('submit', function(e){
-        e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-        var term = getTerm(); if (!term) return;
-        openGoogle(term);
-      }, true); // capture
-      form.dataset._wiredUniform = '1';
-    }
-    input.dataset._wiredUniform = '1';
-  }
-
-  // LENS click -> Google (capture, stop propagation)
-  if (btn && !btn.dataset._wiredUniform){
-    btn.addEventListener('click', function(e){
+  // ENTER on the input (capture to beat other listeners)
+  document.addEventListener('keydown', function(e){
+    if (!input) return;
+    var isTarget = (e.target === input) || (input.contains && input.contains(e.target));
+    if (isTarget && e.key === 'Enter'){
       e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-      var term = getTerm(); if (!term) return;
-      openGoogle(term);
-    }, true); // capture
-    btn.dataset._wiredUniform = '1';
+      openGoogleFromInput();
+    }
+  }, true);
+
+  // Delegated click for search buttons (lens/submit)
+  document.addEventListener('click', function(e){
+    var sel = '#cse-search-btn, [data-cse-search-btn], .cse-search-btn, button[type=submit], .search button';
+    var btn = e.target && e.target.closest ? e.target.closest(sel) : null;
+    if (!btn) return;
+    // If the button is not part of a search bar, ignore
+    var scope = btn.closest && btn.closest('form, header, .search, .searchbar') || document;
+    var relatedInput = scope.querySelector && (scope.querySelector('#cse-input') || scope.querySelector('input[type="search"]') || scope.querySelector('input[name="q"], input[name="s"]'));
+    if (relatedInput) input = relatedInput;
+    e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+    openGoogleFromInput();
+  }, true);
+
+  // Intercept form submit around the input
+  var form = input ? (input.form || (input.closest && input.closest('form'))) : null;
+  if (form){
+    form.addEventListener('submit', function(e){
+      e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+      openGoogleFromInput();
+    }, true);
   }
 })();
 </script>
