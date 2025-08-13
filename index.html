@@ -419,11 +419,10 @@
       }
       .btn:hover{ filter:brightness(1.08) }
       /* Modal overlay */
-      .cookie-modal{
-      position:fixed; inset:0; background:rgba(0,0,0,.6);
+      .cookie-modal{ position:fixed; inset:0; background:rgba(0,0,0,.6);
       display:none; align-items:center; justify-content:center; padding:16px;
-      z-index:20005;
-      }
+      z-index:999999;
+       }
       .cookie-modal[aria-hidden="false"]{ display:flex }
       .cookie-modal__panel{
       width:min(640px,92vw); background:rgba(10,10,30,.98);
@@ -459,7 +458,9 @@
       border-color:#ffd86a;
       box-shadow:0 0 18px rgba(255,215,0,.45), inset 0 0 10px rgba(255,215,0,.25);
       }
-    </style>
+    
+.cookie-modal.force-open{ display:flex !important; }
+</style>
 </link><style>
 .translate-box{display:inline-flex;align-items:center;gap:.5rem}
 .translate-select{
@@ -468,6 +469,62 @@
   background:rgba(20,20,40,.78); color:#e6f0f3; font-size:.95rem; cursor:pointer
 }
 .translate-select:focus{outline:2px solid #2a7c9c}
+
+/* ===== CSE: leggibilità controlli "Ordina per" (patch minima) ===== */
+.gsc-above-wrapper-area,
+.gsc-above-wrapper-area-container,
+.gsc-orderby-container,
+.gsc-selected-option-container { background: transparent !important; color: var(--cse-txt, inherit) !important; }
+.gsc-option-menu { background: var(--cse-card, #111) !important; border: 1px solid rgba(255,255,255,.15) !important; box-shadow: 0 6px 18px rgba(0,0,0,.35) !important; }
+.gsc-option-menu-item { color: var(--cse-txt, #eee) !important; }
+.gsc-option-menu-item-highlighted { background: rgba(255,255,255,.07) !important; color: var(--cse-txt, #fff) !important; }
+.gsc-option-selector, .gsc-orderby-label, .gsc-selected-option-container { color: var(--cse-txt, inherit) !important; }
+.gsc-control-cse, .gcse-wrapper { background: transparent !important; }
+
+/* === Cookie UI micro-interactions === */
+.cookie-banner .btn:focus-visible,
+.cookie-modal .btn:focus-visible,
+#manage-cookies:focus-visible{
+  outline: 2px solid color-mix(in oklab, #ffffff, var(--accent, #d4af37) 60%);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px rgba(255,255,255,.08);
+}
+@media (prefers-reduced-motion: reduce){
+  .cookie-banner, .cookie-modal{ transition: none !important; }
+}
+
+/* === Cookie floating badge (always visible) === */
+.cookie-fab{ position: fixed; left: auto; right: 16px; bottom: 16px; z-index: 1000000;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 10px 14px; border-radius: 999px;
+  background: var(--card-2, #0f141a); color: var(--txt, #eaeaea);
+  border: 1px solid rgba(255,255,255,.18);
+  box-shadow: 0 10px 26px rgba(0,0,0,.45);
+  cursor: pointer; pointer-events:auto; user-select: none;
+ }
+.cookie-fab .emoji{ font-size: 1rem; line-height: 1; }
+.cookie-fab .label{ font-weight: 600; letter-spacing: .2px; }
+.cookie-fab:hover{ filter: brightness(1.08); }
+.cookie-fab:focus-visible{
+  outline: 2px solid color-mix(in oklab, #ffffff, var(--accent, #d4af37) 55%);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px rgba(255,255,255,.08);
+}
+@media (prefers-reduced-motion: reduce){
+  .cookie-fab{
+  position: fixed; left: auto; right: 16px; bottom: 16px; z-index: 20050;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 10px 14px; border-radius: 999px;
+  background: var(--card-2, #0f141a); color: var(--txt, #eaeaea);
+  border: 1px solid rgba(255,255,255,.18);
+  box-shadow: 0 10px 26px rgba(0,0,0,.45);
+  cursor: pointer; user-select: none;
+}
+.cookie-fab .emoji{ font-size: 1rem; line-height: 1; }
+.cookie-fab .label{ font-weight: 600; letter-spacing: .2px; }
+}
+
+.cookie-modal.force-open{ display:flex !important; }
 </style></head>
 <body>
 <!-- GALASSIA dietro -->
@@ -519,7 +576,9 @@
       margin-bottom:8px !important;
       }
       .gs-title, .gs-snippet { color:#eaeaea !important; }
-    </style>
+    
+.cookie-modal.force-open{ display:flex !important; }
+</style>
 <!-- 
       <div class="bar-right">
         <div id="google_translate_element" title="Traduci pagina"></div>
@@ -1620,7 +1679,9 @@
       @media (max-width: 980px) {
       #russell-box, #russell-hint { display:none; }
       }
-    </style>
+    
+.cookie-modal.force-open{ display:flex !important; }
+</style>
 <script>
       window.addEventListener("load", () => {
         if (window.gsap) {
@@ -1770,7 +1831,9 @@ footer::before {
   }
 }
 
-    </style>
+    
+.cookie-modal.force-open{ display:flex !important; }
+</style>
 <!-- 🎬 INIZIO PLAYER (destro) -->
 <div class="video-container" id="video-right">
 <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="264" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/G_REgkOuQfw" title="Schopenhauer e Nietzsche (Hans-Georg Gadamer) - 3x4" width="280"></iframe>
@@ -1823,7 +1886,9 @@ footer::before {
       .video-container-left{ display:none; } /* su mobile lo slider è nascosto, nascondo anche il player sinistro */
       .video-container{ right: 12px; bottom: 12px; width: 70vw; }
       }
-    </style>
+    
+.cookie-modal.force-open{ display:flex !important; }
+</style>
 <!-- 🎬 FINE PLAYER (destro) -->
 <!-- INIZIO MINI PLAYER (sinistra) -->
 <div class="audio-player" id="audio-player">
@@ -1877,7 +1942,9 @@ footer::before {
       @media (max-width: 980px){
       #audio-player{ display:none; }
       }
-    </style>
+    
+.cookie-modal.force-open{ display:flex !important; }
+</style>
 <script>
       // Inizializzazione mini player
       window.addEventListener('load', () => {
@@ -1986,11 +2053,32 @@ footer::before {
     </button>
 <script>
       (function(){
-        const KEY = 'cookieConsent.v1';
-      
-        const $banner = document.getElementById('cookie-banner');
+        \1
+// Global opener: works even if other listeners fail
+window.openCookiePrefs = function(){
+  try { if (typeof openModal === 'function') { openModal(); return; } } catch(e){}
+  try {
+    var m = document.getElementById('cookie-modal');
+    if (m){
+      m.setAttribute('aria-hidden','false');
+      m.style.display = 'flex';
+    }
+  } catch(_) {}
+};
+// Delegated click for the cookie badge (works even if badge is injected after this script)
+document.addEventListener('click', function(ev){
+  var btn = ev.target && ev.target.closest ? ev.target.closest('#cookie-fab') : null;
+  if (!btn) return;
+  try { openModal(); }
+  catch(e){
+    try { var m = document.getElementById('cookie-modal'); if (m) m.setAttribute('aria-hidden','false'); } catch(_) {}
+  }
+});
+const $banner = document.getElementById('cookie-banner');
         const $modal  = document.getElementById('cookie-modal');
-        const $manage = document.getElementById('cookie-manage');
+        const $manage = document.getElementById('manage-cookies') || document.getElementById('cookie-manage');
+const $fab = document.getElementById('cookie-fab');
+if ($manage) $manage.hidden = true; // replace text link with floating badge
       
         const $accept = document.getElementById('cookie-accept');
         const $decline = document.getElementById('cookie-decline');
@@ -2018,49 +2106,137 @@ footer::before {
           // if(c.marketing){ loadMarketing(); } else { disableMarketing(); }
         }
       
-        function showBanner(){ $banner.hidden = false; }
-        function hideBanner(){ $banner.hidden = true; }
+        function showBanner(){
+  $banner.hidden = false;
+  try{
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduce && window.gsap){
+      gsap.fromTo($banner, {y:24, opacity:0}, {y:0, opacity:1, duration:.55, ease:'power3.out'});
+    }
+  }catch(e){}
+}
+        function hideBanner(){
+  try{
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduce && window.gsap){
+      gsap.to($banner, {y:16, opacity:0, duration:.35, ease:'power2.in', onComplete(){ $banner.hidden = true; }});
+      return;
+    }
+  }catch(e){}
+  $banner.hidden = true;
+}
         function openModal(){
-          const c = getConsent() || {};
+  try{
+    const c = getConsent() || {};
+    if ($an) $an.checked = !!c.analytics;
+    if ($pr) $pr.checked = !!c.preferences;
+    if ($mk) $mk.checked = !!c.marketing;
+  }catch(e){}
+  try{
+    $modal.removeAttribute('hidden');
+    $modal.setAttribute('aria-hidden','false');
+    $modal.style.display = 'flex';
+    $modal.classList.add('force-open');
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const panel = $modal.querySelector ? $modal.querySelector('.cookie-modal__panel') : null;
+    if (!reduce && window.gsap && panel){
+      gsap.fromTo($modal, {opacity:0}, {opacity:1, duration:.25, ease:'power2.out'});
+      gsap.fromTo(panel, {y:20, opacity:0}, {y:0, opacity:1, duration:.4, ease:'power3.out'});
+    }
+  }catch(e){}
+}
+}catch(_){}
+  const c = getConsent() || {};
+  $an.checked = !!c.analytics;
+  $pr.checked = !!c.preferences;
+  $mk.checked = !!c.marketing;
+  $modal.setAttribute('aria-hidden','false');
+  try{
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduce && window.gsap){
+      const panel = $modal.querySelector('.cookie-modal__panel');
+      gsap.fromTo($modal, {opacity:0}, {opacity:1, duration:.25, ease:'power2.out'});
+      gsap.fromTo(panel, {y:20, opacity:0}, {y:0, opacity:1, duration:.4, ease:'power3.out'});
+    }
+  }catch(e){}
+};
           $an.checked = !!c.analytics;
           $pr.checked = !!c.preferences;
           $mk.checked = !!c.marketing;
           $modal.setAttribute('aria-hidden','false');
         }
-        function closeModal(){ $modal.setAttribute('aria-hidden','true'); }
+        function closeModal(){
+  try{
+    if ($modal){
+      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const panel = $modal.querySelector ? $modal.querySelector('.cookie-modal__panel') : null;
+      if (!reduce && window.gsap && panel){
+        gsap.to(panel, {y:10, opacity:0, duration:.22, ease:'power2.in'});
+        gsap.to($modal, {opacity:0, duration:.22, ease:'power2.in', onComplete(){
+          $modal.setAttribute('aria-hidden','true');
+          $modal.classList.remove('force-open');
+          $modal.style.display = 'none';
+          $modal.setAttribute('hidden','');
+        }});
+      } else {
+        $modal.setAttribute('aria-hidden','true');
+        $modal.classList.remove('force-open');
+        $modal.style.display = 'none';
+        $modal.setAttribute('hidden','');
+      }
+    }
+  }catch(e){}
+}
+}catch(_){}
+  try{
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduce && window.gsap){
+      const panel = $modal.querySelector('.cookie-modal__panel');
+      gsap.to(panel, {y:10, opacity:0, duration:.22, ease:'power2.in'});
+      gsap.to($modal, {opacity:0, duration:.22, ease:'power2.in', onComplete(){ $modal.setAttribute('aria-hidden','true'); }});
+      return;
+    }
+  }catch(e){}
+  $modal.setAttribute('aria-hidden','true');
+}
       
         // Pulsanti banner
         $accept.addEventListener('click', ()=>{
           setConsent({ essential:true, analytics:true, preferences:true, marketing:true, date:Date.now() });
-          hideBanner(); $manage.hidden = false;
+          hideBanner(); if ($manage) if ($manage) $manage.hidden = true; // keep text button hidden (badge replaces it)
         });
         $decline.addEventListener('click', ()=>{
           setConsent({ essential:true, analytics:false, preferences:false, marketing:false, date:Date.now() });
-          hideBanner(); $manage.hidden = false;
+          hideBanner(); if ($manage) if ($manage) $manage.hidden = true; // keep text button hidden (badge replaces it)
         });
         $customize.addEventListener('click', openModal);
       
         // Modal
-        $save.addEventListener('click', ()=>{
-          setConsent({
-            essential:true,
-            analytics:$an.checked,
-            preferences:$pr.checked,
-            marketing:$mk.checked,
-            date:Date.now()
-          });
-          closeModal(); hideBanner(); $manage.hidden = false;
+document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ closeModal(); }});
+$save.addEventListener('click', ()=>{
+  setConsent({
+    essential:true,
+    analytics:$an && $an.checked,
+    preferences:$pr && $pr.checked,
+    marketing:$mk && $mk.checked,
+    date:Date.now()
+  });
+  closeModal();
+  hideBanner();
+  if ($manage) $manage.hidden = true;
+});
+closeModal(); hideBanner(); if ($manage) if ($manage) $manage.hidden = true; // keep text button hidden (badge replaces it)
         });
-        [$cancel,$close].forEach(btn=> btn.addEventListener('click', closeModal));
-        $modal.addEventListener('click', (e)=>{ if(e.target === $modal) closeModal(); });
-        document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); });
+        [$cancel,$close].filter(Boolean).forEach(btn=> btn.addEventListener('click', closeModal));
+        if ($modal) $modal.addEventListener('click', (e)=>{ if(e.target === $modal) closeModal(); });
+        document.addEventListener('keydown', (e)=>{ try{ if(e.key==='Escape') closeModal(); }catch(_){}});
       
         // Riapertura
-        $manage.addEventListener('click', openModal);
+        if ($manage) $manage.addEventListener('click', openModal);
       
         // Init
         const consent = getConsent();
-        if(consent){ hideBanner(); $manage.hidden = false; applyConsent(consent); }
+        if(consent){ hideBanner(); if ($manage) if ($manage) $manage.hidden = true; // keep text button hidden (badge replaces it) applyConsent(consent); }
         else { showBanner(); }
       })();
     </script>
@@ -2319,6 +2495,8 @@ window.addEventListener('pageshow', function(event) {
 .gcsc-find-more-on-google, .gcsc-find-more-on-google-root { background: transparent !important; }
 input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus { background: color-mix(in oklab, var(--cse-card), transparent 5%) !important; color: var(--cse-txt) !important; border-color: color-mix(in oklab, var(--cse-txt), transparent 75%) !important; }
 .gsc-selected-option-container { color: var(--cse-txt) !important; }
+
+.cookie-modal.force-open{ display:flex !important; }
 </style><script>
 (function(){
   var CSE_CX = '87b07564ab3cb462a'; // cambia se hai un altro ID
@@ -2380,16 +2558,28 @@ input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus { ba
   }
 
   function executeQuery(q){
-    if (!q) return;
-    ensureCSELoaded(function(){
-      var tries = 0;
-      (function waitReady(){
-        var el = getResultsElement();
-        if (el){
-          el.execute(q + ' site:' + location.hostname);
-          if (box) box.style.display = 'block';
-          openPanel();
-        } else if (tries++ < 80){
+  if (!q) return;
+  const siteRestrict = '(site:echidisofia.org OR site:casi0048.github.io)';
+  ensureCSELoaded(function(){
+    var tries = 0;
+    (function waitReady(){
+      try{
+        var el = (google && google.search && google.search.cse && google.search.cse.element)
+          ? google.search.cse.element.getElement('SEARCH_RESULTS')
+          : (typeof getResultsElement === 'function' ? getResultsElement() : null);
+        if (el && typeof el.execute === 'function'){
+          el.execute(`${q} ${siteRestrict}`);
+          if (typeof openPanel === 'function') openPanel();
+          if (typeof box !== 'undefined' && box) box.style.display = 'block';
+        } else if (tries++ < 100){
+          setTimeout(waitReady, 100);
+        }
+      }catch(e){
+        if (tries++ < 100) setTimeout(waitReady, 120);
+      }
+    })();
+  });
+} else if (tries++ < 80){
           setTimeout(waitReady, 100);
         }
       })();
@@ -2397,10 +2587,12 @@ input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus { ba
   }
 
   function submitFromInput(){
-    if (!input) return;
-    var term = input.value ? input.value.trim() : '';
-    if (term) executeQuery(term);
-  }
+  try{
+    var term = (input && input.value) ? input.value.trim() : '';
+    if (!term) return;
+    executeQuery(term);
+  }catch(e){}
+}
 
   if (input){
     input.addEventListener('keydown', function(e){
@@ -2480,5 +2672,97 @@ input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus { ba
   document.addEventListener('visibilitychange', function(){ if (!document.hidden) syncUI(); });
   syncUI();
 })();
-</script></body>
+</script>
+<script>
+(function(){
+  try{
+    var searchBtn = document.getElementById('cse-search-btn') || document.querySelector('[data-cse-search-btn]');
+    if (typeof input !== 'undefined' && input && !input.__cseBound){
+      input.addEventListener('keydown', function(e){
+        if (e.key === 'Enter'){ e.preventDefault(); submitFromInput(); }
+      });
+      input.__cseBound = true;
+    }
+    if (searchBtn && !searchBtn.__cseBound){
+      searchBtn.addEventListener('click', function(e){
+        e.preventDefault(); submitFromInput();
+      });
+      searchBtn.__cseBound = true;
+    }
+  }catch(e){}
+})();
+</script>
+
+<button id="cookie-fab" class="cookie-fab" aria-label="Gestisci cookie" title="Gestisci cookie" onclick="window.openCookiePrefs && window.openCookiePrefs()"><span class="emoji">🍪</span><span class="label">Cookie</span></button>
+
+<script>
+(function(){
+  function openPrefsHard(){
+    try {
+      var m = document.getElementById('cookie-modal');
+      if (!m) return;
+      m.removeAttribute('hidden');
+      m.setAttribute('aria-hidden', 'false');
+      m.style.display = 'flex';
+      m.classList.add('force-open');
+      // focus first close or save button for accessibility
+      setTimeout(function(){
+        var f = m.querySelector('#cookie-close, #cookie-save, button');
+        if (f && f.focus) try{ f.focus(); }catch(e){}
+      }, 30);
+    } catch(e){}
+  }
+  window.openCookiePrefs = function(){
+    try { if (typeof openModal === 'function') { openModal(); return; } } catch(e){}
+    openPrefsHard();
+  };
+  function bind(){
+    var b = document.getElementById('cookie-fab');
+    if (!b) return;
+    b.addEventListener('click', function(e){
+      e.preventDefault();
+      window.openCookiePrefs();
+    });
+  }
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', bind);
+  } else { bind(); }
+})();
+</script>
+
+
+<script>
+// === FINAL FAIL-SAFE CLOSER (binds at end, takes precedence) ===
+(function(){
+  function closeCookieModalHard(){
+    try{
+      var m = document.getElementById('cookie-modal');
+      if (!m) return;
+      m.setAttribute('aria-hidden','true');
+      m.classList.remove('force-open');
+      m.style.display = 'none';
+      m.setAttribute('hidden','');
+    }catch(e){}
+  }
+  // Bind to buttons (capture to pre-empt other handlers if needed)
+  ['cookie-close','cookie-cancel'].forEach(function(id){
+    var b = document.getElementById(id);
+    if (b) b.addEventListener('click', function(ev){ ev.preventDefault(); closeCookieModalHard(); }, {capture:true});
+  });
+  var saveBtn = document.getElementById('cookie-save');
+  if (saveBtn){
+    saveBtn.addEventListener('click', function(){ setTimeout(closeCookieModalHard, 10); }, {capture:true});
+  }
+  // Click outside & ESC
+  var modal = document.getElementById('cookie-modal');
+  if (modal){
+    modal.addEventListener('click', function(e){ if (e.target === modal) closeCookieModalHard(); }, {capture:true});
+  }
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeCookieModalHard(); }, {capture:true});
+  // Expose globally too
+  window.closeCookieModalHard = closeCookieModalHard;
+})();
+</script>
+
+</body>
 </html>
