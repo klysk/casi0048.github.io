@@ -2586,24 +2586,12 @@ input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus { ba
     });
   }
 
-  function openGoogleSearch(q){
-  if(!q) return;
-  var site = '(site:echidisofia.org OR site:casi0048.github.io)';
-  var url = 'https://www.google.com/search?q=' + encodeURIComponent(q + ' ' + site);
-  try{
-    var win = window.open(url, '_blank', 'noopener');
-    if(!win){ location.href = url; }
-  }catch(_){ location.href = url; }
-}
-
-function submitFromInput(){
+  function submitFromInput(){
   try{
     var term = (input && input.value) ? input.value.trim() : '';
     if (!term) return;
-    openGoogleSearch(term);
+    executeQuery(term);
   }catch(e){}
-}
-catch(e){}
 }
 
   if (input){
@@ -2773,6 +2761,66 @@ catch(e){}
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeCookieModalHard(); }, {capture:true});
   // Expose globally too
   window.closeCookieModalHard = closeCookieModalHard;
+})();
+</script>
+
+
+<!-- Uniform Google Search: ENTER & LENS CLICK -> Google (site-restricted) -->
+<script>
+(function(){
+  // Try to locate your search input & button without relying strictly on IDs
+  var input = document.getElementById('cse-input')
+           || document.querySelector('header input[type="search"]')
+           || document.querySelector('input[type="search"]')
+           || document.querySelector('input[name="q"], input[name="s"]');
+  var btn = document.getElementById('cse-search-btn')
+         || document.querySelector('[data-cse-search-btn], .cse-search-btn, header .search button, .search button');
+
+  function googleUrl(q){
+    var site = '(site:echidisofia.org OR site:casi0048.github.io)';
+    return 'https://www.google.com/search?q=' + encodeURIComponent(q + ' ' + site);
+  }
+  function openGoogle(q){
+    if (!q) return;
+    var url = googleUrl(q);
+    try{
+      var w = window.open(url, '_blank', 'noopener');
+      if(!w){ location.href = url; }
+    }catch(_){ location.href = url; }
+  }
+  function getTerm(){ return (input && input.value ? input.value.trim() : ''); }
+
+  // ENTER on input -> Google (capture, stop propagation)
+  if (input && !input.dataset._wiredUniform){
+    input.addEventListener('keydown', function(e){
+      if (e.key === 'Enter'){
+        e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+        var term = getTerm(); if (!term) return;
+        openGoogle(term);
+      }
+    }, true); // capture
+    // Intercept form submit too
+    var form = input.form || (input.closest && input.closest('form'));
+    if (form && !form.dataset._wiredUniform){
+      form.addEventListener('submit', function(e){
+        e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+        var term = getTerm(); if (!term) return;
+        openGoogle(term);
+      }, true); // capture
+      form.dataset._wiredUniform = '1';
+    }
+    input.dataset._wiredUniform = '1';
+  }
+
+  // LENS click -> Google (capture, stop propagation)
+  if (btn && !btn.dataset._wiredUniform){
+    btn.addEventListener('click', function(e){
+      e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+      var term = getTerm(); if (!term) return;
+      openGoogle(term);
+    }, true); // capture
+    btn.dataset._wiredUniform = '1';
+  }
 })();
 </script>
 
