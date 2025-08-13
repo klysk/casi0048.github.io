@@ -2586,12 +2586,24 @@ input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus { ba
     });
   }
 
-  function submitFromInput(){
+  function openGoogleSearch(q){
+  if(!q) return;
+  var site = '(site:echidisofia.org OR site:casi0048.github.io)';
+  var url = 'https://www.google.com/search?q=' + encodeURIComponent(q + ' ' + site);
+  try{
+    var win = window.open(url, '_blank', 'noopener');
+    if(!win){ location.href = url; }
+  }catch(_){ location.href = url; }
+}
+
+function submitFromInput(){
   try{
     var term = (input && input.value) ? input.value.trim() : '';
     if (!term) return;
-    executeQuery(term);
+    openGoogleSearch(term);
   }catch(e){}
+}
+catch(e){}
 }
 
   if (input){
