@@ -2580,6 +2580,104 @@ footer::before {
   }
 })();
 </script>
-     
+   <script>
+(function(){
+  // 👉 Se hai un altro ID CSE, mettilo qui
+  var CSE_CX = '87b07564ab3cb462a';
+
+  var input    = document.getElementById('site-search');   // casella di ricerca
+  var icon     = document.querySelector('.search-icon');   // icona lente (adatta il selettore se diverso)
+  var box      = document.getElementById('cse-results');   // contenitore risultati
+  var overlay  = document.getElementById('cse-overlay');   // sfondo scuro pannello (se presente)
+  var panel    = document.getElementById('cse-panel');     // pannello risultati (se presente)
+
+  // Carica CSE se serve
+  function ensureCSELoaded(cb){
+    if (window.google && google.search && google.search.cse && google.search.cse.element){ cb(); return; }
+    var done = false;
+    window.__gcse = { callback: function(){ if (!done){ done = true; cb(); } } };
+    if (!document.querySelector('script[data-cse-loader]')){
+      var s = document.createElement('script');
+      s.src = 'https://cse.google.com/cse.js?cx=' + encodeURIComponent(CSE_CX);
+      s.async = true; s.defer = true; s.setAttribute('data-cse-loader','1');
+      document.head.appendChild(s);
+    }
+  }
+
+  // Render inline nel nostro box
+  function renderInline(){
+    try {
+      google.search.cse.element.render({
+        div: 'cse-results',
+        tag: 'searchresults-only',
+        gname: 'results'
+      });
+    } catch(e){}
+  }
+
+  function getResultsElement(){
+    if (!(window.google && google.search && google.search.cse && google.search.cse.element)) return null;
+    var el = google.search.cse.element.getElement('results');
+    if (!el){ renderInline(); el = google.search.cse.element.getElement('results'); }
+    return el;
+  }
+
+  function openPanel(){
+    if (overlay) overlay.style.display = 'block';
+    if (panel)   panel.style.display   = 'block';
+  }
+
+  function executeQuery(q){
+    if (!q) return;
+    ensureCSELoaded(function(){
+      var tries = 0;
+      (function waitReady(){
+        var el = getResultsElement();
+        if (el){
+          el.execute(q + ' site:' + location.hostname); // 🔎 limita al tuo dominio
+          if (box) box.style.display = 'block';
+          openPanel(); // apre automaticamente l’overlay/pannello se esiste
+        } else if (tries++ < 80){
+          setTimeout(waitReady, 100);
+        }
+      })();
+    });
+  }
+
+  function submitFromInput(){
+    if (!input) return;
+    var term = input.value ? input.value.trim() : '';
+    if (term) executeQuery(term);
+  }
+
+  // ENTER nella casella → esegue e apre risultati
+  if (input){
+    input.addEventListener('keydown', function(e){
+      if (e.key === 'Enter'){
+        e.preventDefault();
+        submitFromInput();
+      }
+    });
+  }
+
+  // Clic sulla lente → esegue e apre risultati
+  if (icon){
+    icon.addEventListener('click', function(e){
+      e.preventDefault();
+      submitFromInput();
+    });
+  }
+
+  // Se hai un bottone "Risultati", lo rendiamo equivalente a Invio
+  var openBtn = document.getElementById('cse-open');
+  if (openBtn){
+    openBtn.addEventListener('click', function(e){
+      e.preventDefault();
+      submitFromInput();
+    });
+  }
+})();
+</script>
+  
 </body>
 </html>
