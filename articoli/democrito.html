@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Democrito: Il filosofo dell'atomismo</title>
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+            --card-bg: #fff;
+            --button-text: #fff;
+            --transition: all 0.3s ease;
+        }
+
+        /* Modalità di lettura */
+        .notturno {
+            --primary-color: #6d597a;
+            --secondary-color: #355070;
+            --text-color: #eaeaea;
+            --bg-color: #1a1a2e;
+            --card-bg: #16213e;
+            --button-text: #eaeaea;
+        }
+
+        .filosofica {
+            --primary-color: #5e503f;
+            --secondary-color: #22333b;
+            --text-color: #eae0d5;
+            --bg-color: #0a0908;
+            --card-bg: #22333b;
+            --button-text: #eae0d5;
+        }
+
+        .meditativo {
+            --primary-color: #588b8b;
+            --secondary-color: #3a5a40;
+            --text-color: #344e41;
+            --bg-color: #dad7cd;
+            --card-bg: #a3b18a;
+            --button-text: #344e41;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            margin-top: 30px;
+            border-bottom: 1px solid var(--secondary-color);
+            padding-bottom: 10px;
+        }
+
+        .section-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: linear-gradient(to bottom, #FFD700, #F0E68C);    background-color: var(--primary-color);
+            color: var(--button-text);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .section-header:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .section-title {
+            margin: 0;
+            font-size: 1.4rem;
+        }
+
+        .section-content {
+            padding: 20px;
+            display: none;
+        }
+
+        .section-content.active {
+            display: block;
+        }
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--button-text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .toggle-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .quote {
+            font-style: italic;
+            border-left: 4px solid var(--primary-color);
+            padding-left: 20px;
+            margin: 20px 0;
+            color: var(--secondary-color);
+        }
+
+        .theme-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .theme-btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: var(--transition);
+            background-color: var(--primary-color);
+            color: var(--button-text);
+        }
+
+        .theme-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .default-btn {
+            background-color: #4a6fa5;
+            color: white;
+        }
+
+        .notturno-btn {
+            background-color: #6d597a;
+            color: #eaeaea;
+        }
+
+        .filosofica-btn {
+            background-color: #5e503f;
+            color: #eae0d5;
+        }
+
+        .meditativo-btn {
+            background-color: #588b8b;
+            color: #344e41;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 40px auto;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            background-color: var(--card-bg);
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        .timeline-date {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .timeline-content {
+            padding: 10px 0;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            left: -10px;
+            background-color: var(--card-bg);
+            border: 4px solid var(--primary-color);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            border-top: 1px solid var(--primary-color);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .section-header {
+                padding: 12px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Democrito di Abdera</h1>
+            <p>Il filosofo che teorizzò l'atomismo nell'antica Grecia</p>
+        </header>
+
+        <div class="theme-buttons">
+            <button class="theme-btn default-btn" onclick="setTheme('default')">Default</button>
+            <button class="theme-btn notturno-btn" onclick="setTheme('notturno')">Notturno</button>
+            <button class="theme-btn filosofica-btn" onclick="setTheme('filosofica')">Filosofica</button>
+            <button class="theme-btn meditativo-btn" onclick="setTheme('meditativo')">Meditativo</button>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection('biografia')">
+                <h2 class="section-title">Biografia</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="biografia">
+                <p>Democrito (in greco antico: Δημόκριτος, Dēmókritos) nacque ad Abdera, in Tracia, intorno al 460 a.C. e morì probabilmente intorno al 370 a.C. Fu un filosofo greco presocratico, allievo di Leucippo e principale esponente dell'atomismo, una teoria filosofica che spiegava la realtà in termini di atomi e vuoto.</p>
+                
+                <p>Secondo la tradizione, Democrito viaggiò molto in gioventù, visitando Egitto, Persia, Babilonia e forse l'India, assimilando conoscenze da varie culture. Tornato ad Abdera, si dedicò completamente allo studio e alla filosofia, guadagnandosi il soprannome di "filosofo che ride" per la sua visione serena della vita.</p>
+                
+                <div class="quote">
+                    "Nulla esiste se non atomi e spazio vuoto; tutto il resto è opinione."
+                </div>
+                
+                <p>Democrito scrisse numerose opere su vari argomenti, dalla fisica all'etica, dalla matematica alla musica, ma purtroppo nessuna ci è pervenuta integralmente. Le sue idee ci sono note principalmente attraverso i resoconti di altri autori, in particolare Aristotele e i suoi commentatori.</p>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection('filosofia')">
+                <h2 class="section-title">Filosofia Atomistica</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="filosofia">
+                <p>La teoria atomistica di Democrito rappresenta una delle più importanti conquiste del pensiero presocratico. Secondo questa visione:</p>
+                
+                <ul>
+                    <li>La realtà è composta da atomi (ἄτομοι, "indivisibili") e vuoto</li>
+                    <li>Gli atomi sono particelle indivisibili, eterne, immutabili e in movimento</li>
+                    <li>Differiscono tra loro per forma, ordine e posizione</li>
+                    <li>Le combinazioni di atomi danno origine a tutti gli oggetti del mondo</li>
+                    <li>Il vuoto è lo spazio in cui gli atomi si muovono</li>
+                </ul>
+                
+                <p>Questa teoria rappresenta un tentativo di spiegare la molteplicità e il cambiamento nel mondo fisico senza ricorrere a principi soprannaturali. Democrito applicò il suo atomismo anche alla psicologia, sostenendo che l'anima è composta da atomi particolarmente sottili e sferici.</p>
+                
+                <div class="quote">
+                    "Per convenzione il dolce, per convenzione l'amaro, per convenzione il caldo, per convenzione il freddo, per convenzione il colore; in realtà atomi e vuoto."
+                </div>
+                
+                <p>L'atomismo democriteo anticipò in modo sorprendente alcune concezioni della fisica moderna, anche se ovviamente mancava di basi sperimentali e matematiche.</p>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection('etica')">
+                <h2 class="section-title">Etica e Felicità</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="etica">
+                <p>Oltre alla fisica, Democrito sviluppò una sofisticata teoria etica centrata sul concetto di eudaimonia (εὐδαιμονία), spesso tradotta come felicità o fioritura umana.</p>
+                
+                <p>Secondo Democrito, il fine della vita umana è la serenità dell'animo (euthymia), che si ottiene attraverso:</p>
+                
+                <ul>
+                    <li>Moderazione nei piaceri</li>
+                    <li>Equilibrio interiore</li>
+                    <li>Vita conforme a natura</li>
+                    <li>Esercizio della saggezza</li>
+                    <li>Liberazione dalle paure irrazionali</li>
+                </ul>
+                
+                <div class="quote">
+                    "La felicità non risiede nei beni esterni, ma nell'anima. Non deriva dal possesso di bestiame e oro; l'anima è la dimora del demone."
+                </div>
+                
+                <p>Democrito criticò l'accumulo di ricchezze e la ricerca sfrenata dei piaceri, sostenendo che il vero benessere deriva da uno stato di armonia interiore. La sua etica presenta sorprendenti analogie con alcune scuole filosofiche successive, in particolare con l'epicureismo.</p>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection('influenza')">
+                <h2 class="section-title">Influenza e Ricezione</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="influenza">
+                <p>Nonostante il carattere rivoluzionario delle sue idee, l'atomismo democriteo fu inizialmente eclissato dal successo delle filosofie di Platone e Aristotele, che criticarono aspramente questa teoria.</p>
+                
+                <p>Tuttavia, l'influenza di Democrito si manifestò in diversi modi:</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">IV secolo a.C.</div>
+                        <div class="timeline-content">Epicuro riprende e modifica l'atomismo democriteo, fondando l'epicureismo</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-date">I secolo a.C.</div>
+                        <div class="timeline-content">Lucrezio celebra Democrito nel suo poema "De rerum natura"</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-date">XVII secolo</div>
+                        <div class="timeline-content">Pierre Gassendi riscopre l'atomismo antico, influenzando la rivoluzione scientifica</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-date">XIX secolo</div>
+                        <div class="timeline-content">John Dalton sviluppa la teoria atomica moderna, ispirandosi in parte a Democrito</div>
+                    </div>
+                </div>
+                
+                <p>Oggi Democrito è riconosciuto come uno dei più originali pensatori dell'antichità, precursore del metodo scientifico e della concezione materialista della realtà. La sua intuizione fondamentale - che la materia sia composta da particelle indivisibili - si è rivelata straordinariamente profetica.</p>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection('opere')">
+                <h2 class="section-title">Opere e Frammenti</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="opere">
+                <p>Secondo le fonti antiche, Democrito scrisse numerose opere (forse fino a 70) su vari argomenti, organizzate in cinque gruppi:</p>
+                
+                <ol>
+                    <li><strong>Opere di fisica</strong>: "Sulla natura", "Sulle forme degli atomi", "Sul vuoto"</li>
+                    <li><strong>Opere matematiche</strong>: "Sui numeri", "Sulle linee irrazionali"</li>
+                    <li><strong>Opere astronomiche</strong>: "Sulla natura del cielo", "Sulle stelle fisse"</li>
+                    <li><strong>Opere etiche</strong>: "Sulla felicità", "Sulla tranquillità dell'anima"</li>
+                    <li><strong>Opere tecniche</strong>: "Sulle immagini", "Sui sapori"</li>
+                </ol>
+                
+                <p>Purtroppo, tutte queste opere sono andate perdute, ad eccezione di alcuni frammenti e testimonianze. Ecco alcuni frammenti significativi:</p>
+                
+                <div class="quote">
+                    "L'uomo è un microcosmo." (Frammento 34)
+                </div>
+                
+                <div class="quote">
+                    "La natura e l'insegnamento sono simili; infatti l'insegnamento trasforma l'uomo, e trasformando lo crea natura." (Frammento 33)
+                </div>
+                
+                <div class="quote">
+                    "Bisogna tendere non a ogni forma di conoscenza, ma a quella che conduce alla virtù." (Frammento 181)
+                </div>
+                
+                <p>La maggior parte dei frammenti etici di Democrito ci è stata trasmessa attraverso la raccolta di Stobeo, un compilatore del V secolo d.C.</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2023 Articolo su Democrito - Tutti i diritti riservati</p>
+            <p>Fonti: Diogene Laerzio, Aristotele, Frammenti dei Presocratici</p>
+        </footer>
+    </div>
+
+    <script>
+        // Funzione per aprire/chiudere le sezioni
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const button = section.previousElementSibling.querySelector('.toggle-btn');
+            
+            section.classList.toggle('active');
+            
+            if (section.classList.contains('active')) {
+                button.textContent = '-';
+            } else {
+                button.textContent = '+';
+            }
+        }
+
+        // Funzione per cambiare tema
+        function setTheme(theme) {
+            document.body.className = theme;
+            
+            // Salva la preferenza del tema
+            localStorage.setItem('themePreference', theme);
+        }
+
+        // Carica il tema preferito al caricamento della pagina
+        window.onload = function() {
+            const savedTheme = localStorage.getItem('themePreference');
+            if (savedTheme) {
+                setTheme(savedTheme);
+            }
+            
+            // Apri la prima sezione per default
+            toggleSection('biografia');
+        }
+    </script>
+</body>
+</html>

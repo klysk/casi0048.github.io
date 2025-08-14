@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leucippo di Mileto: Il fondatore dell'atomismo</title>
+    <style>
+        :root {
+            --primary-color: #5d5c61;
+            --secondary-color: #379683;
+            --text-color: #333;
+            --bg-color: #f8f8f8;
+            --card-bg: #ffffff;
+            --button-text: #ffffff;
+            --transition: all 0.3s ease;
+        }
+
+        /* Modalità di lettura */
+        .notturno {
+            --primary-color: #1a1a2e;
+            --secondary-color: #16213e;
+            --text-color: #e6e6e6;
+            --bg-color: #0f0f1a;
+            --card-bg: #1a1a2e;
+            --button-text: #e6e6e6;
+        }
+
+        .filosofica {
+            --primary-color: #3a3a3a;
+            --secondary-color: #2d2d2d;
+            --text-color: #e0e0e0;
+            --bg-color: #1e1e1e;
+            --card-bg: #2d2d2d;
+            --button-text: #e0e0e0;
+        }
+
+        .meditativo {
+            --primary-color: #5e7c61;
+            --secondary-color: #3e5c4d;
+            --text-color: #f4f4f4;
+            --bg-color: #2c3e33;
+            --card-bg: #3e5c4d;
+            --button-text: #f4f4f4;
+        }
+
+        .antico {
+            --primary-color: #8b5a2b;
+            --secondary-color: #a67c52;
+            --text-color: #3e2723;
+            --bg-color: #f5e8d0;
+            --card-bg: #e8d5b5;
+            --button-text: #3e2723;
+        }
+
+        body {
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            var(--primary-color);
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            font-style: italic;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+
+        h2 {
+            color:#00ffdc;     var(--secondary-color);
+            margin-top: 30px;
+            border-bottom: 1px solid var(--secondary-color);
+            padding-bottom: 10px;
+            font-weight: 400;
+        }
+
+        .section-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 25px;
+            background-color: var(--primary-color);
+            color: var(--button-text);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .section-header:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .section-title {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 400;
+        }
+
+        .section-content {
+            padding: 25px;
+            display: none;
+        }
+
+        .section-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--button-text);
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .toggle-btn:hover {
+            background-color: rgba(255,255,255,0.1);
+            transform: rotate(90deg);
+        }
+
+        .quote {
+            font-style: italic;
+            border-left: 4px solid var(--primary-color);
+            padding-left: 25px;
+            margin: 25px 0;
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+            line-height: 1.9;
+        }
+
+        .quote-author {
+            display: block;
+            text-align: right;
+            font-style: normal;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        .theme-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .theme-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            background-color: var(--primary-color);
+            color: var(--button-text);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+
+        .theme-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .theme-btn.active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .default-btn {
+            background-color: #5d5c61;
+            color: white;
+        }
+
+        .notturno-btn {
+            background-color: #1a1a2e;
+            color: #e6e6e6;
+        }
+
+        .filosofica-btn {
+            background-color: #3a3a3a;
+            color: #e0e0e0;
+        }
+
+        .meditativo-btn {
+            background-color: #5e7c61;
+            color: #f4f4f4;
+        }
+
+        .antico-btn {
+            background-color: #8b5a2b;
+            color: #f5e8d0;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 40px auto;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 100%;
+            left: 0;
+            top: 0;
+            background-color: var(--primary-color);
+        }
+
+        .timeline-item {
+            padding: 20px;
+            position: relative;
+            background-color: var(--card-bg);
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+        }
+
+        .timeline-date {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .timeline-content {
+            padding: 5px 0;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            left: -39px;
+            background-color: var(--card-bg);
+            border: 4px solid var(--primary-color);
+            top: 25px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            border-top: 1px solid var(--primary-color);
+            font-size: 0.9rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .image-caption {
+            font-style: italic;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-header {
+                padding: 15px 20px;
+            }
+            
+            .theme-buttons {
+                gap: 10px;
+            }
+            
+            .theme-btn {
+                padding: 10px 15px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Leucippo di Mileto</h1>
+            <p class="subtitle">Il fondatore della teoria atomistica nell'antica Grecia</p>
+            
+            <div class="image-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Leucippus.jpg/320px-Leucippus.jpg" alt="Rappresentazione artistica di Leucippo">
+                <p class="image-caption">Rappresentazione artistica di Leucippo di Mileto</p>
+            </div>
+        </header>
+
+        <div class="theme-buttons">
+            <button class="theme-btn default-btn active" onclick="setTheme('default')">Classico</button>
+            <button class="theme-btn notturno-btn" onclick="setTheme('notturno')">Notturno</button>
+            <button class="theme-btn filosofica-btn" onclick="setTheme('filosofica')">Filosofica</button>
+            <button class="theme-btn meditativo-btn" onclick="setTheme('meditativo')">Meditativo</button>
+            <button class="theme-btn antico-btn" onclick="setTheme('antico')">Antico</button>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection('biografia')">
+                <h2 class="section-title">Vita e Contesto Storico</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="biografia">
+                <p>Leucippo (in greco antico: Λεύκιππος, Léukippos) fu un filosofo greco presocratico vissuto probabilmente tra il V e il IV secolo a.C. Le informazioni sulla sua vita sono scarse e spesso controverse. Secondo la tradizione, nacque a Mileto, anche se alcune fonti lo indicano come originario di Elea o di Abdera.</p>
+                
+                <p>Leucippo fu probabilmente contemporaneo di Anassagora e più anziano di Democrito, che sarebbe stato suo allievo. La sua figura è spesso oscurata da quella del più famoso discepolo Democrito, al punto che alcuni antichi arrivarono a dubitare della sua esistenza reale.</p>
+                
+                <div class="quote">
+                    "Leucippo di Mileto, discepolo di Zenone, fu il primo a formulare la teoria degli atomi."
+                    <span class="quote-author">- Diogene Laerzio, Vite dei filosofi</span>
+                </div>
+                
+                <p>Vissuto in un periodo di grande fermento intellettuale, Leucippo operò nella fase di transizione tra la filosofia della natura dei primi presocratici e le più sistematiche speculazioni di Platone e Aristotele. Il suo pensiero rappresenta una sintesi originale tra la tradizione ionica della physis e le argomentazioni logiche della scuola eleatica.</p>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection('filosofia')">
+                <h2 class="section-title">La Dottrina Atomistica</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="filosofia">
+                <p>Leucippo è universalmente riconosciuto come il fondatore della teoria atomistica, anche se la sua formulazione più compiuta si deve al suo allievo Democrito. I principi fondamentali della sua filosofia possono essere così riassunti:</p>
+                
+                <ul>
+                    <li><strong>Atomi</strong>: Esistono particelle indivisibili (άτομοι, atomoi) eterne, immutabili e in movimento</li>
+                    <li><strong>Vuoto</strong>: Lo spazio vuoto è necessario per il movimento degli atomi e per spiegare la molteplicità</li>
+                    <li><strong>Necessità</strong>: Tutto avviene secondo necessità meccanica, senza finalismo</li>
+                    <li><strong>Natura</strong>: I fenomeni naturali sono spiegabili attraverso la combinazione meccanica degli atomi</li>
+                </ul>
+                
+                <p>Questa teoria rappresentava una risposta originale alle aporie della filosofia eleatica, conciliando l'essere parmenideo con l'esperienza del divenire e della molteplicità. Gli atomi di Leucippo, pur essendo qualitativamente identici, differiscono per:</p>
+                
+                <div class="quote">
+                    "Forma, ordine e posizione: la A differisce dalla N per la forma, la AN dalla NA per l'ordine, la Z dalla N per la posizione."
+                    <span class="quote-author">- Aristotele, Metafisica</span>
+                </div>
+                
+                <p>Leucippo applicò la sua teoria atomistica alla cosmologia, sostenendo che i mondi si formano per aggregazione casuale di atomi in vortici cosmici. Questa visione meccanicistica e materialista della natura rappresentò una radicale alternativa alle spiegazioni teleologiche e mitologiche del cosmo.</p>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection('opere')">
+                <h2 class="section-title">Opere e Frammenti</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="opere">
+                <p>La tradizione attribuisce a Leucippo due opere principali:</p>
+                
+                <ol>
+                    <li><strong>La Grande Cosmologia</strong> (Μέγας Διάκοσμος): L'opera più importante, in cui esponeva la sua teoria atomistica e la sua visione del cosmo</li>
+                    <li><strong>Sull'Intelletto</strong> (Περὶ Νοῦ): Un trattato sulla natura della mente e della conoscenza</li>
+                </ol>
+                
+                <p>Purtroppo, nessuna delle opere di Leucippo ci è pervenuta integralmente. Le nostre conoscenze sul suo pensiero derivano principalmente da:</p>
+                
+                <ul>
+                    <li>Citazioni e riferimenti in Aristotele e nei suoi commentatori</li>
+                    <li>Resoconti di autori successivi come Diogene Laerzio e Simplicio</li>
+                    <li>L'opera di Democrito, che sviluppò e sistematizzò le intuizioni del maestro</li>
+                </ul>
+                
+                <div class="quote">
+                    "Nulla avviene invano, ma tutto avviene secondo ragione e necessità."
+                    <span class="quote-author">- Frammento attribuito a Leucippo</span>
+                </div>
+                
+                <p>La difficoltà di distinguere le idee originali di Leucippo da quelle di Democrito ha portato gli studiosi a parlare spesso di "atomismo democriteo" come di un sistema unitario, anche se è probabile che Leucippo abbia formulato i principi fondamentali della teoria, poi sviluppata in modo più completo dal discepolo.</p>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection('influenza')">
+                <h2 class="section-title">Influenza e Ricezione</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="influenza">
+                <p>Nonostante la scarsità di testimonianze dirette, l'influenza di Leucippo sul pensiero occidentale è stata profonda e duratura:</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">V-IV sec. a.C.</div>
+                        <div class="timeline-content">Democrito sviluppa e sistematizza l'atomismo leucippeo</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-date">IV-III sec. a.C.</div>
+                        <div class="timeline-content">Epicuro riprende l'atomismo, adattandolo alla sua filosofia</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-date">I sec. a.C.</div>
+                        <div class="timeline-content">Lucrezio nel "De rerum natura" diffonde l'epicureismo e l'atomismo a Roma</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-date">XVII sec.</div>
+                        <div class="timeline-content">Pierre Gassendi riscopre l'atomismo antico, influenzando la rivoluzione scientifica</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-date">XIX sec.</div>
+                        <div class="timeline-content">John Dalton formula la teoria atomica moderna, ispirandosi all'antico atomismo</div>
+                    </div>
+                </div>
+                
+                <p>L'atomismo di Leucippo rappresentò una sfida radicale alle concezioni tradizionali della realtà e influenzò profondamente lo sviluppo del pensiero scientifico. La sua idea che la realtà sia composta da particelle indivisibili in movimento nel vuoto anticipò in modo sorprendente alcune concezioni della fisica moderna.</p>
+                
+                <div class="quote">
+                    "In verità, ci sono solo atomi e vuoto."
+                    <span class="quote-author">- Democrito, riprendendo la dottrina di Leucippo</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection('confronto')">
+                <h2 class="section-title">Confronto con Altre Scuole</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="confronto">
+                <p>La filosofia di Leucippo si sviluppò in dialogo critico con altre scuole presocratiche:</p>
+                
+                <table>
+                    <tr>
+                        <th>Scuola</th>
+                        <th>Principali Concetti</th>
+                        <th>Differenze con Leucippo</th>
+                    </tr>
+                    <tr>
+                        <td>Eleatica (Parmenide, Zenone)</td>
+                        <td>Unicità e immutabilità dell'essere</td>
+                        <td>Leucippo accetta il vuoto e la molteplicità</td>
+                    </tr>
+                    <tr>
+                        <td>Ionica (Talete, Anassimandro)</td>
+                        <td>Archè materiale (acqua, apeiron)</td>
+                        <td>Leucippo introduce gli atomi come particelle indivisibili</td>
+                    </tr>
+                    <tr>
+                        <td>Pitagorica</td>
+                        <td>Realtà fondata sui numeri</td>
+                        <td>Leucippo propone un fondamento materiale</td>
+                    </tr>
+                    <tr>
+                        <td>Eraclitea</td>
+                        <td>Divenire perpetuo</td>
+                        <td>Leucippo spiega il divenire con atomi immutabili</td>
+                    </tr>
+                </table>
+                
+                <p>L'atomismo di Leucippo rappresentò una sintesi originale tra la logica eleatica e l'empirismo ionico, offrendo una spiegazione unitaria e razionale della natura che influenzò profondamente lo sviluppo del pensiero scientifico occidentale.</p>
+                
+                <div class="quote">
+                    "Leucippo pensava di avere una teoria che conciliava con i sensi senza abbandonare la generazione, la distruzione, il movimento e la molteplicità delle cose."
+                    <span class="quote-author">- Simplicio, Commento alla Fisica di Aristotele</span>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2023 Articolo su Leucippo di Mileto - Tutti i diritti riservati</p>
+            <p>Fonti: Diogene Laerzio, Aristotele, Simplicio, Frammenti dei Presocratici</p>
+        </footer>
+    </div>
+
+    <script>
+        // Funzione per aprire/chiudere le sezioni
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const button = section.previousElementSibling.querySelector('.toggle-btn');
+            
+            section.classList.toggle('active');
+            
+            if (section.classList.contains('active')) {
+                button.textContent = '-';
+            } else {
+                button.textContent = '+';
+            }
+        }
+
+        // Funzione per cambiare tema
+        function setTheme(theme) {
+            document.body.className = theme;
+            
+            // Aggiorna lo stato attivo dei pulsanti
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // Salva la preferenza del tema
+            localStorage.setItem('themePreference', theme);
+        }
+
+        // Carica il tema preferito al caricamento della pagina
+        window.onload = function() {
+            const savedTheme = localStorage.getItem('themePreference');
+            if (savedTheme) {
+                setTheme(savedTheme);
+                // Attiva il pulsante corretto
+                document.querySelector(`.${savedTheme}-btn`).classList.add('active');
+                document.querySelector('.default-btn').classList.remove('active');
+            } else {
+                document.querySelector('.default-btn').classList.add('active');
+            }
+            
+            // Apri la prima sezione per default
+            toggleSection('biografia');
+        }
+    </script>
+</body>
+</html>
