@@ -15,7 +15,7 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <!-- Icons -->
-<link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet">
+<link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
 <!-- GSAP -->
 <script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <style>
@@ -112,7 +112,6 @@
       margin:4px auto 0; max-width:1200px; width:95%;
       background: rgba(0,0,0,0); border:1px solid rgba(255,215,0,.15);
       padding:10px 14px; border-radius:8px; text-align:center;
-     
       }
       .quotes-bar .quote-text{ font-family:'EB Garamond',serif; font-size:1.12rem; font-style:italic; color: #00CFFF;font-weight: 700; }
       .quotes-bar .author{ margin-left:6px; color:#ffd86a; font-size:1rem }
@@ -422,7 +421,7 @@
       .cookie-modal{ position:fixed; inset:0; background:rgba(0,0,0,.6);
       display:none; align-items:center; justify-content:center; padding:16px;
       z-index:999999;
-       }
+      }
       .cookie-modal[aria-hidden="false"]{ display:flex }
       .cookie-modal__panel{
       width:min(640px,92vw); background:rgba(10,10,30,.98);
@@ -458,115 +457,164 @@
       border-color:#ffd86a;
       box-shadow:0 0 18px rgba(255,215,0,.45), inset 0 0 10px rgba(255,215,0,.25);
       }
-    
-.cookie-modal.force-open{ display:flex !important; }
-</style>
-</link><style>
-.translate-box{display:inline-flex;align-items:center;gap:.5rem}
-.translate-select{
-  appearance:none; padding:.45rem .8rem;
-  border:1px solid var(--menu-border, #2f3a3f); border-radius:10px;
-  background:rgba(20,20,40,.78); color:#e6f0f3; font-size:.95rem; cursor:pointer
-}
-.translate-select:focus{outline:2px solid #2a7c9c}
-
-/* ===== CSE: leggibilità controlli "Ordina per" (patch minima) ===== */
-.gsc-above-wrapper-area,
-.gsc-above-wrapper-area-container,
-.gsc-orderby-container,
-.gsc-selected-option-container { background: transparent !important; color: var(--cse-txt, inherit) !important; }
-.gsc-option-menu { background: var(--cse-card, #111) !important; border: 1px solid rgba(255,255,255,.15) !important; box-shadow: 0 6px 18px rgba(0,0,0,.35) !important; }
-.gsc-option-menu-item { color: var(--cse-txt, #eee) !important; }
-.gsc-option-menu-item-highlighted { background: rgba(255,255,255,.07) !important; color: var(--cse-txt, #fff) !important; }
-.gsc-option-selector, .gsc-orderby-label, .gsc-selected-option-container { color: var(--cse-txt, inherit) !important; }
-.gsc-control-cse, .gcse-wrapper { background: transparent !important; }
-
-/* === Cookie UI micro-interactions === */
-.cookie-banner .btn:focus-visible,
-.cookie-modal .btn:focus-visible,
-#manage-cookies:focus-visible{
-  outline: 2px solid color-mix(in oklab, #ffffff, var(--accent, #d4af37) 60%);
-  outline-offset: 2px;
-  box-shadow: 0 0 0 2px rgba(255,255,255,.08);
-}
-@media (prefers-reduced-motion: reduce){
-  .cookie-banner, .cookie-modal{ transition: none !important; }
-}
-
-/* === Cookie floating badge (always visible) === */
-.cookie-fab{ position: fixed; left: auto; right: 16px; bottom: 16px; z-index: 1000000;
-  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  padding: 10px 14px; border-radius: 999px;
-  background: var(--card-2, #0f141a); color: var(--txt, #eaeaea);
-  border: 1px solid rgba(255,255,255,.18);
-  box-shadow: 0 10px 26px rgba(0,0,0,.45);
-  cursor: pointer; pointer-events:auto; user-select: none;
- }
-.cookie-fab .emoji{ font-size: 1rem; line-height: 1; }
-.cookie-fab .label{ font-weight: 600; letter-spacing: .2px; }
-.cookie-fab:hover{ filter: brightness(1.08); }
-.cookie-fab:focus-visible{
-  outline: 2px solid color-mix(in oklab, #ffffff, var(--accent, #d4af37) 55%);
-  outline-offset: 2px;
-  box-shadow: 0 0 0 2px rgba(255,255,255,.08);
-}
-@media (prefers-reduced-motion: reduce){
-  .cookie-fab{
-  position: fixed; left: auto; right: 16px; bottom: 16px; z-index: 20050;
-  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  padding: 10px 14px; border-radius: 999px;
-  background: var(--card-2, #0f141a); color: var(--txt, #eaeaea);
-  border: 1px solid rgba(255,255,255,.18);
-  box-shadow: 0 10px 26px rgba(0,0,0,.45);
-  cursor: pointer; user-select: none;
-}
-.cookie-fab .emoji{ font-size: 1rem; line-height: 1; }
-.cookie-fab .label{ font-weight: 600; letter-spacing: .2px; }
-}
-
-.cookie-modal.force-open{ display:flex !important; }
-
-      .symbol-rotator{
-  display:inline-block;
-  /* permette parole lunghe */
-  max-width: 100%;
-  white-space: nowrap;
-  overflow: visible;   /* non hidden */
-}
-
-</style>
+      .cookie-modal.force-open{ display:flex !important; }
+    </style>
 <style>
-/* Fallback font per simboli/emoji */
-.particle, .symbol-rotator{
-  font-family: system-ui, "Segoe UI", Roboto, "Noto Sans", "Noto Sans Symbols 2",
-               "DejaVu Sans", Symbola, "Apple Color Emoji", "Segoe UI Emoji",
-               "Twemoji Mozilla", sans-serif;
-}
-</style>
-
+      .translate-box{display:inline-flex;align-items:center;gap:.5rem}
+      .translate-select{
+      appearance:none; padding:.45rem .8rem;
+      border:1px solid var(--menu-border, #2f3a3f); border-radius:10px;
+      background:rgba(20,20,40,.78); color:#e6f0f3; font-size:.95rem; cursor:pointer
+      }
+      .translate-select:focus{outline:2px solid #2a7c9c}
+      /* ===== CSE: leggibilità controlli "Ordina per" (patch minima) ===== */
+      .gsc-above-wrapper-area,
+      .gsc-above-wrapper-area-container,
+      .gsc-orderby-container,
+      .gsc-selected-option-container { background: transparent !important; color: var(--cse-txt, inherit) !important; }
+      .gsc-option-menu { background: var(--cse-card, #111) !important; border: 1px solid rgba(255,255,255,.15) !important; box-shadow: 0 6px 18px rgba(0,0,0,.35) !important; }
+      .gsc-option-menu-item { color: var(--cse-txt, #eee) !important; }
+      .gsc-option-menu-item-highlighted { background: rgba(255,255,255,.07) !important; color: var(--cse-txt, #fff) !important; }
+      .gsc-option-selector, .gsc-orderby-label, .gsc-selected-option-container { color: var(--cse-txt, inherit) !important; }
+      .gsc-control-cse, .gcse-wrapper { background: transparent !important; }
+      /* === Cookie UI micro-interactions === */
+      .cookie-banner .btn:focus-visible,
+      .cookie-modal .btn:focus-visible,
+      #manage-cookies:focus-visible{
+      outline: 2px solid color-mix(in oklab, #ffffff, var(--accent, #d4af37) 60%);
+      outline-offset: 2px;
+      box-shadow: 0 0 0 2px rgba(255,255,255,.08);
+      }
+      @media (prefers-reduced-motion: reduce){
+      .cookie-banner, .cookie-modal{ transition: none !important; }
+      }
+      /* === Cookie floating badge (always visible) === */
+      .cookie-fab{ position: fixed; left: auto; right: 16px; bottom: 16px; z-index: 1000000;
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 10px 14px; border-radius: 999px;
+      background: var(--card-2, #0f141a); color: var(--txt, #eaeaea);
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow: 0 10px 26px rgba(0,0,0,.45);
+      cursor: pointer; pointer-events:auto; user-select: none;
+      }
+      .cookie-fab .emoji{ font-size: 1rem; line-height: 1; }
+      .cookie-fab .label{ font-weight: 600; letter-spacing: .2px; }
+      .cookie-fab:hover{ filter: brightness(1.08); }
+      .cookie-fab:focus-visible{
+      outline: 2px solid color-mix(in oklab, #ffffff, var(--accent, #d4af37) 55%);
+      outline-offset: 2px;
+      box-shadow: 0 0 0 2px rgba(255,255,255,.08);
+      }
+      @media (prefers-reduced-motion: reduce){
+      .cookie-fab{
+      position: fixed; left: auto; right: 16px; bottom: 16px; z-index: 20050;
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 10px 14px; border-radius: 999px;
+      background: var(--card-2, #0f141a); color: var(--txt, #eaeaea);
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow: 0 10px 26px rgba(0,0,0,.45);
+      cursor: pointer; user-select: none;
+      }
+      .cookie-fab .emoji{ font-size: 1rem; line-height: 1; }
+      .cookie-fab .label{ font-weight: 600; letter-spacing: .2px; }
+      }
+      .cookie-modal.force-open{ display:flex !important; }
+      .symbol-rotator{
+      display:inline-block;
+      /* permette parole lunghe */
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: visible;   /* non hidden */
+      }
+    </style>
+<style>
+      /* Fallback font per simboli/emoji */
+      .particle, .symbol-rotator{
+      font-family: system-ui, "Segoe UI", Roboto, "Noto Sans", "Noto Sans Symbols 2",
+      "DejaVu Sans", Symbola, "Apple Color Emoji", "Segoe UI Emoji",
+      "Twemoji Mozilla", sans-serif;
+      }
+    </style>
 <!--  inizio  aggiunta stelle cadenti da destra a sinistra-->
 <style>
-  body {
-    margin: 0;
-    background: black;
-    overflow: hidden;
-  }
-  canvas {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    display: block;
-  }
-
-
-</style>
+      body {
+      margin: 0;
+      background: black;
+      overflow: hidden;
+      }
+      canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      display: block;
+      }
+    </style>
 <!--  fine  aggiunta stelle cadenti da destra a sinistra-->
-</head>
-
+<style>
+/* === CSE overlay & panel: CSS estratto da inline === */
+#cse-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.55);
+  backdrop-filter: blur(2px);
+  z-index:9998;
+}
+#cse-panel{
+  display:none;
+  position:fixed;
+  top:6vh;
+  right:4vw;
+  width:88vw;
+  max-width:980px;
+  height:88vh;
+  z-index:9999;
+  background:rgba(10,10,26,0.9);
+  border:1px solid rgba(120,140,220,0.3);
+  border-radius:16px;
+  box-shadow:0 20px 60px rgba(0,0,0,.6);
+  overflow:hidden;
+}
+#cse-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:10px 14px;
+  border-bottom:1px solid rgba(120,140,220,0.2);
+}
+#cse-title{
+  margin:0;
+  font-size:1rem;
+  color:#eaf2ff;
+  letter-spacing:.3px;
+}
+#cse-controls{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+#cse-theme-toggle{
+  padding:6px 10px;
+  border-radius:10px;
+  border:1px solid rgba(120,140,220,0.4);
+  background:rgba(120,140,220,0.15);
+  color:#e6f0f3;
+  cursor:pointer;
+  font-size:.9rem;
+}
+#cse-close{
+  padding:6px 10px;
+  border-radius:10px;
+  border:1px solid rgba(220,120,120,0.5);
+  background:rgba(220,120,120,0.15);
+  color:#ffdede;
+  cursor:pointer;
+  font-size:.9rem;
+}
+</style></head>
 <canvas id="shooting-stars"></canvas>
-
 <body>
-
 <!-- GALASSIA dietro -->
 <canvas id="nebula"></canvas>
 <!-- Stelle + Comete sopra la galassia -->
@@ -586,7 +634,23 @@
 </a>
 <!-- ⬇️ BARRA DESTRA (traduttore + cerca + pulsanti) -->
 <div class="bar-right">
-<div class="translate-box"><span>🌐</span><select aria-label="Traduci pagina" class="translate-select" id="customTranslate"><option value="it">Italiano</option><option value="en">English</option><option value="fr">Français</option><option value="de">Deutsch</option><option value="es">Español</option><option value="pl">Polski</option><option value="pt">Português</option><option value="ru">Русский</option><option value="ja">日本語</option><option value="zh-CN">中文 (简体)</option><option value="ar">العربية</option></select><div aria-hidden="true" id="google_translate_element" style="position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden"></div></div>
+<div class="translate-box">
+<span>🌐</span>
+<select aria-label="Traduci pagina" class="translate-select" id="customTranslate">
+<option value="it">Italiano</option>
+<option value="en">English</option>
+<option value="fr">Français</option>
+<option value="de">Deutsch</option>
+<option value="es">Español</option>
+<option value="pl">Polski</option>
+<option value="pt">Português</option>
+<option value="ru">Русский</option>
+<option value="ja">日本語</option>
+<option value="zh-CN">中文 (简体)</option>
+<option value="ar">العربية</option>
+</select>
+<div aria-hidden="true" id="google_translate_element" style="position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden"></div>
+</div>
 <!-- BOX CERCA (UI tua, non Google) -->
 <div class="search-container" role="search">
 <input aria-label="Cerca" id="site-search" placeholder="Cerca nel sito..." type="search"/>
@@ -598,11 +662,8 @@
 </div>
 </div>
 <!-- CONTENITORE RISULTATI CSE (comparirà dopo la ricerca) -->
-
 <!-- Loader Google CSE (inserisci UNA SOLA volta per pagina) -->
-
 <!-- Script integrazione CSE con il tuo input -->
-
 <!-- Stile scuro per i risultati CSE -->
 <style>
       .gsc-control-cse, .gsc-control-cse .gsc-table-result { background: transparent !important; }
@@ -616,9 +677,8 @@
       margin-bottom:8px !important;
       }
       .gs-title, .gs-snippet { color:#eaeaea !important; }
-    
-.cookie-modal.force-open{ display:flex !important; }
-</style>
+      .cookie-modal.force-open{ display:flex !important; }
+    </style>
 <!-- 
       <div class="bar-right">
         <div id="google_translate_element" title="Traduci pagina"></div>
@@ -1196,7 +1256,8 @@
 <a href="https://casi0048.github.io/pagine/credits.html">Crediti</a>
 <span class="dot">•</span>
 </div>
-</div></footer>
+</div>
+</footer>
 <!-- GALASSIA (canvas particelle colorate) -->
 <script>
       (function(){
@@ -1589,7 +1650,6 @@
         animate();
       });
     </script>
-
 <!-- INIZIO Box Bertrand Russell -->
 <div id="russell-box">
 <button id="russell-btn" title="Clicca per ascoltare la citazione">
@@ -1643,9 +1703,8 @@
       @media (max-width: 980px) {
       #russell-box, #russell-hint { display:none; }
       }
-    
-.cookie-modal.force-open{ display:flex !important; }
-</style>
+      .cookie-modal.force-open{ display:flex !important; }
+    </style>
 <script>
       window.addEventListener("load", () => {
         if (window.gsap) {
@@ -1685,119 +1744,102 @@
     </script>
 <style>
       footer {
-  background: #06060d;
-  color: #e9eef5;
-  margin-top: auto;
-  position: relative;
-  z-index: 1;
-}
-
-footer::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 215, 0, 0.4),
-    transparent
-  );
-}
-
-.footer-wrap {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 28px 16px;
-}
-
-.footer-columns {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 22px;
-  align-items: start;
-  text-align: left; /* Allineamento a sinistra */
-}
-
-.footer-columns h3,
-.footer-columns h4 {
-  margin: 0.2rem 0 0.6rem;
-  color: #ffd86a;
-  font-family: 'Cinzel', serif;
-  letter-spacing: 0.3px;
-}
-
-.footer-columns p {
-  margin: 0.2rem 0;
-  color: #00bb2d; /* e/o #cfe8ff se serve doppio colore */
-  line-height: 1.6;
-}
-
-.footer-columns ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.footer-columns li {
-  margin: 0.25rem 0;
-}
-
-.footer-columns a {
-  color: #f00bb2d;
-  text-decoration: none;
-}
-
-.footer-columns a:hover {
-  color: #ffffff;
-}
-
-.social {
-  margin-top: 0.6rem;
-  display: flex;
-  gap: 10px;
-}
-
-.social a {
-  display: inline-flex;
-  width: 36px;
-  height: 36px;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(255, 215, 0, 0.25);
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.25);
-}
-
-.social a:hover {
-  box-shadow: 0 0 12px rgba(255, 215, 0, 0.25);
-}
-
-.footer-legal {
-  margin-top: 16px;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  flex-wrap: wrap;
-  opacity: 0.9;
-}
-
-.footer-legal .dot {
-  opacity: 0.5;
-}
-
-@media (max-width: 980px) {
-  .footer-columns {
-    grid-template-columns: 1fr;
-    gap: 14px;
-  }
-}
-
-    
-.cookie-modal.force-open{ display:flex !important; }
-</style>
+      background: #06060d;
+      color: #e9eef5;
+      margin-top: auto;
+      position: relative;
+      z-index: 1;
+      }
+      footer::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 215, 0, 0.4),
+      transparent
+      );
+      }
+      .footer-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 28px 16px;
+      }
+      .footer-columns {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 22px;
+      align-items: start;
+      text-align: left; /* Allineamento a sinistra */
+      }
+      .footer-columns h3,
+      .footer-columns h4 {
+      margin: 0.2rem 0 0.6rem;
+      color: #ffd86a;
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.3px;
+      }
+      .footer-columns p {
+      margin: 0.2rem 0;
+      color: #00bb2d; /* e/o #cfe8ff se serve doppio colore */
+      line-height: 1.6;
+      }
+      .footer-columns ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      }
+      .footer-columns li {
+      margin: 0.25rem 0;
+      }
+      .footer-columns a {
+      color: #f00bb2d;
+      text-decoration: none;
+      }
+      .footer-columns a:hover {
+      color: #ffffff;
+      }
+      .social {
+      margin-top: 0.6rem;
+      display: flex;
+      gap: 10px;
+      }
+      .social a {
+      display: inline-flex;
+      width: 36px;
+      height: 36px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 215, 0, 0.25);
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.25);
+      }
+      .social a:hover {
+      box-shadow: 0 0 12px rgba(255, 215, 0, 0.25);
+      }
+      .footer-legal {
+      margin-top: 16px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      opacity: 0.9;
+      }
+      .footer-legal .dot {
+      opacity: 0.5;
+      }
+      @media (max-width: 980px) {
+      .footer-columns {
+      grid-template-columns: 1fr;
+      gap: 14px;
+      }
+      }
+      .cookie-modal.force-open{ display:flex !important; }
+    </style>
 <!-- 🎬 INIZIO PLAYER (destro) -->
 <div class="video-container" id="video-right">
 <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="264" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/G_REgkOuQfw" title="Schopenhauer e Nietzsche (Hans-Georg Gadamer) - 3x4" width="280"></iframe>
@@ -1850,9 +1892,8 @@ footer::before {
       .video-container-left{ display:none; } /* su mobile lo slider è nascosto, nascondo anche il player sinistro */
       .video-container{ right: 12px; bottom: 12px; width: 70vw; }
       }
-    
-.cookie-modal.force-open{ display:flex !important; }
-</style>
+      .cookie-modal.force-open{ display:flex !important; }
+    </style>
 <!-- 🎬 FINE PLAYER (destro) -->
 <!-- INIZIO MINI PLAYER (sinistra) -->
 <div class="audio-player" id="audio-player">
@@ -1906,9 +1947,8 @@ footer::before {
       @media (max-width: 980px){
       #audio-player{ display:none; }
       }
-    
-.cookie-modal.force-open{ display:flex !important; }
-</style>
+      .cookie-modal.force-open{ display:flex !important; }
+    </style>
 <script>
       // Inizializzazione mini player
       window.addEventListener('load', () => {
@@ -2018,31 +2058,31 @@ footer::before {
 <script>
       (function(){
         \1
-// Global opener: works even if other listeners fail
-window.openCookiePrefs = function(){
-  try { if (typeof openModal === 'function') { openModal(); return; } } catch(e){}
-  try {
-    var m = document.getElementById('cookie-modal');
-    if (m){
+      // Global opener: works even if other listeners fail
+      window.openCookiePrefs = function(){
+      try { if (typeof openModal === 'function') { openModal(); return; } } catch(e){}
+      try {
+      var m = document.getElementById('cookie-modal');
+      if (m){
       m.setAttribute('aria-hidden','false');
       m.style.display = 'flex';
-    }
-  } catch(_) {}
-};
-// Delegated click for the cookie badge (works even if badge is injected after this script)
-document.addEventListener('click', function(ev){
-  var btn = ev.target && ev.target.closest ? ev.target.closest('#cookie-fab') : null;
-  if (!btn) return;
-  try { openModal(); }
-  catch(e){
-    try { var m = document.getElementById('cookie-modal'); if (m) m.setAttribute('aria-hidden','false'); } catch(_) {}
-  }
-});
-const $banner = document.getElementById('cookie-banner');
+      }
+      } catch(_) {}
+      };
+      // Delegated click for the cookie badge (works even if badge is injected after this script)
+      document.addEventListener('click', function(ev){
+      var btn = ev.target && ev.target.closest ? ev.target.closest('#cookie-fab') : null;
+      if (!btn) return;
+      try { openModal(); }
+      catch(e){
+      try { var m = document.getElementById('cookie-modal'); if (m) m.setAttribute('aria-hidden','false'); } catch(_) {}
+      }
+      });
+      const $banner = document.getElementById('cookie-banner');
         const $modal  = document.getElementById('cookie-modal');
         const $manage = document.getElementById('manage-cookies') || document.getElementById('cookie-manage');
-const $fab = document.getElementById('cookie-fab');
-if ($manage) $manage.hidden = true; // replace text link with floating badge
+      const $fab = document.getElementById('cookie-fab');
+      if ($manage) $manage.hidden = true; // replace text link with floating badge
       
         const $accept = document.getElementById('cookie-accept');
         const $decline = document.getElementById('cookie-decline');
@@ -2071,67 +2111,67 @@ if ($manage) $manage.hidden = true; // replace text link with floating badge
         }
       
         function showBanner(){
-  $banner.hidden = false;
-  try{
-    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!reduce && window.gsap){
+      $banner.hidden = false;
+      try{
+      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reduce && window.gsap){
       gsap.fromTo($banner, {y:24, opacity:0}, {y:0, opacity:1, duration:.55, ease:'power3.out'});
-    }
-  }catch(e){}
-}
+      }
+      }catch(e){}
+      }
         function hideBanner(){
-  try{
-    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!reduce && window.gsap){
+      try{
+      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reduce && window.gsap){
       gsap.to($banner, {y:16, opacity:0, duration:.35, ease:'power2.in', onComplete(){ $banner.hidden = true; }});
       return;
-    }
-  }catch(e){}
-  $banner.hidden = true;
-}
+      }
+      }catch(e){}
+      $banner.hidden = true;
+      }
         function openModal(){
-  try{
-    const c = getConsent() || {};
-    if ($an) $an.checked = !!c.analytics;
-    if ($pr) $pr.checked = !!c.preferences;
-    if ($mk) $mk.checked = !!c.marketing;
-  }catch(e){}
-  try{
-    $modal.removeAttribute('hidden');
-    $modal.setAttribute('aria-hidden','false');
-    $modal.style.display = 'flex';
-    $modal.classList.add('force-open');
-    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const panel = $modal.querySelector ? $modal.querySelector('.cookie-modal__panel') : null;
-    if (!reduce && window.gsap && panel){
+      try{
+      const c = getConsent() || {};
+      if ($an) $an.checked = !!c.analytics;
+      if ($pr) $pr.checked = !!c.preferences;
+      if ($mk) $mk.checked = !!c.marketing;
+      }catch(e){}
+      try{
+      $modal.removeAttribute('hidden');
+      $modal.setAttribute('aria-hidden','false');
+      $modal.style.display = 'flex';
+      $modal.classList.add('force-open');
+      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const panel = $modal.querySelector ? $modal.querySelector('.cookie-modal__panel') : null;
+      if (!reduce && window.gsap && panel){
       gsap.fromTo($modal, {opacity:0}, {opacity:1, duration:.25, ease:'power2.out'});
       gsap.fromTo(panel, {y:20, opacity:0}, {y:0, opacity:1, duration:.4, ease:'power3.out'});
-    }
-  }catch(e){}
-}
-}catch(_){}
-  const c = getConsent() || {};
-  $an.checked = !!c.analytics;
-  $pr.checked = !!c.preferences;
-  $mk.checked = !!c.marketing;
-  $modal.setAttribute('aria-hidden','false');
-  try{
-    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!reduce && window.gsap){
+      }
+      }catch(e){}
+      }
+      }catch(_){}
+      const c = getConsent() || {};
+      $an.checked = !!c.analytics;
+      $pr.checked = !!c.preferences;
+      $mk.checked = !!c.marketing;
+      $modal.setAttribute('aria-hidden','false');
+      try{
+      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reduce && window.gsap){
       const panel = $modal.querySelector('.cookie-modal__panel');
       gsap.fromTo($modal, {opacity:0}, {opacity:1, duration:.25, ease:'power2.out'});
       gsap.fromTo(panel, {y:20, opacity:0}, {y:0, opacity:1, duration:.4, ease:'power3.out'});
-    }
-  }catch(e){}
-};
+      }
+      }catch(e){}
+      };
           $an.checked = !!c.analytics;
           $pr.checked = !!c.preferences;
           $mk.checked = !!c.marketing;
           $modal.setAttribute('aria-hidden','false');
         }
         function closeModal(){
-  try{
-    if ($modal){
+      try{
+      if ($modal){
       const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const panel = $modal.querySelector ? $modal.querySelector('.cookie-modal__panel') : null;
       if (!reduce && window.gsap && panel){
@@ -2148,21 +2188,21 @@ if ($manage) $manage.hidden = true; // replace text link with floating badge
         $modal.style.display = 'none';
         $modal.setAttribute('hidden','');
       }
-    }
-  }catch(e){}
-}
-}catch(_){}
-  try{
-    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!reduce && window.gsap){
+      }
+      }catch(e){}
+      }
+      }catch(_){}
+      try{
+      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reduce && window.gsap){
       const panel = $modal.querySelector('.cookie-modal__panel');
       gsap.to(panel, {y:10, opacity:0, duration:.22, ease:'power2.in'});
       gsap.to($modal, {opacity:0, duration:.22, ease:'power2.in', onComplete(){ $modal.setAttribute('aria-hidden','true'); }});
       return;
-    }
-  }catch(e){}
-  $modal.setAttribute('aria-hidden','true');
-}
+      }
+      }catch(e){}
+      $modal.setAttribute('aria-hidden','true');
+      }
       
         // Pulsanti banner
         $accept.addEventListener('click', ()=>{
@@ -2176,20 +2216,20 @@ if ($manage) $manage.hidden = true; // replace text link with floating badge
         $customize.addEventListener('click', openModal);
       
         // Modal
-document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ closeModal(); }});
-$save.addEventListener('click', ()=>{
-  setConsent({
-    essential:true,
-    analytics:$an && $an.checked,
-    preferences:$pr && $pr.checked,
-    marketing:$mk && $mk.checked,
-    date:Date.now()
-  });
-  closeModal();
-  hideBanner();
-  if ($manage) $manage.hidden = true;
-});
-closeModal(); hideBanner(); if ($manage) if ($manage) $manage.hidden = true; // keep text button hidden (badge replaces it)
+      document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ closeModal(); }});
+      $save.addEventListener('click', ()=>{
+      setConsent({
+      essential:true,
+      analytics:$an && $an.checked,
+      preferences:$pr && $pr.checked,
+      marketing:$mk && $mk.checked,
+      date:Date.now()
+      });
+      closeModal();
+      hideBanner();
+      if ($manage) $manage.hidden = true;
+      });
+      closeModal(); hideBanner(); if ($manage) if ($manage) $manage.hidden = true; // keep text button hidden (badge replaces it)
         });
         [$cancel,$close].filter(Boolean).forEach(btn=> btn.addEventListener('click', closeModal));
         if ($modal) $modal.addEventListener('click', (e)=>{ if(e.target === $modal) closeModal(); });
@@ -2425,677 +2465,681 @@ closeModal(); hideBanner(); if ($manage) if ($manage) $manage.hidden = true; // 
       });
     </script>
 <script>
-function loadGoogleTranslate() {
-    new google.translate.TranslateElement({
-        pageLanguage: 'it',
-        includedLanguages: 'en,fr,de,es,pl',
-        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-    }, 'google_translate_element');
-}
-
-window.addEventListener('pageshow', function(event) {
-    if (event.persisted) { // se viene dalla cache del browser (Back/Forward)
-        loadGoogleTranslate();
-    }
-});
-</script>
-<div aria-hidden="true" id="cse-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);backdrop-filter: blur(2px);z-index:9998;"></div><div aria-labelledby="cse-title" aria-modal="true" id="cse-panel" role="dialog" style="display:none;position:fixed;top:6vh;right:4vw;width:88vw;max-width:980px;height:88vh;z-index:9999;background:rgba(10,10,26,0.9);border:1px solid rgba(120,140,220,0.3);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.6);overflow:hidden;"><div id="cse-header" style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;border-bottom:1px solid rgba(120,140,220,0.2);"><h3 id="cse-title" style="margin:0;font-size:1rem;color:#eaf2ff;letter-spacing:.3px;">Risultati di ricerca</h3><div id="cse-controls" style="display:flex;align-items:center;gap:10px;"><button id="cse-theme-toggle" style="padding:6px 10px;border-radius:10px;border:1px solid rgba(120,140,220,0.4);background:rgba(120,140,220,0.15);color:#e6f0f3;cursor:pointer;font-size:.9rem;" type="button">Tema: Scuro</button><button aria-label="Chiudi risultati" id="cse-close" style="padding:6px 10px;border-radius:10px;border:1px solid rgba(220,120,120,0.5);background:rgba(220,120,120,0.15);color:#ffdede;cursor:pointer;font-size:.9rem;" type="button">✕ Chiudi</button></div></div><div id="cse-content" style="position:absolute;inset:52px 0 0 0;overflow:auto;padding:10px 12px;"><div id="cse-results" style="display:none;max-width:900px;margin:20px auto;"><div class="gcse-searchresults-only" data-gname="results" data-linkTarget="_self" data-queryParameterName="q"></div></div></div></div><style>
-/* === CSE Panel Themes & High Contrast === */
-:root { --cse-bg:#0a0a1a; --cse-panel:#0a0a1a; --cse-card:#141628; --cse-txt:#eaf2ff; --cse-sub:#cfd8ff; --cse-url:#96ffa6; }
-.cse-light { --cse-bg:#f7f9ff; --cse-panel:#ffffff; --cse-card:#f3f6ff; --cse-txt:#0b0e19; --cse-sub:#2b3550; --cse-url:#0e6b2c; }
-#cse-panel { background:var(--cse-panel) !important; }
-#cse-results { background: color-mix(in oklab, var(--cse-panel), transparent 20%) !important; }
-.gsc-control-cse, .gsc-control-cse .gsc-table-result, .gsc-results-wrapper-visible { background: transparent !important; }
-.gsc-result, .gsc-webResult.gsc-result, .gsc-results .gsc-imageResult {
-  background: var(--cse-card) !important; border: 1px solid color-mix(in oklab, var(--cse-txt), transparent 70%) !important;
-  border-radius: 10px !important; padding: 10px !important;
-}
-.gsc-webResult.gsc-result:hover { background: color-mix(in oklab, var(--cse-card), white 6%) !important; }
-.gsc-result .gs-title, .gsc-result .gs-title * { color: var(--cse-txt) !important; text-decoration: none !important; }
-.gsc-result .gs-snippet { color: var(--cse-sub) !important; }
-.gsc-url-top, .gsc-url-bottom, .gsc-url-top * { color: var(--cse-url) !important; }
-.gsc-cursor-page { color: var(--cse-txt) !important; border-color: color-mix(in oklab, var(--cse-txt), transparent 70%) !important; }
-.gsc-results .gsc-cursor-box .gsc-cursor-page.gsc-cursor-current-page { background: color-mix(in oklab, var(--cse-txt), transparent 85%) !important; color: var(--cse-bg) !important; }
-.gcsc-find-more-on-google, .gcsc-find-more-on-google-root { background: transparent !important; }
-input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus { background: color-mix(in oklab, var(--cse-card), transparent 5%) !important; color: var(--cse-txt) !important; border-color: color-mix(in oklab, var(--cse-txt), transparent 75%) !important; }
-.gsc-selected-option-container { color: var(--cse-txt) !important; }
-
-.cookie-modal.force-open{ display:flex !important; }
-</style><script>
-(function(){
-  var CSE_CX = '87b07564ab3cb462a'; // cambia se hai un altro ID
-  var input    = document.getElementById('site-search');
-  var icon     = document.querySelector('.search-icon');
-  var box      = document.getElementById('cse-results');
-  var overlay  = document.getElementById('cse-overlay');
-  var panel    = document.getElementById('cse-panel');
-  var closeBtn = document.getElementById('cse-close');
-  var themeBtn = document.getElementById('cse-theme-toggle');
-
-  function ensureCSELoaded(cb){
-    if (window.google && google.search && google.search.cse && google.search.cse.element){ cb(); return; }
-    var done = false;
-    window.__gcse = { callback: function(){ if (!done){ done = true; cb(); } } };
-    if (!document.querySelector('script[data-cse-loader]')){
-      var s = document.createElement('script');
-      s.src = 'https://cse.google.com/cse.js?cx=' + encodeURIComponent(CSE_CX);
-      s.async = true; s.defer = true; s.setAttribute('data-cse-loader','1');
-      document.head.appendChild(s);
-    }
-  }
-
-  function renderInline(){
-    try {
-      google.search.cse.element.render({
-        div: 'cse-results',
-        tag: 'searchresults-only',
-        gname: 'results'
-      });
-    } catch(e){}
-  }
-
-  function getResultsElement(){
-    if (!(window.google && google.search && google.search.cse && google.search.cse.element)) return null;
-    var el = google.search.cse.element.getElement('results');
-    if (!el){ renderInline(); el = google.search.cse.element.getElement('results'); }
-    return el;
-  }
-
-  function openPanel(){
-    if (overlay) overlay.style.display = 'block';
-    if (panel)   panel.style.display   = 'block';
-  }
-  function closePanel(){
-    if (overlay) overlay.style.display = 'none';
-    if (panel)   panel.style.display   = 'none';
-  }
-  if (overlay) overlay.addEventListener('click', closePanel);
-  if (closeBtn) closeBtn.addEventListener('click', closePanel);
-
-  if (themeBtn){
-    var light = false;
-    themeBtn.addEventListener('click', function(){
-      light = !light;
-      document.body.classList.toggle('cse-light', light);
-      themeBtn.textContent = light ? 'Tema: Chiaro' : 'Tema: Scuro';
-    });
-  }
-
-  function executeQuery(q){
-  if (!q) return;
-  const siteRestrict = '(site:echidisofia.org OR site:casi0048.github.io)';
-  ensureCSELoaded(function(){
-    var tries = 0;
-    (function waitReady(){
-      try{
-        var el = (google && google.search && google.search.cse && google.search.cse.element)
-          ? google.search.cse.element.getElement('SEARCH_RESULTS')
-          : (typeof getResultsElement === 'function' ? getResultsElement() : null);
-        if (el && typeof el.execute === 'function'){
-          el.execute(`${q} ${siteRestrict}`);
-          if (typeof openPanel === 'function') openPanel();
-          if (typeof box !== 'undefined' && box) box.style.display = 'block';
-        } else if (tries++ < 100){
-          setTimeout(waitReady, 100);
-        }
-      }catch(e){
-        if (tries++ < 100) setTimeout(waitReady, 120);
+      function loadGoogleTranslate() {
+          new google.translate.TranslateElement({
+              pageLanguage: 'it',
+              includedLanguages: 'en,fr,de,es,pl',
+              layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+          }, 'google_translate_element');
       }
-    })();
-  });
-} else if (tries++ < 80){
-          setTimeout(waitReady, 100);
+      
+      window.addEventListener('pageshow', function(event) {
+          if (event.persisted) { // se viene dalla cache del browser (Back/Forward)
+              loadGoogleTranslate();
+          }
+      });
+    </script>
+<div aria-hidden="true" id="cse-overlay"></div>
+<div aria-labelledby="cse-title" aria-modal="true" id="cse-panel" role="dialog">
+<div id="cse-header">
+<h3 id="cse-title">Risultati di ricerca</h3>
+<div id="cse-controls"><button id="cse-theme-toggle" type="button">Tema: Scuro</button><button aria-label="Chiudi risultati" id="cse-close" type="button">✕ Chiudi</button></div>
+</div>
+<div id="cse-content" style="position:absolute;inset:52px 0 0 0;overflow:auto;padding:10px 12px;">
+<div id="cse-results" style="display:none;max-width:900px;margin:20px auto;">
+<div class="gcse-searchresults-only" data-gname="results" data-linktarget="_self" data-queryparametername="q"></div>
+</div>
+</div>
+</div>
+<style>
+      /* === CSE Panel Themes & High Contrast === */
+      :root { --cse-bg:#0a0a1a; --cse-panel:#0a0a1a; --cse-card:#141628; --cse-txt:#eaf2ff; --cse-sub:#cfd8ff; --cse-url:#96ffa6; }
+      .cse-light { --cse-bg:#f7f9ff; --cse-panel:#ffffff; --cse-card:#f3f6ff; --cse-txt:#0b0e19; --cse-sub:#2b3550; --cse-url:#0e6b2c; }
+      #cse-panel { background:var(--cse-panel) !important; }
+      #cse-results { background: color-mix(in oklab, var(--cse-panel), transparent 20%) !important; }
+      .gsc-control-cse, .gsc-control-cse .gsc-table-result, .gsc-results-wrapper-visible { background: transparent !important; }
+      .gsc-result, .gsc-webResult.gsc-result, .gsc-results .gsc-imageResult {
+      background: var(--cse-card) !important; border: 1px solid color-mix(in oklab, var(--cse-txt), transparent 70%) !important;
+      border-radius: 10px !important; padding: 10px !important;
+      }
+      .gsc-webResult.gsc-result:hover { background: color-mix(in oklab, var(--cse-card), white 6%) !important; }
+      .gsc-result .gs-title, .gsc-result .gs-title * { color: var(--cse-txt) !important; text-decoration: none !important; }
+      .gsc-result .gs-snippet { color: var(--cse-sub) !important; }
+      .gsc-url-top, .gsc-url-bottom, .gsc-url-top * { color: var(--cse-url) !important; }
+      .gsc-cursor-page { color: var(--cse-txt) !important; border-color: color-mix(in oklab, var(--cse-txt), transparent 70%) !important; }
+      .gsc-results .gsc-cursor-box .gsc-cursor-page.gsc-cursor-current-page { background: color-mix(in oklab, var(--cse-txt), transparent 85%) !important; color: var(--cse-bg) !important; }
+      .gcsc-find-more-on-google, .gcsc-find-more-on-google-root { background: transparent !important; }
+      input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus { background: color-mix(in oklab, var(--cse-card), transparent 5%) !important; color: var(--cse-txt) !important; border-color: color-mix(in oklab, var(--cse-txt), transparent 75%) !important; }
+      .gsc-selected-option-container { color: var(--cse-txt) !important; }
+      .cookie-modal.force-open{ display:flex !important; }
+    </style>
+<script>
+      (function(){
+        var CSE_CX = '87b07564ab3cb462a'; // cambia se hai un altro ID
+        var input    = document.getElementById('site-search');
+        var icon     = document.querySelector('.search-icon');
+        var box      = document.getElementById('cse-results');
+        var overlay  = document.getElementById('cse-overlay');
+        var panel    = document.getElementById('cse-panel');
+        var closeBtn = document.getElementById('cse-close');
+        var themeBtn = document.getElementById('cse-theme-toggle');
+      
+        function ensureCSELoaded(cb){
+          if (window.google && google.search && google.search.cse && google.search.cse.element){ cb(); return; }
+          var done = false;
+          window.__gcse = { callback: function(){ if (!done){ done = true; cb(); } } };
+          if (!document.querySelector('script[data-cse-loader]')){
+            var s = document.createElement('script');
+            s.src = 'https://cse.google.com/cse.js?cx=' + encodeURIComponent(CSE_CX);
+            s.async = true; s.defer = true; s.setAttribute('data-cse-loader','1');
+            document.head.appendChild(s);
+          }
+        }
+      
+        function renderInline(){
+          try {
+            google.search.cse.element.render({
+              div: 'cse-results',
+              tag: 'searchresults-only',
+              gname: 'results'
+            });
+          } catch(e){}
+        }
+      
+        function getResultsElement(){
+          if (!(window.google && google.search && google.search.cse && google.search.cse.element)) return null;
+          var el = google.search.cse.element.getElement('results');
+          if (!el){ renderInline(); el = google.search.cse.element.getElement('results'); }
+          return el;
+        }
+      
+        function openPanel(){
+          if (overlay) overlay.style.display = 'block';
+          if (panel)   panel.style.display   = 'block';
+        }
+        function closePanel(){
+          if (overlay) overlay.style.display = 'none';
+          if (panel)   panel.style.display   = 'none';
+        }
+        if (overlay) overlay.addEventListener('click', closePanel);
+        if (closeBtn) closeBtn.addEventListener('click', closePanel);
+      
+        if (themeBtn){
+          var light = false;
+          themeBtn.addEventListener('click', function(){
+            light = !light;
+            document.body.classList.toggle('cse-light', light);
+            themeBtn.textContent = light ? 'Tema: Chiaro' : 'Tema: Scuro';
+          });
+        }
+      
+        function executeQuery(q){
+        if (!q) return;
+        const siteRestrict = '(site:echidisofia.org OR site:casi0048.github.io)';
+        ensureCSELoaded(function(){
+          var tries = 0;
+          (function waitReady(){
+            try{
+              var el = (google && google.search && google.search.cse && google.search.cse.element)
+                ? google.search.cse.element.getElement('SEARCH_RESULTS')
+                : (typeof getResultsElement === 'function' ? getResultsElement() : null);
+              if (el && typeof el.execute === 'function'){
+                el.execute(`${q} ${siteRestrict}`);
+                if (typeof openPanel === 'function') openPanel();
+                if (typeof box !== 'undefined' && box) box.style.display = 'block';
+              } else if (tries++ < 100){
+                setTimeout(waitReady, 100);
+              }
+            }catch(e){
+              if (tries++ < 100) setTimeout(waitReady, 120);
+            }
+          })();
+        });
+      } else if (tries++ < 80){
+                setTimeout(waitReady, 100);
+              }
+            })();
+          });
+        }
+      
+        function submitFromInput(){
+        try{
+          var term = (input && input.value) ? input.value.trim() : '';
+          if (!term) return;
+          executeQuery(term);
+        }catch(e){}
+      }
+      
+        if (input){
+          input.addEventListener('keydown', function(e){
+            if (e.key === 'Enter'){
+              e.preventDefault();
+              submitFromInput();
+            }
+          });
+        }
+        if (icon){
+          icon.addEventListener('click', function(e){
+            e.preventDefault();
+            submitFromInput();
+          });
         }
       })();
-    });
-  }
-
-  function submitFromInput(){
-  try{
-    var term = (input && input.value) ? input.value.trim() : '';
-    if (!term) return;
-    executeQuery(term);
-  }catch(e){}
-}
-
-  if (input){
-    input.addEventListener('keydown', function(e){
-      if (e.key === 'Enter'){
-        e.preventDefault();
-        submitFromInput();
-      }
-    });
-  }
-  if (icon){
-    icon.addEventListener('click', function(e){
-      e.preventDefault();
-      submitFromInput();
-    });
-  }
-})();
-</script><script>
-(function(){
-  function setCookie(name, value){
-    var domain = location.hostname.replace(/^www\./,'');
-    var exp = "; expires=" + new Date(Date.now()+365*24*60*60*1000).toUTCString();
-    document.cookie = name + "=" + value + exp + "; path=/";
-    document.cookie = name + "=" + value + exp + "; path=/; domain=." + domain;
-  }
-  function getCookie(name){
-    return (document.cookie.match('(^|;)\s*'+name+'\s*=\s*([^;]+)')||[])[2] || "";
-  }
-  window.__initGoogleTranslate = function(){
-    if (window.google && google.translate && google.translate.TranslateElement) {
-      var host = document.getElementById('google_translate_element');
-      if (!host) {
-        host = document.createElement('div'); host.id='google_translate_element';
-        host.setAttribute('aria-hidden','true');
-        host.style.cssText="position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden";
-        document.body.appendChild(host);
-      } else { host.innerHTML = ""; }
-      new google.translate.TranslateElement({
-        pageLanguage: 'it',
-        includedLanguages: 'it,en,fr,de,es,pl,pt,ru,ja,zh-CN,ar',
-        autoDisplay: false
-      }, 'google_translate_element');
-      var c = getCookie("googtrans");
-      var lang = (c.split("/")[2] || "it");
-      var internal = document.querySelector(".goog-te-combo");
-      if (internal && lang) { internal.value = lang; internal.dispatchEvent(new Event('change')); }
-    } else {
-      setTimeout(window.__initGoogleTranslate, 120);
-    }
-  };
-  (function injectOnce(){
-    if (document.querySelector('script[data-gtr]')) return;
-    var s = document.createElement('script');
-    s.src = "https://translate.google.com/translate_a/element.js?cb=__initGoogleTranslate";
-    s.async = true; s.defer = true; s.setAttribute('data-gtr','1');
-    document.head.appendChild(s);
-  })();
-  function applyLang(lang){
-    var val = (lang && lang !== 'it') ? ("/it/"+lang) : "/it/it";
-    setCookie("googtrans", val);
-    var internal = document.querySelector(".goog-te-combo");
-    if (internal) { internal.value = lang; internal.dispatchEvent(new Event('change')); }
-    else { location.reload(); }
-  }
-  function syncUI(){
-    var sel = document.getElementById('customTranslate');
-    if (!sel) return;
-    var c = getCookie("googtrans");
-    var current = (c.split("/")[2] || "it");
-    for (var i=0;i<sel.options.length;i++){ if (sel.options[i].value === current) { sel.selectedIndex = i; break; } }
-  }
-  document.addEventListener('change', function(e){
-    if (e.target && e.target.id === 'customTranslate') {
-      applyLang(e.target.value);
-    }
-  });
-  window.addEventListener('pageshow', syncUI);
-  document.addEventListener('visibilitychange', function(){ if (!document.hidden) syncUI(); });
-  syncUI();
-})();
-</script>
+    </script><script>
+      (function(){
+        function setCookie(name, value){
+          var domain = location.hostname.replace(/^www\./,'');
+          var exp = "; expires=" + new Date(Date.now()+365*24*60*60*1000).toUTCString();
+          document.cookie = name + "=" + value + exp + "; path=/";
+          document.cookie = name + "=" + value + exp + "; path=/; domain=." + domain;
+        }
+        function getCookie(name){
+          return (document.cookie.match('(^|;)\s*'+name+'\s*=\s*([^;]+)')||[])[2] || "";
+        }
+        window.__initGoogleTranslate = function(){
+          if (window.google && google.translate && google.translate.TranslateElement) {
+            var host = document.getElementById('google_translate_element');
+            if (!host) {
+              host = document.createElement('div'); host.id='google_translate_element';
+              host.setAttribute('aria-hidden','true');
+              host.style.cssText="position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden";
+              document.body.appendChild(host);
+            } else { host.innerHTML = ""; }
+            new google.translate.TranslateElement({
+              pageLanguage: 'it',
+              includedLanguages: 'it,en,fr,de,es,pl,pt,ru,ja,zh-CN,ar',
+              autoDisplay: false
+            }, 'google_translate_element');
+            var c = getCookie("googtrans");
+            var lang = (c.split("/")[2] || "it");
+            var internal = document.querySelector(".goog-te-combo");
+            if (internal && lang) { internal.value = lang; internal.dispatchEvent(new Event('change')); }
+          } else {
+            setTimeout(window.__initGoogleTranslate, 120);
+          }
+        };
+        (function injectOnce(){
+          if (document.querySelector('script[data-gtr]')) return;
+          var s = document.createElement('script');
+          s.src = "https://translate.google.com/translate_a/element.js?cb=__initGoogleTranslate";
+          s.async = true; s.defer = true; s.setAttribute('data-gtr','1');
+          document.head.appendChild(s);
+        })();
+        function applyLang(lang){
+          var val = (lang && lang !== 'it') ? ("/it/"+lang) : "/it/it";
+          setCookie("googtrans", val);
+          var internal = document.querySelector(".goog-te-combo");
+          if (internal) { internal.value = lang; internal.dispatchEvent(new Event('change')); }
+          else { location.reload(); }
+        }
+        function syncUI(){
+          var sel = document.getElementById('customTranslate');
+          if (!sel) return;
+          var c = getCookie("googtrans");
+          var current = (c.split("/")[2] || "it");
+          for (var i=0;i<sel.options.length;i++){ if (sel.options[i].value === current) { sel.selectedIndex = i; break; } }
+        }
+        document.addEventListener('change', function(e){
+          if (e.target && e.target.id === 'customTranslate') {
+            applyLang(e.target.value);
+          }
+        });
+        window.addEventListener('pageshow', syncUI);
+        document.addEventListener('visibilitychange', function(){ if (!document.hidden) syncUI(); });
+        syncUI();
+      })();
+    </script>
 <script>
-(function(){
-  try{
-    var searchBtn = document.getElementById('cse-search-btn') || document.querySelector('[data-cse-search-btn]');
-    if (typeof input !== 'undefined' && input && !input.__cseBound){
-      input.addEventListener('keydown', function(e){
-        if (e.key === 'Enter'){ e.preventDefault(); submitFromInput(); }
-      });
-      input.__cseBound = true;
-    }
-    if (searchBtn && !searchBtn.__cseBound){
-      searchBtn.addEventListener('click', function(e){
-        e.preventDefault(); submitFromInput();
-      });
-      searchBtn.__cseBound = true;
-    }
-  }catch(e){}
-})();
-</script>
-
-<button id="cookie-fab" class="cookie-fab" aria-label="Gestisci cookie" title="Gestisci cookie" onclick="window.openCookiePrefs && window.openCookiePrefs()"><span class="emoji">🍪</span><span class="label">Cookie</span></button>
-
+      (function(){
+        try{
+          var searchBtn = document.getElementById('cse-search-btn') || document.querySelector('[data-cse-search-btn]');
+          if (typeof input !== 'undefined' && input && !input.__cseBound){
+            input.addEventListener('keydown', function(e){
+              if (e.key === 'Enter'){ e.preventDefault(); submitFromInput(); }
+            });
+            input.__cseBound = true;
+          }
+          if (searchBtn && !searchBtn.__cseBound){
+            searchBtn.addEventListener('click', function(e){
+              e.preventDefault(); submitFromInput();
+            });
+            searchBtn.__cseBound = true;
+          }
+        }catch(e){}
+      })();
+    </script>
+<button aria-label="Gestisci cookie" class="cookie-fab" id="cookie-fab" onclick="window.openCookiePrefs &amp;&amp; window.openCookiePrefs()" title="Gestisci cookie"><span class="emoji">🍪</span><span class="label">Cookie</span></button>
 <script>
-(function(){
-  function openPrefsHard(){
-    try {
-      var m = document.getElementById('cookie-modal');
-      if (!m) return;
-      m.removeAttribute('hidden');
-      m.setAttribute('aria-hidden', 'false');
-      m.style.display = 'flex';
-      m.classList.add('force-open');
-      // focus first close or save button for accessibility
-      setTimeout(function(){
-        var f = m.querySelector('#cookie-close, #cookie-save, button');
-        if (f && f.focus) try{ f.focus(); }catch(e){}
-      }, 30);
-    } catch(e){}
-  }
-  window.openCookiePrefs = function(){
-    try { if (typeof openModal === 'function') { openModal(); return; } } catch(e){}
-    openPrefsHard();
-  };
-  function bind(){
-    var b = document.getElementById('cookie-fab');
-    if (!b) return;
-    b.addEventListener('click', function(e){
-      e.preventDefault();
-      window.openCookiePrefs();
-    });
-  }
-  if (document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', bind);
-  } else { bind(); }
-})();
-</script>
-
-
+      (function(){
+        function openPrefsHard(){
+          try {
+            var m = document.getElementById('cookie-modal');
+            if (!m) return;
+            m.removeAttribute('hidden');
+            m.setAttribute('aria-hidden', 'false');
+            m.style.display = 'flex';
+            m.classList.add('force-open');
+            // focus first close or save button for accessibility
+            setTimeout(function(){
+              var f = m.querySelector('#cookie-close, #cookie-save, button');
+              if (f && f.focus) try{ f.focus(); }catch(e){}
+            }, 30);
+          } catch(e){}
+        }
+        window.openCookiePrefs = function(){
+          try { if (typeof openModal === 'function') { openModal(); return; } } catch(e){}
+          openPrefsHard();
+        };
+        function bind(){
+          var b = document.getElementById('cookie-fab');
+          if (!b) return;
+          b.addEventListener('click', function(e){
+            e.preventDefault();
+            window.openCookiePrefs();
+          });
+        }
+        if (document.readyState === 'loading'){
+          document.addEventListener('DOMContentLoaded', bind);
+        } else { bind(); }
+      })();
+    </script>
 <script>
-// === FINAL FAIL-SAFE CLOSER (binds at end, takes precedence) ===
-(function(){
-  function closeCookieModalHard(){
-    try{
-      var m = document.getElementById('cookie-modal');
-      if (!m) return;
-      m.setAttribute('aria-hidden','true');
-      m.classList.remove('force-open');
-      m.style.display = 'none';
-      m.setAttribute('hidden','');
-    }catch(e){}
-  }
-  // Bind to buttons (capture to pre-empt other handlers if needed)
-  ['cookie-close','cookie-cancel'].forEach(function(id){
-    var b = document.getElementById(id);
-    if (b) b.addEventListener('click', function(ev){ ev.preventDefault(); closeCookieModalHard(); }, {capture:true});
-  });
-  var saveBtn = document.getElementById('cookie-save');
-  if (saveBtn){
-    saveBtn.addEventListener('click', function(){ setTimeout(closeCookieModalHard, 10); }, {capture:true});
-  }
-  // Click outside & ESC
-  var modal = document.getElementById('cookie-modal');
-  if (modal){
-    modal.addEventListener('click', function(e){ if (e.target === modal) closeCookieModalHard(); }, {capture:true});
-  }
-  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeCookieModalHard(); }, {capture:true});
-  // Expose globally too
-  window.closeCookieModalHard = closeCookieModalHard;
-})();
-</script>
-
-
-
+      // === FINAL FAIL-SAFE CLOSER (binds at end, takes precedence) ===
+      (function(){
+        function closeCookieModalHard(){
+          try{
+            var m = document.getElementById('cookie-modal');
+            if (!m) return;
+            m.setAttribute('aria-hidden','true');
+            m.classList.remove('force-open');
+            m.style.display = 'none';
+            m.setAttribute('hidden','');
+          }catch(e){}
+        }
+        // Bind to buttons (capture to pre-empt other handlers if needed)
+        ['cookie-close','cookie-cancel'].forEach(function(id){
+          var b = document.getElementById(id);
+          if (b) b.addEventListener('click', function(ev){ ev.preventDefault(); closeCookieModalHard(); }, {capture:true});
+        });
+        var saveBtn = document.getElementById('cookie-save');
+        if (saveBtn){
+          saveBtn.addEventListener('click', function(){ setTimeout(closeCookieModalHard, 10); }, {capture:true});
+        }
+        // Click outside & ESC
+        var modal = document.getElementById('cookie-modal');
+        if (modal){
+          modal.addEventListener('click', function(e){ if (e.target === modal) closeCookieModalHard(); }, {capture:true});
+        }
+        document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeCookieModalHard(); }, {capture:true});
+        // Expose globally too
+        window.closeCookieModalHard = closeCookieModalHard;
+      })();
+    </script>
 <!-- Improved Uniform Google Search: both ENTER & LENS open Google (site-restricted, exact term) -->
 <script>
-(function(){
-  // Try to locate the main search input conservatively
-  var input = document.getElementById('cse-input')
-         || (document.querySelector('header input[type="search"]'))
-         || document.querySelector('input[type="search"]')
-         || document.querySelector('input[name="q"], input[name="s"]');
-
-  function normalizeTerm(raw){
-    var t = (raw || '').trim();
-    if (!t) return '';
-    var hasQuote = /["]/.test(t);
-    var hasOp = /(site:|intitle:|inurl:|OR|AND|NOT)/i.test(t);
-    if (!hasQuote && !hasOp){
-      t = '"' + t.replace(/"/g, '') + '"';
-    }
-    return t;
-  }
-  function googleUrl(q){
-    var site = 'site:echidisofia.org OR site:casi0048.github.io';
-    var term = normalizeTerm(q);
-    return 'https://www.google.com/search?q=' + encodeURIComponent(term + ' ' + site) + '&hl=it';
-  }
-  function openGoogleFromInput(){
-    var term = (input && input.value) ? input.value.trim() : '';
-    if (!term) return;
-    var url = googleUrl(term);
-    try{
-      var w = window.open(url, '_blank', 'noopener');
-      if(!w){ location.href = url; }
-    }catch(_){ location.href = url; }
-  }
-
-  // ENTER on the input (capture to beat other listeners)
-  document.addEventListener('keydown', function(e){
-    if (!input) return;
-    var isTarget = (e.target === input) || (input.contains && input.contains(e.target));
-    if (isTarget && e.key === 'Enter'){
-      e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-      openGoogleFromInput();
-    }
-  }, true);
-
-  // Delegated click for search buttons (lens/submit)
-  document.addEventListener('click', function(e){
-    var sel = '#cse-search-btn, [data-cse-search-btn], .cse-search-btn, button[type=submit], .search button';
-    var btn = e.target && e.target.closest ? e.target.closest(sel) : null;
-    if (!btn) return;
-    // If the button is not part of a search bar, ignore
-    var scope = btn.closest && btn.closest('form, header, .search, .searchbar') || document;
-    var relatedInput = scope.querySelector && (scope.querySelector('#cse-input') || scope.querySelector('input[type="search"]') || scope.querySelector('input[name="q"], input[name="s"]'));
-    if (relatedInput) input = relatedInput;
-    e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-    openGoogleFromInput();
-  }, true);
-
-  // Intercept form submit around the input
-  var form = input ? (input.form || (input.closest && input.closest('form'))) : null;
-  if (form){
-    form.addEventListener('submit', function(e){
-      e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-      openGoogleFromInput();
-    }, true);
-  }
-})();
-</script>
+      (function(){
+        // Try to locate the main search input conservatively
+        var input = document.getElementById('cse-input')
+               || (document.querySelector('header input[type="search"]'))
+               || document.querySelector('input[type="search"]')
+               || document.querySelector('input[name="q"], input[name="s"]');
+      
+        function normalizeTerm(raw){
+          var t = (raw || '').trim();
+          if (!t) return '';
+          var hasQuote = /["]/.test(t);
+          var hasOp = /(site:|intitle:|inurl:|OR|AND|NOT)/i.test(t);
+          if (!hasQuote && !hasOp){
+            t = '"' + t.replace(/"/g, '') + '"';
+          }
+          return t;
+        }
+        function googleUrl(q){
+          var site = 'site:echidisofia.org OR site:casi0048.github.io';
+          var term = normalizeTerm(q);
+          return 'https://www.google.com/search?q=' + encodeURIComponent(term + ' ' + site) + '&hl=it';
+        }
+        function openGoogleFromInput(){
+          var term = (input && input.value) ? input.value.trim() : '';
+          if (!term) return;
+          var url = googleUrl(term);
+          try{
+            var w = window.open(url, '_blank', 'noopener');
+            if(!w){ location.href = url; }
+          }catch(_){ location.href = url; }
+        }
+      
+        // ENTER on the input (capture to beat other listeners)
+        document.addEventListener('keydown', function(e){
+          if (!input) return;
+          var isTarget = (e.target === input) || (input.contains && input.contains(e.target));
+          if (isTarget && e.key === 'Enter'){
+            e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+            openGoogleFromInput();
+          }
+        }, true);
+      
+        // Delegated click for search buttons (lens/submit)
+        document.addEventListener('click', function(e){
+          var sel = '#cse-search-btn, [data-cse-search-btn], .cse-search-btn, button[type=submit], .search button';
+          var btn = e.target && e.target.closest ? e.target.closest(sel) : null;
+          if (!btn) return;
+          // If the button is not part of a search bar, ignore
+          var scope = btn.closest && btn.closest('form, header, .search, .searchbar') || document;
+          var relatedInput = scope.querySelector && (scope.querySelector('#cse-input') || scope.querySelector('input[type="search"]') || scope.querySelector('input[name="q"], input[name="s"]'));
+          if (relatedInput) input = relatedInput;
+          e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+          openGoogleFromInput();
+        }, true);
+      
+        // Intercept form submit around the input
+        var form = input ? (input.form || (input.closest && input.closest('form'))) : null;
+        if (form){
+          form.addEventListener('submit', function(e){
+            e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+            openGoogleFromInput();
+          }, true);
+        }
+      })();
+    </script>
 <!--  inizio script stelle cadenti  da dx a sx-->
 <script>
-const canvas = document.getElementById("shooting-stars");
-const ctx = canvas.getContext("2d");
-
-let w, h;
-function resizeCanvas() {
-  w = canvas.width = window.innerWidth;
-  h = canvas.height = window.innerHeight;
-}
-window.addEventListener("resize", resizeCanvas);
-resizeCanvas();
-
-class ShootingStar {
-  constructor() {
-    this.reset();
-  }
-  reset() {
-    this.x = Math.random() * w;
-    this.y = Math.random() * h * 0.5;
-    this.len = Math.random() * 80 + 10;
-    this.speed = Math.random() * 4 + 2;
-    this.size = Math.random() * 2 + 1;
-    this.opacity = Math.random() * 0.5 + 0.5;
-  }
-  update() {
-    this.x -= this.speed;
-this.y += this.speed * 0.5; // meno discesa
-
-    if (this.x < -this.len || this.y > h + this.len) {
-      this.reset();
-      this.x = Math.random() * w + w;
-      this.y = Math.random() * h * 0.7;
-    }
-  }
-  draw() {
-    ctx.beginPath();
-    const grad = ctx.createLinearGradient(this.x, this.y, this.x + this.len, this.y - this.len);
-    grad.addColorStop(0, `rgba(255,255,255,${this.opacity})`);
-    grad.addColorStop(1, "rgba(255,255,255,0)");
-    ctx.strokeStyle = grad;
-    ctx.lineWidth = this.size;
-    ctx.moveTo(this.x, this.y);
-    ctx.lineTo(this.x + this.len, this.y - this.len);
-    ctx.stroke();
-  }
-}
-
-let stars = [];
-for (let i = 0; i < 20; i++) {
-  stars.push(new ShootingStar());
-}
-
-function animate() {
-  ctx.clearRect(0, 0, w, h);
-  stars.forEach(star => {
-    star.update();
-    star.draw();
-  });
-  requestAnimationFrame(animate);
-}
-animate();
-
-let minSpeed = 4;
-let maxSpeed = 12;
-this.speed = Math.random() * (maxSpeed - minSpeed) + minSpeed;
-</script>
+      const canvas = document.getElementById("shooting-stars");
+      const ctx = canvas.getContext("2d");
+      
+      let w, h;
+      function resizeCanvas() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+      }
+      window.addEventListener("resize", resizeCanvas);
+      resizeCanvas();
+      
+      class ShootingStar {
+        constructor() {
+          this.reset();
+        }
+        reset() {
+          this.x = Math.random() * w;
+          this.y = Math.random() * h * 0.5;
+          this.len = Math.random() * 80 + 10;
+          this.speed = Math.random() * 4 + 2;
+          this.size = Math.random() * 2 + 1;
+          this.opacity = Math.random() * 0.5 + 0.5;
+        }
+        update() {
+          this.x -= this.speed;
+      this.y += this.speed * 0.5; // meno discesa
+      
+          if (this.x < -this.len || this.y > h + this.len) {
+            this.reset();
+            this.x = Math.random() * w + w;
+            this.y = Math.random() * h * 0.7;
+          }
+        }
+        draw() {
+          ctx.beginPath();
+          const grad = ctx.createLinearGradient(this.x, this.y, this.x + this.len, this.y - this.len);
+          grad.addColorStop(0, `rgba(255,255,255,${this.opacity})`);
+          grad.addColorStop(1, "rgba(255,255,255,0)");
+          ctx.strokeStyle = grad;
+          ctx.lineWidth = this.size;
+          ctx.moveTo(this.x, this.y);
+          ctx.lineTo(this.x + this.len, this.y - this.len);
+          ctx.stroke();
+        }
+      }
+      
+      let stars = [];
+      for (let i = 0; i < 20; i++) {
+        stars.push(new ShootingStar());
+      }
+      
+      function animate() {
+        ctx.clearRect(0, 0, w, h);
+        stars.forEach(star => {
+          star.update();
+          star.draw();
+        });
+        requestAnimationFrame(animate);
+      }
+      animate();
+      
+      let minSpeed = 4;
+      let maxSpeed = 12;
+      this.speed = Math.random() * (maxSpeed - minSpeed) + minSpeed;
+    </script>
 <!--  fine script stelle cadenti-->
 <script>
-(() => {
-  const canvas = document.getElementById("shooting-stars");
-  const ctx = canvas.getContext("2d");
-
-  // HiDPI/Retina fix: scala il canvas in base al devicePixelRatio
-  const dpr = Math.max(1, Math.floor(window.devicePixelRatio || 1));
-  let W = 0, H = 0;
-  function resize() {
-    W = canvas.clientWidth  = window.innerWidth;
-    H = canvas.clientHeight = window.innerHeight;
-    canvas.width  = W * dpr;
-    canvas.height = H * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); // disegna in coordinate CSS
-  }
-  window.addEventListener("resize", resize, { passive: true });
-  resize();
-
-  // Parametri regolabili
-  const COUNT     = 7;     // quante stelle simultanee
-
-
-const MIN_SPEED = 1;
-const MAX_SPEED = 2;
-
- const MIN_LEN   = 30;     // lunghezza scia (min)
-  const MAX_LEN   = 110;    // lunghezza scia (max)
-  const MIN_SIZE  = 1.2;    // spessore linea (min)
-  const MAX_SIZE  = 2.2;    // spessore linea (max)
-
-  class ShootingStar {
-    constructor() { this.reset(true); }
-    rand(min, max) { return Math.random() * (max - min) + min; }
-
-    reset(init = false) {
-      // punto di partenza: parte alta/destra per traiettoria diagonale ↘
-      this.x = init ? this.rand(0, W * 1.2) : W + this.rand(0, 200);
-      this.y = this.rand(0, H * 0.5);
-
-      this.len   = this.rand(MIN_LEN, MAX_LEN);
-      this.speed = this.rand(MIN_SPEED, MAX_SPEED);
-      this.size  = this.rand(MIN_SIZE, MAX_SIZE);
-      this.opacity = this.rand(0.5, 1);
-
-      // Colore casuale per la singola stella (fisso finché non viene resettata)
-      this.hue = Math.floor(Math.random() * 360);
-      this.startColor = `hsla(${this.hue}, 100%, 70%, ${this.opacity})`;
-      this.endColor   = `hsla(${this.hue}, 100%, 70%, 0)`;
-    }
-
-    update() {
-      // Movimento diagonale: verso sinistra e verso il basso
-      this.x -= this.speed;
-      this.y += this.speed;
-
-      // Se esce dallo schermo, ricomincia da destra/alto
-      if (this.x < -this.len || this.y > H + this.len) this.reset();
-    }
-
-    draw() {
-      ctx.beginPath();
-      const grad = ctx.createLinearGradient(
-        this.x, this.y,
-        this.x + this.len, this.y - this.len
-      );
-      grad.addColorStop(0, this.startColor); // testa
-      grad.addColorStop(1, this.endColor);   // scia
-
-      ctx.strokeStyle = grad;
-      ctx.lineWidth = this.size;
-      ctx.lineCap = "round";
-      ctx.moveTo(this.x, this.y);
-      ctx.lineTo(this.x + this.len, this.y - this.len);
-      ctx.stroke();
-    }
-  }
-
-  const stars = Array.from({ length: COUNT }, () => new ShootingStar());
-
-  // opzionale: scie più morbide usando un velo semitrasparente anziché clearRect pieno
-  function fadeBackground() {
-    ctx.fillStyle = "rgba(0,0,0,0.2)"; // aumenta opacità se vuoi scie più corte
-    ctx.fillRect(0, 0, W, H);
-  }
-
-  function loop() {
-    // Se preferisci niente scie persistenti, usa clearRect.
-    // ctx.clearRect(0, 0, W, H);
-    fadeBackground();
-    for (const s of stars) { s.update(); s.draw(); }
-    requestAnimationFrame(loop);
-  }
-
-  // Imposta un fondo iniziale nero (utile quando si usa fadeBackground)
-  ctx.fillStyle = "black"; ctx.fillRect(0, 0, W, H);
-  loop();
-})();
-<!--  fine script stelle cadentin da dx a sx-->
-</script>
+      (() => {
+        const canvas = document.getElementById("shooting-stars");
+        const ctx = canvas.getContext("2d");
+      
+        // HiDPI/Retina fix: scala il canvas in base al devicePixelRatio
+        const dpr = Math.max(1, Math.floor(window.devicePixelRatio || 1));
+        let W = 0, H = 0;
+        function resize() {
+          W = canvas.clientWidth  = window.innerWidth;
+          H = canvas.clientHeight = window.innerHeight;
+          canvas.width  = W * dpr;
+          canvas.height = H * dpr;
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0); // disegna in coordinate CSS
+        }
+        window.addEventListener("resize", resize, { passive: true });
+        resize();
+      
+        // Parametri regolabili
+        const COUNT     = 7;     // quante stelle simultanee
+      
+      
+      const MIN_SPEED = 1;
+      const MAX_SPEED = 2;
+      
+       const MIN_LEN   = 30;     // lunghezza scia (min)
+        const MAX_LEN   = 110;    // lunghezza scia (max)
+        const MIN_SIZE  = 1.2;    // spessore linea (min)
+        const MAX_SIZE  = 2.2;    // spessore linea (max)
+      
+        class ShootingStar {
+          constructor() { this.reset(true); }
+          rand(min, max) { return Math.random() * (max - min) + min; }
+      
+          reset(init = false) {
+            // punto di partenza: parte alta/destra per traiettoria diagonale ↘
+            this.x = init ? this.rand(0, W * 1.2) : W + this.rand(0, 200);
+            this.y = this.rand(0, H * 0.5);
+      
+            this.len   = this.rand(MIN_LEN, MAX_LEN);
+            this.speed = this.rand(MIN_SPEED, MAX_SPEED);
+            this.size  = this.rand(MIN_SIZE, MAX_SIZE);
+            this.opacity = this.rand(0.5, 1);
+      
+            // Colore casuale per la singola stella (fisso finché non viene resettata)
+            this.hue = Math.floor(Math.random() * 360);
+            this.startColor = `hsla(${this.hue}, 100%, 70%, ${this.opacity})`;
+            this.endColor   = `hsla(${this.hue}, 100%, 70%, 0)`;
+          }
+      
+          update() {
+            // Movimento diagonale: verso sinistra e verso il basso
+            this.x -= this.speed;
+            this.y += this.speed;
+      
+            // Se esce dallo schermo, ricomincia da destra/alto
+            if (this.x < -this.len || this.y > H + this.len) this.reset();
+          }
+      
+          draw() {
+            ctx.beginPath();
+            const grad = ctx.createLinearGradient(
+              this.x, this.y,
+              this.x + this.len, this.y - this.len
+            );
+            grad.addColorStop(0, this.startColor); // testa
+            grad.addColorStop(1, this.endColor);   // scia
+      
+            ctx.strokeStyle = grad;
+            ctx.lineWidth = this.size;
+            ctx.lineCap = "round";
+            ctx.moveTo(this.x, this.y);
+            ctx.lineTo(this.x + this.len, this.y - this.len);
+            ctx.stroke();
+          }
+        }
+      
+        const stars = Array.from({ length: COUNT }, () => new ShootingStar());
+      
+        // opzionale: scie più morbide usando un velo semitrasparente anziché clearRect pieno
+        function fadeBackground() {
+          ctx.fillStyle = "rgba(0,0,0,0.2)"; // aumenta opacità se vuoi scie più corte
+          ctx.fillRect(0, 0, W, H);
+        }
+      
+        function loop() {
+          // Se preferisci niente scie persistenti, usa clearRect.
+          // ctx.clearRect(0, 0, W, H);
+          fadeBackground();
+          for (const s of stars) { s.update(); s.draw(); }
+          requestAnimationFrame(loop);
+        }
+      
+        // Imposta un fondo iniziale nero (utile quando si usa fadeBackground)
+        ctx.fillStyle = "black"; ctx.fillRect(0, 0, W, H);
+        loop();
+      })();
+      <!--  fine script stelle cadentin da dx a sx-->
+    </script>
 <!-- Particelle filosofiche (solo symbols) -->
-
 <!-- Particelle filosofiche — versione pulita -->
 <script>
-document.addEventListener('DOMContentLoaded', function(){
-  // Container: usa #philoParticles se c'è, altrimenti crealo
-  let container = document.getElementById('philoParticles');
-  if (!container) {
-    container = document.createElement('div');
-    container.id = 'philoParticles';
-    document.body.appendChild(container);
-  } else {
-    // Portalo in fondo al body per stare sopra gli sfondi
-    document.body.appendChild(container);
-  }
-
-  // CSS: sopra sfondi/canvas, sotto UI (regola z-index se serve)
-  const STYLE_ID = 'philoParticles-style';
-  if (!document.getElementById(STYLE_ID)){
-    const st = document.createElement('style'); st.id = STYLE_ID;
-    st.textContent = `
-      #philoParticles{
-        position: fixed; inset: 0;
-        z-index: 60;            /* ↑ aumenta se resta sotto qualche overlay */
-        pointer-events: none;   /* non blocca i clic */
-      }
-      #philoParticles .particle{
-        position: absolute; left: 0; top: 0;
-        transform: translate3d(0,0,0);
-        will-change: transform;
-        white-space: nowrap;    /* nomi doppi interi */
-        line-height: 1;
-        text-shadow: 0 0 8px rgba(255,255,255,.45);
-        opacity: .98;
-      }
-    `;
-    document.head.appendChild(st)
-  }
-
-  // Sorgente simboli/parole
-  const symbols = [
-  // Matematica e logica
-  '∞','Φ','Ψ','Λ','Δ','Ω','π','∑','∏','√',
-  '≡','≈','∴','∀','∃','∈','∧','∨','⊕','⊗',
-  '⊖','⊙','⊘','⊚','⊛','⊜','⊝','⊞','⊟','⊠',
-  '⊡','⊢','⊣','⊤','⊥','⊧','⊨','⊩','⊪','⊫',
-  'Σ','Θ','Ξ','ℵ','∂','∇','∫','∬','∭',
-
-  // Concetti e filosofia
-  'Sapienza','Verità','Logos','Thanatos','Mito','Essere','Divenire',
-  'Idee','Archè','Armonia','Principio','Destino','Libertà','Giustizia',
-  'Virtù','Pensiero','Domanda','Risposta','Silenzio','Samsara','Nirvana',
-  'Epicuro','Parmenide','Dialogo','Socratico','Platone','Sostanza',
-  'Aristotele','Stoà','Eraclito','Fronesi','Atomos','Nous','Anima','Cosmo',
-  'Apeiron','Physis','Ethos','Stoicismo','Epicureismo','Platonismo',
-  'Aristotelismo','Dialettica','Ontologia','Metafisica','Etica','Estetica','Logica',
-
-  // Persone e nomi propri
-  'Ipazia','Maria Teresa','Diotima','Livia','Gesù Nazareno','Demetrio Falereo','Casimiro',
-
-  // Icone ed emoji
-  '✨','⚖️','📚','🌌','💭','🧠','🗣️','📝','💡','🧾','📖','📜','📃','📄',
-  '🌠','☄️','🪐','🌙','🌞','🌎','🪄','📘','📗','📙','📕','🔬','📐','📏',
-  '🧭','📊','⏳','⌛','⏱️','🕰️','🕳️','♾️','🗺️','🚪','🔮','🛸','🧘','💫',
-  '🫥','🩷','💟','🔭'
-];
-
-  // Copertura garantita (tutti una volta per giro)
-  const unique = [...new Set(symbols)];
-  function shuffle(a){ for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]] } return a; }
-  let order = shuffle([...unique]), ptr = 0;
-  function nextToken(){ if (ptr >= order.length){ order = shuffle([...unique]); ptr = 0; } return order[ptr++]; }
-
-  // Configura qui
-  const cfg = {
-    count: 120,              // quante particelle visibili
-    minSize: 0.5,           // rem
-    maxSize: 1,           // rem
-    floatDist: 90,          // ampiezza “galleggiamento”
-    minSpeed: 0.006,        // ↓ più lento
-    maxSpeed: 0.012,
-    useRandomHSL: true      // false = usa palette
-  };
-  const palette = ['#FFD700','#40E0D0','#FF6347','#9370DB','#00BFFF','#7CFC00','#FF69B4','#FF8C00','#DA70D6','#1E90FF'];
-
-  // Stato
-  const particles = [];
-  const rand = (a,b)=> Math.random()*(b-a)+a;
-  const rndInt = n => Math.floor(Math.random()*n);
-  const randHSL = ()=> `hsl(${Math.floor(Math.random()*360)} 100% 70%)`;
-
-  // Crea particelle
-  for (let i=0; i<cfg.count; i++){
-    const el = document.createElement('div');
-    el.className = 'particle';
-    el.textContent = nextToken();
-    const size = rand(cfg.minSize, cfg.maxSize);
-    el.style.fontSize = size + 'rem';
-    el.style.color = cfg.useRandomHSL ? randHSL() : palette[rndInt(palette.length)];
-    container.appendChild(el);
-
-    particles.push({
-      el, size,
-      x: Math.random()*innerWidth,
-      y: Math.random()*innerHeight,
-      ang: Math.random()*Math.PI*2,
-      speed: rand(cfg.minSpeed, cfg.maxSpeed),
-      radius: rand(10, 10 + cfg.floatDist)
-    });
-  }
-
-  // Animazione
-  function render(){
-    for (const p of particles){
-      p.ang += p.speed;
-      const bx = p.x + Math.cos(p.ang)*p.radius;
-      const by = p.y + Math.sin(p.ang*0.7)*p.radius;
-      p.el.style.transform = `translate3d(${bx}px, ${by}px, 0)`;
-    }
-    requestAnimationFrame(render);
-  }
-  render();
-
-  // Resize
-  addEventListener('resize', ()=>{
-    for (const p of particles){
-      p.x = Math.random()*innerWidth;
-      p.y = Math.random()*innerHeight;
-    }
-  });
-});
-</script>
-
+      document.addEventListener('DOMContentLoaded', function(){
+        // Container: usa #philoParticles se c'è, altrimenti crealo
+        let container = document.getElementById('philoParticles');
+        if (!container) {
+          container = document.createElement('div');
+          container.id = 'philoParticles';
+          document.body.appendChild(container);
+        } else {
+          // Portalo in fondo al body per stare sopra gli sfondi
+          document.body.appendChild(container);
+        }
+      
+        // CSS: sopra sfondi/canvas, sotto UI (regola z-index se serve)
+        const STYLE_ID = 'philoParticles-style';
+        if (!document.getElementById(STYLE_ID)){
+          const st = document.createElement('style'); st.id = STYLE_ID;
+          st.textContent = `
+            #philoParticles{
+              position: fixed; inset: 0;
+              z-index: 60;            /* ↑ aumenta se resta sotto qualche overlay */
+              pointer-events: none;   /* non blocca i clic */
+            }
+            #philoParticles .particle{
+              position: absolute; left: 0; top: 0;
+              transform: translate3d(0,0,0);
+              will-change: transform;
+              white-space: nowrap;    /* nomi doppi interi */
+              line-height: 1;
+              text-shadow: 0 0 8px rgba(255,255,255,.45);
+              opacity: .98;
+            }
+          `;
+          document.head.appendChild(st)
+        }
+      
+        // Sorgente simboli/parole
+        const symbols = [
+        // Matematica e logica
+        '∞','Φ','Ψ','Λ','Δ','Ω','π','∑','∏','√',
+        '≡','≈','∴','∀','∃','∈','∧','∨','⊕','⊗',
+        '⊖','⊙','⊘','⊚','⊛','⊜','⊝','⊞','⊟','⊠',
+        '⊡','⊢','⊣','⊤','⊥','⊧','⊨','⊩','⊪','⊫',
+        'Σ','Θ','Ξ','ℵ','∂','∇','∫','∬','∭',
+      
+        // Concetti e filosofia
+        'Sapienza','Verità','Logos','Thanatos','Mito','Essere','Divenire',
+        'Idee','Archè','Armonia','Principio','Destino','Libertà','Giustizia',
+        'Virtù','Pensiero','Domanda','Risposta','Silenzio','Samsara','Nirvana',
+        'Epicuro','Parmenide','Dialogo','Socratico','Platone','Sostanza',
+        'Aristotele','Stoà','Eraclito','Fronesi','Atomos','Nous','Anima','Cosmo',
+        'Apeiron','Physis','Ethos','Stoicismo','Epicureismo','Platonismo',
+        'Aristotelismo','Dialettica','Ontologia','Metafisica','Etica','Estetica','Logica',
+      
+        // Persone e nomi propri
+        'Ipazia','Maria Teresa','Diotima','Livia','Gesù Nazareno','Demetrio Falereo','Casimiro',
+      
+        // Icone ed emoji
+        '✨','⚖️','📚','🌌','💭','🧠','🗣️','📝','💡','🧾','📖','📜','📃','📄',
+        '🌠','☄️','🪐','🌙','🌞','🌎','🪄','📘','📗','📙','📕','🔬','📐','📏',
+        '🧭','📊','⏳','⌛','⏱️','🕰️','🕳️','♾️','🗺️','🚪','🔮','🛸','🧘','💫',
+        '🫥','🩷','💟','🔭'
+      ];
+      
+        // Copertura garantita (tutti una volta per giro)
+        const unique = [...new Set(symbols)];
+        function shuffle(a){ for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]] } return a; }
+        let order = shuffle([...unique]), ptr = 0;
+        function nextToken(){ if (ptr >= order.length){ order = shuffle([...unique]); ptr = 0; } return order[ptr++]; }
+      
+        // Configura qui
+        const cfg = {
+          count: 120,              // quante particelle visibili
+          minSize: 0.5,           // rem
+          maxSize: 1,           // rem
+          floatDist: 90,          // ampiezza “galleggiamento”
+          minSpeed: 0.006,        // ↓ più lento
+          maxSpeed: 0.012,
+          useRandomHSL: true      // false = usa palette
+        };
+        const palette = ['#FFD700','#40E0D0','#FF6347','#9370DB','#00BFFF','#7CFC00','#FF69B4','#FF8C00','#DA70D6','#1E90FF'];
+      
+        // Stato
+        const particles = [];
+        const rand = (a,b)=> Math.random()*(b-a)+a;
+        const rndInt = n => Math.floor(Math.random()*n);
+        const randHSL = ()=> `hsl(${Math.floor(Math.random()*360)} 100% 70%)`;
+      
+        // Crea particelle
+        for (let i=0; i<cfg.count; i++){
+          const el = document.createElement('div');
+          el.className = 'particle';
+          el.textContent = nextToken();
+          const size = rand(cfg.minSize, cfg.maxSize);
+          el.style.fontSize = size + 'rem';
+          el.style.color = cfg.useRandomHSL ? randHSL() : palette[rndInt(palette.length)];
+          container.appendChild(el);
+      
+          particles.push({
+            el, size,
+            x: Math.random()*innerWidth,
+            y: Math.random()*innerHeight,
+            ang: Math.random()*Math.PI*2,
+            speed: rand(cfg.minSpeed, cfg.maxSpeed),
+            radius: rand(10, 10 + cfg.floatDist)
+          });
+        }
+      
+        // Animazione
+        function render(){
+          for (const p of particles){
+            p.ang += p.speed;
+            const bx = p.x + Math.cos(p.ang)*p.radius;
+            const by = p.y + Math.sin(p.ang*0.7)*p.radius;
+      p.el.style.transform = `translate3d(${bx}px, ${by}px, 0) translate(-50%, -50%)`;
+      
+          }
+          requestAnimationFrame(render);
+        }
+        render();
+      
+        // Resize
+        addEventListener('resize', ()=>{
+          for (const p of particles){
+            p.x = Math.random()*innerWidth;
+            p.y = Math.random()*innerHeight;
+          }
+        });
+      });
+    </script>
 </body>
 </html>
