@@ -533,6 +533,27 @@
   white-space: nowrap;
   overflow: visible;   /* non hidden */
 }
+.symbol-rotator{
+  font-family: system-ui, "Segoe UI", Roboto, "Noto Sans",
+               "Noto Sans Symbols 2", "DejaVu Sans", Symbola,
+               "Apple Color Emoji", "Segoe UI Emoji", "Twemoji Mozilla",
+               sans-serif;
+  line-height: 1.1;
+}
+const symbolsUnique = [...new Set(symbols)]; // niente duplicati
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]] } return a; }
+let order = shuffle([...symbolsUnique]);
+let idx = 0;
+const el = document.querySelector('.symbol-rotator');
+
+function tick(){
+  if (!el) return;
+  const token = order[idx++];
+  setToken(el, token);     // vedi funzione sopra
+  if (idx >= order.length){ order = shuffle(order); idx = 0; }
+}
+tick();
+setInterval(tick, 1500);   // cambia ogni 1.5s
 
 </style></head>
 <body>
