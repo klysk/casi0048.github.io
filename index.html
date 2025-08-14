@@ -555,7 +555,15 @@ function tick(){
 tick();
 setInterval(tick, 1500);   // cambia ogni 1.5s
 
-</style></head>
+</style><style>
+/* Fallback font per simboli/emoji */
+.particle, .symbol-rotator{
+  font-family: system-ui, "Segoe UI", Roboto, "Noto Sans", "Noto Sans Symbols 2",
+               "DejaVu Sans", Symbola, "Apple Color Emoji", "Segoe UI Emoji",
+               "Twemoji Mozilla", sans-serif;
+}
+</style>
+</head>
 <body>
 <!-- GALASSIA dietro -->
 <canvas id="nebula"></canvas>
@@ -1595,6 +1603,13 @@ setInterval(tick, 1500);   // cambia ogni 1.5s
   'Ethos', 'Stoicismo', 'Epicureismo', 'Platonismo', 'Aristotelismo',
   'Dialettica', 'Ontologia', 'Metafisica', 'Etica', 'Estetica', 'Logica'
 ];
+
+        // === Copertura garantita: deduplica + ordine mescolato ===
+        const unique = [...new Set(symbols)];
+        function shuffle(a){ for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]] } return a; }
+        let order = shuffle([...unique]);
+        let ptr = 0;
+
         const colors = [
           '#FFD700', '#40E0D0', '#FF6347', '#9370DB', '#00BFFF',
           '#7CFC00', '#FF69B4', '#FF8C00', '#DA70D6', '#1E90FF'
@@ -1605,7 +1620,14 @@ setInterval(tick, 1500);   // cambia ogni 1.5s
           for(let i=0;i<cfg.count;i++){
             const el = document.createElement('div');
             el.className = 'particle';
-            el.textContent = symbols[Math.floor(Math.random()*symbols.length)];
+            // Copertura garantita: mostra tutti una volta per giro
+            const token = order[ptr];
+            el.textContent = token;
+            ptr++;
+            if (ptr >= order.length){
+              order = shuffle(order);
+              ptr = 0;
+            }
             const size = cfg.minSize + Math.random()*(cfg.maxSize-cfg.minSize);
             const color = colors[Math.floor(Math.random()*colors.length)];
             el.style.fontSize = size + 'rem';
@@ -1694,6 +1716,35 @@ setInterval(tick, 1500);   // cambia ogni 1.5s
     document.addEventListener('DOMContentLoaded', startRotator);
   } else { startRotator(); }
 })();
+
+// 1) mescola in modo equo
+function shuffle(a){
+  for (let i = a.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1)); // 0..i
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// 2) preparazione
+const unique = [...new Set(symbols)];   // opzionale: rimuove duplicati
+let order = shuffle([...unique]);       // copia mescolata
+let idx = 0;
+
+// 3) ad ogni “tick” mostra il prossimo; a fine giro rimescola
+function nextToken(){
+  const token = order[idx++];
+  setToken(document.querySelector('.symbol-rotator'), token);
+  if (idx >= order.length){             // finito il giro
+    order = shuffle([...unique]);       // rimescola
+    idx = 0;                            // riparti
+  }
+}
+
+// avvio
+nextToken();
+setInterval(nextToken, 1500);
+
 </script>
 
 <!-- INIZIO Box Bertrand Russell -->
