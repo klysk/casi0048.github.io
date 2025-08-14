@@ -563,7 +563,26 @@ setInterval(tick, 1500);   // cambia ogni 1.5s
                "Twemoji Mozilla", sans-serif;
 }
 </style>
+
+<!--  inizio  aggiunta stelle cadenti da destra a sinistra-->
+<style>
+  body {
+    margin: 0;
+    background: black;
+    overflow: hidden;
+  }
+  canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    display: block;
+  }
+</style>
+<!--  fine  aggiunta stelle cadenti da destra a sinistra-->
 </head>
+
+<canvas id="shooting-stars"></canvas>
+
 <body>
 <!-- GALASSIA dietro -->
 <canvas id="nebula"></canvas>
@@ -677,6 +696,12 @@ setInterval(tick, 1500);   // cambia ogni 1.5s
 <a href="articoli/cratete.html" role="menuitem">Cratete di Tebe</a>
 <a href="articoli/iparchia.html" role="menuitem">Ipparchia</a>
 <a href="articoli/metrocle.html" role="menuitem">Metrocle di Maronea</a>
+</div>
+<div>
+<h4>Scuola atomistica</h4>
+<a href="articoli/leucippo.html" role="menuitem">Leucippo di Mileto</a>
+<a href="articoli/democrito.html" role="menuitem">Democrito di Abdera</a>
+<a href="scuola-vai%C5%9Be%E1%B9%A3ika.html" role="menuitem">Scuola  Vaiśeṣika</a>
 </div>
 <div>
 <h4>🚀Approfondimenti</h4>
@@ -1597,12 +1622,13 @@ setInterval(tick, 1500);   // cambia ogni 1.5s
   '📊', '⏳', '⌛', '⏱️', '🕰️', '🕳️', '♾️', '🗺️', '🚪', '🔮', 
   '🛸', '🧘', '💫', '🫥', '🩷', '💟', '🔭', 'Verità', 'Logos', 'Thanatos', 
   'Mito', 'Essere', 'Divenire', 'Idee', 'Armonia', 'Principio', 'Destino',
-  'Libertà', 'Giustizia', 'Ipazia', 'MARIA TERESA' ,'Virtù', 'Pensiero', 'Domanda', 'Risposta',
-  'Silenzio', 'Diotima', 'Livia', 'Epicuro', 'Demetrio Falereo', 'Parmenide', 'Dialogo', 'Socratico', 'Platone', 'Aristotele',
+  'Libertà', 'Giustizia', 'Ipazia', 'Maria Teresa', 'Virtù', 'Pensiero', 'Domanda', 'Risposta',
+  'Silenzio', 'Samsara', 'Diotima', 'Livia', 'Nirvana', 'Epicuro', 'Demetrio Falereo', 'Parmenide', 'Dialogo', 'Socratico', 'Platone', 'Aristotele',
   'Stoà', 'Casimiro', 'Eraclito', 'Fronesi', 'Atomos', 'Nous', 'Anima', 'Cosmo', 'Apeiron', 'Arché', 'Physis',
   'Ethos', 'Stoicismo', 'Epicureismo', 'Platonismo', 'Aristotelismo',
   'Dialettica', 'Ontologia', 'Metafisica', 'Etica', 'Estetica', 'Logica'
 ];
+
 
         // === Copertura garantita: deduplica + ordine mescolato ===
         const unique = [...new Set(symbols)];
@@ -2954,6 +2980,172 @@ input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus { ba
   }
 })();
 </script>
+<!--  inizio script stelle cadenti  da dx a sx-->
+<script>
+const canvas = document.getElementById("shooting-stars");
+const ctx = canvas.getContext("2d");
 
+let w, h;
+function resizeCanvas() {
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+
+class ShootingStar {
+  constructor() {
+    this.reset();
+  }
+  reset() {
+    this.x = Math.random() * w;
+    this.y = Math.random() * h * 0.5;
+    this.len = Math.random() * 80 + 10;
+    this.speed = Math.random() * 4 + 2;
+    this.size = Math.random() * 2 + 1;
+    this.opacity = Math.random() * 0.5 + 0.5;
+  }
+  update() {
+    this.x -= this.speed;
+this.y += this.speed * 0.5; // meno discesa
+
+    if (this.x < -this.len || this.y > h + this.len) {
+      this.reset();
+      this.x = Math.random() * w + w;
+      this.y = Math.random() * h * 0.7;
+    }
+  }
+  draw() {
+    ctx.beginPath();
+    const grad = ctx.createLinearGradient(this.x, this.y, this.x + this.len, this.y - this.len);
+    grad.addColorStop(0, `rgba(255,255,255,${this.opacity})`);
+    grad.addColorStop(1, "rgba(255,255,255,0)");
+    ctx.strokeStyle = grad;
+    ctx.lineWidth = this.size;
+    ctx.moveTo(this.x, this.y);
+    ctx.lineTo(this.x + this.len, this.y - this.len);
+    ctx.stroke();
+  }
+}
+
+let stars = [];
+for (let i = 0; i < 20; i++) {
+  stars.push(new ShootingStar());
+}
+
+function animate() {
+  ctx.clearRect(0, 0, w, h);
+  stars.forEach(star => {
+    star.update();
+    star.draw();
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+
+let minSpeed = 4;
+let maxSpeed = 12;
+this.speed = Math.random() * (maxSpeed - minSpeed) + minSpeed;
+</script>
+<!--  fine script stelle cadenti-->
+<script>
+(() => {
+  const canvas = document.getElementById("shooting-stars");
+  const ctx = canvas.getContext("2d");
+
+  // HiDPI/Retina fix: scala il canvas in base al devicePixelRatio
+  const dpr = Math.max(1, Math.floor(window.devicePixelRatio || 1));
+  let W = 0, H = 0;
+  function resize() {
+    W = canvas.clientWidth  = window.innerWidth;
+    H = canvas.clientHeight = window.innerHeight;
+    canvas.width  = W * dpr;
+    canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); // disegna in coordinate CSS
+  }
+  window.addEventListener("resize", resize, { passive: true });
+  resize();
+
+  // Parametri regolabili
+  const COUNT     = 7;     // quante stelle simultanee
+
+
+const MIN_SPEED = 1;
+const MAX_SPEED = 2;
+
+ const MIN_LEN   = 30;     // lunghezza scia (min)
+  const MAX_LEN   = 110;    // lunghezza scia (max)
+  const MIN_SIZE  = 1.2;    // spessore linea (min)
+  const MAX_SIZE  = 2.2;    // spessore linea (max)
+
+  class ShootingStar {
+    constructor() { this.reset(true); }
+    rand(min, max) { return Math.random() * (max - min) + min; }
+
+    reset(init = false) {
+      // punto di partenza: parte alta/destra per traiettoria diagonale ↘
+      this.x = init ? this.rand(0, W * 1.2) : W + this.rand(0, 200);
+      this.y = this.rand(0, H * 0.5);
+
+      this.len   = this.rand(MIN_LEN, MAX_LEN);
+      this.speed = this.rand(MIN_SPEED, MAX_SPEED);
+      this.size  = this.rand(MIN_SIZE, MAX_SIZE);
+      this.opacity = this.rand(0.5, 1);
+
+      // Colore casuale per la singola stella (fisso finché non viene resettata)
+      this.hue = Math.floor(Math.random() * 360);
+      this.startColor = `hsla(${this.hue}, 100%, 70%, ${this.opacity})`;
+      this.endColor   = `hsla(${this.hue}, 100%, 70%, 0)`;
+    }
+
+    update() {
+      // Movimento diagonale: verso sinistra e verso il basso
+      this.x -= this.speed;
+      this.y += this.speed;
+
+      // Se esce dallo schermo, ricomincia da destra/alto
+      if (this.x < -this.len || this.y > H + this.len) this.reset();
+    }
+
+    draw() {
+      ctx.beginPath();
+      const grad = ctx.createLinearGradient(
+        this.x, this.y,
+        this.x + this.len, this.y - this.len
+      );
+      grad.addColorStop(0, this.startColor); // testa
+      grad.addColorStop(1, this.endColor);   // scia
+
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = this.size;
+      ctx.lineCap = "round";
+      ctx.moveTo(this.x, this.y);
+      ctx.lineTo(this.x + this.len, this.y - this.len);
+      ctx.stroke();
+    }
+  }
+
+  const stars = Array.from({ length: COUNT }, () => new ShootingStar());
+
+  // opzionale: scie più morbide usando un velo semitrasparente anziché clearRect pieno
+  function fadeBackground() {
+    ctx.fillStyle = "rgba(0,0,0,0.2)"; // aumenta opacità se vuoi scie più corte
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  function loop() {
+    // Se preferisci niente scie persistenti, usa clearRect.
+    // ctx.clearRect(0, 0, W, H);
+    fadeBackground();
+    for (const s of stars) { s.update(); s.draw(); }
+    requestAnimationFrame(loop);
+  }
+
+  // Imposta un fondo iniziale nero (utile quando si usa fadeBackground)
+  ctx.fillStyle = "black"; ctx.fillRect(0, 0, W, H);
+  loop();
+})();
+<!--  fine script stelle cadentin da dx a sx-->
+</script>
 </body>
 </html>
