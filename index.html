@@ -525,6 +525,15 @@
 }
 
 .cookie-modal.force-open{ display:flex !important; }
+
+      .symbol-rotator{
+  display:inline-block;
+  /* permette parole lunghe */
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: visible;   /* non hidden */
+}
+
 </style></head>
 <body>
 <!-- GALASSIA dietro -->
@@ -1625,6 +1634,46 @@
     </script>
 <!-- Google Translate -->
 
+<!-- l’elemento che mostrerà i simboli -->
+<span class="symbol-rotator">∞</span>
+
+<!-- metti questo <script> subito prima di </body> -->
+<script>
+(function(){
+  // il tuo array 'symbols' già pulito
+  const symbols = [/* ... i tuoi valori ... */];
+
+  // funzione che hai chiesto di inserire
+  function setToken(el, token){
+    el.textContent = token;
+    const L = Array.from(token).length; // conta bene anche emoji
+    el.style.fontSize = (L > 10 ? '0.9em' : L > 6 ? '1em' : '1.2em');
+  }
+
+  // (facoltativo ma consigliato) mostra tutti a rotazione, senza ripetizioni
+  function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]] } return a; }
+
+  function startRotator(){
+    const el = document.querySelector('.symbol-rotator');
+    if(!el) return;
+    const unique = [...new Set(symbols)];
+    let order = shuffle([...unique]);
+    let idx = 0;
+
+    function tick(){
+      setToken(el, order[idx++]);
+      if (idx >= order.length){ order = shuffle(order); idx = 0; }
+    }
+
+    tick();
+    setInterval(tick, 1500); // cambia ogni 1.5s
+  }
+
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', startRotator);
+  } else { startRotator(); }
+})();
+</script>
 
 <!-- INIZIO Box Bertrand Russell -->
 <div id="russell-box">
