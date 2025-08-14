@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scuola Vaiśeṣika: L'atomismo indiano</title>
+    <style>
+        :root {
+            --primary-color: #6a4c93;
+            --secondary-color: #8a5a44;
+            --text-color: #333333;
+            --bg-color: #f8f1e5;
+            --card-bg: #ffffff;
+            --button-text: #ffffff;
+            --transition: all 0.3s ease;
+            --highlight-color: #f2e9e1;
+        }
+
+        /* Modalità di lettura */
+        .notturno {
+            --primary-color: #4a2545;
+            --secondary-color: #6d4c3d;
+            --text-color: #e0d7d0;
+            --bg-color: #1a1423;
+            --card-bg: #2d2835;
+            --button-text: #e0d7d0;
+            --highlight-color: #3a3244;
+        }
+
+        .filosofica {
+            --primary-color: #5d5c61;
+            --secondary-color: #379683;
+            --text-color: #e0e0e0;
+            --bg-color: #2d2d2d;
+            --card-bg: #3d3d3d;
+            --button-text: #e0e0e0;
+            --highlight-color: #4a4a4a;
+        }
+
+        .meditativo {
+            --primary-color: #5e7c61;
+            --secondary-color: #3e5c4d;
+            --text-color: #f4f4f4;
+            --bg-color: #2c3e33;
+            --card-bg: #3e5c4d;
+            --button-text: #f4f4f4;
+            --highlight-color: #4a6d5e;
+        }
+
+        .indiano {
+            --primary-color: #9c3d54;
+            --secondary-color: #e07c24;
+            --text-color: #2d1e2f;
+            --bg-color: #f9e5d8;
+            --card-bg: #f8d7b5;
+            --button-text: #2d1e2f;
+            --highlight-color: #f0c9a8;
+        }
+
+        body {
+            font-family: 'Noto Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+
+        .subtitle {
+            font-style: italic;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #00BFFF;    
+            margin-top: 30px;
+            border-bottom: 1px solid var(--secondary-color);
+            padding-bottom: 10px;
+            font-weight: 400;
+        }
+
+        h3 {
+            color:#ee7678; var(--primary-color);
+            margin-top: 25px;
+        }
+
+        .section-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 25px;
+            background-color: var(--primary-color);
+            color: var(--button-text);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .section-header:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .section-title {
+            margin: 0;
+            font-size: 1.4rem;
+            font-weight: 500;
+        }
+
+        .section-content {
+            padding: 25px;
+            display: none;
+        }
+
+        .section-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--button-text);
+            font-size: 1.6rem;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .toggle-btn:hover {
+            background-color: rgba(255,255,255,0.1);
+            transform: rotate(90deg);
+        }
+
+        .quote {
+            font-style: italic;
+            border-left: 4px solid var(--primary-color);
+            padding: 15px 20px;
+            margin: 25px 0;
+            background-color: var(--highlight-color);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .quote-sanskrit {
+            font-family: 'Noto Sans Devanagari', sans-serif;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .quote-author {
+            display: block;
+            text-align: right;
+            font-style: normal;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            opacity: 0.8;
+        }
+
+        .theme-buttons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .theme-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            background-color: var(--primary-color);
+            color: var(--button-text);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .theme-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .theme-btn.active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            outline: 2px solid var(--button-text);
+        }
+
+        .default-btn {
+            background-color: #6a4c93;
+            color: white;
+        }
+
+        .notturno-btn {
+            background-color: #4a2545;
+            color: #e0d7d0;
+        }
+
+        .filosofica-btn {
+            background-color: #5d5c61;
+            color: #e0e0e0;
+        }
+
+        .meditativo-btn {
+            background-color: #5e7c61;
+            color: #f4f4f4;
+        }
+
+        .indiano-btn {
+            background-color: #9c3d54;
+            color: #f9e5d8;
+        }
+
+        .padartha-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .padartha-item {
+            background-color: var(--highlight-color);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .padartha-name {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--secondary-color);
+        }
+
+        .comparison-table th {
+            background-color: var(--primary-color);
+            color: var(--button-text);
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background-color: var(--highlight-color);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            border-top: 1px solid var(--primary-color);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .image-caption {
+            font-style: italic;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-header {
+                padding: 15px 20px;
+            }
+            
+            .theme-buttons {
+                gap: 8px;
+            }
+            
+            .theme-btn {
+                padding: 10px 15px;
+                font-size: 0.85rem;
+            }
+            
+            .padartha-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Scuola Vaiśeṣika</h1>
+            <p class="subtitle">Il sistema filosofico dell'atomismo indiano</p>
+            
+            <div class="image-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Kanada.jpg/320px-Kanada.jpg" alt="Rappresentazione di Kaṇāda, fondatore del Vaiśeṣika">
+                <p class="image-caption">Rappresentazione tradizionale di Kaṇāda, fondatore della scuola Vaiśeṣika</p>
+            </div>
+        </header>
+
+        <div class="theme-buttons">
+            <button class="theme-btn default-btn active" onclick="setTheme('default')">Default</button>
+            <button class="theme-btn notturno-btn" onclick="setTheme('notturno')">Notturno</button>
+            <button class="theme-btn filosofica-btn" onclick="setTheme('filosofica')">Filosofica</button>
+            <button class="theme-btn meditativo-btn" onclick="setTheme('meditativo')">Meditativo</button>
+            <button class="theme-btn indiano-btn" onclick="setTheme('indiano')">Stile Indiano</button>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection('introduzione')">
+                <h2 class="section-title">Introduzione al Vaiśeṣika</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="introduzione">
+                <p>Il Vaiśeṣika (in sanscrito: वैशेषिक) è uno dei sei sistemi filosofici ortodossi (darśana) della tradizione indiana. Fondato dal saggio Kaṇāda (circa II secolo a.C.), questo sistema si caratterizza per la sua teoria atomistica della realtà e per la classificazione sistematica di tutti gli oggetti dell'esperienza.</p>
+                
+                <p>Il nome "Vaiśeṣika" deriva dal termine "viśeṣa", che significa "particolarità" o "differenza specifica", riflettendo l'attenzione del sistema per le caratteristiche distintive di tutte le entità esistenti.</p>
+                
+                <div class="quote">
+                    <div class="quote-sanskrit">वैशेषिकं दर्शनं पदार्थसाधर्म्यवैधर्म्याभ्यां तत्त्वज्ञानान्निःश्रेयसाधिगमः॥</div>
+                    "Il sistema Vaiśeṣika, attraverso la conoscenza della natura della realtà per somiglianza e differenza tra le categorie, conduce alla liberazione suprema."
+                    <span class="quote-author">- Vaiśeṣika Sūtra 1.1.4</span>
+                </div>
+                
+                <p>Insieme al Nyāya, con cui condivide molti principi logici ed epistemologici, il Vaiśeṣika forma una delle coppie filosofiche più importanti del pensiero indiano classico. Mentre il Nyāya si concentra sulla logica e sull'epistemologia, il Vaiśeṣika sviluppa principalmente una metafisica e una filosofia della natura.</p>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection('metafisica')">
+                <h2 class="section-title">Metafisica e Categorie (Padārtha)</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="metafisica">
+                <p>Il sistema Vaiśeṣika classifica tutta la realtà in sette categorie (padārtha), successivamente aumentate a dieci nelle elaborazioni posteriori:</p>
+                
+                <div class="padartha-list">
+                    <div class="padartha-item">
+                        <div class="padartha-name">1. Dravya (Sostanza)</div>
+                        <p>I nove substrati fondamentali: terra, acqua, fuoco, aria, etere, tempo, spazio, anima (ātman) e mente (manas)</p>
+                    </div>
+                    
+                    <div class="padartha-item">
+                        <div class="padartha-name">2. Guṇa (Qualità)</div>
+                        <p>Le 24 qualità come colore, sapore, odore, numero, grandezza, separazione, etc.</p>
+                    </div>
+                    
+                    <div class="padartha-item">
+                        <div class="padartha-name">3. Karma (Azione)</div>
+                        <p>I movimenti fisici di cinque tipi: sollevamento, abbassamento, contrazione, espansione e locomozione</p>
+                    </div>
+                    
+                    <div class="padartha-item">
+                        <div class="padartha-name">4. Sāmānya (Universalità)</div>
+                        <p>I concetti universali che accomunano entità simili (es. "animalità")</p>
+                    </div>
+                    
+                    <div class="padartha-item">
+                        <div class="padartha-name">5. Viśeṣa (Particolarità)</div>
+                        <p>I fattori di individuazione che distinguono le entità atomiche</p>
+                    </div>
+                    
+                    <div class="padartha-item">
+                        <div class="padartha-name">6. Samavāya (Inerenza)</div>
+                        <p>La relazione permanente che lega sostanze e qualità</p>
+                    </div>
+                    
+                    <div class="padartha-item">
+                        <div class="padartha-name">7. Abhāva (Non-esistenza)</div>
+                        <p>La negazione o assenza, aggiunta nelle elaborazioni posteriori</p>
+                    </div>
+                </div>
+                
+                <div class="quote">
+                    "Come i raggi sono connessi al mozzo della ruota, così in questo sistema tutte le cose sono connesse alle categorie."
+                    <span class="quote-author">- Praśastapāda, Padārthadharmasaṅgraha</span>
+                </div>
+                
+                <p>Questa classificazione sistematica rappresenta uno dei primi tentativi nella storia del pensiero umano di catalogare in modo esaustivo tutti gli aspetti della realtà sperimentabile.</p>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection('atomismo')">
+                <h2 class="section-title">Teoria Atomistica</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="atomismo">
+                <p>La teoria atomistica del Vaiśeṣika è una delle sue contribuzioni più originali e rappresenta un parallelo interessante con l'atomismo greco di Leucippo e Democrito. Secondo questa visione:</p>
+                
+                <ul>
+                    <li>Gli atomi (paramāṇu) sono indivisibili, eterni e infinitamente piccoli</li>
+                    <li>Esistono quattro tipi di atomi corrispondenti agli elementi terra, acqua, fuoco e aria</li>
+                    <li>Gli atomi si combinano per formare coppie (dyads) e poi triadi (triads), che diventano percepibili</li>
+                    <li>Il movimento degli atomi è governato dalla legge del karma e dall'intervento divino (nei testi posteriori)</li>
+                    <li>L'etere (ākāśa), il tempo (kāla) e lo spazio (dik) sono sostanze infinite e non atomiche</li>
+                </ul>
+                
+                <div class="quote">
+                    <div class="quote-sanskrit">पृथिव्यप्तेजोवायवः परमाणवः॥</div>
+                    "Gli atomi sono di quattro tipi: terra, acqua, fuoco e aria."
+                    <span class="quote-author">- Vaiśeṣika Sūtra 4.1.1</span>
+                </div>
+                
+                <h3>Confronto con l'atomismo greco</h3>
+                
+                <table class="comparison-table">
+                    <tr>
+                        <th>Aspetto</th>
+                        <th>Atomismo Vaiśeṣika</th>
+                        <th>Atomismo Greco</th>
+                    </tr>
+                    <tr>
+                        <td>Tipi di atomi</td>
+                        <td>4 tipi (terra, acqua, fuoco, aria)</td>
+                        <td>Infiniti tipi (per forma e dimensione)</td>
+                    </tr>
+                    <tr>
+                        <td>Vuoto</td>
+                        <td>Non esiste il vuoto, solo spazio infinito</td>
+                        <td>Il vuoto esiste ed è necessario</td>
+                    </tr>
+                    <tr>
+                        <td>Movimento</td>
+                        <td>Governato dal karma e da Dio</td>
+                        <td>Meccanico e casuale</td>
+                    </tr>
+                    <tr>
+                        <td>Scopo</td>
+                        <td>Liberazione spirituale (mokṣa)</td>
+                        <td>Spiegazione fisica della realtà</td>
+                    </tr>
+                </table>
+                
+                <p>Mentre l'atomismo greco è puramente materialista e meccanicista, la versione indiana mantiene una dimensione spirituale e morale, integrando la fisica atomica con la metafisica e la teologia.</p>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection('epistemologia')">
+                <h2 class="section-title">Epistemologia e Metodo</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="epistemologia">
+                <p>Il sistema Vaiśeṣika riconosce due principali mezzi di conoscenza validi (pramāṇa):</p>
+                
+                <ol>
+                    <li><strong>Percezione (Pratyakṣa)</strong>: Conoscenza diretta attraverso i sensi</li>
+                    <li><strong>Inferenza (Anumāna)</strong>: Conoscenza mediata dal ragionamento logico</li>
+                </ol>
+                
+                <p>Nelle elaborazioni posteriori, specialmente nella sintesi con il Nyāya, furono aggiunti altri due pramāṇa:</p>
+                
+                <ul>
+                    <li><strong>Testimonianza (Śabda)</strong>: Conoscenza da fonti autorevoli (come i Veda)</li>
+                    <li><strong>Comparazione (Upamāna)</strong>: Conoscenza per analogia</li>
+                </ul>
+                
+                <div class="quote">
+                    "La percezione è quella conoscenza che nasce dal contatto dei sensi con l'oggetto [...] L'inferenza è di tre tipi: dal precedente, dal successivo e dall'analogia."
+                    <span class="quote-author">- Kaṇāda, Vaiśeṣika Sūtra</span>
+                </div>
+                
+                <h3>Il metodo analitico del Vaiśeṣika</h3>
+                
+                <p>Il Vaiśeṣika sviluppò un metodo filosofico unico basato su:</p>
+                
+                <ul>
+                    <li><strong>Enumerazione</strong>: Lista sistematica di tutte le categorie della realtà</li>
+                    <li><strong>Definizione</strong>: Descrizione precisa di ogni entità</li>
+                    <li><strong>Esame critico</strong>: Analisi delle somiglianze e differenze (sādharmya e vaidharmya)</li>
+                </ul>
+                
+                <p>Questo approccio analitico e classificatorio anticipa in qualche modo i moderni metodi scientifici di catalogazione e analisi fenomenologica.</p>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header" onclick="toggleSection('influenza')">
+                <h2 class="section-title">Sviluppo Storico e Influenza</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="influenza">
+                <p>La scuola Vaiśeṣika attraversò diverse fasi di sviluppo nel corso dei secoli:</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">VI-II sec. a.C.</div>
+                        <div class="timeline-content">Fase iniziale: composizione dei Vaiśeṣika Sūtra attribuiti a Kaṇāda</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-date">IV-VI sec. d.C.</div>
+                        <div class="timeline-content">Commentario di Praśastapāda (Padārthadharmasaṅgraha)</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-date">X sec. d.C.</div>
+                        <div class="timeline-content">Sintesi con il Nyāya ad opera di Udayana e altri</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-date">XII-XIII sec.</div>
+                        <div class="timeline-content">Elaborazioni di Śrīdhara e Śaṅkara Miśra</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-date">XVI sec. in poi</div>
+                        <div class="timeline-content">Declino come scuola indipendente, assorbimento nel Nyāya-Vaiśeṣika</div>
+                    </div>
+                </div>
+                
+                <div class="quote">
+                    "Come la luna risplende riflettendo la luce del sole, così il Nyāya brilla riflettendo la luce del Vaiśeṣika."
+                    <span class="quote-author">- Detto tradizionale nyāya-vaiśeṣika</span>
+                </div>
+                
+                <h3>Influenza sul pensiero indiano</h3>
+                
+                <p>Il sistema Vaiśeṣika ha esercitato una profonda influenza su:</p>
+                
+                <ul>
+                    <li>Lo sviluppo della logica e dell'epistemologia indiana attraverso la sintesi con il Nyāya</li>
+                    <li>Le scuole di fisica e medicina ayurvedica, che adottarono la teoria atomistica</li>
+                    <li>Il pensiero teistico attraverso la successiva introduzione del concetto di Dio (īśvara)</li>
+                    <li>Le discussioni filosofiche medievali sulla natura della realtà</li>
+                </ul>
+                
+                <p>Oggi, il Vaiśeṣika rimane un punto di riferimento fondamentale per lo studio della metafisica e della filosofia della natura nella tradizione indiana, nonché un interessante parallelo alle moderne teorie atomiche e fisiche.</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2023 Articolo sulla Scuola Vaiśeṣika - Tutti i diritti riservati</p>
+            <p>Fonti: Vaiśeṣika Sūtra, Padārthadharmasaṅgraha, studi accademici sul pensiero indiano</p>
+        </footer>
+    </div>
+
+    <script>
+        // Funzione per aprire/chiudere le sezioni
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const button = section.previousElementSibling.querySelector('.toggle-btn');
+            
+            section.classList.toggle('active');
+            
+            if (section.classList.contains('active')) {
+                button.textContent = '-';
+            } else {
+                button.textContent = '+';
+            }
+        }
+
+        // Funzione per cambiare tema
+        function setTheme(theme) {
+            document.body.className = theme;
+            
+            // Aggiorna lo stato attivo dei pulsanti
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // Salva la preferenza del tema
+            localStorage.setItem('themePreference', theme);
+        }
+
+        // Carica il tema preferito al caricamento della pagina
+        window.onload = function() {
+            const savedTheme = localStorage.getItem('themePreference');
+            if (savedTheme) {
+                setTheme(savedTheme);
+                // Attiva il pulsante corretto
+                document.querySelector(`.${savedTheme}-btn`).classList.add('active');
+                document.querySelector('.default-btn').classList.remove('active');
+            } else {
+                document.querySelector('.default-btn').classList.add('active');
+            }
+            
+            // Apri la prima sezione per default
+            toggleSection('introduzione');
+        }
+    </script>
+</body>
+</html>
