@@ -78,8 +78,15 @@
       .search-container input:focus{ border-color:rgba(255,215,0,.5); box-shadow:0 0 12px rgba(255,215,0,.18) }
       .search-icon{ position:absolute; left:.8rem; font-size:.95rem; color:rgba(255,215,0,.85) }
       header{ margin-top:76px; display:flex; justify-content:center; z-index:900 }
-      .menu-container{ max-width:1200px; width:100%; padding:.4rem 1rem; }
-      nav.menu-desktop ul{ display:flex; gap:1px; list-style:none; margin:0; padding:0; justify-content:center; white-space:nowrap }
+.menu-container {
+  max-width: 1200px;
+  width: 100%;
+  padding: .4rem 1rem;
+  position: sticky; /* mantiene la posizione relativa al top */
+  top: 70px;        /* altezza della top-bar */
+  z-index: 999;     /* sopra il pannello risultati */
+  background: rgba(0,0,0,0.85); /* sfondo per leggibilità */
+}      nav.menu-desktop ul{ display:flex; gap:1px; list-style:none; margin:0; padding:0; justify-content:center; white-space:nowrap }
       nav.menu-desktop li{ position:relative }
       .menu-btn, nav.menu-desktop li>a{
       display:inline-flex; flex-direction:column; align-items:center; gap:3px;
