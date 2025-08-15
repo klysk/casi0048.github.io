@@ -550,7 +550,28 @@
       }
     </style>
     <!--  fine  aggiunta stelle cadenti da destra a sinistra-->
-  </head>
+  <style>
+/* === SEARCH POLISH (caret centered + clear button) === */
+.search-container{ position:relative; display:flex; align-items:center; }
+.search-container input{
+  height: 32px;            /* centering via equal height/line-height */
+  line-height: 32px;
+  padding: 0 2rem 0 2.4rem;/* keep left space for lens, add right for clear */
+  box-sizing: border-box;  /* ensure padding doesn't break width */
+}
+.search-container .clear-icon{
+  position: absolute;
+  right: .6rem;
+  font-size: 1rem;
+  color: rgba(255,215,0,.75);
+  cursor: pointer;
+  user-select: none;
+  display: none;           /* shown only when there's text */
+  line-height: 1;
+}
+.search-container .clear-icon:hover{ filter: brightness(1.1); }
+</style>
+</head>
   <canvas id="shooting-stars"></canvas>
   <body>
     <!-- GALASSIA dietro -->
@@ -3413,6 +3434,58 @@
 })();
 </script>
 
+
+<!-- === SEARCH POLISH (inject clear button, keep existing behavior) === -->
+<script>
+(function(){
+  function ensureClearFor(input){
+    if (!input || input.__hasClearIcon) return;
+    var wrap = input.closest('.search-container') || input.parentElement;
+    if (!wrap) return;
+
+    // create clear icon
+    var btn = document.createElement('span');
+    btn.className = 'clear-icon';
+    btn.setAttribute('role','button');
+    btn.setAttribute('aria-label','Pulisci ricerca');
+    btn.title = 'Pulisci';
+
+    btn.textContent = '✖';
+    wrap.appendChild(btn);
+
+    function toggle(){
+      btn.style.display = input.value ? 'block' : 'none';
+    }
+    input.addEventListener('input', toggle);
+    btn.addEventListener('click', function(){
+      input.value = '';
+      toggle();
+      input.focus();
+      var ev = new Event('input', { bubbles: true });
+      input.dispatchEvent(ev);
+    });
+
+    toggle();
+    input.__hasClearIcon = true;
+  }
+
+  function initAll(){
+    document.querySelectorAll('.search-container input[type="search"], .search-container input[type="text"], #site-search')
+      .forEach(ensureClearFor);
+  }
+
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initAll, { once:true });
+  } else {
+    initAll();
+  }
+
+  new MutationObserver(function(){
+    initAll();
+  }).observe(document.documentElement, { childList:true, subtree:true });
+})();
+</script>
+
 </body> -->
 <!-- Aggiungi questo codice prima della chiusura 
 <!-- === CONSERVATIVE ENTER FIX + siteData (real excerpts) === -->
@@ -3486,6 +3559,58 @@
 
   var mo = new MutationObserver(function(){ bindEnterHandlers(); });
   mo.observe(document.documentElement, { childList: true, subtree: true });
+})();
+</script>
+
+
+<!-- === SEARCH POLISH (inject clear button, keep existing behavior) === -->
+<script>
+(function(){
+  function ensureClearFor(input){
+    if (!input || input.__hasClearIcon) return;
+    var wrap = input.closest('.search-container') || input.parentElement;
+    if (!wrap) return;
+
+    // create clear icon
+    var btn = document.createElement('span');
+    btn.className = 'clear-icon';
+    btn.setAttribute('role','button');
+    btn.setAttribute('aria-label','Pulisci ricerca');
+    btn.title = 'Pulisci';
+
+    btn.textContent = '✖';
+    wrap.appendChild(btn);
+
+    function toggle(){
+      btn.style.display = input.value ? 'block' : 'none';
+    }
+    input.addEventListener('input', toggle);
+    btn.addEventListener('click', function(){
+      input.value = '';
+      toggle();
+      input.focus();
+      var ev = new Event('input', { bubbles: true });
+      input.dispatchEvent(ev);
+    });
+
+    toggle();
+    input.__hasClearIcon = true;
+  }
+
+  function initAll(){
+    document.querySelectorAll('.search-container input[type="search"], .search-container input[type="text"], #site-search')
+      .forEach(ensureClearFor);
+  }
+
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initAll, { once:true });
+  } else {
+    initAll();
+  }
+
+  new MutationObserver(function(){
+    initAll();
+  }).observe(document.documentElement, { childList:true, subtree:true });
 })();
 </script>
 
@@ -3694,6 +3819,58 @@ if (document.readyState === 'complete') {
 })();
 </script>
 
+
+<!-- === SEARCH POLISH (inject clear button, keep existing behavior) === -->
+<script>
+(function(){
+  function ensureClearFor(input){
+    if (!input || input.__hasClearIcon) return;
+    var wrap = input.closest('.search-container') || input.parentElement;
+    if (!wrap) return;
+
+    // create clear icon
+    var btn = document.createElement('span');
+    btn.className = 'clear-icon';
+    btn.setAttribute('role','button');
+    btn.setAttribute('aria-label','Pulisci ricerca');
+    btn.title = 'Pulisci';
+
+    btn.textContent = '✖';
+    wrap.appendChild(btn);
+
+    function toggle(){
+      btn.style.display = input.value ? 'block' : 'none';
+    }
+    input.addEventListener('input', toggle);
+    btn.addEventListener('click', function(){
+      input.value = '';
+      toggle();
+      input.focus();
+      var ev = new Event('input', { bubbles: true });
+      input.dispatchEvent(ev);
+    });
+
+    toggle();
+    input.__hasClearIcon = true;
+  }
+
+  function initAll(){
+    document.querySelectorAll('.search-container input[type="search"], .search-container input[type="text"], #site-search')
+      .forEach(ensureClearFor);
+  }
+
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initAll, { once:true });
+  } else {
+    initAll();
+  }
+
+  new MutationObserver(function(){
+    initAll();
+  }).observe(document.documentElement, { childList:true, subtree:true });
+})();
+</script>
+
 </body> -->
 <div id="search-results-panel" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:10000;padding:40px;box-sizing:border-box;">
   <div style="max-width:800px;margin:0 auto;background:#0a0a1a;padding:20px;border-radius:8px;border:1px solid #d4af37;max-height:80vh;overflow:auto;position:relative;">
@@ -3875,6 +4052,58 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var mo = new MutationObserver(function(){ bindEnterHandlers(); });
   mo.observe(document.documentElement, { childList: true, subtree: true });
+})();
+</script>
+
+
+<!-- === SEARCH POLISH (inject clear button, keep existing behavior) === -->
+<script>
+(function(){
+  function ensureClearFor(input){
+    if (!input || input.__hasClearIcon) return;
+    var wrap = input.closest('.search-container') || input.parentElement;
+    if (!wrap) return;
+
+    // create clear icon
+    var btn = document.createElement('span');
+    btn.className = 'clear-icon';
+    btn.setAttribute('role','button');
+    btn.setAttribute('aria-label','Pulisci ricerca');
+    btn.title = 'Pulisci';
+
+    btn.textContent = '✖';
+    wrap.appendChild(btn);
+
+    function toggle(){
+      btn.style.display = input.value ? 'block' : 'none';
+    }
+    input.addEventListener('input', toggle);
+    btn.addEventListener('click', function(){
+      input.value = '';
+      toggle();
+      input.focus();
+      var ev = new Event('input', { bubbles: true });
+      input.dispatchEvent(ev);
+    });
+
+    toggle();
+    input.__hasClearIcon = true;
+  }
+
+  function initAll(){
+    document.querySelectorAll('.search-container input[type="search"], .search-container input[type="text"], #site-search')
+      .forEach(ensureClearFor);
+  }
+
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initAll, { once:true });
+  } else {
+    initAll();
+  }
+
+  new MutationObserver(function(){
+    initAll();
+  }).observe(document.documentElement, { childList:true, subtree:true });
 })();
 </script>
 
@@ -4224,6 +4453,58 @@ document.getElementById('search-results-panel')?.addEventListener('click', funct
 
   var mo = new MutationObserver(function(){ bindEnterHandlers(); });
   mo.observe(document.documentElement, { childList: true, subtree: true });
+})();
+</script>
+
+
+<!-- === SEARCH POLISH (inject clear button, keep existing behavior) === -->
+<script>
+(function(){
+  function ensureClearFor(input){
+    if (!input || input.__hasClearIcon) return;
+    var wrap = input.closest('.search-container') || input.parentElement;
+    if (!wrap) return;
+
+    // create clear icon
+    var btn = document.createElement('span');
+    btn.className = 'clear-icon';
+    btn.setAttribute('role','button');
+    btn.setAttribute('aria-label','Pulisci ricerca');
+    btn.title = 'Pulisci';
+
+    btn.textContent = '✖';
+    wrap.appendChild(btn);
+
+    function toggle(){
+      btn.style.display = input.value ? 'block' : 'none';
+    }
+    input.addEventListener('input', toggle);
+    btn.addEventListener('click', function(){
+      input.value = '';
+      toggle();
+      input.focus();
+      var ev = new Event('input', { bubbles: true });
+      input.dispatchEvent(ev);
+    });
+
+    toggle();
+    input.__hasClearIcon = true;
+  }
+
+  function initAll(){
+    document.querySelectorAll('.search-container input[type="search"], .search-container input[type="text"], #site-search')
+      .forEach(ensureClearFor);
+  }
+
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initAll, { once:true });
+  } else {
+    initAll();
+  }
+
+  new MutationObserver(function(){
+    initAll();
+  }).observe(document.documentElement, { childList:true, subtree:true });
 })();
 </script>
 
