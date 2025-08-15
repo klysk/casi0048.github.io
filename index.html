@@ -69,11 +69,7 @@
       .ctrl-btn:hover{ color:#fff; box-shadow:0 0 10px rgba(255,215,0,.25) }
       .ctrl-btn:active{ transform: translateY(1px) }
       /* SEARCH BOX */
-     .search-container input {
-  height: 32px;          /* altezza fissa coerente con design */
-  line-height: 32px;     /* uguale all'altezza per centratura verticale */
-  padding: 0 1rem 0 2.4rem; /* padding verticale 0: centratura perfetta */
-}
+      .search-container{ position:relative; display:flex; align-items:center; }
       .search-container input{
       width:260px; max-width:52vw; padding:.55rem 1rem .55rem 2.4rem;
       background:rgba(20,20,40,.78); border:1px solid var(--menu-border); border-radius:6px;
@@ -82,15 +78,8 @@
       .search-container input:focus{ border-color:rgba(255,215,0,.5); box-shadow:0 0 12px rgba(255,215,0,.18) }
       .search-icon{ position:absolute; left:.8rem; font-size:.95rem; color:rgba(255,215,0,.85) }
       header{ margin-top:76px; display:flex; justify-content:center; z-index:900 }
-.menu-container {
-  max-width: 1200px;
-  width: 100%;
-  padding: .4rem 1rem;
-  position: sticky; /* mantiene la posizione relativa al top */
-  top: 70px;        /* altezza della top-bar */
-  z-index: 999;     /* sopra il pannello risultati */
-  background: rgba(0,0,0,0.85); /* sfondo per leggibilità */
-}      nav.menu-desktop ul{ display:flex; gap:1px; list-style:none; margin:0; padding:0; justify-content:center; white-space:nowrap }
+      .menu-container{ max-width:1200px; width:100%; padding:.4rem 1rem; }
+      nav.menu-desktop ul{ display:flex; gap:1px; list-style:none; margin:0; padding:0; justify-content:center; white-space:nowrap }
       nav.menu-desktop li{ position:relative }
       .menu-btn, nav.menu-desktop li>a{
       display:inline-flex; flex-direction:column; align-items:center; gap:3px;
@@ -3424,94 +3413,6 @@
 })();
 </script>
 
-
-<!-- === CONSERVATIVE: Enter behaves like the lens + siteData from menu === -->
-<script>
-(function(){
-  /* 1) Build siteData from internal links (menu + page) */
-  function isInternal(href){
-    if (!href) return false;
-    href = href.trim();
-    if (!href || href[0] === '#' ) return false;
-    if (/^(mailto:|tel:)/i.test(href)) return false;
-    if (/^https?:\/\//i.test(href)) return false;
-    return true;
-  }
-  var seen = new Set();
-  var items = [];
-  document.querySelectorAll('a[href]').forEach(function(a){
-    var href = a.getAttribute('href');
-    var title = (a.textContent || '').trim();
-    if (!isInternal(href) || !title) return;
-    href = href.replace(/^\.\//, '').trim();
-    var key = href.toLowerCase();
-    if (seen.has(key)) return;
-    seen.add(key);
-    items.push({ url: href, title: title, content: "Pagina dedicata a " + title + "." });
-  });
-  /* ensure examples */
-  function ensure(u,t,c){ if (!items.some(it=>it.url===u)) items.unshift({url:u, title:t, content:c||("Pagina dedicata a "+t+".")}); }
-  ensure("articoli/socrate.html","Socrate");
-  ensure("articoli/platone.html","Platone");
-  window.siteData = items;
-
-  /* 2) ENTER = click sulla lente (nessun cambio a layout/animazioni) */
-  function triggerSearchFrom(inputEl){
-    try{
-      var container = inputEl && inputEl.closest && (inputEl.closest('.search-container') || inputEl.closest('.bar-right') || inputEl.closest('.top-bar') || inputEl.closest('form') || document);
-      var btn = container && container.querySelector && (container.querySelector('.search-icon') ||
-                container.querySelector('[data-cse-search-btn]') ||
-                container.querySelector('#cse-search-btn') ||
-                container.querySelector('.cse-search-btn') ||
-                container.querySelector('button[type="submit"]'));
-      if (btn && typeof btn.click === 'function'){ btn.click(); return true; }
-
-      var q = (inputEl && inputEl.value) ? inputEl.value.trim() : '';
-      if (typeof submitFromInput === 'function'){ submitFromInput(); return true; }
-      if (typeof openGoogleFromInput === 'function'){ openGoogleFromInput(); return true; }
-      if (typeof executeQuery === 'function'){ executeQuery(q); return true; }
-      document.dispatchEvent(new CustomEvent('perform-site-search', { detail: { query: q } }));
-      return false;
-    }catch(e){ console.error(e); return false; }
-  }
-
-  function onEnter(e){
-    if (e.key === 'Enter'){
-      e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-      var target = e.target;
-      if (target && target.tagName === 'INPUT') triggerSearchFrom(target);
-    }
-  }
-
-  function bindEnterHandlers(){
-    var nodes = Array.from(document.querySelectorAll('#site-search, input[type="search"]'));
-    nodes.forEach(function(inp){
-      if (!inp.__enterFixBound){
-        inp.addEventListener('keydown', onEnter, true); // capture = massima priorità
-        inp.__enterFixBound = true;
-      }
-    });
-  }
-  bindEnterHandlers();
-
-  // intercetta anche submit di form che contengono l'input di ricerca
-  document.addEventListener('submit', function(e){
-    try{
-      var f = e.target;
-      if (f && f.querySelector && f.querySelector('#site-search, input[type="search"]')){
-        e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-        var inp = f.querySelector('#site-search, input[type="search"]');
-        triggerSearchFrom(inp || document.getElementById('site-search'));
-      }
-    }catch(_){}
-  }, true);
-
-  // se il DOM cambia (menu dinamici ecc.), ricollega gli handler
-  var mo = new MutationObserver(function(){ bindEnterHandlers(); });
-  mo.observe(document.documentElement, { childList: true, subtree: true });
-})();
-</script>
-
 </body> -->
 <!-- Aggiungi questo codice prima della chiusura 
 <!-- === CONSERVATIVE ENTER FIX + siteData (real excerpts) === -->
@@ -3583,94 +3484,6 @@
     }catch(_ ){}
   }, true);
 
-  var mo = new MutationObserver(function(){ bindEnterHandlers(); });
-  mo.observe(document.documentElement, { childList: true, subtree: true });
-})();
-</script>
-
-
-<!-- === CONSERVATIVE: Enter behaves like the lens + siteData from menu === -->
-<script>
-(function(){
-  /* 1) Build siteData from internal links (menu + page) */
-  function isInternal(href){
-    if (!href) return false;
-    href = href.trim();
-    if (!href || href[0] === '#' ) return false;
-    if (/^(mailto:|tel:)/i.test(href)) return false;
-    if (/^https?:\/\//i.test(href)) return false;
-    return true;
-  }
-  var seen = new Set();
-  var items = [];
-  document.querySelectorAll('a[href]').forEach(function(a){
-    var href = a.getAttribute('href');
-    var title = (a.textContent || '').trim();
-    if (!isInternal(href) || !title) return;
-    href = href.replace(/^\.\//, '').trim();
-    var key = href.toLowerCase();
-    if (seen.has(key)) return;
-    seen.add(key);
-    items.push({ url: href, title: title, content: "Pagina dedicata a " + title + "." });
-  });
-  /* ensure examples */
-  function ensure(u,t,c){ if (!items.some(it=>it.url===u)) items.unshift({url:u, title:t, content:c||("Pagina dedicata a "+t+".")}); }
-  ensure("articoli/socrate.html","Socrate");
-  ensure("articoli/platone.html","Platone");
-  window.siteData = items;
-
-  /* 2) ENTER = click sulla lente (nessun cambio a layout/animazioni) */
-  function triggerSearchFrom(inputEl){
-    try{
-      var container = inputEl && inputEl.closest && (inputEl.closest('.search-container') || inputEl.closest('.bar-right') || inputEl.closest('.top-bar') || inputEl.closest('form') || document);
-      var btn = container && container.querySelector && (container.querySelector('.search-icon') ||
-                container.querySelector('[data-cse-search-btn]') ||
-                container.querySelector('#cse-search-btn') ||
-                container.querySelector('.cse-search-btn') ||
-                container.querySelector('button[type="submit"]'));
-      if (btn && typeof btn.click === 'function'){ btn.click(); return true; }
-
-      var q = (inputEl && inputEl.value) ? inputEl.value.trim() : '';
-      if (typeof submitFromInput === 'function'){ submitFromInput(); return true; }
-      if (typeof openGoogleFromInput === 'function'){ openGoogleFromInput(); return true; }
-      if (typeof executeQuery === 'function'){ executeQuery(q); return true; }
-      document.dispatchEvent(new CustomEvent('perform-site-search', { detail: { query: q } }));
-      return false;
-    }catch(e){ console.error(e); return false; }
-  }
-
-  function onEnter(e){
-    if (e.key === 'Enter'){
-      e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-      var target = e.target;
-      if (target && target.tagName === 'INPUT') triggerSearchFrom(target);
-    }
-  }
-
-  function bindEnterHandlers(){
-    var nodes = Array.from(document.querySelectorAll('#site-search, input[type="search"]'));
-    nodes.forEach(function(inp){
-      if (!inp.__enterFixBound){
-        inp.addEventListener('keydown', onEnter, true); // capture = massima priorità
-        inp.__enterFixBound = true;
-      }
-    });
-  }
-  bindEnterHandlers();
-
-  // intercetta anche submit di form che contengono l'input di ricerca
-  document.addEventListener('submit', function(e){
-    try{
-      var f = e.target;
-      if (f && f.querySelector && f.querySelector('#site-search, input[type="search"]')){
-        e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-        var inp = f.querySelector('#site-search, input[type="search"]');
-        triggerSearchFrom(inp || document.getElementById('site-search'));
-      }
-    }catch(_){}
-  }, true);
-
-  // se il DOM cambia (menu dinamici ecc.), ricollega gli handler
   var mo = new MutationObserver(function(){ bindEnterHandlers(); });
   mo.observe(document.documentElement, { childList: true, subtree: true });
 })();
@@ -3881,94 +3694,6 @@ if (document.readyState === 'complete') {
 })();
 </script>
 
-
-<!-- === CONSERVATIVE: Enter behaves like the lens + siteData from menu === -->
-<script>
-(function(){
-  /* 1) Build siteData from internal links (menu + page) */
-  function isInternal(href){
-    if (!href) return false;
-    href = href.trim();
-    if (!href || href[0] === '#' ) return false;
-    if (/^(mailto:|tel:)/i.test(href)) return false;
-    if (/^https?:\/\//i.test(href)) return false;
-    return true;
-  }
-  var seen = new Set();
-  var items = [];
-  document.querySelectorAll('a[href]').forEach(function(a){
-    var href = a.getAttribute('href');
-    var title = (a.textContent || '').trim();
-    if (!isInternal(href) || !title) return;
-    href = href.replace(/^\.\//, '').trim();
-    var key = href.toLowerCase();
-    if (seen.has(key)) return;
-    seen.add(key);
-    items.push({ url: href, title: title, content: "Pagina dedicata a " + title + "." });
-  });
-  /* ensure examples */
-  function ensure(u,t,c){ if (!items.some(it=>it.url===u)) items.unshift({url:u, title:t, content:c||("Pagina dedicata a "+t+".")}); }
-  ensure("articoli/socrate.html","Socrate");
-  ensure("articoli/platone.html","Platone");
-  window.siteData = items;
-
-  /* 2) ENTER = click sulla lente (nessun cambio a layout/animazioni) */
-  function triggerSearchFrom(inputEl){
-    try{
-      var container = inputEl && inputEl.closest && (inputEl.closest('.search-container') || inputEl.closest('.bar-right') || inputEl.closest('.top-bar') || inputEl.closest('form') || document);
-      var btn = container && container.querySelector && (container.querySelector('.search-icon') ||
-                container.querySelector('[data-cse-search-btn]') ||
-                container.querySelector('#cse-search-btn') ||
-                container.querySelector('.cse-search-btn') ||
-                container.querySelector('button[type="submit"]'));
-      if (btn && typeof btn.click === 'function'){ btn.click(); return true; }
-
-      var q = (inputEl && inputEl.value) ? inputEl.value.trim() : '';
-      if (typeof submitFromInput === 'function'){ submitFromInput(); return true; }
-      if (typeof openGoogleFromInput === 'function'){ openGoogleFromInput(); return true; }
-      if (typeof executeQuery === 'function'){ executeQuery(q); return true; }
-      document.dispatchEvent(new CustomEvent('perform-site-search', { detail: { query: q } }));
-      return false;
-    }catch(e){ console.error(e); return false; }
-  }
-
-  function onEnter(e){
-    if (e.key === 'Enter'){
-      e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-      var target = e.target;
-      if (target && target.tagName === 'INPUT') triggerSearchFrom(target);
-    }
-  }
-
-  function bindEnterHandlers(){
-    var nodes = Array.from(document.querySelectorAll('#site-search, input[type="search"]'));
-    nodes.forEach(function(inp){
-      if (!inp.__enterFixBound){
-        inp.addEventListener('keydown', onEnter, true); // capture = massima priorità
-        inp.__enterFixBound = true;
-      }
-    });
-  }
-  bindEnterHandlers();
-
-  // intercetta anche submit di form che contengono l'input di ricerca
-  document.addEventListener('submit', function(e){
-    try{
-      var f = e.target;
-      if (f && f.querySelector && f.querySelector('#site-search, input[type="search"]')){
-        e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-        var inp = f.querySelector('#site-search, input[type="search"]');
-        triggerSearchFrom(inp || document.getElementById('site-search'));
-      }
-    }catch(_){}
-  }, true);
-
-  // se il DOM cambia (menu dinamici ecc.), ricollega gli handler
-  var mo = new MutationObserver(function(){ bindEnterHandlers(); });
-  mo.observe(document.documentElement, { childList: true, subtree: true });
-})();
-</script>
-
 </body> -->
 <div id="search-results-panel" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:10000;padding:40px;box-sizing:border-box;">
   <div style="max-width:800px;margin:0 auto;background:#0a0a1a;padding:20px;border-radius:8px;border:1px solid #d4af37;max-height:80vh;overflow:auto;position:relative;">
@@ -4148,94 +3873,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }catch(_ ){}
   }, true);
 
-  var mo = new MutationObserver(function(){ bindEnterHandlers(); });
-  mo.observe(document.documentElement, { childList: true, subtree: true });
-})();
-</script>
-
-
-<!-- === CONSERVATIVE: Enter behaves like the lens + siteData from menu === -->
-<script>
-(function(){
-  /* 1) Build siteData from internal links (menu + page) */
-  function isInternal(href){
-    if (!href) return false;
-    href = href.trim();
-    if (!href || href[0] === '#' ) return false;
-    if (/^(mailto:|tel:)/i.test(href)) return false;
-    if (/^https?:\/\//i.test(href)) return false;
-    return true;
-  }
-  var seen = new Set();
-  var items = [];
-  document.querySelectorAll('a[href]').forEach(function(a){
-    var href = a.getAttribute('href');
-    var title = (a.textContent || '').trim();
-    if (!isInternal(href) || !title) return;
-    href = href.replace(/^\.\//, '').trim();
-    var key = href.toLowerCase();
-    if (seen.has(key)) return;
-    seen.add(key);
-    items.push({ url: href, title: title, content: "Pagina dedicata a " + title + "." });
-  });
-  /* ensure examples */
-  function ensure(u,t,c){ if (!items.some(it=>it.url===u)) items.unshift({url:u, title:t, content:c||("Pagina dedicata a "+t+".")}); }
-  ensure("articoli/socrate.html","Socrate");
-  ensure("articoli/platone.html","Platone");
-  window.siteData = items;
-
-  /* 2) ENTER = click sulla lente (nessun cambio a layout/animazioni) */
-  function triggerSearchFrom(inputEl){
-    try{
-      var container = inputEl && inputEl.closest && (inputEl.closest('.search-container') || inputEl.closest('.bar-right') || inputEl.closest('.top-bar') || inputEl.closest('form') || document);
-      var btn = container && container.querySelector && (container.querySelector('.search-icon') ||
-                container.querySelector('[data-cse-search-btn]') ||
-                container.querySelector('#cse-search-btn') ||
-                container.querySelector('.cse-search-btn') ||
-                container.querySelector('button[type="submit"]'));
-      if (btn && typeof btn.click === 'function'){ btn.click(); return true; }
-
-      var q = (inputEl && inputEl.value) ? inputEl.value.trim() : '';
-      if (typeof submitFromInput === 'function'){ submitFromInput(); return true; }
-      if (typeof openGoogleFromInput === 'function'){ openGoogleFromInput(); return true; }
-      if (typeof executeQuery === 'function'){ executeQuery(q); return true; }
-      document.dispatchEvent(new CustomEvent('perform-site-search', { detail: { query: q } }));
-      return false;
-    }catch(e){ console.error(e); return false; }
-  }
-
-  function onEnter(e){
-    if (e.key === 'Enter'){
-      e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-      var target = e.target;
-      if (target && target.tagName === 'INPUT') triggerSearchFrom(target);
-    }
-  }
-
-  function bindEnterHandlers(){
-    var nodes = Array.from(document.querySelectorAll('#site-search, input[type="search"]'));
-    nodes.forEach(function(inp){
-      if (!inp.__enterFixBound){
-        inp.addEventListener('keydown', onEnter, true); // capture = massima priorità
-        inp.__enterFixBound = true;
-      }
-    });
-  }
-  bindEnterHandlers();
-
-  // intercetta anche submit di form che contengono l'input di ricerca
-  document.addEventListener('submit', function(e){
-    try{
-      var f = e.target;
-      if (f && f.querySelector && f.querySelector('#site-search, input[type="search"]')){
-        e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-        var inp = f.querySelector('#site-search, input[type="search"]');
-        triggerSearchFrom(inp || document.getElementById('site-search'));
-      }
-    }catch(_){}
-  }, true);
-
-  // se il DOM cambia (menu dinamici ecc.), ricollega gli handler
   var mo = new MutationObserver(function(){ bindEnterHandlers(); });
   mo.observe(document.documentElement, { childList: true, subtree: true });
 })();
@@ -4585,94 +4222,6 @@ document.getElementById('search-results-panel')?.addEventListener('click', funct
     }catch(_ ){}
   }, true);
 
-  var mo = new MutationObserver(function(){ bindEnterHandlers(); });
-  mo.observe(document.documentElement, { childList: true, subtree: true });
-})();
-</script>
-
-
-<!-- === CONSERVATIVE: Enter behaves like the lens + siteData from menu === -->
-<script>
-(function(){
-  /* 1) Build siteData from internal links (menu + page) */
-  function isInternal(href){
-    if (!href) return false;
-    href = href.trim();
-    if (!href || href[0] === '#' ) return false;
-    if (/^(mailto:|tel:)/i.test(href)) return false;
-    if (/^https?:\/\//i.test(href)) return false;
-    return true;
-  }
-  var seen = new Set();
-  var items = [];
-  document.querySelectorAll('a[href]').forEach(function(a){
-    var href = a.getAttribute('href');
-    var title = (a.textContent || '').trim();
-    if (!isInternal(href) || !title) return;
-    href = href.replace(/^\.\//, '').trim();
-    var key = href.toLowerCase();
-    if (seen.has(key)) return;
-    seen.add(key);
-    items.push({ url: href, title: title, content: "Pagina dedicata a " + title + "." });
-  });
-  /* ensure examples */
-  function ensure(u,t,c){ if (!items.some(it=>it.url===u)) items.unshift({url:u, title:t, content:c||("Pagina dedicata a "+t+".")}); }
-  ensure("articoli/socrate.html","Socrate");
-  ensure("articoli/platone.html","Platone");
-  window.siteData = items;
-
-  /* 2) ENTER = click sulla lente (nessun cambio a layout/animazioni) */
-  function triggerSearchFrom(inputEl){
-    try{
-      var container = inputEl && inputEl.closest && (inputEl.closest('.search-container') || inputEl.closest('.bar-right') || inputEl.closest('.top-bar') || inputEl.closest('form') || document);
-      var btn = container && container.querySelector && (container.querySelector('.search-icon') ||
-                container.querySelector('[data-cse-search-btn]') ||
-                container.querySelector('#cse-search-btn') ||
-                container.querySelector('.cse-search-btn') ||
-                container.querySelector('button[type="submit"]'));
-      if (btn && typeof btn.click === 'function'){ btn.click(); return true; }
-
-      var q = (inputEl && inputEl.value) ? inputEl.value.trim() : '';
-      if (typeof submitFromInput === 'function'){ submitFromInput(); return true; }
-      if (typeof openGoogleFromInput === 'function'){ openGoogleFromInput(); return true; }
-      if (typeof executeQuery === 'function'){ executeQuery(q); return true; }
-      document.dispatchEvent(new CustomEvent('perform-site-search', { detail: { query: q } }));
-      return false;
-    }catch(e){ console.error(e); return false; }
-  }
-
-  function onEnter(e){
-    if (e.key === 'Enter'){
-      e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-      var target = e.target;
-      if (target && target.tagName === 'INPUT') triggerSearchFrom(target);
-    }
-  }
-
-  function bindEnterHandlers(){
-    var nodes = Array.from(document.querySelectorAll('#site-search, input[type="search"]'));
-    nodes.forEach(function(inp){
-      if (!inp.__enterFixBound){
-        inp.addEventListener('keydown', onEnter, true); // capture = massima priorità
-        inp.__enterFixBound = true;
-      }
-    });
-  }
-  bindEnterHandlers();
-
-  // intercetta anche submit di form che contengono l'input di ricerca
-  document.addEventListener('submit', function(e){
-    try{
-      var f = e.target;
-      if (f && f.querySelector && f.querySelector('#site-search, input[type="search"]')){
-        e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-        var inp = f.querySelector('#site-search, input[type="search"]');
-        triggerSearchFrom(inp || document.getElementById('site-search'));
-      }
-    }catch(_){}
-  }, true);
-
-  // se il DOM cambia (menu dinamici ecc.), ricollega gli handler
   var mo = new MutationObserver(function(){ bindEnterHandlers(); });
   mo.observe(document.documentElement, { childList: true, subtree: true });
 })();
