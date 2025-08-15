@@ -4666,6 +4666,39 @@ document.getElementById('search-results-panel')?.addEventListener('click', funct
   mo.observe(document.documentElement, { childList: true, subtree: true });
 })();
 </script>
+<script>
+(function () {
+  // trova il bottone "lente" vicino all'input usato
+  function findLens(input){
+    if (!input || !input.closest) return null;
+    const box = input.closest('.search-container, .bar-right, .top-bar, header, form, body');
+    return box && box.querySelector('.search-icon, [data-cse-search-btn], #cse-search-btn, .cse-search-btn, button[type="submit"]');
+  }
+
+  // intercetta Enter in CAPTURE (ha priorità su altri handler)
+  function onEnter(e){
+    if ((e.key === 'Enter' || e.keyCode === 13) &&
+        e.target && e.target.tagName === 'INPUT' &&
+        (e.target.type === 'search' || e.target.type === 'text')) {
+      e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+      const btn = findLens(e.target);
+      if (btn && typeof btn.click === 'function') btn.click();
+    }
+  }
+  document.addEventListener('keydown', onEnter, true);
+
+  // blocca il submit del form che contiene l’input di ricerca e simula la lente
+  document.addEventListener('submit', function(e){
+    const f = e.target;
+    if (f && f.querySelector && f.querySelector('input[type="search"], #site-search')) {
+      e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+      const inp = f.querySelector('input[type="search"], #site-search');
+      const btn = findLens(inp);
+      if (btn && typeof btn.click === 'function') btn.click();
+    }
+  }, true);
+})();
+</script>
 
 </body>
 </html>
