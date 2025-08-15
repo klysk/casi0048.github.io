@@ -78,7 +78,7 @@
       .search-container input:focus{ border-color:rgba(255,215,0,.5); box-shadow:0 0 12px rgba(255,215,0,.18) }
       .search-icon{ position:absolute; left:.8rem; font-size:.95rem; color:rgba(255,215,0,.85) }
       header{ margin-top:76px; display:flex; justify-content:center; z-index:900 }
-      .menu-container{ max-width:1200px; width:100%; padding:2.2rem 1rem; }
+      .menu-container{ max-width:1200px; width:100%; padding:.4rem 1rem; }
       nav.menu-desktop ul{ display:flex; gap:1px; list-style:none; margin:0; padding:0; justify-content:center; white-space:nowrap }
       nav.menu-desktop li{ position:relative }
       .menu-btn, nav.menu-desktop li>a{
@@ -3339,26 +3339,83 @@
 })();
 </script>
 <!-- Aggiungi questo codice prima della chiusura 
-<!-- === CONSERVATIVE ENTER FIX + siteData (real excerpts) === -->
+<!-- === CONSERVATIVE: siteData autofill (real excerpts) + Enter fix === -->
 <script>
 (function(){
-  // 1) Site data (estratti reali dal sito)
-  window.siteData = window.siteData || [
-    { url: "Presocratici/talete.html", title: "Talete di Mileto", content: "Talete fu una figura poliedrica del pensiero arcaico: matematico, astronomo e politico; la sua dottrina sull’acqua come principio originario ci è nota soprattutto attraverso Aristotele." },
-    { url: "Presocratici/anassimandro.html", title: "Anassimandro di Mileto", content: "Pioniere del pensiero scientifico, discepolo di Talete; introdusse l’ápeiron come principio e sviluppò una visione naturale e razionale del cosmo." },
-    { url: "Presocratici/anassimene.html", title: "Anassimene di Mileto", content: "Ultimo dei milesi: identificò nell’aria l’archè di tutte le cose, proseguendo la ricerca dei presocratici sulle cause naturali." },
-    { url: "Presocratici/senofane.html", title: "Senofane di Colofone", content: "Poeta‑filosofo viandante: critica radicale alla religione tradizionale e fondazione della scuola eleatica." },
-    { url: "articoli/ermarco.html", title: "Ermarco di Mitilene", content: "Successore di Epicuro nel Giardino: preservò e diffuse la dottrina epicurea con fedeltà e innovazione, guidando la scuola dopo il 270 a.C." },
-    { url: "articoli/seneca.html", title: "Lucio Anneo Seneca", content: "Figura eminente della filosofia romana: stoico, drammaturgo e statista; i suoi scritti mirano alla tranquillità interiore e alla virtù in un’epoca turbolenta." },
-    { url: "articoli/eudemo.html", title: "Eudemo di Rodi", content: "Discepolo fedele di Aristotele e membro di spicco della scuola peripatetica; ponte tra l’insegnamento aristotelico e la tradizione successiva." },
-    { url: "pagine/benvenuti.html", title: "Presentazione (Incipit)", content: "Echi di Sofia: uno spazio dedicato alla meraviglia e alla saggezza, dove il pensiero antico e moderno risuona oggi attraverso domande che attraversano il tempo." },
-    { url: "articoli/tarski.html", title: "Alfred Tarski", content: "Logico e filosofo del linguaggio: teoria semantica della verità (Convenzione T), contributi a logica, geometria e teoria degli insiemi; influenze su filosofia e informatica teorica." },
-    { url: "articoli/frege.html", title: "Gottlob Frege", content: "Padre della logica moderna: dal Begriffsschrift alla distinzione senso/riferimento; ha fondato la logica dei predicati e influenzato l’analitica." },
-    { url: "articoli/lyotard.html", title: "Jean‑François Lyotard", content: "Teorico del postmoderno: fine delle grandi narrazioni, giochi linguistici, legittimazione performativa del sapere; opere come La condizione postmoderna e Il dissidio." },
-    { url: "pagine/pagina-contatti.html", title: "Contatti", content: "Pagina di contatto per domande, suggerimenti e collaborazioni con Echi di Sofia." }
-  ];
+  // ===== 1) Build siteData from menu (URLs + titles) =====
+  function isInternal(href){
+    if (!href) return false;
+    href = href.trim();
+    if (!href) return false;
+    if (href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return false;
+    if (/^https?:\/\//i.test(href)) return false; // keep only same-site relative links
+    return true;
+  }
 
-  // 2) ENTER = click sulla lente (nessun cambio layout/animazioni)
+  var seen = new Set();
+  var items = [];
+  document.querySelectorAll('a[href]').forEach(function(a){
+    var href = a.getAttribute('href');
+    var title = (a.textContent || '').trim();
+    if (!isInternal(href) || !title) return;
+    // normalize ./ and trailing spaces
+    href = href.replace(/^\.\//,'').trim();
+    var key = href.toLowerCase();
+    if (seen.has(key)) return;
+    seen.add(key);
+    items.push({ url: href, title: title, content: "" });
+  });
+
+  // Prepend your two mandatory examples if present in the site structure
+  function ensure(url, title, content){
+    var i = items.findIndex(it => it.url === url);
+    if (i === -1) items.unshift({ url, title, content: content || "" });
+  }
+  ensure("articoli/socrate.html", "Socrate", ""); // content will be auto-filled
+  ensure("articoli/platone.html", "Platone", "");
+
+  // Expose early (will be enriched asynchronously)
+  window.siteData = items;
+
+  // ===== 2) Auto-fetch each page and extract a REAL excerpt =====
+  // Same-origin relative fetch; respects CORS since it's same site when deployed.
+  function truncate(s, n){ s = (s||"").replace(/\s+/g,' ').trim(); return s.length>n ? s.slice(0, n-1) + "…" : s; }
+  function pickExcerpt(doc){
+    // Prefer first non-empty <p> that looks like article content (not nav/footer)
+    var candidates = Array.from(doc.querySelectorAll('main p, article p, .content p, .post p, .entry p, .container p, p'));
+    var text = "";
+    for (var i=0; i<candidates.length; i++){
+      var t = (candidates[i].textContent || "").replace(/\s+/g,' ').trim();
+      if (t && t.length >= 60) { text = t; break; }
+    }
+    if (!text){
+      // fallback to any non-empty paragraph or heading
+      var any = doc.querySelector('p, h1, h2, h3');
+      text = any ? (any.textContent || "").trim() : "";
+    }
+    return truncate(text, 280);
+  }
+
+  async function fillOne(item){
+    try{
+      const resp = await fetch(item.url, { credentials: 'same-origin' });
+      if (!resp.ok) return;
+      const html = await resp.text();
+      var doc = new DOMParser().parseFromString(html, 'text/html');
+      var excerpt = pickExcerpt(doc);
+      if (excerpt){
+        item.content = excerpt;
+      }
+    }catch(e){ /* ignore single-page errors */ }
+  }
+
+  (async function fillAll(){
+    await Promise.all(items.map(fillOne));
+    // announce readiness for any code listening
+    document.dispatchEvent(new CustomEvent('siteDataReady', { detail: { count: items.length } }));
+  })();
+
+  // ===== 3) ENTER behaves like clicking the lens (no layout/animation changes) =====
   function triggerSearchFrom(el){
     try{
       var input = el && (el.tagName ? el : null);
@@ -3374,6 +3431,7 @@
       if (typeof submitFromInput === 'function'){ submitFromInput(); return true; }
       if (typeof openGoogleFromInput === 'function'){ openGoogleFromInput(); return true; }
       if (typeof executeQuery === 'function'){ executeQuery(q); return true; }
+
       document.dispatchEvent(new CustomEvent('perform-site-search', { detail: { query: q } }));
       return false;
     }catch(e){ console.error(e); return false; }
@@ -3390,7 +3448,7 @@
     var nodes = Array.from(document.querySelectorAll('#site-search, input[type="search"]'));
     nodes.forEach(function(inp){
       if (!inp.__enterFixBound){
-        inp.addEventListener('keydown', onEnter, true);
+        inp.addEventListener('keydown', onEnter, true); // capture for priority
         inp.__enterFixBound = true;
       }
     });
@@ -3405,97 +3463,10 @@
         var inp = target.querySelector('#site-search, input[type="search"]');
         triggerSearchFrom(inp || document.getElementById('site-search'));
       }
-    }catch(_ ){}
-  }, true);
-
-  var mo = new MutationObserver(function(){ bindEnterHandlers(); });
-  mo.observe(document.documentElement, { childList: true, subtree: true });
-})();
-</script>
-
-
-<!-- === CONSERVATIVE: Enter behaves like the lens + siteData from menu === -->
-<script>
-(function(){
-  /* 1) Build siteData from internal links (menu + page) */
-  function isInternal(href){
-    if (!href) return false;
-    href = href.trim();
-    if (!href || href[0] === '#' ) return false;
-    if (/^(mailto:|tel:)/i.test(href)) return false;
-    if (/^https?:\/\//i.test(href)) return false;
-    return true;
-  }
-  var seen = new Set();
-  var items = [];
-  document.querySelectorAll('a[href]').forEach(function(a){
-    var href = a.getAttribute('href');
-    var title = (a.textContent || '').trim();
-    if (!isInternal(href) || !title) return;
-    href = href.replace(/^\.\//, '').trim();
-    var key = href.toLowerCase();
-    if (seen.has(key)) return;
-    seen.add(key);
-    items.push({ url: href, title: title, content: "Pagina dedicata a " + title + "." });
-  });
-  /* ensure examples */
-  function ensure(u,t,c){ if (!items.some(it=>it.url===u)) items.unshift({url:u, title:t, content:c||("Pagina dedicata a "+t+".")}); }
-  ensure("articoli/socrate.html","Socrate");
-  ensure("articoli/platone.html","Platone");
-  window.siteData = items;
-
-  /* 2) ENTER = click sulla lente (nessun cambio a layout/animazioni) */
-  function triggerSearchFrom(inputEl){
-    try{
-      var container = inputEl && inputEl.closest && (inputEl.closest('.search-container') || inputEl.closest('.bar-right') || inputEl.closest('.top-bar') || inputEl.closest('form') || document);
-      var btn = container && container.querySelector && (container.querySelector('.search-icon') ||
-                container.querySelector('[data-cse-search-btn]') ||
-                container.querySelector('#cse-search-btn') ||
-                container.querySelector('.cse-search-btn') ||
-                container.querySelector('button[type="submit"]'));
-      if (btn && typeof btn.click === 'function'){ btn.click(); return true; }
-
-      var q = (inputEl && inputEl.value) ? inputEl.value.trim() : '';
-      if (typeof submitFromInput === 'function'){ submitFromInput(); return true; }
-      if (typeof openGoogleFromInput === 'function'){ openGoogleFromInput(); return true; }
-      if (typeof executeQuery === 'function'){ executeQuery(q); return true; }
-      document.dispatchEvent(new CustomEvent('perform-site-search', { detail: { query: q } }));
-      return false;
-    }catch(e){ console.error(e); return false; }
-  }
-
-  function onEnter(e){
-    if (e.key === 'Enter'){
-      e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-      var target = e.target;
-      if (target && target.tagName === 'INPUT') triggerSearchFrom(target);
-    }
-  }
-
-  function bindEnterHandlers(){
-    var nodes = Array.from(document.querySelectorAll('#site-search, input[type="search"]'));
-    nodes.forEach(function(inp){
-      if (!inp.__enterFixBound){
-        inp.addEventListener('keydown', onEnter, true); // capture = massima priorità
-        inp.__enterFixBound = true;
-      }
-    });
-  }
-  bindEnterHandlers();
-
-  // intercetta anche submit di form che contengono l'input di ricerca
-  document.addEventListener('submit', function(e){
-    try{
-      var f = e.target;
-      if (f && f.querySelector && f.querySelector('#site-search, input[type="search"]')){
-        e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-        var inp = f.querySelector('#site-search, input[type="search"]');
-        triggerSearchFrom(inp || document.getElementById('site-search'));
-      }
     }catch(_){}
   }, true);
 
-  // se il DOM cambia (menu dinamici ecc.), ricollega gli handler
+  // Re-bind if DOM changes
   var mo = new MutationObserver(function(){ bindEnterHandlers(); });
   mo.observe(document.documentElement, { childList: true, subtree: true });
 })();
@@ -3503,26 +3474,83 @@
 
 </body> -->
 <!-- Aggiungi questo codice prima della chiusura 
-<!-- === CONSERVATIVE ENTER FIX + siteData (real excerpts) === -->
+<!-- === CONSERVATIVE: siteData autofill (real excerpts) + Enter fix === -->
 <script>
 (function(){
-  // 1) Site data (estratti reali dal sito)
-  window.siteData = window.siteData || [
-    { url: "Presocratici/talete.html", title: "Talete di Mileto", content: "Talete fu una figura poliedrica del pensiero arcaico: matematico, astronomo e politico; la sua dottrina sull’acqua come principio originario ci è nota soprattutto attraverso Aristotele." },
-    { url: "Presocratici/anassimandro.html", title: "Anassimandro di Mileto", content: "Pioniere del pensiero scientifico, discepolo di Talete; introdusse l’ápeiron come principio e sviluppò una visione naturale e razionale del cosmo." },
-    { url: "Presocratici/anassimene.html", title: "Anassimene di Mileto", content: "Ultimo dei milesi: identificò nell’aria l’archè di tutte le cose, proseguendo la ricerca dei presocratici sulle cause naturali." },
-    { url: "Presocratici/senofane.html", title: "Senofane di Colofone", content: "Poeta‑filosofo viandante: critica radicale alla religione tradizionale e fondazione della scuola eleatica." },
-    { url: "articoli/ermarco.html", title: "Ermarco di Mitilene", content: "Successore di Epicuro nel Giardino: preservò e diffuse la dottrina epicurea con fedeltà e innovazione, guidando la scuola dopo il 270 a.C." },
-    { url: "articoli/seneca.html", title: "Lucio Anneo Seneca", content: "Figura eminente della filosofia romana: stoico, drammaturgo e statista; i suoi scritti mirano alla tranquillità interiore e alla virtù in un’epoca turbolenta." },
-    { url: "articoli/eudemo.html", title: "Eudemo di Rodi", content: "Discepolo fedele di Aristotele e membro di spicco della scuola peripatetica; ponte tra l’insegnamento aristotelico e la tradizione successiva." },
-    { url: "pagine/benvenuti.html", title: "Presentazione (Incipit)", content: "Echi di Sofia: uno spazio dedicato alla meraviglia e alla saggezza, dove il pensiero antico e moderno risuona oggi attraverso domande che attraversano il tempo." },
-    { url: "articoli/tarski.html", title: "Alfred Tarski", content: "Logico e filosofo del linguaggio: teoria semantica della verità (Convenzione T), contributi a logica, geometria e teoria degli insiemi; influenze su filosofia e informatica teorica." },
-    { url: "articoli/frege.html", title: "Gottlob Frege", content: "Padre della logica moderna: dal Begriffsschrift alla distinzione senso/riferimento; ha fondato la logica dei predicati e influenzato l’analitica." },
-    { url: "articoli/lyotard.html", title: "Jean‑François Lyotard", content: "Teorico del postmoderno: fine delle grandi narrazioni, giochi linguistici, legittimazione performativa del sapere; opere come La condizione postmoderna e Il dissidio." },
-    { url: "pagine/pagina-contatti.html", title: "Contatti", content: "Pagina di contatto per domande, suggerimenti e collaborazioni con Echi di Sofia." }
-  ];
+  // ===== 1) Build siteData from menu (URLs + titles) =====
+  function isInternal(href){
+    if (!href) return false;
+    href = href.trim();
+    if (!href) return false;
+    if (href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return false;
+    if (/^https?:\/\//i.test(href)) return false; // keep only same-site relative links
+    return true;
+  }
 
-  // 2) ENTER = click sulla lente (nessun cambio layout/animazioni)
+  var seen = new Set();
+  var items = [];
+  document.querySelectorAll('a[href]').forEach(function(a){
+    var href = a.getAttribute('href');
+    var title = (a.textContent || '').trim();
+    if (!isInternal(href) || !title) return;
+    // normalize ./ and trailing spaces
+    href = href.replace(/^\.\//,'').trim();
+    var key = href.toLowerCase();
+    if (seen.has(key)) return;
+    seen.add(key);
+    items.push({ url: href, title: title, content: "" });
+  });
+
+  // Prepend your two mandatory examples if present in the site structure
+  function ensure(url, title, content){
+    var i = items.findIndex(it => it.url === url);
+    if (i === -1) items.unshift({ url, title, content: content || "" });
+  }
+  ensure("articoli/socrate.html", "Socrate", ""); // content will be auto-filled
+  ensure("articoli/platone.html", "Platone", "");
+
+  // Expose early (will be enriched asynchronously)
+  window.siteData = items;
+
+  // ===== 2) Auto-fetch each page and extract a REAL excerpt =====
+  // Same-origin relative fetch; respects CORS since it's same site when deployed.
+  function truncate(s, n){ s = (s||"").replace(/\s+/g,' ').trim(); return s.length>n ? s.slice(0, n-1) + "…" : s; }
+  function pickExcerpt(doc){
+    // Prefer first non-empty <p> that looks like article content (not nav/footer)
+    var candidates = Array.from(doc.querySelectorAll('main p, article p, .content p, .post p, .entry p, .container p, p'));
+    var text = "";
+    for (var i=0; i<candidates.length; i++){
+      var t = (candidates[i].textContent || "").replace(/\s+/g,' ').trim();
+      if (t && t.length >= 60) { text = t; break; }
+    }
+    if (!text){
+      // fallback to any non-empty paragraph or heading
+      var any = doc.querySelector('p, h1, h2, h3');
+      text = any ? (any.textContent || "").trim() : "";
+    }
+    return truncate(text, 280);
+  }
+
+  async function fillOne(item){
+    try{
+      const resp = await fetch(item.url, { credentials: 'same-origin' });
+      if (!resp.ok) return;
+      const html = await resp.text();
+      var doc = new DOMParser().parseFromString(html, 'text/html');
+      var excerpt = pickExcerpt(doc);
+      if (excerpt){
+        item.content = excerpt;
+      }
+    }catch(e){ /* ignore single-page errors */ }
+  }
+
+  (async function fillAll(){
+    await Promise.all(items.map(fillOne));
+    // announce readiness for any code listening
+    document.dispatchEvent(new CustomEvent('siteDataReady', { detail: { count: items.length } }));
+  })();
+
+  // ===== 3) ENTER behaves like clicking the lens (no layout/animation changes) =====
   function triggerSearchFrom(el){
     try{
       var input = el && (el.tagName ? el : null);
@@ -3538,6 +3566,7 @@
       if (typeof submitFromInput === 'function'){ submitFromInput(); return true; }
       if (typeof openGoogleFromInput === 'function'){ openGoogleFromInput(); return true; }
       if (typeof executeQuery === 'function'){ executeQuery(q); return true; }
+
       document.dispatchEvent(new CustomEvent('perform-site-search', { detail: { query: q } }));
       return false;
     }catch(e){ console.error(e); return false; }
@@ -3554,7 +3583,7 @@
     var nodes = Array.from(document.querySelectorAll('#site-search, input[type="search"]'));
     nodes.forEach(function(inp){
       if (!inp.__enterFixBound){
-        inp.addEventListener('keydown', onEnter, true);
+        inp.addEventListener('keydown', onEnter, true); // capture for priority
         inp.__enterFixBound = true;
       }
     });
@@ -3569,97 +3598,10 @@
         var inp = target.querySelector('#site-search, input[type="search"]');
         triggerSearchFrom(inp || document.getElementById('site-search'));
       }
-    }catch(_ ){}
-  }, true);
-
-  var mo = new MutationObserver(function(){ bindEnterHandlers(); });
-  mo.observe(document.documentElement, { childList: true, subtree: true });
-})();
-</script>
-
-
-<!-- === CONSERVATIVE: Enter behaves like the lens + siteData from menu === -->
-<script>
-(function(){
-  /* 1) Build siteData from internal links (menu + page) */
-  function isInternal(href){
-    if (!href) return false;
-    href = href.trim();
-    if (!href || href[0] === '#' ) return false;
-    if (/^(mailto:|tel:)/i.test(href)) return false;
-    if (/^https?:\/\//i.test(href)) return false;
-    return true;
-  }
-  var seen = new Set();
-  var items = [];
-  document.querySelectorAll('a[href]').forEach(function(a){
-    var href = a.getAttribute('href');
-    var title = (a.textContent || '').trim();
-    if (!isInternal(href) || !title) return;
-    href = href.replace(/^\.\//, '').trim();
-    var key = href.toLowerCase();
-    if (seen.has(key)) return;
-    seen.add(key);
-    items.push({ url: href, title: title, content: "Pagina dedicata a " + title + "." });
-  });
-  /* ensure examples */
-  function ensure(u,t,c){ if (!items.some(it=>it.url===u)) items.unshift({url:u, title:t, content:c||("Pagina dedicata a "+t+".")}); }
-  ensure("articoli/socrate.html","Socrate");
-  ensure("articoli/platone.html","Platone");
-  window.siteData = items;
-
-  /* 2) ENTER = click sulla lente (nessun cambio a layout/animazioni) */
-  function triggerSearchFrom(inputEl){
-    try{
-      var container = inputEl && inputEl.closest && (inputEl.closest('.search-container') || inputEl.closest('.bar-right') || inputEl.closest('.top-bar') || inputEl.closest('form') || document);
-      var btn = container && container.querySelector && (container.querySelector('.search-icon') ||
-                container.querySelector('[data-cse-search-btn]') ||
-                container.querySelector('#cse-search-btn') ||
-                container.querySelector('.cse-search-btn') ||
-                container.querySelector('button[type="submit"]'));
-      if (btn && typeof btn.click === 'function'){ btn.click(); return true; }
-
-      var q = (inputEl && inputEl.value) ? inputEl.value.trim() : '';
-      if (typeof submitFromInput === 'function'){ submitFromInput(); return true; }
-      if (typeof openGoogleFromInput === 'function'){ openGoogleFromInput(); return true; }
-      if (typeof executeQuery === 'function'){ executeQuery(q); return true; }
-      document.dispatchEvent(new CustomEvent('perform-site-search', { detail: { query: q } }));
-      return false;
-    }catch(e){ console.error(e); return false; }
-  }
-
-  function onEnter(e){
-    if (e.key === 'Enter'){
-      e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-      var target = e.target;
-      if (target && target.tagName === 'INPUT') triggerSearchFrom(target);
-    }
-  }
-
-  function bindEnterHandlers(){
-    var nodes = Array.from(document.querySelectorAll('#site-search, input[type="search"]'));
-    nodes.forEach(function(inp){
-      if (!inp.__enterFixBound){
-        inp.addEventListener('keydown', onEnter, true); // capture = massima priorità
-        inp.__enterFixBound = true;
-      }
-    });
-  }
-  bindEnterHandlers();
-
-  // intercetta anche submit di form che contengono l'input di ricerca
-  document.addEventListener('submit', function(e){
-    try{
-      var f = e.target;
-      if (f && f.querySelector && f.querySelector('#site-search, input[type="search"]')){
-        e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-        var inp = f.querySelector('#site-search, input[type="search"]');
-        triggerSearchFrom(inp || document.getElementById('site-search'));
-      }
     }catch(_){}
   }, true);
 
-  // se il DOM cambia (menu dinamici ecc.), ricollega gli handler
+  // Re-bind if DOM changes
   var mo = new MutationObserver(function(){ bindEnterHandlers(); });
   mo.observe(document.documentElement, { childList: true, subtree: true });
 })();
@@ -3796,26 +3738,83 @@ if (document.readyState === 'complete') {
 }
 </style>
 <!-- Aggiungi questo CODICE PRIMA del tag 
-<!-- === CONSERVATIVE ENTER FIX + siteData (real excerpts) === -->
+<!-- === CONSERVATIVE: siteData autofill (real excerpts) + Enter fix === -->
 <script>
 (function(){
-  // 1) Site data (estratti reali dal sito)
-  window.siteData = window.siteData || [
-    { url: "Presocratici/talete.html", title: "Talete di Mileto", content: "Talete fu una figura poliedrica del pensiero arcaico: matematico, astronomo e politico; la sua dottrina sull’acqua come principio originario ci è nota soprattutto attraverso Aristotele." },
-    { url: "Presocratici/anassimandro.html", title: "Anassimandro di Mileto", content: "Pioniere del pensiero scientifico, discepolo di Talete; introdusse l’ápeiron come principio e sviluppò una visione naturale e razionale del cosmo." },
-    { url: "Presocratici/anassimene.html", title: "Anassimene di Mileto", content: "Ultimo dei milesi: identificò nell’aria l’archè di tutte le cose, proseguendo la ricerca dei presocratici sulle cause naturali." },
-    { url: "Presocratici/senofane.html", title: "Senofane di Colofone", content: "Poeta‑filosofo viandante: critica radicale alla religione tradizionale e fondazione della scuola eleatica." },
-    { url: "articoli/ermarco.html", title: "Ermarco di Mitilene", content: "Successore di Epicuro nel Giardino: preservò e diffuse la dottrina epicurea con fedeltà e innovazione, guidando la scuola dopo il 270 a.C." },
-    { url: "articoli/seneca.html", title: "Lucio Anneo Seneca", content: "Figura eminente della filosofia romana: stoico, drammaturgo e statista; i suoi scritti mirano alla tranquillità interiore e alla virtù in un’epoca turbolenta." },
-    { url: "articoli/eudemo.html", title: "Eudemo di Rodi", content: "Discepolo fedele di Aristotele e membro di spicco della scuola peripatetica; ponte tra l’insegnamento aristotelico e la tradizione successiva." },
-    { url: "pagine/benvenuti.html", title: "Presentazione (Incipit)", content: "Echi di Sofia: uno spazio dedicato alla meraviglia e alla saggezza, dove il pensiero antico e moderno risuona oggi attraverso domande che attraversano il tempo." },
-    { url: "articoli/tarski.html", title: "Alfred Tarski", content: "Logico e filosofo del linguaggio: teoria semantica della verità (Convenzione T), contributi a logica, geometria e teoria degli insiemi; influenze su filosofia e informatica teorica." },
-    { url: "articoli/frege.html", title: "Gottlob Frege", content: "Padre della logica moderna: dal Begriffsschrift alla distinzione senso/riferimento; ha fondato la logica dei predicati e influenzato l’analitica." },
-    { url: "articoli/lyotard.html", title: "Jean‑François Lyotard", content: "Teorico del postmoderno: fine delle grandi narrazioni, giochi linguistici, legittimazione performativa del sapere; opere come La condizione postmoderna e Il dissidio." },
-    { url: "pagine/pagina-contatti.html", title: "Contatti", content: "Pagina di contatto per domande, suggerimenti e collaborazioni con Echi di Sofia." }
-  ];
+  // ===== 1) Build siteData from menu (URLs + titles) =====
+  function isInternal(href){
+    if (!href) return false;
+    href = href.trim();
+    if (!href) return false;
+    if (href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return false;
+    if (/^https?:\/\//i.test(href)) return false; // keep only same-site relative links
+    return true;
+  }
 
-  // 2) ENTER = click sulla lente (nessun cambio layout/animazioni)
+  var seen = new Set();
+  var items = [];
+  document.querySelectorAll('a[href]').forEach(function(a){
+    var href = a.getAttribute('href');
+    var title = (a.textContent || '').trim();
+    if (!isInternal(href) || !title) return;
+    // normalize ./ and trailing spaces
+    href = href.replace(/^\.\//,'').trim();
+    var key = href.toLowerCase();
+    if (seen.has(key)) return;
+    seen.add(key);
+    items.push({ url: href, title: title, content: "" });
+  });
+
+  // Prepend your two mandatory examples if present in the site structure
+  function ensure(url, title, content){
+    var i = items.findIndex(it => it.url === url);
+    if (i === -1) items.unshift({ url, title, content: content || "" });
+  }
+  ensure("articoli/socrate.html", "Socrate", ""); // content will be auto-filled
+  ensure("articoli/platone.html", "Platone", "");
+
+  // Expose early (will be enriched asynchronously)
+  window.siteData = items;
+
+  // ===== 2) Auto-fetch each page and extract a REAL excerpt =====
+  // Same-origin relative fetch; respects CORS since it's same site when deployed.
+  function truncate(s, n){ s = (s||"").replace(/\s+/g,' ').trim(); return s.length>n ? s.slice(0, n-1) + "…" : s; }
+  function pickExcerpt(doc){
+    // Prefer first non-empty <p> that looks like article content (not nav/footer)
+    var candidates = Array.from(doc.querySelectorAll('main p, article p, .content p, .post p, .entry p, .container p, p'));
+    var text = "";
+    for (var i=0; i<candidates.length; i++){
+      var t = (candidates[i].textContent || "").replace(/\s+/g,' ').trim();
+      if (t && t.length >= 60) { text = t; break; }
+    }
+    if (!text){
+      // fallback to any non-empty paragraph or heading
+      var any = doc.querySelector('p, h1, h2, h3');
+      text = any ? (any.textContent || "").trim() : "";
+    }
+    return truncate(text, 280);
+  }
+
+  async function fillOne(item){
+    try{
+      const resp = await fetch(item.url, { credentials: 'same-origin' });
+      if (!resp.ok) return;
+      const html = await resp.text();
+      var doc = new DOMParser().parseFromString(html, 'text/html');
+      var excerpt = pickExcerpt(doc);
+      if (excerpt){
+        item.content = excerpt;
+      }
+    }catch(e){ /* ignore single-page errors */ }
+  }
+
+  (async function fillAll(){
+    await Promise.all(items.map(fillOne));
+    // announce readiness for any code listening
+    document.dispatchEvent(new CustomEvent('siteDataReady', { detail: { count: items.length } }));
+  })();
+
+  // ===== 3) ENTER behaves like clicking the lens (no layout/animation changes) =====
   function triggerSearchFrom(el){
     try{
       var input = el && (el.tagName ? el : null);
@@ -3831,6 +3830,7 @@ if (document.readyState === 'complete') {
       if (typeof submitFromInput === 'function'){ submitFromInput(); return true; }
       if (typeof openGoogleFromInput === 'function'){ openGoogleFromInput(); return true; }
       if (typeof executeQuery === 'function'){ executeQuery(q); return true; }
+
       document.dispatchEvent(new CustomEvent('perform-site-search', { detail: { query: q } }));
       return false;
     }catch(e){ console.error(e); return false; }
@@ -3847,7 +3847,7 @@ if (document.readyState === 'complete') {
     var nodes = Array.from(document.querySelectorAll('#site-search, input[type="search"]'));
     nodes.forEach(function(inp){
       if (!inp.__enterFixBound){
-        inp.addEventListener('keydown', onEnter, true);
+        inp.addEventListener('keydown', onEnter, true); // capture for priority
         inp.__enterFixBound = true;
       }
     });
@@ -3862,97 +3862,10 @@ if (document.readyState === 'complete') {
         var inp = target.querySelector('#site-search, input[type="search"]');
         triggerSearchFrom(inp || document.getElementById('site-search'));
       }
-    }catch(_ ){}
-  }, true);
-
-  var mo = new MutationObserver(function(){ bindEnterHandlers(); });
-  mo.observe(document.documentElement, { childList: true, subtree: true });
-})();
-</script>
-
-
-<!-- === CONSERVATIVE: Enter behaves like the lens + siteData from menu === -->
-<script>
-(function(){
-  /* 1) Build siteData from internal links (menu + page) */
-  function isInternal(href){
-    if (!href) return false;
-    href = href.trim();
-    if (!href || href[0] === '#' ) return false;
-    if (/^(mailto:|tel:)/i.test(href)) return false;
-    if (/^https?:\/\//i.test(href)) return false;
-    return true;
-  }
-  var seen = new Set();
-  var items = [];
-  document.querySelectorAll('a[href]').forEach(function(a){
-    var href = a.getAttribute('href');
-    var title = (a.textContent || '').trim();
-    if (!isInternal(href) || !title) return;
-    href = href.replace(/^\.\//, '').trim();
-    var key = href.toLowerCase();
-    if (seen.has(key)) return;
-    seen.add(key);
-    items.push({ url: href, title: title, content: "Pagina dedicata a " + title + "." });
-  });
-  /* ensure examples */
-  function ensure(u,t,c){ if (!items.some(it=>it.url===u)) items.unshift({url:u, title:t, content:c||("Pagina dedicata a "+t+".")}); }
-  ensure("articoli/socrate.html","Socrate");
-  ensure("articoli/platone.html","Platone");
-  window.siteData = items;
-
-  /* 2) ENTER = click sulla lente (nessun cambio a layout/animazioni) */
-  function triggerSearchFrom(inputEl){
-    try{
-      var container = inputEl && inputEl.closest && (inputEl.closest('.search-container') || inputEl.closest('.bar-right') || inputEl.closest('.top-bar') || inputEl.closest('form') || document);
-      var btn = container && container.querySelector && (container.querySelector('.search-icon') ||
-                container.querySelector('[data-cse-search-btn]') ||
-                container.querySelector('#cse-search-btn') ||
-                container.querySelector('.cse-search-btn') ||
-                container.querySelector('button[type="submit"]'));
-      if (btn && typeof btn.click === 'function'){ btn.click(); return true; }
-
-      var q = (inputEl && inputEl.value) ? inputEl.value.trim() : '';
-      if (typeof submitFromInput === 'function'){ submitFromInput(); return true; }
-      if (typeof openGoogleFromInput === 'function'){ openGoogleFromInput(); return true; }
-      if (typeof executeQuery === 'function'){ executeQuery(q); return true; }
-      document.dispatchEvent(new CustomEvent('perform-site-search', { detail: { query: q } }));
-      return false;
-    }catch(e){ console.error(e); return false; }
-  }
-
-  function onEnter(e){
-    if (e.key === 'Enter'){
-      e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-      var target = e.target;
-      if (target && target.tagName === 'INPUT') triggerSearchFrom(target);
-    }
-  }
-
-  function bindEnterHandlers(){
-    var nodes = Array.from(document.querySelectorAll('#site-search, input[type="search"]'));
-    nodes.forEach(function(inp){
-      if (!inp.__enterFixBound){
-        inp.addEventListener('keydown', onEnter, true); // capture = massima priorità
-        inp.__enterFixBound = true;
-      }
-    });
-  }
-  bindEnterHandlers();
-
-  // intercetta anche submit di form che contengono l'input di ricerca
-  document.addEventListener('submit', function(e){
-    try{
-      var f = e.target;
-      if (f && f.querySelector && f.querySelector('#site-search, input[type="search"]')){
-        e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-        var inp = f.querySelector('#site-search, input[type="search"]');
-        triggerSearchFrom(inp || document.getElementById('site-search'));
-      }
     }catch(_){}
   }, true);
 
-  // se il DOM cambia (menu dinamici ecc.), ricollega gli handler
+  // Re-bind if DOM changes
   var mo = new MutationObserver(function(){ bindEnterHandlers(); });
   mo.observe(document.documentElement, { childList: true, subtree: true });
 })();
@@ -4068,26 +3981,83 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 <!-- Aggiungi questo codice prima della chiusura 
-<!-- === CONSERVATIVE ENTER FIX + siteData (real excerpts) === -->
+<!-- === CONSERVATIVE: siteData autofill (real excerpts) + Enter fix === -->
 <script>
 (function(){
-  // 1) Site data (estratti reali dal sito)
-  window.siteData = window.siteData || [
-    { url: "Presocratici/talete.html", title: "Talete di Mileto", content: "Talete fu una figura poliedrica del pensiero arcaico: matematico, astronomo e politico; la sua dottrina sull’acqua come principio originario ci è nota soprattutto attraverso Aristotele." },
-    { url: "Presocratici/anassimandro.html", title: "Anassimandro di Mileto", content: "Pioniere del pensiero scientifico, discepolo di Talete; introdusse l’ápeiron come principio e sviluppò una visione naturale e razionale del cosmo." },
-    { url: "Presocratici/anassimene.html", title: "Anassimene di Mileto", content: "Ultimo dei milesi: identificò nell’aria l’archè di tutte le cose, proseguendo la ricerca dei presocratici sulle cause naturali." },
-    { url: "Presocratici/senofane.html", title: "Senofane di Colofone", content: "Poeta‑filosofo viandante: critica radicale alla religione tradizionale e fondazione della scuola eleatica." },
-    { url: "articoli/ermarco.html", title: "Ermarco di Mitilene", content: "Successore di Epicuro nel Giardino: preservò e diffuse la dottrina epicurea con fedeltà e innovazione, guidando la scuola dopo il 270 a.C." },
-    { url: "articoli/seneca.html", title: "Lucio Anneo Seneca", content: "Figura eminente della filosofia romana: stoico, drammaturgo e statista; i suoi scritti mirano alla tranquillità interiore e alla virtù in un’epoca turbolenta." },
-    { url: "articoli/eudemo.html", title: "Eudemo di Rodi", content: "Discepolo fedele di Aristotele e membro di spicco della scuola peripatetica; ponte tra l’insegnamento aristotelico e la tradizione successiva." },
-    { url: "pagine/benvenuti.html", title: "Presentazione (Incipit)", content: "Echi di Sofia: uno spazio dedicato alla meraviglia e alla saggezza, dove il pensiero antico e moderno risuona oggi attraverso domande che attraversano il tempo." },
-    { url: "articoli/tarski.html", title: "Alfred Tarski", content: "Logico e filosofo del linguaggio: teoria semantica della verità (Convenzione T), contributi a logica, geometria e teoria degli insiemi; influenze su filosofia e informatica teorica." },
-    { url: "articoli/frege.html", title: "Gottlob Frege", content: "Padre della logica moderna: dal Begriffsschrift alla distinzione senso/riferimento; ha fondato la logica dei predicati e influenzato l’analitica." },
-    { url: "articoli/lyotard.html", title: "Jean‑François Lyotard", content: "Teorico del postmoderno: fine delle grandi narrazioni, giochi linguistici, legittimazione performativa del sapere; opere come La condizione postmoderna e Il dissidio." },
-    { url: "pagine/pagina-contatti.html", title: "Contatti", content: "Pagina di contatto per domande, suggerimenti e collaborazioni con Echi di Sofia." }
-  ];
+  // ===== 1) Build siteData from menu (URLs + titles) =====
+  function isInternal(href){
+    if (!href) return false;
+    href = href.trim();
+    if (!href) return false;
+    if (href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return false;
+    if (/^https?:\/\//i.test(href)) return false; // keep only same-site relative links
+    return true;
+  }
 
-  // 2) ENTER = click sulla lente (nessun cambio layout/animazioni)
+  var seen = new Set();
+  var items = [];
+  document.querySelectorAll('a[href]').forEach(function(a){
+    var href = a.getAttribute('href');
+    var title = (a.textContent || '').trim();
+    if (!isInternal(href) || !title) return;
+    // normalize ./ and trailing spaces
+    href = href.replace(/^\.\//,'').trim();
+    var key = href.toLowerCase();
+    if (seen.has(key)) return;
+    seen.add(key);
+    items.push({ url: href, title: title, content: "" });
+  });
+
+  // Prepend your two mandatory examples if present in the site structure
+  function ensure(url, title, content){
+    var i = items.findIndex(it => it.url === url);
+    if (i === -1) items.unshift({ url, title, content: content || "" });
+  }
+  ensure("articoli/socrate.html", "Socrate", ""); // content will be auto-filled
+  ensure("articoli/platone.html", "Platone", "");
+
+  // Expose early (will be enriched asynchronously)
+  window.siteData = items;
+
+  // ===== 2) Auto-fetch each page and extract a REAL excerpt =====
+  // Same-origin relative fetch; respects CORS since it's same site when deployed.
+  function truncate(s, n){ s = (s||"").replace(/\s+/g,' ').trim(); return s.length>n ? s.slice(0, n-1) + "…" : s; }
+  function pickExcerpt(doc){
+    // Prefer first non-empty <p> that looks like article content (not nav/footer)
+    var candidates = Array.from(doc.querySelectorAll('main p, article p, .content p, .post p, .entry p, .container p, p'));
+    var text = "";
+    for (var i=0; i<candidates.length; i++){
+      var t = (candidates[i].textContent || "").replace(/\s+/g,' ').trim();
+      if (t && t.length >= 60) { text = t; break; }
+    }
+    if (!text){
+      // fallback to any non-empty paragraph or heading
+      var any = doc.querySelector('p, h1, h2, h3');
+      text = any ? (any.textContent || "").trim() : "";
+    }
+    return truncate(text, 280);
+  }
+
+  async function fillOne(item){
+    try{
+      const resp = await fetch(item.url, { credentials: 'same-origin' });
+      if (!resp.ok) return;
+      const html = await resp.text();
+      var doc = new DOMParser().parseFromString(html, 'text/html');
+      var excerpt = pickExcerpt(doc);
+      if (excerpt){
+        item.content = excerpt;
+      }
+    }catch(e){ /* ignore single-page errors */ }
+  }
+
+  (async function fillAll(){
+    await Promise.all(items.map(fillOne));
+    // announce readiness for any code listening
+    document.dispatchEvent(new CustomEvent('siteDataReady', { detail: { count: items.length } }));
+  })();
+
+  // ===== 3) ENTER behaves like clicking the lens (no layout/animation changes) =====
   function triggerSearchFrom(el){
     try{
       var input = el && (el.tagName ? el : null);
@@ -4103,6 +4073,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (typeof submitFromInput === 'function'){ submitFromInput(); return true; }
       if (typeof openGoogleFromInput === 'function'){ openGoogleFromInput(); return true; }
       if (typeof executeQuery === 'function'){ executeQuery(q); return true; }
+
       document.dispatchEvent(new CustomEvent('perform-site-search', { detail: { query: q } }));
       return false;
     }catch(e){ console.error(e); return false; }
@@ -4119,7 +4090,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var nodes = Array.from(document.querySelectorAll('#site-search, input[type="search"]'));
     nodes.forEach(function(inp){
       if (!inp.__enterFixBound){
-        inp.addEventListener('keydown', onEnter, true);
+        inp.addEventListener('keydown', onEnter, true); // capture for priority
         inp.__enterFixBound = true;
       }
     });
@@ -4134,97 +4105,10 @@ document.addEventListener('DOMContentLoaded', function() {
         var inp = target.querySelector('#site-search, input[type="search"]');
         triggerSearchFrom(inp || document.getElementById('site-search'));
       }
-    }catch(_ ){}
-  }, true);
-
-  var mo = new MutationObserver(function(){ bindEnterHandlers(); });
-  mo.observe(document.documentElement, { childList: true, subtree: true });
-})();
-</script>
-
-
-<!-- === CONSERVATIVE: Enter behaves like the lens + siteData from menu === -->
-<script>
-(function(){
-  /* 1) Build siteData from internal links (menu + page) */
-  function isInternal(href){
-    if (!href) return false;
-    href = href.trim();
-    if (!href || href[0] === '#' ) return false;
-    if (/^(mailto:|tel:)/i.test(href)) return false;
-    if (/^https?:\/\//i.test(href)) return false;
-    return true;
-  }
-  var seen = new Set();
-  var items = [];
-  document.querySelectorAll('a[href]').forEach(function(a){
-    var href = a.getAttribute('href');
-    var title = (a.textContent || '').trim();
-    if (!isInternal(href) || !title) return;
-    href = href.replace(/^\.\//, '').trim();
-    var key = href.toLowerCase();
-    if (seen.has(key)) return;
-    seen.add(key);
-    items.push({ url: href, title: title, content: "Pagina dedicata a " + title + "." });
-  });
-  /* ensure examples */
-  function ensure(u,t,c){ if (!items.some(it=>it.url===u)) items.unshift({url:u, title:t, content:c||("Pagina dedicata a "+t+".")}); }
-  ensure("articoli/socrate.html","Socrate");
-  ensure("articoli/platone.html","Platone");
-  window.siteData = items;
-
-  /* 2) ENTER = click sulla lente (nessun cambio a layout/animazioni) */
-  function triggerSearchFrom(inputEl){
-    try{
-      var container = inputEl && inputEl.closest && (inputEl.closest('.search-container') || inputEl.closest('.bar-right') || inputEl.closest('.top-bar') || inputEl.closest('form') || document);
-      var btn = container && container.querySelector && (container.querySelector('.search-icon') ||
-                container.querySelector('[data-cse-search-btn]') ||
-                container.querySelector('#cse-search-btn') ||
-                container.querySelector('.cse-search-btn') ||
-                container.querySelector('button[type="submit"]'));
-      if (btn && typeof btn.click === 'function'){ btn.click(); return true; }
-
-      var q = (inputEl && inputEl.value) ? inputEl.value.trim() : '';
-      if (typeof submitFromInput === 'function'){ submitFromInput(); return true; }
-      if (typeof openGoogleFromInput === 'function'){ openGoogleFromInput(); return true; }
-      if (typeof executeQuery === 'function'){ executeQuery(q); return true; }
-      document.dispatchEvent(new CustomEvent('perform-site-search', { detail: { query: q } }));
-      return false;
-    }catch(e){ console.error(e); return false; }
-  }
-
-  function onEnter(e){
-    if (e.key === 'Enter'){
-      e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-      var target = e.target;
-      if (target && target.tagName === 'INPUT') triggerSearchFrom(target);
-    }
-  }
-
-  function bindEnterHandlers(){
-    var nodes = Array.from(document.querySelectorAll('#site-search, input[type="search"]'));
-    nodes.forEach(function(inp){
-      if (!inp.__enterFixBound){
-        inp.addEventListener('keydown', onEnter, true); // capture = massima priorità
-        inp.__enterFixBound = true;
-      }
-    });
-  }
-  bindEnterHandlers();
-
-  // intercetta anche submit di form che contengono l'input di ricerca
-  document.addEventListener('submit', function(e){
-    try{
-      var f = e.target;
-      if (f && f.querySelector && f.querySelector('#site-search, input[type="search"]')){
-        e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-        var inp = f.querySelector('#site-search, input[type="search"]');
-        triggerSearchFrom(inp || document.getElementById('site-search'));
-      }
     }catch(_){}
   }, true);
 
-  // se il DOM cambia (menu dinamici ecc.), ricollega gli handler
+  // Re-bind if DOM changes
   var mo = new MutationObserver(function(){ bindEnterHandlers(); });
   mo.observe(document.documentElement, { childList: true, subtree: true });
 })();
@@ -4505,26 +4389,83 @@ document.getElementById('search-results-panel')?.addEventListener('click', funct
 
 
 
-<!-- === CONSERVATIVE ENTER FIX + siteData (real excerpts) === -->
+<!-- === CONSERVATIVE: siteData autofill (real excerpts) + Enter fix === -->
 <script>
 (function(){
-  // 1) Site data (estratti reali dal sito)
-  window.siteData = window.siteData || [
-    { url: "Presocratici/talete.html", title: "Talete di Mileto", content: "Talete fu una figura poliedrica del pensiero arcaico: matematico, astronomo e politico; la sua dottrina sull’acqua come principio originario ci è nota soprattutto attraverso Aristotele." },
-    { url: "Presocratici/anassimandro.html", title: "Anassimandro di Mileto", content: "Pioniere del pensiero scientifico, discepolo di Talete; introdusse l’ápeiron come principio e sviluppò una visione naturale e razionale del cosmo." },
-    { url: "Presocratici/anassimene.html", title: "Anassimene di Mileto", content: "Ultimo dei milesi: identificò nell’aria l’archè di tutte le cose, proseguendo la ricerca dei presocratici sulle cause naturali." },
-    { url: "Presocratici/senofane.html", title: "Senofane di Colofone", content: "Poeta‑filosofo viandante: critica radicale alla religione tradizionale e fondazione della scuola eleatica." },
-    { url: "articoli/ermarco.html", title: "Ermarco di Mitilene", content: "Successore di Epicuro nel Giardino: preservò e diffuse la dottrina epicurea con fedeltà e innovazione, guidando la scuola dopo il 270 a.C." },
-    { url: "articoli/seneca.html", title: "Lucio Anneo Seneca", content: "Figura eminente della filosofia romana: stoico, drammaturgo e statista; i suoi scritti mirano alla tranquillità interiore e alla virtù in un’epoca turbolenta." },
-    { url: "articoli/eudemo.html", title: "Eudemo di Rodi", content: "Discepolo fedele di Aristotele e membro di spicco della scuola peripatetica; ponte tra l’insegnamento aristotelico e la tradizione successiva." },
-    { url: "pagine/benvenuti.html", title: "Presentazione (Incipit)", content: "Echi di Sofia: uno spazio dedicato alla meraviglia e alla saggezza, dove il pensiero antico e moderno risuona oggi attraverso domande che attraversano il tempo." },
-    { url: "articoli/tarski.html", title: "Alfred Tarski", content: "Logico e filosofo del linguaggio: teoria semantica della verità (Convenzione T), contributi a logica, geometria e teoria degli insiemi; influenze su filosofia e informatica teorica." },
-    { url: "articoli/frege.html", title: "Gottlob Frege", content: "Padre della logica moderna: dal Begriffsschrift alla distinzione senso/riferimento; ha fondato la logica dei predicati e influenzato l’analitica." },
-    { url: "articoli/lyotard.html", title: "Jean‑François Lyotard", content: "Teorico del postmoderno: fine delle grandi narrazioni, giochi linguistici, legittimazione performativa del sapere; opere come La condizione postmoderna e Il dissidio." },
-    { url: "pagine/pagina-contatti.html", title: "Contatti", content: "Pagina di contatto per domande, suggerimenti e collaborazioni con Echi di Sofia." }
-  ];
+  // ===== 1) Build siteData from menu (URLs + titles) =====
+  function isInternal(href){
+    if (!href) return false;
+    href = href.trim();
+    if (!href) return false;
+    if (href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return false;
+    if (/^https?:\/\//i.test(href)) return false; // keep only same-site relative links
+    return true;
+  }
 
-  // 2) ENTER = click sulla lente (nessun cambio layout/animazioni)
+  var seen = new Set();
+  var items = [];
+  document.querySelectorAll('a[href]').forEach(function(a){
+    var href = a.getAttribute('href');
+    var title = (a.textContent || '').trim();
+    if (!isInternal(href) || !title) return;
+    // normalize ./ and trailing spaces
+    href = href.replace(/^\.\//,'').trim();
+    var key = href.toLowerCase();
+    if (seen.has(key)) return;
+    seen.add(key);
+    items.push({ url: href, title: title, content: "" });
+  });
+
+  // Prepend your two mandatory examples if present in the site structure
+  function ensure(url, title, content){
+    var i = items.findIndex(it => it.url === url);
+    if (i === -1) items.unshift({ url, title, content: content || "" });
+  }
+  ensure("articoli/socrate.html", "Socrate", ""); // content will be auto-filled
+  ensure("articoli/platone.html", "Platone", "");
+
+  // Expose early (will be enriched asynchronously)
+  window.siteData = items;
+
+  // ===== 2) Auto-fetch each page and extract a REAL excerpt =====
+  // Same-origin relative fetch; respects CORS since it's same site when deployed.
+  function truncate(s, n){ s = (s||"").replace(/\s+/g,' ').trim(); return s.length>n ? s.slice(0, n-1) + "…" : s; }
+  function pickExcerpt(doc){
+    // Prefer first non-empty <p> that looks like article content (not nav/footer)
+    var candidates = Array.from(doc.querySelectorAll('main p, article p, .content p, .post p, .entry p, .container p, p'));
+    var text = "";
+    for (var i=0; i<candidates.length; i++){
+      var t = (candidates[i].textContent || "").replace(/\s+/g,' ').trim();
+      if (t && t.length >= 60) { text = t; break; }
+    }
+    if (!text){
+      // fallback to any non-empty paragraph or heading
+      var any = doc.querySelector('p, h1, h2, h3');
+      text = any ? (any.textContent || "").trim() : "";
+    }
+    return truncate(text, 280);
+  }
+
+  async function fillOne(item){
+    try{
+      const resp = await fetch(item.url, { credentials: 'same-origin' });
+      if (!resp.ok) return;
+      const html = await resp.text();
+      var doc = new DOMParser().parseFromString(html, 'text/html');
+      var excerpt = pickExcerpt(doc);
+      if (excerpt){
+        item.content = excerpt;
+      }
+    }catch(e){ /* ignore single-page errors */ }
+  }
+
+  (async function fillAll(){
+    await Promise.all(items.map(fillOne));
+    // announce readiness for any code listening
+    document.dispatchEvent(new CustomEvent('siteDataReady', { detail: { count: items.length } }));
+  })();
+
+  // ===== 3) ENTER behaves like clicking the lens (no layout/animation changes) =====
   function triggerSearchFrom(el){
     try{
       var input = el && (el.tagName ? el : null);
@@ -4540,6 +4481,7 @@ document.getElementById('search-results-panel')?.addEventListener('click', funct
       if (typeof submitFromInput === 'function'){ submitFromInput(); return true; }
       if (typeof openGoogleFromInput === 'function'){ openGoogleFromInput(); return true; }
       if (typeof executeQuery === 'function'){ executeQuery(q); return true; }
+
       document.dispatchEvent(new CustomEvent('perform-site-search', { detail: { query: q } }));
       return false;
     }catch(e){ console.error(e); return false; }
@@ -4556,7 +4498,7 @@ document.getElementById('search-results-panel')?.addEventListener('click', funct
     var nodes = Array.from(document.querySelectorAll('#site-search, input[type="search"]'));
     nodes.forEach(function(inp){
       if (!inp.__enterFixBound){
-        inp.addEventListener('keydown', onEnter, true);
+        inp.addEventListener('keydown', onEnter, true); // capture for priority
         inp.__enterFixBound = true;
       }
     });
@@ -4571,132 +4513,12 @@ document.getElementById('search-results-panel')?.addEventListener('click', funct
         var inp = target.querySelector('#site-search, input[type="search"]');
         triggerSearchFrom(inp || document.getElementById('site-search'));
       }
-    }catch(_ ){}
-  }, true);
-
-  var mo = new MutationObserver(function(){ bindEnterHandlers(); });
-  mo.observe(document.documentElement, { childList: true, subtree: true });
-})();
-</script>
-
-
-<!-- === CONSERVATIVE: Enter behaves like the lens + siteData from menu === -->
-<script>
-(function(){
-  /* 1) Build siteData from internal links (menu + page) */
-  function isInternal(href){
-    if (!href) return false;
-    href = href.trim();
-    if (!href || href[0] === '#' ) return false;
-    if (/^(mailto:|tel:)/i.test(href)) return false;
-    if (/^https?:\/\//i.test(href)) return false;
-    return true;
-  }
-  var seen = new Set();
-  var items = [];
-  document.querySelectorAll('a[href]').forEach(function(a){
-    var href = a.getAttribute('href');
-    var title = (a.textContent || '').trim();
-    if (!isInternal(href) || !title) return;
-    href = href.replace(/^\.\//, '').trim();
-    var key = href.toLowerCase();
-    if (seen.has(key)) return;
-    seen.add(key);
-    items.push({ url: href, title: title, content: "Pagina dedicata a " + title + "." });
-  });
-  /* ensure examples */
-  function ensure(u,t,c){ if (!items.some(it=>it.url===u)) items.unshift({url:u, title:t, content:c||("Pagina dedicata a "+t+".")}); }
-  ensure("articoli/socrate.html","Socrate");
-  ensure("articoli/platone.html","Platone");
-  window.siteData = items;
-
-  /* 2) ENTER = click sulla lente (nessun cambio a layout/animazioni) */
-  function triggerSearchFrom(inputEl){
-    try{
-      var container = inputEl && inputEl.closest && (inputEl.closest('.search-container') || inputEl.closest('.bar-right') || inputEl.closest('.top-bar') || inputEl.closest('form') || document);
-      var btn = container && container.querySelector && (container.querySelector('.search-icon') ||
-                container.querySelector('[data-cse-search-btn]') ||
-                container.querySelector('#cse-search-btn') ||
-                container.querySelector('.cse-search-btn') ||
-                container.querySelector('button[type="submit"]'));
-      if (btn && typeof btn.click === 'function'){ btn.click(); return true; }
-
-      var q = (inputEl && inputEl.value) ? inputEl.value.trim() : '';
-      if (typeof submitFromInput === 'function'){ submitFromInput(); return true; }
-      if (typeof openGoogleFromInput === 'function'){ openGoogleFromInput(); return true; }
-      if (typeof executeQuery === 'function'){ executeQuery(q); return true; }
-      document.dispatchEvent(new CustomEvent('perform-site-search', { detail: { query: q } }));
-      return false;
-    }catch(e){ console.error(e); return false; }
-  }
-
-  function onEnter(e){
-    if (e.key === 'Enter'){
-      e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-      var target = e.target;
-      if (target && target.tagName === 'INPUT') triggerSearchFrom(target);
-    }
-  }
-
-  function bindEnterHandlers(){
-    var nodes = Array.from(document.querySelectorAll('#site-search, input[type="search"]'));
-    nodes.forEach(function(inp){
-      if (!inp.__enterFixBound){
-        inp.addEventListener('keydown', onEnter, true); // capture = massima priorità
-        inp.__enterFixBound = true;
-      }
-    });
-  }
-  bindEnterHandlers();
-
-  // intercetta anche submit di form che contengono l'input di ricerca
-  document.addEventListener('submit', function(e){
-    try{
-      var f = e.target;
-      if (f && f.querySelector && f.querySelector('#site-search, input[type="search"]')){
-        e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-        var inp = f.querySelector('#site-search, input[type="search"]');
-        triggerSearchFrom(inp || document.getElementById('site-search'));
-      }
     }catch(_){}
   }, true);
 
-  // se il DOM cambia (menu dinamici ecc.), ricollega gli handler
+  // Re-bind if DOM changes
   var mo = new MutationObserver(function(){ bindEnterHandlers(); });
   mo.observe(document.documentElement, { childList: true, subtree: true });
-})();
-</script>
-<script>
-(function () {
-  // trova il bottone "lente" vicino all'input usato
-  function findLens(input){
-    if (!input || !input.closest) return null;
-    const box = input.closest('.search-container, .bar-right, .top-bar, header, form, body');
-    return box && box.querySelector('.search-icon, [data-cse-search-btn], #cse-search-btn, .cse-search-btn, button[type="submit"]');
-  }
-
-  // intercetta Enter in CAPTURE (ha priorità su altri handler)
-  function onEnter(e){
-    if ((e.key === 'Enter' || e.keyCode === 13) &&
-        e.target && e.target.tagName === 'INPUT' &&
-        (e.target.type === 'search' || e.target.type === 'text')) {
-      e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-      const btn = findLens(e.target);
-      if (btn && typeof btn.click === 'function') btn.click();
-    }
-  }
-  document.addEventListener('keydown', onEnter, true);
-
-  // blocca il submit del form che contiene l’input di ricerca e simula la lente
-  document.addEventListener('submit', function(e){
-    const f = e.target;
-    if (f && f.querySelector && f.querySelector('input[type="search"], #site-search')) {
-      e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-      const inp = f.querySelector('input[type="search"], #site-search');
-      const btn = findLens(inp);
-      if (btn && typeof btn.click === 'function') btn.click();
-    }
-  }, true);
 })();
 </script>
 
