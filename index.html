@@ -3414,99 +3414,90 @@
 </script>
 
 
-<!-- === HARD CONSERVATIVE FIX: Enter -> lens; block Google redirects === -->
+<!-- === CONSERVATIVE: Enter behaves like the lens + siteData from menu === -->
 <script>
 (function(){
-  function closestSearchContainer(input){
-    if (!input || !input.closest) return document;
-    return input.closest('.search-container') ||
-           input.closest('.bar-right') ||
-           input.closest('.top-bar') ||
-           input.closest('header') ||
-           input.closest('form') || document;
+  /* 1) Build siteData from internal links (menu + page) */
+  function isInternal(href){
+    if (!href) return false;
+    href = href.trim();
+    if (!href || href[0] === '#' ) return false;
+    if (/^(mailto:|tel:)/i.test(href)) return false;
+    if (/^https?:\/\//i.test(href)) return false;
+    return true;
   }
-  function findLensFor(input){
-    var c = closestSearchContainer(input);
-    if (!c || !c.querySelector) return null;
-    return c.querySelector('.search-icon, [data-cse-search-btn], #cse-search-btn, .cse-search-btn, button[type="submit"]');
-  }
-  function clickLens(input){
-    var btn = findLensFor(input);
-    if (btn && typeof btn.click === 'function'){ btn.click(); return true; }
-    // fallback: call existing functions if present
+  var seen = new Set();
+  var items = [];
+  document.querySelectorAll('a[href]').forEach(function(a){
+    var href = a.getAttribute('href');
+    var title = (a.textContent || '').trim();
+    if (!isInternal(href) || !title) return;
+    href = href.replace(/^\.\//, '').trim();
+    var key = href.toLowerCase();
+    if (seen.has(key)) return;
+    seen.add(key);
+    items.push({ url: href, title: title, content: "Pagina dedicata a " + title + "." });
+  });
+  /* ensure examples */
+  function ensure(u,t,c){ if (!items.some(it=>it.url===u)) items.unshift({url:u, title:t, content:c||("Pagina dedicata a "+t+".")}); }
+  ensure("articoli/socrate.html","Socrate");
+  ensure("articoli/platone.html","Platone");
+  window.siteData = items;
+
+  /* 2) ENTER = click sulla lente (nessun cambio a layout/animazioni) */
+  function triggerSearchFrom(inputEl){
     try{
+      var container = inputEl && inputEl.closest && (inputEl.closest('.search-container') || inputEl.closest('.bar-right') || inputEl.closest('.top-bar') || inputEl.closest('form') || document);
+      var btn = container && container.querySelector && (container.querySelector('.search-icon') ||
+                container.querySelector('[data-cse-search-btn]') ||
+                container.querySelector('#cse-search-btn') ||
+                container.querySelector('.cse-search-btn') ||
+                container.querySelector('button[type="submit"]'));
+      if (btn && typeof btn.click === 'function'){ btn.click(); return true; }
+
+      var q = (inputEl && inputEl.value) ? inputEl.value.trim() : '';
       if (typeof submitFromInput === 'function'){ submitFromInput(); return true; }
       if (typeof openGoogleFromInput === 'function'){ openGoogleFromInput(); return true; }
-      var q = (input && input.value) ? input.value.trim() : '';
       if (typeof executeQuery === 'function'){ executeQuery(q); return true; }
-    }catch(e){}
-    return false;
+      document.dispatchEvent(new CustomEvent('perform-site-search', { detail: { query: q } }));
+      return false;
+    }catch(e){ console.error(e); return false; }
   }
 
-  function isSearchInput(el){
-    return el && el.tagName === 'INPUT' && (el.type === 'search' || el.type === 'text');
+  function onEnter(e){
+    if (e.key === 'Enter'){
+      e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+      var target = e.target;
+      if (target && target.tagName === 'INPUT') triggerSearchFrom(target);
+    }
   }
 
-  function stopper(e){
-    if (!e) return;
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-  }
-
-  // 1) Capture keydown/keypress/keyup Enter on search inputs
-  ['keydown','keypress','keyup'].forEach(function(type){
-    document.addEventListener(type, function(e){
-      if ((e.key === 'Enter' || e.keyCode === 13) && isSearchInput(e.target)){
-        stopper(e);
-        clickLens(e.target);
+  function bindEnterHandlers(){
+    var nodes = Array.from(document.querySelectorAll('#site-search, input[type="search"]'));
+    nodes.forEach(function(inp){
+      if (!inp.__enterFixBound){
+        inp.addEventListener('keydown', onEnter, true); // capture = massima priorità
+        inp.__enterFixBound = true;
       }
-    }, true);
-  });
+    });
+  }
+  bindEnterHandlers();
 
-  // 2) Capture submit on any form that contains a search input
+  // intercetta anche submit di form che contengono l'input di ricerca
   document.addEventListener('submit', function(e){
     try{
       var f = e.target;
-      if (f && f.querySelector && f.querySelector('input[type="search"], input[type="text"]')){
-        stopper(e);
-        var inp = f.querySelector('input[type="search"], input[type="text"]');
-        clickLens(inp);
+      if (f && f.querySelector && f.querySelector('#site-search, input[type="search"]')){
+        e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+        var inp = f.querySelector('#site-search, input[type="search"]');
+        triggerSearchFrom(inp || document.getElementById('site-search'));
       }
     }catch(_){}
   }, true);
 
-  // 3) Patch window.open / location.assign / replace for Google Search URLs
-  function isGoogleSearch(url){
-    try{ url = String(url||''); }catch(e){ return false; }
-    return /https?:\/\/(www\.)?google\.[^\/]+\/search\?/i.test(url);
-  }
-  var _open = window.open;
-  window.open = function(u){
-    if (isGoogleSearch(u)){
-      var focused = document.activeElement;
-      if (!isSearchInput(focused)) focused = document.querySelector('#site-search, input[type="search"], input[type="text"]');
-      clickLens(focused);
-      return null;
-    }
-    return _open.apply(this, arguments);
-  };
-  var _assign = window.location.assign.bind(window.location);
-  var _replace = window.location.replace.bind(window.location);
-  window.location.assign = function(u){ if (isGoogleSearch(u)){ var i=document.activeElement; if(!isSearchInput(i)) i=document.querySelector('#site-search, input[type="search"], input[type="text"]'); clickLens(i); return; } _assign(u); };
-  window.location.replace = function(u){ if (isGoogleSearch(u)){ var i=document.activeElement; if(!isSearchInput(i)) i=document.querySelector('#site-search, input[type="search"], input[type="text"]'); clickLens(i); return; } _replace(u); };
-
-  // 4) Bind once to all search inputs (in case of dynamic DOM)
-  function bindOnce(){
-    document.querySelectorAll('#site-search, input[type="search"]').forEach(function(inp){
-      if (!inp.__enterHardBound){
-        // already handled via document-level capture; mark to avoid rebinding logic elsewhere
-        inp.__enterHardBound = true;
-      }
-    });
-  }
-  bindOnce();
-  new MutationObserver(bindOnce).observe(document.documentElement, { childList:true, subtree:true });
+  // se il DOM cambia (menu dinamici ecc.), ricollega gli handler
+  var mo = new MutationObserver(function(){ bindEnterHandlers(); });
+  mo.observe(document.documentElement, { childList: true, subtree: true });
 })();
 </script>
 
@@ -3587,99 +3578,90 @@
 </script>
 
 
-<!-- === HARD CONSERVATIVE FIX: Enter -> lens; block Google redirects === -->
+<!-- === CONSERVATIVE: Enter behaves like the lens + siteData from menu === -->
 <script>
 (function(){
-  function closestSearchContainer(input){
-    if (!input || !input.closest) return document;
-    return input.closest('.search-container') ||
-           input.closest('.bar-right') ||
-           input.closest('.top-bar') ||
-           input.closest('header') ||
-           input.closest('form') || document;
+  /* 1) Build siteData from internal links (menu + page) */
+  function isInternal(href){
+    if (!href) return false;
+    href = href.trim();
+    if (!href || href[0] === '#' ) return false;
+    if (/^(mailto:|tel:)/i.test(href)) return false;
+    if (/^https?:\/\//i.test(href)) return false;
+    return true;
   }
-  function findLensFor(input){
-    var c = closestSearchContainer(input);
-    if (!c || !c.querySelector) return null;
-    return c.querySelector('.search-icon, [data-cse-search-btn], #cse-search-btn, .cse-search-btn, button[type="submit"]');
-  }
-  function clickLens(input){
-    var btn = findLensFor(input);
-    if (btn && typeof btn.click === 'function'){ btn.click(); return true; }
-    // fallback: call existing functions if present
+  var seen = new Set();
+  var items = [];
+  document.querySelectorAll('a[href]').forEach(function(a){
+    var href = a.getAttribute('href');
+    var title = (a.textContent || '').trim();
+    if (!isInternal(href) || !title) return;
+    href = href.replace(/^\.\//, '').trim();
+    var key = href.toLowerCase();
+    if (seen.has(key)) return;
+    seen.add(key);
+    items.push({ url: href, title: title, content: "Pagina dedicata a " + title + "." });
+  });
+  /* ensure examples */
+  function ensure(u,t,c){ if (!items.some(it=>it.url===u)) items.unshift({url:u, title:t, content:c||("Pagina dedicata a "+t+".")}); }
+  ensure("articoli/socrate.html","Socrate");
+  ensure("articoli/platone.html","Platone");
+  window.siteData = items;
+
+  /* 2) ENTER = click sulla lente (nessun cambio a layout/animazioni) */
+  function triggerSearchFrom(inputEl){
     try{
+      var container = inputEl && inputEl.closest && (inputEl.closest('.search-container') || inputEl.closest('.bar-right') || inputEl.closest('.top-bar') || inputEl.closest('form') || document);
+      var btn = container && container.querySelector && (container.querySelector('.search-icon') ||
+                container.querySelector('[data-cse-search-btn]') ||
+                container.querySelector('#cse-search-btn') ||
+                container.querySelector('.cse-search-btn') ||
+                container.querySelector('button[type="submit"]'));
+      if (btn && typeof btn.click === 'function'){ btn.click(); return true; }
+
+      var q = (inputEl && inputEl.value) ? inputEl.value.trim() : '';
       if (typeof submitFromInput === 'function'){ submitFromInput(); return true; }
       if (typeof openGoogleFromInput === 'function'){ openGoogleFromInput(); return true; }
-      var q = (input && input.value) ? input.value.trim() : '';
       if (typeof executeQuery === 'function'){ executeQuery(q); return true; }
-    }catch(e){}
-    return false;
+      document.dispatchEvent(new CustomEvent('perform-site-search', { detail: { query: q } }));
+      return false;
+    }catch(e){ console.error(e); return false; }
   }
 
-  function isSearchInput(el){
-    return el && el.tagName === 'INPUT' && (el.type === 'search' || el.type === 'text');
+  function onEnter(e){
+    if (e.key === 'Enter'){
+      e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+      var target = e.target;
+      if (target && target.tagName === 'INPUT') triggerSearchFrom(target);
+    }
   }
 
-  function stopper(e){
-    if (!e) return;
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-  }
-
-  // 1) Capture keydown/keypress/keyup Enter on search inputs
-  ['keydown','keypress','keyup'].forEach(function(type){
-    document.addEventListener(type, function(e){
-      if ((e.key === 'Enter' || e.keyCode === 13) && isSearchInput(e.target)){
-        stopper(e);
-        clickLens(e.target);
+  function bindEnterHandlers(){
+    var nodes = Array.from(document.querySelectorAll('#site-search, input[type="search"]'));
+    nodes.forEach(function(inp){
+      if (!inp.__enterFixBound){
+        inp.addEventListener('keydown', onEnter, true); // capture = massima priorità
+        inp.__enterFixBound = true;
       }
-    }, true);
-  });
+    });
+  }
+  bindEnterHandlers();
 
-  // 2) Capture submit on any form that contains a search input
+  // intercetta anche submit di form che contengono l'input di ricerca
   document.addEventListener('submit', function(e){
     try{
       var f = e.target;
-      if (f && f.querySelector && f.querySelector('input[type="search"], input[type="text"]')){
-        stopper(e);
-        var inp = f.querySelector('input[type="search"], input[type="text"]');
-        clickLens(inp);
+      if (f && f.querySelector && f.querySelector('#site-search, input[type="search"]')){
+        e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+        var inp = f.querySelector('#site-search, input[type="search"]');
+        triggerSearchFrom(inp || document.getElementById('site-search'));
       }
     }catch(_){}
   }, true);
 
-  // 3) Patch window.open / location.assign / replace for Google Search URLs
-  function isGoogleSearch(url){
-    try{ url = String(url||''); }catch(e){ return false; }
-    return /https?:\/\/(www\.)?google\.[^\/]+\/search\?/i.test(url);
-  }
-  var _open = window.open;
-  window.open = function(u){
-    if (isGoogleSearch(u)){
-      var focused = document.activeElement;
-      if (!isSearchInput(focused)) focused = document.querySelector('#site-search, input[type="search"], input[type="text"]');
-      clickLens(focused);
-      return null;
-    }
-    return _open.apply(this, arguments);
-  };
-  var _assign = window.location.assign.bind(window.location);
-  var _replace = window.location.replace.bind(window.location);
-  window.location.assign = function(u){ if (isGoogleSearch(u)){ var i=document.activeElement; if(!isSearchInput(i)) i=document.querySelector('#site-search, input[type="search"], input[type="text"]'); clickLens(i); return; } _assign(u); };
-  window.location.replace = function(u){ if (isGoogleSearch(u)){ var i=document.activeElement; if(!isSearchInput(i)) i=document.querySelector('#site-search, input[type="search"], input[type="text"]'); clickLens(i); return; } _replace(u); };
-
-  // 4) Bind once to all search inputs (in case of dynamic DOM)
-  function bindOnce(){
-    document.querySelectorAll('#site-search, input[type="search"]').forEach(function(inp){
-      if (!inp.__enterHardBound){
-        // already handled via document-level capture; mark to avoid rebinding logic elsewhere
-        inp.__enterHardBound = true;
-      }
-    });
-  }
-  bindOnce();
-  new MutationObserver(bindOnce).observe(document.documentElement, { childList:true, subtree:true });
+  // se il DOM cambia (menu dinamici ecc.), ricollega gli handler
+  var mo = new MutationObserver(function(){ bindEnterHandlers(); });
+  mo.observe(document.documentElement, { childList: true, subtree: true });
 })();
 </script>
 
@@ -3889,99 +3871,90 @@ if (document.readyState === 'complete') {
 </script>
 
 
-<!-- === HARD CONSERVATIVE FIX: Enter -> lens; block Google redirects === -->
+<!-- === CONSERVATIVE: Enter behaves like the lens + siteData from menu === -->
 <script>
 (function(){
-  function closestSearchContainer(input){
-    if (!input || !input.closest) return document;
-    return input.closest('.search-container') ||
-           input.closest('.bar-right') ||
-           input.closest('.top-bar') ||
-           input.closest('header') ||
-           input.closest('form') || document;
+  /* 1) Build siteData from internal links (menu + page) */
+  function isInternal(href){
+    if (!href) return false;
+    href = href.trim();
+    if (!href || href[0] === '#' ) return false;
+    if (/^(mailto:|tel:)/i.test(href)) return false;
+    if (/^https?:\/\//i.test(href)) return false;
+    return true;
   }
-  function findLensFor(input){
-    var c = closestSearchContainer(input);
-    if (!c || !c.querySelector) return null;
-    return c.querySelector('.search-icon, [data-cse-search-btn], #cse-search-btn, .cse-search-btn, button[type="submit"]');
-  }
-  function clickLens(input){
-    var btn = findLensFor(input);
-    if (btn && typeof btn.click === 'function'){ btn.click(); return true; }
-    // fallback: call existing functions if present
+  var seen = new Set();
+  var items = [];
+  document.querySelectorAll('a[href]').forEach(function(a){
+    var href = a.getAttribute('href');
+    var title = (a.textContent || '').trim();
+    if (!isInternal(href) || !title) return;
+    href = href.replace(/^\.\//, '').trim();
+    var key = href.toLowerCase();
+    if (seen.has(key)) return;
+    seen.add(key);
+    items.push({ url: href, title: title, content: "Pagina dedicata a " + title + "." });
+  });
+  /* ensure examples */
+  function ensure(u,t,c){ if (!items.some(it=>it.url===u)) items.unshift({url:u, title:t, content:c||("Pagina dedicata a "+t+".")}); }
+  ensure("articoli/socrate.html","Socrate");
+  ensure("articoli/platone.html","Platone");
+  window.siteData = items;
+
+  /* 2) ENTER = click sulla lente (nessun cambio a layout/animazioni) */
+  function triggerSearchFrom(inputEl){
     try{
+      var container = inputEl && inputEl.closest && (inputEl.closest('.search-container') || inputEl.closest('.bar-right') || inputEl.closest('.top-bar') || inputEl.closest('form') || document);
+      var btn = container && container.querySelector && (container.querySelector('.search-icon') ||
+                container.querySelector('[data-cse-search-btn]') ||
+                container.querySelector('#cse-search-btn') ||
+                container.querySelector('.cse-search-btn') ||
+                container.querySelector('button[type="submit"]'));
+      if (btn && typeof btn.click === 'function'){ btn.click(); return true; }
+
+      var q = (inputEl && inputEl.value) ? inputEl.value.trim() : '';
       if (typeof submitFromInput === 'function'){ submitFromInput(); return true; }
       if (typeof openGoogleFromInput === 'function'){ openGoogleFromInput(); return true; }
-      var q = (input && input.value) ? input.value.trim() : '';
       if (typeof executeQuery === 'function'){ executeQuery(q); return true; }
-    }catch(e){}
-    return false;
+      document.dispatchEvent(new CustomEvent('perform-site-search', { detail: { query: q } }));
+      return false;
+    }catch(e){ console.error(e); return false; }
   }
 
-  function isSearchInput(el){
-    return el && el.tagName === 'INPUT' && (el.type === 'search' || el.type === 'text');
+  function onEnter(e){
+    if (e.key === 'Enter'){
+      e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+      var target = e.target;
+      if (target && target.tagName === 'INPUT') triggerSearchFrom(target);
+    }
   }
 
-  function stopper(e){
-    if (!e) return;
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-  }
-
-  // 1) Capture keydown/keypress/keyup Enter on search inputs
-  ['keydown','keypress','keyup'].forEach(function(type){
-    document.addEventListener(type, function(e){
-      if ((e.key === 'Enter' || e.keyCode === 13) && isSearchInput(e.target)){
-        stopper(e);
-        clickLens(e.target);
+  function bindEnterHandlers(){
+    var nodes = Array.from(document.querySelectorAll('#site-search, input[type="search"]'));
+    nodes.forEach(function(inp){
+      if (!inp.__enterFixBound){
+        inp.addEventListener('keydown', onEnter, true); // capture = massima priorità
+        inp.__enterFixBound = true;
       }
-    }, true);
-  });
+    });
+  }
+  bindEnterHandlers();
 
-  // 2) Capture submit on any form that contains a search input
+  // intercetta anche submit di form che contengono l'input di ricerca
   document.addEventListener('submit', function(e){
     try{
       var f = e.target;
-      if (f && f.querySelector && f.querySelector('input[type="search"], input[type="text"]')){
-        stopper(e);
-        var inp = f.querySelector('input[type="search"], input[type="text"]');
-        clickLens(inp);
+      if (f && f.querySelector && f.querySelector('#site-search, input[type="search"]')){
+        e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+        var inp = f.querySelector('#site-search, input[type="search"]');
+        triggerSearchFrom(inp || document.getElementById('site-search'));
       }
     }catch(_){}
   }, true);
 
-  // 3) Patch window.open / location.assign / replace for Google Search URLs
-  function isGoogleSearch(url){
-    try{ url = String(url||''); }catch(e){ return false; }
-    return /https?:\/\/(www\.)?google\.[^\/]+\/search\?/i.test(url);
-  }
-  var _open = window.open;
-  window.open = function(u){
-    if (isGoogleSearch(u)){
-      var focused = document.activeElement;
-      if (!isSearchInput(focused)) focused = document.querySelector('#site-search, input[type="search"], input[type="text"]');
-      clickLens(focused);
-      return null;
-    }
-    return _open.apply(this, arguments);
-  };
-  var _assign = window.location.assign.bind(window.location);
-  var _replace = window.location.replace.bind(window.location);
-  window.location.assign = function(u){ if (isGoogleSearch(u)){ var i=document.activeElement; if(!isSearchInput(i)) i=document.querySelector('#site-search, input[type="search"], input[type="text"]'); clickLens(i); return; } _assign(u); };
-  window.location.replace = function(u){ if (isGoogleSearch(u)){ var i=document.activeElement; if(!isSearchInput(i)) i=document.querySelector('#site-search, input[type="search"], input[type="text"]'); clickLens(i); return; } _replace(u); };
-
-  // 4) Bind once to all search inputs (in case of dynamic DOM)
-  function bindOnce(){
-    document.querySelectorAll('#site-search, input[type="search"]').forEach(function(inp){
-      if (!inp.__enterHardBound){
-        // already handled via document-level capture; mark to avoid rebinding logic elsewhere
-        inp.__enterHardBound = true;
-      }
-    });
-  }
-  bindOnce();
-  new MutationObserver(bindOnce).observe(document.documentElement, { childList:true, subtree:true });
+  // se il DOM cambia (menu dinamici ecc.), ricollega gli handler
+  var mo = new MutationObserver(function(){ bindEnterHandlers(); });
+  mo.observe(document.documentElement, { childList: true, subtree: true });
 })();
 </script>
 
@@ -4170,99 +4143,90 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 
-<!-- === HARD CONSERVATIVE FIX: Enter -> lens; block Google redirects === -->
+<!-- === CONSERVATIVE: Enter behaves like the lens + siteData from menu === -->
 <script>
 (function(){
-  function closestSearchContainer(input){
-    if (!input || !input.closest) return document;
-    return input.closest('.search-container') ||
-           input.closest('.bar-right') ||
-           input.closest('.top-bar') ||
-           input.closest('header') ||
-           input.closest('form') || document;
+  /* 1) Build siteData from internal links (menu + page) */
+  function isInternal(href){
+    if (!href) return false;
+    href = href.trim();
+    if (!href || href[0] === '#' ) return false;
+    if (/^(mailto:|tel:)/i.test(href)) return false;
+    if (/^https?:\/\//i.test(href)) return false;
+    return true;
   }
-  function findLensFor(input){
-    var c = closestSearchContainer(input);
-    if (!c || !c.querySelector) return null;
-    return c.querySelector('.search-icon, [data-cse-search-btn], #cse-search-btn, .cse-search-btn, button[type="submit"]');
-  }
-  function clickLens(input){
-    var btn = findLensFor(input);
-    if (btn && typeof btn.click === 'function'){ btn.click(); return true; }
-    // fallback: call existing functions if present
+  var seen = new Set();
+  var items = [];
+  document.querySelectorAll('a[href]').forEach(function(a){
+    var href = a.getAttribute('href');
+    var title = (a.textContent || '').trim();
+    if (!isInternal(href) || !title) return;
+    href = href.replace(/^\.\//, '').trim();
+    var key = href.toLowerCase();
+    if (seen.has(key)) return;
+    seen.add(key);
+    items.push({ url: href, title: title, content: "Pagina dedicata a " + title + "." });
+  });
+  /* ensure examples */
+  function ensure(u,t,c){ if (!items.some(it=>it.url===u)) items.unshift({url:u, title:t, content:c||("Pagina dedicata a "+t+".")}); }
+  ensure("articoli/socrate.html","Socrate");
+  ensure("articoli/platone.html","Platone");
+  window.siteData = items;
+
+  /* 2) ENTER = click sulla lente (nessun cambio a layout/animazioni) */
+  function triggerSearchFrom(inputEl){
     try{
+      var container = inputEl && inputEl.closest && (inputEl.closest('.search-container') || inputEl.closest('.bar-right') || inputEl.closest('.top-bar') || inputEl.closest('form') || document);
+      var btn = container && container.querySelector && (container.querySelector('.search-icon') ||
+                container.querySelector('[data-cse-search-btn]') ||
+                container.querySelector('#cse-search-btn') ||
+                container.querySelector('.cse-search-btn') ||
+                container.querySelector('button[type="submit"]'));
+      if (btn && typeof btn.click === 'function'){ btn.click(); return true; }
+
+      var q = (inputEl && inputEl.value) ? inputEl.value.trim() : '';
       if (typeof submitFromInput === 'function'){ submitFromInput(); return true; }
       if (typeof openGoogleFromInput === 'function'){ openGoogleFromInput(); return true; }
-      var q = (input && input.value) ? input.value.trim() : '';
       if (typeof executeQuery === 'function'){ executeQuery(q); return true; }
-    }catch(e){}
-    return false;
+      document.dispatchEvent(new CustomEvent('perform-site-search', { detail: { query: q } }));
+      return false;
+    }catch(e){ console.error(e); return false; }
   }
 
-  function isSearchInput(el){
-    return el && el.tagName === 'INPUT' && (el.type === 'search' || el.type === 'text');
+  function onEnter(e){
+    if (e.key === 'Enter'){
+      e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+      var target = e.target;
+      if (target && target.tagName === 'INPUT') triggerSearchFrom(target);
+    }
   }
 
-  function stopper(e){
-    if (!e) return;
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-  }
-
-  // 1) Capture keydown/keypress/keyup Enter on search inputs
-  ['keydown','keypress','keyup'].forEach(function(type){
-    document.addEventListener(type, function(e){
-      if ((e.key === 'Enter' || e.keyCode === 13) && isSearchInput(e.target)){
-        stopper(e);
-        clickLens(e.target);
+  function bindEnterHandlers(){
+    var nodes = Array.from(document.querySelectorAll('#site-search, input[type="search"]'));
+    nodes.forEach(function(inp){
+      if (!inp.__enterFixBound){
+        inp.addEventListener('keydown', onEnter, true); // capture = massima priorità
+        inp.__enterFixBound = true;
       }
-    }, true);
-  });
+    });
+  }
+  bindEnterHandlers();
 
-  // 2) Capture submit on any form that contains a search input
+  // intercetta anche submit di form che contengono l'input di ricerca
   document.addEventListener('submit', function(e){
     try{
       var f = e.target;
-      if (f && f.querySelector && f.querySelector('input[type="search"], input[type="text"]')){
-        stopper(e);
-        var inp = f.querySelector('input[type="search"], input[type="text"]');
-        clickLens(inp);
+      if (f && f.querySelector && f.querySelector('#site-search, input[type="search"]')){
+        e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+        var inp = f.querySelector('#site-search, input[type="search"]');
+        triggerSearchFrom(inp || document.getElementById('site-search'));
       }
     }catch(_){}
   }, true);
 
-  // 3) Patch window.open / location.assign / replace for Google Search URLs
-  function isGoogleSearch(url){
-    try{ url = String(url||''); }catch(e){ return false; }
-    return /https?:\/\/(www\.)?google\.[^\/]+\/search\?/i.test(url);
-  }
-  var _open = window.open;
-  window.open = function(u){
-    if (isGoogleSearch(u)){
-      var focused = document.activeElement;
-      if (!isSearchInput(focused)) focused = document.querySelector('#site-search, input[type="search"], input[type="text"]');
-      clickLens(focused);
-      return null;
-    }
-    return _open.apply(this, arguments);
-  };
-  var _assign = window.location.assign.bind(window.location);
-  var _replace = window.location.replace.bind(window.location);
-  window.location.assign = function(u){ if (isGoogleSearch(u)){ var i=document.activeElement; if(!isSearchInput(i)) i=document.querySelector('#site-search, input[type="search"], input[type="text"]'); clickLens(i); return; } _assign(u); };
-  window.location.replace = function(u){ if (isGoogleSearch(u)){ var i=document.activeElement; if(!isSearchInput(i)) i=document.querySelector('#site-search, input[type="search"], input[type="text"]'); clickLens(i); return; } _replace(u); };
-
-  // 4) Bind once to all search inputs (in case of dynamic DOM)
-  function bindOnce(){
-    document.querySelectorAll('#site-search, input[type="search"]').forEach(function(inp){
-      if (!inp.__enterHardBound){
-        // already handled via document-level capture; mark to avoid rebinding logic elsewhere
-        inp.__enterHardBound = true;
-      }
-    });
-  }
-  bindOnce();
-  new MutationObserver(bindOnce).observe(document.documentElement, { childList:true, subtree:true });
+  // se il DOM cambia (menu dinamici ecc.), ricollega gli handler
+  var mo = new MutationObserver(function(){ bindEnterHandlers(); });
+  mo.observe(document.documentElement, { childList: true, subtree: true });
 })();
 </script>
 
@@ -4616,99 +4580,90 @@ document.getElementById('search-results-panel')?.addEventListener('click', funct
 </script>
 
 
-<!-- === HARD CONSERVATIVE FIX: Enter -> lens; block Google redirects === -->
+<!-- === CONSERVATIVE: Enter behaves like the lens + siteData from menu === -->
 <script>
 (function(){
-  function closestSearchContainer(input){
-    if (!input || !input.closest) return document;
-    return input.closest('.search-container') ||
-           input.closest('.bar-right') ||
-           input.closest('.top-bar') ||
-           input.closest('header') ||
-           input.closest('form') || document;
+  /* 1) Build siteData from internal links (menu + page) */
+  function isInternal(href){
+    if (!href) return false;
+    href = href.trim();
+    if (!href || href[0] === '#' ) return false;
+    if (/^(mailto:|tel:)/i.test(href)) return false;
+    if (/^https?:\/\//i.test(href)) return false;
+    return true;
   }
-  function findLensFor(input){
-    var c = closestSearchContainer(input);
-    if (!c || !c.querySelector) return null;
-    return c.querySelector('.search-icon, [data-cse-search-btn], #cse-search-btn, .cse-search-btn, button[type="submit"]');
-  }
-  function clickLens(input){
-    var btn = findLensFor(input);
-    if (btn && typeof btn.click === 'function'){ btn.click(); return true; }
-    // fallback: call existing functions if present
+  var seen = new Set();
+  var items = [];
+  document.querySelectorAll('a[href]').forEach(function(a){
+    var href = a.getAttribute('href');
+    var title = (a.textContent || '').trim();
+    if (!isInternal(href) || !title) return;
+    href = href.replace(/^\.\//, '').trim();
+    var key = href.toLowerCase();
+    if (seen.has(key)) return;
+    seen.add(key);
+    items.push({ url: href, title: title, content: "Pagina dedicata a " + title + "." });
+  });
+  /* ensure examples */
+  function ensure(u,t,c){ if (!items.some(it=>it.url===u)) items.unshift({url:u, title:t, content:c||("Pagina dedicata a "+t+".")}); }
+  ensure("articoli/socrate.html","Socrate");
+  ensure("articoli/platone.html","Platone");
+  window.siteData = items;
+
+  /* 2) ENTER = click sulla lente (nessun cambio a layout/animazioni) */
+  function triggerSearchFrom(inputEl){
     try{
+      var container = inputEl && inputEl.closest && (inputEl.closest('.search-container') || inputEl.closest('.bar-right') || inputEl.closest('.top-bar') || inputEl.closest('form') || document);
+      var btn = container && container.querySelector && (container.querySelector('.search-icon') ||
+                container.querySelector('[data-cse-search-btn]') ||
+                container.querySelector('#cse-search-btn') ||
+                container.querySelector('.cse-search-btn') ||
+                container.querySelector('button[type="submit"]'));
+      if (btn && typeof btn.click === 'function'){ btn.click(); return true; }
+
+      var q = (inputEl && inputEl.value) ? inputEl.value.trim() : '';
       if (typeof submitFromInput === 'function'){ submitFromInput(); return true; }
       if (typeof openGoogleFromInput === 'function'){ openGoogleFromInput(); return true; }
-      var q = (input && input.value) ? input.value.trim() : '';
       if (typeof executeQuery === 'function'){ executeQuery(q); return true; }
-    }catch(e){}
-    return false;
+      document.dispatchEvent(new CustomEvent('perform-site-search', { detail: { query: q } }));
+      return false;
+    }catch(e){ console.error(e); return false; }
   }
 
-  function isSearchInput(el){
-    return el && el.tagName === 'INPUT' && (el.type === 'search' || el.type === 'text');
+  function onEnter(e){
+    if (e.key === 'Enter'){
+      e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+      var target = e.target;
+      if (target && target.tagName === 'INPUT') triggerSearchFrom(target);
+    }
   }
 
-  function stopper(e){
-    if (!e) return;
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-  }
-
-  // 1) Capture keydown/keypress/keyup Enter on search inputs
-  ['keydown','keypress','keyup'].forEach(function(type){
-    document.addEventListener(type, function(e){
-      if ((e.key === 'Enter' || e.keyCode === 13) && isSearchInput(e.target)){
-        stopper(e);
-        clickLens(e.target);
+  function bindEnterHandlers(){
+    var nodes = Array.from(document.querySelectorAll('#site-search, input[type="search"]'));
+    nodes.forEach(function(inp){
+      if (!inp.__enterFixBound){
+        inp.addEventListener('keydown', onEnter, true); // capture = massima priorità
+        inp.__enterFixBound = true;
       }
-    }, true);
-  });
+    });
+  }
+  bindEnterHandlers();
 
-  // 2) Capture submit on any form that contains a search input
+  // intercetta anche submit di form che contengono l'input di ricerca
   document.addEventListener('submit', function(e){
     try{
       var f = e.target;
-      if (f && f.querySelector && f.querySelector('input[type="search"], input[type="text"]')){
-        stopper(e);
-        var inp = f.querySelector('input[type="search"], input[type="text"]');
-        clickLens(inp);
+      if (f && f.querySelector && f.querySelector('#site-search, input[type="search"]')){
+        e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+        var inp = f.querySelector('#site-search, input[type="search"]');
+        triggerSearchFrom(inp || document.getElementById('site-search'));
       }
     }catch(_){}
   }, true);
 
-  // 3) Patch window.open / location.assign / replace for Google Search URLs
-  function isGoogleSearch(url){
-    try{ url = String(url||''); }catch(e){ return false; }
-    return /https?:\/\/(www\.)?google\.[^\/]+\/search\?/i.test(url);
-  }
-  var _open = window.open;
-  window.open = function(u){
-    if (isGoogleSearch(u)){
-      var focused = document.activeElement;
-      if (!isSearchInput(focused)) focused = document.querySelector('#site-search, input[type="search"], input[type="text"]');
-      clickLens(focused);
-      return null;
-    }
-    return _open.apply(this, arguments);
-  };
-  var _assign = window.location.assign.bind(window.location);
-  var _replace = window.location.replace.bind(window.location);
-  window.location.assign = function(u){ if (isGoogleSearch(u)){ var i=document.activeElement; if(!isSearchInput(i)) i=document.querySelector('#site-search, input[type="search"], input[type="text"]'); clickLens(i); return; } _assign(u); };
-  window.location.replace = function(u){ if (isGoogleSearch(u)){ var i=document.activeElement; if(!isSearchInput(i)) i=document.querySelector('#site-search, input[type="search"], input[type="text"]'); clickLens(i); return; } _replace(u); };
-
-  // 4) Bind once to all search inputs (in case of dynamic DOM)
-  function bindOnce(){
-    document.querySelectorAll('#site-search, input[type="search"]').forEach(function(inp){
-      if (!inp.__enterHardBound){
-        // already handled via document-level capture; mark to avoid rebinding logic elsewhere
-        inp.__enterHardBound = true;
-      }
-    });
-  }
-  bindOnce();
-  new MutationObserver(bindOnce).observe(document.documentElement, { childList:true, subtree:true });
+  // se il DOM cambia (menu dinamici ecc.), ricollega gli handler
+  var mo = new MutationObserver(function(){ bindEnterHandlers(); });
+  mo.observe(document.documentElement, { childList: true, subtree: true });
 })();
 </script>
 
