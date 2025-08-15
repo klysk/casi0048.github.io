@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
-   
+    <title>Echi di Sofia — Slider laterale + Blob articoli</title>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect"/>
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -3413,6 +3413,94 @@
 })();
 </script>
 
+
+<!-- === CONSERVATIVE: Enter behaves like the lens + siteData from menu === -->
+<script>
+(function(){
+  /* 1) Build siteData from internal links (menu + page) */
+  function isInternal(href){
+    if (!href) return false;
+    href = href.trim();
+    if (!href || href[0] === '#' ) return false;
+    if (/^(mailto:|tel:)/i.test(href)) return false;
+    if (/^https?:\/\//i.test(href)) return false;
+    return true;
+  }
+  var seen = new Set();
+  var items = [];
+  document.querySelectorAll('a[href]').forEach(function(a){
+    var href = a.getAttribute('href');
+    var title = (a.textContent || '').trim();
+    if (!isInternal(href) || !title) return;
+    href = href.replace(/^\.\//, '').trim();
+    var key = href.toLowerCase();
+    if (seen.has(key)) return;
+    seen.add(key);
+    items.push({ url: href, title: title, content: "Pagina dedicata a " + title + "." });
+  });
+  /* ensure examples */
+  function ensure(u,t,c){ if (!items.some(it=>it.url===u)) items.unshift({url:u, title:t, content:c||("Pagina dedicata a "+t+".")}); }
+  ensure("articoli/socrate.html","Socrate");
+  ensure("articoli/platone.html","Platone");
+  window.siteData = items;
+
+  /* 2) ENTER = click sulla lente (nessun cambio a layout/animazioni) */
+  function triggerSearchFrom(inputEl){
+    try{
+      var container = inputEl && inputEl.closest && (inputEl.closest('.search-container') || inputEl.closest('.bar-right') || inputEl.closest('.top-bar') || inputEl.closest('form') || document);
+      var btn = container && container.querySelector && (container.querySelector('.search-icon') ||
+                container.querySelector('[data-cse-search-btn]') ||
+                container.querySelector('#cse-search-btn') ||
+                container.querySelector('.cse-search-btn') ||
+                container.querySelector('button[type="submit"]'));
+      if (btn && typeof btn.click === 'function'){ btn.click(); return true; }
+
+      var q = (inputEl && inputEl.value) ? inputEl.value.trim() : '';
+      if (typeof submitFromInput === 'function'){ submitFromInput(); return true; }
+      if (typeof openGoogleFromInput === 'function'){ openGoogleFromInput(); return true; }
+      if (typeof executeQuery === 'function'){ executeQuery(q); return true; }
+      document.dispatchEvent(new CustomEvent('perform-site-search', { detail: { query: q } }));
+      return false;
+    }catch(e){ console.error(e); return false; }
+  }
+
+  function onEnter(e){
+    if (e.key === 'Enter'){
+      e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+      var target = e.target;
+      if (target && target.tagName === 'INPUT') triggerSearchFrom(target);
+    }
+  }
+
+  function bindEnterHandlers(){
+    var nodes = Array.from(document.querySelectorAll('#site-search, input[type="search"]'));
+    nodes.forEach(function(inp){
+      if (!inp.__enterFixBound){
+        inp.addEventListener('keydown', onEnter, true); // capture = massima priorità
+        inp.__enterFixBound = true;
+      }
+    });
+  }
+  bindEnterHandlers();
+
+  // intercetta anche submit di form che contengono l'input di ricerca
+  document.addEventListener('submit', function(e){
+    try{
+      var f = e.target;
+      if (f && f.querySelector && f.querySelector('#site-search, input[type="search"]')){
+        e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+        var inp = f.querySelector('#site-search, input[type="search"]');
+        triggerSearchFrom(inp || document.getElementById('site-search'));
+      }
+    }catch(_){}
+  }, true);
+
+  // se il DOM cambia (menu dinamici ecc.), ricollega gli handler
+  var mo = new MutationObserver(function(){ bindEnterHandlers(); });
+  mo.observe(document.documentElement, { childList: true, subtree: true });
+})();
+</script>
+
 </body> -->
 <!-- Aggiungi questo codice prima della chiusura 
 <!-- === CONSERVATIVE ENTER FIX + siteData (real excerpts) === -->
@@ -3484,6 +3572,94 @@
     }catch(_ ){}
   }, true);
 
+  var mo = new MutationObserver(function(){ bindEnterHandlers(); });
+  mo.observe(document.documentElement, { childList: true, subtree: true });
+})();
+</script>
+
+
+<!-- === CONSERVATIVE: Enter behaves like the lens + siteData from menu === -->
+<script>
+(function(){
+  /* 1) Build siteData from internal links (menu + page) */
+  function isInternal(href){
+    if (!href) return false;
+    href = href.trim();
+    if (!href || href[0] === '#' ) return false;
+    if (/^(mailto:|tel:)/i.test(href)) return false;
+    if (/^https?:\/\//i.test(href)) return false;
+    return true;
+  }
+  var seen = new Set();
+  var items = [];
+  document.querySelectorAll('a[href]').forEach(function(a){
+    var href = a.getAttribute('href');
+    var title = (a.textContent || '').trim();
+    if (!isInternal(href) || !title) return;
+    href = href.replace(/^\.\//, '').trim();
+    var key = href.toLowerCase();
+    if (seen.has(key)) return;
+    seen.add(key);
+    items.push({ url: href, title: title, content: "Pagina dedicata a " + title + "." });
+  });
+  /* ensure examples */
+  function ensure(u,t,c){ if (!items.some(it=>it.url===u)) items.unshift({url:u, title:t, content:c||("Pagina dedicata a "+t+".")}); }
+  ensure("articoli/socrate.html","Socrate");
+  ensure("articoli/platone.html","Platone");
+  window.siteData = items;
+
+  /* 2) ENTER = click sulla lente (nessun cambio a layout/animazioni) */
+  function triggerSearchFrom(inputEl){
+    try{
+      var container = inputEl && inputEl.closest && (inputEl.closest('.search-container') || inputEl.closest('.bar-right') || inputEl.closest('.top-bar') || inputEl.closest('form') || document);
+      var btn = container && container.querySelector && (container.querySelector('.search-icon') ||
+                container.querySelector('[data-cse-search-btn]') ||
+                container.querySelector('#cse-search-btn') ||
+                container.querySelector('.cse-search-btn') ||
+                container.querySelector('button[type="submit"]'));
+      if (btn && typeof btn.click === 'function'){ btn.click(); return true; }
+
+      var q = (inputEl && inputEl.value) ? inputEl.value.trim() : '';
+      if (typeof submitFromInput === 'function'){ submitFromInput(); return true; }
+      if (typeof openGoogleFromInput === 'function'){ openGoogleFromInput(); return true; }
+      if (typeof executeQuery === 'function'){ executeQuery(q); return true; }
+      document.dispatchEvent(new CustomEvent('perform-site-search', { detail: { query: q } }));
+      return false;
+    }catch(e){ console.error(e); return false; }
+  }
+
+  function onEnter(e){
+    if (e.key === 'Enter'){
+      e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+      var target = e.target;
+      if (target && target.tagName === 'INPUT') triggerSearchFrom(target);
+    }
+  }
+
+  function bindEnterHandlers(){
+    var nodes = Array.from(document.querySelectorAll('#site-search, input[type="search"]'));
+    nodes.forEach(function(inp){
+      if (!inp.__enterFixBound){
+        inp.addEventListener('keydown', onEnter, true); // capture = massima priorità
+        inp.__enterFixBound = true;
+      }
+    });
+  }
+  bindEnterHandlers();
+
+  // intercetta anche submit di form che contengono l'input di ricerca
+  document.addEventListener('submit', function(e){
+    try{
+      var f = e.target;
+      if (f && f.querySelector && f.querySelector('#site-search, input[type="search"]')){
+        e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+        var inp = f.querySelector('#site-search, input[type="search"]');
+        triggerSearchFrom(inp || document.getElementById('site-search'));
+      }
+    }catch(_){}
+  }, true);
+
+  // se il DOM cambia (menu dinamici ecc.), ricollega gli handler
   var mo = new MutationObserver(function(){ bindEnterHandlers(); });
   mo.observe(document.documentElement, { childList: true, subtree: true });
 })();
@@ -3694,6 +3870,94 @@ if (document.readyState === 'complete') {
 })();
 </script>
 
+
+<!-- === CONSERVATIVE: Enter behaves like the lens + siteData from menu === -->
+<script>
+(function(){
+  /* 1) Build siteData from internal links (menu + page) */
+  function isInternal(href){
+    if (!href) return false;
+    href = href.trim();
+    if (!href || href[0] === '#' ) return false;
+    if (/^(mailto:|tel:)/i.test(href)) return false;
+    if (/^https?:\/\//i.test(href)) return false;
+    return true;
+  }
+  var seen = new Set();
+  var items = [];
+  document.querySelectorAll('a[href]').forEach(function(a){
+    var href = a.getAttribute('href');
+    var title = (a.textContent || '').trim();
+    if (!isInternal(href) || !title) return;
+    href = href.replace(/^\.\//, '').trim();
+    var key = href.toLowerCase();
+    if (seen.has(key)) return;
+    seen.add(key);
+    items.push({ url: href, title: title, content: "Pagina dedicata a " + title + "." });
+  });
+  /* ensure examples */
+  function ensure(u,t,c){ if (!items.some(it=>it.url===u)) items.unshift({url:u, title:t, content:c||("Pagina dedicata a "+t+".")}); }
+  ensure("articoli/socrate.html","Socrate");
+  ensure("articoli/platone.html","Platone");
+  window.siteData = items;
+
+  /* 2) ENTER = click sulla lente (nessun cambio a layout/animazioni) */
+  function triggerSearchFrom(inputEl){
+    try{
+      var container = inputEl && inputEl.closest && (inputEl.closest('.search-container') || inputEl.closest('.bar-right') || inputEl.closest('.top-bar') || inputEl.closest('form') || document);
+      var btn = container && container.querySelector && (container.querySelector('.search-icon') ||
+                container.querySelector('[data-cse-search-btn]') ||
+                container.querySelector('#cse-search-btn') ||
+                container.querySelector('.cse-search-btn') ||
+                container.querySelector('button[type="submit"]'));
+      if (btn && typeof btn.click === 'function'){ btn.click(); return true; }
+
+      var q = (inputEl && inputEl.value) ? inputEl.value.trim() : '';
+      if (typeof submitFromInput === 'function'){ submitFromInput(); return true; }
+      if (typeof openGoogleFromInput === 'function'){ openGoogleFromInput(); return true; }
+      if (typeof executeQuery === 'function'){ executeQuery(q); return true; }
+      document.dispatchEvent(new CustomEvent('perform-site-search', { detail: { query: q } }));
+      return false;
+    }catch(e){ console.error(e); return false; }
+  }
+
+  function onEnter(e){
+    if (e.key === 'Enter'){
+      e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+      var target = e.target;
+      if (target && target.tagName === 'INPUT') triggerSearchFrom(target);
+    }
+  }
+
+  function bindEnterHandlers(){
+    var nodes = Array.from(document.querySelectorAll('#site-search, input[type="search"]'));
+    nodes.forEach(function(inp){
+      if (!inp.__enterFixBound){
+        inp.addEventListener('keydown', onEnter, true); // capture = massima priorità
+        inp.__enterFixBound = true;
+      }
+    });
+  }
+  bindEnterHandlers();
+
+  // intercetta anche submit di form che contengono l'input di ricerca
+  document.addEventListener('submit', function(e){
+    try{
+      var f = e.target;
+      if (f && f.querySelector && f.querySelector('#site-search, input[type="search"]')){
+        e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+        var inp = f.querySelector('#site-search, input[type="search"]');
+        triggerSearchFrom(inp || document.getElementById('site-search'));
+      }
+    }catch(_){}
+  }, true);
+
+  // se il DOM cambia (menu dinamici ecc.), ricollega gli handler
+  var mo = new MutationObserver(function(){ bindEnterHandlers(); });
+  mo.observe(document.documentElement, { childList: true, subtree: true });
+})();
+</script>
+
 </body> -->
 <div id="search-results-panel" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:10000;padding:40px;box-sizing:border-box;">
   <div style="max-width:800px;margin:0 auto;background:#0a0a1a;padding:20px;border-radius:8px;border:1px solid #d4af37;max-height:80vh;overflow:auto;position:relative;">
@@ -3873,6 +4137,94 @@ document.addEventListener('DOMContentLoaded', function() {
     }catch(_ ){}
   }, true);
 
+  var mo = new MutationObserver(function(){ bindEnterHandlers(); });
+  mo.observe(document.documentElement, { childList: true, subtree: true });
+})();
+</script>
+
+
+<!-- === CONSERVATIVE: Enter behaves like the lens + siteData from menu === -->
+<script>
+(function(){
+  /* 1) Build siteData from internal links (menu + page) */
+  function isInternal(href){
+    if (!href) return false;
+    href = href.trim();
+    if (!href || href[0] === '#' ) return false;
+    if (/^(mailto:|tel:)/i.test(href)) return false;
+    if (/^https?:\/\//i.test(href)) return false;
+    return true;
+  }
+  var seen = new Set();
+  var items = [];
+  document.querySelectorAll('a[href]').forEach(function(a){
+    var href = a.getAttribute('href');
+    var title = (a.textContent || '').trim();
+    if (!isInternal(href) || !title) return;
+    href = href.replace(/^\.\//, '').trim();
+    var key = href.toLowerCase();
+    if (seen.has(key)) return;
+    seen.add(key);
+    items.push({ url: href, title: title, content: "Pagina dedicata a " + title + "." });
+  });
+  /* ensure examples */
+  function ensure(u,t,c){ if (!items.some(it=>it.url===u)) items.unshift({url:u, title:t, content:c||("Pagina dedicata a "+t+".")}); }
+  ensure("articoli/socrate.html","Socrate");
+  ensure("articoli/platone.html","Platone");
+  window.siteData = items;
+
+  /* 2) ENTER = click sulla lente (nessun cambio a layout/animazioni) */
+  function triggerSearchFrom(inputEl){
+    try{
+      var container = inputEl && inputEl.closest && (inputEl.closest('.search-container') || inputEl.closest('.bar-right') || inputEl.closest('.top-bar') || inputEl.closest('form') || document);
+      var btn = container && container.querySelector && (container.querySelector('.search-icon') ||
+                container.querySelector('[data-cse-search-btn]') ||
+                container.querySelector('#cse-search-btn') ||
+                container.querySelector('.cse-search-btn') ||
+                container.querySelector('button[type="submit"]'));
+      if (btn && typeof btn.click === 'function'){ btn.click(); return true; }
+
+      var q = (inputEl && inputEl.value) ? inputEl.value.trim() : '';
+      if (typeof submitFromInput === 'function'){ submitFromInput(); return true; }
+      if (typeof openGoogleFromInput === 'function'){ openGoogleFromInput(); return true; }
+      if (typeof executeQuery === 'function'){ executeQuery(q); return true; }
+      document.dispatchEvent(new CustomEvent('perform-site-search', { detail: { query: q } }));
+      return false;
+    }catch(e){ console.error(e); return false; }
+  }
+
+  function onEnter(e){
+    if (e.key === 'Enter'){
+      e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+      var target = e.target;
+      if (target && target.tagName === 'INPUT') triggerSearchFrom(target);
+    }
+  }
+
+  function bindEnterHandlers(){
+    var nodes = Array.from(document.querySelectorAll('#site-search, input[type="search"]'));
+    nodes.forEach(function(inp){
+      if (!inp.__enterFixBound){
+        inp.addEventListener('keydown', onEnter, true); // capture = massima priorità
+        inp.__enterFixBound = true;
+      }
+    });
+  }
+  bindEnterHandlers();
+
+  // intercetta anche submit di form che contengono l'input di ricerca
+  document.addEventListener('submit', function(e){
+    try{
+      var f = e.target;
+      if (f && f.querySelector && f.querySelector('#site-search, input[type="search"]')){
+        e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+        var inp = f.querySelector('#site-search, input[type="search"]');
+        triggerSearchFrom(inp || document.getElementById('site-search'));
+      }
+    }catch(_){}
+  }, true);
+
+  // se il DOM cambia (menu dinamici ecc.), ricollega gli handler
   var mo = new MutationObserver(function(){ bindEnterHandlers(); });
   mo.observe(document.documentElement, { childList: true, subtree: true });
 })();
@@ -4222,6 +4574,94 @@ document.getElementById('search-results-panel')?.addEventListener('click', funct
     }catch(_ ){}
   }, true);
 
+  var mo = new MutationObserver(function(){ bindEnterHandlers(); });
+  mo.observe(document.documentElement, { childList: true, subtree: true });
+})();
+</script>
+
+
+<!-- === CONSERVATIVE: Enter behaves like the lens + siteData from menu === -->
+<script>
+(function(){
+  /* 1) Build siteData from internal links (menu + page) */
+  function isInternal(href){
+    if (!href) return false;
+    href = href.trim();
+    if (!href || href[0] === '#' ) return false;
+    if (/^(mailto:|tel:)/i.test(href)) return false;
+    if (/^https?:\/\//i.test(href)) return false;
+    return true;
+  }
+  var seen = new Set();
+  var items = [];
+  document.querySelectorAll('a[href]').forEach(function(a){
+    var href = a.getAttribute('href');
+    var title = (a.textContent || '').trim();
+    if (!isInternal(href) || !title) return;
+    href = href.replace(/^\.\//, '').trim();
+    var key = href.toLowerCase();
+    if (seen.has(key)) return;
+    seen.add(key);
+    items.push({ url: href, title: title, content: "Pagina dedicata a " + title + "." });
+  });
+  /* ensure examples */
+  function ensure(u,t,c){ if (!items.some(it=>it.url===u)) items.unshift({url:u, title:t, content:c||("Pagina dedicata a "+t+".")}); }
+  ensure("articoli/socrate.html","Socrate");
+  ensure("articoli/platone.html","Platone");
+  window.siteData = items;
+
+  /* 2) ENTER = click sulla lente (nessun cambio a layout/animazioni) */
+  function triggerSearchFrom(inputEl){
+    try{
+      var container = inputEl && inputEl.closest && (inputEl.closest('.search-container') || inputEl.closest('.bar-right') || inputEl.closest('.top-bar') || inputEl.closest('form') || document);
+      var btn = container && container.querySelector && (container.querySelector('.search-icon') ||
+                container.querySelector('[data-cse-search-btn]') ||
+                container.querySelector('#cse-search-btn') ||
+                container.querySelector('.cse-search-btn') ||
+                container.querySelector('button[type="submit"]'));
+      if (btn && typeof btn.click === 'function'){ btn.click(); return true; }
+
+      var q = (inputEl && inputEl.value) ? inputEl.value.trim() : '';
+      if (typeof submitFromInput === 'function'){ submitFromInput(); return true; }
+      if (typeof openGoogleFromInput === 'function'){ openGoogleFromInput(); return true; }
+      if (typeof executeQuery === 'function'){ executeQuery(q); return true; }
+      document.dispatchEvent(new CustomEvent('perform-site-search', { detail: { query: q } }));
+      return false;
+    }catch(e){ console.error(e); return false; }
+  }
+
+  function onEnter(e){
+    if (e.key === 'Enter'){
+      e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+      var target = e.target;
+      if (target && target.tagName === 'INPUT') triggerSearchFrom(target);
+    }
+  }
+
+  function bindEnterHandlers(){
+    var nodes = Array.from(document.querySelectorAll('#site-search, input[type="search"]'));
+    nodes.forEach(function(inp){
+      if (!inp.__enterFixBound){
+        inp.addEventListener('keydown', onEnter, true); // capture = massima priorità
+        inp.__enterFixBound = true;
+      }
+    });
+  }
+  bindEnterHandlers();
+
+  // intercetta anche submit di form che contengono l'input di ricerca
+  document.addEventListener('submit', function(e){
+    try{
+      var f = e.target;
+      if (f && f.querySelector && f.querySelector('#site-search, input[type="search"]')){
+        e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+        var inp = f.querySelector('#site-search, input[type="search"]');
+        triggerSearchFrom(inp || document.getElementById('site-search'));
+      }
+    }catch(_){}
+  }, true);
+
+  // se il DOM cambia (menu dinamici ecc.), ricollega gli handler
   var mo = new MutationObserver(function(){ bindEnterHandlers(); });
   mo.observe(document.documentElement, { childList: true, subtree: true });
 })();
