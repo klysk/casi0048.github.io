@@ -3034,141 +3034,140 @@ header {
         ctx.fillStyle = "black"; ctx.fillRect(0, 0, W, H);
         loop();
       })();
-      <!--  fine script stelle cadentin da dx a sx-->
-    </script>
+      </script>
+     <!--  fine script stelle cadentin da dx a sx-->
     <!-- Particelle filosofiche (solo symbols) -->
-    <!-- Particelle filosofiche — versione pulita -->
-    <script>
-      document.addEventListener('DOMContentLoaded', function(){
-        // Container: usa #philoParticles se c'è, altrimenti crealo
-        let container = document.getElementById('philoParticles');
-        if (!container) {
-          container = document.createElement('div');
-          container.id = 'philoParticles';
-          document.body.appendChild(container);
-        } else {
-          // Portalo in fondo al body per stare sopra gli sfondi
-          document.body.appendChild(container);
-        }
-      
-        // CSS: sopra sfondi/canvas, sotto UI (regola z-index se serve)
-        const STYLE_ID = 'philoParticles-style';
-        if (!document.getElementById(STYLE_ID)){
-          const st = document.createElement('style'); st.id = STYLE_ID;
-          st.textContent = `
-            #philoParticles{
-              position: fixed; inset: 0;
-              z-index: 60;            /* ↑ aumenta se resta sotto qualche overlay */
-              pointer-events: none;   /* non blocca i clic */
-            }
-            #philoParticles .particle{
-              position: absolute; left: 0; top: 0;
-              transform: translate3d(0,0,0);
-              will-change: transform;
-              white-space: nowrap;    /* nomi doppi interi */
-              line-height: 1;
-              text-shadow: 0 0 8px rgba(255,255,255,.45);
-              opacity: .98;
-            }
-          `;
-          document.head.appendChild(st)
-        }
-      
-        // Sorgente simboli/parole
-        const symbols = [
-        // Matematica e logica
-        '∞','Φ','Ψ','Λ','Δ','Ω','π','∑','∏','√',
-        '≡','≈','∴','∀','∃','∈','∧','∨','⊕','⊗',
-        '⊖','⊙','⊘','⊚','⊛','⊜','⊝','⊞','⊟','⊠',
-        '⊡','⊢','⊣','⊤','⊥','⊧','⊨','⊩','⊪','⊫',
-        'Σ','Θ','Ξ','ℵ','∂','∇','∫','∬','∭',
-      
-        // Concetti e filosofia
-        'Sapienza','Verità','Logos','Thanatos','Mito','Essere','Divenire',
-        'Idee','Archè','Armonia','Principio','Destino','Libertà','Giustizia',
-        'Virtù','Pensiero','Domanda','Risposta','Silenzio','Samsara','Nirvana',
-        'Epicuro','Parmenide','Dialogo','Socratico','Platone','Sostanza',
-        'Aristotele','Stoà','Eraclito','Fronesi','Atomos','Nous','Anima','Cosmo',
-        'Apeiron','Physis','Ethos','Stoicismo','Epicureismo','Platonismo',
-        'Aristotelismo','Dialettica','Ontologia','Metafisica','Etica','Estetica','Logica',
-      
-        // Persone e nomi propri
-        'Ipazia','Maria Teresa','Diotima','Livia','Gesù Nazareno','Demetrio Falereo','Casimiro',
-      
-        // Icone ed emoji
-        '✨','⚖️','📚','🌌','💭','🧠','🗣️','📝','💡','👨‍🚀','🌓','🌕',
-        '🌠','☄️','🪐','🌙','🌍 ','🌞','🌎','🪄','🚀','📗','📙','📕','🔬','☀️','📏',
-        '🧭','📊','⌛','🛸 ','🪐','🌖 ','🌔','🕳️','♾️','🗺️','🚪','🔮','🛸','🌙','💫',
-        '🫥','🩷','🔭'
-      ];
-      
-        // Copertura garantita (tutti una volta per giro)
-        const unique = [...new Set(symbols)];
-        function shuffle(a){ for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]] } return a; }
-        let order = shuffle([...unique]), ptr = 0;
-        function nextToken(){ if (ptr >= order.length){ order = shuffle([...unique]); ptr = 0; } return order[ptr++]; }
-      
-        // Configura qui
-        const cfg = {
-          count: 120,              // quante particelle visibili
-          minSize: 0.5,           // rem
-          maxSize: 1,           // rem
-          floatDist: 90,          // ampiezza “galleggiamento”
-          minSpeed: 0.006,        // ↓ più lento
-          maxSpeed: 0.012,
-          useRandomHSL: true      // false = usa palette
-        };
-        const palette = ['#FFD700','#40E0D0','#FF6347','#9370DB','#00BFFF','#7CFC00','#FF69B4','#FF8C00','#DA70D6','#1E90FF'];
-      
-        // Stato
-        const particles = [];
-        const rand = (a,b)=> Math.random()*(b-a)+a;
-        const rndInt = n => Math.floor(Math.random()*n);
-        const randHSL = ()=> `hsl(${Math.floor(Math.random()*360)} 100% 70%)`;
-      
-        // Crea particelle
-        for (let i=0; i<cfg.count; i++){
-          const el = document.createElement('div');
-          el.className = 'particle';
-          el.textContent = nextToken();
-          const size = rand(cfg.minSize, cfg.maxSize);
-          el.style.fontSize = size + 'rem';
-          el.style.color = cfg.useRandomHSL ? randHSL() : palette[rndInt(palette.length)];
-          container.appendChild(el);
-      
-          particles.push({
-            el, size,
-            x: Math.random()*innerWidth,
-            y: Math.random()*innerHeight,
-            ang: Math.random()*Math.PI*2,
-            speed: rand(cfg.minSpeed, cfg.maxSpeed),
-            radius: rand(10, 10 + cfg.floatDist)
-          });
-        }
-      
-        // Animazione
-        function render(){
-          for (const p of particles){
-            p.ang += p.speed;
-            const bx = p.x + Math.cos(p.ang)*p.radius;
-            const by = p.y + Math.sin(p.ang*0.7)*p.radius;
-      p.el.style.transform = `translate3d(${bx}px, ${by}px, 0) translate(-50%, -50%)`;
-      
-          }
-          requestAnimationFrame(render);
-        }
-        render();
-      
-        // Resize
-        addEventListener('resize', ()=>{
-          for (const p of particles){
-            p.x = Math.random()*innerWidth;
-            p.y = Math.random()*innerHeight;
-          }
+    <!--  INIZIO Particelle filosofiche — versione pulita -->
+  <script>
+document.addEventListener('DOMContentLoaded', function(){
+  // Container
+  let container = document.getElementById('philoParticles');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'philoParticles';
+    document.body.appendChild(container);
+  } else {
+    document.body.appendChild(container);
+  }
+
+  // CSS
+  const STYLE_ID = 'philoParticles-style';
+  if (!document.getElementById(STYLE_ID)){
+    const st = document.createElement('style'); st.id = STYLE_ID;
+    st.textContent = `
+      #philoParticles{
+        position: fixed; inset: 0;
+        z-index: 60;
+        pointer-events: none;
+      }
+      #philoParticles .particle{
+        position: absolute;
+        transform: translate3d(0,0,0);
+        will-change: transform;
+        white-space: nowrap;
+        line-height: 1;
+        text-shadow: 0 0 8px rgba(255,255,255,.45);
+        opacity: .98;
+      }
+    `;
+    document.head.appendChild(st)
+  }
+
+  // Sorgente simboli/parole
+  const symbols = [
+    '∞','Φ','Ψ','Λ','Δ','Ω','π','∑','∏','√',
+    '≡','≈','∴','∀','∃','∈','∧','∨','⊕','⊗',
+    'Σ','Θ','Ξ','ℵ','∂','∇','∫',
+    'Sapienza','Verità','Logos','Thanatos','Mito','Essere','Divenire',
+    'Idee','Archè','Armonia','Principio','Destino','Libertà','Giustizia',
+    'Virtù','Pensiero','Domanda','Risposta','Silenzio','Samsara','Nirvana',
+    'Epicuro','Parmenide','Dialogo','Socratico','Platone','Sostanza',
+    'Aristotele','Stoà','Eraclito','Nous','Anima','Cosmo',
+    'Ipazia','Livia','Gesù Nazareno','Casimiro',
+    '✨','⚖️','📚','🌌','💭','🧠','🗣️','📝','💡','👨‍🚀','🌓','🌕',
+    '🌠','☄️','🪐','🌙','🌍 ','🌞','🚀','📗','📙','📕','🔬','☀️',
+    '🧭','⌛','🛸','🌖','🌔','🕳️','♾️'
+  ];
+
+  // shuffle
+  function shuffle(a){ for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]] } return a; }
+
+  // Config
+  const cfg = {
+    count: 140,
+    minSize: 0.6,
+    maxSize: 1.4,
+    floatDist: 100,
+    minSpeed: 0.004,
+    maxSpeed: 0.010,
+    useRandomHSL: true
+  };
+  const palette = ['#FFD700','#40E0D0','#FF6347','#9370DB','#00BFFF','#7CFC00','#FF69B4','#FF8C00','#DA70D6','#1E90FF'];
+  const rand = (a,b)=> Math.random()*(b-a)+a;
+  const rndInt = n => Math.floor(Math.random()*n);
+  const randHSL = ()=> `hsl(${Math.floor(Math.random()*360)} 100% 70%)`;
+
+  // Genera griglia
+  function makeParticles(){
+    container.innerHTML = "";
+    particles.length = 0;
+    const cols = Math.ceil(Math.sqrt(cfg.count));
+    const rows = Math.ceil(cfg.count / cols);
+    let grid = [];
+    for (let r=0; r<rows; r++){
+      for (let c=0; c<cols; c++){
+        grid.push({
+          x: (c+0.5)/cols * innerWidth,
+          y: (r+0.5)/rows * innerHeight
         });
+      }
+    }
+    grid = shuffle(grid);
+
+    for (let i=0; i<cfg.count; i++){
+      const el = document.createElement('div');
+      el.className = 'particle';
+      el.textContent = symbols[i % symbols.length];
+      const size = rand(cfg.minSize, cfg.maxSize);
+      el.style.fontSize = size + 'rem';
+      el.style.color = cfg.useRandomHSL ? randHSL() : palette[rndInt(palette.length)];
+      container.appendChild(el);
+
+      const pos = grid[i];
+      particles.push({
+        el, size,
+        x: pos.x,
+        y: pos.y,
+        ang: Math.random()*Math.PI*2,
+        speed: rand(cfg.minSpeed, cfg.maxSpeed),
+        radius: rand(10, 10 + cfg.floatDist)
       });
-    </script>
-  
+    }
+  }
+
+  // Stato
+  const particles = [];
+
+  // Animazione
+  function render(){
+    for (const p of particles){
+      p.ang += p.speed;
+      const bx = p.x + Math.cos(p.ang)*p.radius;
+      const by = p.y + Math.sin(p.ang*0.7)*p.radius;
+      p.el.style.transform = `translate3d(${bx}px, ${by}px, 0) translate(-50%, -50%)`;
+    }
+    requestAnimationFrame(render);
+  }
+
+  makeParticles();
+  render();
+
+  // Resize
+  addEventListener('resize', makeParticles);
+});
+</script>
+
+  <!--  FINE SCRIPT PARTICELLE-->
 <!-- === CSE CLEAN-LOCK PATCH (single-instance, forced internal) === -->
 <style>
   #cseCL-panel{position:fixed;inset:0;z-index:20050;display:none}
