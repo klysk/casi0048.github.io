@@ -78,7 +78,7 @@
       .search-container input:focus{ border-color:rgba(255,215,0,.5); box-shadow:0 0 12px rgba(255,215,0,.18) }
       .search-icon{ position:absolute; left:.8rem; font-size:.95rem; color:rgba(255,215,0,.85) }
       header{ margin-top:76px; display:flex; justify-content:center; z-index:900 }
-      .menu-container{ max-width:1200px; width:100%; padding:.4rem 1rem; margin-top: 50px !important; }
+      .menu-container{ max-width:1200px; width:100%; padding:.4rem 1rem; }
       nav.menu-desktop ul{ display:flex; gap:1px; list-style:none; margin:0; padding:0; justify-content:center; white-space:nowrap }
       nav.menu-desktop li{ position:relative }
       .menu-btn, nav.menu-desktop li>a{
@@ -579,6 +579,18 @@
 #play-thunder:active,
 #explode-symbols:active {
   transform: scale(0.97);
+}
+</style>
+<style>
+/* === CLEAR ICON STABILITY + NATIVE CANCEL OFF === */
+.search-container input::-webkit-search-cancel-button { -webkit-appearance: none; }
+.search-container .clear-icon {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: 100% !important;
 }
 </style>
 </head>
@@ -3444,6 +3456,23 @@
 })();
 </script>
 
+
+<script>
+(function(){
+  function forceClearIcons(){
+    document.querySelectorAll('.search-container .clear-icon').forEach(function(el){
+      el.style.display = 'flex';
+      el.style.visibility = 'visible';
+      el.style.opacity = '1';
+      el.style.height = (el.parentElement && el.parentElement.querySelector('input')) ?
+        getComputedStyle(el.parentElement.querySelector('input')).height : '100%';
+    });
+  }
+  forceClearIcons();
+  new MutationObserver(forceClearIcons).observe(document.documentElement, { attributes:true, subtree:true, childList:true });
+})();
+</script>
+
 </body> -->
 <!-- Aggiungi questo codice prima della chiusura 
 <!-- === CONSERVATIVE ENTER FIX + siteData (real excerpts) === -->
@@ -3517,6 +3546,23 @@
 
   var mo = new MutationObserver(function(){ bindEnterHandlers(); });
   mo.observe(document.documentElement, { childList: true, subtree: true });
+})();
+</script>
+
+
+<script>
+(function(){
+  function forceClearIcons(){
+    document.querySelectorAll('.search-container .clear-icon').forEach(function(el){
+      el.style.display = 'flex';
+      el.style.visibility = 'visible';
+      el.style.opacity = '1';
+      el.style.height = (el.parentElement && el.parentElement.querySelector('input')) ?
+        getComputedStyle(el.parentElement.querySelector('input')).height : '100%';
+    });
+  }
+  forceClearIcons();
+  new MutationObserver(forceClearIcons).observe(document.documentElement, { attributes:true, subtree:true, childList:true });
 })();
 </script>
 
@@ -3725,6 +3771,23 @@ if (document.readyState === 'complete') {
 })();
 </script>
 
+
+<script>
+(function(){
+  function forceClearIcons(){
+    document.querySelectorAll('.search-container .clear-icon').forEach(function(el){
+      el.style.display = 'flex';
+      el.style.visibility = 'visible';
+      el.style.opacity = '1';
+      el.style.height = (el.parentElement && el.parentElement.querySelector('input')) ?
+        getComputedStyle(el.parentElement.querySelector('input')).height : '100%';
+    });
+  }
+  forceClearIcons();
+  new MutationObserver(forceClearIcons).observe(document.documentElement, { attributes:true, subtree:true, childList:true });
+})();
+</script>
+
 </body> -->
 <div id="search-results-panel" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:10000;padding:40px;box-sizing:border-box;">
   <div style="max-width:800px;margin:0 auto;background:#0a0a1a;padding:20px;border-radius:8px;border:1px solid #d4af37;max-height:80vh;overflow:auto;position:relative;">
@@ -3906,6 +3969,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var mo = new MutationObserver(function(){ bindEnterHandlers(); });
   mo.observe(document.documentElement, { childList: true, subtree: true });
+})();
+</script>
+
+
+<script>
+(function(){
+  function forceClearIcons(){
+    document.querySelectorAll('.search-container .clear-icon').forEach(function(el){
+      el.style.display = 'flex';
+      el.style.visibility = 'visible';
+      el.style.opacity = '1';
+      el.style.height = (el.parentElement && el.parentElement.querySelector('input')) ?
+        getComputedStyle(el.parentElement.querySelector('input')).height : '100%';
+    });
+  }
+  forceClearIcons();
+  new MutationObserver(forceClearIcons).observe(document.documentElement, { attributes:true, subtree:true, childList:true });
 })();
 </script>
 
@@ -4255,6 +4335,23 @@ document.getElementById('search-results-panel')?.addEventListener('click', funct
 
   var mo = new MutationObserver(function(){ bindEnterHandlers(); });
   mo.observe(document.documentElement, { childList: true, subtree: true });
+})();
+</script>
+
+
+<script>
+(function(){
+  function forceClearIcons(){
+    document.querySelectorAll('.search-container .clear-icon').forEach(function(el){
+      el.style.display = 'flex';
+      el.style.visibility = 'visible';
+      el.style.opacity = '1';
+      el.style.height = (el.parentElement && el.parentElement.querySelector('input')) ?
+        getComputedStyle(el.parentElement.querySelector('input')).height : '100%';
+    });
+  }
+  forceClearIcons();
+  new MutationObserver(forceClearIcons).observe(document.documentElement, { attributes:true, subtree:true, childList:true });
 })();
 </script>
 
