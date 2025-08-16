@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="it">
    <head>
@@ -149,36 +148,73 @@
          #philoParticles{ position:fixed; inset:0; z-index:10; pointer-events:none; }
          .particle{ position:fixed; will-change:transform,opacity; user-select:none; white-space:nowrap;
          text-shadow:0 0 10px rgba(255,215,0,.35); opacity:.95; pointer-events:auto; cursor:default; }
-         /* ===== SLIDER VERTICALE SINISTRA ===== */
-         .slider-vertical{position:fixed; left:12px; top:120px; height: 320px; width:180px;
-         z-index:930; overflow:hidden;
-         border:1px solid rgba(255,215,0,.18);
-         border-radius:12px; background:rgba(10,10,25,.45);
-         backdrop-filter: blur(6px);
-         box-shadow: 0 8px 24px rgba(0,0,0,.35);
-         }
-         .slider-vertical .slider-inner{ position:absolute; left:0; top:0; right:0; will-change:transform; }
-         .slide-vertical{ width:100%; padding:10px 10px 14px; display:flex; flex-direction:column; align-items:center; gap:8px; }
-         .slide-vertical img{
-         width:100%;
-         height:140px;          /* due foto intere nello stesso viewport dello slider */
-         object-fit:contain;
-         background:rgba(0,0,0,.25);
-         border-radius:10px;
-         border:1px solid rgba(255,255,255,.1);
-         box-shadow:0 6px 14px rgba(0,0,0,.25);
-         }
-         /* Alternativa (altezze variabili, nessun letterboxing):
-         .slide-vertical img{
-         width:100%;
-         height:140px;          /* due foto intere nello stesso viewport dello slider */
-         object-fit:contain;
-         background:rgba(0,0,0,.25);
-         border-radius:10px;
-         border:1px solid rgba(255,255,255,.1);
-         box-shadow:0 6px 14px rgba(0,0,0,.25);
-         }*/
-         .slide-vertical p{ margin:.25rem 0 0; font-family:'Cormorant Garamond',serif; font-size:.92rem; text-align:center; color:#ffe9b8; text-shadow:0 0 8px rgba(255,215,0,.25); }
+         
+   /* =====INIZIO SLIDER VERTICALE SINISTRA — STABILE ===== */   
+.slider-vertical{
+  position: fixed;
+  left: 12px;
+  top: 120px;
+  width: 180px;
+  height: 320px;            /* viewport dello slider: fissa */
+  z-index: 930;
+  overflow: hidden;         /* evita scroll interni */
+  border: 1px solid rgba(255,215,0,.18);
+  border-radius: 12px;
+  background: rgba(10,10,25,.45);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.35);
+}
+
+.slider-vertical .slider-inner{
+  position: absolute;
+  inset: 0;                 /* left:0; right:0; top:0; bottom:0 */
+  will-change: transform;   /* animazione fluida */
+}
+
+.slide-vertical{
+  width: 100%;
+  padding: 10px 10px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  /* Altezza totale dello “slide” coerente:
+     140px immagine + ~44px caption + padding */
+  box-sizing: border-box;
+}
+
+.slide-vertical img{
+  width: 100%;
+  height: 140px;            /* tutte le immagini stessa altezza */
+  object-fit: contain;      /* nessun crop; usa cover se preferisci riempire */
+  display: block;           /* elimina line-gap */
+  background: rgba(0,0,0,.25);
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.1);
+  box-shadow: 0 6px 14px rgba(0,0,0,.25);
+}
+
+/* Didascalia con altezza uniforme → niente scossoni */
+.slide-vertical p{
+  margin: .25rem 0 0;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: .92rem;
+  text-align: center;
+  color: #ffe9b8;
+  text-shadow: 0 0 8px rgba(255,215,0,.25);
+
+  /* blocco stabile: 2 righe max senza saltelli */
+  min-height: 2.6em;            /* ~2 righe di testo */
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;        /* tronca a 2 righe (se vuoi) */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* (Opzionale) se preferisci riempire il riquadro senza “letterboxing”:
+   usa object-fit: cover; per l’immagine */
+  /* =====FINE SLIDER VERTICALE SINISTRA — STABILE ===== */
          /* ===== BLOB ANIMATO DESTRA (Ultimi articoli) ===== */
          .articles-blob{
          position:fixed; right:14px; top:150px; width:300px; max-width:32vw; z-index:930;
@@ -632,7 +668,17 @@
          user-select: none;
          }
       </style>
-   </head>
+   
+<style>
+.exploding-text.explode{ animation: explodeAnim 1.2s forwards; }
+@keyframes explodeAnim{
+  0%{ letter-spacing: normal; opacity:1; transform: scale(1); }
+  50%{ letter-spacing: 0.6em; opacity:.7; transform: scale(1.4) rotate(5deg); }
+  100%{ letter-spacing: normal; opacity:1; transform: scale(1); }
+}
+</style>
+
+</head>
    <canvas id="shooting-stars"></canvas>
    <body>
       <!-- GALASSIA dietro -->
@@ -1062,7 +1108,7 @@
     <div class="slide-vertical">
       <img alt="Maria Teresa" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/maria_teresa.jpg"
            loading="lazy" decoding="async" width="260" height="340"/>
-      <p>🕯️Maria Teresa: intreccio armonioso di virtù e bellezza✝️</p>
+      <p>🕯️Maria Teresa: virtù e bellezza in armonia✝️</p>
     </div>
 
     <div class="slide-vertical">
@@ -1304,19 +1350,189 @@
       </aside>
       <!-- Main -->
       <main>
-         <section class="welcome-section">
-            <h1 class="welcome-title" id="title">Benvenuto<br/>in Echi di Sofia</h1>
-            <p class="welcome-subtitle" id="subtitle">Un viaggio tra stelle e pensiero</p>
-            <!-- Citazioni typing sotto titolo (restano) -->
-            <div class="typing-wrap">
-               <div class="typing-effect"></div>
-               <span aria-hidden="true" class="caret"></span>
-            </div>
-            <!-- Testo esplosivo -->
-            <div class="exploding-text" id="exploding" title="Clicca per esplodere">
-               Φ Pensare, dunque è ancora possibile Φ
-            </div>
-         </section>
+         <!-- ===Inizio Exploding text (HTML) === -->
+<section class="welcome-section">
+  <h1 class="welcome-title" id="title">Benvenuto<br/>in Echi di Sofia</h1>
+  <p class="welcome-subtitle" id="subtitle">Un viaggio tra stelle e pensiero</p>
+
+  <div class="typing-wrap">
+    <div class="typing-effect"></div>
+    <span class="caret" aria-hidden="true"></span>
+  </div>
+
+  <!-- Testo esplosivo con ritorno -->
+  <div class="exploding-text" id="exploding" title="Clicca per esplodere">
+    ⏳  Pensare, dunque è ancora possibile 🧘
+  </div>
+</section>
+
+<!-- === Exploding text (CSS) === -->
+<style>
+  .exploding-text{
+    display:inline-block;
+    cursor:pointer;
+    user-select:none;
+    will-change:transform, opacity;
+  }
+  .exploding-text span{
+    display:inline-block;
+    will-change:transform, opacity;
+  }
+.exploding-text {
+  font-family: 'Cinzel', serif;   /* o altro font coerente col sito */
+  font-size: 1.1rem;              /* grandezza regolabile */
+  font-weight: 700;               /* valori comuni: 300, 400, 500, 600, 700, 900 */
+  letter-spacing: 0.5px;          /* spaziatura tra lettere */
+  color: #ffd86a;                 /* colore dorato, a tema */
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+}
+</style>
+
+<!-- === Exploding text (JS) === -->
+<script>
+(function(){
+  // Carica GSAP solo se manca
+  function ensureGSAP(cb){
+    if (window.gsap) return cb();
+    var s = document.createElement('script');
+    s.src = "https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js";
+    s.onload = cb;
+    document.head.appendChild(s);
+  }
+
+  function setupExploding(){
+    const exploding = document.getElementById("exploding");
+    if (!exploding) return;
+
+    // prepara lo split in span una sola volta
+    if (!exploding.__prepared){
+      const text = exploding.textContent;
+      exploding.textContent = "";
+      const frag = document.createDocumentFragment();
+      for (const ch of text){
+        const span = document.createElement("span");
+        span.textContent = ch;
+        frag.appendChild(span);
+      }
+      exploding.appendChild(frag);
+      exploding.__prepared = true;
+    }
+
+    const letters = Array.from(exploding.querySelectorAll("span"));
+
+    function explodeAndReturn(){
+      // evita re-entrance mentre l'animazione è in corso
+      if (explodeAndReturn.__busy) return;
+      explodeAndReturn.__busy = true;
+
+      gsap.to(letters, {
+        duration: 0.8,
+        x: () => (Math.random() - 0.5) * 400,
+        y: () => (Math.random() - 0.5) * 300,
+        rotation: () => (Math.random() - 0.5) * 720,
+        opacity: 0,
+        ease: "power3.out",
+        stagger: 0.02,
+        onComplete: () => {
+          gsap.to(letters, {
+            duration: 1.2,
+            x: 0,
+            y: 0,
+            rotation: 0,
+            opacity: 1,
+            ease: "elastic.out(1, 0.5)",
+            stagger: 0.02,
+            onComplete: () => { explodeAndReturn.__busy = false; }
+          });
+        }
+      });
+    }
+
+    exploding.addEventListener("click", explodeAndReturn);
+  }
+
+  // init
+  if (document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", () => ensureGSAP(setupExploding));
+  } else {
+    ensureGSAP(setupExploding);
+  }
+})();
+</script>
+<!--INIZIO AGGIUNTA JS EXPLODING TEXT-->
+<script>
+(function(){
+  // Carica GSAP se manca
+  function ensureGSAP(cb){
+    if (window.gsap) return cb();
+    var s = document.createElement('script');
+    s.src = "https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js";
+    s.onload = cb;
+    document.head.appendChild(s);
+  }
+
+  function setupExploding(){
+    const exploding = document.getElementById("exploding");
+    if (!exploding) return;
+
+    // prepara gli span una sola volta
+    if (!exploding.__prepared){
+      const text = exploding.textContent;
+      exploding.textContent = "";
+      const frag = document.createDocumentFragment();
+      for (const ch of text){
+        const span = document.createElement("span");
+        span.textContent = ch;
+        span.style.display = "inline-block";
+        frag.appendChild(span);
+      }
+      exploding.appendChild(frag);
+      exploding.__prepared = true;
+    }
+
+    const letters = Array.from(exploding.querySelectorAll("span"));
+
+    function explodeAndReturn(){
+      if (explodeAndReturn.__busy) return;
+      explodeAndReturn.__busy = true;
+
+      gsap.to(letters, {
+        duration: 0.8,
+        x: () => (Math.random() - 0.5) * 400,
+        y: () => (Math.random() - 0.5) * 300,
+        rotation: () => (Math.random() - 0.5) * 720,
+        opacity: 0,
+        ease: "power3.out",
+        stagger: 0.02,
+        onComplete: () => {
+          gsap.to(letters, {
+            duration: 1.2,
+            x: 0, y: 0, rotation: 0, opacity: 1,
+            ease: "elastic.out(1, 0.5)",
+            stagger: 0.02,
+            onComplete: () => { explodeAndReturn.__busy = false; }
+          });
+        }
+      });
+    }
+
+    // 1) Esplosione automatica al caricamento (una volta)
+    explodeAndReturn();
+
+    // 2) Esplosioni successive al click
+    exploding.addEventListener("click", explodeAndReturn);
+  }
+
+  if (document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", () => ensureGSAP(setupExploding));
+  } else {
+    ensureGSAP(setupExploding);
+  }
+})();
+</script>
+
+<!--FINE AGGIUNTA JS EXPLODING TEXT-->
+   <!-- ===Fine Exploding text (HTML) === -->
       </main>
       <!-- Particelle layer -->
       <div aria-hidden="true" id="philoParticles"></div>
@@ -3618,7 +3834,52 @@
            new MutationObserver(initAll).observe(document.documentElement, { childList:true, subtree:true });
          })();
       </script>
-   </body>
+   
+<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c5b8c77887.mp3?filename=explosion-6055.mp3" preload="auto"></audio>
+
+<script>
+(function(){
+  function playExplosion(){
+    var boom = document.getElementById('explode-sound');
+    if (boom){
+      try{ boom.currentTime = 0; }catch(e){}
+      var p = boom.play();
+      if (p && typeof p.catch === 'function'){
+        p.catch(function(err){ console.warn('Audio esplosione bloccato:', err); });
+      }
+    }
+  }
+  function triggerExplodeEffect(){
+    var el = document.getElementById('exploding');
+    if (!el) return;
+    // se esiste il listener GSAP, riusa il click
+    var hadGsap = !!window.gsap && el.querySelector('span');
+    if (hadGsap){
+      el.dispatchEvent(new Event('click', {bubbles:true}));
+    } else {
+      el.classList.add('explode');
+      setTimeout(function(){ el.classList.remove('explode'); }, 1200);
+    }
+  }
+  function bind(){
+    var btn = document.getElementById('btn-explode');
+    if (!btn) return;
+    if (btn.__explosionBound) return;
+    btn.addEventListener('click', function(){
+      playExplosion();
+      triggerExplodeEffect();
+    });
+    btn.__explosionBound = true;
+  }
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', bind);
+  } else {
+    bind();
+  }
+})();
+</script>
+
+</body>
    -->
    <!-- Aggiungi questo codice prima della chiusura 
       <!-- === CONSERVATIVE ENTER FIX + siteData (real excerpts) === -->
@@ -3735,7 +3996,52 @@
         new MutationObserver(initAll).observe(document.documentElement, { childList:true, subtree:true });
       })();
    </script>
-   </body> -->
+   
+<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c5b8c77887.mp3?filename=explosion-6055.mp3" preload="auto"></audio>
+
+<script>
+(function(){
+  function playExplosion(){
+    var boom = document.getElementById('explode-sound');
+    if (boom){
+      try{ boom.currentTime = 0; }catch(e){}
+      var p = boom.play();
+      if (p && typeof p.catch === 'function'){
+        p.catch(function(err){ console.warn('Audio esplosione bloccato:', err); });
+      }
+    }
+  }
+  function triggerExplodeEffect(){
+    var el = document.getElementById('exploding');
+    if (!el) return;
+    // se esiste il listener GSAP, riusa il click
+    var hadGsap = !!window.gsap && el.querySelector('span');
+    if (hadGsap){
+      el.dispatchEvent(new Event('click', {bubbles:true}));
+    } else {
+      el.classList.add('explode');
+      setTimeout(function(){ el.classList.remove('explode'); }, 1200);
+    }
+  }
+  function bind(){
+    var btn = document.getElementById('btn-explode');
+    if (!btn) return;
+    if (btn.__explosionBound) return;
+    btn.addEventListener('click', function(){
+      playExplosion();
+      triggerExplodeEffect();
+    });
+    btn.__explosionBound = true;
+  }
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', bind);
+  } else {
+    bind();
+  }
+})();
+</script>
+
+</body> -->
    <div id="cse-results-container" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:10000;padding:20px;box-sizing:border-box;">
       <div style="max-width:800px;margin:0 auto;background:#0a0a1a;padding:20px;border-radius:8px;border:1px solid var(--gold);max-height:80vh;overflow:auto;">
          <button onclick="closeSearchResults()" style="float:right;background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;">×</button>
@@ -3970,7 +4276,52 @@
         new MutationObserver(initAll).observe(document.documentElement, { childList:true, subtree:true });
       })();
    </script>
-   </body> -->
+   
+<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c5b8c77887.mp3?filename=explosion-6055.mp3" preload="auto"></audio>
+
+<script>
+(function(){
+  function playExplosion(){
+    var boom = document.getElementById('explode-sound');
+    if (boom){
+      try{ boom.currentTime = 0; }catch(e){}
+      var p = boom.play();
+      if (p && typeof p.catch === 'function'){
+        p.catch(function(err){ console.warn('Audio esplosione bloccato:', err); });
+      }
+    }
+  }
+  function triggerExplodeEffect(){
+    var el = document.getElementById('exploding');
+    if (!el) return;
+    // se esiste il listener GSAP, riusa il click
+    var hadGsap = !!window.gsap && el.querySelector('span');
+    if (hadGsap){
+      el.dispatchEvent(new Event('click', {bubbles:true}));
+    } else {
+      el.classList.add('explode');
+      setTimeout(function(){ el.classList.remove('explode'); }, 1200);
+    }
+  }
+  function bind(){
+    var btn = document.getElementById('btn-explode');
+    if (!btn) return;
+    if (btn.__explosionBound) return;
+    btn.addEventListener('click', function(){
+      playExplosion();
+      triggerExplodeEffect();
+    });
+    btn.__explosionBound = true;
+  }
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', bind);
+  } else {
+    bind();
+  }
+})();
+</script>
+
+</body> -->
    <div id="search-results-panel" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:10000;padding:40px;box-sizing:border-box;">
       <div style="max-width:800px;margin:0 auto;background:#0a0a1a;padding:20px;border-radius:8px;border:1px solid #d4af37;max-height:80vh;overflow:auto;position:relative;">
          <button onclick="closeSearchPanel()" style="position:absolute;top:10px;right:10px;background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;">×</button>
@@ -4193,7 +4544,52 @@
         new MutationObserver(initAll).observe(document.documentElement, { childList:true, subtree:true });
       })();
    </script>
-   </body> -->
+   
+<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c5b8c77887.mp3?filename=explosion-6055.mp3" preload="auto"></audio>
+
+<script>
+(function(){
+  function playExplosion(){
+    var boom = document.getElementById('explode-sound');
+    if (boom){
+      try{ boom.currentTime = 0; }catch(e){}
+      var p = boom.play();
+      if (p && typeof p.catch === 'function'){
+        p.catch(function(err){ console.warn('Audio esplosione bloccato:', err); });
+      }
+    }
+  }
+  function triggerExplodeEffect(){
+    var el = document.getElementById('exploding');
+    if (!el) return;
+    // se esiste il listener GSAP, riusa il click
+    var hadGsap = !!window.gsap && el.querySelector('span');
+    if (hadGsap){
+      el.dispatchEvent(new Event('click', {bubbles:true}));
+    } else {
+      el.classList.add('explode');
+      setTimeout(function(){ el.classList.remove('explode'); }, 1200);
+    }
+  }
+  function bind(){
+    var btn = document.getElementById('btn-explode');
+    if (!btn) return;
+    if (btn.__explosionBound) return;
+    btn.addEventListener('click', function(){
+      playExplosion();
+      triggerExplodeEffect();
+    });
+    btn.__explosionBound = true;
+  }
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', bind);
+  } else {
+    bind();
+  }
+})();
+</script>
+
+</body> -->
    <div id="search-results-panel" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:10000;padding:40px;box-sizing:border-box;backdrop-filter:blur(5px);">
       <div style="max-width:800px;margin:0 auto;background:#0a0a1a;padding:25px;border-radius:12px;border:1px solid #d4af37;max-height:80vh;overflow:auto;position:relative;box-shadow:0 0 20px rgba(0,0,0,0.5);">
          <button onclick="closeSearchPanel()" style="position:absolute;top:15px;right:15px;background:none;border:none;color:#fff;font-size:1.8rem;cursor:pointer;transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">×</button>
@@ -4586,5 +4982,50 @@
         });
       })();
    </script>
-   </body>
+   
+<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c5b8c77887.mp3?filename=explosion-6055.mp3" preload="auto"></audio>
+
+<script>
+(function(){
+  function playExplosion(){
+    var boom = document.getElementById('explode-sound');
+    if (boom){
+      try{ boom.currentTime = 0; }catch(e){}
+      var p = boom.play();
+      if (p && typeof p.catch === 'function'){
+        p.catch(function(err){ console.warn('Audio esplosione bloccato:', err); });
+      }
+    }
+  }
+  function triggerExplodeEffect(){
+    var el = document.getElementById('exploding');
+    if (!el) return;
+    // se esiste il listener GSAP, riusa il click
+    var hadGsap = !!window.gsap && el.querySelector('span');
+    if (hadGsap){
+      el.dispatchEvent(new Event('click', {bubbles:true}));
+    } else {
+      el.classList.add('explode');
+      setTimeout(function(){ el.classList.remove('explode'); }, 1200);
+    }
+  }
+  function bind(){
+    var btn = document.getElementById('btn-explode');
+    if (!btn) return;
+    if (btn.__explosionBound) return;
+    btn.addEventListener('click', function(){
+      playExplosion();
+      triggerExplodeEffect();
+    });
+    btn.__explosionBound = true;
+  }
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', bind);
+  } else {
+    bind();
+  }
+})();
+</script>
+
+</body>
 </html>
