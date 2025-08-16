@@ -668,19 +668,22 @@
          user-select: none;
          }
       </style>
-   
-<style>
-.exploding-text.explode{ animation: explodeAnim 1.2s forwards; }
-@keyframes explodeAnim{
-  0%{ letter-spacing: normal; opacity:1; transform: scale(1); }
-  50%{ letter-spacing: 0.6em; opacity:.7; transform: scale(1.4) rotate(5deg); }
-  100%{ letter-spacing: normal; opacity:1; transform: scale(1); }
-}
+   <link rel="preconnect" href="https://cse.google.com" crossorigin>
+<link rel="dns-prefetch" href="https://cse.google.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<style id="cse-panel-style">
+#cse-panel{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); z-index: 9990; }
+#cse-panel .cse-box{ position:absolute; top:8vh; left:50%; transform:translateX(-50%); width:min(920px, 92vw); max-height:84vh; overflow:auto; padding:16px; border-radius:12px; background:rgba(12,12,20,0.9); box-shadow:0 10px 30px rgba(0,0,0,.45); border:1px solid rgba(255,215,0,.2); }
+#cse-results{ min-height: 200px; }
+#cse-close{ position:absolute; top:10px; right:14px; font-size:20px; cursor:pointer; color:#ffd86a; }
 </style>
 
 </head>
    <canvas id="shooting-stars"></canvas>
    <body>
+<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c5b8c77887.mp3?filename=explosion-6055.mp3" preload="auto"></audio>
       <!-- GALASSIA dietro -->
       <canvas id="nebula"></canvas>
       <!-- Stelle + Comete sopra la galassia -->
@@ -3834,51 +3837,175 @@
            new MutationObserver(initAll).observe(document.documentElement, { childList:true, subtree:true });
          })();
       </script>
-   
-<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c5b8c77887.mp3?filename=explosion-6055.mp3" preload="auto"></audio>
-
-<script>
+   <script>
 (function(){
-  function playExplosion(){
-    var boom = document.getElementById('explode-sound');
-    if (boom){
-      try{ boom.currentTime = 0; }catch(e){}
-      var p = boom.play();
-      if (p && typeof p.catch === 'function'){
-        p.catch(function(err){ console.warn('Audio esplosione bloccato:', err); });
+  /* Small helpers */
+  const onReady = (fn) => (document.readyState === 'loading') ? document.addEventListener('DOMContentLoaded', fn, {once:true}) : fn();
+  const idle = (fn) => ('requestIdleCallback' in window) ? requestIdleCallback(fn, {timeout: 2000}) : setTimeout(fn, 0);
+
+  /* ===== Exploding text: auto at load + click, with sound ===== */
+  function ensureExploding(){
+    const el = document.getElementById('exploding');
+    if (!el) return;
+    // prepare spans once
+    if (!el.__prepared){
+      const t = el.textContent;
+      el.textContent = '';
+      const frag = document.createDocumentFragment();
+      for (const ch of t){
+        const s = document.createElement('span');
+        s.textContent = ch;
+        s.style.display = 'inline-block';
+        frag.appendChild(s);
+      }
+      el.appendChild(frag);
+      el.__prepared = true;
+    }
+    const letters = Array.from(el.querySelectorAll('span'));
+
+    function playExplosion(){
+      const boom = document.getElementById('explode-sound');
+      if (boom){
+        try{ boom.currentTime = 0; boom.play(); }catch(e){ /* ignore */ }
       }
     }
-  }
-  function triggerExplodeEffect(){
-    var el = document.getElementById('exploding');
-    if (!el) return;
-    // se esiste il listener GSAP, riusa il click
-    var hadGsap = !!window.gsap && el.querySelector('span');
-    if (hadGsap){
-      el.dispatchEvent(new Event('click', {bubbles:true}));
-    } else {
-      el.classList.add('explode');
-      setTimeout(function(){ el.classList.remove('explode'); }, 1200);
-    }
-  }
-  function bind(){
-    var btn = document.getElementById('btn-explode');
-    if (!btn) return;
-    if (btn.__explosionBound) return;
-    btn.addEventListener('click', function(){
+
+    function explodeAndReturn(){
+      if (explodeAndReturn.__busy) return;
+      explodeAndReturn.__busy = true;
+      if (window.gsap){
+        gsap.to(letters, {
+          duration: 0.8,
+          x: () => (Math.random() - 0.5) * 400,
+          y: () => (Math.random() - 0.5) * 300,
+          rotation: () => (Math.random() - 0.5) * 720,
+          opacity: 0,
+          ease: "power3.out",
+          stagger: 0.02,
+          onComplete: () => {
+            gsap.to(letters, {
+              duration: 1.2, x:0, y:0, rotation:0, opacity:1,
+              ease: "elastic.out(1, 0.5)", stagger: 0.02,
+              onComplete: () => { explodeAndReturn.__busy = false; }
+            });
+          }
+        });
+      } else {
+        el.classList.add('explode-fallback');
+        setTimeout(()=>{ el.classList.remove('explode-fallback'); explodeAndReturn.__busy = false; }, 900);
+      }
       playExplosion();
-      triggerExplodeEffect();
+    }
+
+    // auto once
+    explodeAndReturn();
+
+    // click handlers (support multiple buttons)
+    const btns = Array.from(document.querySelectorAll('#btn-explode, .btn-explode'));
+    btns.forEach(b => {
+      if (!b.__explodeBound){
+        b.addEventListener('click', explodeAndReturn);
+        b.__explodeBound = true;
+      }
     });
-    btn.__explosionBound = true;
   }
-  if (document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', bind);
-  } else {
-    bind();
+
+  /* ===== CSE lazy loader + panel ===== */
+  function initCSE(){
+    const CX = '87b07564ab3cb462a';
+    const input = document.getElementById('site-search');
+    const icon  = document.querySelector('.search-icon');
+    const panel = document.getElementById('cse-panel');
+    const btnClose = document.getElementById('cse-close');
+    if (!input || !icon || !panel) return;
+
+    let loaded = false, loading = false;
+
+    function ensureCSE(cb){
+      if (loaded && window.google && google.search && google.search.cse) return cb && cb();
+      if (loading) return;
+      loading = true;
+      const s = document.createElement('script');
+      s.src = 'https://cse.google.com/cse.js?cx=' + encodeURIComponent(CX);
+      s.async = true; s.defer = true;
+      s.onload = function(){ loaded = true; cb && cb(); };
+      document.head.appendChild(s);
+    }
+
+    function renderIfNeeded(){
+      if (!window.google || !google.search || !google.search.cse) return;
+      if (!google.search.cse.element.getElement('results')){
+        google.search.cse.element.render({
+          div: 'cse-results',
+          tag: 'searchresults-only',
+          gname: 'results'
+        });
+      }
+    }
+
+    function openPanel(){
+      panel.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    }
+    function closePanel(){
+      panel.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+    window.closeSearchPanel = closePanel;
+
+    function execute(q){
+      if (!q || !q.trim()) return;
+      openPanel();
+      ensureCSE(function(){
+        renderIfNeeded();
+        const el = google.search.cse.element.getElement('results');
+        if (el && el.execute) el.execute(q);
+      });
+    }
+
+    input.addEventListener('keydown', function(e){
+      if (e.key === 'Enter'){
+        e.preventDefault();
+        execute(input.value);
+      }
+    });
+    icon.addEventListener('click', function(e){
+      e.preventDefault();
+      execute(input.value);
+    });
+
+    // close interactions
+    btnClose && btnClose.addEventListener('click', closePanel);
+    panel.addEventListener('click', function(e){ if (e.target === panel) closePanel(); });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closePanel(); });
+
+    // Preload CSE in idle per ridurre il tempo della prima ricerca
+    idle(()=> ensureCSE(()=> renderIfNeeded()));
   }
+
+  /* ===== Fallback CSS for explode (if GSAP missing) ===== */
+  (function(){
+    const STYLE_ID = 'explode-fallback-style';
+    if (!document.getElementById(STYLE_ID)){
+      const st = document.createElement('style');
+      st.id = STYLE_ID;
+      st.textContent = `
+        .exploding-text.explode-fallback{ animation: explodeAnim .9s ease-in-out; }
+        @keyframes explodeAnim{
+          0%{ letter-spacing: normal; transform: scale(1); opacity:1; }
+          50%{ letter-spacing: .6em; transform: scale(1.4) rotate(3deg); opacity:.7; }
+          100%{ letter-spacing: normal; transform: scale(1); opacity:1; }
+        }`;
+      document.head.appendChild(st);
+    }
+  })();
+
+  onReady(function(){
+    ensureExploding();
+    initCSE();
+  });
 })();
 </script>
-
 </body>
    -->
    <!-- Aggiungi questo codice prima della chiusura 
@@ -3996,51 +4123,175 @@
         new MutationObserver(initAll).observe(document.documentElement, { childList:true, subtree:true });
       })();
    </script>
-   
-<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c5b8c77887.mp3?filename=explosion-6055.mp3" preload="auto"></audio>
-
-<script>
+   <script>
 (function(){
-  function playExplosion(){
-    var boom = document.getElementById('explode-sound');
-    if (boom){
-      try{ boom.currentTime = 0; }catch(e){}
-      var p = boom.play();
-      if (p && typeof p.catch === 'function'){
-        p.catch(function(err){ console.warn('Audio esplosione bloccato:', err); });
+  /* Small helpers */
+  const onReady = (fn) => (document.readyState === 'loading') ? document.addEventListener('DOMContentLoaded', fn, {once:true}) : fn();
+  const idle = (fn) => ('requestIdleCallback' in window) ? requestIdleCallback(fn, {timeout: 2000}) : setTimeout(fn, 0);
+
+  /* ===== Exploding text: auto at load + click, with sound ===== */
+  function ensureExploding(){
+    const el = document.getElementById('exploding');
+    if (!el) return;
+    // prepare spans once
+    if (!el.__prepared){
+      const t = el.textContent;
+      el.textContent = '';
+      const frag = document.createDocumentFragment();
+      for (const ch of t){
+        const s = document.createElement('span');
+        s.textContent = ch;
+        s.style.display = 'inline-block';
+        frag.appendChild(s);
+      }
+      el.appendChild(frag);
+      el.__prepared = true;
+    }
+    const letters = Array.from(el.querySelectorAll('span'));
+
+    function playExplosion(){
+      const boom = document.getElementById('explode-sound');
+      if (boom){
+        try{ boom.currentTime = 0; boom.play(); }catch(e){ /* ignore */ }
       }
     }
-  }
-  function triggerExplodeEffect(){
-    var el = document.getElementById('exploding');
-    if (!el) return;
-    // se esiste il listener GSAP, riusa il click
-    var hadGsap = !!window.gsap && el.querySelector('span');
-    if (hadGsap){
-      el.dispatchEvent(new Event('click', {bubbles:true}));
-    } else {
-      el.classList.add('explode');
-      setTimeout(function(){ el.classList.remove('explode'); }, 1200);
-    }
-  }
-  function bind(){
-    var btn = document.getElementById('btn-explode');
-    if (!btn) return;
-    if (btn.__explosionBound) return;
-    btn.addEventListener('click', function(){
+
+    function explodeAndReturn(){
+      if (explodeAndReturn.__busy) return;
+      explodeAndReturn.__busy = true;
+      if (window.gsap){
+        gsap.to(letters, {
+          duration: 0.8,
+          x: () => (Math.random() - 0.5) * 400,
+          y: () => (Math.random() - 0.5) * 300,
+          rotation: () => (Math.random() - 0.5) * 720,
+          opacity: 0,
+          ease: "power3.out",
+          stagger: 0.02,
+          onComplete: () => {
+            gsap.to(letters, {
+              duration: 1.2, x:0, y:0, rotation:0, opacity:1,
+              ease: "elastic.out(1, 0.5)", stagger: 0.02,
+              onComplete: () => { explodeAndReturn.__busy = false; }
+            });
+          }
+        });
+      } else {
+        el.classList.add('explode-fallback');
+        setTimeout(()=>{ el.classList.remove('explode-fallback'); explodeAndReturn.__busy = false; }, 900);
+      }
       playExplosion();
-      triggerExplodeEffect();
+    }
+
+    // auto once
+    explodeAndReturn();
+
+    // click handlers (support multiple buttons)
+    const btns = Array.from(document.querySelectorAll('#btn-explode, .btn-explode'));
+    btns.forEach(b => {
+      if (!b.__explodeBound){
+        b.addEventListener('click', explodeAndReturn);
+        b.__explodeBound = true;
+      }
     });
-    btn.__explosionBound = true;
   }
-  if (document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', bind);
-  } else {
-    bind();
+
+  /* ===== CSE lazy loader + panel ===== */
+  function initCSE(){
+    const CX = '87b07564ab3cb462a';
+    const input = document.getElementById('site-search');
+    const icon  = document.querySelector('.search-icon');
+    const panel = document.getElementById('cse-panel');
+    const btnClose = document.getElementById('cse-close');
+    if (!input || !icon || !panel) return;
+
+    let loaded = false, loading = false;
+
+    function ensureCSE(cb){
+      if (loaded && window.google && google.search && google.search.cse) return cb && cb();
+      if (loading) return;
+      loading = true;
+      const s = document.createElement('script');
+      s.src = 'https://cse.google.com/cse.js?cx=' + encodeURIComponent(CX);
+      s.async = true; s.defer = true;
+      s.onload = function(){ loaded = true; cb && cb(); };
+      document.head.appendChild(s);
+    }
+
+    function renderIfNeeded(){
+      if (!window.google || !google.search || !google.search.cse) return;
+      if (!google.search.cse.element.getElement('results')){
+        google.search.cse.element.render({
+          div: 'cse-results',
+          tag: 'searchresults-only',
+          gname: 'results'
+        });
+      }
+    }
+
+    function openPanel(){
+      panel.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    }
+    function closePanel(){
+      panel.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+    window.closeSearchPanel = closePanel;
+
+    function execute(q){
+      if (!q || !q.trim()) return;
+      openPanel();
+      ensureCSE(function(){
+        renderIfNeeded();
+        const el = google.search.cse.element.getElement('results');
+        if (el && el.execute) el.execute(q);
+      });
+    }
+
+    input.addEventListener('keydown', function(e){
+      if (e.key === 'Enter'){
+        e.preventDefault();
+        execute(input.value);
+      }
+    });
+    icon.addEventListener('click', function(e){
+      e.preventDefault();
+      execute(input.value);
+    });
+
+    // close interactions
+    btnClose && btnClose.addEventListener('click', closePanel);
+    panel.addEventListener('click', function(e){ if (e.target === panel) closePanel(); });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closePanel(); });
+
+    // Preload CSE in idle per ridurre il tempo della prima ricerca
+    idle(()=> ensureCSE(()=> renderIfNeeded()));
   }
+
+  /* ===== Fallback CSS for explode (if GSAP missing) ===== */
+  (function(){
+    const STYLE_ID = 'explode-fallback-style';
+    if (!document.getElementById(STYLE_ID)){
+      const st = document.createElement('style');
+      st.id = STYLE_ID;
+      st.textContent = `
+        .exploding-text.explode-fallback{ animation: explodeAnim .9s ease-in-out; }
+        @keyframes explodeAnim{
+          0%{ letter-spacing: normal; transform: scale(1); opacity:1; }
+          50%{ letter-spacing: .6em; transform: scale(1.4) rotate(3deg); opacity:.7; }
+          100%{ letter-spacing: normal; transform: scale(1); opacity:1; }
+        }`;
+      document.head.appendChild(st);
+    }
+  })();
+
+  onReady(function(){
+    ensureExploding();
+    initCSE();
+  });
 })();
 </script>
-
 </body> -->
    <div id="cse-results-container" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:10000;padding:20px;box-sizing:border-box;">
       <div style="max-width:800px;margin:0 auto;background:#0a0a1a;padding:20px;border-radius:8px;border:1px solid var(--gold);max-height:80vh;overflow:auto;">
@@ -4276,51 +4527,175 @@
         new MutationObserver(initAll).observe(document.documentElement, { childList:true, subtree:true });
       })();
    </script>
-   
-<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c5b8c77887.mp3?filename=explosion-6055.mp3" preload="auto"></audio>
-
-<script>
+   <script>
 (function(){
-  function playExplosion(){
-    var boom = document.getElementById('explode-sound');
-    if (boom){
-      try{ boom.currentTime = 0; }catch(e){}
-      var p = boom.play();
-      if (p && typeof p.catch === 'function'){
-        p.catch(function(err){ console.warn('Audio esplosione bloccato:', err); });
+  /* Small helpers */
+  const onReady = (fn) => (document.readyState === 'loading') ? document.addEventListener('DOMContentLoaded', fn, {once:true}) : fn();
+  const idle = (fn) => ('requestIdleCallback' in window) ? requestIdleCallback(fn, {timeout: 2000}) : setTimeout(fn, 0);
+
+  /* ===== Exploding text: auto at load + click, with sound ===== */
+  function ensureExploding(){
+    const el = document.getElementById('exploding');
+    if (!el) return;
+    // prepare spans once
+    if (!el.__prepared){
+      const t = el.textContent;
+      el.textContent = '';
+      const frag = document.createDocumentFragment();
+      for (const ch of t){
+        const s = document.createElement('span');
+        s.textContent = ch;
+        s.style.display = 'inline-block';
+        frag.appendChild(s);
+      }
+      el.appendChild(frag);
+      el.__prepared = true;
+    }
+    const letters = Array.from(el.querySelectorAll('span'));
+
+    function playExplosion(){
+      const boom = document.getElementById('explode-sound');
+      if (boom){
+        try{ boom.currentTime = 0; boom.play(); }catch(e){ /* ignore */ }
       }
     }
-  }
-  function triggerExplodeEffect(){
-    var el = document.getElementById('exploding');
-    if (!el) return;
-    // se esiste il listener GSAP, riusa il click
-    var hadGsap = !!window.gsap && el.querySelector('span');
-    if (hadGsap){
-      el.dispatchEvent(new Event('click', {bubbles:true}));
-    } else {
-      el.classList.add('explode');
-      setTimeout(function(){ el.classList.remove('explode'); }, 1200);
-    }
-  }
-  function bind(){
-    var btn = document.getElementById('btn-explode');
-    if (!btn) return;
-    if (btn.__explosionBound) return;
-    btn.addEventListener('click', function(){
+
+    function explodeAndReturn(){
+      if (explodeAndReturn.__busy) return;
+      explodeAndReturn.__busy = true;
+      if (window.gsap){
+        gsap.to(letters, {
+          duration: 0.8,
+          x: () => (Math.random() - 0.5) * 400,
+          y: () => (Math.random() - 0.5) * 300,
+          rotation: () => (Math.random() - 0.5) * 720,
+          opacity: 0,
+          ease: "power3.out",
+          stagger: 0.02,
+          onComplete: () => {
+            gsap.to(letters, {
+              duration: 1.2, x:0, y:0, rotation:0, opacity:1,
+              ease: "elastic.out(1, 0.5)", stagger: 0.02,
+              onComplete: () => { explodeAndReturn.__busy = false; }
+            });
+          }
+        });
+      } else {
+        el.classList.add('explode-fallback');
+        setTimeout(()=>{ el.classList.remove('explode-fallback'); explodeAndReturn.__busy = false; }, 900);
+      }
       playExplosion();
-      triggerExplodeEffect();
+    }
+
+    // auto once
+    explodeAndReturn();
+
+    // click handlers (support multiple buttons)
+    const btns = Array.from(document.querySelectorAll('#btn-explode, .btn-explode'));
+    btns.forEach(b => {
+      if (!b.__explodeBound){
+        b.addEventListener('click', explodeAndReturn);
+        b.__explodeBound = true;
+      }
     });
-    btn.__explosionBound = true;
   }
-  if (document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', bind);
-  } else {
-    bind();
+
+  /* ===== CSE lazy loader + panel ===== */
+  function initCSE(){
+    const CX = '87b07564ab3cb462a';
+    const input = document.getElementById('site-search');
+    const icon  = document.querySelector('.search-icon');
+    const panel = document.getElementById('cse-panel');
+    const btnClose = document.getElementById('cse-close');
+    if (!input || !icon || !panel) return;
+
+    let loaded = false, loading = false;
+
+    function ensureCSE(cb){
+      if (loaded && window.google && google.search && google.search.cse) return cb && cb();
+      if (loading) return;
+      loading = true;
+      const s = document.createElement('script');
+      s.src = 'https://cse.google.com/cse.js?cx=' + encodeURIComponent(CX);
+      s.async = true; s.defer = true;
+      s.onload = function(){ loaded = true; cb && cb(); };
+      document.head.appendChild(s);
+    }
+
+    function renderIfNeeded(){
+      if (!window.google || !google.search || !google.search.cse) return;
+      if (!google.search.cse.element.getElement('results')){
+        google.search.cse.element.render({
+          div: 'cse-results',
+          tag: 'searchresults-only',
+          gname: 'results'
+        });
+      }
+    }
+
+    function openPanel(){
+      panel.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    }
+    function closePanel(){
+      panel.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+    window.closeSearchPanel = closePanel;
+
+    function execute(q){
+      if (!q || !q.trim()) return;
+      openPanel();
+      ensureCSE(function(){
+        renderIfNeeded();
+        const el = google.search.cse.element.getElement('results');
+        if (el && el.execute) el.execute(q);
+      });
+    }
+
+    input.addEventListener('keydown', function(e){
+      if (e.key === 'Enter'){
+        e.preventDefault();
+        execute(input.value);
+      }
+    });
+    icon.addEventListener('click', function(e){
+      e.preventDefault();
+      execute(input.value);
+    });
+
+    // close interactions
+    btnClose && btnClose.addEventListener('click', closePanel);
+    panel.addEventListener('click', function(e){ if (e.target === panel) closePanel(); });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closePanel(); });
+
+    // Preload CSE in idle per ridurre il tempo della prima ricerca
+    idle(()=> ensureCSE(()=> renderIfNeeded()));
   }
+
+  /* ===== Fallback CSS for explode (if GSAP missing) ===== */
+  (function(){
+    const STYLE_ID = 'explode-fallback-style';
+    if (!document.getElementById(STYLE_ID)){
+      const st = document.createElement('style');
+      st.id = STYLE_ID;
+      st.textContent = `
+        .exploding-text.explode-fallback{ animation: explodeAnim .9s ease-in-out; }
+        @keyframes explodeAnim{
+          0%{ letter-spacing: normal; transform: scale(1); opacity:1; }
+          50%{ letter-spacing: .6em; transform: scale(1.4) rotate(3deg); opacity:.7; }
+          100%{ letter-spacing: normal; transform: scale(1); opacity:1; }
+        }`;
+      document.head.appendChild(st);
+    }
+  })();
+
+  onReady(function(){
+    ensureExploding();
+    initCSE();
+  });
 })();
 </script>
-
 </body> -->
    <div id="search-results-panel" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:10000;padding:40px;box-sizing:border-box;">
       <div style="max-width:800px;margin:0 auto;background:#0a0a1a;padding:20px;border-radius:8px;border:1px solid #d4af37;max-height:80vh;overflow:auto;position:relative;">
@@ -4544,51 +4919,175 @@
         new MutationObserver(initAll).observe(document.documentElement, { childList:true, subtree:true });
       })();
    </script>
-   
-<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c5b8c77887.mp3?filename=explosion-6055.mp3" preload="auto"></audio>
-
-<script>
+   <script>
 (function(){
-  function playExplosion(){
-    var boom = document.getElementById('explode-sound');
-    if (boom){
-      try{ boom.currentTime = 0; }catch(e){}
-      var p = boom.play();
-      if (p && typeof p.catch === 'function'){
-        p.catch(function(err){ console.warn('Audio esplosione bloccato:', err); });
+  /* Small helpers */
+  const onReady = (fn) => (document.readyState === 'loading') ? document.addEventListener('DOMContentLoaded', fn, {once:true}) : fn();
+  const idle = (fn) => ('requestIdleCallback' in window) ? requestIdleCallback(fn, {timeout: 2000}) : setTimeout(fn, 0);
+
+  /* ===== Exploding text: auto at load + click, with sound ===== */
+  function ensureExploding(){
+    const el = document.getElementById('exploding');
+    if (!el) return;
+    // prepare spans once
+    if (!el.__prepared){
+      const t = el.textContent;
+      el.textContent = '';
+      const frag = document.createDocumentFragment();
+      for (const ch of t){
+        const s = document.createElement('span');
+        s.textContent = ch;
+        s.style.display = 'inline-block';
+        frag.appendChild(s);
+      }
+      el.appendChild(frag);
+      el.__prepared = true;
+    }
+    const letters = Array.from(el.querySelectorAll('span'));
+
+    function playExplosion(){
+      const boom = document.getElementById('explode-sound');
+      if (boom){
+        try{ boom.currentTime = 0; boom.play(); }catch(e){ /* ignore */ }
       }
     }
-  }
-  function triggerExplodeEffect(){
-    var el = document.getElementById('exploding');
-    if (!el) return;
-    // se esiste il listener GSAP, riusa il click
-    var hadGsap = !!window.gsap && el.querySelector('span');
-    if (hadGsap){
-      el.dispatchEvent(new Event('click', {bubbles:true}));
-    } else {
-      el.classList.add('explode');
-      setTimeout(function(){ el.classList.remove('explode'); }, 1200);
-    }
-  }
-  function bind(){
-    var btn = document.getElementById('btn-explode');
-    if (!btn) return;
-    if (btn.__explosionBound) return;
-    btn.addEventListener('click', function(){
+
+    function explodeAndReturn(){
+      if (explodeAndReturn.__busy) return;
+      explodeAndReturn.__busy = true;
+      if (window.gsap){
+        gsap.to(letters, {
+          duration: 0.8,
+          x: () => (Math.random() - 0.5) * 400,
+          y: () => (Math.random() - 0.5) * 300,
+          rotation: () => (Math.random() - 0.5) * 720,
+          opacity: 0,
+          ease: "power3.out",
+          stagger: 0.02,
+          onComplete: () => {
+            gsap.to(letters, {
+              duration: 1.2, x:0, y:0, rotation:0, opacity:1,
+              ease: "elastic.out(1, 0.5)", stagger: 0.02,
+              onComplete: () => { explodeAndReturn.__busy = false; }
+            });
+          }
+        });
+      } else {
+        el.classList.add('explode-fallback');
+        setTimeout(()=>{ el.classList.remove('explode-fallback'); explodeAndReturn.__busy = false; }, 900);
+      }
       playExplosion();
-      triggerExplodeEffect();
+    }
+
+    // auto once
+    explodeAndReturn();
+
+    // click handlers (support multiple buttons)
+    const btns = Array.from(document.querySelectorAll('#btn-explode, .btn-explode'));
+    btns.forEach(b => {
+      if (!b.__explodeBound){
+        b.addEventListener('click', explodeAndReturn);
+        b.__explodeBound = true;
+      }
     });
-    btn.__explosionBound = true;
   }
-  if (document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', bind);
-  } else {
-    bind();
+
+  /* ===== CSE lazy loader + panel ===== */
+  function initCSE(){
+    const CX = '87b07564ab3cb462a';
+    const input = document.getElementById('site-search');
+    const icon  = document.querySelector('.search-icon');
+    const panel = document.getElementById('cse-panel');
+    const btnClose = document.getElementById('cse-close');
+    if (!input || !icon || !panel) return;
+
+    let loaded = false, loading = false;
+
+    function ensureCSE(cb){
+      if (loaded && window.google && google.search && google.search.cse) return cb && cb();
+      if (loading) return;
+      loading = true;
+      const s = document.createElement('script');
+      s.src = 'https://cse.google.com/cse.js?cx=' + encodeURIComponent(CX);
+      s.async = true; s.defer = true;
+      s.onload = function(){ loaded = true; cb && cb(); };
+      document.head.appendChild(s);
+    }
+
+    function renderIfNeeded(){
+      if (!window.google || !google.search || !google.search.cse) return;
+      if (!google.search.cse.element.getElement('results')){
+        google.search.cse.element.render({
+          div: 'cse-results',
+          tag: 'searchresults-only',
+          gname: 'results'
+        });
+      }
+    }
+
+    function openPanel(){
+      panel.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    }
+    function closePanel(){
+      panel.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+    window.closeSearchPanel = closePanel;
+
+    function execute(q){
+      if (!q || !q.trim()) return;
+      openPanel();
+      ensureCSE(function(){
+        renderIfNeeded();
+        const el = google.search.cse.element.getElement('results');
+        if (el && el.execute) el.execute(q);
+      });
+    }
+
+    input.addEventListener('keydown', function(e){
+      if (e.key === 'Enter'){
+        e.preventDefault();
+        execute(input.value);
+      }
+    });
+    icon.addEventListener('click', function(e){
+      e.preventDefault();
+      execute(input.value);
+    });
+
+    // close interactions
+    btnClose && btnClose.addEventListener('click', closePanel);
+    panel.addEventListener('click', function(e){ if (e.target === panel) closePanel(); });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closePanel(); });
+
+    // Preload CSE in idle per ridurre il tempo della prima ricerca
+    idle(()=> ensureCSE(()=> renderIfNeeded()));
   }
+
+  /* ===== Fallback CSS for explode (if GSAP missing) ===== */
+  (function(){
+    const STYLE_ID = 'explode-fallback-style';
+    if (!document.getElementById(STYLE_ID)){
+      const st = document.createElement('style');
+      st.id = STYLE_ID;
+      st.textContent = `
+        .exploding-text.explode-fallback{ animation: explodeAnim .9s ease-in-out; }
+        @keyframes explodeAnim{
+          0%{ letter-spacing: normal; transform: scale(1); opacity:1; }
+          50%{ letter-spacing: .6em; transform: scale(1.4) rotate(3deg); opacity:.7; }
+          100%{ letter-spacing: normal; transform: scale(1); opacity:1; }
+        }`;
+      document.head.appendChild(st);
+    }
+  })();
+
+  onReady(function(){
+    ensureExploding();
+    initCSE();
+  });
 })();
 </script>
-
 </body> -->
    <div id="search-results-panel" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:10000;padding:40px;box-sizing:border-box;backdrop-filter:blur(5px);">
       <div style="max-width:800px;margin:0 auto;background:#0a0a1a;padding:25px;border-radius:12px;border:1px solid #d4af37;max-height:80vh;overflow:auto;position:relative;box-shadow:0 0 20px rgba(0,0,0,0.5);">
@@ -4982,50 +5481,174 @@
         });
       })();
    </script>
-   
-<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c5b8c77887.mp3?filename=explosion-6055.mp3" preload="auto"></audio>
-
-<script>
+   <script>
 (function(){
-  function playExplosion(){
-    var boom = document.getElementById('explode-sound');
-    if (boom){
-      try{ boom.currentTime = 0; }catch(e){}
-      var p = boom.play();
-      if (p && typeof p.catch === 'function'){
-        p.catch(function(err){ console.warn('Audio esplosione bloccato:', err); });
+  /* Small helpers */
+  const onReady = (fn) => (document.readyState === 'loading') ? document.addEventListener('DOMContentLoaded', fn, {once:true}) : fn();
+  const idle = (fn) => ('requestIdleCallback' in window) ? requestIdleCallback(fn, {timeout: 2000}) : setTimeout(fn, 0);
+
+  /* ===== Exploding text: auto at load + click, with sound ===== */
+  function ensureExploding(){
+    const el = document.getElementById('exploding');
+    if (!el) return;
+    // prepare spans once
+    if (!el.__prepared){
+      const t = el.textContent;
+      el.textContent = '';
+      const frag = document.createDocumentFragment();
+      for (const ch of t){
+        const s = document.createElement('span');
+        s.textContent = ch;
+        s.style.display = 'inline-block';
+        frag.appendChild(s);
+      }
+      el.appendChild(frag);
+      el.__prepared = true;
+    }
+    const letters = Array.from(el.querySelectorAll('span'));
+
+    function playExplosion(){
+      const boom = document.getElementById('explode-sound');
+      if (boom){
+        try{ boom.currentTime = 0; boom.play(); }catch(e){ /* ignore */ }
       }
     }
-  }
-  function triggerExplodeEffect(){
-    var el = document.getElementById('exploding');
-    if (!el) return;
-    // se esiste il listener GSAP, riusa il click
-    var hadGsap = !!window.gsap && el.querySelector('span');
-    if (hadGsap){
-      el.dispatchEvent(new Event('click', {bubbles:true}));
-    } else {
-      el.classList.add('explode');
-      setTimeout(function(){ el.classList.remove('explode'); }, 1200);
-    }
-  }
-  function bind(){
-    var btn = document.getElementById('btn-explode');
-    if (!btn) return;
-    if (btn.__explosionBound) return;
-    btn.addEventListener('click', function(){
+
+    function explodeAndReturn(){
+      if (explodeAndReturn.__busy) return;
+      explodeAndReturn.__busy = true;
+      if (window.gsap){
+        gsap.to(letters, {
+          duration: 0.8,
+          x: () => (Math.random() - 0.5) * 400,
+          y: () => (Math.random() - 0.5) * 300,
+          rotation: () => (Math.random() - 0.5) * 720,
+          opacity: 0,
+          ease: "power3.out",
+          stagger: 0.02,
+          onComplete: () => {
+            gsap.to(letters, {
+              duration: 1.2, x:0, y:0, rotation:0, opacity:1,
+              ease: "elastic.out(1, 0.5)", stagger: 0.02,
+              onComplete: () => { explodeAndReturn.__busy = false; }
+            });
+          }
+        });
+      } else {
+        el.classList.add('explode-fallback');
+        setTimeout(()=>{ el.classList.remove('explode-fallback'); explodeAndReturn.__busy = false; }, 900);
+      }
       playExplosion();
-      triggerExplodeEffect();
+    }
+
+    // auto once
+    explodeAndReturn();
+
+    // click handlers (support multiple buttons)
+    const btns = Array.from(document.querySelectorAll('#btn-explode, .btn-explode'));
+    btns.forEach(b => {
+      if (!b.__explodeBound){
+        b.addEventListener('click', explodeAndReturn);
+        b.__explodeBound = true;
+      }
     });
-    btn.__explosionBound = true;
   }
-  if (document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', bind);
-  } else {
-    bind();
+
+  /* ===== CSE lazy loader + panel ===== */
+  function initCSE(){
+    const CX = '87b07564ab3cb462a';
+    const input = document.getElementById('site-search');
+    const icon  = document.querySelector('.search-icon');
+    const panel = document.getElementById('cse-panel');
+    const btnClose = document.getElementById('cse-close');
+    if (!input || !icon || !panel) return;
+
+    let loaded = false, loading = false;
+
+    function ensureCSE(cb){
+      if (loaded && window.google && google.search && google.search.cse) return cb && cb();
+      if (loading) return;
+      loading = true;
+      const s = document.createElement('script');
+      s.src = 'https://cse.google.com/cse.js?cx=' + encodeURIComponent(CX);
+      s.async = true; s.defer = true;
+      s.onload = function(){ loaded = true; cb && cb(); };
+      document.head.appendChild(s);
+    }
+
+    function renderIfNeeded(){
+      if (!window.google || !google.search || !google.search.cse) return;
+      if (!google.search.cse.element.getElement('results')){
+        google.search.cse.element.render({
+          div: 'cse-results',
+          tag: 'searchresults-only',
+          gname: 'results'
+        });
+      }
+    }
+
+    function openPanel(){
+      panel.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    }
+    function closePanel(){
+      panel.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+    window.closeSearchPanel = closePanel;
+
+    function execute(q){
+      if (!q || !q.trim()) return;
+      openPanel();
+      ensureCSE(function(){
+        renderIfNeeded();
+        const el = google.search.cse.element.getElement('results');
+        if (el && el.execute) el.execute(q);
+      });
+    }
+
+    input.addEventListener('keydown', function(e){
+      if (e.key === 'Enter'){
+        e.preventDefault();
+        execute(input.value);
+      }
+    });
+    icon.addEventListener('click', function(e){
+      e.preventDefault();
+      execute(input.value);
+    });
+
+    // close interactions
+    btnClose && btnClose.addEventListener('click', closePanel);
+    panel.addEventListener('click', function(e){ if (e.target === panel) closePanel(); });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closePanel(); });
+
+    // Preload CSE in idle per ridurre il tempo della prima ricerca
+    idle(()=> ensureCSE(()=> renderIfNeeded()));
   }
+
+  /* ===== Fallback CSS for explode (if GSAP missing) ===== */
+  (function(){
+    const STYLE_ID = 'explode-fallback-style';
+    if (!document.getElementById(STYLE_ID)){
+      const st = document.createElement('style');
+      st.id = STYLE_ID;
+      st.textContent = `
+        .exploding-text.explode-fallback{ animation: explodeAnim .9s ease-in-out; }
+        @keyframes explodeAnim{
+          0%{ letter-spacing: normal; transform: scale(1); opacity:1; }
+          50%{ letter-spacing: .6em; transform: scale(1.4) rotate(3deg); opacity:.7; }
+          100%{ letter-spacing: normal; transform: scale(1); opacity:1; }
+        }`;
+      document.head.appendChild(st);
+    }
+  })();
+
+  onReady(function(){
+    ensureExploding();
+    initCSE();
+  });
 })();
 </script>
-
 </body>
 </html>
