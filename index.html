@@ -4530,6 +4530,14 @@ document.getElementById('search-results-panel')?.addEventListener('click', funct
   new MutationObserver(initAll).observe(document.documentElement, { childList:true, subtree:true });
 })();
 </script>
+<script>
+(function(){
+  ['btn-thunder','btn-explode'].forEach(id=>{
+    const nodes = Array.from(document.querySelectorAll('#'+id));
+    nodes.slice(1).forEach(n => n.remove()); // lascia solo il primo
+  });
+})();
+</script>
 
 </body>
 </html>
