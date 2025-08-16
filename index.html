@@ -78,7 +78,7 @@
       .search-container input:focus{ border-color:rgba(255,215,0,.5); box-shadow:0 0 12px rgba(255,215,0,.18) }
       .search-icon{ position:absolute; left:.8rem; font-size:.95rem; color:rgba(255,215,0,.85) }
       header{ margin-top:76px; display:flex; justify-content:center; z-index:900 }
-      .menu-container{ max-width:1200px; width:100%; padding:.4rem 1rem; margin-top: 60px !important; }
+      .menu-container{ max-width:1200px; width:100%; padding:.4rem 1rem; }
       nav.menu-desktop ul{ display:flex; gap:1px; list-style:none; margin:0; padding:0; justify-content:center; white-space:nowrap }
       nav.menu-desktop li{ position:relative }
       .menu-btn, nav.menu-desktop li>a{
@@ -551,47 +551,54 @@
     </style>
     <!--  fine  aggiunta stelle cadenti da destra a sinistra-->
   <style>
-/* === CLICKABLE AREA TUNING (search + buttons) === */
+
+/* === MENU FIXED UNDER TOP BAR === */
+header {
+  margin-top: 76px !important;      /* distanza dalla top-bar */
+  padding-bottom: 68px !important;  /* spazio riservato per il menu fisso */
+  display: flex;
+  justify-content: center;
+  z-index: 900;
+}
+.menu-container {
+  max-width: 1200px;
+  width: 100%;
+  padding: .4rem 1rem;
+  position: fixed !important;
+  top: 76px !important;             /* allineato alla top-bar */
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 999 !important;
+  background: rgba(0,0,0,0.85) !important; /* sfondo per leggibilità */
+  margin-top: 0 !important;         /* nessun rialzo */
+}
+
+
+/* === SEARCH: caret centered + larger clickable area + stable clear === */
+.search-container{ position:relative; display:flex; align-items:center; }
 .search-container input {
   height: 40px !important;
   line-height: 40px !important;
-  padding: 0 2.6rem 0 3rem !important; /* more room for clear (right) and lens (left) */
+  padding: 0 2.6rem 0 3rem !important; /* spazio per lente a sinistra e crocetta a destra */
   box-sizing: border-box !important;
 }
-
-.search-container .clear-icon {
-  right: .8rem !important;
-  line-height: 1 !important;
-}
-
-#play-thunder,
-#explode-symbols {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  padding: 0.6rem 1.2rem !important;
-  min-height: 40px !important;
-  line-height: 1.2 !important;
-  cursor: pointer !important;
-  user-select: none !important;
-}
-
-#play-thunder:active,
-#explode-symbols:active {
-  transform: scale(0.97);
-}
-</style>
-<style>
-/* === CLEAR ICON STABILITY + NATIVE CANCEL OFF === */
+/* disabilita l'icona clear nativa */
 .search-container input::-webkit-search-cancel-button { -webkit-appearance: none; }
+/* icona clear nostra: sempre visibile e a tutta altezza */
 .search-container .clear-icon {
+  position: absolute;
+  right: .8rem;
+  font-size: 1rem;
+  color: rgba(255,215,0,.85);
+  cursor: pointer;
+  user-select: none;
   display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  height: 100% !important;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
+.search-container .clear-icon:hover{ filter: brightness(1.1); }
+
 </style>
 </head>
   <canvas id="shooting-stars"></canvas>
@@ -3457,19 +3464,45 @@
 </script>
 
 
+<!-- === SEARCH: stable clear icon (no duplicates) === -->
 <script>
 (function(){
-  function forceClearIcons(){
-    document.querySelectorAll('.search-container .clear-icon').forEach(function(el){
-      el.style.display = 'flex';
-      el.style.visibility = 'visible';
-      el.style.opacity = '1';
-      el.style.height = (el.parentElement && el.parentElement.querySelector('input')) ?
-        getComputedStyle(el.parentElement.querySelector('input')).height : '100%';
-    });
+  function ensureClearFor(input){
+    if (!input) return;
+    var wrap = (input.closest && input.closest('.search-container')) || input.parentElement;
+    if (!wrap) return;
+    // evita duplicati: se esiste già, riusa
+    var btn = wrap.querySelector('.clear-icon');
+    if (!btn){
+      btn = document.createElement('span');
+      btn.className = 'clear-icon';
+      btn.setAttribute('role','button');
+      btn.setAttribute('aria-label','Pulisci ricerca');
+      btn.title = 'Pulisci';
+      btn.textContent = '✖';
+      wrap.appendChild(btn);
+    }
+    if (!btn.__bound){
+      btn.addEventListener('click', function(){
+        input.value = '';
+        input.focus();
+        // notifica eventuali listener
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+      btn.__bound = true;
+    }
   }
-  forceClearIcons();
-  new MutationObserver(forceClearIcons).observe(document.documentElement, { attributes:true, subtree:true, childList:true });
+  function initAll(){
+    document.querySelectorAll('.search-container input[type="search"], .search-container input[type="text"], #site-search')
+      .forEach(ensureClearFor);
+  }
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initAll, { once:true });
+  } else {
+    initAll();
+  }
+  new MutationObserver(initAll).observe(document.documentElement, { childList:true, subtree:true });
 })();
 </script>
 
@@ -3550,19 +3583,45 @@
 </script>
 
 
+<!-- === SEARCH: stable clear icon (no duplicates) === -->
 <script>
 (function(){
-  function forceClearIcons(){
-    document.querySelectorAll('.search-container .clear-icon').forEach(function(el){
-      el.style.display = 'flex';
-      el.style.visibility = 'visible';
-      el.style.opacity = '1';
-      el.style.height = (el.parentElement && el.parentElement.querySelector('input')) ?
-        getComputedStyle(el.parentElement.querySelector('input')).height : '100%';
-    });
+  function ensureClearFor(input){
+    if (!input) return;
+    var wrap = (input.closest && input.closest('.search-container')) || input.parentElement;
+    if (!wrap) return;
+    // evita duplicati: se esiste già, riusa
+    var btn = wrap.querySelector('.clear-icon');
+    if (!btn){
+      btn = document.createElement('span');
+      btn.className = 'clear-icon';
+      btn.setAttribute('role','button');
+      btn.setAttribute('aria-label','Pulisci ricerca');
+      btn.title = 'Pulisci';
+      btn.textContent = '✖';
+      wrap.appendChild(btn);
+    }
+    if (!btn.__bound){
+      btn.addEventListener('click', function(){
+        input.value = '';
+        input.focus();
+        // notifica eventuali listener
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+      btn.__bound = true;
+    }
   }
-  forceClearIcons();
-  new MutationObserver(forceClearIcons).observe(document.documentElement, { attributes:true, subtree:true, childList:true });
+  function initAll(){
+    document.querySelectorAll('.search-container input[type="search"], .search-container input[type="text"], #site-search')
+      .forEach(ensureClearFor);
+  }
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initAll, { once:true });
+  } else {
+    initAll();
+  }
+  new MutationObserver(initAll).observe(document.documentElement, { childList:true, subtree:true });
 })();
 </script>
 
@@ -3772,19 +3831,45 @@ if (document.readyState === 'complete') {
 </script>
 
 
+<!-- === SEARCH: stable clear icon (no duplicates) === -->
 <script>
 (function(){
-  function forceClearIcons(){
-    document.querySelectorAll('.search-container .clear-icon').forEach(function(el){
-      el.style.display = 'flex';
-      el.style.visibility = 'visible';
-      el.style.opacity = '1';
-      el.style.height = (el.parentElement && el.parentElement.querySelector('input')) ?
-        getComputedStyle(el.parentElement.querySelector('input')).height : '100%';
-    });
+  function ensureClearFor(input){
+    if (!input) return;
+    var wrap = (input.closest && input.closest('.search-container')) || input.parentElement;
+    if (!wrap) return;
+    // evita duplicati: se esiste già, riusa
+    var btn = wrap.querySelector('.clear-icon');
+    if (!btn){
+      btn = document.createElement('span');
+      btn.className = 'clear-icon';
+      btn.setAttribute('role','button');
+      btn.setAttribute('aria-label','Pulisci ricerca');
+      btn.title = 'Pulisci';
+      btn.textContent = '✖';
+      wrap.appendChild(btn);
+    }
+    if (!btn.__bound){
+      btn.addEventListener('click', function(){
+        input.value = '';
+        input.focus();
+        // notifica eventuali listener
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+      btn.__bound = true;
+    }
   }
-  forceClearIcons();
-  new MutationObserver(forceClearIcons).observe(document.documentElement, { attributes:true, subtree:true, childList:true });
+  function initAll(){
+    document.querySelectorAll('.search-container input[type="search"], .search-container input[type="text"], #site-search')
+      .forEach(ensureClearFor);
+  }
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initAll, { once:true });
+  } else {
+    initAll();
+  }
+  new MutationObserver(initAll).observe(document.documentElement, { childList:true, subtree:true });
 })();
 </script>
 
@@ -3973,19 +4058,45 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 
+<!-- === SEARCH: stable clear icon (no duplicates) === -->
 <script>
 (function(){
-  function forceClearIcons(){
-    document.querySelectorAll('.search-container .clear-icon').forEach(function(el){
-      el.style.display = 'flex';
-      el.style.visibility = 'visible';
-      el.style.opacity = '1';
-      el.style.height = (el.parentElement && el.parentElement.querySelector('input')) ?
-        getComputedStyle(el.parentElement.querySelector('input')).height : '100%';
-    });
+  function ensureClearFor(input){
+    if (!input) return;
+    var wrap = (input.closest && input.closest('.search-container')) || input.parentElement;
+    if (!wrap) return;
+    // evita duplicati: se esiste già, riusa
+    var btn = wrap.querySelector('.clear-icon');
+    if (!btn){
+      btn = document.createElement('span');
+      btn.className = 'clear-icon';
+      btn.setAttribute('role','button');
+      btn.setAttribute('aria-label','Pulisci ricerca');
+      btn.title = 'Pulisci';
+      btn.textContent = '✖';
+      wrap.appendChild(btn);
+    }
+    if (!btn.__bound){
+      btn.addEventListener('click', function(){
+        input.value = '';
+        input.focus();
+        // notifica eventuali listener
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+      btn.__bound = true;
+    }
   }
-  forceClearIcons();
-  new MutationObserver(forceClearIcons).observe(document.documentElement, { attributes:true, subtree:true, childList:true });
+  function initAll(){
+    document.querySelectorAll('.search-container input[type="search"], .search-container input[type="text"], #site-search')
+      .forEach(ensureClearFor);
+  }
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initAll, { once:true });
+  } else {
+    initAll();
+  }
+  new MutationObserver(initAll).observe(document.documentElement, { childList:true, subtree:true });
 })();
 </script>
 
@@ -4339,19 +4450,45 @@ document.getElementById('search-results-panel')?.addEventListener('click', funct
 </script>
 
 
+<!-- === SEARCH: stable clear icon (no duplicates) === -->
 <script>
 (function(){
-  function forceClearIcons(){
-    document.querySelectorAll('.search-container .clear-icon').forEach(function(el){
-      el.style.display = 'flex';
-      el.style.visibility = 'visible';
-      el.style.opacity = '1';
-      el.style.height = (el.parentElement && el.parentElement.querySelector('input')) ?
-        getComputedStyle(el.parentElement.querySelector('input')).height : '100%';
-    });
+  function ensureClearFor(input){
+    if (!input) return;
+    var wrap = (input.closest && input.closest('.search-container')) || input.parentElement;
+    if (!wrap) return;
+    // evita duplicati: se esiste già, riusa
+    var btn = wrap.querySelector('.clear-icon');
+    if (!btn){
+      btn = document.createElement('span');
+      btn.className = 'clear-icon';
+      btn.setAttribute('role','button');
+      btn.setAttribute('aria-label','Pulisci ricerca');
+      btn.title = 'Pulisci';
+      btn.textContent = '✖';
+      wrap.appendChild(btn);
+    }
+    if (!btn.__bound){
+      btn.addEventListener('click', function(){
+        input.value = '';
+        input.focus();
+        // notifica eventuali listener
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+      btn.__bound = true;
+    }
   }
-  forceClearIcons();
-  new MutationObserver(forceClearIcons).observe(document.documentElement, { attributes:true, subtree:true, childList:true });
+  function initAll(){
+    document.querySelectorAll('.search-container input[type="search"], .search-container input[type="text"], #site-search')
+      .forEach(ensureClearFor);
+  }
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initAll, { once:true });
+  } else {
+    initAll();
+  }
+  new MutationObserver(initAll).observe(document.documentElement, { childList:true, subtree:true });
 })();
 </script>
 
