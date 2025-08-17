@@ -752,6 +752,14 @@
   }
 </style>
 
+
+<style data-cse-float-css>
+  .cse-suggestions.cse-float{
+    position: fixed !important;
+    z-index: 2147483647 !important; /* sopra tutto */
+  }
+</style>
+
 </head>
    <body>
   <canvas id="shooting-stars"></canvas>
@@ -4162,6 +4170,164 @@
 })();
 </script>
 
+
+<script>
+(function(){
+  const $ = (s, r=document)=>r.querySelector(s);
+  const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
+
+  // 1) Trova l'input della ricerca (non tocchiamo altro)
+  const input = $('#site-search') 
+             || document.querySelector('.search-container input[type="search"], .search-container input[type="text"]');
+  if(!input) return;
+
+  // 2) Assicura il box suggerimenti. Se già esiste, lo sposto nel <body> per stare sopra al menu
+  let box = $('#cse-suggestions');
+  if(!box){
+    box = document.createElement('div');
+    box.id = 'cse-suggestions';
+    box.className = 'cse-suggestions';
+  } else if (box.parentElement !== document.body){
+    box.parentElement.removeChild(box);
+  }
+  if (!document.body.contains(box)) document.body.appendChild(box);
+  box.classList.add('cse-float'); // abilita posizione fixed con CSS minimale
+
+  function positionBox(){
+    const r = input.getBoundingClientRect();
+    const left = Math.max(8, Math.min(r.left, window.innerWidth - 8));
+    const top  = Math.max(8, r.bottom + 6);
+    const width = Math.min(r.width, window.innerWidth - left - 8);
+    box.style.left = left + 'px';
+    box.style.top = top + 'px';
+    box.style.width = width + 'px';
+    box.style.maxWidth = Math.min(960, window.innerWidth - 16) + 'px';
+  }
+  function showBox(){ positionBox(); box.classList.add('show'); }
+  function hideBox(){ box.classList.remove('show'); }
+
+  function normalizeHref(href){
+    href = String(href || '').trim();
+    if(!href) return '#';
+    if(/^https?:/i.test(href)) return href;          // absolute http(s)
+    if(href.startsWith('mailto:') || href.startsWith('tel:')) return href;
+    if(href.startsWith('/')){                        // root-relative
+      if (location.protocol === 'file:'){            // running offline: map to relative path
+        return '.' + href;                           // "./articoli/kant.html"
+      }
+      return href;                                   // keep root-relative online
+    }
+    return href;                                     // plain relative already ok
+  }
+
+
+  // 3) Dataset: prendo prima gli "ultimi articoli" dal blob a destra; fallback ai link del menu
+  function norm(s){ return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ').trim(); }
+  function safe(txt){ return String(txt||'').replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+
+  function collectFromBlob(){
+    const arr = [];
+    $$('.articles-blob a').forEach(a=>{
+      const href = a.getAttribute('href')||'';
+      if(!href) return;
+      const title = (a.getAttribute('data-title') || a.textContent || '').trim();
+      if(!title) return;
+      arr.push({title, href, key: norm(title)});
+    });
+    return arr;
+  }
+  function collectFromMenu(){
+    const arr = [];
+    $$('nav.menu-desktop a').forEach(a=>{
+      const href = a.getAttribute('href')||'';
+      if(!/\.html?(\?.*)?(#.*)?$/i.test(href)) return; // solo pagine interne
+      if(/^https?:/i.test(href)) return;               // escludi esterni
+      const title = (a.getAttribute('data-title') || a.textContent || '').trim();
+      if(!title) return;
+      arr.push({title, href, key: norm(title)});
+    });
+    return arr;
+  }
+
+  function getNews(){
+    const A = collectFromBlob();
+    if (A.length) return A.slice(0, 6);
+    const B = collectFromMenu();
+    return B.slice(0, 6);
+  }
+
+  // 4) Template item (ancora più "conservativo": <a> vero, così è naturalmente cliccabile)
+  function itemHTML(it, q){
+    const qn = norm(q||'');
+    const t  = it.title || '';
+    if (!qn) return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(t)+'</span>';
+    const nt = norm(t); const ix = nt.indexOf(qn);
+    if(ix<0) return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(t)+'</span>';
+    const a=t.slice(0,ix), b=t.slice(ix,ix+qn.length), c=t.slice(ix+qn.length);
+    return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(a)+'<mark>'+safe(b)+'</mark>'+safe(c)+'</span>';
+  }
+
+  function renderNews(){
+    const list = getNews();
+    box.innerHTML = '';
+    if(!list.length){ hideBox(); return; }
+
+    const h = document.createElement('div');
+    h.className = 'section-title';
+    h.textContent = 'Novità';
+    box.appendChild(h);
+
+    list.forEach((it, i)=>{
+      const a = document.createElement('a');
+      a.className = 'cse-sugg-item';
+      a.setAttribute('role','option');
+      a.setAttribute('aria-selected', i===0 ? 'true' : 'false');
+      a.href = normalizeHref(it.href);
+a.setAttribute('target','_self');
+      a.innerHTML = itemHTML(it, '' ) + '<span class="badge-news">Nuovo</span>';
+      a.addEventListener('click', (e)=>{
+        // Se esiste la tua ricerca interna, usala; altrimenti lascia il link nativo
+        if (typeof window.execQuery === 'function'){
+          e.preventDefault();
+          window.execQuery(it.title);
+          hideBox();
+        }
+      });
+      box.appendChild(a);
+    });
+    showBox();
+  }
+
+  // Helper pubblico (debug/uso manuale)
+  window.showNovita = renderNews;
+
+  // 5) Attiva Novità quando clicchi la lente e l'input è vuoto (non tocco Enter, né la tua ricerca)
+  function onLens(e){
+    const lens = e.target.closest('.search-container .search-icon, .search-container [data-role="search-lens"]');
+    if(!lens) return;
+    if ((input.value||'').trim()) return; // se c'è testo, non faccio nulla
+    e.preventDefault();
+    e.stopPropagation();
+    input.focus();
+    renderNews();
+  }
+  document.addEventListener('pointerdown', onLens, true);
+  document.addEventListener('click', onLens, true);
+
+  // 6) Chiusura solo cliccando fuori dal box e fuori dalla search-container
+  document.addEventListener('mousedown', (e)=>{
+    if (e.target.closest('#cse-suggestions')) return;
+    if (e.target.closest('.search-container')) return;
+    hideBox();
+  }, true);
+
+  // 7) Reposizionamento quando serve
+  window.addEventListener('scroll', ()=>{ if(box.classList.contains('show')) positionBox(); }, true);
+  window.addEventListener('resize', ()=>{ if(box.classList.contains('show')) positionBox(); });
+
+})();
+</script>
+
 </body>
    -->
    <!-- Aggiungi questo codice prima della chiusura 
@@ -4509,6 +4675,164 @@
     const ev = new Event('focus', {bubbles:false, cancelable:false});
     input.dispatchEvent(ev);
   }, true);
+})();
+</script>
+
+
+<script>
+(function(){
+  const $ = (s, r=document)=>r.querySelector(s);
+  const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
+
+  // 1) Trova l'input della ricerca (non tocchiamo altro)
+  const input = $('#site-search') 
+             || document.querySelector('.search-container input[type="search"], .search-container input[type="text"]');
+  if(!input) return;
+
+  // 2) Assicura il box suggerimenti. Se già esiste, lo sposto nel <body> per stare sopra al menu
+  let box = $('#cse-suggestions');
+  if(!box){
+    box = document.createElement('div');
+    box.id = 'cse-suggestions';
+    box.className = 'cse-suggestions';
+  } else if (box.parentElement !== document.body){
+    box.parentElement.removeChild(box);
+  }
+  if (!document.body.contains(box)) document.body.appendChild(box);
+  box.classList.add('cse-float'); // abilita posizione fixed con CSS minimale
+
+  function positionBox(){
+    const r = input.getBoundingClientRect();
+    const left = Math.max(8, Math.min(r.left, window.innerWidth - 8));
+    const top  = Math.max(8, r.bottom + 6);
+    const width = Math.min(r.width, window.innerWidth - left - 8);
+    box.style.left = left + 'px';
+    box.style.top = top + 'px';
+    box.style.width = width + 'px';
+    box.style.maxWidth = Math.min(960, window.innerWidth - 16) + 'px';
+  }
+  function showBox(){ positionBox(); box.classList.add('show'); }
+  function hideBox(){ box.classList.remove('show'); }
+
+  function normalizeHref(href){
+    href = String(href || '').trim();
+    if(!href) return '#';
+    if(/^https?:/i.test(href)) return href;          // absolute http(s)
+    if(href.startsWith('mailto:') || href.startsWith('tel:')) return href;
+    if(href.startsWith('/')){                        // root-relative
+      if (location.protocol === 'file:'){            // running offline: map to relative path
+        return '.' + href;                           // "./articoli/kant.html"
+      }
+      return href;                                   // keep root-relative online
+    }
+    return href;                                     // plain relative already ok
+  }
+
+
+  // 3) Dataset: prendo prima gli "ultimi articoli" dal blob a destra; fallback ai link del menu
+  function norm(s){ return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ').trim(); }
+  function safe(txt){ return String(txt||'').replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+
+  function collectFromBlob(){
+    const arr = [];
+    $$('.articles-blob a').forEach(a=>{
+      const href = a.getAttribute('href')||'';
+      if(!href) return;
+      const title = (a.getAttribute('data-title') || a.textContent || '').trim();
+      if(!title) return;
+      arr.push({title, href, key: norm(title)});
+    });
+    return arr;
+  }
+  function collectFromMenu(){
+    const arr = [];
+    $$('nav.menu-desktop a').forEach(a=>{
+      const href = a.getAttribute('href')||'';
+      if(!/\.html?(\?.*)?(#.*)?$/i.test(href)) return; // solo pagine interne
+      if(/^https?:/i.test(href)) return;               // escludi esterni
+      const title = (a.getAttribute('data-title') || a.textContent || '').trim();
+      if(!title) return;
+      arr.push({title, href, key: norm(title)});
+    });
+    return arr;
+  }
+
+  function getNews(){
+    const A = collectFromBlob();
+    if (A.length) return A.slice(0, 6);
+    const B = collectFromMenu();
+    return B.slice(0, 6);
+  }
+
+  // 4) Template item (ancora più "conservativo": <a> vero, così è naturalmente cliccabile)
+  function itemHTML(it, q){
+    const qn = norm(q||'');
+    const t  = it.title || '';
+    if (!qn) return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(t)+'</span>';
+    const nt = norm(t); const ix = nt.indexOf(qn);
+    if(ix<0) return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(t)+'</span>';
+    const a=t.slice(0,ix), b=t.slice(ix,ix+qn.length), c=t.slice(ix+qn.length);
+    return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(a)+'<mark>'+safe(b)+'</mark>'+safe(c)+'</span>';
+  }
+
+  function renderNews(){
+    const list = getNews();
+    box.innerHTML = '';
+    if(!list.length){ hideBox(); return; }
+
+    const h = document.createElement('div');
+    h.className = 'section-title';
+    h.textContent = 'Novità';
+    box.appendChild(h);
+
+    list.forEach((it, i)=>{
+      const a = document.createElement('a');
+      a.className = 'cse-sugg-item';
+      a.setAttribute('role','option');
+      a.setAttribute('aria-selected', i===0 ? 'true' : 'false');
+      a.href = normalizeHref(it.href);
+a.setAttribute('target','_self');
+      a.innerHTML = itemHTML(it, '' ) + '<span class="badge-news">Nuovo</span>';
+      a.addEventListener('click', (e)=>{
+        // Se esiste la tua ricerca interna, usala; altrimenti lascia il link nativo
+        if (typeof window.execQuery === 'function'){
+          e.preventDefault();
+          window.execQuery(it.title);
+          hideBox();
+        }
+      });
+      box.appendChild(a);
+    });
+    showBox();
+  }
+
+  // Helper pubblico (debug/uso manuale)
+  window.showNovita = renderNews;
+
+  // 5) Attiva Novità quando clicchi la lente e l'input è vuoto (non tocco Enter, né la tua ricerca)
+  function onLens(e){
+    const lens = e.target.closest('.search-container .search-icon, .search-container [data-role="search-lens"]');
+    if(!lens) return;
+    if ((input.value||'').trim()) return; // se c'è testo, non faccio nulla
+    e.preventDefault();
+    e.stopPropagation();
+    input.focus();
+    renderNews();
+  }
+  document.addEventListener('pointerdown', onLens, true);
+  document.addEventListener('click', onLens, true);
+
+  // 6) Chiusura solo cliccando fuori dal box e fuori dalla search-container
+  document.addEventListener('mousedown', (e)=>{
+    if (e.target.closest('#cse-suggestions')) return;
+    if (e.target.closest('.search-container')) return;
+    hideBox();
+  }, true);
+
+  // 7) Reposizionamento quando serve
+  window.addEventListener('scroll', ()=>{ if(box.classList.contains('show')) positionBox(); }, true);
+  window.addEventListener('resize', ()=>{ if(box.classList.contains('show')) positionBox(); });
+
 })();
 </script>
 
@@ -4980,6 +5304,164 @@
 })();
 </script>
 
+
+<script>
+(function(){
+  const $ = (s, r=document)=>r.querySelector(s);
+  const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
+
+  // 1) Trova l'input della ricerca (non tocchiamo altro)
+  const input = $('#site-search') 
+             || document.querySelector('.search-container input[type="search"], .search-container input[type="text"]');
+  if(!input) return;
+
+  // 2) Assicura il box suggerimenti. Se già esiste, lo sposto nel <body> per stare sopra al menu
+  let box = $('#cse-suggestions');
+  if(!box){
+    box = document.createElement('div');
+    box.id = 'cse-suggestions';
+    box.className = 'cse-suggestions';
+  } else if (box.parentElement !== document.body){
+    box.parentElement.removeChild(box);
+  }
+  if (!document.body.contains(box)) document.body.appendChild(box);
+  box.classList.add('cse-float'); // abilita posizione fixed con CSS minimale
+
+  function positionBox(){
+    const r = input.getBoundingClientRect();
+    const left = Math.max(8, Math.min(r.left, window.innerWidth - 8));
+    const top  = Math.max(8, r.bottom + 6);
+    const width = Math.min(r.width, window.innerWidth - left - 8);
+    box.style.left = left + 'px';
+    box.style.top = top + 'px';
+    box.style.width = width + 'px';
+    box.style.maxWidth = Math.min(960, window.innerWidth - 16) + 'px';
+  }
+  function showBox(){ positionBox(); box.classList.add('show'); }
+  function hideBox(){ box.classList.remove('show'); }
+
+  function normalizeHref(href){
+    href = String(href || '').trim();
+    if(!href) return '#';
+    if(/^https?:/i.test(href)) return href;          // absolute http(s)
+    if(href.startsWith('mailto:') || href.startsWith('tel:')) return href;
+    if(href.startsWith('/')){                        // root-relative
+      if (location.protocol === 'file:'){            // running offline: map to relative path
+        return '.' + href;                           // "./articoli/kant.html"
+      }
+      return href;                                   // keep root-relative online
+    }
+    return href;                                     // plain relative already ok
+  }
+
+
+  // 3) Dataset: prendo prima gli "ultimi articoli" dal blob a destra; fallback ai link del menu
+  function norm(s){ return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ').trim(); }
+  function safe(txt){ return String(txt||'').replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+
+  function collectFromBlob(){
+    const arr = [];
+    $$('.articles-blob a').forEach(a=>{
+      const href = a.getAttribute('href')||'';
+      if(!href) return;
+      const title = (a.getAttribute('data-title') || a.textContent || '').trim();
+      if(!title) return;
+      arr.push({title, href, key: norm(title)});
+    });
+    return arr;
+  }
+  function collectFromMenu(){
+    const arr = [];
+    $$('nav.menu-desktop a').forEach(a=>{
+      const href = a.getAttribute('href')||'';
+      if(!/\.html?(\?.*)?(#.*)?$/i.test(href)) return; // solo pagine interne
+      if(/^https?:/i.test(href)) return;               // escludi esterni
+      const title = (a.getAttribute('data-title') || a.textContent || '').trim();
+      if(!title) return;
+      arr.push({title, href, key: norm(title)});
+    });
+    return arr;
+  }
+
+  function getNews(){
+    const A = collectFromBlob();
+    if (A.length) return A.slice(0, 6);
+    const B = collectFromMenu();
+    return B.slice(0, 6);
+  }
+
+  // 4) Template item (ancora più "conservativo": <a> vero, così è naturalmente cliccabile)
+  function itemHTML(it, q){
+    const qn = norm(q||'');
+    const t  = it.title || '';
+    if (!qn) return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(t)+'</span>';
+    const nt = norm(t); const ix = nt.indexOf(qn);
+    if(ix<0) return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(t)+'</span>';
+    const a=t.slice(0,ix), b=t.slice(ix,ix+qn.length), c=t.slice(ix+qn.length);
+    return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(a)+'<mark>'+safe(b)+'</mark>'+safe(c)+'</span>';
+  }
+
+  function renderNews(){
+    const list = getNews();
+    box.innerHTML = '';
+    if(!list.length){ hideBox(); return; }
+
+    const h = document.createElement('div');
+    h.className = 'section-title';
+    h.textContent = 'Novità';
+    box.appendChild(h);
+
+    list.forEach((it, i)=>{
+      const a = document.createElement('a');
+      a.className = 'cse-sugg-item';
+      a.setAttribute('role','option');
+      a.setAttribute('aria-selected', i===0 ? 'true' : 'false');
+      a.href = normalizeHref(it.href);
+a.setAttribute('target','_self');
+      a.innerHTML = itemHTML(it, '' ) + '<span class="badge-news">Nuovo</span>';
+      a.addEventListener('click', (e)=>{
+        // Se esiste la tua ricerca interna, usala; altrimenti lascia il link nativo
+        if (typeof window.execQuery === 'function'){
+          e.preventDefault();
+          window.execQuery(it.title);
+          hideBox();
+        }
+      });
+      box.appendChild(a);
+    });
+    showBox();
+  }
+
+  // Helper pubblico (debug/uso manuale)
+  window.showNovita = renderNews;
+
+  // 5) Attiva Novità quando clicchi la lente e l'input è vuoto (non tocco Enter, né la tua ricerca)
+  function onLens(e){
+    const lens = e.target.closest('.search-container .search-icon, .search-container [data-role="search-lens"]');
+    if(!lens) return;
+    if ((input.value||'').trim()) return; // se c'è testo, non faccio nulla
+    e.preventDefault();
+    e.stopPropagation();
+    input.focus();
+    renderNews();
+  }
+  document.addEventListener('pointerdown', onLens, true);
+  document.addEventListener('click', onLens, true);
+
+  // 6) Chiusura solo cliccando fuori dal box e fuori dalla search-container
+  document.addEventListener('mousedown', (e)=>{
+    if (e.target.closest('#cse-suggestions')) return;
+    if (e.target.closest('.search-container')) return;
+    hideBox();
+  }, true);
+
+  // 7) Reposizionamento quando serve
+  window.addEventListener('scroll', ()=>{ if(box.classList.contains('show')) positionBox(); }, true);
+  window.addEventListener('resize', ()=>{ if(box.classList.contains('show')) positionBox(); });
+
+})();
+</script>
+
 </body> -->
    <div id="search-results-panel" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:10000;padding:40px;box-sizing:border-box;">
       <div style="max-width:800px;margin:0 auto;background:#0a0a1a;padding:20px;border-radius:8px;border:1px solid #d4af37;max-height:80vh;overflow:auto;position:relative;">
@@ -5433,6 +5915,164 @@
     const ev = new Event('focus', {bubbles:false, cancelable:false});
     input.dispatchEvent(ev);
   }, true);
+})();
+</script>
+
+
+<script>
+(function(){
+  const $ = (s, r=document)=>r.querySelector(s);
+  const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
+
+  // 1) Trova l'input della ricerca (non tocchiamo altro)
+  const input = $('#site-search') 
+             || document.querySelector('.search-container input[type="search"], .search-container input[type="text"]');
+  if(!input) return;
+
+  // 2) Assicura il box suggerimenti. Se già esiste, lo sposto nel <body> per stare sopra al menu
+  let box = $('#cse-suggestions');
+  if(!box){
+    box = document.createElement('div');
+    box.id = 'cse-suggestions';
+    box.className = 'cse-suggestions';
+  } else if (box.parentElement !== document.body){
+    box.parentElement.removeChild(box);
+  }
+  if (!document.body.contains(box)) document.body.appendChild(box);
+  box.classList.add('cse-float'); // abilita posizione fixed con CSS minimale
+
+  function positionBox(){
+    const r = input.getBoundingClientRect();
+    const left = Math.max(8, Math.min(r.left, window.innerWidth - 8));
+    const top  = Math.max(8, r.bottom + 6);
+    const width = Math.min(r.width, window.innerWidth - left - 8);
+    box.style.left = left + 'px';
+    box.style.top = top + 'px';
+    box.style.width = width + 'px';
+    box.style.maxWidth = Math.min(960, window.innerWidth - 16) + 'px';
+  }
+  function showBox(){ positionBox(); box.classList.add('show'); }
+  function hideBox(){ box.classList.remove('show'); }
+
+  function normalizeHref(href){
+    href = String(href || '').trim();
+    if(!href) return '#';
+    if(/^https?:/i.test(href)) return href;          // absolute http(s)
+    if(href.startsWith('mailto:') || href.startsWith('tel:')) return href;
+    if(href.startsWith('/')){                        // root-relative
+      if (location.protocol === 'file:'){            // running offline: map to relative path
+        return '.' + href;                           // "./articoli/kant.html"
+      }
+      return href;                                   // keep root-relative online
+    }
+    return href;                                     // plain relative already ok
+  }
+
+
+  // 3) Dataset: prendo prima gli "ultimi articoli" dal blob a destra; fallback ai link del menu
+  function norm(s){ return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ').trim(); }
+  function safe(txt){ return String(txt||'').replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+
+  function collectFromBlob(){
+    const arr = [];
+    $$('.articles-blob a').forEach(a=>{
+      const href = a.getAttribute('href')||'';
+      if(!href) return;
+      const title = (a.getAttribute('data-title') || a.textContent || '').trim();
+      if(!title) return;
+      arr.push({title, href, key: norm(title)});
+    });
+    return arr;
+  }
+  function collectFromMenu(){
+    const arr = [];
+    $$('nav.menu-desktop a').forEach(a=>{
+      const href = a.getAttribute('href')||'';
+      if(!/\.html?(\?.*)?(#.*)?$/i.test(href)) return; // solo pagine interne
+      if(/^https?:/i.test(href)) return;               // escludi esterni
+      const title = (a.getAttribute('data-title') || a.textContent || '').trim();
+      if(!title) return;
+      arr.push({title, href, key: norm(title)});
+    });
+    return arr;
+  }
+
+  function getNews(){
+    const A = collectFromBlob();
+    if (A.length) return A.slice(0, 6);
+    const B = collectFromMenu();
+    return B.slice(0, 6);
+  }
+
+  // 4) Template item (ancora più "conservativo": <a> vero, così è naturalmente cliccabile)
+  function itemHTML(it, q){
+    const qn = norm(q||'');
+    const t  = it.title || '';
+    if (!qn) return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(t)+'</span>';
+    const nt = norm(t); const ix = nt.indexOf(qn);
+    if(ix<0) return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(t)+'</span>';
+    const a=t.slice(0,ix), b=t.slice(ix,ix+qn.length), c=t.slice(ix+qn.length);
+    return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(a)+'<mark>'+safe(b)+'</mark>'+safe(c)+'</span>';
+  }
+
+  function renderNews(){
+    const list = getNews();
+    box.innerHTML = '';
+    if(!list.length){ hideBox(); return; }
+
+    const h = document.createElement('div');
+    h.className = 'section-title';
+    h.textContent = 'Novità';
+    box.appendChild(h);
+
+    list.forEach((it, i)=>{
+      const a = document.createElement('a');
+      a.className = 'cse-sugg-item';
+      a.setAttribute('role','option');
+      a.setAttribute('aria-selected', i===0 ? 'true' : 'false');
+      a.href = normalizeHref(it.href);
+a.setAttribute('target','_self');
+      a.innerHTML = itemHTML(it, '' ) + '<span class="badge-news">Nuovo</span>';
+      a.addEventListener('click', (e)=>{
+        // Se esiste la tua ricerca interna, usala; altrimenti lascia il link nativo
+        if (typeof window.execQuery === 'function'){
+          e.preventDefault();
+          window.execQuery(it.title);
+          hideBox();
+        }
+      });
+      box.appendChild(a);
+    });
+    showBox();
+  }
+
+  // Helper pubblico (debug/uso manuale)
+  window.showNovita = renderNews;
+
+  // 5) Attiva Novità quando clicchi la lente e l'input è vuoto (non tocco Enter, né la tua ricerca)
+  function onLens(e){
+    const lens = e.target.closest('.search-container .search-icon, .search-container [data-role="search-lens"]');
+    if(!lens) return;
+    if ((input.value||'').trim()) return; // se c'è testo, non faccio nulla
+    e.preventDefault();
+    e.stopPropagation();
+    input.focus();
+    renderNews();
+  }
+  document.addEventListener('pointerdown', onLens, true);
+  document.addEventListener('click', onLens, true);
+
+  // 6) Chiusura solo cliccando fuori dal box e fuori dalla search-container
+  document.addEventListener('mousedown', (e)=>{
+    if (e.target.closest('#cse-suggestions')) return;
+    if (e.target.closest('.search-container')) return;
+    hideBox();
+  }, true);
+
+  // 7) Reposizionamento quando serve
+  window.addEventListener('scroll', ()=>{ if(box.classList.contains('show')) positionBox(); }, true);
+  window.addEventListener('resize', ()=>{ if(box.classList.contains('show')) positionBox(); });
+
 })();
 </script>
 
@@ -6059,6 +6699,164 @@
     const ev = new Event('focus', {bubbles:false, cancelable:false});
     input.dispatchEvent(ev);
   }, true);
+})();
+</script>
+
+
+<script>
+(function(){
+  const $ = (s, r=document)=>r.querySelector(s);
+  const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
+
+  // 1) Trova l'input della ricerca (non tocchiamo altro)
+  const input = $('#site-search') 
+             || document.querySelector('.search-container input[type="search"], .search-container input[type="text"]');
+  if(!input) return;
+
+  // 2) Assicura il box suggerimenti. Se già esiste, lo sposto nel <body> per stare sopra al menu
+  let box = $('#cse-suggestions');
+  if(!box){
+    box = document.createElement('div');
+    box.id = 'cse-suggestions';
+    box.className = 'cse-suggestions';
+  } else if (box.parentElement !== document.body){
+    box.parentElement.removeChild(box);
+  }
+  if (!document.body.contains(box)) document.body.appendChild(box);
+  box.classList.add('cse-float'); // abilita posizione fixed con CSS minimale
+
+  function positionBox(){
+    const r = input.getBoundingClientRect();
+    const left = Math.max(8, Math.min(r.left, window.innerWidth - 8));
+    const top  = Math.max(8, r.bottom + 6);
+    const width = Math.min(r.width, window.innerWidth - left - 8);
+    box.style.left = left + 'px';
+    box.style.top = top + 'px';
+    box.style.width = width + 'px';
+    box.style.maxWidth = Math.min(960, window.innerWidth - 16) + 'px';
+  }
+  function showBox(){ positionBox(); box.classList.add('show'); }
+  function hideBox(){ box.classList.remove('show'); }
+
+  function normalizeHref(href){
+    href = String(href || '').trim();
+    if(!href) return '#';
+    if(/^https?:/i.test(href)) return href;          // absolute http(s)
+    if(href.startsWith('mailto:') || href.startsWith('tel:')) return href;
+    if(href.startsWith('/')){                        // root-relative
+      if (location.protocol === 'file:'){            // running offline: map to relative path
+        return '.' + href;                           // "./articoli/kant.html"
+      }
+      return href;                                   // keep root-relative online
+    }
+    return href;                                     // plain relative already ok
+  }
+
+
+  // 3) Dataset: prendo prima gli "ultimi articoli" dal blob a destra; fallback ai link del menu
+  function norm(s){ return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ').trim(); }
+  function safe(txt){ return String(txt||'').replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+
+  function collectFromBlob(){
+    const arr = [];
+    $$('.articles-blob a').forEach(a=>{
+      const href = a.getAttribute('href')||'';
+      if(!href) return;
+      const title = (a.getAttribute('data-title') || a.textContent || '').trim();
+      if(!title) return;
+      arr.push({title, href, key: norm(title)});
+    });
+    return arr;
+  }
+  function collectFromMenu(){
+    const arr = [];
+    $$('nav.menu-desktop a').forEach(a=>{
+      const href = a.getAttribute('href')||'';
+      if(!/\.html?(\?.*)?(#.*)?$/i.test(href)) return; // solo pagine interne
+      if(/^https?:/i.test(href)) return;               // escludi esterni
+      const title = (a.getAttribute('data-title') || a.textContent || '').trim();
+      if(!title) return;
+      arr.push({title, href, key: norm(title)});
+    });
+    return arr;
+  }
+
+  function getNews(){
+    const A = collectFromBlob();
+    if (A.length) return A.slice(0, 6);
+    const B = collectFromMenu();
+    return B.slice(0, 6);
+  }
+
+  // 4) Template item (ancora più "conservativo": <a> vero, così è naturalmente cliccabile)
+  function itemHTML(it, q){
+    const qn = norm(q||'');
+    const t  = it.title || '';
+    if (!qn) return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(t)+'</span>';
+    const nt = norm(t); const ix = nt.indexOf(qn);
+    if(ix<0) return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(t)+'</span>';
+    const a=t.slice(0,ix), b=t.slice(ix,ix+qn.length), c=t.slice(ix+qn.length);
+    return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(a)+'<mark>'+safe(b)+'</mark>'+safe(c)+'</span>';
+  }
+
+  function renderNews(){
+    const list = getNews();
+    box.innerHTML = '';
+    if(!list.length){ hideBox(); return; }
+
+    const h = document.createElement('div');
+    h.className = 'section-title';
+    h.textContent = 'Novità';
+    box.appendChild(h);
+
+    list.forEach((it, i)=>{
+      const a = document.createElement('a');
+      a.className = 'cse-sugg-item';
+      a.setAttribute('role','option');
+      a.setAttribute('aria-selected', i===0 ? 'true' : 'false');
+      a.href = normalizeHref(it.href);
+a.setAttribute('target','_self');
+      a.innerHTML = itemHTML(it, '' ) + '<span class="badge-news">Nuovo</span>';
+      a.addEventListener('click', (e)=>{
+        // Se esiste la tua ricerca interna, usala; altrimenti lascia il link nativo
+        if (typeof window.execQuery === 'function'){
+          e.preventDefault();
+          window.execQuery(it.title);
+          hideBox();
+        }
+      });
+      box.appendChild(a);
+    });
+    showBox();
+  }
+
+  // Helper pubblico (debug/uso manuale)
+  window.showNovita = renderNews;
+
+  // 5) Attiva Novità quando clicchi la lente e l'input è vuoto (non tocco Enter, né la tua ricerca)
+  function onLens(e){
+    const lens = e.target.closest('.search-container .search-icon, .search-container [data-role="search-lens"]');
+    if(!lens) return;
+    if ((input.value||'').trim()) return; // se c'è testo, non faccio nulla
+    e.preventDefault();
+    e.stopPropagation();
+    input.focus();
+    renderNews();
+  }
+  document.addEventListener('pointerdown', onLens, true);
+  document.addEventListener('click', onLens, true);
+
+  // 6) Chiusura solo cliccando fuori dal box e fuori dalla search-container
+  document.addEventListener('mousedown', (e)=>{
+    if (e.target.closest('#cse-suggestions')) return;
+    if (e.target.closest('.search-container')) return;
+    hideBox();
+  }, true);
+
+  // 7) Reposizionamento quando serve
+  window.addEventListener('scroll', ()=>{ if(box.classList.contains('show')) positionBox(); }, true);
+  window.addEventListener('resize', ()=>{ if(box.classList.contains('show')) positionBox(); });
+
 })();
 </script>
 
