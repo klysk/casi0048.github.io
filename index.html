@@ -4176,12 +4176,10 @@
   const $ = (s, r=document)=>r.querySelector(s);
   const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
 
-  // 1) Trova l'input della ricerca (non tocchiamo altro)
   const input = $('#site-search') 
              || document.querySelector('.search-container input[type="search"], .search-container input[type="text"]');
   if(!input) return;
 
-  // 2) Assicura il box suggerimenti. Se già esiste, lo sposto nel <body> per stare sopra al menu
   let box = $('#cse-suggestions');
   if(!box){
     box = document.createElement('div');
@@ -4191,7 +4189,7 @@
     box.parentElement.removeChild(box);
   }
   if (!document.body.contains(box)) document.body.appendChild(box);
-  box.classList.add('cse-float'); // abilita posizione fixed con CSS minimale
+  box.classList.add('cse-float');
 
   function positionBox(){
     const r = input.getBoundingClientRect();
@@ -4206,22 +4204,6 @@
   function showBox(){ positionBox(); box.classList.add('show'); }
   function hideBox(){ box.classList.remove('show'); }
 
-  function normalizeHref(href){
-    href = String(href || '').trim();
-    if(!href) return '#';
-    if(/^https?:/i.test(href)) return href;          // absolute http(s)
-    if(href.startsWith('mailto:') || href.startsWith('tel:')) return href;
-    if(href.startsWith('/')){                        // root-relative
-      if (location.protocol === 'file:'){            // running offline: map to relative path
-        return '.' + href;                           // "./articoli/kant.html"
-      }
-      return href;                                   // keep root-relative online
-    }
-    return href;                                     // plain relative already ok
-  }
-
-
-  // 3) Dataset: prendo prima gli "ultimi articoli" dal blob a destra; fallback ai link del menu
   function norm(s){ return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ').trim(); }
   function safe(txt){ return String(txt||'').replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
 
@@ -4240,15 +4222,14 @@
     const arr = [];
     $$('nav.menu-desktop a').forEach(a=>{
       const href = a.getAttribute('href')||'';
-      if(!/\.html?(\?.*)?(#.*)?$/i.test(href)) return; // solo pagine interne
-      if(/^https?:/i.test(href)) return;               // escludi esterni
+      if(!/\.html?(\?.*)?(#.*)?$/i.test(href)) return;
+      if(/^https?:/i.test(href)) return;
       const title = (a.getAttribute('data-title') || a.textContent || '').trim();
       if(!title) return;
       arr.push({title, href, key: norm(title)});
     });
     return arr;
   }
-
   function getNews(){
     const A = collectFromBlob();
     if (A.length) return A.slice(0, 6);
@@ -4256,13 +4237,12 @@
     return B.slice(0, 6);
   }
 
-  // 4) Template item (ancora più "conservativo": <a> vero, così è naturalmente cliccabile)
   function itemHTML(it, q){
     const qn = norm(q||'');
     const t  = it.title || '';
     if (!qn) return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(t)+'</span>';
     const nt = norm(t); const ix = nt.indexOf(qn);
-    if(ix<0) return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(t)+'</span>';
+    if(ix< 0) return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(t)+'</span>';
     const a=t.slice(0,ix), b=t.slice(ix,ix+qn.length), c=t.slice(ix+qn.length);
     return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(a)+'<mark>'+safe(b)+'</mark>'+safe(c)+'</span>';
   }
@@ -4282,30 +4262,47 @@
       a.className = 'cse-sugg-item';
       a.setAttribute('role','option');
       a.setAttribute('aria-selected', i===0 ? 'true' : 'false');
-      a.href = normalizeHref(it.href);
-a.setAttribute('target','_self');
+      a.href = it.href;                  // link nativo
+      a.target = '_self';                // apri nella stessa tab
       a.innerHTML = itemHTML(it, '' ) + '<span class="badge-news">Nuovo</span>';
-      a.addEventListener('click', (e)=>{
-        // Se esiste la tua ricerca interna, usala; altrimenti lascia il link nativo
-        if (typeof window.execQuery === 'function'){
-          e.preventDefault();
-          window.execQuery(it.title);
-          hideBox();
-        }
-      });
+      box.appendChild(a);
+    });
+    showBox();
+  }
+  window.showNovita = renderNews; // utile se vuoi test da console
+
+  function renderList(list, q){
+    box.innerHTML='';
+    if(!list || !list.length){ hideBox(); return; }
+    list.forEach((it,i)=>{
+      const a = document.createElement('a');
+      a.className = 'cse-sugg-item';
+      a.setAttribute('role','option');
+      a.setAttribute('aria-selected', i===0 ? 'true' : 'false');
+      a.href = it.href;
+      a.target = '_self';
+      a.innerHTML = itemHTML(it, q);
       box.appendChild(a);
     });
     showBox();
   }
 
-  // Helper pubblico (debug/uso manuale)
-  window.showNovita = renderNews;
+  // Chiudi solo quando clicchi completamente fuori
+  document.addEventListener('mousedown', (e)=>{
+    if (e.target.closest('#cse-suggestions')) return;
+    if (e.target.closest('.search-container')) return;
+    hideBox();
+  }, true);
 
-  // 5) Attiva Novità quando clicchi la lente e l'input è vuoto (non tocco Enter, né la tua ricerca)
+  // Reposizionamento
+  window.addEventListener('scroll', ()=>{ if(box.classList.contains('show')) positionBox(); }, true);
+  window.addEventListener('resize', ()=>{ if(box.classList.contains('show')) positionBox(); });
+
+  // Lente → Novità (solo input vuoto)
   function onLens(e){
     const lens = e.target.closest('.search-container .search-icon, .search-container [data-role="search-lens"]');
     if(!lens) return;
-    if ((input.value||'').trim()) return; // se c'è testo, non faccio nulla
+    if ((input.value||'').trim()) return;
     e.preventDefault();
     e.stopPropagation();
     input.focus();
@@ -4313,18 +4310,6 @@ a.setAttribute('target','_self');
   }
   document.addEventListener('pointerdown', onLens, true);
   document.addEventListener('click', onLens, true);
-
-  // 6) Chiusura solo cliccando fuori dal box e fuori dalla search-container
-  document.addEventListener('mousedown', (e)=>{
-    if (e.target.closest('#cse-suggestions')) return;
-    if (e.target.closest('.search-container')) return;
-    hideBox();
-  }, true);
-
-  // 7) Reposizionamento quando serve
-  window.addEventListener('scroll', ()=>{ if(box.classList.contains('show')) positionBox(); }, true);
-  window.addEventListener('resize', ()=>{ if(box.classList.contains('show')) positionBox(); });
-
 })();
 </script>
 
@@ -4684,12 +4669,10 @@ a.setAttribute('target','_self');
   const $ = (s, r=document)=>r.querySelector(s);
   const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
 
-  // 1) Trova l'input della ricerca (non tocchiamo altro)
   const input = $('#site-search') 
              || document.querySelector('.search-container input[type="search"], .search-container input[type="text"]');
   if(!input) return;
 
-  // 2) Assicura il box suggerimenti. Se già esiste, lo sposto nel <body> per stare sopra al menu
   let box = $('#cse-suggestions');
   if(!box){
     box = document.createElement('div');
@@ -4699,7 +4682,7 @@ a.setAttribute('target','_self');
     box.parentElement.removeChild(box);
   }
   if (!document.body.contains(box)) document.body.appendChild(box);
-  box.classList.add('cse-float'); // abilita posizione fixed con CSS minimale
+  box.classList.add('cse-float');
 
   function positionBox(){
     const r = input.getBoundingClientRect();
@@ -4714,22 +4697,6 @@ a.setAttribute('target','_self');
   function showBox(){ positionBox(); box.classList.add('show'); }
   function hideBox(){ box.classList.remove('show'); }
 
-  function normalizeHref(href){
-    href = String(href || '').trim();
-    if(!href) return '#';
-    if(/^https?:/i.test(href)) return href;          // absolute http(s)
-    if(href.startsWith('mailto:') || href.startsWith('tel:')) return href;
-    if(href.startsWith('/')){                        // root-relative
-      if (location.protocol === 'file:'){            // running offline: map to relative path
-        return '.' + href;                           // "./articoli/kant.html"
-      }
-      return href;                                   // keep root-relative online
-    }
-    return href;                                     // plain relative already ok
-  }
-
-
-  // 3) Dataset: prendo prima gli "ultimi articoli" dal blob a destra; fallback ai link del menu
   function norm(s){ return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ').trim(); }
   function safe(txt){ return String(txt||'').replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
 
@@ -4748,15 +4715,14 @@ a.setAttribute('target','_self');
     const arr = [];
     $$('nav.menu-desktop a').forEach(a=>{
       const href = a.getAttribute('href')||'';
-      if(!/\.html?(\?.*)?(#.*)?$/i.test(href)) return; // solo pagine interne
-      if(/^https?:/i.test(href)) return;               // escludi esterni
+      if(!/\.html?(\?.*)?(#.*)?$/i.test(href)) return;
+      if(/^https?:/i.test(href)) return;
       const title = (a.getAttribute('data-title') || a.textContent || '').trim();
       if(!title) return;
       arr.push({title, href, key: norm(title)});
     });
     return arr;
   }
-
   function getNews(){
     const A = collectFromBlob();
     if (A.length) return A.slice(0, 6);
@@ -4764,13 +4730,12 @@ a.setAttribute('target','_self');
     return B.slice(0, 6);
   }
 
-  // 4) Template item (ancora più "conservativo": <a> vero, così è naturalmente cliccabile)
   function itemHTML(it, q){
     const qn = norm(q||'');
     const t  = it.title || '';
     if (!qn) return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(t)+'</span>';
     const nt = norm(t); const ix = nt.indexOf(qn);
-    if(ix<0) return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(t)+'</span>';
+    if(ix< 0) return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(t)+'</span>';
     const a=t.slice(0,ix), b=t.slice(ix,ix+qn.length), c=t.slice(ix+qn.length);
     return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(a)+'<mark>'+safe(b)+'</mark>'+safe(c)+'</span>';
   }
@@ -4790,30 +4755,47 @@ a.setAttribute('target','_self');
       a.className = 'cse-sugg-item';
       a.setAttribute('role','option');
       a.setAttribute('aria-selected', i===0 ? 'true' : 'false');
-      a.href = normalizeHref(it.href);
-a.setAttribute('target','_self');
+      a.href = it.href;                  // link nativo
+      a.target = '_self';                // apri nella stessa tab
       a.innerHTML = itemHTML(it, '' ) + '<span class="badge-news">Nuovo</span>';
-      a.addEventListener('click', (e)=>{
-        // Se esiste la tua ricerca interna, usala; altrimenti lascia il link nativo
-        if (typeof window.execQuery === 'function'){
-          e.preventDefault();
-          window.execQuery(it.title);
-          hideBox();
-        }
-      });
+      box.appendChild(a);
+    });
+    showBox();
+  }
+  window.showNovita = renderNews; // utile se vuoi test da console
+
+  function renderList(list, q){
+    box.innerHTML='';
+    if(!list || !list.length){ hideBox(); return; }
+    list.forEach((it,i)=>{
+      const a = document.createElement('a');
+      a.className = 'cse-sugg-item';
+      a.setAttribute('role','option');
+      a.setAttribute('aria-selected', i===0 ? 'true' : 'false');
+      a.href = it.href;
+      a.target = '_self';
+      a.innerHTML = itemHTML(it, q);
       box.appendChild(a);
     });
     showBox();
   }
 
-  // Helper pubblico (debug/uso manuale)
-  window.showNovita = renderNews;
+  // Chiudi solo quando clicchi completamente fuori
+  document.addEventListener('mousedown', (e)=>{
+    if (e.target.closest('#cse-suggestions')) return;
+    if (e.target.closest('.search-container')) return;
+    hideBox();
+  }, true);
 
-  // 5) Attiva Novità quando clicchi la lente e l'input è vuoto (non tocco Enter, né la tua ricerca)
+  // Reposizionamento
+  window.addEventListener('scroll', ()=>{ if(box.classList.contains('show')) positionBox(); }, true);
+  window.addEventListener('resize', ()=>{ if(box.classList.contains('show')) positionBox(); });
+
+  // Lente → Novità (solo input vuoto)
   function onLens(e){
     const lens = e.target.closest('.search-container .search-icon, .search-container [data-role="search-lens"]');
     if(!lens) return;
-    if ((input.value||'').trim()) return; // se c'è testo, non faccio nulla
+    if ((input.value||'').trim()) return;
     e.preventDefault();
     e.stopPropagation();
     input.focus();
@@ -4821,18 +4803,6 @@ a.setAttribute('target','_self');
   }
   document.addEventListener('pointerdown', onLens, true);
   document.addEventListener('click', onLens, true);
-
-  // 6) Chiusura solo cliccando fuori dal box e fuori dalla search-container
-  document.addEventListener('mousedown', (e)=>{
-    if (e.target.closest('#cse-suggestions')) return;
-    if (e.target.closest('.search-container')) return;
-    hideBox();
-  }, true);
-
-  // 7) Reposizionamento quando serve
-  window.addEventListener('scroll', ()=>{ if(box.classList.contains('show')) positionBox(); }, true);
-  window.addEventListener('resize', ()=>{ if(box.classList.contains('show')) positionBox(); });
-
 })();
 </script>
 
@@ -5310,12 +5280,10 @@ a.setAttribute('target','_self');
   const $ = (s, r=document)=>r.querySelector(s);
   const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
 
-  // 1) Trova l'input della ricerca (non tocchiamo altro)
   const input = $('#site-search') 
              || document.querySelector('.search-container input[type="search"], .search-container input[type="text"]');
   if(!input) return;
 
-  // 2) Assicura il box suggerimenti. Se già esiste, lo sposto nel <body> per stare sopra al menu
   let box = $('#cse-suggestions');
   if(!box){
     box = document.createElement('div');
@@ -5325,7 +5293,7 @@ a.setAttribute('target','_self');
     box.parentElement.removeChild(box);
   }
   if (!document.body.contains(box)) document.body.appendChild(box);
-  box.classList.add('cse-float'); // abilita posizione fixed con CSS minimale
+  box.classList.add('cse-float');
 
   function positionBox(){
     const r = input.getBoundingClientRect();
@@ -5340,22 +5308,6 @@ a.setAttribute('target','_self');
   function showBox(){ positionBox(); box.classList.add('show'); }
   function hideBox(){ box.classList.remove('show'); }
 
-  function normalizeHref(href){
-    href = String(href || '').trim();
-    if(!href) return '#';
-    if(/^https?:/i.test(href)) return href;          // absolute http(s)
-    if(href.startsWith('mailto:') || href.startsWith('tel:')) return href;
-    if(href.startsWith('/')){                        // root-relative
-      if (location.protocol === 'file:'){            // running offline: map to relative path
-        return '.' + href;                           // "./articoli/kant.html"
-      }
-      return href;                                   // keep root-relative online
-    }
-    return href;                                     // plain relative already ok
-  }
-
-
-  // 3) Dataset: prendo prima gli "ultimi articoli" dal blob a destra; fallback ai link del menu
   function norm(s){ return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ').trim(); }
   function safe(txt){ return String(txt||'').replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
 
@@ -5374,15 +5326,14 @@ a.setAttribute('target','_self');
     const arr = [];
     $$('nav.menu-desktop a').forEach(a=>{
       const href = a.getAttribute('href')||'';
-      if(!/\.html?(\?.*)?(#.*)?$/i.test(href)) return; // solo pagine interne
-      if(/^https?:/i.test(href)) return;               // escludi esterni
+      if(!/\.html?(\?.*)?(#.*)?$/i.test(href)) return;
+      if(/^https?:/i.test(href)) return;
       const title = (a.getAttribute('data-title') || a.textContent || '').trim();
       if(!title) return;
       arr.push({title, href, key: norm(title)});
     });
     return arr;
   }
-
   function getNews(){
     const A = collectFromBlob();
     if (A.length) return A.slice(0, 6);
@@ -5390,13 +5341,12 @@ a.setAttribute('target','_self');
     return B.slice(0, 6);
   }
 
-  // 4) Template item (ancora più "conservativo": <a> vero, così è naturalmente cliccabile)
   function itemHTML(it, q){
     const qn = norm(q||'');
     const t  = it.title || '';
     if (!qn) return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(t)+'</span>';
     const nt = norm(t); const ix = nt.indexOf(qn);
-    if(ix<0) return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(t)+'</span>';
+    if(ix< 0) return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(t)+'</span>';
     const a=t.slice(0,ix), b=t.slice(ix,ix+qn.length), c=t.slice(ix+qn.length);
     return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(a)+'<mark>'+safe(b)+'</mark>'+safe(c)+'</span>';
   }
@@ -5416,30 +5366,47 @@ a.setAttribute('target','_self');
       a.className = 'cse-sugg-item';
       a.setAttribute('role','option');
       a.setAttribute('aria-selected', i===0 ? 'true' : 'false');
-      a.href = normalizeHref(it.href);
-a.setAttribute('target','_self');
+      a.href = it.href;                  // link nativo
+      a.target = '_self';                // apri nella stessa tab
       a.innerHTML = itemHTML(it, '' ) + '<span class="badge-news">Nuovo</span>';
-      a.addEventListener('click', (e)=>{
-        // Se esiste la tua ricerca interna, usala; altrimenti lascia il link nativo
-        if (typeof window.execQuery === 'function'){
-          e.preventDefault();
-          window.execQuery(it.title);
-          hideBox();
-        }
-      });
+      box.appendChild(a);
+    });
+    showBox();
+  }
+  window.showNovita = renderNews; // utile se vuoi test da console
+
+  function renderList(list, q){
+    box.innerHTML='';
+    if(!list || !list.length){ hideBox(); return; }
+    list.forEach((it,i)=>{
+      const a = document.createElement('a');
+      a.className = 'cse-sugg-item';
+      a.setAttribute('role','option');
+      a.setAttribute('aria-selected', i===0 ? 'true' : 'false');
+      a.href = it.href;
+      a.target = '_self';
+      a.innerHTML = itemHTML(it, q);
       box.appendChild(a);
     });
     showBox();
   }
 
-  // Helper pubblico (debug/uso manuale)
-  window.showNovita = renderNews;
+  // Chiudi solo quando clicchi completamente fuori
+  document.addEventListener('mousedown', (e)=>{
+    if (e.target.closest('#cse-suggestions')) return;
+    if (e.target.closest('.search-container')) return;
+    hideBox();
+  }, true);
 
-  // 5) Attiva Novità quando clicchi la lente e l'input è vuoto (non tocco Enter, né la tua ricerca)
+  // Reposizionamento
+  window.addEventListener('scroll', ()=>{ if(box.classList.contains('show')) positionBox(); }, true);
+  window.addEventListener('resize', ()=>{ if(box.classList.contains('show')) positionBox(); });
+
+  // Lente → Novità (solo input vuoto)
   function onLens(e){
     const lens = e.target.closest('.search-container .search-icon, .search-container [data-role="search-lens"]');
     if(!lens) return;
-    if ((input.value||'').trim()) return; // se c'è testo, non faccio nulla
+    if ((input.value||'').trim()) return;
     e.preventDefault();
     e.stopPropagation();
     input.focus();
@@ -5447,18 +5414,6 @@ a.setAttribute('target','_self');
   }
   document.addEventListener('pointerdown', onLens, true);
   document.addEventListener('click', onLens, true);
-
-  // 6) Chiusura solo cliccando fuori dal box e fuori dalla search-container
-  document.addEventListener('mousedown', (e)=>{
-    if (e.target.closest('#cse-suggestions')) return;
-    if (e.target.closest('.search-container')) return;
-    hideBox();
-  }, true);
-
-  // 7) Reposizionamento quando serve
-  window.addEventListener('scroll', ()=>{ if(box.classList.contains('show')) positionBox(); }, true);
-  window.addEventListener('resize', ()=>{ if(box.classList.contains('show')) positionBox(); });
-
 })();
 </script>
 
@@ -5924,12 +5879,10 @@ a.setAttribute('target','_self');
   const $ = (s, r=document)=>r.querySelector(s);
   const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
 
-  // 1) Trova l'input della ricerca (non tocchiamo altro)
   const input = $('#site-search') 
              || document.querySelector('.search-container input[type="search"], .search-container input[type="text"]');
   if(!input) return;
 
-  // 2) Assicura il box suggerimenti. Se già esiste, lo sposto nel <body> per stare sopra al menu
   let box = $('#cse-suggestions');
   if(!box){
     box = document.createElement('div');
@@ -5939,7 +5892,7 @@ a.setAttribute('target','_self');
     box.parentElement.removeChild(box);
   }
   if (!document.body.contains(box)) document.body.appendChild(box);
-  box.classList.add('cse-float'); // abilita posizione fixed con CSS minimale
+  box.classList.add('cse-float');
 
   function positionBox(){
     const r = input.getBoundingClientRect();
@@ -5954,22 +5907,6 @@ a.setAttribute('target','_self');
   function showBox(){ positionBox(); box.classList.add('show'); }
   function hideBox(){ box.classList.remove('show'); }
 
-  function normalizeHref(href){
-    href = String(href || '').trim();
-    if(!href) return '#';
-    if(/^https?:/i.test(href)) return href;          // absolute http(s)
-    if(href.startsWith('mailto:') || href.startsWith('tel:')) return href;
-    if(href.startsWith('/')){                        // root-relative
-      if (location.protocol === 'file:'){            // running offline: map to relative path
-        return '.' + href;                           // "./articoli/kant.html"
-      }
-      return href;                                   // keep root-relative online
-    }
-    return href;                                     // plain relative already ok
-  }
-
-
-  // 3) Dataset: prendo prima gli "ultimi articoli" dal blob a destra; fallback ai link del menu
   function norm(s){ return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ').trim(); }
   function safe(txt){ return String(txt||'').replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
 
@@ -5988,15 +5925,14 @@ a.setAttribute('target','_self');
     const arr = [];
     $$('nav.menu-desktop a').forEach(a=>{
       const href = a.getAttribute('href')||'';
-      if(!/\.html?(\?.*)?(#.*)?$/i.test(href)) return; // solo pagine interne
-      if(/^https?:/i.test(href)) return;               // escludi esterni
+      if(!/\.html?(\?.*)?(#.*)?$/i.test(href)) return;
+      if(/^https?:/i.test(href)) return;
       const title = (a.getAttribute('data-title') || a.textContent || '').trim();
       if(!title) return;
       arr.push({title, href, key: norm(title)});
     });
     return arr;
   }
-
   function getNews(){
     const A = collectFromBlob();
     if (A.length) return A.slice(0, 6);
@@ -6004,13 +5940,12 @@ a.setAttribute('target','_self');
     return B.slice(0, 6);
   }
 
-  // 4) Template item (ancora più "conservativo": <a> vero, così è naturalmente cliccabile)
   function itemHTML(it, q){
     const qn = norm(q||'');
     const t  = it.title || '';
     if (!qn) return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(t)+'</span>';
     const nt = norm(t); const ix = nt.indexOf(qn);
-    if(ix<0) return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(t)+'</span>';
+    if(ix< 0) return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(t)+'</span>';
     const a=t.slice(0,ix), b=t.slice(ix,ix+qn.length), c=t.slice(ix+qn.length);
     return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(a)+'<mark>'+safe(b)+'</mark>'+safe(c)+'</span>';
   }
@@ -6030,30 +5965,47 @@ a.setAttribute('target','_self');
       a.className = 'cse-sugg-item';
       a.setAttribute('role','option');
       a.setAttribute('aria-selected', i===0 ? 'true' : 'false');
-      a.href = normalizeHref(it.href);
-a.setAttribute('target','_self');
+      a.href = it.href;                  // link nativo
+      a.target = '_self';                // apri nella stessa tab
       a.innerHTML = itemHTML(it, '' ) + '<span class="badge-news">Nuovo</span>';
-      a.addEventListener('click', (e)=>{
-        // Se esiste la tua ricerca interna, usala; altrimenti lascia il link nativo
-        if (typeof window.execQuery === 'function'){
-          e.preventDefault();
-          window.execQuery(it.title);
-          hideBox();
-        }
-      });
+      box.appendChild(a);
+    });
+    showBox();
+  }
+  window.showNovita = renderNews; // utile se vuoi test da console
+
+  function renderList(list, q){
+    box.innerHTML='';
+    if(!list || !list.length){ hideBox(); return; }
+    list.forEach((it,i)=>{
+      const a = document.createElement('a');
+      a.className = 'cse-sugg-item';
+      a.setAttribute('role','option');
+      a.setAttribute('aria-selected', i===0 ? 'true' : 'false');
+      a.href = it.href;
+      a.target = '_self';
+      a.innerHTML = itemHTML(it, q);
       box.appendChild(a);
     });
     showBox();
   }
 
-  // Helper pubblico (debug/uso manuale)
-  window.showNovita = renderNews;
+  // Chiudi solo quando clicchi completamente fuori
+  document.addEventListener('mousedown', (e)=>{
+    if (e.target.closest('#cse-suggestions')) return;
+    if (e.target.closest('.search-container')) return;
+    hideBox();
+  }, true);
 
-  // 5) Attiva Novità quando clicchi la lente e l'input è vuoto (non tocco Enter, né la tua ricerca)
+  // Reposizionamento
+  window.addEventListener('scroll', ()=>{ if(box.classList.contains('show')) positionBox(); }, true);
+  window.addEventListener('resize', ()=>{ if(box.classList.contains('show')) positionBox(); });
+
+  // Lente → Novità (solo input vuoto)
   function onLens(e){
     const lens = e.target.closest('.search-container .search-icon, .search-container [data-role="search-lens"]');
     if(!lens) return;
-    if ((input.value||'').trim()) return; // se c'è testo, non faccio nulla
+    if ((input.value||'').trim()) return;
     e.preventDefault();
     e.stopPropagation();
     input.focus();
@@ -6061,18 +6013,6 @@ a.setAttribute('target','_self');
   }
   document.addEventListener('pointerdown', onLens, true);
   document.addEventListener('click', onLens, true);
-
-  // 6) Chiusura solo cliccando fuori dal box e fuori dalla search-container
-  document.addEventListener('mousedown', (e)=>{
-    if (e.target.closest('#cse-suggestions')) return;
-    if (e.target.closest('.search-container')) return;
-    hideBox();
-  }, true);
-
-  // 7) Reposizionamento quando serve
-  window.addEventListener('scroll', ()=>{ if(box.classList.contains('show')) positionBox(); }, true);
-  window.addEventListener('resize', ()=>{ if(box.classList.contains('show')) positionBox(); });
-
 })();
 </script>
 
@@ -6708,12 +6648,10 @@ a.setAttribute('target','_self');
   const $ = (s, r=document)=>r.querySelector(s);
   const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
 
-  // 1) Trova l'input della ricerca (non tocchiamo altro)
   const input = $('#site-search') 
              || document.querySelector('.search-container input[type="search"], .search-container input[type="text"]');
   if(!input) return;
 
-  // 2) Assicura il box suggerimenti. Se già esiste, lo sposto nel <body> per stare sopra al menu
   let box = $('#cse-suggestions');
   if(!box){
     box = document.createElement('div');
@@ -6723,7 +6661,7 @@ a.setAttribute('target','_self');
     box.parentElement.removeChild(box);
   }
   if (!document.body.contains(box)) document.body.appendChild(box);
-  box.classList.add('cse-float'); // abilita posizione fixed con CSS minimale
+  box.classList.add('cse-float');
 
   function positionBox(){
     const r = input.getBoundingClientRect();
@@ -6738,22 +6676,6 @@ a.setAttribute('target','_self');
   function showBox(){ positionBox(); box.classList.add('show'); }
   function hideBox(){ box.classList.remove('show'); }
 
-  function normalizeHref(href){
-    href = String(href || '').trim();
-    if(!href) return '#';
-    if(/^https?:/i.test(href)) return href;          // absolute http(s)
-    if(href.startsWith('mailto:') || href.startsWith('tel:')) return href;
-    if(href.startsWith('/')){                        // root-relative
-      if (location.protocol === 'file:'){            // running offline: map to relative path
-        return '.' + href;                           // "./articoli/kant.html"
-      }
-      return href;                                   // keep root-relative online
-    }
-    return href;                                     // plain relative already ok
-  }
-
-
-  // 3) Dataset: prendo prima gli "ultimi articoli" dal blob a destra; fallback ai link del menu
   function norm(s){ return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ').trim(); }
   function safe(txt){ return String(txt||'').replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
 
@@ -6772,15 +6694,14 @@ a.setAttribute('target','_self');
     const arr = [];
     $$('nav.menu-desktop a').forEach(a=>{
       const href = a.getAttribute('href')||'';
-      if(!/\.html?(\?.*)?(#.*)?$/i.test(href)) return; // solo pagine interne
-      if(/^https?:/i.test(href)) return;               // escludi esterni
+      if(!/\.html?(\?.*)?(#.*)?$/i.test(href)) return;
+      if(/^https?:/i.test(href)) return;
       const title = (a.getAttribute('data-title') || a.textContent || '').trim();
       if(!title) return;
       arr.push({title, href, key: norm(title)});
     });
     return arr;
   }
-
   function getNews(){
     const A = collectFromBlob();
     if (A.length) return A.slice(0, 6);
@@ -6788,13 +6709,12 @@ a.setAttribute('target','_self');
     return B.slice(0, 6);
   }
 
-  // 4) Template item (ancora più "conservativo": <a> vero, così è naturalmente cliccabile)
   function itemHTML(it, q){
     const qn = norm(q||'');
     const t  = it.title || '';
     if (!qn) return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(t)+'</span>';
     const nt = norm(t); const ix = nt.indexOf(qn);
-    if(ix<0) return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(t)+'</span>';
+    if(ix< 0) return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(t)+'</span>';
     const a=t.slice(0,ix), b=t.slice(ix,ix+qn.length), c=t.slice(ix+qn.length);
     return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="t">'+safe(a)+'<mark>'+safe(b)+'</mark>'+safe(c)+'</span>';
   }
@@ -6814,30 +6734,47 @@ a.setAttribute('target','_self');
       a.className = 'cse-sugg-item';
       a.setAttribute('role','option');
       a.setAttribute('aria-selected', i===0 ? 'true' : 'false');
-      a.href = normalizeHref(it.href);
-a.setAttribute('target','_self');
+      a.href = it.href;                  // link nativo
+      a.target = '_self';                // apri nella stessa tab
       a.innerHTML = itemHTML(it, '' ) + '<span class="badge-news">Nuovo</span>';
-      a.addEventListener('click', (e)=>{
-        // Se esiste la tua ricerca interna, usala; altrimenti lascia il link nativo
-        if (typeof window.execQuery === 'function'){
-          e.preventDefault();
-          window.execQuery(it.title);
-          hideBox();
-        }
-      });
+      box.appendChild(a);
+    });
+    showBox();
+  }
+  window.showNovita = renderNews; // utile se vuoi test da console
+
+  function renderList(list, q){
+    box.innerHTML='';
+    if(!list || !list.length){ hideBox(); return; }
+    list.forEach((it,i)=>{
+      const a = document.createElement('a');
+      a.className = 'cse-sugg-item';
+      a.setAttribute('role','option');
+      a.setAttribute('aria-selected', i===0 ? 'true' : 'false');
+      a.href = it.href;
+      a.target = '_self';
+      a.innerHTML = itemHTML(it, q);
       box.appendChild(a);
     });
     showBox();
   }
 
-  // Helper pubblico (debug/uso manuale)
-  window.showNovita = renderNews;
+  // Chiudi solo quando clicchi completamente fuori
+  document.addEventListener('mousedown', (e)=>{
+    if (e.target.closest('#cse-suggestions')) return;
+    if (e.target.closest('.search-container')) return;
+    hideBox();
+  }, true);
 
-  // 5) Attiva Novità quando clicchi la lente e l'input è vuoto (non tocco Enter, né la tua ricerca)
+  // Reposizionamento
+  window.addEventListener('scroll', ()=>{ if(box.classList.contains('show')) positionBox(); }, true);
+  window.addEventListener('resize', ()=>{ if(box.classList.contains('show')) positionBox(); });
+
+  // Lente → Novità (solo input vuoto)
   function onLens(e){
     const lens = e.target.closest('.search-container .search-icon, .search-container [data-role="search-lens"]');
     if(!lens) return;
-    if ((input.value||'').trim()) return; // se c'è testo, non faccio nulla
+    if ((input.value||'').trim()) return;
     e.preventDefault();
     e.stopPropagation();
     input.focus();
@@ -6845,18 +6782,6 @@ a.setAttribute('target','_self');
   }
   document.addEventListener('pointerdown', onLens, true);
   document.addEventListener('click', onLens, true);
-
-  // 6) Chiusura solo cliccando fuori dal box e fuori dalla search-container
-  document.addEventListener('mousedown', (e)=>{
-    if (e.target.closest('#cse-suggestions')) return;
-    if (e.target.closest('.search-container')) return;
-    hideBox();
-  }, true);
-
-  // 7) Reposizionamento quando serve
-  window.addEventListener('scroll', ()=>{ if(box.classList.contains('show')) positionBox(); }, true);
-  window.addEventListener('resize', ()=>{ if(box.classList.contains('show')) positionBox(); });
-
 })();
 </script>
 
