@@ -6,8 +6,8 @@
       <meta content="width=device-width, initial-scale=1" name="viewport"/>
       <title>Echi di Sofia — Slider laterale + Blob articoli</title>
       <!-- Fonts -->
-      <link href="https://fonts.googleapis.com" rel="preconnect"/>
-      <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+      
+      
       <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&amp;family=Cinzel+Decorative:wght@700&amp;family=Cormorant+Garamond:wght@600&amp;family=EB+Garamond:ital,wght@0,400;0,500;1,400&amp;family=Montserrat:wght@300;400;600&amp;display=swap" rel="stylesheet"/>
       <!-- Favicon -->
       <link href="favicon_io/favicon-32x32.png" rel="icon" type="image/png"/>
@@ -566,7 +566,7 @@
          .cookie-fab .emoji{ font-size: 1rem; line-height: 1; }
          .cookie-fab .label{ font-weight: 600; letter-spacing: .2px; }
          }
-         .cookie-modal.force-open{ display:flex !important; }
+         
          .symbol-rotator{
          display:inline-block;
          /* permette parole lunghe */
@@ -678,9 +678,85 @@
 }
 </style>
 
+
+<style>
+  .clear-icon{cursor:pointer; margin-left:6px; opacity:.8; user-select:none}
+  .clear-icon:hover{opacity:1}
+</style>
+
+
+<link rel="canonical" href="https://echidisofia.org/">
+<meta property="og:title" content="Echi di Sofia">
+<meta property="og:description" content="Un viaggio tra stelle e pensiero: filosofia antica, moderna e contemporanea.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://echidisofia.org/">
+<meta name="theme-color" content="#0b1530">
+
+
+<style>
+  /* === Cookie FAB floating (conservativo) === */
+  @keyframes cookieFloat {
+    0%   { transform: translateY(0); }
+    50%  { transform: translateY(-15px); }
+    100% { transform: translateY(0); }
+  }
+  .cookie-fab{
+    animation: cookieFloat 4.5s ease-in-out infinite;
+    will-change: transform;
+    transform: translateZ(0);
+  }
+  .cookie-fab:hover{
+    animation-play-state: paused;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .cookie-fab{ animation: none !important; }
+  }
+</style>
+
+
+<style>
+  /* === CSE Local Suggestions (conservativo) === */
+  .search-container{ position:relative }
+  .cse-suggestions{
+    position: absolute; left: 0; top: calc(100% + 6px);
+    width: 100%; max-height: 56vh; overflow: auto;
+    background: rgba(10,10,30,.98);
+    border: 1px solid rgba(255,215,0,.25);
+    border-radius: 10px; padding: 6px;
+    box-shadow: 0 16px 36px rgba(0,0,0,.45);
+    z-index: 200000; display: none;
+  }
+  .cse-suggestions.show{ display:block }
+  .cse-sugg-item{
+    display:flex; align-items:center; gap:8px;
+    padding: 8px 10px; border-radius: 8px;
+    color: #cfe8ff; text-decoration: none; cursor: pointer;
+  }
+  .cse-sugg-item:hover, .cse-sugg-item[aria-selected="true"]{
+    background: rgba(255,255,255,.06); color: #fff;
+  }
+  .cse-sugg-item i{ opacity: .9 }
+  .cse-sugg-item small{ opacity: .8; font-size: .82rem }
+  .cse-sugg-item mark{ background: color-mix(in oklab, #ffd86a 40%, transparent); color: inherit; padding:0 .1em; }
+</style>
+
+
+<style data-cse-news-css>
+  .cse-suggestions .section-title{
+    font-size: .82rem; letter-spacing: .02em; text-transform: uppercase;
+    opacity: .85; padding: 6px 8px; margin: 4px 4px 2px; border-bottom: 1px dashed rgba(255,255,255,.15);
+  }
+  .cse-sugg-item .badge-news{
+    font-size: .72rem; margin-left: auto; opacity: .9; padding: 2px 6px;
+    border: 1px solid rgba(255,215,0,.35); border-radius: 999px;
+  }
+</style>
+
 </head>
-   <canvas id="shooting-stars"></canvas>
    <body>
+  <canvas id="shooting-stars"></canvas>
+   
+
       <!-- GALASSIA dietro -->
       <canvas id="nebula"></canvas>
       <!-- Stelle + Comete sopra la galassia -->
@@ -720,7 +796,7 @@
             <!-- BOX CERCA (UI tua, non Google) -->
             <div class="search-container" role="search">
                <input aria-label="Cerca" id="site-search" placeholder="Cerca nel sito..." type="search"/>
-               <i aria-hidden="true" class="fa-solid fa-magnifying-glass search-icon"></i>
+               <i aria-hidden="true" class="fa-solid fa-magnifying-glass search-icon"></i><span class="clear-icon" aria-hidden="true">✕</span>
             </div>
             <!-- Pulsanti -->
             <button class="ctrl-btn" id="btn-thunder" title="Riproduci tuono">⚡ Tuono</button>
@@ -743,7 +819,7 @@
          margin-bottom:8px !important;
          }
          .gs-title, .gs-snippet { color:#eaeaea !important; }
-         .cookie-modal.force-open{ display:flex !important; }
+         
       </style>
       <!-- 
          <div class="bar-right">
@@ -812,6 +888,13 @@
                            <a href="articoli/democrito.html" role="menuitem">Democrito di Abdera</a>
                            <a href="articoli/scuola-vai%C5%9Be%E1%B9%A3ika.html" role="menuitem">Scuola  Vaiśeṣika</a>
                         </div>
+                         <div>
+                           <h4>Storiografia greca antica</h4>
+                           <a href="articoli/erodoto.html" role="menuitem">Erodoto</a>
+                           <a href="articoli/tucidide.html" role="menuitem">Tucidide </a>
+                           <a href="articoli/senofonte.html" role="menuitem">Senofonte</a>
+                           <a href="articoli/polibio.html" role="menuitem">Polibio</a>
+                        </div>
                         <div>
                            <h4>🚀Approfondimenti</h4>
                            <a href="https://www.worldhistory.org/trans/it/1-13310/democrazia-ateniese/" role="menuitem">Democrazia Ateniese</a>
@@ -831,7 +914,7 @@
                         <div>
                            <h4>Socrate e Scuola</h4>
                            <a href="articoli/socrate.html" role="menuitem">Socrate</a>
-                           <a href="articoli/senofonte.html" role="menuitem">Senofonte</a>
+                           
                            <a href="articoli/antistene.html" role="menuitem">Antistene</a>
                         </div>
                         <div>
@@ -879,7 +962,18 @@
                            <a href="articoli/orfismo.html" role="menuitem">Orfismo</a>
                            <a href="articoli/eleusi.html" role="menuitem">Misteri Eleusini</a>
                         </div>
-                     </div>
+                            <div>
+                           <h4>Drammaturgia greca antica</h4>
+                           <a href="articoli/eschilo.html" role="menuitem">Eschilo</a>
+                           <a href="articoli/sofocle.html" role="menuitem">Sofocle</a>
+                           <a href="articoli/euripide.html" role="menuitem">Euripide</a>
+                            </div>
+                              <div>
+                           <h4>Commedia greca antica</h4>
+                           <a href="articoli/aristofane.html" role="menuitem">Aristofane</a>
+                           <a href="articoli/menandro.html" role="menuitem">Menandro</a>                           
+                            </div>
+                      </div>
                   </li>
                   <li class="dropdown">
                      <button aria-expanded="false" aria-haspopup="true" class="menu-btn underline-effect" role="menuitem">
@@ -887,7 +981,7 @@
                      </button>
                      <div aria-label="Sottomenu Filosofia medievale" class="mega-menu columns-4" role="menu">
                         <div>
-                           <h4>Filosofia medievale</h4>
+                           <h4>Medievale</h4>
                            <a href="articoli/eriugena.html" role="menuitem">Giovanni Scoto Eriugena</a>
                            <a href="articoli/anselmo.html" role="menuitem">Sant'Anselmo d'Aosta</a>
                            <a href="articoli/abelardo.html" role="menuitem">Pietro Abelardo</a>
@@ -2025,7 +2119,7 @@
          @media (max-width: 980px) {
          #russell-box, #russell-hint { display:none; }
          }
-         .cookie-modal.force-open{ display:flex !important; }
+         
       </style>
       <script>
          window.addEventListener("load", () => {
@@ -2068,7 +2162,7 @@
          footer {
          background: #06060d;
          color: #e9eef5;
-         margin-top: 20px;   /* 👈 spazio fisso sopra il footer */
+         margin-top: 40px;   /* 👈 spazio fisso sopra il footer */
          position: relative;
          z-index: 1;
          }
@@ -2160,7 +2254,7 @@
          gap: 14px;
          }
          }
-         .cookie-modal.force-open{ display:flex !important; }
+         
       </style>
       <!-- 🎬 INIZIO PLAYER (destro) -->
       <div class="video-container" id="video-right">
@@ -2169,7 +2263,7 @@
       <style>
          .video-container{
          position: fixed;
-         bottom: 60px;
+         bottom: 80px;
          right: 40px;
          width: 280px;
          z-index: 99;
@@ -2214,7 +2308,7 @@
          .video-container-left{ display:none; } /* su mobile lo slider è nascosto, nascondo anche il player sinistro */
          .video-container{ right: 12px; bottom: 12px; width: 70vw; }
          }
-         .cookie-modal.force-open{ display:flex !important; }
+         
       </style>
       <!-- 🎬 FINE PLAYER (destro) -->
       <!-- INIZIO MINI PLAYER (sinistra) -->
@@ -2269,7 +2363,7 @@
          @media (max-width: 980px){
          #audio-player{ display:none; }
          }
-         .cookie-modal.force-open{ display:flex !important; }
+         
       </style>
       <script>
          // Inizializzazione mini player
@@ -2833,7 +2927,7 @@
          .gcsc-find-more-on-google, .gcsc-find-more-on-google-root { background: transparent !important; }
          input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus { background: color-mix(in oklab, var(--cse-card), transparent 5%) !important; color: var(--cse-txt) !important; border-color: color-mix(in oklab, var(--cse-txt), transparent 75%) !important; }
          .gsc-selected-option-container { color: var(--cse-txt) !important; }
-         .cookie-modal.force-open{ display:flex !important; }
+         
       </style>
       <script>
          (function(){
@@ -3880,6 +3974,194 @@
 })();
 </script>
 
+
+<script>
+(function(){
+  const input = document.getElementById('site-search') || document.querySelector('input[type="search"]');
+  const panel = document.getElementById('cse-panel');
+  const closeBtn = panel ? panel.querySelector('.cse-close') : null;
+  const lens = document.querySelector('.search-icon, .fa-magnifying-glass');
+
+  function openPanel(){
+    if(!panel) return;
+    panel.hidden = false;
+    panel.setAttribute('aria-hidden','false');
+  }
+  function closePanel(){
+    if(!panel) return;
+    panel.setAttribute('aria-hidden','true');
+    setTimeout(()=>{ panel.hidden = true; }, 220);
+  }
+  if (closeBtn) closeBtn.addEventListener('click', closePanel);
+
+  window.execQuery = function(q){
+    if (!q) return;
+    openPanel();
+    try{
+      const el = window.google && google.search && google.search.cse && google.search.cse.element && google.search.cse.element.getElement('cseResults');
+      if (el && el.execute) el.execute(q);
+    }catch(e){ console.warn(e); }
+  };
+
+  if (input) {
+    input.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter'){ window.execQuery(input.value.trim()); }
+    });
+  }
+  if (lens) {
+    lens.addEventListener('click', ()=>{
+      const val = (input && input.value || '').trim();
+      window.execQuery(val);
+    });
+  }
+  const clearIcon = document.querySelector('.clear-icon');
+  if (clearIcon && input) {
+    clearIcon.addEventListener('click', ()=>{ input.value=''; input.focus(); });
+  }
+  window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closePanel(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  const input = document.getElementById('site-search') || document.querySelector('input[type="search"]');
+  const box = document.getElementById('cse-suggestions');
+  if(!input || !box) return;
+
+  const MAX_SUGGESTIONS = 10;
+  const NEWS_COUNT = 5;
+  window.CSE_LOCAL_NEWS = window.CSE_LOCAL_NEWS || [];
+
+  const norm = s => (s||'').toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/\s+/g,' ').trim();
+
+  function collectArticles(){
+    const anchors = Array.from(document.querySelectorAll('nav.menu-desktop a, .articles-blob a'));
+    const items = []; const seen = new Set();
+    anchors.forEach(a => {
+      const href = a.getAttribute('href') || '';
+      if(!/\.html?(#.*)?$/i.test(href)) return;
+      if(/^https?:/i.test(href)) return;
+      const key = href.replace(/#.*$/,'');
+      if(seen.has(key)) return;
+      seen.add(key);
+      const title = (a.getAttribute('data-title') || a.textContent || '').trim();
+      if(!title) return;
+      let cat = '';
+      const h4 = a.closest('div')?.querySelector('h4');
+      if(h4) cat = h4.textContent.trim();
+      items.push({title, href, cat, key: norm(title + ' ' + cat)});
+    });
+    return items;
+  }
+
+  function collectNewsFromConfig(DATA){
+    if(!Array.isArray(window.CSE_LOCAL_NEWS) || !window.CSE_LOCAL_NEWS.length) return [];
+    const idx = new Map(DATA.map((it,i)=>[it.href.replace(/#.*$/,''), i]));
+    const picked = [];
+    window.CSE_LOCAL_NEWS.forEach(href => {
+      const k = String(href||'').replace(/#.*$/,'');
+      if(idx.has(k)) picked.push(DATA[idx.get(k)]);
+    });
+    return picked;
+  }
+
+  function collectNewsFallback(DATA){
+    const blobAnchors = Array.from(document.querySelectorAll('.articles-blob a'));
+    const seen = new Set(); const items = [];
+    blobAnchors.forEach(a => {
+      const href = a.getAttribute('href') || '';
+      if(!/\.html?(#.*)?$/i.test(href)) return;
+      if(/^https?:/i.test(href)) return;
+      const key = href.replace(/#.*$/,'');
+      if(seen.has(key)) return;
+      seen.add(key);
+      const title = (a.getAttribute('data-title') || a.textContent || '').trim();
+      if(title) items.push({title, href, cat: 'Novità', key: norm(title)});
+    });
+    if(!items.length) return DATA.slice(0, Math.min(NEWS_COUNT, DATA.length));
+    return items;
+  }
+
+  function itemTemplate(it, q){
+    const safe = (txt)=>String(txt||'').replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
+    const hlt = (txt) => {
+      const n = norm(txt);
+      const nq = norm(q);
+      const ix = nq ? n.indexOf(nq) : -1;
+      if(ix < 0) return safe(txt);
+      const a = txt.slice(0, ix);
+      const b = txt.slice(ix, ix + q.length);
+      const c = txt.slice(ix + q.length);
+      return safe(a) + '<mark>' + safe(b) + '</mark>' + safe(c);
+    };
+    const cat = it.cat ? ' <small>· ' + hlt(it.cat) + '</small>' : '';
+    return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i>' +
+           '<span class="t">' + hlt(it.title) + '</span>' + cat;
+  }
+
+  let DATA = collectArticles();
+  let NEWS = collectNewsFromConfig(DATA);
+  if(!NEWS.length) NEWS = collectNewsFallback(DATA);
+
+  function renderNews(){
+    if(!box) return;
+    box.innerHTML = '';
+    if(!NEWS || !NEWS.length) return;
+    const h = document.createElement('div');
+    h.className = 'section-title'; h.textContent = 'Novità';
+    box.appendChild(h);
+    NEWS.slice(0, NEWS_COUNT).forEach((it, idx) => {
+      const div = document.createElement('div');
+      div.className = 'cse-sugg-item';
+      div.setAttribute('role','option');
+      div.setAttribute('data-href', it.href);
+      div.setAttribute('data-title', it.title);
+      if(idx === 0) div.setAttribute('aria-selected','true');
+      div.innerHTML = itemTemplate(it, '' ) + '<span class="badge-news">Nuovo</span>';
+      box.appendChild(div);
+    });
+    box.classList.add('show');
+  }
+
+  // On focus: show news if input empty
+  input.addEventListener('focus', () => { if(!input.value) renderNews(); });
+
+  // Refresh datasets on DOM changes
+  const mo = new MutationObserver(() => {
+    DATA = collectArticles();
+    let n = collectNewsFromConfig(DATA);
+    if(!n.length) n = collectNewsFallback(DATA);
+    NEWS = n;
+  });
+  mo.observe(document.body, {subtree:true, childList:true});
+})();
+</script>
+
+
+<script>
+(function(){
+  const input = document.getElementById('site-search') || document.querySelector('input[type="search"]');
+  // Intercetta il click sulla lente PRIMA degli altri handler
+  document.addEventListener('click', function(e){
+    const lens = e.target.closest('.search-icon, .fa-magnifying-glass');
+    if(!lens) return;
+    if(!input) return;
+    if(input.value && input.value.trim() !== '') return; // se c'è testo, lasciamo il comportamento attuale
+    // Input vuoto: mostra "Novità" richiamando il focus (lo script news le apre on-focus)
+    e.preventDefault();
+    if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+    e.stopPropagation();
+    input.focus();
+    // forza l'evento focus per essere sicuri
+    const ev = new Event('focus', {bubbles:false, cancelable:false});
+    input.dispatchEvent(ev);
+  }, true);
+})();
+</script>
+
 </body>
    -->
    <!-- Aggiungi questo codice prima della chiusura 
@@ -4039,6 +4321,194 @@
   } else {
     bind();
   }
+})();
+</script>
+
+
+<script>
+(function(){
+  const input = document.getElementById('site-search') || document.querySelector('input[type="search"]');
+  const panel = document.getElementById('cse-panel');
+  const closeBtn = panel ? panel.querySelector('.cse-close') : null;
+  const lens = document.querySelector('.search-icon, .fa-magnifying-glass');
+
+  function openPanel(){
+    if(!panel) return;
+    panel.hidden = false;
+    panel.setAttribute('aria-hidden','false');
+  }
+  function closePanel(){
+    if(!panel) return;
+    panel.setAttribute('aria-hidden','true');
+    setTimeout(()=>{ panel.hidden = true; }, 220);
+  }
+  if (closeBtn) closeBtn.addEventListener('click', closePanel);
+
+  window.execQuery = function(q){
+    if (!q) return;
+    openPanel();
+    try{
+      const el = window.google && google.search && google.search.cse && google.search.cse.element && google.search.cse.element.getElement('cseResults');
+      if (el && el.execute) el.execute(q);
+    }catch(e){ console.warn(e); }
+  };
+
+  if (input) {
+    input.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter'){ window.execQuery(input.value.trim()); }
+    });
+  }
+  if (lens) {
+    lens.addEventListener('click', ()=>{
+      const val = (input && input.value || '').trim();
+      window.execQuery(val);
+    });
+  }
+  const clearIcon = document.querySelector('.clear-icon');
+  if (clearIcon && input) {
+    clearIcon.addEventListener('click', ()=>{ input.value=''; input.focus(); });
+  }
+  window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closePanel(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  const input = document.getElementById('site-search') || document.querySelector('input[type="search"]');
+  const box = document.getElementById('cse-suggestions');
+  if(!input || !box) return;
+
+  const MAX_SUGGESTIONS = 10;
+  const NEWS_COUNT = 5;
+  window.CSE_LOCAL_NEWS = window.CSE_LOCAL_NEWS || [];
+
+  const norm = s => (s||'').toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/\s+/g,' ').trim();
+
+  function collectArticles(){
+    const anchors = Array.from(document.querySelectorAll('nav.menu-desktop a, .articles-blob a'));
+    const items = []; const seen = new Set();
+    anchors.forEach(a => {
+      const href = a.getAttribute('href') || '';
+      if(!/\.html?(#.*)?$/i.test(href)) return;
+      if(/^https?:/i.test(href)) return;
+      const key = href.replace(/#.*$/,'');
+      if(seen.has(key)) return;
+      seen.add(key);
+      const title = (a.getAttribute('data-title') || a.textContent || '').trim();
+      if(!title) return;
+      let cat = '';
+      const h4 = a.closest('div')?.querySelector('h4');
+      if(h4) cat = h4.textContent.trim();
+      items.push({title, href, cat, key: norm(title + ' ' + cat)});
+    });
+    return items;
+  }
+
+  function collectNewsFromConfig(DATA){
+    if(!Array.isArray(window.CSE_LOCAL_NEWS) || !window.CSE_LOCAL_NEWS.length) return [];
+    const idx = new Map(DATA.map((it,i)=>[it.href.replace(/#.*$/,''), i]));
+    const picked = [];
+    window.CSE_LOCAL_NEWS.forEach(href => {
+      const k = String(href||'').replace(/#.*$/,'');
+      if(idx.has(k)) picked.push(DATA[idx.get(k)]);
+    });
+    return picked;
+  }
+
+  function collectNewsFallback(DATA){
+    const blobAnchors = Array.from(document.querySelectorAll('.articles-blob a'));
+    const seen = new Set(); const items = [];
+    blobAnchors.forEach(a => {
+      const href = a.getAttribute('href') || '';
+      if(!/\.html?(#.*)?$/i.test(href)) return;
+      if(/^https?:/i.test(href)) return;
+      const key = href.replace(/#.*$/,'');
+      if(seen.has(key)) return;
+      seen.add(key);
+      const title = (a.getAttribute('data-title') || a.textContent || '').trim();
+      if(title) items.push({title, href, cat: 'Novità', key: norm(title)});
+    });
+    if(!items.length) return DATA.slice(0, Math.min(NEWS_COUNT, DATA.length));
+    return items;
+  }
+
+  function itemTemplate(it, q){
+    const safe = (txt)=>String(txt||'').replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
+    const hlt = (txt) => {
+      const n = norm(txt);
+      const nq = norm(q);
+      const ix = nq ? n.indexOf(nq) : -1;
+      if(ix < 0) return safe(txt);
+      const a = txt.slice(0, ix);
+      const b = txt.slice(ix, ix + q.length);
+      const c = txt.slice(ix + q.length);
+      return safe(a) + '<mark>' + safe(b) + '</mark>' + safe(c);
+    };
+    const cat = it.cat ? ' <small>· ' + hlt(it.cat) + '</small>' : '';
+    return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i>' +
+           '<span class="t">' + hlt(it.title) + '</span>' + cat;
+  }
+
+  let DATA = collectArticles();
+  let NEWS = collectNewsFromConfig(DATA);
+  if(!NEWS.length) NEWS = collectNewsFallback(DATA);
+
+  function renderNews(){
+    if(!box) return;
+    box.innerHTML = '';
+    if(!NEWS || !NEWS.length) return;
+    const h = document.createElement('div');
+    h.className = 'section-title'; h.textContent = 'Novità';
+    box.appendChild(h);
+    NEWS.slice(0, NEWS_COUNT).forEach((it, idx) => {
+      const div = document.createElement('div');
+      div.className = 'cse-sugg-item';
+      div.setAttribute('role','option');
+      div.setAttribute('data-href', it.href);
+      div.setAttribute('data-title', it.title);
+      if(idx === 0) div.setAttribute('aria-selected','true');
+      div.innerHTML = itemTemplate(it, '' ) + '<span class="badge-news">Nuovo</span>';
+      box.appendChild(div);
+    });
+    box.classList.add('show');
+  }
+
+  // On focus: show news if input empty
+  input.addEventListener('focus', () => { if(!input.value) renderNews(); });
+
+  // Refresh datasets on DOM changes
+  const mo = new MutationObserver(() => {
+    DATA = collectArticles();
+    let n = collectNewsFromConfig(DATA);
+    if(!n.length) n = collectNewsFallback(DATA);
+    NEWS = n;
+  });
+  mo.observe(document.body, {subtree:true, childList:true});
+})();
+</script>
+
+
+<script>
+(function(){
+  const input = document.getElementById('site-search') || document.querySelector('input[type="search"]');
+  // Intercetta il click sulla lente PRIMA degli altri handler
+  document.addEventListener('click', function(e){
+    const lens = e.target.closest('.search-icon, .fa-magnifying-glass');
+    if(!lens) return;
+    if(!input) return;
+    if(input.value && input.value.trim() !== '') return; // se c'è testo, lasciamo il comportamento attuale
+    // Input vuoto: mostra "Novità" richiamando il focus (lo script news le apre on-focus)
+    e.preventDefault();
+    if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+    e.stopPropagation();
+    input.focus();
+    // forza l'evento focus per essere sicuri
+    const ev = new Event('focus', {bubbles:false, cancelable:false});
+    input.dispatchEvent(ev);
+  }, true);
 })();
 </script>
 
@@ -4322,6 +4792,194 @@
 })();
 </script>
 
+
+<script>
+(function(){
+  const input = document.getElementById('site-search') || document.querySelector('input[type="search"]');
+  const panel = document.getElementById('cse-panel');
+  const closeBtn = panel ? panel.querySelector('.cse-close') : null;
+  const lens = document.querySelector('.search-icon, .fa-magnifying-glass');
+
+  function openPanel(){
+    if(!panel) return;
+    panel.hidden = false;
+    panel.setAttribute('aria-hidden','false');
+  }
+  function closePanel(){
+    if(!panel) return;
+    panel.setAttribute('aria-hidden','true');
+    setTimeout(()=>{ panel.hidden = true; }, 220);
+  }
+  if (closeBtn) closeBtn.addEventListener('click', closePanel);
+
+  window.execQuery = function(q){
+    if (!q) return;
+    openPanel();
+    try{
+      const el = window.google && google.search && google.search.cse && google.search.cse.element && google.search.cse.element.getElement('cseResults');
+      if (el && el.execute) el.execute(q);
+    }catch(e){ console.warn(e); }
+  };
+
+  if (input) {
+    input.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter'){ window.execQuery(input.value.trim()); }
+    });
+  }
+  if (lens) {
+    lens.addEventListener('click', ()=>{
+      const val = (input && input.value || '').trim();
+      window.execQuery(val);
+    });
+  }
+  const clearIcon = document.querySelector('.clear-icon');
+  if (clearIcon && input) {
+    clearIcon.addEventListener('click', ()=>{ input.value=''; input.focus(); });
+  }
+  window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closePanel(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  const input = document.getElementById('site-search') || document.querySelector('input[type="search"]');
+  const box = document.getElementById('cse-suggestions');
+  if(!input || !box) return;
+
+  const MAX_SUGGESTIONS = 10;
+  const NEWS_COUNT = 5;
+  window.CSE_LOCAL_NEWS = window.CSE_LOCAL_NEWS || [];
+
+  const norm = s => (s||'').toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/\s+/g,' ').trim();
+
+  function collectArticles(){
+    const anchors = Array.from(document.querySelectorAll('nav.menu-desktop a, .articles-blob a'));
+    const items = []; const seen = new Set();
+    anchors.forEach(a => {
+      const href = a.getAttribute('href') || '';
+      if(!/\.html?(#.*)?$/i.test(href)) return;
+      if(/^https?:/i.test(href)) return;
+      const key = href.replace(/#.*$/,'');
+      if(seen.has(key)) return;
+      seen.add(key);
+      const title = (a.getAttribute('data-title') || a.textContent || '').trim();
+      if(!title) return;
+      let cat = '';
+      const h4 = a.closest('div')?.querySelector('h4');
+      if(h4) cat = h4.textContent.trim();
+      items.push({title, href, cat, key: norm(title + ' ' + cat)});
+    });
+    return items;
+  }
+
+  function collectNewsFromConfig(DATA){
+    if(!Array.isArray(window.CSE_LOCAL_NEWS) || !window.CSE_LOCAL_NEWS.length) return [];
+    const idx = new Map(DATA.map((it,i)=>[it.href.replace(/#.*$/,''), i]));
+    const picked = [];
+    window.CSE_LOCAL_NEWS.forEach(href => {
+      const k = String(href||'').replace(/#.*$/,'');
+      if(idx.has(k)) picked.push(DATA[idx.get(k)]);
+    });
+    return picked;
+  }
+
+  function collectNewsFallback(DATA){
+    const blobAnchors = Array.from(document.querySelectorAll('.articles-blob a'));
+    const seen = new Set(); const items = [];
+    blobAnchors.forEach(a => {
+      const href = a.getAttribute('href') || '';
+      if(!/\.html?(#.*)?$/i.test(href)) return;
+      if(/^https?:/i.test(href)) return;
+      const key = href.replace(/#.*$/,'');
+      if(seen.has(key)) return;
+      seen.add(key);
+      const title = (a.getAttribute('data-title') || a.textContent || '').trim();
+      if(title) items.push({title, href, cat: 'Novità', key: norm(title)});
+    });
+    if(!items.length) return DATA.slice(0, Math.min(NEWS_COUNT, DATA.length));
+    return items;
+  }
+
+  function itemTemplate(it, q){
+    const safe = (txt)=>String(txt||'').replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
+    const hlt = (txt) => {
+      const n = norm(txt);
+      const nq = norm(q);
+      const ix = nq ? n.indexOf(nq) : -1;
+      if(ix < 0) return safe(txt);
+      const a = txt.slice(0, ix);
+      const b = txt.slice(ix, ix + q.length);
+      const c = txt.slice(ix + q.length);
+      return safe(a) + '<mark>' + safe(b) + '</mark>' + safe(c);
+    };
+    const cat = it.cat ? ' <small>· ' + hlt(it.cat) + '</small>' : '';
+    return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i>' +
+           '<span class="t">' + hlt(it.title) + '</span>' + cat;
+  }
+
+  let DATA = collectArticles();
+  let NEWS = collectNewsFromConfig(DATA);
+  if(!NEWS.length) NEWS = collectNewsFallback(DATA);
+
+  function renderNews(){
+    if(!box) return;
+    box.innerHTML = '';
+    if(!NEWS || !NEWS.length) return;
+    const h = document.createElement('div');
+    h.className = 'section-title'; h.textContent = 'Novità';
+    box.appendChild(h);
+    NEWS.slice(0, NEWS_COUNT).forEach((it, idx) => {
+      const div = document.createElement('div');
+      div.className = 'cse-sugg-item';
+      div.setAttribute('role','option');
+      div.setAttribute('data-href', it.href);
+      div.setAttribute('data-title', it.title);
+      if(idx === 0) div.setAttribute('aria-selected','true');
+      div.innerHTML = itemTemplate(it, '' ) + '<span class="badge-news">Nuovo</span>';
+      box.appendChild(div);
+    });
+    box.classList.add('show');
+  }
+
+  // On focus: show news if input empty
+  input.addEventListener('focus', () => { if(!input.value) renderNews(); });
+
+  // Refresh datasets on DOM changes
+  const mo = new MutationObserver(() => {
+    DATA = collectArticles();
+    let n = collectNewsFromConfig(DATA);
+    if(!n.length) n = collectNewsFallback(DATA);
+    NEWS = n;
+  });
+  mo.observe(document.body, {subtree:true, childList:true});
+})();
+</script>
+
+
+<script>
+(function(){
+  const input = document.getElementById('site-search') || document.querySelector('input[type="search"]');
+  // Intercetta il click sulla lente PRIMA degli altri handler
+  document.addEventListener('click', function(e){
+    const lens = e.target.closest('.search-icon, .fa-magnifying-glass');
+    if(!lens) return;
+    if(!input) return;
+    if(input.value && input.value.trim() !== '') return; // se c'è testo, lasciamo il comportamento attuale
+    // Input vuoto: mostra "Novità" richiamando il focus (lo script news le apre on-focus)
+    e.preventDefault();
+    if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+    e.stopPropagation();
+    input.focus();
+    // forza l'evento focus per essere sicuri
+    const ev = new Event('focus', {bubbles:false, cancelable:false});
+    input.dispatchEvent(ev);
+  }, true);
+})();
+</script>
+
 </body> -->
    <div id="search-results-panel" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:10000;padding:40px;box-sizing:border-box;">
       <div style="max-width:800px;margin:0 auto;background:#0a0a1a;padding:20px;border-radius:8px;border:1px solid #d4af37;max-height:80vh;overflow:auto;position:relative;">
@@ -4587,6 +5245,194 @@
   } else {
     bind();
   }
+})();
+</script>
+
+
+<script>
+(function(){
+  const input = document.getElementById('site-search') || document.querySelector('input[type="search"]');
+  const panel = document.getElementById('cse-panel');
+  const closeBtn = panel ? panel.querySelector('.cse-close') : null;
+  const lens = document.querySelector('.search-icon, .fa-magnifying-glass');
+
+  function openPanel(){
+    if(!panel) return;
+    panel.hidden = false;
+    panel.setAttribute('aria-hidden','false');
+  }
+  function closePanel(){
+    if(!panel) return;
+    panel.setAttribute('aria-hidden','true');
+    setTimeout(()=>{ panel.hidden = true; }, 220);
+  }
+  if (closeBtn) closeBtn.addEventListener('click', closePanel);
+
+  window.execQuery = function(q){
+    if (!q) return;
+    openPanel();
+    try{
+      const el = window.google && google.search && google.search.cse && google.search.cse.element && google.search.cse.element.getElement('cseResults');
+      if (el && el.execute) el.execute(q);
+    }catch(e){ console.warn(e); }
+  };
+
+  if (input) {
+    input.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter'){ window.execQuery(input.value.trim()); }
+    });
+  }
+  if (lens) {
+    lens.addEventListener('click', ()=>{
+      const val = (input && input.value || '').trim();
+      window.execQuery(val);
+    });
+  }
+  const clearIcon = document.querySelector('.clear-icon');
+  if (clearIcon && input) {
+    clearIcon.addEventListener('click', ()=>{ input.value=''; input.focus(); });
+  }
+  window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closePanel(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  const input = document.getElementById('site-search') || document.querySelector('input[type="search"]');
+  const box = document.getElementById('cse-suggestions');
+  if(!input || !box) return;
+
+  const MAX_SUGGESTIONS = 10;
+  const NEWS_COUNT = 5;
+  window.CSE_LOCAL_NEWS = window.CSE_LOCAL_NEWS || [];
+
+  const norm = s => (s||'').toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/\s+/g,' ').trim();
+
+  function collectArticles(){
+    const anchors = Array.from(document.querySelectorAll('nav.menu-desktop a, .articles-blob a'));
+    const items = []; const seen = new Set();
+    anchors.forEach(a => {
+      const href = a.getAttribute('href') || '';
+      if(!/\.html?(#.*)?$/i.test(href)) return;
+      if(/^https?:/i.test(href)) return;
+      const key = href.replace(/#.*$/,'');
+      if(seen.has(key)) return;
+      seen.add(key);
+      const title = (a.getAttribute('data-title') || a.textContent || '').trim();
+      if(!title) return;
+      let cat = '';
+      const h4 = a.closest('div')?.querySelector('h4');
+      if(h4) cat = h4.textContent.trim();
+      items.push({title, href, cat, key: norm(title + ' ' + cat)});
+    });
+    return items;
+  }
+
+  function collectNewsFromConfig(DATA){
+    if(!Array.isArray(window.CSE_LOCAL_NEWS) || !window.CSE_LOCAL_NEWS.length) return [];
+    const idx = new Map(DATA.map((it,i)=>[it.href.replace(/#.*$/,''), i]));
+    const picked = [];
+    window.CSE_LOCAL_NEWS.forEach(href => {
+      const k = String(href||'').replace(/#.*$/,'');
+      if(idx.has(k)) picked.push(DATA[idx.get(k)]);
+    });
+    return picked;
+  }
+
+  function collectNewsFallback(DATA){
+    const blobAnchors = Array.from(document.querySelectorAll('.articles-blob a'));
+    const seen = new Set(); const items = [];
+    blobAnchors.forEach(a => {
+      const href = a.getAttribute('href') || '';
+      if(!/\.html?(#.*)?$/i.test(href)) return;
+      if(/^https?:/i.test(href)) return;
+      const key = href.replace(/#.*$/,'');
+      if(seen.has(key)) return;
+      seen.add(key);
+      const title = (a.getAttribute('data-title') || a.textContent || '').trim();
+      if(title) items.push({title, href, cat: 'Novità', key: norm(title)});
+    });
+    if(!items.length) return DATA.slice(0, Math.min(NEWS_COUNT, DATA.length));
+    return items;
+  }
+
+  function itemTemplate(it, q){
+    const safe = (txt)=>String(txt||'').replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
+    const hlt = (txt) => {
+      const n = norm(txt);
+      const nq = norm(q);
+      const ix = nq ? n.indexOf(nq) : -1;
+      if(ix < 0) return safe(txt);
+      const a = txt.slice(0, ix);
+      const b = txt.slice(ix, ix + q.length);
+      const c = txt.slice(ix + q.length);
+      return safe(a) + '<mark>' + safe(b) + '</mark>' + safe(c);
+    };
+    const cat = it.cat ? ' <small>· ' + hlt(it.cat) + '</small>' : '';
+    return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i>' +
+           '<span class="t">' + hlt(it.title) + '</span>' + cat;
+  }
+
+  let DATA = collectArticles();
+  let NEWS = collectNewsFromConfig(DATA);
+  if(!NEWS.length) NEWS = collectNewsFallback(DATA);
+
+  function renderNews(){
+    if(!box) return;
+    box.innerHTML = '';
+    if(!NEWS || !NEWS.length) return;
+    const h = document.createElement('div');
+    h.className = 'section-title'; h.textContent = 'Novità';
+    box.appendChild(h);
+    NEWS.slice(0, NEWS_COUNT).forEach((it, idx) => {
+      const div = document.createElement('div');
+      div.className = 'cse-sugg-item';
+      div.setAttribute('role','option');
+      div.setAttribute('data-href', it.href);
+      div.setAttribute('data-title', it.title);
+      if(idx === 0) div.setAttribute('aria-selected','true');
+      div.innerHTML = itemTemplate(it, '' ) + '<span class="badge-news">Nuovo</span>';
+      box.appendChild(div);
+    });
+    box.classList.add('show');
+  }
+
+  // On focus: show news if input empty
+  input.addEventListener('focus', () => { if(!input.value) renderNews(); });
+
+  // Refresh datasets on DOM changes
+  const mo = new MutationObserver(() => {
+    DATA = collectArticles();
+    let n = collectNewsFromConfig(DATA);
+    if(!n.length) n = collectNewsFallback(DATA);
+    NEWS = n;
+  });
+  mo.observe(document.body, {subtree:true, childList:true});
+})();
+</script>
+
+
+<script>
+(function(){
+  const input = document.getElementById('site-search') || document.querySelector('input[type="search"]');
+  // Intercetta il click sulla lente PRIMA degli altri handler
+  document.addEventListener('click', function(e){
+    const lens = e.target.closest('.search-icon, .fa-magnifying-glass');
+    if(!lens) return;
+    if(!input) return;
+    if(input.value && input.value.trim() !== '') return; // se c'è testo, lasciamo il comportamento attuale
+    // Input vuoto: mostra "Novità" richiamando il focus (lo script news le apre on-focus)
+    e.preventDefault();
+    if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+    e.stopPropagation();
+    input.focus();
+    // forza l'evento focus per essere sicuri
+    const ev = new Event('focus', {bubbles:false, cancelable:false});
+    input.dispatchEvent(ev);
+  }, true);
 })();
 </script>
 
@@ -5025,6 +5871,194 @@
   } else {
     bind();
   }
+})();
+</script>
+
+
+<script>
+(function(){
+  const input = document.getElementById('site-search') || document.querySelector('input[type="search"]');
+  const panel = document.getElementById('cse-panel');
+  const closeBtn = panel ? panel.querySelector('.cse-close') : null;
+  const lens = document.querySelector('.search-icon, .fa-magnifying-glass');
+
+  function openPanel(){
+    if(!panel) return;
+    panel.hidden = false;
+    panel.setAttribute('aria-hidden','false');
+  }
+  function closePanel(){
+    if(!panel) return;
+    panel.setAttribute('aria-hidden','true');
+    setTimeout(()=>{ panel.hidden = true; }, 220);
+  }
+  if (closeBtn) closeBtn.addEventListener('click', closePanel);
+
+  window.execQuery = function(q){
+    if (!q) return;
+    openPanel();
+    try{
+      const el = window.google && google.search && google.search.cse && google.search.cse.element && google.search.cse.element.getElement('cseResults');
+      if (el && el.execute) el.execute(q);
+    }catch(e){ console.warn(e); }
+  };
+
+  if (input) {
+    input.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter'){ window.execQuery(input.value.trim()); }
+    });
+  }
+  if (lens) {
+    lens.addEventListener('click', ()=>{
+      const val = (input && input.value || '').trim();
+      window.execQuery(val);
+    });
+  }
+  const clearIcon = document.querySelector('.clear-icon');
+  if (clearIcon && input) {
+    clearIcon.addEventListener('click', ()=>{ input.value=''; input.focus(); });
+  }
+  window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closePanel(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  const input = document.getElementById('site-search') || document.querySelector('input[type="search"]');
+  const box = document.getElementById('cse-suggestions');
+  if(!input || !box) return;
+
+  const MAX_SUGGESTIONS = 10;
+  const NEWS_COUNT = 5;
+  window.CSE_LOCAL_NEWS = window.CSE_LOCAL_NEWS || [];
+
+  const norm = s => (s||'').toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/\s+/g,' ').trim();
+
+  function collectArticles(){
+    const anchors = Array.from(document.querySelectorAll('nav.menu-desktop a, .articles-blob a'));
+    const items = []; const seen = new Set();
+    anchors.forEach(a => {
+      const href = a.getAttribute('href') || '';
+      if(!/\.html?(#.*)?$/i.test(href)) return;
+      if(/^https?:/i.test(href)) return;
+      const key = href.replace(/#.*$/,'');
+      if(seen.has(key)) return;
+      seen.add(key);
+      const title = (a.getAttribute('data-title') || a.textContent || '').trim();
+      if(!title) return;
+      let cat = '';
+      const h4 = a.closest('div')?.querySelector('h4');
+      if(h4) cat = h4.textContent.trim();
+      items.push({title, href, cat, key: norm(title + ' ' + cat)});
+    });
+    return items;
+  }
+
+  function collectNewsFromConfig(DATA){
+    if(!Array.isArray(window.CSE_LOCAL_NEWS) || !window.CSE_LOCAL_NEWS.length) return [];
+    const idx = new Map(DATA.map((it,i)=>[it.href.replace(/#.*$/,''), i]));
+    const picked = [];
+    window.CSE_LOCAL_NEWS.forEach(href => {
+      const k = String(href||'').replace(/#.*$/,'');
+      if(idx.has(k)) picked.push(DATA[idx.get(k)]);
+    });
+    return picked;
+  }
+
+  function collectNewsFallback(DATA){
+    const blobAnchors = Array.from(document.querySelectorAll('.articles-blob a'));
+    const seen = new Set(); const items = [];
+    blobAnchors.forEach(a => {
+      const href = a.getAttribute('href') || '';
+      if(!/\.html?(#.*)?$/i.test(href)) return;
+      if(/^https?:/i.test(href)) return;
+      const key = href.replace(/#.*$/,'');
+      if(seen.has(key)) return;
+      seen.add(key);
+      const title = (a.getAttribute('data-title') || a.textContent || '').trim();
+      if(title) items.push({title, href, cat: 'Novità', key: norm(title)});
+    });
+    if(!items.length) return DATA.slice(0, Math.min(NEWS_COUNT, DATA.length));
+    return items;
+  }
+
+  function itemTemplate(it, q){
+    const safe = (txt)=>String(txt||'').replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
+    const hlt = (txt) => {
+      const n = norm(txt);
+      const nq = norm(q);
+      const ix = nq ? n.indexOf(nq) : -1;
+      if(ix < 0) return safe(txt);
+      const a = txt.slice(0, ix);
+      const b = txt.slice(ix, ix + q.length);
+      const c = txt.slice(ix + q.length);
+      return safe(a) + '<mark>' + safe(b) + '</mark>' + safe(c);
+    };
+    const cat = it.cat ? ' <small>· ' + hlt(it.cat) + '</small>' : '';
+    return '<i class="fa-solid fa-file-lines" aria-hidden="true"></i>' +
+           '<span class="t">' + hlt(it.title) + '</span>' + cat;
+  }
+
+  let DATA = collectArticles();
+  let NEWS = collectNewsFromConfig(DATA);
+  if(!NEWS.length) NEWS = collectNewsFallback(DATA);
+
+  function renderNews(){
+    if(!box) return;
+    box.innerHTML = '';
+    if(!NEWS || !NEWS.length) return;
+    const h = document.createElement('div');
+    h.className = 'section-title'; h.textContent = 'Novità';
+    box.appendChild(h);
+    NEWS.slice(0, NEWS_COUNT).forEach((it, idx) => {
+      const div = document.createElement('div');
+      div.className = 'cse-sugg-item';
+      div.setAttribute('role','option');
+      div.setAttribute('data-href', it.href);
+      div.setAttribute('data-title', it.title);
+      if(idx === 0) div.setAttribute('aria-selected','true');
+      div.innerHTML = itemTemplate(it, '' ) + '<span class="badge-news">Nuovo</span>';
+      box.appendChild(div);
+    });
+    box.classList.add('show');
+  }
+
+  // On focus: show news if input empty
+  input.addEventListener('focus', () => { if(!input.value) renderNews(); });
+
+  // Refresh datasets on DOM changes
+  const mo = new MutationObserver(() => {
+    DATA = collectArticles();
+    let n = collectNewsFromConfig(DATA);
+    if(!n.length) n = collectNewsFallback(DATA);
+    NEWS = n;
+  });
+  mo.observe(document.body, {subtree:true, childList:true});
+})();
+</script>
+
+
+<script>
+(function(){
+  const input = document.getElementById('site-search') || document.querySelector('input[type="search"]');
+  // Intercetta il click sulla lente PRIMA degli altri handler
+  document.addEventListener('click', function(e){
+    const lens = e.target.closest('.search-icon, .fa-magnifying-glass');
+    if(!lens) return;
+    if(!input) return;
+    if(input.value && input.value.trim() !== '') return; // se c'è testo, lasciamo il comportamento attuale
+    // Input vuoto: mostra "Novità" richiamando il focus (lo script news le apre on-focus)
+    e.preventDefault();
+    if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+    e.stopPropagation();
+    input.focus();
+    // forza l'evento focus per essere sicuri
+    const ev = new Event('focus', {bubbles:false, cancelable:false});
+    input.dispatchEvent(ev);
+  }, true);
 })();
 </script>
 
