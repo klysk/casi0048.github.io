@@ -134,7 +134,7 @@
          filter:drop-shadow(0 0 12px rgba(255,215,0,.35)); animation:titlePulse 6s infinite;
          }
          @keyframes titlePulse{ 0%,100%{ transform:scale(1)} 50%{ transform:scale(1.04)} }
-         .welcome-subtitle{ margin-top:-20px; color:#9ad0ff; font-size:1.5rem }
+         .welcome-subtitle{ margin-top:10px; color:#9ad0ff; font-size:1.05rem }
          .typing-wrap{ margin-top:10px; display:flex; justify-content:center; }
          .typing-effect{ font-family:'EB Garamond',serif; font-size:1.4rem; font-style:italic; color:#00CFFF; font-weight: 700;  }
          .caret{ display:inline-block; width:1ch; }
@@ -727,37 +727,9 @@
 </style>
 
 
-<style data-cse-suggest-css>
-  #cse-suggest{
-    position: fixed;
-    z-index: 11050;
-    display: none;
-    background: rgba(10,10,30,.98);
-    border: 1px solid rgba(255,215,0,.25);
-    border-radius: 10px;
-    box-shadow: 0 16px 36px rgba(0,0,0,.55);
-    padding: 6px;
-    max-height: 56vh;
-    overflow: auto;
-  }
-  #cse-suggest.show{ display:block; }
-  #cse-suggest .item{
-    display: flex; align-items: center; gap: 10px;
-    padding: 8px 10px; border-radius: 8px;
-    color: #cfe8ff; text-decoration: none;
-  }
-  #cse-suggest .item:hover,
-  #cse-suggest .item:focus{
-    background: rgba(255,255,255,.06); color:#fff;
-    outline: none;
-  }
-  #cse-suggest .item i{ opacity:.9 }
-  #cse-suggest .section{
-    font-size: .8rem; letter-spacing: .02em;
-    text-transform: uppercase; opacity:.85;
-    padding: 6px 8px; margin: 4px 4px 2px;
-    border-bottom: 1px dashed rgba(255,255,255,.15);
-  }
+<style data-typing-cls-fallback>
+  /* Fallback: garantisci un minimo di spazio in caso di errori di misura */
+  .typing-wrap{ min-height: 2.6em; }
 </style>
 
 </head>
@@ -976,7 +948,7 @@
                             </div>
                               <div>
                            <h4>Commedia greca antica</h4>
-                           <a href="articoli/aristofane.html" role="menuitem">Aristofane</a>
+                           <a href=""articoli/aristofane.html role="menuitem">Aristofane</a>
                            <a href="articoli/menandro.html" role="menuitem">Menandro</a>                           
                             </div>
                       </div>
@@ -2047,6 +2019,39 @@
              "La domanda giusta vale più di mille risposte.",
              "L’inquietudine è il motore della ricerca."
            ];
+function reserveTypingSpace(target, texts){
+  try{
+    if(!target || !texts || !texts.length) return;
+    var wrap = target.closest('.typing-wrap') || target.parentElement || document.body;
+    var ghost = document.createElement('div');
+    var cs = getComputedStyle(target);
+    ghost.style.position = 'absolute';
+    ghost.style.visibility = 'hidden';
+    ghost.style.whiteSpace = 'normal';
+    ghost.style.pointerEvents = 'none';
+    ghost.style.fontFamily = cs.fontFamily;
+    ghost.style.fontSize   = cs.fontSize;
+    ghost.style.fontWeight = cs.fontWeight;
+    ghost.style.fontStyle  = cs.fontStyle;
+    ghost.style.lineHeight = cs.lineHeight;
+    try{
+      var w = wrap.getBoundingClientRect().width;
+      if(!isNaN(w) && w > 0) ghost.style.maxWidth = w + 'px';
+    }catch(e){}
+    document.body.appendChild(ghost);
+    var maxH = 0;
+    for(var i=0;i<texts.length;i++){
+      ghost.textContent = texts[i];
+      var r = ghost.getBoundingClientRect();
+      if(r.height > maxH) maxH = r.height;
+    }
+    ghost.remove();
+    if(maxH > 0) wrap.style.minHeight = Math.ceil(maxH) + 'px';
+  }catch(e){}
+}
+
+reserveTypingSpace(el, texts);
+
            let textIndex = 0, index = 0, forward = true, delay = 0, stepCounter = 0;
            const writeSpeed = 3, deleteSpeed = 2;
            function animate() {
@@ -2168,7 +2173,7 @@
          footer {
          background: #06060d;
          color: #e9eef5;
-         margin-top: 40px;   /* 👈 spazio fisso sopra il footer */
+         margin-top: 20px;   /* 👈 spazio fisso sopra il footer */
          position: relative;
          z-index: 1;
          }
@@ -2270,7 +2275,7 @@
          .video-container{
          position: fixed;
          bottom: 60px;
-         right: 80px;
+         right: 40px;
          width: 280px;
          z-index: 99;
          padding: 8px;
@@ -5125,147 +5130,6 @@
   } else {
     bind();
   }
-})();
-</script>
-
-
-<script>
-(function(){
-  const $ = (s, r=document) => r.querySelector(s);
-  const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
-  const norm = s => (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ').trim();
-  const safe = s => String(s||'').replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
-
-  const input = $('#site-search') || $('.search-container input[type="search"], .search-container input[type="text"]');
-  if(!input) return;
-
-  let box = $('#cse-suggest');
-  if(!box){
-    box = document.createElement('div');
-    box.id = 'cse-suggest';
-    document.body.appendChild(box);
-  }
-
-  function positionBox(){
-    const r = input.getBoundingClientRect();
-    const left = Math.max(8, Math.min(r.left, window.innerWidth - 8));
-    const top  = Math.max(8, r.bottom + 6);
-    const width = Math.min(r.width, window.innerWidth - left - 8);
-    box.style.left = left + 'px';
-    box.style.top = top + 'px';
-    box.style.width = width + 'px';
-    box.style.maxWidth = Math.min(960, window.innerWidth - 16) + 'px';
-  }
-  function show(){ positionBox(); box.classList.add('show'); }
-  function hide(){ box.classList.remove('show'); }
-
-  function collectMenu(){
-    const out = [];
-    $$('nav.menu-desktop a').forEach(a => {
-      const href = a.getAttribute('href') || '';
-      const title = (a.getAttribute('data-title') || a.textContent || '').trim();
-      if(!href || !title) return;
-      if(/^https?:\/\//i.test(href)) return;
-      if(!/\.html?(\?|#|$)/i.test(href) && !/^\w+(\/|$)/.test(href)) return;
-      out.push({ title, href, key: norm(title) });
-    });
-    return out;
-  }
-  function collectBlob(){
-    const out = [];
-    $$('.articles-blob a').forEach(a => {
-      const href = a.getAttribute('href') || '';
-      const title = (a.getAttribute('data-title') || a.textContent || '').trim();
-      if(href && title) out.push({ title, href, key: norm(title) });
-    });
-    return out;
-  }
-
-// --- ESTENSIONE: consenti di includere link ovunque con data-search="include" ---
-function collectMarked(){
-  const out = [];
-  document.querySelectorAll('a[data-search="include"], a[data-search="1"], a[data-search="true"]').forEach(a=>{
-    const href = a.getAttribute('href') || '';
-    const title = (a.getAttribute('data-title') || a.textContent || '').trim();
-    if(!href || !title) return;
-    if(/^https?:\/\//i.test(href)) return; // solo interni
-    if(!/\.html?(\?|#|$)/i.test(href) && !/^\w+(\/|$)/.test(href)) return;
-    out.push({ title, href, key: norm(title) });
-  });
-  return out;
-}
-
-
-  let INDEX = [];
-  function rebuildIndex(){
-    const A = collectBlob();
-    const B = collectMenu();
-    const C = collectMarked();
-    const seen = new Set();
-    INDEX = [];
-    [...A, ...B, ...C].forEach(it => {
-      const k = it.href + '||' + it.title;
-      if(seen.has(k)) return; seen.add(k);
-      INDEX.push(it);
-    });
-    window._siteIndex = INDEX;
-  }
-  rebuildIndex();
-  window.addEventListener('load', () => setTimeout(rebuildIndex, 400));
-
-  function renderList(list, q){
-    if(!list || !list.length){ hide(); return; }
-    const qn = norm(q);
-    box.innerHTML = '';
-    const head = document.createElement('div');
-    head.className = 'section';
-    head.textContent = 'Risultati rapidi';
-    box.appendChild(head);
-
-    list.slice(0, 14).forEach((it, i) => {
-      const a = document.createElement('a');
-      a.className = 'item';
-      a.href = it.href;
-      a.target = '_self';
-      const t = it.title;
-      let html = '<i class="fa-solid fa-file-lines" aria-hidden="true"></i>';
-      const nt = norm(t); const ix = qn ? nt.indexOf(qn) : -1;
-      if(ix >= 0){
-        const a1 = t.slice(0, ix), a2 = t.slice(ix, ix + q.length), a3 = t.slice(ix + q.length);
-        html += '<span>'+ safe(a1) + '<mark>' + safe(a2) + '</mark>' + safe(a3) + '</span>';
-      }else{
-        html += '<span>'+ safe(t) + '</span>';
-      }
-      a.innerHTML = html;
-      box.appendChild(a);
-    });
-    show();
-  }
-
-  let t = 0;
-  input.addEventListener('input', function(){
-    const q = input.value || '';
-    if(q.trim().length < 2){ hide(); return; }
-    clearTimeout(t);
-    t = setTimeout(function(){
-      const qn = norm(q);
-      const list = INDEX.filter(it => it.key.includes(qn));
-      renderList(list, q);
-    }, 80);
-  });
-
-  input.addEventListener('keydown', function(e){
-    if(e.key === 'Escape'){ hide(); }
-  });
-
-  document.addEventListener('mousedown', function(e){
-    if(e.target.closest('#cse-suggest')) return;
-    if(e.target.closest('.search-container')) return;
-    hide();
-  }, true);
-
-  window.addEventListener('scroll', ()=>{ if(box.classList.contains('show')) positionBox(); }, true);
-  window.addEventListener('resize', ()=>{ if(box.classList.contains('show')) positionBox(); });
 })();
 </script>
 
