@@ -2270,7 +2270,7 @@
          .video-container{
          position: fixed;
          bottom: 60px;
-         right: 40px;
+         right: 80px;
          width: 280px;
          z-index: 99;
          padding: 8px;
@@ -5181,13 +5181,29 @@
     return out;
   }
 
+// --- ESTENSIONE: consenti di includere link ovunque con data-search="include" ---
+function collectMarked(){
+  const out = [];
+  document.querySelectorAll('a[data-search="include"], a[data-search="1"], a[data-search="true"]').forEach(a=>{
+    const href = a.getAttribute('href') || '';
+    const title = (a.getAttribute('data-title') || a.textContent || '').trim();
+    if(!href || !title) return;
+    if(/^https?:\/\//i.test(href)) return; // solo interni
+    if(!/\.html?(\?|#|$)/i.test(href) && !/^\w+(\/|$)/.test(href)) return;
+    out.push({ title, href, key: norm(title) });
+  });
+  return out;
+}
+
+
   let INDEX = [];
   function rebuildIndex(){
     const A = collectBlob();
     const B = collectMenu();
+    const C = collectMarked();
     const seen = new Set();
     INDEX = [];
-    [...A, ...B].forEach(it => {
+    [...A, ...B, ...C].forEach(it => {
       const k = it.href + '||' + it.title;
       if(seen.has(k)) return; seen.add(k);
       INDEX.push(it);
