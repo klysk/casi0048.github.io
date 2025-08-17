@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sofocle: Il Maestro della Tragedia Greca</title>
+    <style>
+        :root {
+            --primary-color: #3a506b;
+            --secondary-color: #5bc0be;
+            --text-color: #1c2541;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        /* Modalità di lettura */
+        .notturno {
+            --primary-color: #1e3a8a;
+            --secondary-color: #60a5fa;
+            --text-color: #e5e7eb;
+            --bg-color: #111827;
+            --card-bg: #1f2937;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .filosofico {
+            --primary-color: #4338ca;
+            --secondary-color: #a78bfa;
+            --text-color: #1e1b4b;
+            --bg-color: #f5f3ff;
+            --card-bg: #ede9fe;
+        }
+
+        .contemplativo {
+            --primary-color: #047857;
+            --secondary-color: #34d399;
+            --text-color: #064e3b;
+            --bg-color: #ecfdf5;
+            --card-bg: #d1fae5;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            font-style: italic;
+            margin-bottom: 2rem;
+        }
+
+        .reading-modes {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .mode-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 50px;
+            background: var(--secondary-color);
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            box-shadow: var(--shadow);
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        .mode-btn.active {
+            background: var(--primary-color);
+        }
+
+        .section-container {
+            margin-bottom: 3rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 8px 8px 0 0;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .section-header:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .toggle-btn:hover {
+            transform: rotate(90deg);
+        }
+
+        .section-content {
+            padding: 2rem;
+            background-color: var(--card-bg);
+            border-radius: 0 0 8px 8px;
+            box-shadow: var(--shadow);
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .quote {
+            font-style: italic;
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            color: var(--primary-color);
+        }
+
+        .highlight {
+            background-color: rgba(91, 192, 190, 0.2);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+        }
+
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .work-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .work-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .work-card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 2rem auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: var(--secondary-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 3px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -12px;
+            background-color: var(--card-bg);
+            border: 4px solid var(--primary-color);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        .right::after {
+            left: -12px;
+        }
+
+        .timeline-content {
+            padding: 20px 30px;
+            background-color: var(--card-bg);
+            position: relative;
+            border-radius: 6px;
+            box-shadow: var(--shadow);
+        }
+
+        .timeline-year {
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 2rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .back-to-top {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: var(--transition);
+            margin-top: 1rem;
+            box-shadow: var(--shadow);
+        }
+
+        .back-to-top:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        @media screen and (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item::after {
+                left: 18px;
+            }
+
+            .left::after, .right::after {
+                left: 18px;
+            }
+
+            .right {
+                left: 0%;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sofocle</h1>
+            <div class="subtitle">Il poeta che plasmò l'essenza della tragedia greca</div>
+            
+            <div class="reading-modes">
+                <button class="mode-btn active" data-mode="default">Classico</button>
+                <button class="mode-btn" data-mode="notturno">Notturno</button>
+                <button class="mode-btn" data-mode="filosofico">Filosofico</button>
+                <button class="mode-btn" data-mode="contemplativo">Contemplativo</button>
+            </div>
+            
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Sophocles_Altemps_Inv86.jpg/320px-Sophocles_Altemps_Inv86.jpg" alt="Busto di Sofocle" style="max-width: 200px; border-radius: 50%; border: 5px solid var(--secondary-color); margin-bottom: 2rem;">
+        </header>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('intro')">
+                <h2>Introduzione</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="intro">
+                <p>Sofocle (497/496 a.C. - 406/405 a.C.) è stato uno dei tre grandi tragici dell'antica Grecia, insieme a Eschilo ed Euripide. Nato a Colono, un sobborgo di Atene, Sofocle rappresenta il <span class="highlight">culmine della tragedia greca classica</span>, perfezionando la forma artistica e introducendo innovazioni che avrebbero influenzato il teatro occidentale per millenni.</p>
+                
+                <div class="quote">
+                    "Molte sono le cose meravigliose, ma nulla è più meraviglioso dell'uomo."<br>
+                    — Sofocle, Antigone
+                </div>
+                
+                <p>La sua opera incarna perfettamente l'ideale greco della <span class="highlight">sofrosyne</span> (moderazione, equilibrio), combinando potenza emotiva con rigore formale. Dei suoi 123 drammi, ci sono pervenuti solo 7 tragedie complete, ma queste bastano a garantirgli un posto eterno nel pantheon della letteratura mondiale.</p>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('vita')">
+                <h2>Vita e Contesto Storico</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="vita">
+                <div class="timeline">
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <div class="timeline-year">496 a.C.</div>
+                            <p>Nascita di Sofocle a Colono, un demo dell'Attica, figlio di Sofillo, un ricco fabbricante di armi. Cresce durante il periodo delle Guerre Persiane, che avrebbero plasmato l'identità ateniese.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <div class="timeline-year">468 a.C.</div>
+                            <p>A soli 28 anni, vince il suo primo agone tragico alle Grandi Dionisie, battendo il già affermato Eschilo. Questo segna l'inizio di una carriera straordinaria che avrebbe visto Sofocle vincere 24 volte (su 30 partecipazioni).</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <div class="timeline-year">443-442 a.C.</div>
+                            <p>Ricopre la carica di <span class="highlight">ellenotamias</span> (tesoriere della lega delio-attica), dimostrando il suo impegno nella vita politica ateniese durante l'età d'oro di Pericle.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <div class="timeline-year">441 a.C.</div>
+                            <p>Probabile data di rappresentazione dell'<span class="highlight">Antigone</span>, una delle sue opere più celebri, che esplora il conflitto tra legge divina e legge umana.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <div class="timeline-year">431-405 a.C.</div>
+                            <p>Guerra del Peloponneso. Sofocle vive il declino di Atene, che si rifletterà nelle sue opere tarde come <span class="highlight">Edipo a Colono</span>, rappresentata postuma nel 401 a.C.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <div class="timeline-year">406 a.C.</div>
+                            <p>Morte di Sofocle all'età di 90 anni. La leggenda narra che sia morto soffocato da un acino d'uva mentre recitava un passaggio dell'<span class="highlight">Antigone</span>.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <p>Sofocle fu non solo un drammaturgo, ma anche un attivo cittadino ateniese: ricoprì cariche pubbliche, fu sacerdote del dio Asclepio e guidò il coro che celebrava la vittoria di Salamina. La sua lunga vita gli permise di assistere all'apogeo e al declino di Atene, esperienza che profondamente influenzò la sua visione tragica.</p>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('opere')">
+                <h2>Opere Principali</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="opere">
+                <p>Delle oltre 120 opere che Sofocle compose, solo sette tragedie ci sono pervenute integralmente. Eppure, queste bastano a rivelare la profondità del suo genio:</p>
+                
+                <div class="works-grid">
+                    <div class="work-card">
+                        <h3>Antigone (441 a.C.)</h3>
+                        <p>Il conflitto tra le leggi divine e quelle umane si incarna nello scontro tra Antigone, che vuole seppellire il fratello Polinice, e Creonte, re di Tebe che lo ha proibito. Un'opera fondamentale sul <span class="highlight">dovere morale</span> e i limiti del potere.</p>
+                    </div>
+                    <div class="work-card">
+                        <h3>Edipo Re (430-425 a.C.)</h3>
+                        <p>Considerato da Aristotele il modello perfetto di tragedia, racconta la scoperta da parte di Edipo di aver ucciso il padre e sposato la madre. Un capolavoro di <span class="highlight">ironia tragica</span> e indagine sulla conoscenza umana.</p>
+                    </div>
+                    <div class="work-card">
+                        <h3>Edipo a Colono (406 a.C.)</h3>
+                        <p>Rappresentato postumo, mostra il vecchio Edipo, cieco ed esule, che trova redenzione nel bosco sacro delle Eumenidi a Colono. Un'opera profondamente <span class="highlight">contemplativa</span> sulla morte e la purificazione.</p>
+                    </div>
+                    <div class="work-card">
+                        <h3>Elettra (410 a.C. circa)</h3>
+                        <p>La vendetta di Elettra e Oreste per l'uccisione del padre Agamennone. Sofocle concentra l'attenzione sulla <span class="highlight">sofferenza psicologica</span> di Elettra, creando un ritratto femminile di straordinaria complessità.</p>
+                    </div>
+                    <div class="work-card">
+                        <h3>Aiace (450-440 a.C.)</h3>
+                        <p>La tragedia dell'eroe omerico che, umiliato per non aver ricevuto le armi di Achille, cade in una follia omicida e poi si suicida. Un'esplorazione della <span class="highlight">dignità umana</span> di fronte all'ingiustizia.</p>
+                    </div>
+                    <div class="work-card">
+                        <h3>Le Trachinie (430-420 a.C.)</h3>
+                        <p>La tragica storia di Deianira e Eracle, un dramma di <span class="highlight">amore e gelosia</span> con un'insolita struttura bipartita che mostra l'influenza di Euripide.</p>
+                    </div>
+                    <div class="work-card">
+                        <h3>Filottete (409 a.C.)</h3>
+                        <p>L'ultima opera conservata, tratta dell'eroe abbandonato sull'isola di Lemno e del dilemma morale di Neottolemo. Un'opera sulla <span class="highlight">natura della persuasione</span> e il conflitto tra interesse personale e bene comune.</p>
+                    </div>
+                </div>
+                
+                <div class="quote">
+                    "Non è cosa saggia lasciar fermentare la collera del cuore; a chi molto ama, molto è concesso."<br>
+                    — Sofocle, Filottete
+                </div>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('innovazioni')">
+                <h2>Innovazioni Teatrali</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="innovazioni">
+                <p>Sofocle rivoluzionò il teatro greco introducendo importanti innovazioni tecniche e strutturali:</p>
+                
+                <h3>Il Terzo Attore</h3>
+                <p>Mentre Eschilo aveva introdotto il secondo attore, Sofocle aggiunse il <span class="highlight">terzo attore</span>, permettendo interazioni più complesse e una maggiore profondità psicologica nei personaggi. Questo cambiamento trasformò il dramma da un dialogo prevalentemente tra coro e attore a una vera e propria <span class="highlight">azione scenica</span>.</p>
+                
+                <h3>Scenografia e Tecnica</h3>
+                <p>Sofocle introdusse:</p>
+                <ul>
+                    <li>La <span class="highlight">skenographia</span> (pittura scenica), antenata delle moderne scenografie</li>
+                    <li>L'uso più sofisticato dello <span class="highlight">spazio teatrale</span></li>
+                    <li>Innovazioni nel <span class="highlight">costume teatrale</span>, rendendolo più espressivo</li>
+                </ul>
+                
+                <h3>Struttura Drammatica</h3>
+                <p>Perfettamente bilanciata tra:</p>
+                <ul>
+                    <li><span class="highlight">Prologo</span>: introduzione alla situazione</li>
+                    <li><span class="highlight">Parodo</span>: ingresso del coro</li>
+                    <li><span class="highlight">Episodi</span>: scene principali</li>
+                    <li><span class="highlight">Stasimi</span>: canti del coro tra gli episodi</li>
+                    <li><span class="highlight">Esodo</span>: conclusione</li>
+                </ul>
+                
+                <div class="quote">
+                    "Il successo è dolce, anche se a caro prezzo, per chi non ne ha più desiderio."<br>
+                    — Sofocle, Aiace
+                </div>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('temi')">
+                <h2>Temi Filosofici</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="temi">
+                <p>Le tragedie di Sofocle esplorano alcuni dei più profondi interrogativi dell'esistenza umana:</p>
+                
+                <h3>Il Conflitto tra Legge Divina e Umana</h3>
+                <p>Nell'<span class="highlight">Antigone</span>, il contrasto tra le leggi non scritte degli dei e le leggi dello stato rappresenta uno dei primi esempi di <span class="highlight">disobbedienza civile</span> nella letteratura occidentale.</p>
+                
+                <h3>La Natura della Conoscenza</h3>
+                <p>L'<span class="highlight">Edipo Re</span> è una metafora della ricerca della verità e dei limiti della conoscenza umana. Edipo, che crede di sapere, scopre di non conoscere la verità fondamentale sulla propria identità.</p>
+                
+                <h3>Il Libero Arbitrio e il Fato</h3>
+                <p>Sofocle esplora il paradosso dell'<span class="highlight">azione umana</span> in un universo dove il destino sembra predeterminato. I suoi personaggi sono pienamente responsabili delle loro scelte, anche quando agiscono in ignoranza.</p>
+                
+                <h3>La Sofferenza e la Redenzione</h3>
+                <p>Nell'<span class="highlight">Edipo a Colono</span>, il protagonista, dopo una vita di sofferenze, trova una forma di <span class="highlight">purificazione</span> e trascendenza, suggerendo che la sofferenza possa avere un valore catartico.</p>
+                
+                <div class="quote">
+                    "È meglio non nascere affatto; ma, nato, tornare al più presto là donde si venne."<br>
+                    — Sofocle, Edipo a Colono (citato da Nietzsche ne "La nascita della tragedia")
+                </div>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('eredita')">
+                <h2>Eredità Culturale</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="eredita">
+                <p>L'influenza di Sofocle si estende ben oltre il mondo antico:</p>
+                
+                <h3>Nel Teatro Moderno</h3>
+                <p>Drammaturghi come <span class="highlight">Jean Anouilh</span> (Antigone, 1944), <span class="highlight">Bertolt Brecht</span> e <span class="highlight">Tennessee Williams</span> hanno attinto alla sua opera. La struttura della tragedia sofoclea rimane un modello per il dramma contemporaneo.</p>
+                
+                <h3>In Filosofia</h3>
+                <p><span class="highlight">Hegel</span> vide nell'Antigone il perfetto esempio di conflitto tra due forze ugualmente legittime. <span class="highlight">Freud</span> prese a prestito il mito di Edipo per la sua teoria psicoanalitica.</p>
+                
+                <h3>Nella Letteratura</h3>
+                <p>Autori come <span class="highlight">George Eliot</span>, <span class="highlight">Virginia Woolf</span> e <span class="highlight">James Joyce</span> hanno attinto ai temi sofoclei. Il <span class="highlight">mito di Edipo</span> è diventato un archetipo letterario universale.</p>
+                
+                <h3>Nel Cinema</h3>
+                <p>Pellicole come <span class="highlight">"Edipo Re"</span> di Pasolini (1967) e <span class="highlight">"Antigone"</span> di Sophie Deraspe (2019) dimostrano l'attualità delle sue storie.</p>
+                
+                <div class="quote">
+                    "Sofocle è il poeta della perfetta umanità... la sua arte è l'apice della civiltà greca."<br>
+                    — Friedrich Schlegel
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2023 Esplorazione della Tragedia Greca | Creato con passione per la letteratura classica</p>
+            <a href="#" class="back-to-top">Torna all'inizio</a>
+        </footer>
+    </div>
+
+    <script>
+        // Toggle sections
+        function toggleSection(sectionId) {
+            const content = document.getElementById(sectionId);
+            const btn = content.previousElementSibling.querySelector('.toggle-btn');
+            
+            content.classList.toggle('active');
+            btn.textContent = content.classList.contains('active') ? '−' : '+';
+        }
+
+        // Reading modes
+        const modeButtons = document.querySelectorAll('.mode-btn');
+        modeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                modeButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Change reading mode
+                const mode = button.dataset.mode;
+                document.body.className = mode !== 'default' ? mode : '';
+            });
+        });
+
+        // Smooth scroll to top
+        document.querySelector('.back-to-top').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Open first section by default
+        document.addEventListener('DOMContentLoaded', () => {
+            const firstSection = document.querySelector('.section-content');
+            const firstBtn = firstSection.previousElementSibling.querySelector('.toggle-btn');
+            
+            firstSection.classList.add('active');
+            firstBtn.textContent = '−';
+        });
+    </script>
+</body>
+</html>

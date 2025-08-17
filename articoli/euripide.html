@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Euripide: Il Rivoluzionario della Tragedia Greca</title>
+    <style>
+        :root {
+            --primary-color: #6a4c93;
+            --secondary-color: #8a5a44;
+            --accent-color: #f18f01;
+            --text-color: #2d3047;
+            --bg-color: #fafafa;
+            --card-bg: #ffffff;
+            --shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --border-radius: 12px;
+        }
+
+        /* Modalità di lettura */
+        .notturno {
+            --primary-color: #5e548e;
+            --secondary-color: #9f86c0;
+            --accent-color: #ff9e00;
+            --text-color: #e0e1dd;
+            --bg-color: #1b263b;
+            --card-bg: #2a3a5e;
+            --shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .filosofico {
+            --primary-color: #5c6bc0;
+            --secondary-color: #3949ab;
+            --accent-color: #ff7043;
+            --text-color: #1a237e;
+            --bg-color: #e8eaf6;
+            --card-bg: #c5cae9;
+        }
+
+        .contemplativo {
+            --primary-color: #2e7d32;
+            --secondary-color: #5e8c5e;
+            --accent-color: #ffb300;
+            --text-color: #1b5e20;
+            --bg-color: #e8f5e9;
+            --card-bg: #c8e6c9;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            letter-spacing: -1.5px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+            font-style: italic;
+            margin-bottom: 2.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .subtitle::after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+            bottom: -10px;
+            left: 20%;
+            border-radius: 3px;
+        }
+
+        .reading-modes {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            font-size: 1rem;
+        }
+
+        .mode-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            opacity: 0;
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .mode-btn:hover::before {
+            opacity: 1;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .mode-btn.active {
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            box-shadow: 0 0 0 3px rgba(241, 143, 1, 0.3);
+        }
+
+        .mode-btn.active::before {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+        }
+
+        .section-container {
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .section-container::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+            border-radius: 3px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .section-container:hover::before {
+            opacity: 1;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .section-header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .section-header:hover::after {
+            opacity: 1;
+        }
+
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.8rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            z-index: 1;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .toggle-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            padding: 2.5rem;
+            background-color: var(--card-bg);
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            box-shadow: var(--shadow);
+            display: none;
+            animation: fadeIn 0.6s ease-out;
+            border-top: 3px solid var(--accent-color);
+            margin-top: -5px;
+        }
+
+        .section-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .quote {
+            font-style: italic;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 2rem;
+            margin: 2.5rem 0;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            position: relative;
+        }
+
+        .quote::before {
+            content: '"';
+            position: absolute;
+            font-size: 4rem;
+            color: var(--accent-color);
+            opacity: 0.2;
+            top: -1.5rem;
+            left: 0.5rem;
+            font-family: serif;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(241, 143, 1, 0.2), rgba(241, 143, 1, 0));
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            background-position: 0 100%;
+            background-repeat: no-repeat;
+            background-size: 100% 0.2rem;
+            transition: background-size 0.3s ease;
+        }
+
+        .highlight:hover {
+            background-size: 100% 100%;
+        }
+
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2.5rem;
+        }
+
+        .work-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .work-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+            transition: var(--transition);
+        }
+
+        .work-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .work-card:hover::before {
+            width: 8px;
+        }
+
+        .work-card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px dashed var(--accent-color);
+            font-size: 1.5rem;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 3rem auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 3px;
+        }
+
+        .timeline-item {
+            padding: 15px 50px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            right: -15px;
+            background-color: var(--card-bg);
+            border: 5px solid var(--accent-color);
+            top: 20px;
+            border-radius: 50%;
+            z-index: 1;
+            box-shadow: 0 0 0 4px var(--bg-color);
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        .right::after {
+            left: -15px;
+        }
+
+        .timeline-content {
+            padding: 25px;
+            background-color: var(--card-bg);
+            position: relative;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .timeline-content:hover {
+            transform: scale(1.02);
+        }
+
+        .timeline-year {
+            font-weight: bold;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background-color: rgba(241, 143, 1, 0.1);
+            border-radius: 20px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 5rem;
+            padding: 3rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        footer::before {
+            content: 'Εὐριπίδης';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 10rem;
+            color: rgba(106, 76, 147, 0.03);
+            z-index: 0;
+            font-weight: bold;
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .back-to-top {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: var(--transition);
+            margin-top: 1.5rem;
+            box-shadow: var(--shadow);
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .back-to-top::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .back-to-top:hover::before {
+            opacity: 1;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-to-top span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .back-to-top i {
+            font-style: normal;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Nuovi bottoni speciali */
+        .special-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .special-btn {
+            position: relative;
+            padding: 1rem 2rem;
+            border: none;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            min-width: 200px;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .special-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            opacity: 0;
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .special-btn:hover::before {
+            opacity: 1;
+        }
+
+        .special-btn:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .special-btn .icon {
+            display: block;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .special-btn:hover .icon {
+            transform: scale(1.2);
+        }
+
+        /* Effetto onda */
+        .wave-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wave-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .wave-btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+
+        /* Bottone a scomparsa */
+        .slide-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide-btn span {
+            display: inline-block;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .slide-btn:hover span {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+
+        .slide-btn::after {
+            content: attr(data-hover);
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            transition: var(--transition);
+            opacity: 0;
+            padding: inherit;
+        }
+
+        .slide-btn:hover::after {
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 1;
+        }
+
+        /* Bottone con bordo animato */
+        .border-btn {
+            background: transparent !important;
+            color: var(--primary-color) !important;
+            border: 2px solid var(--primary-color);
+            box-shadow: none !important;
+        }
+
+        .border-btn::before {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
+        }
+
+        .border-btn:hover {
+            color: white !important;
+        }
+
+        .border-btn::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border: 2px solid transparent;
+            border-radius: var(--border-radius);
+            animation: borderAnimation 3s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes borderAnimation {
+            0% {
+                border-color: var(--primary-color);
+                clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%);
+            }
+            25% {
+                border-color: var(--primary-color);
+                clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 0% 100%);
+            }
+            50% {
+                border-color: var(--accent-color);
+                clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+            }
+            75% {
+                border-color: var(--accent-color);
+                clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 0% 100%);
+            }
+            100% {
+                border-color: var(--primary-color);
+                clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 100%);
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+
+            .subtitle {
+                font-size: 1.4rem;
+            }
+
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item::after {
+                left: 18px;
+            }
+
+            .left::after, .right::after {
+                left: 18px;
+            }
+
+            .right {
+                left: 0%;
+            }
+
+            .works-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Euripide</h1>
+            <div class="subtitle">Il drammaturgo che sfidò le convenzioni dell'antica Grecia</div>
+            
+            <div class="reading-modes">
+                <button class="mode-btn active" data-mode="default">Classico</button>
+                <button class="mode-btn" data-mode="notturno">Notturno</button>
+                <button class="mode-btn" data-mode="filosofico">Filosofico</button>
+                <button class="mode-btn" data-mode="contemplativo">Contemplativo</button>
+            </div>
+            
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Euripides_Pio-Clementino_Inv302.jpg/320px-Euripides_Pio-Clementino_Inv302.jpg" alt="Busto di Euripide" style="max-width: 200px; border-radius: 50%; border: 5px solid var(--accent-color); margin-bottom: 2rem; box-shadow: var(--shadow);">
+        </header>
+
+        <div class="special-buttons">
+            <button class="special-btn wave-btn">
+                <span class="icon">✍️</span>
+                <span>Scopri lo Stile</span>
+            </button>
+            <button class="special-btn slide-btn" data-hover="Esplora Ora">
+                <span>Opere Principali</span>
+            </button>
+            <button class="special-btn border-btn">
+                <span class="icon">💡</span>
+                <span>Innovazioni</span>
+            </button>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('intro')">
+                <h2>Introduzione al Genio Ribelle</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="intro">
+                <p>Euripide (480 a.C. - 406 a.C.), il più giovane dei tre grandi tragici ateniesi, fu un <span class="highlight">innovatore radicale</span> che trasformò la tragedia greca portando sulla scena le passioni umane nella loro forma più cruda e realistica. Nato a Salamina nel giorno stesso della famosa battaglia, la sua opera riflette un <span class="highlight">scetticismo razionalista</span> che lo rese controverso ai suoi tempi ma immensamente influente nei secoli successivi.</p>
+                
+                <div class="quote">
+                    "Chi sa se vivere non sia morire e morire non sia vivere?"<br>
+                    — Euripide, Frammento 638
+                </div>
+                
+                <p>Mentre Sofocle mostrava come gli uomini dovrebbero essere, Euripide <span class="highlight">svelò come realmente sono</span>: contraddittori, passionali, spesso irrazionali. Dei suoi circa 92 drammi, ci sono pervenuti 18 tragedie complete e un dramma satiresco, il <span class="highlight">Ciclope</span>, un corpus che lo rivela come il più moderno degli antichi.</p>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('vita')">
+                <h2>Vita e Contesto Storico</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="vita">
+                <div class="timeline">
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <div class="timeline-year">480 a.C.</div>
+                            <p>Nascita di Euripide a Salamina, figlio di Mnesarco, in una famiglia benestante. La tradizione vuole che sia nato proprio nel giorno della <span class="highlight">battaglia di Salamina</span>, evento cruciale per la Grecia.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <div class="timeline-year">455 a.C.</div>
+                            <p>Prima partecipazione alle Grandi Dionisie con <span class="highlight">Le Pelìadi</span>, opera perduta. Inizia una carriera che lo vedrà vincere solo 5 volte (contro le 24 di Sofocle), segno della sua ricezione controversa.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <div class="timeline-year">441 a.C.</div>
+                            <p>Prima vittoria alle Dionisie. In questo periodo frequenta i circoli intellettuali ateniesi, entrando in contatto con i <span class="highlight">sofisti</span> come Protagora e Anassagora.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <div class="timeline-year">431 a.C.</div>
+                            <p>Rappresentazione di <span class="highlight">Medea</span>, capolavoro che scandalizzò Atene per la sua rappresentazione senza veli di passione femminile e infanticidio.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <div class="timeline-year">415 a.C.</div>
+                            <p><span class="highlight">Le Troiane</span>, straziante denuncia degli orrori della guerra, rappresentata durante la disastrosa spedizione ateniese in Sicilia.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <div class="timeline-year">408 a.C.</div>
+                            <p>Euripide, deluso da Atene, si trasferisce alla corte di <span class="highlight">Archelao di Macedonia</span>, dove scrive alcune delle sue opere più innovative.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <div class="timeline-year">406 a.C.</div>
+                            <p>Morte di Euripide in Macedonia. Secondo la leggenda, fu sbranato dai cani del re. Atene gli tributerà poi onori postumi riconoscendone il genio.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <p>Euripide visse durante il <span class="highlight">declino di Atene</span>, assistendo alla guerra del Peloponneso e alla crisi dei valori tradizionali. Questo contesto storico spiega il suo <span class="highlight">relativismo morale</span> e la sua attenzione per gli emarginati (donne, stranieri, schiavi). A differenza di Eschilo e Sofocle, fu più filosofo che uomo d'azione, un intellettuale che preferiva la solitudine dello studio alla vita pubblica.</p>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('opere')">
+                <h2>Opere Principali</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="opere">
+                <p>Le opere di Euripide che ci sono pervenute rappresentano solo una parte della sua produzione ma bastano a rivelarne la genialità:</p>
+                
+                <div class="works-grid">
+                    <div class="work-card">
+                        <h3>Medea (431 a.C.)</h3>
+                        <p>La tragica storia della principessa barbara che, tradita dal marito Giasone, si vendica uccidendo i propri figli. Un ritratto sconvolgente di <span class="highlight">passione femminile</span> e alienazione che sfida ogni convenzione.</p>
+                    </div>
+                    <div class="work-card">
+                        <h3>Le Baccanti (405 a.C.)</h3>
+                        <p>Opera postuma, esplora il conflitto tra razionalità (Penteo) e istinto dionisiaco. Capolavoro di <span class="highlight">tensione drammatica</span> con un messaggio ambiguo sul potere delle emozioni.</p>
+                    </div>
+                    <div class="work-card">
+                        <h3>Le Troiane (415 a.C.)</h3>
+                        <p>Quadro desolante delle donne troiane ridotte in schiavitù dopo la guerra. Potente <span class="highlight">denuncia antimilitarista</span> che risuona ancora oggi.</p>
+                    </div>
+                    <div class="work-card">
+                        <h3>Ifigenia in Aulide (405 a.C.)</h3>
+                        <p>Il sacrificio di Ifigenia per permettere la partenza della flotta greca. Euripide esplora il <span class="highlight">conflitto tra dovere e affetti</span> con rara profondità psicologica.</p>
+                    </div>
+                    <div class="work-card">
+                        <h3>Ippolito (428 a.C.)</h3>
+                        <p>La tragica passione di Fedra per il figliastro Ippolito. Vincitore alle Dionisie, è un'indagine sulla <span class="highlight">natura della castità e del desiderio</span>.</p>
+                    </div>
+                    <div class="work-card">
+                        <h3>Elettra (413 a.C. circa)</h3>
+                        <p>Rivisitazione del mito di Oreste ed Elettra, dove Euripide <span class="highlight">smonta gli ideali eroici</span> mostrando la crudeltà della vendetta.</p>
+                    </div>
+                    <div class="work-card">
+                        <h3>Alcesti (438 a.C.)</h3>
+                        <p>Unica tragedia con finale "felice", tratta della moglie che muore al posto del marito. Esplora temi di <span class="highlight">amore coniugale e sacrificio</span> con toccante sensibilità.</p>
+                    </div>
+                    <div class="work-card">
+                        <h3>Elena (412 a.C.)</h3>
+                        <p>Rivisitazione del mito di Elena, presentata come vittima anziché causa della guerra. Opera che gioca con <span class="highlight">realtà e apparenza</span>, anticipando il teatro moderno.</p>
+                    </div>
+                </div>
+                
+                <div class="quote">
+                    "Terribile è la forza della necessità; non c'è cosa che possa resisterle."<br>
+                    — Euripide, Alcesti
+                </div>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('innovazioni')">
+                <h2>Innovazioni Teatrali</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="innovazioni">
+                <p>Euripide rivoluzionò il teatro greco con audaci innovazioni formali e tematiche:</p>
+                
+                <h3>Uso del Prologo</h3>
+                <p>Euripide perfezionò l'uso del <span class="highlight">prologo esplicativo</span>, spesso affidato a un dio o a un personaggio che anticipa la trama. Questa scelta, criticata da Aristotele, rispondeva all'aumentata complessità delle storie.</p>
+                
+                <h3>Deus ex Machina</h3>
+                <p>Frequente ricorso all'intervento divino per risolvere intrighi complessi (es. <span class="highlight">Medea</span> salvata dal carro del Sole). Tecnica che sarà molto influente nel teatro successivo.</p>
+                
+                <h3>Personaggi Complessi</h3>
+                <p>Euripide creò figure di <span class="highlight">straordinaria profondità psicologica</span>:
+                <ul>
+                    <li>Eroine <span class="highlight">passionali e intellettuali</span> (Medea, Fedra)</li>
+                    <li>Antieroi <span class="highlight">dubitanti e contraddittori</span> (Giasone, Agamennone)</li>
+                    <li>Figure divine <span class="highlight">spietate e capricciose</span> (Dioniso nelle Baccanti)</li>
+                </ul>
+                
+                <h3>Monodie</h3>
+                <p>Sviluppo di arie solistiche (<span class="highlight">monodie</span>) che anticipano l'opera lirica, dando maggiore spazio all'espressione emotiva individuale.</p>
+                
+                <div class="quote">
+                    "La parola è medicina al male dell'uomo saggio."<br>
+                    — Euripide, Frammento 1068
+                </div>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('temi')">
+                <h2>Temi Filosofici</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="temi">
+                <p>Le tragedie di Euripide esplorano con sconvolgente modernità alcuni temi fondamentali:</p>
+                
+                <h3>Critica alla Religione Tradizionale</h3>
+                <p>Euripide mette in discussione gli dei omerici, spesso rappresentandoli come <span class="highlight">crudeli e capricciosi</span> (es. Afrodite nell'Ippolito). La sua visione è vicina al <span class="highlight">naturalismo filosofico</span> dei presocratici.</p>
+                
+                <h3>La Condizione Femminile</h3>
+                <p>Diede voce alle donne come nessuno prima:
+                <ul>
+                    <li><span class="highlight">Medea</span>: l'emarginata che si ribella</li>
+                    <li><span class="highlight">Fedra</span>: la donna travolta da passione proibita</li>
+                    <li><span class="highlight">Ecuba</span>: la madre straziata dal dolore</li>
+                </ul>
+                Le sue eroine sfidano i ruoli di genere tradizionali.</p>
+                
+                <h3>Relativismo Morale</h3>
+                <p>In opere come <span class="highlight">Elena</span> o <span class="highlight">Elettra</span>, Euripide mostra come la <span class="highlight">verità sia sfuggente</span> e le azioni umane spesso determinate da circostanze esterne.</p>
+                
+                <h3>Pessimismo Antropologico</h3>
+                <p>Visione disincantata della natura umana, espressa in celebri <span class="highlight">sentenze</span>:
+                <ul>
+                    <li>"Nessuno è libero: è schiavo del denaro o della sorte"</li>
+                    <li>"Gli dei fanno cadere nella rovina i grandi uomini"</li>
+                </ul>
+                </p>
+                
+                <div class="quote">
+                    "La sorte è cieca e cammina al buio tra gli uomini."<br>
+                    — Euripide, Eracle
+                </div>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('eredita')">
+                <h2>Eredità Culturale</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="eredita">
+                <p>L'influenza di Euripide ha attraversato i secoli:</p>
+                
+                <h3>Nel Teatro Antico e Moderno</h3>
+                <p>Fu il tragico più rappresentato in epoca ellenistica e romana. La sua influenza si ritrova in:
+                <ul>
+                    <li><span class="highlight">Seneca</span>, che ne riprende i temi nelle sue tragedie</li>
+                    <li><span class="highlight">Shakespeare</span>, soprattutto per i personaggi femminili complessi</li>
+                    <li><span class="highlight">Racine</span>, che adattò Fedra e Andromaca</li>
+                    <li><span class="highlight">Pirandello</span>, per l'indagine sulla relatività della verità</li>
+                </ul>
+                </p>
+                
+                <h3>In Filosofia</h3>
+                <p>Fu ammirato da:
+                <ul>
+                    <li><span class="highlight">Nietzsche</span>, che ne "La nascita della tragedia" lo vede come espressione dello "spirito socratico"</li>
+                    <li><span class="highlight">Freud</span>, che trovò in figure come Medea e Fedra archetipi psicoanalitici</li>
+                </ul>
+                </p>
+                
+                <h3>Nella Cultura Popolare</h3>
+                <p>Adattamenti moderni includono:
+                <ul>
+                    <li>Film come <span class="highlight">"Medea"</span> di Pasolini (1969)</li>
+                    <li>Opere liriche come <span class="highlight">"Medea"</span> di Cherubini</li>
+                    <li>Riscritture femministe come quelle di Christa Wolf</li>
+                </ul>
+                </p>
+                
+                <div class="quote">
+                    "Euripide è il più tragico dei poeti."<br>
+                    — Aristotele, Poetica (paradossalmente, dopo averlo criticato)
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer-content">
+                <p>© 2023 Viaggio nel Teatro Antico | Creato con amore per la classicità</p>
+                <a href="#" class="back-to-top">
+                    <span>Torna all'inizio</span>
+                    <i>↑</i>
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Toggle sections
+        function toggleSection(sectionId) {
+            const content = document.getElementById(sectionId);
+            const btn = content.previousElementSibling.querySelector('.toggle-btn');
+            
+            content.classList.toggle('active');
+            btn.textContent = content.classList.contains('active') ? '−' : '+';
+        }
+
+        // Reading modes
+        const modeButtons = document.querySelectorAll('.mode-btn');
+        modeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                modeButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Change reading mode
+                const mode = button.dataset.mode;
+                document.body.className = mode !== 'default' ? mode : '';
+            });
+        });
+
+        // Smooth scroll to top
+        document.querySelector('.back-to-top').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Open first section by default
+        document.addEventListener('DOMContentLoaded', () => {
+            const firstSection = document.querySelector('.section-content');
+            const firstBtn = firstSection.previousElementSibling.querySelector('.toggle-btn');
+            
+            firstSection.classList.add('active');
+            firstBtn.textContent = '−';
+        });
+
+        // Special buttons effects
+        const waveButtons = document.querySelectorAll('.wave-btn');
+        waveButtons.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                // Remove any existing ripple
+                const ripple = this.querySelector('.ripple');
+                if (ripple) ripple.remove();
+                
+                // Get mouse position
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Create ripple
+                const rippleEl = document.createElement('span');
+                rippleEl.classList.add('ripple');
+                rippleEl.style.left = `${x}px`;
+                rippleEl.style.top = `${y}px`;
+                this.appendChild(rippleEl);
+                
+                // Remove after animation
+                setTimeout(() => {
+                    rippleEl.remove();
+                }, 1000);
+            });
+        });
+    </script>
+</body>
+</html>

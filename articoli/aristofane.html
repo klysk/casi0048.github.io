@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aristofane: Il Satirico che Ride della Città</title>
+    <style>
+        :root {
+            --primary: #8e44ad;
+            --secondary: #6c3483;
+            --accent: #e74c3c;
+            --text: #2c3e50;
+            --bg: #f5eef8;
+            --card-bg: #ffffff;
+            --shadow: 0 6px 18px rgba(0,0,0,0.1);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+        }
+
+        body {
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            line-height: 1.8;
+            color: var(--text);
+            background-color: var(--bg);
+            margin: 0;
+            padding: 0;
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 4rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            color: var(--primary);
+            font-style: italic;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+
+        .theme-selector {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .theme-btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            opacity: 0.85;
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .theme-btn:hover {
+            opacity: 1;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .notturno {
+            --primary: #9b59b6;
+            --secondary: #8e44ad;
+            --accent: #e74c3c;
+            --text: #ecf0f1;
+            --bg: #1a1a2e;
+            --card-bg: #16213e;
+            --shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .filosofico {
+            --primary: #5d4037;
+            --secondary: #3e2723;
+            --accent: #d84315;
+            --text: #3e2723;
+            --bg: #efebe9;
+            --card-bg: #d7ccc8;
+            --shadow: 0 6px 20px rgba(61, 47, 35, 0.15);
+        }
+
+        .contemplativo {
+            --primary: #2c3e50;
+            --secondary: #1a252f;
+            --accent: #3498db;
+            --text: #34495e;
+            --bg: #eaf2f8;
+            --card-bg: #d4e6f1;
+            --shadow: 0 6px 20px rgba(52, 73, 94, 0.1);
+        }
+
+        .section {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-left: 5px solid var(--accent);
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            font-size: 2.4rem;
+            color: var(--secondary);
+            margin: 0;
+            font-weight: 600;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 3px;
+        }
+
+        .toggle-btn {
+            position: relative;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition);
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 4px 15px rgba(142, 68, 173, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .toggle-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            opacity: 0;
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .toggle-btn:hover::before {
+            opacity: 1;
+        }
+
+        .toggle-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(142, 68, 173, 0.4);
+        }
+
+        .toggle-btn i {
+            transition: var(--transition);
+        }
+
+        .section-content {
+            display: none;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .quote {
+            font-style: italic;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-left: 4px solid var(--accent);
+            background: rgba(231, 76, 60, 0.08);
+            border-radius: 0 12px 12px 0;
+            position: relative;
+            font-size: 1.1rem;
+        }
+
+        .quote::before {
+            content: '"';
+            position: absolute;
+            top: 0;
+            left: 10px;
+            font-size: 4rem;
+            color: rgba(231, 76, 60, 0.15);
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .highlight {
+            background: rgba(231, 76, 60, 0.15);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .image-container {
+            margin: 3rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .image-container:hover img {
+            transform: scale(1.02);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .caption {
+            font-size: 1rem;
+            color: var(--primary);
+            margin-top: 1rem;
+            font-style: italic;
+            opacity: 0.8;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 3rem auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 3px;
+            background: var(--accent);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1.5px;
+            opacity: 0.7;
+        }
+
+        .timeline-item {
+            padding: 15px 50px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: var(--card-bg);
+            border: 5px solid var(--accent);
+            border-radius: 50%;
+            top: 20px;
+            z-index: 1;
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        .left::after {
+            right: -17px;
+        }
+
+        .right::after {
+            left: -17px;
+        }
+
+        .timeline-content {
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            top: 20px;
+            border-style: solid;
+        }
+
+        .left .timeline-content::before {
+            right: -15px;
+            border-width: 10px 0 10px 15px;
+            border-color: transparent transparent transparent var(--card-bg);
+        }
+
+        .right .timeline-content::before {
+            left: -15px;
+            border-width: 10px 15px 10px 0;
+            border-color: transparent var(--card-bg) transparent transparent;
+        }
+
+        .timeline-date {
+            font-weight: bold;
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .work-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-top: 3px solid var(--accent);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .work-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .work-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .work-title {
+            font-size: 1.4rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .work-desc {
+            font-size: 1.05rem;
+            color: var(--text);
+            opacity: 0.9;
+            line-height: 1.7;
+        }
+
+        .character-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .character-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            flex: 1 1 300px;
+            transition: var(--transition);
+            border-bottom: 3px solid var(--accent);
+        }
+
+        .character-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .character-name {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 5rem;
+            padding: 3rem;
+            color: var(--primary);
+            font-size: 1rem;
+            border-top: 1px solid rgba(142, 68, 173, 0.2);
+        }
+
+        /* Bottoni speciali */
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 3rem 0;
+            gap: 1.5rem;
+        }
+
+        .special-btn {
+            position: relative;
+            padding: 1.2rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            overflow: hidden;
+            z-index: 1;
+            color: white;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            box-shadow: 0 6px 20px rgba(142, 68, 173, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .special-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            opacity: 0;
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .special-btn:hover::before {
+            opacity: 1;
+        }
+
+        .special-btn:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 12px 30px rgba(142, 68, 173, 0.4);
+        }
+
+        .special-btn:active {
+            transform: translateY(2px);
+        }
+
+        .special-btn i {
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .special-btn:hover i {
+            transform: rotate(360deg);
+        }
+
+        /* Effetti particolari */
+        .morph-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .morph-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255,255,255,0.6);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .morph-btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.6;
+            }
+            100% {
+                transform: scale(30, 30);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .container {
+                padding: 2rem;
+            }
+            
+            h1 {
+                font-size: 3rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .theme-selector {
+                position: static;
+                justify-content: center;
+                margin-bottom: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section {
+                padding: 1.8rem;
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item::after {
+                left: 21px;
+            }
+
+            .left::after, .right::after {
+                left: 21px;
+            }
+
+            .right {
+                left: 0;
+            }
+            
+            .left .timeline-content::before,
+            .right .timeline-content::before {
+                display: none;
+            }
+            
+            .works-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .toggle-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+            
+            .special-btn {
+                padding: 1rem 1.8rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="theme-selector">
+                <button class="theme-btn" onclick="setTheme('default')"><i class="fas fa-sun"></i> Classico</button>
+                <button class="theme-btn" onclick="setTheme('notturno')"><i class="fas fa-moon"></i> Notturno</button>
+                <button class="theme-btn" onclick="setTheme('filosofico')"><i class="fas fa-atom"></i> Filosofico</button>
+                <button class="theme-btn" onclick="setTheme('contemplativo')"><i class="fas fa-mountain"></i> Contemplativo</button>
+            </div>
+            <h1>Aristofane</h1>
+            <p class="subtitle">Il più grande commediografo dell'antica Grecia e maestro della satira politica</p>
+            <div class="image-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Aristophanes_-_Filosof_och_diktare.jpg/800px-Aristophanes_-_Filosof_och_diktare.jpg" alt="Aristofane in un affresco antico">
+                <p class="caption">Rappresentazione di Aristofane in un affresco antico</p>
+            </div>
+        </header>
+
+        <div class="btn-group">
+            <button class="special-btn morph-btn" onclick="toggleAllSections(true)">
+                <i class="fas fa-chevron-down"></i> Espandi Tutto
+            </button>
+            <button class="special-btn morph-btn" onclick="toggleAllSections(false)">
+                <i class="fas fa-chevron-up"></i> Collassa Tutto
+            </button>
+        </div>
+
+        <section class="section">
+            <div class="section-header">
+                <h2>Vita e Contesto Storico</h2>
+                <button class="toggle-btn morph-btn" onclick="toggleSection(this)">
+                    <i class="fas fa-plus"></i> Mostra
+                </button>
+            </div>
+            <div class="section-content">
+                <p>Aristofane (<span class="highlight">450 a.C. circa - 385 a.C.</span>) visse durante il periodo più turbolento della storia ateniese, tra la <span class="highlight">guerra del Peloponneso</span> e la crisi della democrazia. Nacque nel demo di <span class="highlight">Cidateneo</span> e la sua famiglia possedeva terre nell'isola di Egina, fatto che influenzò la sua visione conservatrice.</p>
+                
+                <div class="quote">
+                    "La città è malata e io sono il suo medico, anche se i pazienti detestano i loro dottori quando dicono la verità." - Aristofane, "Gli Acarnesi"
+                </div>
+                
+                <p>La sua carriera coincise con eventi cruciali:</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <div class="timeline-date">445 a.C.</div>
+                            <p>Probabile data di nascita di Aristofane ad Atene, in una famiglia benestante.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <div class="timeline-date">427 a.C.</div>
+                            <p>Debutto teatrale con "I Banchettanti", opera oggi perduta, che ottiene il secondo posto alle Lenee.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <div class="timeline-date">425 a.C.</div>
+                            <p>Trionfo con "Gli Acarnesi", prima commedia conservata, dove attacca la guerra e celebra la pace.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <div class="timeline-date">411 a.C.</div>
+                            <p>Scrive "Lisistrata" e "Le donne alle Tesmoforie", opere che mettono in scena rivolte femminili.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <div class="timeline-date">405 a.C.</div>
+                            <p>Capolavoro "Le Rane", che vince il primo premio alle Lenee e ottiene il raro onore di una seconda rappresentazione.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <div class="timeline-date">388 a.C.</div>
+                            <p>Ultima opera certa, "Pluto", che segna la transizione verso la Commedia di Mezzo.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <div class="timeline-date">385 a.C.</div>
+                            <p>Morte di Aristofane, probabilmente ad Atene.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <p>Vissuto durante la <span class="highlight">guerra del Peloponneso</span> (431-404 a.C.), Aristofane ne criticò aspramente i protagonisti, da Cleone a Pericle, diventando la <span class="highlight">voce satirica</span> della città. Le sue opere riflettono le tensioni tra:</p>
+                <ul>
+                    <li>Vecchia e nuova educazione</li>
+                    <li>Tradizione e innovazione</li>
+                    <li>Pace e guerra</li>
+                    <li>Demagogia e democrazia</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2>Opere Principali</h2>
+                <button class="toggle-btn morph-btn" onclick="toggleSection(this)">
+                    <i class="fas fa-plus"></i> Mostra
+                </button>
+            </div>
+            <div class="section-content">
+                <p>Delle <span class="highlight">40 commedie</span> scritte da Aristofane, ci sono pervenute <span class="highlight">11 opere complete</span>, capolavori assoluti del teatro antico:</p>
+                
+                <div class="works-grid">
+                    <div class="work-card">
+                        <div class="work-title">Gli Acarnesi (425 a.C.)</div>
+                        <div class="work-desc">Un contadino conclude una pace privata con Sparta, sfidando la demagogia bellicista. Prima commedia superstite, attacco diretto alla guerra.</div>
+                    </div>
+                    <div class="work-card">
+                        <div class="work-title">I Cavalieri (424 a.C.)</div>
+                        <div class="work-desc">Satira feroce contro Cleone, il demagogo più potente di Atene. Vince il primo premio alle Lenee.</div>
+                    </div>
+                    <div class="work-card">
+                        <div class="work-title">Le Nuvole (423 a.C.)</div>
+                        <div class="work-desc">Parodia di Socrate e della nuova educazione sofistica. Versione originale fallì, poi rielaborata.</div>
+                    </div>
+                    <div class="work-card">
+                        <div class="work-title">Le Vespe (422 a.C.)</div>
+                        <div class="work-desc">Critica al sistema giudiziario ateniese e alla mania per i processi. Protagonista un vecchio addicted ai tribunali.</div>
+                    </div>
+                    <div class="work-card">
+                        <div class="work-title">La Pace (421 a.C.)</div>
+                        <div class="work-desc">Celebrazione della pace di Nicia. Un contadino vola sull'Olimpo per liberare la dea Pace.</div>
+                    </div>
+                    <div class="work-card">
+                        <div class="work-title">Gli Uccelli (414 a.C.)</div>
+                        <div class="work-desc">Due ateniesi fondano una città tra le nuvole ("Nubicuculia"). Capolavoro di fantasia e satira politica.</div>
+                    </div>
+                    <div class="work-card">
+                        <div class="work-title">Lisistrata (411 a.C.)</div>
+                        <div class="work-desc">Le donne greche fanno sciopero del sesso per costringere gli uomini alla pace. Opera iconica del femminismo antico.</div>
+                    </div>
+                    <div class="work-card">
+                        <div class="work-title">Le Rane (405 a.C.)</div>
+                        <div class="work-desc">Dioniso scende negli Inferi per riportare in vita un poeta tragico. Satira letteraria e politica, vincitrice del primo premio.</div>
+                    </div>
+                </div>
+                
+                <div class="quote">
+                    "Beato chi ha la mente aperta al sapere e non si fa corrompere, chi ama la pace e detesta la guerra, chi non tradisce mai la sua terra." - Aristofane, "Le Rane"
+                </div>
+                
+                <h3>Caratteristiche dello Stile</h3>
+                <p>Aristofane sviluppò un <span class="highlight">linguaggio teatrale unico</span>, mescolando:</p>
+                <ul>
+                    <li><strong>Parabasi</strong>: Monologhi diretti al pubblico che rompono l'illusione scenica</li>
+                    <li><strong>Corripi</strong>: Parti liriche cantate dal coro con complesse strutture metriche</li>
+                    <li><strong>Neologismi</strong>: Creazione di parole nuove con straordinaria inventiva</li>
+                    <li><strong>Doppi sensi</strong>: Giochi di parole e allusioni oscene</li>
+                    <li><strong>Fantasia sfrenata</strong>: Uomini che volano, città tra le nuvole, scioperi del sesso</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2>Personaggi e Satira</h2>
+                <button class="toggle-btn morph-btn" onclick="toggleSection(this)">
+                    <i class="fas fa-plus"></i> Mostra
+                </button>
+            </div>
+            <div class="section-content">
+                <p>La galleria di personaggi aristofaneschi è <span class="highlight">straordinariamente varia</span>, comprendendo:</p>
+                
+                <div class="character-list">
+                    <div class="character-card">
+                        <div class="character-name">Il Contadino Antieroico</div>
+                        <p>Protagonista di molte commedie (Diceopoli ne "Gli Acarnesi", Trigeo ne "La Pace"), rappresenta il cittadino comune che sfida l'ordine costituito con pragmatismo e buon senso.</p>
+                    </div>
+                    <div class="character-card">
+                        <div class="character-name">Il Demagogo</div>
+                        <p>Figura ricorrente (Cleone ne "I Cavalieri"), incarnazione della corruzione politica e della retorica vuota. Spesso rappresentato come schiavo arrogante.</p>
+                    </div>
+                    <div class="character-card">
+                        <div class="character-name">L'Intellettuale Pseudo-sapiente</div>
+                        <p>Parodia di filosofi e sofisti (Socrate ne "Le Nuvole"), ridicolizzati per il loro linguaggio astruso e le teorie bizzarre.</p>
+                    </div>
+                    <div class="character-card">
+                        <div class="character-name">La Donna Rivoluzionaria</div>
+                        <p>Figure come Lisistrata o Prassagora ("Le donne al Parlamento") che sovvertono l'ordine sociale con intelligenza e determinazione.</p>
+                    </div>
+                    <div class="character-card">
+                        <div class="character-name">Il Dio Buffonesco</div>
+                        <p>Divinità come Dioniso ("Le Rane") o Ermes rappresentate in modo irriverente e umanizzato.</p>
+                    </div>
+                    <div class="character-card">
+                        <div class="character-name">L'Animale Parlante</div>
+                        <p>Corpi di uccelli, rane, vespe che commentano con saggezza le follie umane.</p>
+                    </div>
+                </div>
+                
+                <div class="image-container">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Aristophanes_-_Project_Gutenberg_eText_12788.png/800px-Aristophanes_-_Project_Gutenberg_eText_12788.png" alt="Scena da una commedia di Aristofane">
+                    <p class="caption">Rappresentazione ottocentesca di una scena aristofanesca</p>
+                </div>
+                
+                <h3>Temi della Satira</h3>
+                <p>Aristofane colpisce senza pietà tutti gli aspetti della società ateniese:</p>
+                <ul>
+                    <li><strong>Politica</strong>: Demagoghi, guerra, corruzione</li>
+                    <li><strong>Cultura</strong>: Nuova educazione, sofisti, tragedia</li>
+                    <li><strong>Società</strong>: Processomania, burocrazia, moda</li>
+                    <li><strong>Religione</strong>: Credenze tradizionali, oracoli</li>
+                    <li><strong>Sesso</strong>: Rapporto uomo-donna, omosessualità</li>
+                </ul>
+                
+                <div class="quote">
+                    "La commedia conosce la giustizia, ma voi non la ascoltate. Eppure il poeta comico dovrebbe, più del tragico, essere consigliere della città." - Aristofane, "Le Rane"
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2>Influenza e Fortuna</h2>
+                <button class="toggle-btn morph-btn" onclick="toggleSection(this)">
+                    <i class="fas fa-plus"></i> Mostra
+                </button>
+            </div>
+            <div class="section-content">
+                <p>L'impatto di Aristofane sulla cultura occidentale è <span class="highlight">immenso</span>, nonostante la difficoltà di tradurre la sua lingua ricca di giochi di parole:</p>
+                
+                <h3>Ricezione Antica</h3>
+                <p>Già nell'antichità fu considerato <span class="highlight">il maestro della commedia</span>:</p>
+                <ul>
+                    <li>Platone lo cita nel "Simposio" come voce della verità</li>
+                    <li>Gli autori della Commedia Nuova (Menandro) ne semplificarono lo stile</li>
+                    <li>I Romani (Plauto, Terenzio) ne ripresero situazioni e personaggi</li>
+                </ul>
+                
+                <h3>Riscoperta Moderna</h3>
+                <p>Dopo secoli di oblio, rinacque nel <span class="highlight">Rinascimento</span>:</p>
+                <ul>
+                    <li>Erasmo da Rotterdam ne ammirava la satira</li>
+                    <li>Rabelais e Swift imitarono il suo grottesco</li>
+                    <li>Goethe tradusse "Gli Uccelli"</li>
+                    <li>Il teatro elisabettiano (Shakespeare, Ben Jonson) ne riprese lo spirito</li>
+                </ul>
+                
+                <div class="quote">
+                    "Aristofane è il più coraggioso poeta che sia mai esistito. La sua satira colpisce senza paura i potenti, i corrotti, i fanatici." - George Bernard Shaw
+                </div>
+                
+                <h3>Influenza Contemporanea</h3>
+                <p>Nel XX-XXI secolo è diventato un <span class="highlight">simbolo di teatro politico</span>:</p>
+                <ul>
+                    <li>Bertolt Brecht lo considerava un modello di teatro epico</li>
+                    <li>Dario Fo si ispirò alla sua commedia dell'arte</li>
+                    <li>Le sue opere sono state adattate per criticare regimi moderni</li>
+                    <li>"Lysistrata Project" (2003): letture globali contro la guerra in Iraq</li>
+                </ul>
+                
+                <div class="image-container">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Lysistrata_State_Theatre_Kassel_2009.jpg/800px-Lysistrata_State_Theatre_Kassel_2009.jpg" alt="Rappresentazione moderna di Lisistrata">
+                    <p class="caption">Rappresentazione moderna di "Lisistrata" al Teatro Statale di Kassel (2009)</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2>Pensiero e Attualità</h2>
+                <button class="toggle-btn morph-btn" onclick="toggleSection(this)">
+                    <i class="fas fa-plus"></i> Mostra
+                </button>
+            </div>
+            <div class="section-content">
+                <p>Nonostante la maschera del buffone, Aristofane nasconde una <span class="highlight">profonda visione del mondo</span>:</p>
+                
+                <h3>Filosofia Politica</h3>
+                <p>La sua critica alla democrazia ateniese anticipa problemi moderni:</p>
+                <ul>
+                    <li><strong>Demagogia</strong>: Il potere dei "venditori di parole"</li>
+                    <li><strong>Militarismo</strong>: Gli interessi dietro le guerre</li>
+                    <li><strong>Corruzione</strong>: Il sistema clientelare</li>
+                    <li><strong>Populismo</strong>: Le promesse irrealizzabili</li>
+                </ul>
+                
+                <div class="quote">
+                    "I peggiori cittadini sono quelli che, per denaro, lusingano la folla invece di dire ciò che è giusto." - Aristofane, "I Cavalieri"
+                </div>
+                
+                <h3>Etica e Società</h3>
+                <p>I suoi valori emergono attraverso la satira:</p>
+                <ul>
+                    <li><strong>Pace</strong>: Come condizione per la prosperità</li>
+                    <li><strong>Tradizione</strong>: Senza rifiuto del progresso</li>
+                    <li><strong>Equilibrio</strong>: Tra individuo e comunità</li>
+                    <li><strong>Educazione</strong>: Come formazione del carattere</li>
+                </ul>
+                
+                <h3>Attualità</h3>
+                <p>Le sue commedie risuonano sorprendentemente oggi:</p>
+                <ul>
+                    <li>Critica ai "politici di professione"</li>
+                    <li>Scetticismo verso le "fake news" antiche</li>
+                    <li>Femminismo ante litteram</li>
+                    <li>Ecologia ("Gli Uccelli" come critica all'urbanizzazione)</li>
+                    <li>Libertà di espressione contro la censura</li>
+                </ul>
+                
+                <div class="image-container">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Aristophanes_-_Frogs_-_Project_Gutenberg_eText_10028.jpg/800px-Aristophanes_-_Frogs_-_Project_Gutenberg_eText_10028.jpg" alt="Illustrazione de Le Rane">
+                    <p class="caption">Illustrazione ottocentesca de "Le Rane", opera che critica la cultura contemporanea</p>
+                </div>
+                
+                <div class="quote">
+                    "La commedia ha il diritto, anzi il dovere, di dire la verità a chi detiene il potere. Questo è il mio testamento teatrale." - Dario Fo su Aristofane
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2023 Tributo ad Aristofane - Tutti i diritti riservati</p>
+            <p>Fonti: "Aristophanes and his Theatre of the Absurd" di Paul Cartledge, "The Cambridge Companion to Greek Comedy" a cura di M. Revermann</p>
+            <div style="margin-top: 2rem;">
+                <button class="special-btn morph-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                    <i class="fas fa-arrow-up"></i> Torna all'Inizio
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function toggleSection(button) {
+            const section = button.closest('.section');
+            const content = section.querySelector('.section-content');
+            const icon = button.querySelector('i');
+            
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+                button.innerHTML = '<i class="fas fa-plus"></i> Mostra';
+                section.style.borderLeft = '5px solid var(--accent)';
+            } else {
+                content.style.display = 'block';
+                button.innerHTML = '<i class="fas fa-minus"></i> Nascondi';
+                section.style.borderLeft = '5px solid var(--secondary)';
+            }
+        }
+        
+        function toggleAllSections(show) {
+            const buttons = document.querySelectorAll('.toggle-btn');
+            buttons.forEach(button => {
+                const section = button.closest('.section');
+                const content = section.querySelector('.section-content');
+                
+                if (show) {
+                    content.style.display = 'block';
+                    button.innerHTML = '<i class="fas fa-minus"></i> Nascondi';
+                    section.style.borderLeft = '5px solid var(--secondary)';
+                } else {
+                    content.style.display = 'none';
+                    button.innerHTML = '<i class="fas fa-plus"></i> Mostra';
+                    section.style.borderLeft = '5px solid var(--accent)';
+                }
+            });
+        }
+        
+        function setTheme(theme) {
+            document.body.className = theme;
+            localStorage.setItem('themePreference', theme);
+            
+            // Cambia il colore dei bottoni tema
+            const themeBtns = document.querySelectorAll('.theme-btn');
+            themeBtns.forEach(btn => {
+                btn.style.background = theme === 'default' ? 'var(--card-bg)' : 'var(--card-bg)';
+                btn.style.color = theme === 'default' ? 'var(--primary)' : 'var(--primary)';
+            });
+        }
+        
+        // Carica il tema preferito
+        window.onload = function() {
+            const savedTheme = localStorage.getItem('themePreference') || 'default';
+            setTheme(savedTheme);
+            
+            // Aggiungi effetti di ripple ai bottoni
+            const morphBtns = document.querySelectorAll('.morph-btn');
+            morphBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const ripple = document.createElement('span');
+                    ripple.className = 'ripple';
+                    ripple.style.left = `${x}px`;
+                    ripple.style.top = `${y}px`;
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 1000);
+                });
+            });
+        }
+    </script>
+</body>
+</html>

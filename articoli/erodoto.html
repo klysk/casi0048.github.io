@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erodoto: Il Padre della Storia</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+            --card-bg: #fff;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-style: italic;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+
+        .theme-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .theme-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: var(--transition);
+        }
+
+        .theme-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .default {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .notturno {
+            background-color: #1a1a2e;
+            color: #e6e6e6;
+        }
+
+        .filosofico {
+            background-color: #6c5b7b;
+            color: #f8b195;
+        }
+
+        .contemplativo {
+            background-color: #355c7d;
+            color: #f8f3d4;
+        }
+
+        .section-container {
+            margin-bottom: 30px;
+        }
+
+        .section-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            text-align: left;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: var(--border-radius);
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .section-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .section-btn::after {
+            content: '+';
+            font-size: 1.5rem;
+        }
+
+        .section-btn.active::after {
+            content: '-';
+        }
+
+        .section-content {
+            padding: 0;
+            background-color: var(--card-bg);
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            box-shadow: var(--box-shadow);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .section-content.show {
+            padding: 20px;
+            max-height: 5000px;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .section-content h3 {
+            color: var(--primary-color);
+            margin-top: 20px;
+        }
+
+        .quote {
+            font-style: italic;
+            padding: 15px;
+            background-color: rgba(52, 152, 219, 0.1);
+            border-left: 4px solid var(--secondary-color);
+            margin: 20px 0;
+        }
+
+        .timeline {
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .timeline-item {
+            padding-left: 30px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 20px;
+            width: 1px;
+            height: calc(100% - 15px);
+            background-color: var(--secondary-color);
+        }
+
+        .timeline-item:last-child::after {
+            display: none;
+        }
+
+        .timeline-year {
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .gallery-item {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .gallery-caption {
+            padding: 10px;
+            background-color: var(--card-bg);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: var(--border-radius);
+        }
+
+        /* Theme styles */
+        body.notturno-theme {
+            --primary-color: #e6e6e6;
+            --secondary-color: #f05454;
+            --text-color: #e6e6e6;
+            --bg-color: #1a1a2e;
+            --card-bg: #16213e;
+        }
+
+        body.filosofico-theme {
+            --primary-color: #f8b195;
+            --secondary-color: #c06c84;
+            --text-color: #355c7d;
+            --bg-color: #f8f3d4;
+            --card-bg: #f8e8d8;
+        }
+
+        body.contemplativo-theme {
+            --primary-color: #f8f3d4;
+            --secondary-color: #a8e6cf;
+            --text-color: #355c7d;
+            --bg-color: #355c7d;
+            --card-bg: #6c5b7b;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Erodoto di Alicarnasso</h1>
+        <div class="subtitle">Il Padre della Storia e il Primo Grande Narratore dell'Antichità</div>
+        
+        <div class="theme-selector">
+            <button class="theme-btn default" onclick="setTheme('default')">Default</button>
+            <button class="theme-btn notturno" onclick="setTheme('notturno')">Notturno</button>
+            <button class="theme-btn filosofico" onclick="setTheme('filosofico')">Filosofico</button>
+            <button class="theme-btn contemplativo" onclick="setTheme('contemplativo')">Contemplativo</button>
+        </div>
+    </header>
+
+    <div class="section-container">
+        <button class="section-btn">Introduzione a Erodoto</button>
+        <div class="section-content">
+            <p>Erodoto di Alicarnasso (484 a.C. circa - 425 a.C. circa) è universalmente riconosciuto come il "Padre della Storia", titolo che gli fu conferito da Cicerone. Nato nella città greca di Alicarnasso (oggi Bodrum, in Turchia), Erodoto rappresenta una figura di transizione tra il mondo arcaico dei poeti e il nuovo mondo razionale degli storici e filosofi.</p>
+            
+            <p>La sua opera monumentale, <em>Le Storie</em> (in greco antico: Ἱστορίαι, <em>Historíai</em>), rappresenta il primo tentativo sistematico di registrare eventi passati con un approccio che combina ricerca, verifica dei fatti e narrazione avvincente. Erodoto non si limitò a raccontare eventi, ma cercò di comprenderne le cause profonde, interrogandosi sul rapporto tra libertà umana e destino, sul ruolo degli dei negli affari umani e sulla natura del potere.</p>
+            
+            <div class="quote">
+                "Erodoto di Alicarnasso qui presenta i risultati della sua ricerca affinché il tempo non cancelli il ricordo di quanto gli uomini hanno compiuto e perché le grandi e meravigliose imprese, realizzate sia dai Greci che dai Barbari, non restino senza fama."
+                <div style="text-align: right; margin-top: 10px;">- Erodoto, <em>Le Storie</em>, Proemio</div>
+            </div>
+            
+            <p>La grandezza di Erodoto risiede nella sua capacità di fondere il rigore dell'indagine con l'arte della narrazione, creando un'opera che è al tempo stesso storica, etnografica, geografica e letteraria. I suoi viaggi attraverso l'Egitto, la Persia, la Mesopotamia e altre regioni gli permisero di raccogliere una quantità straordinaria di informazioni sui popoli e le culture del mondo antico.</p>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">La Vita di Erodoto</button>
+        <div class="section-content">
+            <p>Le informazioni sulla vita di Erodoto sono scarse e spesso incerte. Nacque intorno al 484 a.C. ad Alicarnasso, una città greca della Caria (Asia Minore) allora sotto il dominio persiano. La sua famiglia era probabilmente agiata e influente, il che gli permise di ricevere un'educazione completa e di viaggiare ampiamente.</p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">484 a.C. circa</div>
+                    <p>Nascita di Erodoto ad Alicarnasso, in una famiglia probabilmente aristocratica.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">460 a.C. circa</div>
+                    <p>Partecipazione alla rivolta contro il tiranno Ligdami II, che costringe Erodoto all'esilio sull'isola di Samo.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">450-440 a.C.</div>
+                    <p>Grandi viaggi attraverso l'impero persiano, l'Egitto, la Fenicia, la Mesopotamia, la Scizia e altre regioni, raccogliendo materiale per la sua opera.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">447 a.C.</div>
+                    <p>Si stabilisce ad Atene, dove entra in contatto con i maggiori intellettuali del tempo, tra cui Pericle e Sofocle.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">443 a.C.</div>
+                    <p>Partecipa alla fondazione della colonia panellenica di Thurii in Magna Grecia (Italia meridionale), dove probabilmente completa la sua opera.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">425 a.C. circa</div>
+                    <p>Morte di Erodoto, probabilmente a Thurii o ad Atene.</p>
+                </div>
+            </div>
+            
+            <h3>I Viaggi di Erodoto</h3>
+            <p>Erodoto fu un instancabile viaggiatore, un vero e proprio "ricercatore" (come il termine greco <em>histor</em> implica). I suoi viaggi lo portarono in:</p>
+            <ul>
+                <li>Egitto: risalì il Nilo fino alla prima cateratta, visitò le piramidi e i templi, studiò le usanze locali</li>
+                <li>Persia: esplorò Babilonia, Susa e altre città dell'impero</li>
+                <li>Scizia (odierna Ucraina e Russia meridionale): descrisse le popolazioni nomadi delle steppe</li>
+                <li>Libia: raccontò le culture dei popoli del Nord Africa</li>
+                <li>Grecia continentale e isole: approfondì la conoscenza delle varie poleis</li>
+                <li>Italia meridionale: dove probabilmente trascorse gli ultimi anni</li>
+            </ul>
+            
+            <p>Questi viaggi non furono semplici turismo, ma vere e proprie missioni di ricerca, durante le quali Erodoto interrogava sacerdoti, funzionari, mercanti e gente comune, confrontando le diverse versioni degli eventi e cercando di distinguere la verità dal mito.</p>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">Le Storie: Struttura e Contenuto</button>
+        <div class="section-content">
+            <p>L'opera di Erodoto, conosciuta come <em>Le Storie</em>, è divisa in nove libri, ciascuno intitolato con il nome di una Musa. Questa divisione fu opera degli editori alessandrini, non dell'autore stesso. L'opera può essere suddivisa in due grandi parti:</p>
+            
+            <h3>Libri I-IV: Etnografia e Antefatti</h3>
+            <p>Nei primi quattro libri, Erodoto presenta un affresco del mondo conosciuto, descrivendo geografia, costumi, religioni e storia dei vari popoli:</p>
+            <ul>
+                <li><strong>Libro I (Clio):</strong> Creso e la conquista della Lidia da parte di Ciro il Grande; storia della Persia e di Babilonia</li>
+                <li><strong>Libro II (Euterpe):</strong> L'Egitto - geografia, storia, religione, costumi</li>
+                <li><strong>Libro III (Talia):</strong> Cambise e la conquista persiana dell'Egitto; il regno di Dario I</li>
+                <li><strong>Libro IV (Melpomene):</strong> Sciti e Libici; la rivolta ionica</li>
+            </ul>
+            
+            <h3>Libri V-IX: Le Guerre Persiane</h3>
+            <p>I restanti cinque libri sono dedicati alle Guerre Persiane (499-479 a.C.), il conflitto epico tra l'impero persiano e le città-stato greche:</p>
+            <ul>
+                <li><strong>Libro V (Tersicore):</strong> Rivolta ionica e intervento ateniese</li>
+                <li><strong>Libro VI (Erato):</strong> Prima guerra persiana (battaglia di Maratona)</li>
+                <li><strong>Libro VII (Polimnia):</strong> Seconda guerra persiana (Serse, Termopili)</li>
+                <li><strong>Libro VIII (Urania):</strong> Battaglia di Salamina</li>
+                <li><strong>Libro IX (Calliope):</strong> Battaglie di Platea e Micale; conclusione</li>
+            </ul>
+            
+            <div class="quote">
+                "Il fine di Erodoto non è soltanto quello di conservare la memoria del passato mettendo in luce le imprese importanti e meravigliose compiute sia dai Greci che dai Barbari, ma anche, e soprattutto, di ricercarne le cause, di spiegare perché essi si fecero guerra."
+                <div style="text-align: right; margin-top: 10px;">- Luciano Canfora, storico</div>
+            </div>
+            
+            <h3>Lo Stile e il Metodo di Erodoto</h3>
+            <p>Erodoto sviluppò un metodo storico innovativo che combinava:</p>
+            <ul>
+                <li><strong>Autopsia:</strong> osservazione diretta dei luoghi e delle culture</li>
+                <li><strong>Inchiesta:</strong> raccolta e verifica delle testimonianze</li>
+                <li><strong>Ragionamento:</strong> analisi critica delle informazioni</li>
+                <li><strong>Narrazione:</strong> abilità letteraria nel presentare i fatti</li>
+            </ul>
+            
+            <p>Sebbene a volte includa racconti fantastici o leggendari, Erodoto spesso esprime scetticismo verso le fonti meno affidabili e cerca di distinguere tra verità e invenzione. La sua opera è caratterizzata da digressioni affascinanti su usi e costumi dei popoli, che la rendono una miniera di informazioni etnografiche.</p>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">Il Pensiero Storico di Erodoto</button>
+        <div class="section-content">
+            <p>Erodoto rappresenta una svolta fondamentale nel modo di concepire e raccontare il passato. A differenza dei poeti epici come Omero, che attribuivano tutto all'intervento divino, Erodoto cerca spiegazioni razionali negli eventi umani, pur senza negare completamente il ruolo del soprannaturale.</p>
+            
+            <h3>Le Cause delle Guerre Persiane</h3>
+            <p>Nella sua analisi delle Guerre Persiane, Erodoto individua una complessa rete di cause:</p>
+            <ul>
+                <li><strong>Cause mitiche:</strong> il rapimento di Io, Europa, Medea e Elena come antiche offese tra Asia ed Europa</li>
+                <li><strong>Cause politiche:</strong> l'espansionismo persiano e la ribellione delle colonie greche in Asia Minore</li>
+                <li><strong>Cause personali:</strong> l'orgoglio di Creso, la vendetta di Dario e l'ambizione di Serse</li>
+                <li><strong>Cause culturali:</strong> lo scontro tra libertà greca e dispotismo orientale</li>
+            </ul>
+            
+            <div class="quote">
+                "Nessuno è così folle da preferire la guerra alla pace: in questa i figli seppelliscono i padri, in quella i padri seppelliscono i figli."
+                <div style="text-align: right; margin-top: 10px;">- Erodoto, <em>Le Storie</em> (I, 87)</div>
+            </div>
+            
+            <h3>Il Concetto di Fortuna e Nemesi</h3>
+            <p>Un tema ricorrente in Erodoto è quello della <em>hybris</em> (tracotanza) e della conseguente <em>nemesis</em> (punizione divina). Secondo questa visione:</p>
+            <ul>
+                <li>La fortuna umana è instabile e ciclica</li>
+                <li>Il successo eccessivo porta all'arroganza</li>
+                <li>L'arroganza provoca la caduta</li>
+                <li>Gli dei invidiano la felicità umana e la puniscono</li>
+            </ul>
+            
+            <p>Questo schema è evidente nelle storie di Creso, Ciro, Cambise e Serse, tutti sovrani che raggiungono l'apice del potere per poi conoscere la rovina a causa della loro superbia.</p>
+            
+            <h3>Libertà vs. Dispotismo</h3>
+            <p>Erodoto contrappone il mondo greco, caratterizzato dalla libertà e dall'autogoverno, all'impero persiano, basato sull'obbedienza assoluta al sovrano. Secondo lui, è questa differenza culturale a spiegare la vittoria greca nonostante l'enorme disparità di forze:</p>
+            
+            <div class="quote">
+                "I Greci sono liberi, ma non liberi in tutto: hanno un signore sopra di loro, ed è la Legge. È questa che essi temono, molto più che i tuoi sudditi non temano te. Eseguono i suoi ordini, e questi ordini sono sempre gli stessi: vietano di combattere contro la moltitudine e di fuggire davanti al nemico, ma comandano di restare saldi nelle file e di vincere o morire."
+                <div style="text-align: right; margin-top: 10px;">- Erodoto, <em>Le Storie</em> (VII, 104)</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">Erodoto e l'Etnografia</button>
+        <div class="section-content">
+            <p>Uno degli aspetti più affascinanti dell'opera di Erodoto è la sua attenzione alle culture straniere, che descrive con curiosità e relativamente poca etnocentrismo per l'epoca. Il suo approccio etnografico è caratterizzato da:</p>
+            
+            <ul>
+                <li><strong>Descrizioni dettagliate</strong> di usi, costumi e religioni</li>
+                <li><strong>Comparazione culturale</strong> tra Greci e "Barbari"</li>
+                <li><strong>Relativismo culturale</strong>: riconoscimento che ogni popolo considera le proprie tradizioni le migliori</li>
+                <li><strong>Interesse per l'esotico</strong> senza perdere completamente lo spirito critico</li>
+            </ul>
+            
+            <h3>Popoli Descritti da Erodoto</h3>
+            
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Battle_of_Issus_mosaic_-_Museo_Archeologico_Nazionale_-_Naples_2013-05-16_16-25-06_BW.jpg/800px-Battle_of_Issus_mosaic_-_Museo_Archeologico_Nazionale_-_Naples_2013-05-16_16-25-06_BW.jpg" alt="Persiani">
+                    <div class="gallery-caption">Persiani: descritti come guerrieri valorosi ma sudditi obbedienti</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Ancient_Egyptian_Relief_-_Brooklyn_Museum.jpg/800px-Ancient_Egyptian_Relief_-_Brooklyn_Museum.jpg" alt="Egiziani">
+                    <div class="gallery-caption">Egiziani: popolo antichissimo con costumi opposti a quelli greci</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Scythian_warriors.jpg/800px-Scythian_warriors.jpg" alt="Sciti">
+                    <div class="gallery-caption">Sciti: nomadi guerrieri delle steppe euroasiatiche</div>
+                </div>
+            </div>
+            
+            <h3>L'Egitto nelle Storie</h3>
+            <p>Il Libro II dedicato all'Egitto è particolarmente ricco di osservazioni:</p>
+            <ul>
+                <li>Descrive il Nilo e le sue inondazioni, cercando di spiegarne le cause</li>
+                <li>Racconta la costruzione delle piramidi e altri monumenti</li>
+                <li>Illustra la religione egizia, il culto degli animali e le pratiche funerarie</li>
+                <li>Confronta le divinità egizie con quelle greche (interpretatio graeca)</li>
+                <li>Riporta storie su faraoni come Cheope, Ramses e Psammetico</li>
+            </ul>
+            
+            <div class="quote">
+                "L'Egitto è un dono del Nilo."
+                <div style="text-align: right; margin-top: 10px;">- Erodoto, <em>Le Storie</em> (II, 5)</div>
+            </div>
+            
+            <p>Sebbene alcune sue affermazioni sull'Egitto siano state smentite dall'archeologia moderna, molte altre si sono rivelate sorprendentemente accurate, dimostrando la serietà della sua ricerca.</p>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">Erodoto e la Scienza</button>
+        <div class="section-content">
+            <p>Oltre che storico, Erodoto può essere considerato un precursore in vari campi scientifici, grazie al suo approccio empirico e alla sua curiosità per i fenomeni naturali.</p>
+            
+            <h3>Geografia</h3>
+            <p>Erodoto contribuì significativamente alla conoscenza geografica del mondo antico:</p>
+            <ul>
+                <li>Criticò le mappe ioniche troppo schematiche</li>
+                <li>Descrive accuratamente il corso del Nilo</li>
+                <li>Fornisce informazioni sull'Europa settentrionale e sull'Asia</li>
+                <li>Menziona popoli come gli Etiopi e gli Indiani</li>
+            </ul>
+            
+            <h3>Etnologia</h3>
+            <p>Il suo metodo di osservazione partecipante anticipa l'antropologia moderna:</p>
+            <ul>
+                <li>Descrive le società in termini di parentela, economia, politica e religione</li>
+                <li>Nota le differenze tra culture matriarcali e patriarcali</li>
+                <li>Interessato ai sistemi di valori diversi</li>
+            </ul>
+            
+            <h3>Biologia e Medicina</h3>
+            <p>Erodoto registra osservazioni su:</p>
+            <ul>
+                <li>Animali esotici (coccodrilli, ippopotami)</li>
+                <li>Pratiche mediche egizie e babilonesi</li>
+                <li>Adattamenti ambientali delle specie</li>
+            </ul>
+            
+            <div class="quote">
+                "La terra che gli Egiziani abitano è nera e friabile, essendo fango e limo portato giù dall'Etiopia dal fiume. Ma la terra della Libia, che confina con l'Egitto, è rossa e sabbiosa."
+                <div style="text-align: right; margin-top: 10px;">- Erodoto, <em>Le Storie</em> (II, 12)</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">Critiche e Difese di Erodoto</button>
+        <div class="section-content">
+            <p>Già nell'antichità Erodoto fu oggetto di critiche, in particolare da parte di Tucidide e Plutarco, che lo accusarono di essere troppo credulo e di privilegiare il racconto piacevole alla verità storica.</p>
+            
+            <h3>Le Principali Critiche</h3>
+            <ul>
+                <li><strong>Credulità:</strong> inclusione di racconti fantastici e miracolosi</li>
+                <li><strong>Inesattezze:</strong> errori su date, distanze e dimensioni</li>
+                <li><strong>Parzialità:</strong> presunta simpatia per Atene e avversione per i Persiani</li>
+                <li><strong>Mancanza di rigore:</strong> digressioni eccessive che allontanano dal tema principale</li>
+            </ul>
+            
+            <h3>Le Difese</h3>
+            <ul>
+                <li><strong>Pioniere:</strong> operava senza modelli precedenti di storiografia critica</li>
+                <li><strong>Onestà intellettuale:</strong> spesso segnala quando una notizia è incerta o basata su voci</li>
+                <li><strong>Approccio olistico:</strong> la storia per lui includeva anche cultura, geografia e tradizioni</li>
+                <li><strong>Conferme moderne:</strong> molte sue affermazioni sono state verificate dall'archeologia</li>
+            </ul>
+            
+            <div class="quote">
+                "Erodoto potrebbe aver sbagliato molte cose, ma ha inventato qualcosa di più importante: il metodo storico. E per questo siamo tutti suoi debitori."
+                <div style="text-align: right; margin-top: 10px;">- John Marincola, studioso di storiografia antica</div>
+            </div>
+            
+            <h3>Erodoto vs. Tucidide</h3>
+            <p>Il confronto tra i due grandi storici greci è illuminante:</p>
+            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                <tr style="background-color: var(--secondary-color); color: white;">
+                    <th style="padding: 10px; text-align: left;">Aspetto</th>
+                    <th style="padding: 10px; text-align: left;">Erodoto</th>
+                    <th style="padding: 10px; text-align: left;">Tucidide</th>
+                </tr>
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 10px;">Approccio</td>
+                    <td style="padding: 10px;">Narrativo, inclusivo</td>
+                    <td style="padding: 10px;">Analitico, selettivo</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 10px;">Temi</td>
+                    <td style="padding: 10px;">Guerre, culture, tradizioni</td>
+                    <td style="padding: 10px;">Politica, strategia militare</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 10px;">Stile</td>
+                    <td style="padding: 10px;">Letterario, digressivo</td>
+                    <td style="padding: 10px;">Conciso, rigoroso</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 10px;">Causalità</td>
+                    <td style="padding: 10px;">Multipla (divina, umana)</td>
+                    <td style="padding: 10px;">Razionale, politica</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 10px;">Scopo</td>
+                    <td style="padding: 10px;">Memoria e comprensione</td>
+                    <td style="padding: 10px;">Utilità pratica</td>
+                </tr>
+            </table>
+            
+            <p>Oggi si tende a vedere Erodoto e Tucidide non come antagonisti ma come complementari, rappresentanti di due approcci diversi ma ugualmente validi alla storiografia.</p>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">L'Eredità di Erodoto</button>
+        <div class="section-content">
+            <p>L'influenza di Erodoto si è estesa ben oltre l'antichità, plasmando la storiografia occidentale e lasciando un'impronta indelebile nella cultura globale.</p>
+            
+            <h3>Nell'Antichità</h3>
+            <ul>
+                <li><strong>Modello per storici successivi</strong> come Polibio e Plutarco</li>
+                <li><strong>Fonte preziosa</strong> per geografi e enciclopedisti</li>
+                <li><strong>Ispirazione letteraria</strong> per poeti e drammaturghi</li>
+            </ul>
+            
+            <h3>Nel Rinascimento</h3>
+            <ul>
+                <li><strong>Riscoperta delle sue opere</strong> con la caduta di Costantinopoli</li>
+                <li><strong>Modello per esploratori</strong> e viaggiatori</li>
+                <li><strong>Influenza su umanisti</strong> come Lorenzo Valla</li>
+            </ul>
+            
+            <h3>Nell'Età Moderna</h3>
+            <ul>
+                <li><strong>Pioniere riconosciuto</strong> dell'antropologia e dell'etnografia</li>
+                <li><strong>Ispirazione per filosofi</strong> come Voltaire e Hegel</li>
+                <li><strong>Modello per storici</strong> come Edward Gibbon</li>
+            </ul>
+            
+            <div class="quote">
+                "Tutta la storiografia occidentale è una serie di note a margine su Erodoto."
+                <div style="text-align: right; margin-top: 10px;">- Parafrasi di Alfred North Whitehead</div>
+            </div>
+            
+            <h3>Erodoto Oggi</h3>
+            <p>Nel XXI secolo, Erodoto continua a essere riletto e reinterpretato:</p>
+            <ul>
+                <li><strong>Studi postcoloniali:</strong> il suo sguardo sull'"Altro" è oggetto di analisi</li>
+                <li><strong>Global history:</strong> la sua visione interculturale appare moderna</li>
+                <li><strong>Letteratura:</strong> ispira scrittori di narrativa storica</li>
+                <li><strong>Giornalismo:</strong> il suo metodo d'inchiesta è considerato precursore del reportage</li>
+            </ul>
+            
+            <p>La sua opera rimane fondamentale non solo come fonte storica, ma come monumento letterario e come riflessione profonda sulla natura umana, sul potere e sul rapporto tra culture diverse.</p>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">Citazioni Celebri di Erodoto</button>
+        <div class="section-content">
+            <p>Erodoto ha lasciato numerose citazioni che rivelano la profondità del suo pensiero e la sua abilità letteraria. Eccone alcune tra le più significative:</p>
+            
+            <div class="quote">
+                "Nella pace i figli seppelliscono i padri; nella guerra sono i padri a seppellire i figli."
+            </div>
+            
+            <div class="quote">
+                "L'uomo è soltanto disgrazia: quando questa si è stancata di perseguitarlo, egli stesso se la procura con le proprie mani."
+            </div>
+            
+            <div class="quote">
+                "La circolazione delle vicende umane non permette che sempre rimangano le stesse sorti agli stessi uomini."
+            </div>
+            
+            <div class="quote">
+                "Nessuno è così folle da preferire la guerra alla pace: in questa i figli seppelliscono i padri, in quella i padri seppelliscono i figli."
+            </div>
+            
+            <div class="quote">
+                "Se a tutti gli uomini si proponesse di scegliere, tra tutte, le usanze migliori, ciascuno, dopo un'attenta riflessione, preferirebbe quelle del suo paese: tanto a ciascuno sembrano di gran lunga migliori le proprie."
+            </div>
+            
+            <div class="quote">
+                "La felicità umana non rimane mai a lungo nello stesso posto."
+            </div>
+            
+            <div class="quote">
+                "Bisogna dire quel che si sa, ma non per questo si è obbligati a credere a tutto quel che si dice."
+            </div>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">Curiosità su Erodoto</button>
+        <div class="section-content">
+            <h3>1. Il Primo Giornalista</h3>
+            <p>Per il suo metodo di raccolta delle informazioni sul campo e verifica delle fonti, Erodoto è stato spesso definito il "primo giornalista" della storia.</p>
+            
+            <h3>2. La Mummificazione</h3>
+            <p>La sua descrizione del processo di mummificazione egizia è una delle più dettagliate dell'antichità e in gran parte confermata dall'archeologia moderna.</p>
+            
+            <h3>3. Le Formiche Ricamatrici d'Oro</h3>
+            <p>Una delle sue affermazioni più discusse riguarda formiche giganti in India che scavavano oro. Alcuni studiosi ipotizzano che si riferisse ai marmotti dell'Himalaya.</p>
+            
+            <h3>4. La Misurazione delle Piramidi</h3>
+            <p>Erodoto fornì le prime misure delle piramidi di Giza, calcolando correttamente che quella di Cheope aveva richiesto 20 anni di lavoro e 100.000 operai.</p>
+            
+            <h3>5. La Sfinge</h3>
+            <p>Fu il primo autore antico a menzionare la Sfinge, anche se non ne descrisse le dimensioni colossali come le conosciamo oggi.</p>
+            
+            <h3>6. L'Eco del Nilo</h3>
+            <p>La sua spiegazione delle inondazioni del Nilo (attribuite ai venti che ne avrebbero bloccato la foce) fu considerata valida fino alla scoperta delle vere cause nel XIX secolo.</p>
+            
+            <h3>7. Il Cannibalismo</h3>
+            <p>Riportò diverse storie di popoli cannibali, alcune probabilmente leggendarie, altre basate su reali pratiche rituali.</p>
+            
+            <h3>8. Il Giro dell'Africa</h3>
+            <p>Descrive una spedizione fenicia che avrebbe circumnavigato l'Africa per conto del faraone Necao, impiegando tre anni.</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2023 Studio su Erodoto di Alicarnasso - Tutti i diritti riservati</p>
+        <p>Fonti principali: Le Storie di Erodoto, edizioni critiche e commenti moderni</p>
+    </footer>
+
+    <script>
+        // Toggle sections
+        const sectionBtns = document.querySelectorAll('.section-btn');
+        sectionBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.classList.toggle('active');
+                const content = btn.nextElementSibling;
+                content.classList.toggle('show');
+            });
+        });
+
+        // Set theme
+        function setTheme(theme) {
+            document.body.className = theme + '-theme' || '';
+            
+            // Update active button
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // Open first section by default
+        sectionBtns[0].click();
+    </script>
+</body>
+</html>

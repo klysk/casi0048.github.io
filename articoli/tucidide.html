@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tucidide: La Storia come Scienza</title>
+    <style>
+        :root {
+            --primary-color: #3a506b;
+            --secondary-color: #5bc0be;
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+            --card-bg: #fff;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            border-top: 5px solid var(--secondary-color);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            font-style: italic;
+            color: var(--secondary-color);
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+        }
+
+        .decoration {
+            width: 100px;
+            height: 3px;
+            background-color: var(--secondary-color);
+            margin: 20px auto;
+        }
+
+        .theme-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .theme-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: var(--transition);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .theme-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .default {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .notturno {
+            background-color: #1f2833;
+            color: #66fcf1;
+        }
+
+        .filosofico {
+            background-color: #4b3b47;
+            color: #d4dcff;
+        }
+
+        .contemplativo {
+            background-color: #3a5a78;
+            color: #d8e1ff;
+        }
+
+        .section-container {
+            margin-bottom: 35px;
+        }
+
+        .section-btn {
+            width: 100%;
+            padding: 18px 25px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            text-align: left;
+            font-size: 1.3rem;
+            cursor: pointer;
+            border-radius: var(--border-radius);
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+            box-shadow: var(--box-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background-color: var(--secondary-color);
+            transition: var(--transition);
+        }
+
+        .section-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 14px rgba(0,0,0,0.1);
+        }
+
+        .section-btn:hover::before {
+            width: 8px;
+        }
+
+        .section-btn::after {
+            content: '+';
+            font-size: 1.8rem;
+            transition: var(--transition);
+        }
+
+        .section-btn.active::after {
+            content: '-';
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            padding: 0;
+            background-color: var(--card-bg);
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            box-shadow: var(--box-shadow);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+        }
+
+        .section-content.show {
+            padding: 30px;
+            max-height: 10000px;
+        }
+
+        .section-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+            font-size: 1.1rem;
+        }
+
+        .section-content h3 {
+            color: var(--primary-color);
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 5px;
+        }
+
+        .quote {
+            font-style: italic;
+            padding: 25px;
+            background-color: rgba(91, 192, 190, 0.08);
+            border-left: 5px solid var(--secondary-color);
+            margin: 30px 0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            position: relative;
+        }
+
+        .quote::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 3rem;
+            color: rgba(91, 192, 190, 0.2);
+            font-family: Georgia, serif;
+        }
+
+        .quote-author {
+            text-align: right;
+            margin-top: 15px;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+
+        .timeline {
+            margin: 40px 0;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            background-color: var(--secondary-color);
+        }
+
+        .timeline-item {
+            padding-left: 30px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 5px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            border: 3px solid var(--card-bg);
+            z-index: 1;
+        }
+
+        .timeline-year {
+            font-weight: bold;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            box-shadow: var(--box-shadow);
+        }
+
+        .comparison-table th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background-color: rgba(91, 192, 190, 0.05);
+        }
+
+        .comparison-table tr:hover {
+            background-color: rgba(91, 192, 190, 0.1);
+        }
+
+        .method-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: var(--box-shadow);
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .method-card h4 {
+            color: var(--primary-color);
+            margin-top: 0;
+            font-size: 1.2rem;
+        }
+
+        .influence-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .influence-item {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        .influence-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .influence-item h4 {
+            color: var(--secondary-color);
+            margin-top: 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        /* Theme styles */
+        body.notturno-theme {
+            --primary-color: #1f2833;
+            --secondary-color: #66fcf1;
+            --text-color: #c5c6c7;
+            --bg-color: #0b0c10;
+            --card-bg: #1f2833;
+        }
+
+        body.filosofico-theme {
+            --primary-color: #4b3b47;
+            --secondary-color: #d4dcff;
+            --text-color: #d8d8d8;
+            --bg-color: #2d242e;
+            --card-bg: #4b3b47;
+        }
+
+        body.contemplativo-theme {
+            --primary-color: #3a5a78;
+            --secondary-color: #d8e1ff;
+            --text-color: #e8f1f2;
+            --bg-color: #1a2a3a;
+            --card-bg: #3a5a78;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Tucidide</h1>
+        <div class="subtitle">Il Padre della Storia Scientifica e l'Analista del Potere</div>
+        <div class="decoration"></div>
+        
+        <div class="theme-selector">
+            <button class="theme-btn default" onclick="setTheme('default')">Default</button>
+            <button class="theme-btn notturno" onclick="setTheme('notturno')">Notturno</button>
+            <button class="theme-btn filosofico" onclick="setTheme('filosofico')">Filosofico</button>
+            <button class="theme-btn contemplativo" onclick="setTheme('contemplativo')">Contemplativo</button>
+        </div>
+    </header>
+
+    <div class="section-container">
+        <button class="section-btn">Introduzione a Tucidide</button>
+        <div class="section-content">
+            <p>Tucidide (460 a.C. circa - 400 a.C. circa) rappresenta una svolta epocale nella storiografia occidentale. Mentre Erodoto, suo predecessore, viene chiamato "Padre della Storia", Tucidide potrebbe essere definito il "Padre della Storia Scientifica". La sua opera, <em>La Guerra del Peloponneso</em>, è uno studio rigoroso e analitico del conflitto che oppose Atene a Sparta tra il 431 e il 404 a.C., ma è anche una profonda riflessione sulla natura del potere, sulla psicologia umana e sulle dinamiche politiche.</p>
+            
+            <div class="quote">
+                "L'assenza di favole nel mio lavoro potrà forse apparire meno piacevole all'ascolto; ma sarà sufficiente che quanti vorranno esaminare con precisione le cose avvenute e quelle simili che potranno verificarsi in futuro secondo l'umana natura giudichino utile la mia opera. Io l'ho composta come un possesso per sempre, più che come un pezzo da competizione per l'immediato ascolto."
+                <div class="quote-author">- Tucidide, <em>La Guerra del Peloponneso</em>, I, 22</div>
+            </div>
+            
+            <p>A differenza di Erodoto, che includeva miti e racconti popolari, Tucidide adottò un approccio rigorosamente razionale, basato su:</p>
+            
+            <div class="influence-grid">
+                <div class="influence-item">
+                    <h4>Verifica delle Fonti</h4>
+                    <p>Controllo incrociato delle testimonianze e scetticismo verso i racconti non verificabili</p>
+                </div>
+                <div class="influence-item">
+                    <h4>Obiettività</h4>
+                    <p>Sforzo di mantenersi imparziale nonostante fosse un ateniese</p>
+                </div>
+                <div class="influence-item">
+                    <h4>Analisi Causale</h4>
+                    <p>Ricerca delle cause profonde degli eventi, non solo della loro successione</p>
+                </div>
+                <div class="influence-item">
+                    <h4>Universalità</h4>
+                    <p>Interesse per i modelli ricorrenti del comportamento umano</p>
+                </div>
+            </div>
+            
+            <p>La sua opera è strutturata in otto libri che combinano narrazione storica, analisi politica e discorsi ricostruiti che esprimono le diverse posizioni dei protagonisti. Questi discorsi, pur essendo opera di Tucidide, rappresentano uno dei primi tentativi di presentare in modo obiettivo prospettive contrapposte.</p>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">La Vita di Tucidide</button>
+        <div class="section-content">
+            <p>Le informazioni sulla vita di Tucidide sono scarse e provengono principalmente da riferimenti nella sua stessa opera. Appartenente all'aristocrazia ateniese, la sua vita fu segnata dalla guerra che avrebbe poi immortalato nella sua opera.</p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">460 a.C. circa</div>
+                    <p>Nascita di Tucidide in una famiglia aristocratica ateniese, probabilmente nel demo di Alimunte. La sua famiglia possedeva miniere d'oro in Tracia, il che gli garantì una posizione agiata.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">431 a.C.</div>
+                    <p>Inizio della Guerra del Peloponneso tra Atene e Sparta. Tucidide riconosce immediatamente l'importanza epocale del conflitto e decide di documentarlo.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">424 a.C.</div>
+                    <p>Eletto stratego, viene incaricato di difendre la città di Anfipoli in Tracia. La caduta della città sotto il generale spartano Brasida porta al suo esilio da Atene per 20 anni.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">424-404 a.C.</div>
+                    <p>Periodo dell'esilio, durante il quale viaggia tra i territori peloponnesiaci, raccogliendo informazioni da entrambe le parti del conflitto. Questo gli permette di sviluppare una prospettiva più obiettiva.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">404 a.C.</div>
+                    <p>Fine della Guerra del Peloponneso con la sconfitta di Atene. Tucidide può probabilmente tornare in patria, ma le circostanze della sua morte (intorno al 400 a.C.) rimangono incerte.</p>
+                </div>
+            </div>
+            
+            <h3>L'Esilio come Opportunità Intellettuale</h3>
+            <p>L'esilio di Tucidide, anziché limitare la sua opera, gli permise di:</p>
+            
+            <div class="method-card">
+                <h4>1. Acquisire una prospettiva bilanciata</h4>
+                <p>Visitando entrambi gli schieramenti, poté raccogliere versioni diverse degli eventi</p>
+            </div>
+            
+            <div class="method-card">
+                <h4>2. Sviluppare obiettività</h4>
+                <p>La distanza da Atene gli permise di analizzare le azioni della sua città con maggior distacco</p>
+            </div>
+            
+            <div class="method-card">
+                <h4>3. Concentrarsi sulla scrittura</h4>
+                <p>Libero dagli impegni politici, poté dedicarsi completamente alla sua ricerca storica</p>
+            </div>
+            
+            <p>Lo stesso Tucidide riconosce l'importanza del suo esilio: <em>"Ho assistito agli avvenimenti di entrambe le parti, e soprattutto a quelli peloponnesiaci per via del mio esilio, il che mi diede agio di considerare le cose con maggiore tranquillità"</em> (V, 26).</p>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">La Guerra del Peloponneso: Struttura</button>
+        <div class="section-content">
+            <p>L'opera di Tucidide è divisa in otto libri che seguono un ordine cronologico del conflitto, ma con frequenti analisi e digressioni che approfondiscono cause e conseguenze degli eventi.</p>
+            
+            <h3>Libro I: Introduzione e Cause della Guerra</h3>
+            <p>Contiene la famosa <em>Archeologia</em>, una ricostruzione della storia greca prima della guerra per dimostrare che mai c'era stato un conflitto di tale portata. Analizza le cause profonde (l'ascesa del potere ateniese) e quelle immediate (il conflitto tra Corinto e Corcira).</p>
+            
+            <h3>Libro II-V.24: Guerra Archidamica (431-421 a.C.)</h3>
+            <p>Descrive i primi 10 anni di guerra, tra cui:</p>
+            <ul>
+                <li>L'epidemia di peste ad Atene (430-429 a.C.) con il famoso ritratto della società in crisi</li>
+                <li>L'epitaffio di Pericle, fondamentale testo sulla democrazia ateniese</li>
+                <li>Le vicende militari fino alla Pace di Nicia (421 a.C.)</li>
+            </ul>
+            
+            <h3>Libro V.25-VII: Spedizione in Sicilia (415-413 a.C.)</h3>
+            <p>Il disastroso tentativo ateniese di conquistare Siracusa, descritto con drammatica intensità. Tucidide mostra come l'eccessiva ambizione (hybris) porti alla rovina.</p>
+            
+            <h3>Libro VIII: Guerra Decelica (413-411 a.C.)</h3>
+            <p>Gli ultimi anni di guerra, con la ripresa delle ostilità dopo la pace e il colpo di stato oligarchico ad Atene. L'opera si interrompe bruscamente nel 411 a.C., lasciando supporre che Tucidide sia morto prima di completarla.</p>
+            
+            <div class="quote">
+                "Fu infatti questa la più grande crisi che colpì i Greci in una parte di loro, e per così dire anche la maggior parte dei barbari; anzi, per dirla in una parola, quasi tutto il genere umano."
+                <div class="quote-author">- Tucidide, <em>La Guerra del Peloponneso</em>, I, 1</div>
+            </div>
+            
+            <h3>I Discorsi: Uno Strumento Analitico</h3>
+            <p>Una caratteristica unica dell'opera sono i discorsi attribuiti ai protagonisti. Tucidide spiega il suo metodo:</p>
+            
+            <div class="quote">
+                "Per quanto riguarda i discorsi pronunciati dai vari personaggi, sia prima che durante la guerra, era difficile ricordarne la forma esatta, sia per me che per coloro che me li riferivano; perciò li ho riportati come mi pareva che ciascuno avrebbe potuto esprimersi nelle varie circostanze, attenendomi il più possibile al senso generale di ciò che fu effettivamente detto."
+                <div class="quote-author">- Tucidide, <em>La Guerra del Peloponneso</em>, I, 22</div>
+            </div>
+            
+            <p>Tra i discorsi più celebri:</p>
+            <ul>
+                <li><strong>Epitaffio di Pericle</strong> (II, 35-46): l'elogio della democrazia ateniese</li>
+                <li><strong>Dialogo melio</strong> (V, 85-113): il crudele realismo del potere ateniese</li>
+                <li><strong>Discorsi di Cleone e Diodoto</strong> (III, 37-48): dibattito sulla giustizia e l'utilità</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">Il Metodo di Tucidide</button>
+        <div class="section-content">
+            <p>Tucidide rivoluzionò il modo di fare storia introducendo un metodo rigoroso che anticipa molti principi della storiografia moderna. I suoi criteri metodologici possono essere sintetizzati in cinque punti fondamentali:</p>
+            
+            <div class="method-card">
+                <h4>1. Ricerca della Verità Oggettiva</h4>
+                <p>Tucidide rifiuta il meraviglioso e il mitico, concentrandosi su fatti verificabili. Critica esplicitamente chi "abbraccia più il meraviglioso che il vero" (I, 20).</p>
+            </div>
+            
+            <div class="method-card">
+                <h4>2. Verifica delle Fonti</h4>
+                <p>Controlla le informazioni incrociando diverse testimonianze: "Mi sono basato sulle indicazioni più sicure dopo averle esaminate con la massima accuratezza possibile" (I, 22).</p>
+            </div>
+            
+            <div class="method-card">
+                <h4>3. Ricerca delle Cause Profonde</h4>
+                <p>Distinguendo tra cause apparenti (prophasis) e cause reali (aitia), analizza le motivazioni strutturali dietro gli eventi.</p>
+            </div>
+            
+            <div class="method-card">
+                <h4>4. Universalità della Natura Umana</h4>
+                <p>Studia gli eventi come esempi di comportamenti umani ricorrenti: "Le cose avvenute... che secondo l'umana natura potranno verificarsi in futuro" (I, 22).</p>
+            </div>
+            
+            <div class="method-card">
+                <h4>5. Utilità Pratica</h4>
+                <p>Scrive per fornire strumenti di comprensione a futuri statisti: "Possesso per sempre" (ktema es aiei) piuttosto che "pezzo da competizione" (agonisma).</p>
+            </div>
+            
+            <h3>L'Analisi della Peste: Un Case Study Metodologico</h3>
+            <p>La descrizione della peste ad Atene (II, 47-54) mostra l'approccio scientifico di Tucidide:</p>
+            
+            <ul>
+                <li><strong>Osservazione clinica:</strong> descrive sintomi e decorso della malattia</li>
+                <li><strong>Analisi sociale:</strong> mostra il collasso delle norme morali durante l'epidemia</li>
+                <li><strong>Approccio comparativo:</strong> confronta con precedenti epidemie</li>
+                <li><strong>Obiettività:</strong> pur essendo colpito personalmente (si ammalò ma sopravvisse), mantiene tono distaccato</li>
+            </ul>
+            
+            <div class="quote">
+                "Nessuna sciagura fu mai più grave per i Greci e non ne decimò mai una parte così grande della popolazione... I medici non riuscivano a far fronte alla malattia, che colpiva all'improvviso e che essi non conoscevano, anzi erano i primi a morire, avendone più contatto."
+                <div class="quote-author">- Tucidide, <em>La Guerra del Peloponneso</em>, II, 47</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">Il Pensiero Politico di Tucidide</button>
+        <div class="section-content">
+            <p>L'opera di Tucidide va oltre la semplice cronaca militare, offrendo una profonda riflessione sulla natura del potere, della giustizia e delle relazioni internazionali. Il suo realismo politico anticipa molti concetti delle moderne relazioni internazionali.</p>
+            
+            <h3>Realismo Politico</h3>
+            <p>Tucidide è considerato il precursore del realismo politico per la sua analisi spietata delle dinamiche di potere. Il celebre <em>Dialogo melio</em> (V, 85-113) esprime crudamente questa visione:</p>
+            
+            <div class="quote">
+                "Noi non abbiamo inventato questa legge né siamo i primi ad applicarla: è una legge eterna che il più forte domini sul più debole... La giustizia viene presa in considerazione tra pari, ma i forti fanno quello che possono e i deboli subiscono quello che devono."
+                <div class="quote-author">- Ateniesi ai Melii, <em>La Guerra del Peloponneso</em>, V, 89, 105</div>
+            </div>
+            
+            <h3>Analisi del Potere</h3>
+            <p>Tucidide identifica diverse forme di potere e le loro dinamiche:</p>
+            
+            <table class="comparison-table">
+                <tr>
+                    <th>Tipo di Potere</th>
+                    <th>Esempio</th>
+                    <th>Analisi</th>
+                </tr>
+                <tr>
+                    <td>Potere marittimo</td>
+                    <td>Atene</td>
+                    <td>Basato su flotta, commercio e impero, ma vulnerabile alla disunione</td>
+                </tr>
+                <tr>
+                    <td>Potere terrestre</td>
+                    <td>Sparta</td>
+                    <td>Basato su esercito di terra e disciplina, ma conservatore e lento</td>
+                </tr>
+                <tr>
+                    <td>Potere carismatico</td>
+                    <td>Pericle</td>
+                    <td>Leadership basata su competenza e persuasione razionale</td>
+                </tr>
+                <tr>
+                    <td>Potere demagogico</td>
+                    <td>Cleone</td>
+                    <td>Leadership basata su populismo e manipolazione emotiva</td>
+                </tr>
+            </table>
+            
+            <h3>Democrazia vs. Oligarchia</h3>
+            <p>Tucidide offre un'analisi equilibrata dei due sistemi:</p>
+            
+            <div class="influence-grid">
+                <div class="influence-item">
+                    <h4>Democrazia sotto Pericle</h4>
+                    <p>"In nome era democrazia, ma in realtà era il governo del primo cittadino" (II, 65) - lode del governo illuminato</p>
+                </div>
+                <div class="influence-item">
+                    <h4>Democrazia post-Pericle</h4>
+                    <p>Critica della demagogia e delle decisioni impulsive (es. spedizione siciliana)</p>
+                </div>
+                <div class="influence-item">
+                    <h4>Oligarchia dei Quattrocento</h4>
+                    <p>Descrive il colpo di stato del 411 a.C. e le sue conseguenze destabilizzanti</p>
+                </div>
+                <div class="influence-item">
+                    <h4>Modello misto</h4>
+                    <p>Implicita preferenza per un equilibrio tra competenza oligarchica e partecipazione democratica</p>
+                </div>
+            </div>
+            
+            <h3>L'Epitaffio di Pericle: Un Manifesto Democratico</h3>
+            <p>Il discorso funebre di Pericle (II, 35-46) è considerato uno dei più alti elogi della democrazia ateniese:</p>
+            
+            <div class="quote">
+                "La nostra costituzione non copia le leggi dei vicini: siamo noi a servire da modello a qualcuno piuttosto che da imitatori. Il suo nome è democrazia, perché l'amministrazione non dipende dai pochi ma dai molti... Nella vita pubblica ci regoliamo nel rispetto delle leggi... Nella vita privata non ci controlliamo gelosamente l'un l'altro... La nostra città è aperta al mondo."
+                <div class="quote-author">- Pericle nell'<em>Epitaffio</em>, II, 37, 39</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">Tucidide vs. Erodoto</button>
+        <div class="section-content">
+            <p>Il confronto tra i due grandi storici greci illumina l'evoluzione della storiografia antica. Mentre Erodoto rappresenta la tradizione ionica più narrativa, Tucidide incarna l'approccio attico più analitico.</p>
+            
+            <table class="comparison-table">
+                <tr>
+                    <th>Caratteristica</th>
+                    <th>Erodoto</th>
+                    <th>Tucidide</th>
+                </tr>
+                <tr>
+                    <td>Approccio</td>
+                    <td>Narrativo, inclusivo</td>
+                    <td>Analitico, selettivo</td>
+                </tr>
+                <tr>
+                    <td>Oggetto</td>
+                    <td>Guerre persiane e culture</td>
+                    <td>Guerra del Peloponneso</td>
+                </tr>
+                <tr>
+                    <td>Metodo</td>
+                    <td>Raccolta di tradizioni</td>
+                    <td>Verifica critica</td>
+                </tr>
+                <tr>
+                    <td>Causalità</td>
+                    <td>Divina e umana</td>
+                    <td>Umana e politica</td>
+                </tr>
+                <tr>
+                    <td>Stile</td>
+                    <td>Digressivo, vario</td>
+                    <td>Conciso, denso</td>
+                </tr>
+                <tr>
+                    <td>Scopo</td>
+                    <td>Preservare la fama</td>
+                    <td>Utilità pratica</td>
+                </tr>
+            </table>
+            
+            <h3>Differenze Fondamentali</h3>
+            
+            <div class="method-card">
+                <h4>1. Concezione del Tempo</h4>
+                <p>Erodoto: tempo ciclico con interventi divini<br>
+                Tucidide: tempo lineare con causalità umana</p>
+            </div>
+            
+            <div class="method-card">
+                <h4>2. Trattamento delle Fonti</h4>
+                <p>Erodoto: include versioni diverse senza sempre scegliere<br>
+                Tucidide: verifica e seleziona la versione più plausibile</p>
+            </div>
+            
+            <div class="method-card">
+                <h4>3. Ruolo dell'Individuo</h4>
+                <p>Erodoto: grandi personalità come motori della storia<br>
+                Tucidide: strutture di potere e dinamiche collettive</p>
+            </div>
+            
+            <div class="quote">
+                "Erodoto è il padre della storia, Tucidide è il padre della storia scientifica. Il primo ci ha dato il piacere del racconto, il secondo gli strumenti per comprendere."
+                <div class="quote-author">- Moses Finley, storico</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">L'Eredità di Tucidide</button>
+        <div class="section-content">
+            <p>L'influenza di Tucidide si è estesa ben oltre l'antichità, plasmando la storiografia, le scienze politiche e il pensiero strategico fino ai giorni nostri.</p>
+            
+            <h3>Nell'Antichità</h3>
+            <ul>
+                <li><strong>Senofonte</strong> continuò la sua opera con le <em>Elleniche</em></li>
+                <li><strong>Polibio</strong> adottò il suo metodo analitico</li>
+                <li><strong>Tacito</strong> emulò il suo stile conciso e la psicologia politica</li>
+            </ul>
+            
+            <h3>Nel Rinascimento</h3>
+            <ul>
+                <li>Riscoperta dei manoscritti tucididei stimolò la storiografia critica</li>
+                <li>Machiavelli e Guicciardini ripresero il suo realismo politico</li>
+                <li>Gli umanisti ne ammiravano lo stile austero</li>
+            </ul>
+            
+            <h3>Nell'Età Moderna</h3>
+            <ul>
+                <li>Hobbes ne tradusse l'opera, influenzando il suo pensiero politico</li>
+                <li>Gli storici del XIX secolo (Ranke, Mommsen) lo considerarono modello</li>
+                <li>Le scuole di guerra ne studiarono le analisi strategiche</li>
+            </ul>
+            
+            <h3>Nel XX-XXI Secolo</h3>
+            
+            <div class="influence-grid">
+                <div class="influence-item">
+                    <h4>Realismo Politico</h4>
+                    <p>Hans Morgenthau e Kenneth Waltz lo considerano precursore del realismo nelle relazioni internazionali</p>
+                </div>
+                <div class="influence-item">
+                    <h4>Teoria della Guerra</h4>
+                    <p>Studiato nelle accademie militari per le analisi strategiche</p>
+                </div>
+                <div class="influence-item">
+                    <h4>Storiografia</h4>
+                    <p>Modello per la storia politica e analitica</p>
+                </div>
+                <div class="influence-item">
+                    <h4>Politica Estera</h4>
+                    <p>Citato in dibattiti su potenza egemone (USA come Atene?)</p>
+                </div>
+            </div>
+            
+            <div class="quote">
+                "Tucidide non è solo uno storico, ma un pensatore politico di prima grandezza. La sua analisi della guerra, del potere e delle relazioni internazionali rimane insuperata per profondità e acutezza."
+                <div class="quote-author">- Raymond Aron, filosofo politico</div>
+            </div>
+            
+            <h3>Tucidide Oggi</h3>
+            <p>Nell'era contemporanea, Tucidide viene letto e interpretato attraverso nuove lenti:</p>
+            
+            <ul>
+                <li><strong>Teoria delle Relazioni Internazionali:</strong> la "trappola di Tucidide" spiega i conflitti tra potenze emergenti e consolidate</li>
+                <li><strong>Studi Strategici:</strong> le sue analisi militari sono applicate a conflitti moderni</li>
+                <li><strong>Psicologia Politica:</strong> le sue osservazioni sul comportamento umano in crisi sono studiate da politologi</li>
+                <li><strong>Pandemia:</strong> la descrizione della peste ateniese è stata ampiamente citata durante il COVID-19</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">Citazioni Celebri di Tucidide</button>
+        <div class="section-content">
+            <p>L'opera di Tucidide è ricca di passaggi che rivelano la profondità del suo pensiero e la sua abilità letteraria. Ecco alcune delle citazioni più significative:</p>
+            
+            <div class="quote">
+                "La guerra è un maestro violento: togliendo alle persone la facilità di soddisfare i bisogni quotidiani, le adegua alle circostanze."
+            </div>
+            
+            <div class="quote">
+                "Gli uomini approvano chi non fa loro delitti più che chi li benefica; i primi cercano di compiacere, i secondi di essere superiori."
+            </div>
+            
+            <div class="quote">
+                "Bisogna conoscere chiaramente che la guerra si nutre di denaro, e che dove questo manca, i buoni progetti falliscono."
+            </div>
+            
+            <div class="quote">
+                "La segretezza non può essere pretesa in una città che comanda un impero: i cittadini devono a volte accettare che i nemici conoscano i loro piani prima che i loro stessi alleati."
+            </div>
+            
+            <div class="quote">
+                "La libertà che godiamo nel nostro governo si estende anche alla vita ordinaria; non siamo sospettosi l'uno dell'altro, e non ci adiriamo se il nostro vicino fa quello che gli piace."
+            </div>
+            
+            <div class="quote">
+                "È proprio dell'uomo gettare la colpa sugli altri per i mali di cui è causa lui stesso."
+            </div>
+            
+            <div class="quote">
+                "Le parole perdono il loro significato quando le azioni le contraddicono."
+            </div>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">Curiosità su Tucidide</button>
+        <div class="section-content">
+            <h3>1. Il Primo Storico Scientifico</h3>
+            <p>Tucidide è considerato il primo storico ad applicare un metodo rigorosamente scientifico, anteponendo la verità fattuale alla narrazione piacevole.</p>
+            
+            <h3>2. L'Esilio come Opportunità</h3>
+            <p>Il suo esilio di 20 anni, anziché danneggiare la sua opera, gli permise di viaggiare e raccogliere informazioni da entrambi gli schieramenti in conflitto.</p>
+            
+            <h3>3. La Malattia che lo Risparmiò</h3>
+            <p>Contrasse la peste ateniese ma sopravvisse, potendo così descriverla con precisione clinica nella sua opera.</p>
+            
+            <h3>4. Uno Stile Difficile ma Profondo</h3>
+            <p>Il suo stile denso e conciso è famoso per essere tra i più difficili del greco antico, ma anche tra i più ricchi di significato.</p>
+            
+            <h3>5. L'Opera Incompiuta</h3>
+            <p>La Guerra del Peloponneso si interrompe bruscamente nel 411 a.C., sette anni prima della fine del conflitto, lasciando supporre che Tucidide sia morto prima di completarla.</p>
+            
+            <h3>6. Il Primo a Scrivere Storia Contemporanea</h3>
+            <p>A differenza di Erodoto che scrisse di eventi passati, Tucidide documentò la guerra mentre era in corso, essendone testimone diretto.</p>
+            
+            <h3>7. L'Inventore dei Discorsi Ricostruiti</h3>
+            <p>Il suo metodo di ricostruire i discorsi dei protagonisti, pur mantenendo la sostanza storica, fu innovativo e molto imitato.</p>
+            
+            <h3>8. Un Aristocratico Critico della Democrazia</h3>
+            <p>Nonostante le sue origini aristocratiche, offrì un'analisi equilibrata sia della democrazia che dell'oligarchia, criticandone gli eccessi.</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2023 Studio su Tucidide - Tutti i diritti riservati</p>
+        <p>Fonti principali: <em>La Guerra del Peloponneso</em>, edizioni critiche e commenti moderni</p>
+        <p>Realizzato con il metodo tucidideo: verifica delle fonti e analisi obiettiva</p>
+    </footer>
+
+    <script>
+        // Toggle sections
+        const sectionBtns = document.querySelectorAll('.section-btn');
+        sectionBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.classList.toggle('active');
+                const content = btn.nextElementSibling;
+                content.classList.toggle('show');
+            });
+        });
+
+        // Set theme
+        function setTheme(theme) {
+            document.body.className = theme + '-theme' || '';
+            
+            // Update active button
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // Open first section by default
+        sectionBtns[0].click();
+    </script>
+</body>
+</html>

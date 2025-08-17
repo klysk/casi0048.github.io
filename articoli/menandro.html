@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menandro: Il Maestro della Commedia Nuova</title>
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --accent-color: #4fc3a1;
+            --text-color: #2d3748;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --border-radius: 16px;
+            --decorative-border: 3px dashed rgba(74, 111, 165, 0.3);
+        }
+
+        /* Modalità di lettura */
+        .notturno {
+            --primary-color: #3a5683;
+            --secondary-color: #124e78;
+            --accent-color: #3db090;
+            --text-color: #e2e8f0;
+            --bg-color: #1a202c;
+            --card-bg: #2d3748;
+            --shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            --decorative-border: 3px dashed rgba(58, 86, 131, 0.5);
+        }
+
+        .filosofico {
+            --primary-color: #5d5c7f;
+            --secondary-color: #3a3a5a;
+            --accent-color: #a68a64;
+            --text-color: #2a2a3a;
+            --bg-color: #f0f0f5;
+            --card-bg: #e0e0ea;
+            --decorative-border: 3px dashed rgba(93, 92, 127, 0.4);
+        }
+
+        .contemplativo {
+            --primary-color: #3a7d7b;
+            --secondary-color: #245953;
+            --accent-color: #d8b15d;
+            --text-color: #1a3a37;
+            --bg-color: #e8f4f3;
+            --card-bg: #d0e5e3;
+            --decorative-border: 3px dashed rgba(58, 125, 123, 0.4);
+        }
+
+        body {
+            font-family: 'EB Garamond', serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            transition: var(--transition);
+            background-image: radial-gradient(circle at 10% 20%, rgba(74, 111, 165, 0.05) 0%, rgba(74, 111, 165, 0) 90%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 5rem;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 4.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
+            border-radius: 3px;
+        }
+
+        .subtitle {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            font-style: italic;
+            margin: 2rem 0 3rem;
+            position: relative;
+            display: inline-block;
+            padding: 0 2rem;
+        }
+
+        .subtitle::before, .subtitle::after {
+            content: '✻';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-color);
+            font-size: 1.5rem;
+        }
+
+        .subtitle::before {
+            left: 0;
+        }
+
+        .subtitle::after {
+            right: 0;
+        }
+
+        .reading-modes {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            font-size: 1.1rem;
+            min-width: 140px;
+            text-align: center;
+        }
+
+        .mode-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            opacity: 0;
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .mode-btn:hover::before {
+            opacity: 1;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .mode-btn.active {
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            box-shadow: 0 0 0 4px rgba(79, 195, 161, 0.3);
+        }
+
+        .mode-btn.active::before {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+        }
+
+        .section-container {
+            margin-bottom: 5rem;
+            position: relative;
+        }
+
+        .section-container::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+            border-radius: 4px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .section-container:hover::before {
+            opacity: 1;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.8rem 2.5rem;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border-bottom: var(--decorative-border);
+        }
+
+        .section-header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .section-header:hover::after {
+            opacity: 0.3;
+        }
+
+        .section-header h2 {
+            margin: 0;
+            font-size: 2rem;
+            position: relative;
+            z-index: 1;
+            letter-spacing: -0.5px;
+        }
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            z-index: 1;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .toggle-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .section-content {
+            padding: 3rem;
+            background-color: var(--card-bg);
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            box-shadow: var(--shadow);
+            display: none;
+            animation: fadeIn 0.8s ease-out;
+            border-left: var(--decorative-border);
+            border-right: var(--decorative-border);
+            border-bottom: var(--decorative-border);
+            margin-top: -3px;
+        }
+
+        .section-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .quote {
+            font-style: italic;
+            border-left: 4px solid var(--accent-color);
+            padding: 2rem;
+            margin: 3rem 0;
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            position: relative;
+            background-color: rgba(79, 195, 161, 0.08);
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .quote::before {
+            content: '"';
+            position: absolute;
+            font-size: 8rem;
+            color: var(--accent-color);
+            opacity: 0.1;
+            top: -2rem;
+            left: 1rem;
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .quote::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 50px;
+            height: 30px;
+            border-bottom: 2px solid var(--accent-color);
+            border-right: 2px solid var(--accent-color);
+            border-radius: 0 0 var(--border-radius) 0;
+        }
+
+        .highlight {
+            position: relative;
+            z-index: 1;
+            padding: 0.2rem 0.4rem;
+        }
+
+        .highlight::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background-color: rgba(79, 195, 161, 0.3);
+            z-index: -1;
+            transition: var(--transition);
+        }
+
+        .highlight:hover::before {
+            height: 100%;
+            background-color: rgba(79, 195, 161, 0.5);
+        }
+
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .work-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .work-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(74, 111, 165, 0.03), rgba(22, 96, 136, 0.05));
+            z-index: 0;
+        }
+
+        .work-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .work-card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-color);
+            font-size: 1.6rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .work-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 50%;
+            height: 2px;
+            background-color: var(--secondary-color);
+            transition: var(--transition);
+        }
+
+        .work-card:hover h3::after {
+            width: 100%;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 4rem auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 3px;
+        }
+
+        .timeline-item {
+            padding: 20px 60px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            right: -17px;
+            background-color: var(--card-bg);
+            border: 5px solid var(--accent-color);
+            top: 25px;
+            border-radius: 50%;
+            z-index: 1;
+            box-shadow: 0 0 0 6px var(--bg-color);
+            transition: var(--transition);
+        }
+
+        .timeline-item:hover::after {
+            transform: scale(1.1);
+            border-color: var(--primary-color);
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        .right::after {
+            left: -17px;
+        }
+
+        .timeline-content {
+            padding: 30px;
+            background-color: var(--card-bg);
+            position: relative;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: var(--decorative-border);
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .timeline-year {
+            font-weight: bold;
+            color: var(--accent-color);
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            padding: 0.5rem 1.2rem;
+            background-color: rgba(79, 195, 161, 0.1);
+            border-radius: 30px;
+            border: 1px solid var(--accent-color);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 6rem;
+            padding: 4rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        footer::before {
+            content: 'Μένανδρος';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12rem;
+            color: rgba(74, 111, 165, 0.03);
+            z-index: 0;
+            font-weight: bold;
+            letter-spacing: 5px;
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .back-to-top {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.2rem 2.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: var(--transition);
+            margin-top: 2rem;
+            box-shadow: var(--shadow);
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+            font-size: 1.1rem;
+        }
+
+        .back-to-top::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .back-to-top:hover::before {
+            opacity: 1;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            letter-spacing: 1px;
+        }
+
+        .back-to-top span {
+            position: relative;
+            z-index: 1;
+            transition: var(--transition);
+        }
+
+        .back-to-top i {
+            font-style: normal;
+            position: relative;
+            z-index: 1;
+            transition: var(--transition);
+        }
+
+        /* Bottoni speciali - Nuovo design */
+        .special-buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 4rem 0;
+            flex-wrap: wrap;
+        }
+
+        .special-btn {
+            position: relative;
+            padding: 1.5rem 3rem;
+            border: none;
+            background: transparent;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            min-width: 250px;
+            text-align: center;
+            z-index: 1;
+            border: 2px solid var(--primary-color);
+        }
+
+        .special-btn::before, .special-btn::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .special-btn::before {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+        }
+
+        .special-btn::after {
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+        }
+
+        .special-btn:hover::before {
+            clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+        }
+
+        .special-btn:hover::after {
+            clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+        }
+
+        .special-btn:hover {
+            color: white;
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            border-color: transparent;
+        }
+
+        .special-btn .icon {
+            display: block;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            transition: var(--transition);
+        }
+
+        .special-btn:hover .icon {
+            transform: rotate(15deg) scale(1.2);
+        }
+
+        /* Bottone a puzzle */
+        .puzzle-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .puzzle-btn::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: 
+                linear-gradient(45deg, 
+                    transparent 45%, 
+                    var(--accent-color) 45%, 
+                    var(--accent-color) 55%, 
+                    transparent 55%),
+                linear-gradient(-45deg, 
+                    transparent 45%, 
+                    var(--accent-color) 45%, 
+                    var(--accent-color) 55%, 
+                    transparent 55%);
+            background-size: 20px 20px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .puzzle-btn:hover::before {
+            opacity: 0.3;
+            animation: puzzleMove 4s linear infinite;
+        }
+
+        @keyframes puzzleMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 40px 40px; }
+        }
+
+        /* Bottone a spirale */
+        .spiral-btn {
+            position: relative;
+        }
+
+        .spiral-btn::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 2px solid transparent;
+            border-top-color: var(--accent-color);
+            border-right-color: var(--accent-color);
+            border-radius: 50%;
+            animation: spiralRotate 3s linear infinite;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .spiral-btn:hover::after {
+            opacity: 1;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+        }
+
+        @keyframes spiralRotate {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        /* Bottone a mosaico */
+        .mosaic-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mosaic-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, 
+                    var(--card-bg) 33%, 
+                    transparent 33%, 
+                    transparent 66%, 
+                    var(--card-bg) 66%),
+                linear-gradient(0deg, 
+                    var(--card-bg) 33%, 
+                    transparent 33%, 
+                    transparent 66%, 
+                    var(--card-bg) 66%);
+            background-size: 6px 6px;
+            mix-blend-mode: overlay;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .mosaic-btn:hover::before {
+            opacity: 0.6;
+            animation: mosaicFlash 0.5s linear;
+        }
+
+        @keyframes mosaicFlash {
+            0% { opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { opacity: 0.6; }
+        }
+
+        @media screen and (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+
+            .subtitle {
+                font-size: 1.5rem;
+            }
+
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item::after {
+                left: 18px;
+            }
+
+            .left::after, .right::after {
+                left: 18px;
+            }
+
+            .right {
+                left: 0%;
+            }
+
+            .works-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .special-buttons-container {
+                gap: 2rem;
+            }
+
+            .special-btn {
+                min-width: 200px;
+                padding: 1.2rem 2rem;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Menandro</h1>
+            <div class="subtitle">Il poeta che ridefinì la commedia greca</div>
+            
+            <div class="reading-modes">
+                <button class="mode-btn active" data-mode="default">Classico</button>
+                <button class="mode-btn" data-mode="notturno">Notturno</button>
+                <button class="mode-btn" data-mode="filosofico">Filosofico</button>
+                <button class="mode-btn" data-mode="contemplativo">Contemplativo</button>
+            </div>
+            
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Menander_Getty_Villa_96.AA.39.jpg/320px-Menander_Getty_Villa_96.AA.39.jpg" alt="Busto di Menandro" style="max-width: 220px; border-radius: 50%; border: 5px solid var(--accent-color); margin-bottom: 2rem; box-shadow: var(--shadow);">
+        </header>
+
+        <div class="special-buttons-container">
+            <button class="special-btn puzzle-btn" data-target="stile">
+                <span class="icon">🧩</span>
+                <span>Scopri lo Stile</span>
+            </button>
+            <button class="special-btn spiral-btn" data-target="opere">
+                <span class="icon">🌀</span>
+                <span>Opere Principali</span>
+            </button>
+            <button class="special-btn mosaic-btn" data-target="innovazioni">
+                <span class="icon">🏛️</span>
+                <span>Innovazioni</span>
+            </button>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('intro')">
+                <h2>Introduzione al Genio Comico</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="intro">
+                <p>Menandro (342/341 a.C. - 290 a.C.), massimo esponente della <span class="highlight">Commedia Nuova</span> ateniese, rivoluzionò il teatro greco spostando l'attenzione dai temi politici e mitologici alla rappresentazione della <span class="highlight">vita quotidiana</span> e delle relazioni umane. Nato ad Atene in una famiglia agiata, fu allievo di Teofrasto e profondamente influenzato dalla filosofia peripatetica.</p>
+                
+                <div class="quote">
+                    "La fortuna somiglia a un dado: quando ha deciso, ribalta la situazione."<br>
+                    — Menandro, Monostici
+                </div>
+                
+                <p>Delle sue circa 108 commedie, solo una (<span class="highlight">Il Misantropo</span>) ci è pervenuta completa fino al XX secolo, quando fortunosi ritrovamenti papiracei hanno restituito ampi frammenti di altre opere. Nonostante ciò, la sua influenza sulla commedia occidentale è <span class="highlight">immensa</span>, attraverso la mediazione degli autori latini Plauto e Terenzio.</p>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('vita')">
+                <h2>Vita e Contesto Storico</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="vita">
+                <div class="timeline">
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <div class="timeline-year">342/341 a.C.</div>
+                            <p>Nascita di Menandro ad Atene, figlio di Diopeite, in una famiglia benestante. Cresce durante il periodo della <span class="highlight">egemonia macedone</span>, in un'Atene ormai privata del suo ruolo politico dominante.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <div class="timeline-year">321 a.C.</div>
+                            <p>Probabile debutto teatrale con <span class="highlight">L'ira</span>, opera perduta. Inizia una carriera che lo vedrà vincere 8 volte alle Lenee, nonostante la concorrenza di Filemone.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <div class="timeline-year">317-307 a.C.</div>
+                            <p>Periodo di massima fioritura creativa sotto il governo di <span class="highlight">Demetrio di Falero</span>. Compone alcune delle sue opere più celebri come <span class="highlight">La Samia</span> e <span class="highlight">Lo Scudo</span>.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <div class="timeline-year">316 a.C.</div>
+                            <p>Rappresentazione de <span class="highlight">Il Misantropo</span> (Dyskolos), unica commedia pervenutaci completa, che vince le Lenee. Il protagonista Cnemon è uno dei personaggi più memorabili del teatro antico.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <div class="timeline-year">307 a.C.</div>
+                            <p>Con la caduta di Demetrio di Falero, Menandro rischia la vita ma viene salvato dall'intervento del tiranno <span class="highlight">Demetrio Poliorcete</span>, suo ammiratore.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <div class="timeline-year">290 a.C.</div>
+                            <p>Morte di Menandro, probabilmente annegato mentre nuotava nel Pireo. La leggenda narra che Atene gli abbia tributato un monumento funerario sull'Acropoli, onore eccezionale per un poeta comico.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <p>Menandro visse in un'epoca di transizione, quando il teatro greco si stava trasformando da evento civico a intrattenimento raffinato. La sua commedia riflette i valori della <span class="highlight">borghesia ateniese</span> del IV secolo: amore per la vita privata, interesse per la psicologia individuale, ricerca di un equilibrio tra dovere e piacere.</p>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('opere')">
+                <h2>Opere Principali</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="opere">
+                <p>Grazie a fortunosi ritrovamenti papiracei, oggi possiamo apprezzare almeno parzialmente alcune delle sue commedie più celebri:</p>
+                
+                <div class="works-grid">
+                    <div class="work-card">
+                        <h3>Il Misantropo (316 a.C.)</h3>
+                        <p>Unica commedia completa, racconta di Cnemon, vecchio misantropo la cui ostilità verso il genere umano viene vinta dall'amore. Capolavoro di <span class="highlight">caratterizzazione psicologica</span> e ironia bonaria.</p>
+                    </div>
+                    <div class="work-card">
+                        <h3>La Samia (310 a.C. circa)</h3>
+                        <p>Commedia degli equivoci incentrata su una presunta relazione tra un giovane e la concubina del padre. Notevole per la <span class="highlight">complessa trama intrecciata</span> e la raffigurazione delle dinamiche familiari.</p>
+                    </div>
+                    <div class="work-card">
+                        <h3>Lo Scudo (fine IV sec.)</h3>
+                        <p>Commedia basata su un finto riconoscimento, dove uno scudo diventa prova di identità. Esempio del <span class="highlight">ruolo del caso</span> nelle trame menandree.</p>
+                    </div>
+                    <div class="work-card">
+                        <h3>La Donna di Perinto</h3>
+                        <p>Commedia quasi completa ritrovata nel 1905, tratta di riconoscimenti e amori contrastati. Mostra la <span class="highlight">maestria tecnica</span> di Menandro nel gestire intrighi complessi.</p>
+                    </div>
+                    <div class="work-card">
+                        <h3>L'Arbitrato (fine IV sec.)</h3>
+                        <p>Circa due terzi dell'opera sono stati ritrovati. La trama ruota attorno a un bambino esposto e riconosciuto grazie a un <span class="highlight">sistema di gioielli</span>. Capolavoro di costruzione drammaturgica.</p>
+                    </div>
+                    <div class="work-card">
+                        <h3>La Tonsa</h3>
+                        <p>Commedia frammentaria che tratta di un giovane innamorato di una ragazza di umili origini. Notevole per la <span class="highlight">sensibilità sociale</span> nel ritrarre personaggi popolari.</p>
+                    </div>
+                </div>
+                
+                <div class="quote">
+                    "Chi vive secondo natura non sarà mai povero; chi vive secondo l'opinione non sarà mai ricco."<br>
+                    — Menandro, Monostici
+                </div>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('stile')">
+                <h2>Stile e Tecniche Narrative</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="stile">
+                <p>Menandro sviluppò uno stile unico che rivoluzionò la commedia greca:</p>
+                
+                <h3>Linguaggio e Dialoghi</h3>
+                <p>Il suo linguaggio rappresenta una perfetta sintesi tra:
+                <ul>
+                    <li><span class="highlight">Naturalismo</span>: Riproduzione fedele del parlato quotidiano</li>
+                    <li><span class="highlight">Raffinatezza</span>: Giochi di parole e sottili ironie</li>
+                    <li><span class="highlight">Varietà</span>: Differenziazione linguistica tra personaggi</li>
+                </ul>
+                </p>
+                
+                <h3>Struttura Drammaturgica</h3>
+                <p>Menandro perfezionò la struttura in <span class="highlight">cinque atti</span> con:
+                <ul>
+                    <li>Prologo esplicativo</li>
+                    <li>Sviluppo progressivo dell'intreccio</li>
+                    <li>Riconoscimento (anagnorisis)</li>
+                    <li>Scioglimento finale</li>
+                </ul>
+                </p>
+                
+                <h3>Personaggi e Caratterizzazione</h3>
+                <p>Creò personaggi memorabili attraverso:
+                <ul>
+                    <li><span class="highlight">Profondità psicologica</span>: Motivazioni complesse e credibili</li>
+                    <li><span class="highlight">Evoluzione</span>: Cambiamento durante la commedia</li>
+                    <li><span class="highlight">Universalità</span>: Tipi umani riconoscibili ancora oggi</li>
+                </ul>
+                </p>
+                
+                <div class="quote">
+                    "La natura umana è simile a un vaso di terracotta: se lo colpisci quando è bagnato, anche se si deforma non si rompe; se è asciutto, si sbriciola in mille pezzi."<br>
+                    — Menandro, Frammento 612
+                </div>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('innovazioni')">
+                <h2>Innovazioni Teatrali</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="innovazioni">
+                <p>Menandro rivoluzionò la commedia greca introducendo importanti innovazioni:</p>
+                
+                <h3>Realismo Psicologico</h3>
+                <p>I personaggi di Menandro non sono maschere fisse ma individui complessi:
+                <ul>
+                    <li><span class="highlight">Cnemon</span> (Il Misantropo): non semplice burbero ma uomo deluso dalla vita</li>
+                    <li><span class="highlight">Pataico</span> (La Samia): padre non autoritario ma comprensivo</li>
+                    <li><span class="highlight">Carisio</span> (L'Arbitrato): giovane non libertino ma tormentato dal rimorso</li>
+                </ul>
+                </p>
+                
+                <h3>Struttura a Cinque Atti</h3>
+                <p>Menandro perfezionò la struttura in <span class="highlight">cinque atti</span> separati da interludi corali (anche se il coro aveva ormai perso la sua funzione drammatica).</p>
+                
+                <h3>Uso del Caso</h3>
+                <p>Nelle sue commedie il <span class="highlight">caso</span> (Tyche) gioca un ruolo fondamentale:
+                <ul>
+                    <li>Riconoscimenti fortuiti</li>
+                    <li>Incontri casuali</li>
+                    <li>Colpi di scena imprevisti</li>
+                </ul>
+                Tutto però inserito in una trama perfettamente logica.</p>
+                
+                <h3>Dialoghi Naturalistici</h3>
+                <p>Abbandonò lo stile elevato della tragedia per un linguaggio più <span class="highlight">quotidiano</span>, ricco di battute spontanee e giochi di parole.</p>
+                
+                <div class="quote">
+                    "La natura umana è simile a un vaso di terracotta: se lo colpisci quando è bagnato, anche se si deforma non si rompe; se è asciutto, si sbriciola in mille pezzi."<br>
+                    — Menandro, Frammento 612
+                </div>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('temi')">
+                <h2>Temi Filosofici</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="temi">
+                <p>Le commedie di Menandro esplorano con finezza psicologica alcuni temi fondamentali:</p>
+                
+                <h3>Fortuna e Libero Arbitrio</h3>
+                <p>Il rapporto tra <span class="highlight">Tyche</span> (la sorte) e <span class="highlight">Gnome</span> (la scelta razionale) è centrale:
+                <ul>
+                    <li>I personaggi subiscono colpi di sorte</li>
+                    <li>Ma sono chiamati a reagire con saggezza</li>
+                    <li>La felicità sta nell'accettare ciò che non si può cambiare</li>
+                </ul>
+                </p>
+                
+                <h3>Etica della Moderazione</h3>
+                <p>Influenzato dalla filosofia peripatetica, Menandro propone un ideale di <span class="highlight">medietà</span>:
+                <ul>
+                    <li>Critica sia dell'ascetismo che dell'edonismo sfrenato</li>
+                    <li>Valorizzazione della vita familiare</li>
+                    <li>Importanza della <span class="highlight">philanthropia</span> (umanità verso il prossimo)</li>
+                </ul>
+                </p>
+                
+                <h3>Critica Sociale Velata</h3>
+                <p>Pur evitando la satira politica diretta, Menandro:
+                <ul>
+                    <li>Mette in luce le <span class="highlight">ingiustizie sociali</span></li>
+                    <li>Critica l'ipocrisia dei benpensanti</li>
+                    <li>Mostra simpatia per gli emarginati</li>
+                </ul>
+                </p>
+                
+                <h3>Educazione Sentimentale</h3>
+                <p>Le sue commedie sono spesso <span class="highlight">romanzi di formazione</span> in cui i giovani:
+                <ul>
+                    <li>Imparano a conoscere se stessi</li>
+                    <li>Superano pregiudizi</li>
+                    <li>Trovano un equilibrio tra passione e ragione</li>
+                </ul>
+                </p>
+                
+                <div class="quote">
+                    "Non è ricco chi possiede molto, ma chi non desidera altro."<br>
+                    — Menandro, Frammento 540
+                </div>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header" onclick="toggleSection('eredita')">
+                <h2>Eredità Culturale</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content" id="eredita">
+                <p>L'influenza di Menandro si è estesa ben oltre il mondo antico:</p>
+                
+                <h3>Nel Teatro Romano</h3>
+                <p>Fu modello per:
+                <ul>
+                    <li><span class="highlight">Plauto</span>, che ne riprese trame e personaggi</li>
+                    <li><span class="highlight">Terenzio</span>, che ne imitò lo stile raffinato</li>
+                </ul>
+                Circa un terzo delle commedie latine derivano da originali menandrei.</p>
+                
+                <h3>Nella Commedia Moderna</h3>
+                <p>La sua influenza si ritrova in:
+                <ul>
+                    <li>Shakespeare (<span class="highlight">La commedia degli errori</span>)</li>
+                    <li>Molière (<span class="highlight">Il misantropo</span>)</li>
+                    <li>Goldoni (<span class="highlight">commedie di carattere</span>)</li>
+                </ul>
+                </p>
+                
+                <h3>Nella Letteratura Occidentale</h3>
+                <p>Menandro ha influenzato:
+                <ul>
+                    <li>Il <span class="highlight">romanzo borghese</span> dell'Ottocento</li>
+                    <li>La <span class="highlight">commedia sofisticata</span> di Wilde e Shaw</li>
+                    <li>Il <span class="highlight">teatro dell'assurdo</span> (in antitesi)</li>
+                </ul>
+                </p>
+                
+                <h3>Nella Cultura Popolare</h3>
+                <p>Elementi menandrei si ritrovano in:
+                <ul>
+                    <li>Sitcom televisive (<span class="highlight">equivoci e riconoscimenti</span>)</li>
+                    <li>Film romantici (<span class="highlight">ostacoli all'amore</span>)</li>
+                    <li>Commedie cinematografiche (<span class="highlight">personaggi stereotipati ma umani</span>)</li>
+                </ul>
+                </p>
+                
+                <div class="quote">
+                    "Menandro e la vita, chi di voi ha imitato l'altro?"<br>
+                    — Aristofane di Bisanzio
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer-content">
+                <p>© 2023 Viaggio nella Commedia Antica | Creato con passione per il teatro classico</p>
+                <a href="#" class="back-to-top">
+                    <span>Torna all'inizio</span>
+                    <i>↑</i>
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Toggle sections
+        function toggleSection(sectionId) {
+            const content = document.getElementById(sectionId);
+            const btn = content.previousElementSibling.querySelector('.toggle-btn');
+            
+            content.classList.toggle('active');
+            btn.textContent = content.classList.contains('active') ? '−' : '+';
+        }
+
+        // Reading modes
+        const modeButtons = document.querySelectorAll('.mode-btn');
+        modeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                modeButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Change reading mode
+                const mode = button.dataset.mode;
+                document.body.className = mode !== 'default' ? mode : '';
+                
+                // Update decorative borders
+                const decorativeBorders = document.querySelectorAll('.section-content, .timeline-content, .work-card');
+                decorativeBorders.forEach(el => {
+                    el.style.borderLeft = getComputedStyle(document.documentElement).getPropertyValue('--decorative-border');
+                    el.style.borderRight = getComputedStyle(document.documentElement).getPropertyValue('--decorative-border');
+                    el.style.borderBottom = getComputedStyle(document.documentElement).getPropertyValue('--decorative-border');
+                });
+            });
+        });
+
+        // Smooth scroll to top
+        document.querySelector('.back-to-top').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Open first section by default
+        document.addEventListener('DOMContentLoaded', () => {
+            const firstSection = document.querySelector('.section-content');
+            const firstBtn = firstSection.previousElementSibling.querySelector('.toggle-btn');
+            
+            firstSection.classList.add('active');
+            firstBtn.textContent = '−';
+            
+            // Initialize decorative borders
+            const decorativeBorders = document.querySelectorAll('.section-content, .timeline-content, .work-card');
+            decorativeBorders.forEach(el => {
+                el.style.borderLeft = getComputedStyle(document.documentElement).getPropertyValue('--decorative-border');
+                el.style.borderRight = getComputedStyle(document.documentElement).getPropertyValue('--decorative-border');
+                el.style.borderBottom = getComputedStyle(document.documentElement).getPropertyValue('--decorative-border');
+            });
+        });
+
+        // Special buttons effects and functionality
+        document.querySelectorAll('.special-btn').forEach(btn => {
+            // Visual effects
+            btn.addEventListener('mouseenter', () => {
+                const icon = btn.querySelector('.icon');
+                if (icon) {
+                    icon.style.transform = 'rotate(10deg) scale(1.1)';
+                }
+            });
+            
+            btn.addEventListener('mouseleave', () => {
+                const icon = btn.querySelector('.icon');
+                if (icon) {
+                    icon.style.transform = '';
+                }
+            });
+            
+            // Scroll to section functionality
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('data-target');
+                const targetSection = document.getElementById(targetId);
+                
+                // First open the section if it's closed
+                if (!targetSection.classList.contains('active')) {
+                    const sectionHeader = targetSection.previousElementSibling;
+                    const toggleBtn = sectionHeader.querySelector('.toggle-btn');
+                    targetSection.classList.add('active');
+                    toggleBtn.textContent = '−';
+                }
+                
+                // Then scroll to it
+                targetSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

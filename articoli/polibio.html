@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polibio: Il Sistema Romano e la Teoria della Storia</title>
+    <style>
+        :root {
+            --primary-color: #4a4e69;
+            --secondary-color: #9a8c98;
+            --text-color: #333;
+            --bg-color: #f2e9e4;
+            --card-bg: #fff;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Garamond', 'Times New Roman', serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            border-top: 5px solid var(--secondary-color);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-style: italic;
+            color: var(--secondary-color);
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+        }
+
+        .decoration {
+            width: 150px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+            margin: 25px auto;
+            border-radius: 2px;
+        }
+
+        .theme-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .theme-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: var(--transition);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            font-family: inherit;
+        }
+
+        .theme-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .default {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .notturno {
+            background-color: #22223b;
+            color: #c9ada7;
+        }
+
+        .filosofico {
+            background-color: #3d405b;
+            color: #f2cc8f;
+        }
+
+        .contemplativo {
+            background-color: #3a5a40;
+            color: #d8f3dc;
+        }
+
+        .section-container {
+            margin-bottom: 40px;
+        }
+
+        .section-btn {
+            width: 100%;
+            padding: 18px 25px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            text-align: left;
+            font-size: 1.3rem;
+            cursor: pointer;
+            border-radius: var(--border-radius);
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+            box-shadow: var(--box-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--secondary-color), var(--primary-color));
+            transition: var(--transition);
+        }
+
+        .section-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 14px rgba(0,0,0,0.15);
+        }
+
+        .section-btn:hover::before {
+            width: 8px;
+        }
+
+        .section-btn::after {
+            content: '↓';
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .section-btn.active::after {
+            content: '↑';
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            padding: 0;
+            background-color: var(--card-bg);
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            box-shadow: var(--box-shadow);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+        }
+
+        .section-content.show {
+            padding: 30px;
+            max-height: 10000px;
+        }
+
+        .section-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .section-content h3 {
+            color: var(--primary-color);
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 8px;
+        }
+
+        .quote {
+            font-style: italic;
+            padding: 25px;
+            background-color: rgba(154, 140, 152, 0.08);
+            border-left: 5px solid var(--secondary-color);
+            margin: 30px 0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            position: relative;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .quote::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 4rem;
+            color: rgba(154, 140, 152, 0.1);
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .quote-author {
+            text-align: right;
+            margin-top: 15px;
+            font-weight: bold;
+            color: var(--secondary-color);
+            font-style: normal;
+        }
+
+        .timeline {
+            margin: 40px 0;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--secondary-color), var(--primary-color));
+        }
+
+        .timeline-item {
+            padding-left: 30px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 5px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            border: 3px solid var(--card-bg);
+            z-index: 1;
+        }
+
+        .timeline-year {
+            font-weight: bold;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .constitution-diagram {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin: 30px 0;
+            box-shadow: var(--box-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .constitution-diagram::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--secondary-color), var(--primary-color));
+        }
+
+        .constitution-diagram h4 {
+            color: var(--primary-color);
+            margin-top: 0;
+            font-size: 1.2rem;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            box-shadow: var(--box-shadow);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .comparison-table th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(154, 140, 152, 0.2);
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background-color: rgba(154, 140, 152, 0.05);
+        }
+
+        .comparison-table tr:hover {
+            background-color: rgba(154, 140, 152, 0.1);
+        }
+
+        .influence-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .influence-item {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            border-top: 3px solid var(--secondary-color);
+        }
+
+        .influence-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .influence-item h4 {
+            color: var(--secondary-color);
+            margin-top: 0;
+            font-size: 1.2rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        /* Theme styles */
+        body.notturno-theme {
+            --primary-color: #22223b;
+            --secondary-color: #c9ada7;
+            --text-color: #f2e9e4;
+            --bg-color: #4a4e69;
+            --card-bg: #22223b;
+        }
+
+        body.filosofico-theme {
+            --primary-color: #3d405b;
+            --secondary-color: #f2cc8f;
+            --text-color: #f4f1de;
+            --bg-color: #3d405b;
+            --card-bg: #1d1f2a;
+        }
+
+        body.contemplativo-theme {
+            --primary-color: #3a5a40;
+            --secondary-color: #d8f3dc;
+            --text-color: #f8f9fa;
+            --bg-color: #2d3e30;
+            --card-bg: #3a5a40;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Polibio di Megalopoli</h1>
+        <div class="subtitle">Lo Storico della Repubblica Romana e Teorico della Costituzione Mista</div>
+        <div class="decoration"></div>
+        
+        <div class="theme-selector">
+            <button class="theme-btn default" onclick="setTheme('default')">Default</button>
+            <button class="theme-btn notturno" onclick="setTheme('notturno')">Notturno</button>
+            <button class="theme-btn filosofico" onclick="setTheme('filosofico')">Filosofico</button>
+            <button class="theme-btn contemplativo" onclick="setTheme('contemplativo')">Contemplativo</button>
+        </div>
+    </header>
+
+    <div class="section-container">
+        <button class="section-btn">Introduzione a Polibio</button>
+        <div class="section-content">
+            <p>Polibio (200 a.C. circa - 118 a.C. circa), storico greco originario di Megalopoli in Arcadia, rappresenta una figura cruciale nella storiografia antica. Prigioniero politico portato a Roma, divenne un osservatore privilegiato dell'ascesa di Roma a potenza mondiale. La sua opera principale, <em>Storie</em> (in greco: Ἱστορίαι), in 40 libri (di cui solo i primi 5 sono giunti completi a noi), analizza sistematicamente l'espansione romana tra il 264 e il 146 a.C., con particolare attenzione alla Seconda Guerra Punica e alla conquista della Grecia.</p>
+            
+            <div class="quote">
+                "Sarebbe forse possibile trovare qualcuno così meschino o indolente da non desiderare di conoscere come e grazie a quale forma di governo quasi tutto il mondo civilizzato sia caduto sotto il dominio unico di Roma in meno di cinquantatré anni?"
+                <div class="quote-author">- Polibio, <em>Storie</em>, I, 1</div>
+            </div>
+            
+            <p>Polibio sviluppò un approccio innovativo alla storia, caratterizzato da:</p>
+            
+            <div class="influence-grid">
+                <div class="influence-item">
+                    <h4>Universalità</h4>
+                    <p>Primo storico a trattare l'intero mondo mediterraneo come un sistema interconnesso</p>
+                </div>
+                <div class="influence-item">
+                    <h4>Pragmatismo</h4>
+                    <p>Focus sulle cause politiche, militari ed economiche degli eventi (historia pragmatike)</p>
+                </div>
+                <div class="influence-item">
+                    <h4>Ciclismo Politico</h4>
+                    <p>Teoria dell'anaciclosi: la circolarità delle forme di governo</p>
+                </div>
+                <div class="influence-item">
+                    <h4>Utilità Pratica</h4>
+                    <p>La storia come maestra di vita per statisti e militari</p>
+                </div>
+            </div>
+            
+            <p>Polibio rappresenta il ponte tra la cultura greca e quella romana. Pur essendo greco, sviluppò un'ammirazione per il sistema politico romano, che analizzò con occhio critico ma imparziale. La sua opera è fondamentale per comprendere non solo le vicende storiche del periodo, ma anche il pensiero politico antico e le ragioni del successo romano.</p>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">La Vita di Polibio</button>
+        <div class="section-content">
+            <p>La vita di Polibio fu segnata dall'ascesa di Roma e dal declino dell'indipendenza greca, eventi che avrebbero formato il nucleo della sua opera storica.</p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">200 a.C. circa</div>
+                    <p>Nascita a Megalopoli, in Arcadia, in una famiglia aristocratica. Suo padre, Licorta, era un importante politico della Lega Achea.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">182-181 a.C.</div>
+                    <p>Viene inviato come ambasciatore in Egitto, dimostrando già prestigio politico.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">170-169 a.C.</div>
+                    <p>Eletto ipparco (comandante della cavalleria) della Lega Achea, la seconda carica più importante.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">168 a.C.</div>
+                    <p>Dopo la sconfitta di Perseo di Macedonia a Pidna, viene deportato a Roma come ostaggio politico insieme a 1000 altri achei. Qui entra nel circolo degli Scipioni.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">167-150 a.C.</div>
+                    <p>Periodo di detenzione a Roma, durante il quale studia le istituzioni romane e viaggia con Scipione Emiliano, diventandone amico e mentore.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">150 a.C.</div>
+                    <p>Viene liberato e continua a viaggiare, visitando molti luoghi descritti nella sua opera, tra cui Cartagine, la Spagna e l'Africa.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">146 a.C.</div>
+                    <p>Assiste alla distruzione di Cartagine e Corinto. Media tra Roma e le città greche dopo la conquista.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">118 a.C. circa</div>
+                    <p>Morte di Polibio, probabilmente in Grecia. Continua a scrivere fino agli ultimi anni.</p>
+                </div>
+            </div>
+            
+            <h3>L'Esperienza come Ostaggio e la Cerchia degli Scipioni</h3>
+            <p>L'esperienza di Polibio come ostaggio a Roma si rivelò fondamentale per la sua formazione intellettuale:</p>
+            
+            <div class="constitution-diagram">
+                <h4>La Cerchia degli Scipioni</h4>
+                <p>Polibio entrò nel circolo culturale di Scipione Emiliano, figlio di Lucio Emilio Paolo Macedonico e adottivo nipote di Scipione Africano. Questo ambiente, permeato di cultura greca ma profondamente romano, gli permise di:</p>
+                <ul>
+                    <li>Accedere agli archivi e ai documenti ufficiali romani</li>
+                    <li>Conoscere da vicino il funzionamento dello stato romano</li>
+                    <li>Partecipare a discussioni filosofiche e politiche di alto livello</li>
+                    <li>Accompagnare Scipione in campagne militari, tra cui la distruzione di Cartagine</li>
+                </ul>
+                <p>Questa posizione privilegiata fece di Polibio un osservatore unico del sistema romano, capace di comprenderne sia le virtù che i difetti.</p>
+            </div>
+            
+            <p>Polibio stesso riconosce l'importanza della sua esperienza romana: <em>"La sorte mi ha condotto a Roma e mi ha fatto partecipare a molti avvenimenti... mi ha dato la possibilità di acquisire conoscenze precise su queste cose"</em> (III, 4).</p>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">Le Storie: Struttura e Contenuto</button>
+        <div class="section-content">
+            <p>L'opera monumentale di Polibio, originariamente in 40 libri, copre il periodo dal 264 a.C. (inizio della Prima Guerra Punica) al 146 a.C. (distruzione di Cartagine e Corinto), con particolare attenzione agli anni 220-167 a.C.</p>
+            
+            <h3>Struttura dell'Opera</h3>
+            <p>Le <em>Storie</em> sono organizzate secondo un piano preciso:</p>
+            
+            <div class="constitution-diagram">
+                <h4>Libri I-II: Prolegomeni</h4>
+                <p>Introduzione e antefatti (Prima Guerra Punica, storia della Lega Achea)</p>
+            </div>
+            
+            <div class="constitution-diagram">
+                <h4>Libri III-XXXIX: Narrazione Principale</h4>
+                <p>Eventi dal 220 al 167 a.C. in ordine cronologico, divisi per olimpiadi</p>
+                <ul>
+                    <li>III-V: Seconda Guerra Punica (218-201 a.C.)</li>
+                    <li>VI: Excursus sulla costituzione romana</li>
+                    <li>VII-XV: Guerre in Grecia e Oriente</li>
+                    <li>XVI-XXXIX: Espansione romana fino alla vittoria su Perseo</li>
+                </ul>
+            </div>
+            
+            <div class="constitution-diagram">
+                <h4>Libro XL: Conclusioni</h4>
+                <p>Eventi successivi fino al 146 a.C. (perduto)</p>
+            </div>
+            
+            <h3>Metodo Storiografico</h3>
+            <p>Polibio critica i suoi predecessori e stabilisce nuovi standard per la storiografia:</p>
+            
+            <div class="quote">
+                "La conoscenza teorica dei luoghi senza esperienza personale è come dipingere un animale a occhi chiusi. Il risultato non avrà alcuna somiglianza con la realtà."
+                <div class="quote-author">- Polibio, <em>Storie</em>, XII, 25</div>
+            </div>
+            
+            <ul>
+                <li><strong>Autopsia:</strong> visita personale dei luoghi descritti</li>
+                <li><strong>Esperienza politica e militare:</strong> requisito essenziale per lo storico</li>
+                <li><strong>Documentazione:</strong> uso sistematico di archivi e fonti primarie</li>
+                <li><strong>Universalità:</strong> storia "sincronica" che collega eventi in diverse regioni</li>
+                <li><strong>Causalità:</strong> ricerca delle cause profonde, non solo della successione degli eventi</li>
+            </ul>
+            
+            <h3>I Discorsi in Polibio</h3>
+            <p>A differenza di Tucidide, Polibio è più cauto nell'inserire discorsi ricostruiti:</p>
+            
+            <div class="quote">
+                "Quando è necessario riportare discorsi pronunciati prima di qualche azione importante... mi limiterò a riportare il senso generale di ciò che fu realmente detto."
+                <div class="quote-author">- Polibio, <em>Storie</em>, XXXVI, 1</div>
+            </div>
+            
+            <p>Tra i discorsi più significativi:</p>
+            <ul>
+                <li>Scipione Africano ai soldati prima di Zama (XV, 10)</li>
+                <li>Discorso di Agelao sulla minaccia romana (V, 104)</li>
+                <li>Dialogo tra Scipione e Polibio sulla distruzione di Cartagine (XXXVIII, 21)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">La Teoria della Costituzione Mista</button>
+        <div class="section-content">
+            <p>Uno dei contributi più originali di Polibio è la sua analisi della costituzione romana nel Libro VI, dove sviluppa la teoria della costituzione mista come forma di governo ideale.</p>
+            
+            <h3>L'Anaciclosi: Il Ciclo delle Costituzioni</h3>
+            <p>Polibio elabora una teoria ciclica dell'evoluzione politica (anakyklosis):</p>
+            
+            <div class="constitution-diagram">
+                <h4>1. Monarchia</h4>
+                <p>Governo del migliore, che degenera in...</p>
+            </div>
+            
+            <div class="constitution-diagram">
+                <h4>2. Tirannide</h4>
+                <p>Abuso di potere che porta alla rivolta degli ottimi (aristoi) e all'instaurazione di...</p>
+            </div>
+            
+            <div class="constitution-diagram">
+                <h4>3. Aristocrazia</h4>
+                <p>Governo dei migliori, che degenera in...</p>
+            </div>
+            
+            <div class="constitution-diagram">
+                <h4>4. Oligarchia</h4>
+                <p>Governo corrotto di pochi che porta alla rivolta popolare e all'instaurazione di...</p>
+            </div>
+            
+            <div class="constitution-diagram">
+                <h4>5. Democrazia</h4>
+                <p>Governo del popolo, che degenera in...</p>
+            </div>
+            
+            <div class="constitution-diagram">
+                <h4>6. Oclocrazia</h4>
+                <p>Governo della plebe che precipita nel caos, fino all'emergere di un nuovo monarca</p>
+            </div>
+            
+            <div class="quote">
+                "Questa è la ruota della natura che fa girare e rivolgere le costituzioni."
+                <div class="quote-author">- Polibio, <em>Storie</em>, VI, 9</div>
+            </div>
+            
+            <h3>La Costituzione Mista Romana</h3>
+            <p>Polibio vede nella costituzione romana la soluzione al ciclo degenerativo:</p>
+            
+            <table class="comparison-table">
+                <tr>
+                    <th>Elemento</th>
+                    <th>Istituzione Romana</th>
+                    <th>Funzione</th>
+                </tr>
+                <tr>
+                    <td>Monarchico</td>
+                    <td>Consoli</td>
+                    <td>Comando militare, esecutivo</td>
+                </tr>
+                <tr>
+                    <td>Aristocratico</td>
+                    <td>Senato</td>
+                    <td>Controllo finanziario, politica estera</td>
+                </tr>
+                <tr>
+                    <td>Democratico</td>
+                    <td>Assemblee popolari</td>
+                    <td>Elezione magistrati, approvazione leggi</td>
+                </tr>
+            </table>
+            
+            <p>L'equilibrio tra questi elementi crea un sistema stabile dove:</p>
+            <ul>
+                <li>Ogni potere controlla e bilancia gli altri (checks and balances)</li>
+                <li>Si previene la degenerazione verso estremi</li>
+                <li>Si combinano i vantaggi di ogni forma di governo puro</li>
+            </ul>
+            
+            <div class="quote">
+                "Non sarebbe possibile trovare una costituzione meglio equilibrata di questa... in essa ogni elemento è così propriamente contrapposto agli altri che è impossibile stabilire con certezza se l'insieme sia aristocratico, democratico o monarchico."
+                <div class="quote-author">- Polibio, <em>Storie</em>, VI, 11</div>
+            </div>
+            
+            <h3>Influenza sul Pensiero Politico</h3>
+            <p>La teoria polibiana della costituzione mista influenzò:</p>
+            <ul>
+                <li>Cicerone (<em>De re publica</em>)</li>
+                <li>Machiavelli (<em>Discorsi sopra la prima deca di Tito Livio</em>)</li>
+                <li>I Padri Fondatori degli Stati Uniti (Costituzione americana)</li>
+                <li>Montesquieu (teoria della separazione dei poteri)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">Polibio e l'Imperialismo Romano</button>
+        <div class="section-content">
+            <p>Polibio offre una delle prime analisi sistematiche dell'imperialismo romano, cercando di spiegare il fenomeno senza cadere in apologetica o demonizzazione.</p>
+            
+            <h3>Le Cause del Successo Romano</h3>
+            <p>Secondo Polibio, Roma raggiunse l'egemonia grazie a:</p>
+            
+            <div class="influence-grid">
+                <div class="influence-item">
+                    <h4>Superiorità Militare</h4>
+                    <p>Disciplina, addestramento e organizzazione superiori</p>
+                </div>
+                <div class="influence-item">
+                    <h4>Istituzioni Politiche</h4>
+                    <p>Costituzione mista che garantiva stabilità</p>
+                </div>
+                <div class="influence-item">
+                    <h4>Virtù Civiche</h4>
+                    <p>Religiosità, senso del dovere, austerità</p>
+                </div>
+                <div class="influence-item">
+                    <h4>Strategia Geopolitica</h4>
+                    <p>Alleanze intelligenti e trattamento dei vinti</p>
+                </div>
+            </div>
+            
+            <div class="quote">
+                "I Romani si proponevano come obiettivo, con l'aiuto delle armi e del coraggio, di dominare su tutti, e di realizzare questo audace progetto non solo con la forza, ma anche con metodo e prudenza."
+                <div class="quote-author">- Polibio, <em>Storie</em>, I, 63</div>
+            </div>
+            
+            <h3>La "Fortuna" di Roma</h3>
+            <p>Polibio analizza il ruolo della Tyche (Fortuna) nell'ascesa romana:</p>
+            <ul>
+                <li>Non è una divinità capricciosa, ma quasi una forza storica</li>
+                <li>Roma seppe sfruttare le occasioni offerte dalla fortuna</li>
+                <li>La virtù romana (arete) interagisce con la fortuna</li>
+            </ul>
+            
+            <div class="quote">
+                "La fortuna ha portato quasi tutti gli avvenimenti del mondo in una sola direzione e ha costretto tutti a volgersi verso un unico fine."
+                <div class="quote-author">- Polibio, <em>Storie</em>, I, 4</div>
+            </div>
+            
+            <h3>Critica all'Imperialismo</h3>
+            <p>Pur ammirando Roma, Polibio non ne ignora i lati negativi:</p>
+            
+            <table class="comparison-table">
+                <tr>
+                    <th>Aspetti Positivi</th>
+                    <th>Aspetti Critici</th>
+                </tr>
+                <tr>
+                    <td>Trattamento relativamente clemente dei vinti</td>
+                    <td>Crudeltà in casi particolari (es. Cartagine)</td>
+                </tr>
+                <tr>
+                    <td>Capacità di integrare le élite locali</td>
+                    <td>Sfruttamento economico delle province</td>
+                </tr>
+                <tr>
+                    <td>Stabilità e ordine garantiti</td>
+                    <td>Perdita di libertà per le nazioni conquistate</td>
+                </tr>
+            </table>
+            
+            <p>Polibio prevede anche i possibili rischi della corruzione per Roma: <em>"Quando uno stato, dopo essere scampato a molti pericoli, raggiunge il dominio incontestato e la prosperità... è chiaro che i costumi si corromperanno"</em> (VI, 57).</p>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">Polibio come Storico Militare</button>
+        <div class="section-content">
+            <p>L'esperienza diretta di Polibio come comandante militare si riflette nella sua approfondita analisi delle strategie e tattiche militari, che costituiscono una parte significativa della sua opera.</p>
+            
+            <h3>Analisi delle Battaglie</h3>
+            <p>Polibio offre descrizioni dettagliate di importanti battaglie, tra cui:</p>
+            
+            <div class="influence-grid">
+                <div class="influence-item">
+                    <h4>Canne (216 a.C.)</h4>
+                    <p>Capolavoro tattico di Annibale, analizzato nei minimi dettagli</p>
+                </div>
+                <div class="influence-item">
+                    <h4>Zama (202 a.C.)</h4>
+                    <p>Scipione Africano sconfigge Annibale, fine della Seconda Guerra Punica</p>
+                </div>
+                <div class="influence-item">
+                    <h4>Pidna (168 a.C.)</h4>
+                    <p>Decisiva vittoria romana su Perseo di Macedonia</p>
+                </div>
+                <div class="influence-item">
+                    <h4>Assedi</h4>
+                    <p>Descrizioni tecniche di assedi come quello di Siracusa</p>
+                </div>
+            </div>
+            
+            <h3>Innovazioni nell'Analisi Militare</h3>
+            <p>Polibio introduce diversi elementi innovativi nella storiografia militare:</p>
+            
+            <div class="constitution-diagram">
+                <h4>1. Approccio Tecnico</h4>
+                <p>Descrizioni precise di formazioni, equipaggiamenti e tattiche</p>
+            </div>
+            
+            <div class="constitution-diagram">
+                <h4>2. Logistica</h4>
+                <p>Attenzione inedita a rifornimenti, movimenti e organizzazione</p>
+            </div>
+            
+            <div class="constitution-diagram">
+                <h4>3. Geografia Militare</h4>
+                <p>Importanza del terreno e delle mappe per comprendere le battaglie</p>
+            </div>
+            
+            <div class="constitution-diagram">
+                <h4>4. Psicologia del Combattimento</h4>
+                <p>Analisi del morale delle truppe e del fattore umano</p>
+            </div>
+            
+            <div class="quote">
+                "Lo storico che scrive di operazioni militari non deve limitarsi a indagare ciò che è accaduto, ma anche per quali ragioni sia accaduto, sia nel caso di successi che di fallimenti."
+                <div class="quote-author">- Polibio, <em>Storie</em>, III, 31</div>
+            </div>
+            
+            <h3>Confronto tra Eserciti</h3>
+            <p>Polibio offre analisi comparative tra gli eserciti del Mediterraneo:</p>
+            
+            <table class="comparison-table">
+                <tr>
+                    <th>Esercito</th>
+                    <th>Punti di Forza</th>
+                    <th>Punti Deboli</th>
+                </tr>
+                <tr>
+                    <td>Romano</td>
+                    <td>Disciplina, organizzazione, flessibilità</td>
+                    <td>Lentezza nell'adattarsi a nuovi nemici</td>
+                </tr>
+                <tr>
+                    <td>Cartaginese</td>
+                    <td>Genio tattico, cavalleria superiore</td>
+                    <td>Dipendenze da mercenari, mancanza di leva popolare</td>
+                </tr>
+                <tr>
+                    <td>Macedone</td>
+                    <td>Falange potente, tradizione militare</td>
+                    <td>Rigidità tattica, vulnerabilità su terreni accidentati</td>
+                </tr>
+                <tr>
+                    <td>Greco</td>
+                    <td>Addestramento individuale, spirito civico</td>
+                    <td>Divisioni politiche, mancanza di unità</td>
+                </tr>
+            </table>
+            
+            <p>Queste analisi fanno di Polibio una fonte insostituibile per la storia militare antica e un precursore dell'analisi strategica moderna.</p>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">L'Eredità di Polibio</button>
+        <div class="section-content">
+            <p>L'influenza di Polibio si è estesa ben oltre l'antichità, plasmando la storiografia, il pensiero politico e l'analisi militare attraverso i secoli.</p>
+            
+            <h3>Nell'Antichità</h3>
+            <ul>
+                <li><strong>Posidonio</strong> continuò la sua opera storica</li>
+                <li><strong>Livio</strong> lo utilizzò come fonte principale per la storia romana</li>
+                <li><strong>Cicerone</strong> ne adottò la teoria della costituzione mista</li>
+            </ul>
+            
+            <h3>Nel Rinascimento</h3>
+            <ul>
+                <li>Riscoperta dei suoi manoscritti influenzò l'umanesimo politico</li>
+                <li>Machiavelli lo cita nei <em>Discorsi</em> come modello di analisi politica</li>
+                <li>Le sue descrizioni geografiche aiutarono l'esplorazione del mondo</li>
+            </ul>
+            
+            <h3>Nell'Età Moderna</h3>
+            <ul>
+                <li>Montesquieu si ispirò alla sua analisi delle istituzioni romane</li>
+                <li>I Padri Fondatori americani studiarono la sua teoria dei checks and balances</li>
+                <li>Gli storici del XIX secolo lo rivalutarono come storico "scientifico"</li>
+            </ul>
+            
+            <h3>Nel XX-XXI Secolo</h3>
+            
+            <div class="influence-grid">
+                <div class="influence-item">
+                    <h4>Storiografia</h4>
+                    <p>Modello per la storia universale e comparata</p>
+                </div>
+                <div class="influence-item">
+                    <h4>Scienza Politica</h4>
+                    <p>Studi sui sistemi costituzionali e la stabilità politica</p>
+                </div>
+                <div class="influence-item">
+                    <h4>Relazioni Internazionali</h4>
+                    <p>Analisi dell'egemonia e dell'ordine internazionale</p>
+                </div>
+                <div class="influence-item">
+                    <h4>Teoria Militare</h4>
+                    <p>Precursore dell'analisi strategica moderna</p>
+                </div>
+            </div>
+            
+            <div class="quote">
+                "Polibio non è solo lo storico dell'ascesa di Roma, ma il teorico della prima globalizzazione, colui che comprese come il mondo mediterraneo stesse diventando un sistema interconnesso."
+                <div class="quote-author">- Arnaldo Momigliano, storico</div>
+            </div>
+            
+            <h3>Polibio Oggi</h3>
+            <p>Nell'era contemporanea, Polibio viene letto e interpretato attraverso nuove lenti:</p>
+            
+            <ul>
+                <li><strong>Global History:</strong> precursore della storia sistemica e interconnessa</li>
+                <li><strong>Political Science:</strong> studi sulla stabilità costituzionale e la ciclicità politica</li>
+                <li><strong>International Relations:</strong> analisi dell'egemonia e del potere unipolare</li>
+                <li><strong>Military Studies:</strong> le sue analisi tattiche sono ancora studiate nelle accademie militari</li>
+            </ul>
+            
+            <p>La sua opera rimane fondamentale per comprendere non solo l'antichità, ma anche le dinamiche del potere che continuano a plasmare il nostro mondo.</p>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">Citazioni Celebri di Polibio</button>
+        <div class="section-content">
+            <p>L'opera di Polibio è ricca di passaggi che rivelano la profondità del suo pensiero storico e politico. Ecco alcune delle citazioni più significative:</p>
+            
+            <div class="quote">
+                "La verità è alla storia ciò che gli occhi sono per il corpo: se togli gli occhi dal corpo, questo diventa inutile, e se togli la verità dalla storia, ciò che rimane non è che un racconto inutile."
+            </div>
+            
+            <div class="quote">
+                "Non sono gli avvenimenti in sé che devono essere oggetto di ammirazione o di biasimo, ma le loro cause e i loro risultati."
+            </div>
+            
+            <div class="quote">
+                "La caratteristica più nobile della storia è questa: che avvertiamo in anticipo gli eventi che stanno per accadere, secondo il ciclo degli affari umani, e che possiamo quindi talvolta sospenderne il corso, quando si presentano, o almeno sostenerli con maggiore fermezza."
+            </div>
+            
+            <div class="quote">
+                "Nelle guerre, più che in qualsiasi altra attività, è necessario lasciare spazio all'imprevisto."
+            </div>
+            
+            <div class="quote">
+                "La fortuna mostra la sua potenza proprio quando non c'è alcuna causa razionale che spieghi gli eventi straordinari."
+            </div>
+            
+            <div class="quote">
+                "È compito dello storico registrare non solo ciò che è stato detto, ma anche ciò che è stato fatto, e in entrambi i casi ricercare la verità."
+            </div>
+            
+            <div class="quote">
+                "Nessuno è così folle da preferire la guerra alla pace: in pace i figli seppelliscono i padri, in guerra i padri seppelliscono i figli."
+            </div>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">Curiosità su Polibio</button>
+        <div class="section-content">
+            <h3>1. Il Primo Storico "Globale"</h3>
+            <p>Polibio è considerato il primo storico a trattare l'intero mondo mediterraneo come un sistema interconnesso, anticipando la "global history".</p>
+            
+            <h3>2. L'Esperimento sul Monte Olimpo</h3>
+            <p>Per verificare un racconto di Filostefano, salì sul Monte Olimpo per controllare se fosse davvero impossibile accendere fuochi in vetta a causa del freddo.</p>
+            
+            <h3>3. Il Viaggio attraverso le Alpi</h3>
+            <p>Ripercorse il percorso di Annibale attraverso le Alpi per verificarne la fattibilità, uno dei primi esempi di ricerca storica sul campo.</p>
+            
+            <h3>4. L'Inventore della Critica delle Fonti</h3>
+            <p>Sviluppò un metodo sistematico per valutare l'attendibilità delle fonti, precorrendo la moderna storiografia scientifica.</p>
+            
+            <h3>5. Il Primo a Descrivere la Macchina di Anticitera</h3>
+            <p>Nelle parti perdute della sua opera descrisse probabilmente questo antico "computer" astronomico, ritrovato nel 1901.</p>
+            
+            <h3>6. L'Interesse per la Crittografia</h3>
+            <p>Descrive un sistema di comunicazione segreta usando griglie di lettere, precursore dei moderni cifrari.</p>
+            
+            <h3>7. L'Osservatore della Cometa di Halley</h3>
+            <p>Probabilmente osservò il passaggio della cometa di Halley nel 147 a.C., come suggeriscono alcune fonti indirette.</p>
+            
+            <h3>8. L'Ultimo Grande Storico Ellenistico</h3>
+            <p>Rappresenta il culmine della storiografia greca, sintetizzando tradizione erodotea e metodo tucidideo.</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2023 Studio su Polibio di Megalopoli - Tutti i diritti riservati</p>
+        <p>Fonti principali: <em>Storie</em> di Polibio, edizioni critiche e commenti moderni</p>
+        <p>Realizzato secondo il metodo polibiano: verifica delle fonti e analisi pragmatica</p>
+    </footer>
+
+    <script>
+        // Toggle sections
+        const sectionBtns = document.querySelectorAll('.section-btn');
+        sectionBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.classList.toggle('active');
+                const content = btn.nextElementSibling;
+                content.classList.toggle('show');
+            });
+        });
+
+        // Set theme
+        function setTheme(theme) {
+            document.body.className = theme + '-theme' || '';
+            
+            // Update active button
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // Open first section by default
+        sectionBtns[0].click();
+    </script>
+</body>
+</html>

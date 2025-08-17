@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eschilo: Il Fondatore del Teatro Tragico</title>
+    <style>
+        :root {
+            --primary-color: #5e3023;
+            --secondary-color: #895737;
+            --text-color: #333;
+            --bg-color: #f5ebe0;
+            --card-bg: #fff;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Garamond', 'Times New Roman', serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            border-top: 5px solid var(--secondary-color);
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Aischylos_Bust_%26_Mask.jpg/800px-Aischylos_Bust_%26_Mask.jpg');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        }
+
+        h1 {
+            color: white;
+            font-size: 3rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-style: italic;
+            color: #f5ebe0;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .decoration {
+            width: 150px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+            margin: 25px auto;
+            border-radius: 2px;
+        }
+
+        .theme-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+            background-color: rgba(0,0,0,0.5);
+            padding: 15px;
+            border-radius: var(--border-radius);
+        }
+
+        .theme-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: var(--transition);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            font-family: inherit;
+        }
+
+        .theme-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .default {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .notturno {
+            background-color: #22223b;
+            color: #c9ada7;
+        }
+
+        .filosofico {
+            background-color: #3d405b;
+            color: #f2cc8f;
+        }
+
+        .contemplativo {
+            background-color: #3a5a40;
+            color: #d8f3dc;
+        }
+
+        .section-container {
+            margin-bottom: 40px;
+        }
+
+        .section-btn {
+            width: 100%;
+            padding: 18px 25px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            text-align: left;
+            font-size: 1.3rem;
+            cursor: pointer;
+            border-radius: var(--border-radius);
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+            box-shadow: var(--box-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--secondary-color), var(--primary-color));
+            transition: var(--transition);
+        }
+
+        .section-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 14px rgba(0,0,0,0.2);
+        }
+
+        .section-btn:hover::before {
+            width: 8px;
+        }
+
+        .section-btn::after {
+            content: '⌄';
+            font-size: 1.8rem;
+            transition: var(--transition);
+        }
+
+        .section-btn.active::after {
+            content: '⌃';
+        }
+
+        .section-content {
+            padding: 0;
+            background-color: var(--card-bg);
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            box-shadow: var(--box-shadow);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+        }
+
+        .section-content.show {
+            padding: 30px;
+            max-height: 10000px;
+        }
+
+        .section-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .section-content h3 {
+            color: var(--primary-color);
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 8px;
+        }
+
+        .quote {
+            font-style: italic;
+            padding: 25px;
+            background-color: rgba(137, 87, 55, 0.08);
+            border-left: 5px solid var(--secondary-color);
+            margin: 30px 0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            position: relative;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .quote::before {
+            content: '“';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 4rem;
+            color: rgba(137, 87, 55, 0.1);
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .quote-author {
+            text-align: right;
+            margin-top: 15px;
+            font-weight: bold;
+            color: var(--secondary-color);
+            font-style: normal;
+        }
+
+        .timeline {
+            margin: 40px 0;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--secondary-color), var(--primary-color));
+        }
+
+        .timeline-item {
+            padding-left: 30px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 5px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            border: 3px solid var(--card-bg);
+            z-index: 1;
+        }
+
+        .timeline-year {
+            font-weight: bold;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .play-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin: 30px 0;
+            box-shadow: var(--box-shadow);
+            position: relative;
+            overflow: hidden;
+            border-left: 5px solid var(--secondary-color);
+        }
+
+        .play-card h4 {
+            color: var(--primary-color);
+            margin-top: 0;
+            font-size: 1.3rem;
+        }
+
+        .play-card .play-date {
+            font-style: italic;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            box-shadow: var(--box-shadow);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .comparison-table th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(137, 87, 55, 0.2);
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background-color: rgba(137, 87, 55, 0.05);
+        }
+
+        .comparison-table tr:hover {
+            background-color: rgba(137, 87, 55, 0.1);
+        }
+
+        .innovation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .innovation-item {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            border-top: 3px solid var(--secondary-color);
+        }
+
+        .innovation-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .innovation-item h4 {
+            color: var(--secondary-color);
+            margin-top: 0;
+            font-size: 1.2rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        /* Theme styles */
+        body.notturno-theme {
+            --primary-color: #22223b;
+            --secondary-color: #c9ada7;
+            --text-color: #f2e9e4;
+            --bg-color: #4a4e69;
+            --card-bg: #22223b;
+        }
+
+        body.filosofico-theme {
+            --primary-color: #3d405b;
+            --secondary-color: #f2cc8f;
+            --text-color: #f4f1de;
+            --bg-color: #3d405b;
+            --card-bg: #1d1f2a;
+        }
+
+        body.contemplativo-theme {
+            --primary-color: #3a5a40;
+            --secondary-color: #d8f3dc;
+            --text-color: #f8f9fa;
+            --bg-color: #2d3e30;
+            --card-bg: #3a5a40;
+        }
+
+        /* Maschera teatrale decorations */
+        .mask-decoration {
+            position: fixed;
+            opacity: 0.03;
+            z-index: -1;
+            font-size: 30rem;
+        }
+
+        .comedy-mask {
+            top: -50px;
+            left: -50px;
+        }
+
+        .tragedy-mask {
+            bottom: -50px;
+            right: -50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="mask-decoration comedy-mask">☺</div>
+    <div class="mask-decoration tragedy-mask">☹</div>
+
+    <header>
+        <h1>Eschilo</h1>
+        <div class="subtitle">Il Padre della Tragedia Greca</div>
+        <div class="decoration"></div>
+        
+        <div class="theme-selector">
+            <button class="theme-btn default" onclick="setTheme('default')">Default</button>
+            <button class="theme-btn notturno" onclick="setTheme('notturno')">Notturno</button>
+            <button class="theme-btn filosofico" onclick="setTheme('filosofico')">Filosofico</button>
+            <button class="theme-btn contemplativo" onclick="setTheme('contemplativo')">Contemplativo</button>
+        </div>
+    </header>
+
+    <div class="section-container">
+        <button class="section-btn">Introduzione a Eschilo</button>
+        <div class="section-content">
+            <p>Eschilo (525 a.C. circa - 456 a.C.), nato a Eleusi nell'Attica, è universalmente riconosciuto come il fondatore del teatro tragico greco. Soprannominato "il Padre della Tragedia", fu il primo dei tre grandi tragici greci (insieme a Sofocle ed Euripide) e rivoluzionò la forma drammatica, trasformandola da semplice spettacolo corale a complessa rappresentazione teatrale.</p>
+            
+            <div class="quote">
+                "La parola è medicina per un'anima ferita."
+                <div class="quote-author">- Eschilo, <em>Prometeo Incatenato</em></div>
+            </div>
+            
+            <p>Eschilo combatté nelle battaglie di Maratona (490 a.C.) e Salamina (480 a.C.), esperienze che influenzarono profondamente la sua visione tragica. Introdusse innovazioni fondamentali nel teatro:</p>
+            
+            <div class="innovation-grid">
+                <div class="innovation-item">
+                    <h4>Secondo Attore</h4>
+                    <p>Introdusse il deuteragonista, permettendo il dialogo e il conflitto drammatico</p>
+                </div>
+                <div class="innovation-item">
+                    <h4>Trilogie Legate</h4>
+                    <p>Sviluppò trilogie tematiche con una storia continua</p>
+                </div>
+                <div class="innovation-item">
+                    <h4>Scenografia</h4>
+                    <p>Pioniere nell'uso di costumi, maschere e macchine teatrali</p>
+                </div>
+                <div class="innovation-item">
+                    <h4>Temi Elevati</h4>
+                    <p>Trattò questioni cosmiche: giustizia divina, hybris, destino</p>
+                </div>
+            </div>
+            
+            <p>Delle circa 90 opere che compose, solo 7 tragedie complete sono giunte fino a noi. La sua produzione rappresenta il passaggio dal teatro arcaico a quello classico, con una profonda riflessione sul rapporto tra uomini, dèi e destino.</p>
+            
+            <div class="quote">
+                "Eschilo fu il primo ad ampliare la tragedia, ad abbellirla con uno stile maestoso e a vestirla di splendidi abiti drammatici."
+                <div class="quote-author">- Vita Aeschyli</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">La Vita di Eschilo</button>
+        <div class="section-content">
+            <p>La vita di Eschilo si intreccia con i momenti cruciali della storia ateniese, dalla nascita della democrazia alle guerre persiane.</p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">525 a.C. circa</div>
+                    <p>Nascita a Eleusi, centro dei misteri eleusini, in una famiglia aristocratica. Il luogo natale influenzerà la sua spiritualità.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">499 a.C.</div>
+                    <p>Esordio teatrale ad Atene, ma senza successo. Il suo stile innovativo inizialmente disorienta il pubblico.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">490 a.C.</div>
+                    <p>Combatte a Maratona insieme al fratello Cinegiro, che muore eroicamente. Questa esperienza segna profondamente la sua produzione.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">480 a.C.</div>
+                    <p>Partecipa alla battaglia di Salamina, evento che ispirerà i <em>Persiani</em>, unica tragedia storica giuntaci.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">484 a.C.</div>
+                    <p>Ottiene la prima vittoria alle Grandi Dionisie, inizio di un dominio quasi incontrastato per 15 anni.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">472 a.C.</div>
+                    <p><em>I Persiani</em> viene rappresentato con Pericle come corego, segnando l'inizio del loro rapporto.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">458 a.C.</div>
+                    <p>Trionfo con l'<em>Orestea</em>, unica trilogia completa sopravvissuta dall'antichità.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">456 a.C.</div>
+                    <p>Muore a Gela, in Sicilia, secondo la leggenda colpito da una tartaruga caduta dall'artiglio di un'aquila. L'epitaffio da lui composto celebra solo il suo valore militare, non l'arte.</p>
+                </div>
+            </div>
+            
+            <h3>Eschilo e la Politica Ateniese</h3>
+            <p>Eschilo visse durante la transizione dalla tirannide alla democrazia:</p>
+            
+            <ul>
+                <li>Sostenitore moderato della democrazia nascente</li>
+                <li>Legami con il circolo di Pericle (il futuro statista finanziò i <em>Persiani</em>)</li>
+                <li>Critico verso gli eccessi democratici (come mostra nell'<em>Orestea</em>)</li>
+                <li>Rappresentante dell'aristocrazia illuminata</li>
+            </ul>
+            
+            <div class="quote">
+                "Ad Atene, il popolo comanda a turno, secondo un principio di uguaglianza; altrove, sono i membri dell'esercito che governano."
+                <div class="quote-author">- Eschilo, <em>Supplici</em></div>
+            </div>
+            
+            <h3>La Morte Leggendaria</h3>
+            <p>Secondo la tradizione, un oracolo aveva predetto che Eschilo sarebbe morto colpito da una casa. Morì invece a Gela, in Sicilia, quando un'aquila scambiò la sua testa calva per una roccia e vi lasciò cadere una tartaruga per romperne il guscio. Ironia tragica degna delle sue opere.</p>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">Le Opere Superstiti</button>
+        <div class="section-content">
+            <p>Delle circa 90 opere attribuite a Eschilo, solo 7 tragedie complete sono giunte fino a noi. Ciascuna rappresenta un capolavoro di profondità filosofica e potenza drammatica.</p>
+            
+            <div class="play-card">
+                <h4>I Persiani (472 a.C.)</h4>
+                <div class="play-date">Unica tragedia storica superstite</div>
+                <p>Rappresenta la sconfitta persiana a Salamina dal punto di vista dei vinti. Dramma patriottico che esplora le conseguenze dell'hybris di Serse, che osò punire il mare frustandolo.</p>
+                <div class="quote">
+                    "Grido di dolore, grido di desolazione! Piangete, Persiani, giovani e vecchi!"
+                    <div class="quote-author">- Coro de <em>I Persiani</em></div>
+                </div>
+            </div>
+            
+            <div class="play-card">
+                <h4>I Sette a Tebe (467 a.C.)</h4>
+                <div class="play-date">Terza parte della trilogia tebana</div>
+                <p>Conflitto tra i fratelli Eteocle e Polinice per il trono di Tebe. Eschilo esplora il tema della maledizione familiare e del dovere civico contro i legami di sangue.</p>
+                <div class="quote">
+                    "Quando un uomo affretta la propria sorte, anche il cielo concorre a spingerlo verso il male."
+                    <div class="quote-author">- <em>I Sette a Tebe</em></div>
+                </div>
+            </div>
+            
+            <div class="play-card">
+                <h4>Le Supplici (463 a.C.?)</h4>
+                <div class="play-date">Prima parte della trilogia delle Danaidi</div>
+                <p>Le 50 figlie di Danao fuggono dai matrimoni forzati con i cugini. Esplora temi di asilo, giustizia e diritti delle donne.</p>
+                <div class="quote">
+                    "Rispettate la santità della supplica, voi che governate la terra!"
+                    <div class="quote-author">- Coro de <em>Le Supplici</em></div>
+                </div>
+            </div>
+            
+            <div class="play-card">
+                <h4>Prometeo Incatenato (data incerta)</h4>
+                <div class="play-date">Probabilmente parte di una trilogia</div>
+                <p>Il titano Prometeo viene punito da Zeus per aver donato il fuoco agli uomini. Potente esplorazione del conflitto tra autorità e compassione, potere e conoscenza.</p>
+                <div class="quote">
+                    "Sapevo che avrei sofferto, lo sapevo; ma contro la mia volontà, sì, contro la mia volontà ho peccato, non lo nego."
+                    <div class="quote-author">- Prometeo in <em>Prometeo Incatenato</em></div>
+                </div>
+            </div>
+            
+            <h3>L'Orestea (458 a.C.)</h3>
+            <p>Unica trilogia completa sopravvissuta dall'antichità, comprende:</p>
+            
+            <table class="comparison-table">
+                <tr>
+                    <th>Opera</th>
+                    <th>Tema</th>
+                    <th>Innovazioni</th>
+                </tr>
+                <tr>
+                    <td><strong>Agamennone</strong></td>
+                    <td>L'omicidio di Agamennone da parte di Clitennestra</td>
+                    <td>Primo uso dell'ekkyklema (piattaforma rotante) per mostrare i cadaveri</td>
+                </tr>
+                <tr>
+                    <td><strong>Le Coefore</strong></td>
+                    <td>Oreste torna per vendicare il padre</td>
+                    <td>Scena del riconoscimento tra Oreste ed Elettra</td>
+                </tr>
+                <tr>
+                    <td><strong>Le Eumenidi</strong></td>
+                    <td>Processo di Oreste all'Areopago</td>
+                    <td>Prima rappresentazione di un processo giudiziario</td>
+                </tr>
+            </table>
+            
+            <div class="quote">
+                "La saggezza viene attraverso la sofferenza. Nelle tenebre, davanti agli occhi del cuore, stilla goccia a goccia il ricordo del dolore: anche a chi non vuole viene la prudenza."
+                <div class="quote-author">- Coro dell'<em>Agamennone</em></div>
+            </div>
+            
+            <p>L'Orestea rappresenta il culmine dell'arte eschilea, esplorando il passaggio dalla legge del taglione alla giustizia istituzionale, dalle Erinni (spiriti di vendetta) alle Eumenidi (spiriti benevoli).</p>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">Innovazioni Teatrali</button>
+        <div class="section-content">
+            <p>Eschilo rivoluzionò il teatro tragico, trasformandolo da semplice performance corale a complessa forma drammatica. Le sue innovazioni gettarono le basi per tutto il teatro occidentale.</p>
+            
+            <h3>Innovazioni Drammaturgiche</h3>
+            
+            <div class="innovation-grid">
+                <div class="innovation-item">
+                    <h4>Secondo Attore</h4>
+                    <p>Introdusse il deuteragonista, permettendo dialoghi complessi e conflitti drammatici senza dipendere solo dal coro.</p>
+                </div>
+                <div class="innovation-item">
+                    <h4>Trilogie Tematiche</h4>
+                    <p>Sviluppò trilogie legate da una trama continua (come l'Orestea), piuttosto che tre opere separate.</p>
+                </div>
+                <div class="innovation-item">
+                    <h4>Linguaggio Elevato</h4>
+                    <p>Creò uno stile poetico maestoso, ricco di metafore complesse e immagini potenti.</p>
+                </div>
+                <div class="innovation-item">
+                    <h4>Struttura Drammatica</h4>
+                    <p>Definì la struttura base della tragedia: prologo, parodo, episodi, stasimi, esodo.</p>
+                </div>
+            </div>
+            
+            <h3>Innovazioni Tecniche</h3>
+            
+            <div class="innovation-grid">
+                <div class="innovation-item">
+                    <h4>Costumi e Maschere</h4>
+                    <p>Perfezionò l'uso di costumi sontuosi e maschere espressive, aumentando la visibilità e il riconoscimento dei personaggi.</p>
+                </div>
+                <div class="innovation-item">
+                    <h4>Scenografia</h4>
+                    <p>Pioniere nell'uso di scene dipinte (forse inventate dal fratello) e macchine teatrali.</p>
+                </div>
+                <div class="innovation-item">
+                    <h4>Ekkyklema</h4>
+                    <p>Piattaforma rotante per mostrare scene di interni o i risultati di violenze (come i cadaveri nell'Agamennone).</p>
+                </div>
+                <div class="innovation-item">
+                    <h4>Coreografia</h4>
+                    <p>Sviluppò movimenti del coro più elaborati e significativi drammaticamente.</p>
+                </div>
+            </div>
+            
+            <div class="quote">
+                "Eschilo fu il primo ad aumentare il numero degli attori da uno a due, a diminuire le parti del coro e a dare il ruolo principale al dialogo."
+                <div class="quote-author">- Aristotele, <em>Poetica</em></div>
+            </div>
+            
+            <h3>Confronto con i Tragici Successivi</h3>
+            
+            <table class="comparison-table">
+                <tr>
+                    <th>Elemento</th>
+                    <th>Eschilo</th>
+                    <th>Sofocle</th>
+                    <th>Euripide</th>
+                </tr>
+                <tr>
+                    <td>Attori</td>
+                    <td>2 (introdusse il secondo)</td>
+                    <td>3 (introdusse il terzo)</td>
+                    <td>3 (ma uso più flessibile)</td>
+                </tr>
+                <tr>
+                    <td>Coro</td>
+                    <td>Ruolo ancora centrale</td>
+                    <td>Ruolo ridotto</td>
+                    <td>Spesso marginale</td>
+                </tr>
+                <tr>
+                    <td>Temi</td>
+                    <td>Cosmici, divini</td>
+                    <td>Eroici, conflitto interiore</td>
+                    <td>Umani, psicologici</td>
+                </tr>
+                <tr>
+                    <td>Stile</td>
+                    <td>Elevato, complesso</td>
+                    <td>Armonioso, classico</td>
+                    <td>Naturale, a volte prosaico</td>
+                </tr>
+            </table>
+            
+            <p>Le innovazioni di Eschilo crearono le basi su cui Sofocle ed Euripide avrebbero poi costruito, ma la sua grandiosità epica e la profondità teologica rimangono uniche.</p>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">Temi e Filosofia</button>
+        <div class="section-content">
+            <p>Eschilo esplorò nei suoi drammi i grandi temi dell'esistenza umana: il rapporto con gli dèi, la giustizia, la colpa e la redenzione. La sua visione tragica riflette una profonda meditazione filosofica e teologica.</p>
+            
+            <h3>Giustizia Divina e Legge del Taglione</h3>
+            <p>Nei drammi di Eschilo, la giustizia divina (Dike) è implacabile ma non arbitraria:</p>
+            
+            <ul>
+                <li>L'hybris (tracotanza) porta sempre alla nemesi (punizione)</li>
+                <li>La colpa si tramanda di generazione in generazione (maledizione degli Atridi)</li>
+                <li>La violenza genera altra violenza in un ciclo infinito</li>
+            </ul>
+            
+            <div class="quote">
+                "Chi agisce deve soffrire. Questa è la legge antica, chiara, solenne, immutabile!"
+                <div class="quote-author">- Coro dell'<em>Agamennone</em></div>
+            </div>
+            
+            <p>Nell'Orestea, Eschilo mostra però un'evoluzione: dalla primitiva legge del taglione (occhio per occhio) alla giustizia istituzionale dell'Areopago, dove il voto di Atena interrompe il ciclo di vendetta.</p>
+            
+            <h3>Il Problema del Male</h3>
+            <p>Eschilo affronta il problema teodiceo: come conciliare la bontà degli dèi con l'esistenza del male?</p>
+            
+            <div class="innovation-grid">
+                <div class="innovation-item">
+                    <h4>Prometeo</h4>
+                    <p>Zeus appare tirannico nel punire Prometeo, che ha aiutato gli uomini</p>
+                </div>
+                <div class="innovation-item">
+                    <h4>Agamennone</h4>
+                    <p>Il re deve sacrificare Ifigenia per placare Artemide: scelta impossibile</p>
+                </div>
+                <div class="innovation-item">
+                    <h4>Oreste</h4>
+                    <p>Dover uccidere la madre per vendicare il padre: conflitto di doveri</p>
+                </div>
+                <div class="innovation-item">
+                    <h4>Soluzione</h4>
+                    <p>La sofferenza ha un senso pedagogico: "pathei mathos" (imparare attraverso il dolore)</p>
+                </div>
+            </div>
+            
+            <div class="quote">
+                "Zeus ci ha posto sulla via del senno, stabilendo come legge inviolabile che attraverso il dolore giunga la saggezza."
+                <div class="quote-author">- Coro dell'<em>Agamennone</em></div>
+            </div>
+            
+            <h3>Evoluzione Religiosa</h3>
+            <p>Eschilo riflette il passaggio dalla religione arcaica a una visione più morale:</p>
+            
+            <table class="comparison-table">
+                <tr>
+                    <th>Religione Arcaica</th>
+                    <th>Visione Eschilea</th>
+                </tr>
+                <tr>
+                    <td>Dèi capricciosi e vendicativi</td>
+                    <td>Dike (Giustizia) come principio ordinatore</td>
+                </tr>
+                <tr>
+                    <td>Maledizioni familiari inevitabili</td>
+                    <td>Possibilità di redenzione attraverso le istituzioni</td>
+                </tr>
+                <tr>
+                    <td>Vendetta personale</td>
+                    <td>Giustizia istituzionale (Areopago)</td>
+                </tr>
+            </table>
+            
+            <p>Questa evoluzione è particolarmente evidente nell'Orestea, dove le antiche Erinni (spiriti di vendetta) diventano Eumenidi (spiriti benevoli), integrate nel nuovo ordine democratico ateniese.</p>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">Eredità e Influenza</button>
+        <div class="section-content">
+            <p>L'influenza di Eschilo si è estesa ben oltre il mondo antico, plasmando la letteratura, il teatro e il pensiero occidentale attraverso i secoli.</p>
+            
+            <h3>Nell'Antichità</h3>
+            <ul>
+                <li><strong>Sofocle ed Euripide</strong> costruirono sulle sue innovazioni drammaturgiche</li>
+                <li><strong>Aristofane</strong> lo cita con rispetto ne <em>Le Rane</em>, dove Dioniso lo porta dall'Ade per salvare Atene</li>
+                <li><strong>I Romani</strong> lo tradussero e imitarono (Seneca, Ennio)</li>
+            </ul>
+            
+            <h3>Nel Rinascimento e Età Moderna</h3>
+            <ul>
+                <li>Riscoperta dei suoi testi influenzò il teatro elisabettiano</li>
+                <li>Milton si ispirò al <em>Prometeo</em> per <em>Paradise Lost</em></li>
+                <li>Goethe scrisse un <em>Prometeo</em> ispirato a Eschilo</li>
+            </ul>
+            
+            <h3>Nell'Età Contemporanea</h3>
+            
+            <div class="innovation-grid">
+                <div class="innovation-item">
+                    <h4>Teatro</h4>
+                    <p>Influenzò Brecht, O'Neill, Pasolini (che tradusse l'Orestea)</p>
+                </div>
+                <div class="innovation-item">
+                    <h4>Psicanalisi</h4>
+                    <p>Freud si ispirò all'Orestea per il complesso di Edipo</p>
+                </div>
+                <div class="innovation-item">
+                    <h4>Filosofia</h4>
+                    <p>Nietzsche vide in Eschilo il culmine dello "spirito dionisiaco"</p>
+                </div>
+                <div class="innovation-item">
+                    <h4>Politica</h4>
+                    <p>L'Orestea è stata usata per riflettere su giustizia e democrazia</p>
+                </div>
+            </div>
+            
+            <div class="quote">
+                "Eschilo è il creatore sublime della tragedia greca, colui che ha dato forma poetica alle più profonde intuizioni sulla condizione umana."
+                <div class="quote-author">- Friedrich Nietzsche, <em>La Nascita della Tragedia</em></div>
+            </div>
+            
+            <h3>Eschilo Oggi</h3>
+            <p>Nell'era contemporanea, Eschilo continua a essere attuale:</p>
+            
+            <ul>
+                <li><strong>Rappresentazioni teatrali:</strong> L'Orestea e il Prometeo sono tra i testi più messi in scena</li>
+                <li><strong>Studi classici:</strong> Oggetto di nuove interpretazioni critiche</li>
+                <li><strong>Influenza culturale:</strong> Citato in letteratura, cinema, fumetti</li>
+                <li><strong>Riletture politiche:</strong> Analisi del potere, giustizia, conflitto</li>
+            </ul>
+            
+            <p>La profondità dei suoi temi e la potenza della sua poesia assicurano a Eschilo un posto eterno nel pantheon della cultura occidentale.</p>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">Citazioni Celebri</button>
+        <div class="section-content">
+            <p>Eschilo ha creato alcune delle frasi più potenti e memorabili della letteratura occidentale. Ecco una selezione delle sue citazioni più significative:</p>
+            
+            <div class="quote">
+                "La saggezza viene solo attraverso la sofferenza."
+                <div class="quote-author">- <em>Agamennone</em></div>
+            </div>
+            
+            <div class="quote">
+                "È nel carattere degli uomini credere alle cose che desiderano."
+                <div class="quote-author">- <em>Agamennone</em></div>
+            </div>
+            
+            <div class="quote">
+                "Meglio essere morto che vivere nella paura."
+                <div class="quote-author">- <em>I Persiani</em></div>
+            </div>
+            
+            <div class="quote">
+                "Il tempo, crescendo, insegna tutte le cose."
+                <div class="quote-author">- <em>Prometeo Incatenato</em></div>
+            </div>
+            
+            <div class="quote">
+                "Le parole sono i medici di una mente malata."
+                <div class="quote-author">- <em>Prometeo Incatenato</em></div>
+            </div>
+            
+            <div class="quote">
+                "Nessun mortale può dirsi felice prima di aver varcato il confine della vita senza aver provato dolore."
+                <div class="quote-author">- <em>Agamennone</em></div>
+            </div>
+            
+            <div class="quote">
+                "La felicità è un dono instabile degli dèi."
+                <div class="quote-author">- <em>I Sette a Tebe</em></div>
+            </div>
+            
+            <div class="quote">
+                "Non c'è dolore che il tempo non attenui e domi."
+                <div class="quote-author">- <em>Prometeo Incatenato</em></div>
+            </div>
+            
+            <div class="quote">
+                "È dolce, anche nella sventura, ricordare le disgrazie passate."
+                <div class="quote-author">- <em>Agamennone</em></div>
+            </div>
+            
+            <div class="quote">
+                "La giustizia brilla nelle dimore fumose dei poveri, mentre onora la vita pura."
+                <div class="quote-author">- <em>Le Supplici</em></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="section-btn">Curiosità su Eschilo</button>
+        <div class="section-content">
+            <h3>1. Il Soldato-Poeta</h3>
+            <p>Eschilo combatté a Maratona e Salamina. Sulla sua tomba fu ricordato solo il suo valore militare, non le opere teatrali.</p>
+            
+            <h3>2. La Morte Bizzarra</h3>
+            <p>Secondo la leggenda, morì colpito da una tartaruga caduta dall'artiglio di un'aquila che aveva scambiato la sua testa calva per una roccia.</p>
+            
+            <h3>3. Le Rivalità Familiari</h3>
+            <p>Suo nipote, anche lui drammaturgo, vinse competizioni teatrali riproponendo le opere del nonno con piccole modifiche.</p>
+            
+            <h3>4. Il Primo Effetto Speciale</h3>
+            <p>Nell'Orestea usò macchine teatrali per far apparire la Pizia terrorizzata e Clitennestra con l'ascia insanguinata.</p>
+            
+            <h3>5. L'Attore Timido</h3>
+            <p>Secondo la tradizione, durante le apparizioni del coro nell'<em>Agamennone</em>, i 12.000 spettatori fuggirono terrorizzati, credendo che le Erinni fossero reali.</p>
+            
+            <h3>6. Il Record di Vittorie</h3>
+            <p>Vinse 13 volte alle Grandi Dionisie, record battuto solo da Sofocle. Le sue opere continuarono a essere riproposte dopo la morte.</p>
+            
+            <h3>7. Il Mistero del Prometeo</h3>
+            <p>Alcuni studiosi dubitano che il <em>Prometeo Incatenato</em> sia davvero di Eschilo per differenze stilistiche.</p>
+            
+            <h3>8. L'Epitaffio Modesto</h3>
+            <p>La sua tomba recitava: "Questa tomba nasconde Eschilo ateniese, figlio di Euforione. Il suo valore glorioso ricorda il bosco di Maratona e il Medo dai lunghi capelli, che lo conobbe."</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2023 Studio su Eschilo - Tutti i diritti riservati</p>
+        <p>Fonti principali: Tragedie superstiti, testimonianze antiche, studi moderni</p>
+        <p>Realizzato con lo spirito della tragedia eschilea: profondità e grandiosità</p>
+    </footer>
+
+    <script>
+        // Toggle sections
+        const sectionBtns = document.querySelectorAll('.section-btn');
+        sectionBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.classList.toggle('active');
+                const content = btn.nextElementSibling;
+                content.classList.toggle('show');
+            });
+        });
+
+        // Set theme
+        function setTheme(theme) {
+            document.body.className = theme + '-theme' || '';
+            
+            // Update active button
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // Open first section by default
+        sectionBtns[0].click();
+    </script>
+</body>
+</html>
