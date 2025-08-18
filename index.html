@@ -2230,7 +2230,9 @@ footer { position: relative; z-index: 20; }
            const audio   = document.getElementById('thunder-sound');
          
            // --- stato solo per l'AUDIO ---
-           let thunderOn = false;
+           if (typeof window.__thOn === 'undefined') window.__thOn = false;
+const thunderOnRef = () => window.__thOn;
+const setThunderOn = v => (window.__thOn = !!v);
          
            function playThunder(){
              if (!thunderOn || !audio) return;
@@ -2284,20 +2286,11 @@ footer { position: relative; z-index: 20; }
              btn.setAttribute('aria-pressed', thunderOn ? 'true' : 'false');
            }
          
-           window.toggleThunder = function(){
-             thunderOn = !thunderOn;
-             updateBtn();
-             if (!thunderOn) {
-               stopThunderAudio();
-             } else {
-               // feedback immediato: un lampo con suono
-               flash();
-             }
-           };
+           
          
          
          // --- toggle audio tuono (ON/OFF) ---
-         let thunderOn = false;
+         
          
          function updateThunderBtn(on){
            const b = document.getElementById('btn-thunder');
@@ -2307,23 +2300,7 @@ footer { position: relative; z-index: 20; }
            }
          }
          
-         window.toggleThunder = function(){
-           const a = document.getElementById('thunder-sound'); // deve esistere in HTML
-           if (!a) return;
          
-           if (!thunderOn){
-             a.currentTime = 0;
-             a.play().then(() => {
-               thunderOn = true;
-               updateThunderBtn(true);
-             }).catch(()=>{ /* silenzio in caso di blocco */ });
-           } else {
-             a.pause();
-             a.currentTime = 0;
-             thunderOn = false;
-             updateThunderBtn(false);
-           }
-         };
          
          })();
       </script>
@@ -2664,7 +2641,7 @@ reserveTypingSpace(el, texts);
          margin: 0.25rem 0;
          }
          .footer-columns a {
-         color: #f00bb2d;
+         color: #00bb2d;
          text-decoration: none;
          }
          .footer-columns a:hover {
@@ -2709,7 +2686,7 @@ reserveTypingSpace(el, texts);
       </style>
       <!-- 🎬 INIZIO PLAYER (destro) -->
       <div class="video-container" id="video-right">
-         <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="264" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/G_REgkOuQfw" title="Schopenhauer e Nietzsche (Hans-Georg Gadamer) - 3x4" width="280"></iframe>
+         <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="264" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/G_REgkOuQfw" title="Schopenhauer e Nietzsche (Hans-Georg Gadamer) - 3x4" width="280"></iframe>
       </div>
       <style>
          .video-container{
@@ -3180,7 +3157,7 @@ reserveTypingSpace(el, texts);
                  // don't steal clicks meant for navigation if it's an <a> without #
                  if (btn.tagName === 'A' && btn.getAttribute('href') && btn.getAttribute('href').trim().charAt(0) !== '#') return;
                  ev.preventDefault();
-                 thunderOn = !thunderOn;
+                 setThunderOn(!thunderOnRef());
                  if (thunderOn) playThunder(); else stopThunder();
                  setBtnState(btn, thunderOn);
                }, false);
@@ -3194,12 +3171,7 @@ reserveTypingSpace(el, texts);
            setTimeout(wireButtons, 2000);
          
            // Also expose a global toggle for any existing handlers
-           window.toggleThunder = function(){
-             thunderOn = !thunderOn;
-             if (thunderOn) playThunder(); else stopThunder();
-             // update all wired buttons
-             findThunderButtons().forEach(function(b){ setBtnState(b, thunderOn); });
-           };
+           
          
            // ---------- lightning (10–15s), always on
            var overlay = document.getElementById('lightning');
@@ -3282,7 +3254,7 @@ reserveTypingSpace(el, texts);
            const thBtn = document.getElementById('btn-thunder');
          
            // Stato ON/OFF solo per il suono (i lampi restano indipendenti)
-           let thunderOn = false;
+           
          
            function updateLabel(){
              thBtn.classList.toggle('active', thunderOn);
@@ -3306,7 +3278,7 @@ reserveTypingSpace(el, texts);
            // Toggle ON/OFF al click
            thBtn.addEventListener('click', async function(ev){
              ev.preventDefault();
-             thunderOn = !thunderOn;
+             setThunderOn(!thunderOnRef());
              if (thunderOn) await playOnce(); else stopNow();
              updateLabel();
            });
@@ -4416,7 +4388,7 @@ document.addEventListener('DOMContentLoaded', function(){
          })();
       </script>
    
-<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c5b8c77887.mp3?filename=explosion-6055.mp3" preload="auto"></audio>
+<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/25/audio_f7efc7fc85.mp3" preload="auto"></audio>
 
 <script>
 (function(){
@@ -4458,11 +4430,7 @@ document.addEventListener('DOMContentLoaded', function(){
     bind();
   }
 })();
-</script>
-
-
-   -->
-   <!-- Aggiungi questo codice prima della chiusura 
+</script><!-- Aggiungi questo codice prima della chiusura 
       <!-- === CONSERVATIVE ENTER FIX + siteData (real excerpts) === -->
    <script>
       (function(){
@@ -4578,7 +4546,7 @@ document.addEventListener('DOMContentLoaded', function(){
       })();
    </script>
    
-<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c5b8c77887.mp3?filename=explosion-6055.mp3" preload="auto"></audio>
+<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/25/audio_f7efc7fc85.mp3" preload="auto"></audio>
 
 <script>
 (function(){
@@ -4620,10 +4588,7 @@ document.addEventListener('DOMContentLoaded', function(){
     bind();
   }
 })();
-</script>
-
- -->
-   <div id="cse-results-container" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:10000;padding:20px;box-sizing:border-box;">
+</script><div id="cse-results-container" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:10000;padding:20px;box-sizing:border-box;">
       <div style="max-width:800px;margin:0 auto;background:#0a0a1a;padding:20px;border-radius:8px;border:1px solid var(--gold);max-height:80vh;overflow:auto;">
          <button onclick="closeSearchResults()" style="float:right;background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;">×</button>
          <h2 style="color:var(--gold);margin-top:0;">Risultati della ricerca</h2>
@@ -4858,7 +4823,7 @@ document.addEventListener('DOMContentLoaded', function(){
       })();
    </script>
    
-<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c5b8c77887.mp3?filename=explosion-6055.mp3" preload="auto"></audio>
+<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/25/audio_f7efc7fc85.mp3" preload="auto"></audio>
 
 <script>
 (function(){
@@ -4900,10 +4865,7 @@ document.addEventListener('DOMContentLoaded', function(){
     bind();
   }
 })();
-</script>
-
- -->
-   <div id="search-results-panel" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:10000;padding:40px;box-sizing:border-box;">
+</script><div id="search-results-panel" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:10000;padding:40px;box-sizing:border-box;">
       <div style="max-width:800px;margin:0 auto;background:#0a0a1a;padding:20px;border-radius:8px;border:1px solid #d4af37;max-height:80vh;overflow:auto;position:relative;">
          <button onclick="closeSearchPanel()" style="position:absolute;top:10px;right:10px;background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;">×</button>
          <h2 style="color:#d4af37;margin-top:0;">Risultati della ricerca</h2>
@@ -4915,12 +4877,20 @@ document.addEventListener('DOMContentLoaded', function(){
       var siteData = [];
       
       // Funzione per caricare i dati del sito
-      async function loadSiteData() {
-        try {
-          // Questo è un esempio - dovresti sostituirlo con i tuoi dati reali
-          const response = await fetch('sitemap.json'); // Crea un file JSON con tutti i tuoi URL e titoli
-          siteData = await response.json();
-        } catch (error) {
+      async function loadSiteData(){
+  try{
+    const r = await fetch('sitemap.json', {cache:'no-store'});
+    if(!r.ok) throw 0;
+    const ct = r.headers.get('content-type')||'';
+    if(!/json/i.test(ct)) throw 0;
+    siteData = await r.json();
+  }catch(_){
+    siteData = siteData && siteData.length ? siteData : [
+      {url:"articoli/socrate.html", title:"Socrate", content:"Socrate è stato un filosofo greco antico."},
+      {url:"articoli/platone.html",  title:"Platone", content:"Platone è stato allievo di Socrate."}
+    ];
+  }
+} catch (error) {
           console.error("Errore nel caricamento dei dati:", error);
           // Fallback manuale se il JSON non è disponibile
           siteData = [
@@ -5126,7 +5096,7 @@ document.addEventListener('DOMContentLoaded', function(){
       })();
    </script>
    
-<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c5b8c77887.mp3?filename=explosion-6055.mp3" preload="auto"></audio>
+<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/25/audio_f7efc7fc85.mp3" preload="auto"></audio>
 
 <script>
 (function(){
@@ -5168,10 +5138,7 @@ document.addEventListener('DOMContentLoaded', function(){
     bind();
   }
 })();
-</script>
-
- -->
-   <div id="search-results-panel" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:10000;padding:40px;box-sizing:border-box;backdrop-filter:blur(5px);">
+</script><div id="search-results-panel" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:10000;padding:40px;box-sizing:border-box;backdrop-filter:blur(5px);">
       <div style="max-width:800px;margin:0 auto;background:#0a0a1a;padding:25px;border-radius:12px;border:1px solid #d4af37;max-height:80vh;overflow:auto;position:relative;box-shadow:0 0 20px rgba(0,0,0,0.5);">
          <button onclick="closeSearchPanel()" style="position:absolute;top:15px;right:15px;background:none;border:none;color:#fff;font-size:1.8rem;cursor:pointer;transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">×</button>
          <h2 style="color:#d4af37;margin-top:0;font-family:'Cinzel',serif;border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:10px;">Risultati della ricerca</h2>
@@ -5564,7 +5531,7 @@ document.addEventListener('DOMContentLoaded', function(){
       })();
    </script>
    
-<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c5b8c77887.mp3?filename=explosion-6055.mp3" preload="auto"></audio>
+<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/25/audio_f7efc7fc85.mp3" preload="auto"></audio>
 
 <script>
 (function(){
@@ -5769,6 +5736,43 @@ function collectMarked(){
     et.addEventListener('click', function(){ guardHeight(et, 1200); }, {passive:true});
   }
 })();
+</script>
+
+
+<script>
+(function(){
+  const audio = document.getElementById('thunder-sound');
+  if (audio){
+    if (typeof window.__thOn === 'undefined') window.__thOn = false;
+    window.toggleThunder = function(){
+      window.__thOn = !window.__thOn;
+      if (window.__thOn){
+        try{ audio.currentTime = 0; audio.play().catch(()=>{});}catch(e){}
+      }else{
+        try{ audio.pause(); audio.currentTime = 0; }catch(e){}
+      }
+      const b=document.getElementById('btn-thunder');
+      if (b){
+        b.classList.toggle('active', window.__thOn);
+        b.setAttribute('aria-pressed', window.__thOn ? 'true':'false');
+        b.textContent = window.__thOn ? '⚡ Tuono: ON' : '⚡ Tuono';
+      }
+    };
+  }
+})();
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  var b = document.getElementById('btn-thunder');
+  if (b && !b.__thunderBound){
+    b.addEventListener('click', function(e){
+      try { window.toggleThunder && window.toggleThunder(); } catch (err) { console.error('toggleThunder error', err); }
+    });
+    b.__thunderBound = true;
+  }
+});
 </script>
 
 </body>
