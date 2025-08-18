@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
    <head>
+<script>window.OFFLINE = (location.protocol === 'file:');</script>
 <meta name="description" content="Echi di Sofia - Portale di filosofia antica, moderna e contemporanea con approfondimenti su autori e correnti filosofiche">
       <meta charset="utf-8"/>
       <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -828,16 +829,336 @@
 })();
 </script>
 
-
-
-
-
 <style data-explode-cls-guard>
   /* Anti-CLS exploding text: evita il wrap durante l'animazione */
   .exploding-text{ white-space: nowrap !important; }
 </style>
+<!--INIZIO COSMO DINAMICO-->
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: radial-gradient(ellipse at center, #000000 0%, #0F0F2D 70%, #1A1A4A 100%);
+            height: 100vh;
+        }
+
+        /* Vortice galattico centrale */
+        .galaxy {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80vmin;
+            height: 80vmin;
+            background: radial-gradient(circle, transparent 60%, rgba(138, 43, 226, 0.15) 100%);
+            border-radius: 50%;
+            animation: spin 120s linear infinite;
+            z-index: 1;
+        }
+
+        .galaxy::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(75, 0, 130, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(106, 90, 205, 0.3) 0%, transparent 50%);
+            border-radius: 50%;
+            animation: pulse 20s infinite alternate;
+        }
+
+        @keyframes spin {
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+
+        /* Stelle base */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 7;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Stelle esplosive (supernove) */
+        .supernova {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 3;
+            animation: explode 4s forwards;
+            opacity: 0;
+        }
+
+        @keyframes explode {
+            0% { transform: scale(0); opacity: 0; }
+            20% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+
+        
+
+        .planet-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            border-top-color: rgba(255, 215, 0, 0.6);
+            transform-origin: center;
+            animation: spin-ring linear infinite;
+        }
+
+        @keyframes spin-ring {
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Sciami meteorici */
+        .meteor-shower {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 4;
+            pointer-events: none;
+        }
+
+        .meteor {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            animation: meteor linear infinite;
+        }
+
+        .meteor::before {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(255,255,255,1), rgba(255,255,255,0));
+            transform-origin: left center;
+            transform: rotate(-30deg);
+            filter: drop-shadow(0 0 5px white);
+        }
+
+        @keyframes meteor {
+            0% {
+                transform: translateX(var(--start-x)) translateY(var(--start-y));
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(var(--end-x)) translateY(var(--end-y));
+                opacity: 0;
+            }
+        }
+
+        /* Polvere stellare */
+        .stardust {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+        }
+
+        .particle {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            background: white;
+            border-radius: 50%;
+            animation: float-particle linear infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes float-particle {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            20% { opacity: 0.7; }
+            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+    </style>
+
+    <!-- Vortice galattico -->
+    <div class="galaxy"></div>
+
+    <!-- Polvere stellare -->
+    <div class="stardust" id="stardust"></div>
+
+    <!-- Stelle -->
+    <div class="stars" id="stars"></div>
+
+    <!-- Sciami meteorici -->
+    <div class="meteor-shower" id="meteorShower"></div>
+
+    <!-- Pianeti -->
+    <div class="planet" style="width: 100px; height: 100px; background: radial-gradient(circle at 30% 30%, #FF6347, #8B0000); top: 20%; left: 15%;">
+        <div class="planet-ring" style="width: 180px; height: 180px; top: -40px; left: -40px; animation-duration: 50s;"></div>
+    </div>
+
+    <div class="planet" style="width: 60px; height: 60px; background: radial-gradient(circle at 30% 30%, #40E0D0, #008B8B); bottom: 25%; right: 20%;">
+        <div class="planet-ring" style="width: 120px; height: 120px; top: -30px; left: -30px; animation-duration: 30s;"></div>
+    </div>
+
+    <script>
+        // Stelle base (400)
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 400; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            
+            star.style.setProperty('--duration', `${Math.random() * 5 + 3}s`);
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.width = `${Math.random() * 2 + 1}px`;
+            star.style.height = star.style.width;
+            
+            // 15% stelle colorate
+            if (Math.random() < 0.15) {
+                const colors = ['#FF1493', '#00BFFF', '#FFD700', '#7CFC00'];
+                star.style.background = colors[Math.floor(Math.random() * colors.length)];
+                star.style.boxShadow = `0 0 5px 1px ${star.style.background}`;
+            }
+            
+            starsContainer.appendChild(star);
+        }
+
+        // Supernove casuali
+        function createSupernova() {
+            const supernova = document.createElement('div');
+            supernova.className = 'supernova';
+            
+            const size = Math.random() * 100 + 50;
+            const colors = [
+                'radial-gradient(circle, rgba(255,69,0,0.8) 0%, rgba(255,215,0,0.6) 50%, transparent 70%)',
+                'radial-gradient(circle, rgba(138,43,226,0.8) 0%, rgba(75,0,130,0.6) 50%, transparent 70%)',
+                'radial-gradient(circle, rgba(0,191,255,0.8) 0%, rgba(30,144,255,0.6) 50%, transparent 70%)'
+            ];
+            
+            supernova.style.background = colors[Math.floor(Math.random() * colors.length)];
+            supernova.style.width = `${size}px`;
+            supernova.style.height = `${size}px`;
+            supernova.style.left = `${Math.random() * 90 + 5}%`;
+            supernova.style.top = `${Math.random() * 90 + 5}%`;
+            
+            document.body.appendChild(supernova);
+            
+            setTimeout(() => {
+                supernova.remove();
+            }, 4000);
+        }
+        
+        setInterval(createSupernova, 3000);
+
+        // Sciame meteorico intenso
+        const meteorShower = document.getElementById('meteorShower');
+        function createMeteorShower() {
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const meteor = document.createElement('div');
+                    meteor.className = 'meteor';
+                    
+                    const startX = Math.random() * 100 + 50;
+                    const startY = -10;
+                    const endX = startX - (Math.random() * 100 + 50);
+                    const endY = 100 + Math.random() * 20;
+                    const duration = Math.random() * 2 + 1;
+                    
+                    meteor.style.setProperty('--start-x', `${startX}%`);
+                    meteor.style.setProperty('--start-y', `${startY}%`);
+                    meteor.style.setProperty('--end-x', `${endX}%`);
+                    meteor.style.setProperty('--end-y', `${endY}%`);
+                    meteor.style.animationDuration = `${duration}s`;
+                    
+                    // Colori casuali per le meteore
+                    const colors = ['white', '#FF6347', '#40E0D0', '#9370DB'];
+                    meteor.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    meteorShower.appendChild(meteor);
+                    
+                    setTimeout(() => {
+                        meteor.remove();
+                    }, duration * 1000);
+                }, i * 200);
+            }
+        }
+        
+        setInterval(createMeteorShower, 5000);
+        createMeteorShower();
+
+        // Particelle di polvere stellare
+        const stardustContainer = document.getElementById('stardust');
+        for (let i = 0; i < 100; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100 + 100}%`;
+            particle.style.animationDuration = `${Math.random() * 30 + 20}s`;
+            particle.style.animationDelay = `${Math.random() * 10}s`;
+            
+            // Dimensione casuale
+            const size = Math.random() * 2 + 0.5;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            
+            stardustContainer.appendChild(particle);
+        }
+
+        // Effetto di parallasse al movimento del mouse
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            document.querySelector('.galaxy').style.transform = `
+                translate(-50%, -50%) 
+                rotate(${x * 10 - 5}deg)
+                scale(${1 + y * 0.05})
+            `;
+            
+            document.querySelectorAll('.planet').forEach((planet, i) => {
+                const factor = i === 0 ? 0.03 : 0.02;
+                planet.style.transform = `translate(${(x - 0.5) * 20}px, ${(y - 0.5) * 20}px)`;
+            });
+        });
+    </script>
+<!--FINE COSMO DINAMICO-->
+
+
+<style id="conservative-layering">
+  #cosmo { z-index: -1 !important; pointer-events: none; }
+  #nebula, #star-canvas, #shooting-stars { pointer-events: none !important; }
+</style>
+
+
+<style id="anti-cls-text">
+  .typing-wrap{ min-height: 2.6em; }
+  .exploding-text{ white-space: nowrap; }
+</style>
 
 </head>
+<body>
 <span class="const-symbol" aria-hidden="true" data-repel-item>∞</span>
 
    <canvas id="shooting-stars"></canvas>
@@ -920,6 +1241,9 @@
          -->
       <!-- Header & Mega Menu -->
       <header>
+<!--INIZIO COSMO DINAMICO-->
+
+<!--FINE COSMO DINAMICO-->
          <div class="menu-container">
             <nav class="menu-desktop">
                <ul role="menu">
@@ -1898,7 +2222,7 @@
            const audio   = document.getElementById('thunder-sound');
          
            // --- stato solo per l'AUDIO ---
-           let thunderOn = false;
+           var thunderOn = false;
          
            function playThunder(){
              if (!thunderOn || !audio) return;
@@ -1965,7 +2289,7 @@
          
          
          // --- toggle audio tuono (ON/OFF) ---
-         let thunderOn = false;
+         var thunderOn = false;
          
          function updateThunderBtn(on){
            const b = document.getElementById('btn-thunder');
@@ -2377,7 +2701,7 @@ reserveTypingSpace(el, texts);
       </style>
       <!-- 🎬 INIZIO PLAYER (destro) -->
       <div class="video-container" id="video-right">
-         <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="264" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/G_REgkOuQfw" title="Schopenhauer e Nietzsche (Hans-Georg Gadamer) - 3x4" width="280"></iframe>
+         <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; " allowfullscreen="" frameborder="0" height="264" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/G_REgkOuQfw" title="Schopenhauer e Nietzsche (Hans-Georg Gadamer) - 3x4" width="280"></iframe>
       </div>
       <style>
          .video-container{
@@ -2592,7 +2916,6 @@ reserveTypingSpace(el, texts);
       </button>
       <script>
          (function(){
-           \1
          // Global opener: works even if other listeners fail
          window.openCookiePrefs = function(){
          try { if (typeof openModal === 'function') { openModal(); return; } } catch(e){}
@@ -2665,45 +2988,19 @@ reserveTypingSpace(el, texts);
          $banner.hidden = true;
          }
            function openModal(){
-         try{
-         const c = getConsent() || {};
-         if ($an) $an.checked = !!c.analytics;
-         if ($pr) $pr.checked = !!c.preferences;
-         if ($mk) $mk.checked = !!c.marketing;
-         }catch(e){}
-         try{
-         $modal.removeAttribute('hidden');
-         $modal.setAttribute('aria-hidden','false');
-         $modal.style.display = 'flex';
-         $modal.classList.add('force-open');
-         const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-         const panel = $modal.querySelector ? $modal.querySelector('.cookie-modal__panel') : null;
-         if (!reduce && window.gsap && panel){
-         gsap.fromTo($modal, {opacity:0}, {opacity:1, duration:.25, ease:'power2.out'});
-         gsap.fromTo(panel, {y:20, opacity:0}, {y:0, opacity:1, duration:.4, ease:'power3.out'});
-         }
-         }catch(e){}
-         }
-         }catch(_){}
-         const c = getConsent() || {};
-         $an.checked = !!c.analytics;
-         $pr.checked = !!c.preferences;
-         $mk.checked = !!c.marketing;
-         $modal.setAttribute('aria-hidden','false');
-         try{
-         const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-         if (!reduce && window.gsap){
-         const panel = $modal.querySelector('.cookie-modal__panel');
-         gsap.fromTo($modal, {opacity:0}, {opacity:1, duration:.25, ease:'power2.out'});
-         gsap.fromTo(panel, {y:20, opacity:0}, {y:0, opacity:1, duration:.4, ease:'power3.out'});
-         }
-         }catch(e){}
-         };
-             $an.checked = !!c.analytics;
-             $pr.checked = !!c.preferences;
-             $mk.checked = !!c.marketing;
-             $modal.setAttribute('aria-hidden','false');
-           }
+  try{
+    const dialog = document.getElementById('cookie-banner');
+    if(!dialog) return;
+    if (typeof dialog.showModal === 'function') {
+      dialog.showModal();
+    } else {
+      dialog.setAttribute('open','');
+    }
+  }catch(err){
+    console.warn('Cookie modal open error:', err);
+  }
+}
+
            function closeModal(){
          try{
          if ($modal){
@@ -2805,7 +3102,7 @@ reserveTypingSpace(el, texts);
            var audio = document.getElementById('thunder-sound');
            if (!audio){
              audio = createEl('audio', { id:'thunder-sound', preload:'auto', crossorigin:'anonymous' });
-             var src = createEl('source', { src:'https://cdn.pixabay.com/download/audio/2022/03/25/audio_f7efc7fc85.mp3', type:'audio/mpeg' });
+             var src = createEl('source', { src:'audio/explosion.mp3', type:'audio/mpeg' });
              audio.appendChild(src);
              audio.style.display = 'none';
              document.body.appendChild(audio);
@@ -2950,7 +3247,7 @@ reserveTypingSpace(el, texts);
            const thBtn = document.getElementById('btn-thunder');
          
            // Stato ON/OFF solo per il suono (i lampi restano indipendenti)
-           let thunderOn = false;
+           var thunderOn = false;
          
            function updateLabel(){
              thBtn.classList.toggle('active', thunderOn);
@@ -3049,118 +3346,23 @@ reserveTypingSpace(el, texts);
          .cookie-modal.force-open{ display:flex !important; }
       </style>
       <script>
-         (function(){
-           var CSE_CX = '87b07564ab3cb462a'; // cambia se hai un altro ID
-           var input    = document.getElementById('site-search');
-           var icon     = document.querySelector('.search-icon');
-           var box      = document.getElementById('cse-results');
-           var overlay  = document.getElementById('cse-overlay');
-           var panel    = document.getElementById('cse-panel');
-           var closeBtn = document.getElementById('cse-close');
-           var themeBtn = document.getElementById('cse-theme-toggle');
-         
-           function ensureCSELoaded(cb){
-             if (window.google && google.search && google.search.cse && google.search.cse.element){ cb(); return; }
-             var done = false;
-             window.__gcse = { callback: function(){ if (!done){ done = true; cb(); } } };
-             if (!document.querySelector('script[data-cse-loader]')){
-               var s = document.createElement('script');
-               s.src = 'https://cse.google.com/cse.js?cx=' + encodeURIComponent(CSE_CX);
-               s.async = true; s.defer = true; s.setAttribute('data-cse-loader','1');
-               document.head.appendChild(s);
-             }
-           }
-         
-           function renderInline(){
-             try {
-               google.search.cse.element.render({
-                 div: 'cse-results',
-                 tag: 'searchresults-only',
-                 gname: 'results'
-               });
-             } catch(e){}
-           }
-         
-           function getResultsElement(){
-             if (!(window.google && google.search && google.search.cse && google.search.cse.element)) return null;
-             var el = google.search.cse.element.getElement('results');
-             if (!el){ renderInline(); el = google.search.cse.element.getElement('results'); }
-             return el;
-           }
-         
-           function openPanel(){
-             if (overlay) overlay.style.display = 'block';
-             if (panel)   panel.style.display   = 'block';
-           }
-           function closePanel(){
-             if (overlay) overlay.style.display = 'none';
-             if (panel)   panel.style.display   = 'none';
-           }
-           if (overlay) overlay.addEventListener('click', closePanel);
-           if (closeBtn) closeBtn.addEventListener('click', closePanel);
-         
-           if (themeBtn){
-             var light = false;
-             themeBtn.addEventListener('click', function(){
-               light = !light;
-               document.body.classList.toggle('cse-light', light);
-               themeBtn.textContent = light ? 'Tema: Chiaro' : 'Tema: Scuro';
-             });
-           }
-         
-           function executeQuery(q){
-           if (!q) return;
-           const siteRestrict = '(site:echidisofia.org OR site:casi0048.github.io)';
-           ensureCSELoaded(function(){
-             var tries = 0;
-             (function waitReady(){
-               try{
-                 var el = (google && google.search && google.search.cse && google.search.cse.element)
-                   ? google.search.cse.element.getElement('SEARCH_RESULTS')
-                   : (typeof getResultsElement === 'function' ? getResultsElement() : null);
-                 if (el && typeof el.execute === 'function'){
-                   el.execute(`${q} ${siteRestrict}`);
-                   if (typeof openPanel === 'function') openPanel();
-                   if (typeof box !== 'undefined' && box) box.style.display = 'block';
-                 } else if (tries++ < 100){
-                   setTimeout(waitReady, 100);
-                 }
-               }catch(e){
-                 if (tries++ < 100) setTimeout(waitReady, 120);
-               }
-             })();
-           });
-         } else if (tries++ < 80){
-                   setTimeout(waitReady, 100);
-                 }
-               })();
-             });
-           }
-         
-           function submitFromInput(){
-           try{
-             var term = (input && input.value) ? input.value.trim() : '';
-             if (!term) return;
-             executeQuery(term);
-           }catch(e){}
-         }
-         
-           if (input){
-             input.addEventListener('keydown', function(e){
-               if (e.key === 'Enter'){
-                 e.preventDefault();
-                 submitFromInput();
-               }
-             });
-           }
-           if (icon){
-             icon.addEventListener('click', function(e){
-               e.preventDefault();
-               submitFromInput();
-             });
-           }
-         })();
-      </script><script>
+/* CSE disabled in offline mode + cleaned */
+(function(){
+  const offline = (typeof window !== 'undefined') && window.OFFLINE;
+  window.ensureCSELoaded = function(cb){ if (cb) cb(); };
+  window.getResultsElement = function(){ return document.getElementById('results'); };
+  window.executeQuery = function(q){
+    if(!q) return;
+    if(offline){ console.info('Search skipped: offline/stub.', q); return; }
+    console.warn('CSE stub: online loader not included.');
+  };
+  window.submitFromInput = function(){
+    const el = document.getElementById('site-search');
+    if(!el) return;
+    executeQuery(el.value.trim());
+  };
+})();
+</script><script>
          (function(){
            function setCookie(name, value){
              var domain = location.hostname.replace(/^www\./,'');
@@ -4084,7 +4286,7 @@ document.addEventListener('DOMContentLoaded', function(){
          })();
       </script>
    
-<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c5b8c77887.mp3?filename=explosion-6055.mp3" preload="auto"></audio>
+<audio id="explode-sound" src="audio/explosion.mp3" preload="auto"></audio>
 
 <script>
 (function(){
@@ -4246,7 +4448,7 @@ document.addEventListener('DOMContentLoaded', function(){
       })();
    </script>
    
-<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c5b8c77887.mp3?filename=explosion-6055.mp3" preload="auto"></audio>
+<audio id="explode-sound" src="audio/explosion.mp3" preload="auto"></audio>
 
 <script>
 (function(){
@@ -4526,7 +4728,7 @@ document.addEventListener('DOMContentLoaded', function(){
       })();
    </script>
    
-<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c5b8c77887.mp3?filename=explosion-6055.mp3" preload="auto"></audio>
+<audio id="explode-sound" src="audio/explosion.mp3" preload="auto"></audio>
 
 <script>
 (function(){
@@ -4583,12 +4785,7 @@ document.addEventListener('DOMContentLoaded', function(){
       var siteData = [];
       
       // Funzione per caricare i dati del sito
-      async function loadSiteData() {
-        try {
-          // Questo è un esempio - dovresti sostituirlo con i tuoi dati reali
-          const response = await fetch('sitemap.json'); // Crea un file JSON con tutti i tuoi URL e titoli
-          siteData = await response.json();
-        } catch (error) {
+      async function loadSiteData(){ try{ if(window.OFFLINE){ console.warn('Offline: skip loadSiteData'); return; } const response = await fetch('sitemap.json'); siteData = await response.json(); }catch(e){ console.warn('Errore nel caricamento dei dati:', e); } } catch (error) {
           console.error("Errore nel caricamento dei dati:", error);
           // Fallback manuale se il JSON non è disponibile
           siteData = [
@@ -4655,7 +4852,7 @@ document.addEventListener('DOMContentLoaded', function(){
       // Inizializzazione
       document.addEventListener('DOMContentLoaded', function() {
         // Carica i dati del sito
-        loadSiteData();
+        if(!window.OFFLINE){ loadSiteData(); }
         
         // Configura la barra di ricerca
         const searchInput = document.getElementById('site-search');
@@ -4794,7 +4991,7 @@ document.addEventListener('DOMContentLoaded', function(){
       })();
    </script>
    
-<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c5b8c77887.mp3?filename=explosion-6055.mp3" preload="auto"></audio>
+<audio id="explode-sound" src="audio/explosion.mp3" preload="auto"></audio>
 
 <script>
 (function(){
@@ -4858,7 +5055,9 @@ document.addEventListener('DOMContentLoaded', function(){
       
       // Funzione per indicizzare le pagine
       async function buildSearchIndex() {
-        console.log("Costruzione indice di ricerca...");
+        
+  if (window.OFFLINE) { console.warn('Offline: skipping buildSearchIndex'); return; }
+console.log("Costruzione indice di ricerca...");
         
         // Ottieni la lista delle pagine dal menu
         const menuLinks = Array.from(document.querySelectorAll('.mega-menu a[href]'));
@@ -5232,7 +5431,7 @@ document.addEventListener('DOMContentLoaded', function(){
       })();
    </script>
    
-<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c5b8c77887.mp3?filename=explosion-6055.mp3" preload="auto"></audio>
+<audio id="explode-sound" src="audio/explosion.mp3" preload="auto"></audio>
 
 <script>
 (function(){
@@ -5435,6 +5634,148 @@ function collectMarked(){
   }
   if(et){
     et.addEventListener('click', function(){ guardHeight(et, 1200); }, {passive:true});
+  }
+})();
+</script>
+
+
+<script id="once-guards">
+  (function(){
+    window.__ONCE = window.__ONCE || {};
+    function once(key, fn){ if(__ONCE[key]) return; __ONCE[key]=1; try{ fn(); }catch(e){} }
+
+    once('bind-thunder', function(){
+      var b = document.getElementById('btn-thunder');
+      if(b && !b.dataset.bound && typeof window.toggleThunder === 'function'){
+        b.dataset.bound='1';
+        b.addEventListener('click', window.toggleThunder, {passive:true});
+      }
+    });
+
+    once('bind-explode', function(){
+      var b = document.getElementById('btn-explode');
+      var t = document.querySelector('.exploding-text');
+      if(b && t && !b.dataset.bound && typeof window.triggerExplosion === 'function'){
+        b.dataset.bound='1';
+        b.addEventListener('click', window.triggerExplosion, {passive:true});
+      }
+    });
+  })();
+</script>
+
+
+<script id="thunder-helper">
+(function(){
+  function ensureAudio(){
+    var btn = document.getElementById('btn-thunder');
+    var custom = btn ? btn.getAttribute('data-audio') : null;
+    var a = document.getElementById('thunder-sound');
+    if(!a){
+      a = document.createElement('audio');
+      a.id = 'thunder-sound';
+      a.preload = 'auto';
+      a.src = custom || 'media/thunder.mp3';
+      document.body.appendChild(a);
+    }else if(custom){
+      a.src = custom;
+    }
+    a.volume = 1.0;
+    return a;
+  }
+  window.toggleThunder = window.toggleThunder || function(){
+    try{
+      var a = ensureAudio();
+      try{ a.pause(); }catch(e){}
+      try{ a.currentTime = 0; }catch(e){}
+      var p = a.play();
+      if(p && typeof p.catch === 'function'){
+        p.catch(function(){ /* playback will start on user gesture */ });
+      }
+      var l = document.getElementById('lightning'), b = document.getElementById('bolt');
+      if(l){ l.style.transition='opacity 120ms ease'; l.style.opacity='1'; setTimeout(function(){ l.style.opacity='0'; }, 220); }
+      if(b){ b.style.transition='transform 120ms ease'; b.style.transform='translate(-50%,-50%) rotate(12deg) scaleY(1)'; setTimeout(function(){ b.style.transform='translate(-50%,-50%) rotate(12deg) scaleY(0)'; }, 220); }
+    }catch(e){}
+  };
+  var btn = document.getElementById('btn-thunder');
+  if(btn && !btn.dataset.bound){
+    btn.dataset.bound='1';
+    btn.addEventListener('click', window.toggleThunder, {passive:true});
+  }
+})();
+</script>
+
+
+<script id="thunder-webaudio-fallback">
+(function(){
+  function webAudioThunder(){
+    try{
+      var AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if(!AudioCtx) return;
+      var ctx = new AudioCtx();
+      var sampleRate = ctx.sampleRate;
+      var seconds = 2.0;
+      var length = sampleRate * seconds;
+      var buffer = ctx.createBuffer(1, length, sampleRate);
+      var data = buffer.getChannelData(0);
+      // Brown noise (integrated white noise) for thunder-like rumble
+      var lastOut = 0.0;
+      for (var i=0; i<length; i++){
+        var white = Math.random() * 2 - 1;
+        lastOut = (lastOut + (0.02 * white)) / 1.02;
+        data[i] = lastOut * 3.5; // gain
+      }
+      // Envelope (attack boom + decay)
+      var attack = 0.02 * sampleRate;
+      var decay  = 1.8  * sampleRate;
+      for (var i=0; i<length; i++){
+        var env = (i < attack) ? (i/attack) : Math.max(0, 1 - (i-attack)/decay);
+        data[i] *= env;
+      }
+      var src = ctx.createBufferSource(); src.buffer = buffer;
+      var lp  = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 250;
+      src.connect(lp).connect(ctx.destination); src.start(0);
+      setTimeout(function(){ try{ ctx.close(); }catch(e){} }, seconds*1000+250);
+    }catch(e){}
+  }
+
+  // Wrap existing toggleThunder or define one
+  var oldToggle = window.toggleThunder;
+  window.toggleThunder = function(){
+    var a = document.getElementById('thunder-sound');
+    var played = false;
+    try{
+      if(a){
+        a.pause(); a.currentTime = 0;
+        var p = a.play();
+        if(p && typeof p.then === 'function'){
+          p.then(function(){ played = true; }).catch(function(){});
+        }else{
+          played = true;
+        }
+      }
+    }catch(e){}
+
+    // fallback if not played within a tick
+    setTimeout(function(){
+      if(!played){ webAudioThunder(); }
+    }, 120);
+
+    // keep any visual effect the old handler may have
+    if (typeof oldToggle === 'function'){
+      try{ oldToggle(); }catch(e){}
+    } else {
+      // simple flash if present
+      var l = document.getElementById('lightning'), b = document.getElementById('bolt');
+      if(l){ l.style.transition='opacity 120ms ease'; l.style.opacity='1'; setTimeout(function(){ l.style.opacity='0'; }, 220); }
+      if(b){ b.style.transition='transform 120ms ease'; b.style.transform='translate(-50%,-50%) rotate(12deg) scaleY(1)'; setTimeout(function(){ b.style.transform='translate(-50%,-50%) rotate(12deg) scaleY(0)'; }, 220); }
+    }
+  };
+
+  // Ensure the button is wired once
+  var btn = document.getElementById('btn-thunder');
+  if(btn && !btn.dataset.boundThunder){
+    btn.dataset.boundThunder = '1';
+    btn.addEventListener('click', window.toggleThunder, {passive:true});
   }
 })();
 </script>
