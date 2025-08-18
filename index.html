@@ -3848,9 +3848,7 @@ reserveTypingSpace(el, texts);
          })();
       </script>
       <!--  fine script stelle cadentin da dx a sx-->
-      <!-- Particelle filosofiche (solo symbols) -->
-      <!--  INIZIO Particelle filosofiche — versione pulita -->
-     <!--  INIZIO Particelle filosofiche — versione con repulsione -->
+     <!--  INIZIO Particelle filosofiche — distribuzione su tutta pagina + repulsione -->
 <script>
 document.addEventListener('DOMContentLoaded', function(){
   // Container
@@ -3863,7 +3861,7 @@ document.addEventListener('DOMContentLoaded', function(){
     document.body.appendChild(container);
   }
 
-  // CSS
+  // CSS (una sola volta)
   const STYLE_ID = 'philoParticles-style';
   if (!document.getElementById(STYLE_ID)){
     const st = document.createElement('style'); st.id = STYLE_ID;
@@ -3881,6 +3879,8 @@ document.addEventListener('DOMContentLoaded', function(){
         line-height: 1;
         text-shadow: 0 0 8px rgba(255,255,255,.45);
         opacity: .98;
+        /* abilito hover solo se serve: qui resta tutto pass-through */
+        pointer-events: none;
       }
     `;
     document.head.appendChild(st)
@@ -3902,59 +3902,99 @@ document.addEventListener('DOMContentLoaded', function(){
     '🧭','⌛','🌗','🛸','🌏 ','🌖','🌔','💫 ','🕳️','♾️'
   ];
 
-  // shuffle
-  function shuffle(a){ for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]] } return a; }
-
-  // Config
-  const cfg = {
-    count: 110,
-    minSize: 0.5,
-    maxSize: 1,
-    floatDist: 100,
-    minSpeed: 0.004,
-    maxSpeed: 0.010,
-    useRandomHSL: true,
-
-    // NEW — repulsione (regolabili)
-    repelRadius: 120,     // raggio d’influenza del mouse (px)
-    repelStrength: 28     // spostamento massimo (px)
-  };
-  const palette = ['#FFD700','#40E0D0','#FF6347','#9370DB','#00BFFF','#7CFC00','#FF69B4','#FF8C00','#DA70D6','#1E90FF'];
+  // Utilità
+  const shuffle = a => { for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]] } return a; };
   const rand = (a,b)=> Math.random()*(b-a)+a;
   const rndInt = n => Math.floor(Math.random()*n);
   const randHSL = ()=> `hsl(${Math.floor(Math.random()*360)} 100% 70%)`;
 
-  // Genera griglia
+  // Config
+  const cfg = {
+    count: 110,          // quante particelle
+    minSize: 0.5,        // rem
+    maxSize: 1,          // rem
+    floatDist: 100,      // raggio di oscillazione
+    minSpeed: 0.004,
+    maxSpeed: 0.010,
+    useRandomHSL: true,
+
+    // distribuzione
+    padding: 16,         // px: margine dai bordi
+    jitter: 0.65,        // 0..1: “disordine” dentro la cella
+
+    // repulsione
+    repelRadius: 120,    // px
+    repelStrength: 28    // px
+  };
+
+  const palette = ['#FFD700','#40E0D0','#FF6347','#9370DB','#00BFFF','#7CFC00','#FF69B4','#FF8C00','#DA70D6','#1E90FF'];
+
+  // Stato
+  const particles = [];
+  let order = [];        // ordine simboli garantito (copertura completa)
+  let mx = -1e6, my = -1e6, mouseActive = false;
+
+  // Prepara una lista di simboli lunga almeno quanto count e mescolata
+  function buildSymbolOrder(){
+    order.length = 0;
+    // ripeti l’array finché superi count
+    while(order.length < cfg.count) order.push(...symbols);
+    order = order.slice(0, cfg.count);
+    shuffle(order);
+  }
+
+  // Crea una griglia proporzionata all’aspect-ratio della finestra:
+  // celle ~quadrate ⇒ copertura omogenea su tutta la pagina
+  function gridLayout(w, h, n){
+    const aspect = w / h;
+    let cols = Math.max(1, Math.round(Math.sqrt(n * aspect)));
+    let rows = Math.max(1, Math.ceil(n / cols));
+    // ricalibra per coprire esattamente n
+    while(cols*rows < n) rows++;
+    return { cols, rows };
+  }
+
   function makeParticles(){
     container.innerHTML = "";
     particles.length = 0;
-    const cols = Math.ceil(Math.sqrt(cfg.count));
-    const rows = Math.ceil(cfg.count / cols);
-    let grid = [];
-    for (let r=0; r<rows; r++){
-      for (let c=0; c<cols; c++){
-        grid.push({
-          x: (c+0.5)/cols * innerWidth,
-          y: (r+0.5)/rows * innerHeight
-        });
+    buildSymbolOrder();
+
+    const w = innerWidth  - cfg.padding*2;
+    const h = innerHeight - cfg.padding*2;
+    const { cols, rows } = gridLayout(w, h, cfg.count);
+
+    // Pre-calcola centri cella
+    const cells = [];
+    for(let r=0; r<rows; r++){
+      for(let c=0; c<cols; c++){
+        const cx = cfg.padding + (c + 0.5) * (w / cols);
+        const cy = cfg.padding + (r + 0.5) * (h / rows);
+        cells.push({cx, cy});
       }
     }
-    grid = shuffle(grid);
+    shuffle(cells); // sparpaglia le celle utilizzate
 
     for (let i=0; i<cfg.count; i++){
       const el = document.createElement('div');
       el.className = 'particle';
-      el.textContent = symbols[i % symbols.length];
+      el.textContent = order[i];
+
       const size = rand(cfg.minSize, cfg.maxSize);
       el.style.fontSize = size + 'rem';
       el.style.color = cfg.useRandomHSL ? randHSL() : palette[rndInt(palette.length)];
       container.appendChild(el);
 
-      const pos = grid[i];
+      const {cx, cy} = cells[i];
+
+      // jitter naturale dentro la cella (niente “soldatini”)
+      const cellW = w / cols, cellH = h / rows;
+      const jx = (Math.random() - 0.5) * cellW * cfg.jitter;
+      const jy = (Math.random() - 0.5) * cellH * cfg.jitter;
+
       particles.push({
         el, size,
-        x: pos.x,
-        y: pos.y,
+        x: cx + jx,
+        y: cy + jy,
         ang: Math.random()*Math.PI*2,
         speed: rand(cfg.minSpeed, cfg.maxSpeed),
         radius: rand(10, 10 + cfg.floatDist)
@@ -3962,11 +4002,7 @@ document.addEventListener('DOMContentLoaded', function(){
     }
   }
 
-  // Stato
-  const particles = [];
-
-  // NEW — repulsione: stato mouse (solo desktop/mouse)
-  let mx = -1e6, my = -1e6, mouseActive = false;
+  // Repulsione (solo mouse/desktop)
   window.addEventListener('pointermove', (e)=>{
     if(e.pointerType && e.pointerType !== 'mouse') return;
     mx = e.clientX; my = e.clientY;
@@ -3981,17 +4017,17 @@ document.addEventListener('DOMContentLoaded', function(){
   function render(){
     for (const p of particles){
       p.ang += p.speed;
-      // base float (come prima)
+      // oscillazione “fluttuante”
       let bx = p.x + Math.cos(p.ang)*p.radius;
       let by = p.y + Math.sin(p.ang*0.7)*p.radius;
 
-      // NEW — repulsione dal mouse (solo transform, zero reflow)
+      // repulsione dolce
       if(mouseActive){
         const dx = bx - mx, dy = by - my;
         const d  = Math.hypot(dx, dy);
         if(d < cfg.repelRadius){
-          const t = 1 - d / cfg.repelRadius;           // 0..1
-          const push = cfg.repelStrength * t * t;      // caduta dolce
+          const t = 1 - d / cfg.repelRadius;
+          const push = cfg.repelStrength * t * t;
           const ux = dx / (d || 1), uy = dy / (d || 1);
           bx += ux * push;
           by += uy * push;
@@ -4003,17 +4039,20 @@ document.addEventListener('DOMContentLoaded', function(){
     requestAnimationFrame(render);
   }
 
+  // Debounce resize
+  let rAF = 0;
+  function onResize(){
+    if(rAF) cancelAnimationFrame(rAF);
+    rAF = requestAnimationFrame(()=>{ makeParticles(); rAF = 0; });
+  }
+
   makeParticles();
   render();
-
-  // Resize
-  addEventListener('resize', makeParticles);
+  addEventListener('resize', onResize);
 });
 </script>
-<!--  FINE SCRIPT PARTICELLE-->
+<!--  FINE SCRIPT PARTICELLE -->
 
-      </script>
-      <!--  FINE SCRIPT PARTICELLE-->
       <!-- === CSE CLEAN-LOCK PATCH (single-instance, forced internal) === -->
       <style>
          #cseCL-panel{position:fixed;inset:0;z-index:20050;display:none}
