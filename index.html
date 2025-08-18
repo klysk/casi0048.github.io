@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
    <head>
-<script>window.OFFLINE = (location.protocol === 'file:');</script>
 <meta name="description" content="Echi di Sofia - Portale di filosofia antica, moderna e contemporanea con approfondimenti su autori e correnti filosofiche">
       <meta charset="utf-8"/>
       <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -1145,39 +1144,6 @@
     </script>
 <!--FINE COSMO DINAMICO-->
 
-
-<style id="conservative-layering">
-  #cosmo { z-index: -1 !important; pointer-events: none; }
-  #nebula, #star-canvas, #shooting-stars { pointer-events: none !important; }
-</style>
-
-
-<style id="anti-cls-text">
-  .typing-wrap{ min-height: 2.6em; }
-  .exploding-text{ white-space: nowrap; }
-</style>
-<style>
-  /* Posiziona il pulsante tuono in ALTO A DESTRA */
-  :root{
-    --tuono-x: 16px;   /* distanza dal bordo destro  */
-    --tuono-y: 16px;   /* distanza dal bordo alto    */
-  }
-  .floater-tuono{
-    left: auto;
-    right: var(--tuono-x);
-    bottom: auto;
-    top: var(--tuono-y);
-  }
-
-  /* Se su mobile serve più margine dalla status bar */
-  @media (max-width:480px){
-    :root{ --tuono-y: 24px; }
-  }
-</style>
-
-
-
-
 </head>
 <body>
 <span class="const-symbol" aria-hidden="true" data-repel-item>∞</span>
@@ -2243,7 +2209,7 @@
            const audio   = document.getElementById('thunder-sound');
          
            // --- stato solo per l'AUDIO ---
-           var thunderOn = false;
+           let thunderOn = false;
          
            function playThunder(){
              if (!thunderOn || !audio) return;
@@ -2297,11 +2263,20 @@
              btn.setAttribute('aria-pressed', thunderOn ? 'true' : 'false');
            }
          
-           /* DUPLICATE toggleThunder removed */
+           window.toggleThunder = function(){
+             thunderOn = !thunderOn;
+             updateBtn();
+             if (!thunderOn) {
+               stopThunderAudio();
+             } else {
+               // feedback immediato: un lampo con suono
+               flash();
+             }
+           };
          
          
          // --- toggle audio tuono (ON/OFF) ---
-         /* duplicate thunderOn removed */
+         let thunderOn = false;
          
          function updateThunderBtn(on){
            const b = document.getElementById('btn-thunder');
@@ -2318,7 +2293,16 @@
            if (!thunderOn){
              a.currentTime = 0;
              a.play().then(() => {
-   /* DUPLICATE toggleThunder removed */
+               thunderOn = true;
+               updateThunderBtn(true);
+             }).catch(()=>{ /* silenzio in caso di blocco */ });
+           } else {
+             a.pause();
+             a.currentTime = 0;
+             thunderOn = false;
+             updateThunderBtn(false);
+           }
+         };
          
          })();
       </script>
@@ -2704,7 +2688,7 @@ reserveTypingSpace(el, texts);
       </style>
       <!-- 🎬 INIZIO PLAYER (destro) -->
       <div class="video-container" id="video-right">
-         <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; " allowfullscreen="" frameborder="0" height="264" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/G_REgkOuQfw" title="Schopenhauer e Nietzsche (Hans-Georg Gadamer) - 3x4" width="280"></iframe>
+         <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="264" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/G_REgkOuQfw" title="Schopenhauer e Nietzsche (Hans-Georg Gadamer) - 3x4" width="280"></iframe>
       </div>
       <style>
          .video-container{
@@ -2919,6 +2903,7 @@ reserveTypingSpace(el, texts);
       </button>
       <script>
          (function(){
+           \1
          // Global opener: works even if other listeners fail
          window.openCookiePrefs = function(){
          try { if (typeof openModal === 'function') { openModal(); return; } } catch(e){}
@@ -2991,19 +2976,45 @@ reserveTypingSpace(el, texts);
          $banner.hidden = true;
          }
            function openModal(){
-  try{
-    const dialog = document.getElementById('cookie-banner');
-    if(!dialog) return;
-    if (typeof dialog.showModal === 'function') {
-      dialog.showModal();
-    } else {
-      dialog.setAttribute('open','');
-    }
-  }catch(err){
-    console.warn('Cookie modal open error:', err);
-  }
-}
-
+         try{
+         const c = getConsent() || {};
+         if ($an) $an.checked = !!c.analytics;
+         if ($pr) $pr.checked = !!c.preferences;
+         if ($mk) $mk.checked = !!c.marketing;
+         }catch(e){}
+         try{
+         $modal.removeAttribute('hidden');
+         $modal.setAttribute('aria-hidden','false');
+         $modal.style.display = 'flex';
+         $modal.classList.add('force-open');
+         const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+         const panel = $modal.querySelector ? $modal.querySelector('.cookie-modal__panel') : null;
+         if (!reduce && window.gsap && panel){
+         gsap.fromTo($modal, {opacity:0}, {opacity:1, duration:.25, ease:'power2.out'});
+         gsap.fromTo(panel, {y:20, opacity:0}, {y:0, opacity:1, duration:.4, ease:'power3.out'});
+         }
+         }catch(e){}
+         }
+         }catch(_){}
+         const c = getConsent() || {};
+         $an.checked = !!c.analytics;
+         $pr.checked = !!c.preferences;
+         $mk.checked = !!c.marketing;
+         $modal.setAttribute('aria-hidden','false');
+         try{
+         const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+         if (!reduce && window.gsap){
+         const panel = $modal.querySelector('.cookie-modal__panel');
+         gsap.fromTo($modal, {opacity:0}, {opacity:1, duration:.25, ease:'power2.out'});
+         gsap.fromTo(panel, {y:20, opacity:0}, {y:0, opacity:1, duration:.4, ease:'power3.out'});
+         }
+         }catch(e){}
+         };
+             $an.checked = !!c.analytics;
+             $pr.checked = !!c.preferences;
+             $mk.checked = !!c.marketing;
+             $modal.setAttribute('aria-hidden','false');
+           }
            function closeModal(){
          try{
          if ($modal){
@@ -3105,13 +3116,13 @@ reserveTypingSpace(el, texts);
            var audio = document.getElementById('thunder-sound');
            if (!audio){
              audio = createEl('audio', { id:'thunder-sound', preload:'auto', crossorigin:'anonymous' });
-             var src = createEl('source', { src:'https://casi0048.github.io/suoni/explosion-1.mp3', type:'audio/mpeg' });
+             var src = createEl('source', { src:'https://cdn.pixabay.com/download/audio/2022/03/25/audio_f7efc7fc85.mp3', type:'audio/mpeg' });
              audio.appendChild(src);
              audio.style.display = 'none';
              document.body.appendChild(audio);
            }
          
-           /* duplicate thunderOn removed */
+           var thunderOn = false;
            function playThunder(){
              if (!thunderOn || !audio) return;
              try { audio.currentTime = 0; audio.play().catch(function(){}); } catch(e){}
@@ -3125,8 +3136,7 @@ reserveTypingSpace(el, texts);
              btn.classList.toggle('active', on);
              btn.setAttribute('aria-pressed', on ? 'true':'false');
              if (!btn.dataset._label) btn.dataset._label = (btn.innerText||btn.textContent||'⚡ Tuono').trim();
-btn.textContent = on ? '⚡ Tuono: ON (clicca per OFF)' : (btn.dataset._label || '⚡ Tuono');
-
+             btn.textContent = on ? '⚡ Tuono: ON' : (btn.dataset._label || '⚡ Tuono');
            }
          
            // Find candidate thunder buttons (various heuristics: id/class/name contains thunder/tuono/fulmine; or text has ⚡/tuono)
@@ -3173,7 +3183,117 @@ btn.textContent = on ? '⚡ Tuono: ON (clicca per OFF)' : (btn.dataset._label ||
            // ---------- lightning (10–15s), always on
            var overlay = document.getElementById('lightning');
            if (!overlay){
-             overlay = createEl('div', { id:'lightning' }, 'position:fixed;inset:0;pointer-even/* DUPLICATE toggleThunder removed */
+             overlay = createEl('div', { id:'lightning' }, 'position:fixed;inset:0;pointer-events:none;opacity:0;z-index:5;background:transparent;');
+             document.body.appendChild(overlay);
+           }
+           var bolt = document.getElementById('bolt');
+           if (!bolt){
+             bolt = createEl('div', { id:'bolt' }, 'position:fixed;left:50%;top:50%;width:3px;height:56vh;background:linear-gradient(#fff,rgba(255,255,255,0));box-shadow:0 0 16px rgba(255,255,255,.9),0 0 32px rgba(255,255,255,.6);opacity:0;pointer-events:none;z-index:6;transform-origin:top;');
+             document.body.appendChild(bolt);
+           }
+           function flash(){
+             var xPerc = 15 + Math.random()*70;
+             var yPerc = 10 + Math.random()*65;
+             var angle  = -25 + Math.random()*50;
+             var scaleY = 0.8 + Math.random()*1.2;
+         
+             overlay.style.transition = 'none'; overlay.offsetHeight;
+             overlay.style.background = 'radial-gradient(circle at '+xPerc+'% '+yPerc+'%, rgba(255,255,255,.95), rgba(255,255,255,.22) 40%, transparent 65%)';
+             overlay.style.opacity = '1';
+             overlay.style.transition = 'opacity 80ms ease-out';
+             setTimeout(function(){ overlay.style.opacity = '0'; }, 140);
+         
+             bolt.style.left = xPerc + '%';
+             bolt.style.top  = yPerc + '%';
+             bolt.style.transform = 'translate(-50%,-50%) rotate('+angle+'deg) scaleY('+scaleY+')';
+             bolt.style.transition = 'transform 90ms ease-out, opacity 280ms ease-out';
+             bolt.style.opacity = '1';
+             setTimeout(function(){ bolt.style.opacity = '0'; }, 180);
+         
+             setTimeout(playThunder, 120);
+           }
+           (function schedule(){
+             var MIN = 10000, MAX = 15000; // 10–15s
+             setTimeout(function(){ flash(); schedule(); }, MIN + Math.random()*(MAX-MIN));
+           })();
+         
+           // ---------- cookie banner compatibility
+           (function(){
+             function hideAll(){
+               var b = document.getElementById('cookie-banner'); if (b) b.style.display = 'none';
+               var m = document.querySelector('.cookie-modal, #cookie-modal'); if (m) m.style.display = 'none';
+             }
+             function setConsent(v){ try{ localStorage.setItem('cookieConsent', JSON.stringify({ v:v, at: Date.now() })); }catch(e){} }
+             function getConsent(){ try{ return JSON.parse(localStorage.getItem('cookieConsent')||'null'); }catch(e){ return null; } }
+             var c = getConsent(); if (c && (c.v==='accepted'||c.v==='rejected')) hideAll();
+             function bind(sel, fn){
+               document.querySelectorAll(sel).forEach(function(el){
+                 if (el._ckBound) return;
+                 el.addEventListener('click', function(ev){ ev.preventDefault(); fn(); }, false);
+                 el._ckBound = true;
+               });
+             }
+             bind('#cookie-accept, #btn-accept-cookies, [data-consent=\"accepted\"]', function(){ setConsent('accepted'); hideAll(); });
+             bind('#cookie-reject, #btn-reject-cookies, [data-consent=\"rejected\"]', function(){ setConsent('rejected'); hideAll(); });
+             bind('#cookie-save', function(){ setConsent('accepted'); hideAll(); });
+             bind('[data-open=\"cookie-modal\"]', function(){ var m = document.querySelector('.cookie-modal, #cookie-modal'); if (m) m.style.display='block'; });
+             bind('[data-close=\"cookie-modal\"]', function(){ var m = document.querySelector('.cookie-modal, #cookie-modal'); if (m) m.style.display='none'; });
+           })();
+         })();
+      </script>
+      <script>
+         (function(){
+           // Prendi elementi
+           const btn = document.getElementById('btn-thunder');
+           const audio = document.getElementById('thunder-sound');
+           if (!btn || !audio) return;
+         
+           // Normalizza audio (alcuni browser sono schizzinosi)
+           audio.preload = 'auto';
+           audio.muted = false;
+           audio.volume = 1.0;
+           audio.setAttribute('playsinline',''); // iOS
+           audio.setAttribute('type','audio/mpeg');
+         
+           // Rimuovi eventuali vecchi event listener attaccati al bottone
+           const clone = btn.cloneNode(true);
+           btn.parentNode.replaceChild(clone, btn);
+           const thBtn = document.getElementById('btn-thunder');
+         
+           // Stato ON/OFF solo per il suono (i lampi restano indipendenti)
+           let thunderOn = false;
+         
+           function updateLabel(){
+             thBtn.classList.toggle('active', thunderOn);
+             thBtn.setAttribute('aria-pressed', thunderOn ? 'true' : 'false');
+             thBtn.textContent = thunderOn ? '⚡ Tuono: ON' : '⚡ Tuono';
+           }
+         
+           async function playOnce(){
+             try {
+               audio.currentTime = 0;
+               await audio.play();      // dentro il click => sbloccato ovunque
+             } catch(e) {
+               console.warn('Playback bloccato:', e);
+             }
+           }
+         
+           function stopNow(){
+             try { audio.pause(); audio.currentTime = 0; } catch(e){}
+           }
+         
+           // Toggle ON/OFF al click
+           thBtn.addEventListener('click', async function(ev){
+             ev.preventDefault();
+             thunderOn = !thunderOn;
+             if (thunderOn) await playOnce(); else stopNow();
+             updateLabel();
+           });
+         
+           // (Opzionale) se hai uno script di lampi che chiama il tuono, usa questo hook globale:
+           window.playThunderIfOn = function(){
+             if (thunderOn) { try { audio.currentTime = 0; audio.play().catch(()=>{}); } catch(e){} }
+           };
          
            updateLabel();
          })();
@@ -3240,23 +3360,118 @@ btn.textContent = on ? '⚡ Tuono: ON (clicca per OFF)' : (btn.dataset._label ||
          .cookie-modal.force-open{ display:flex !important; }
       </style>
       <script>
-/* CSE disabled in offline mode + cleaned */
-(function(){
-  const offline = (typeof window !== 'undefined') && window.OFFLINE;
-  window.ensureCSELoaded = function(cb){ if (cb) cb(); };
-  window.getResultsElement = function(){ return document.getElementById('results'); };
-  window.executeQuery = function(q){
-    if(!q) return;
-    if(offline){ console.info('Search skipped: offline/stub.', q); return; }
-    console.warn('CSE stub: online loader not included.');
-  };
-  window.submitFromInput = function(){
-    const el = document.getElementById('site-search');
-    if(!el) return;
-    executeQuery(el.value.trim());
-  };
-})();
-</script><script>
+         (function(){
+           var CSE_CX = '87b07564ab3cb462a'; // cambia se hai un altro ID
+           var input    = document.getElementById('site-search');
+           var icon     = document.querySelector('.search-icon');
+           var box      = document.getElementById('cse-results');
+           var overlay  = document.getElementById('cse-overlay');
+           var panel    = document.getElementById('cse-panel');
+           var closeBtn = document.getElementById('cse-close');
+           var themeBtn = document.getElementById('cse-theme-toggle');
+         
+           function ensureCSELoaded(cb){
+             if (window.google && google.search && google.search.cse && google.search.cse.element){ cb(); return; }
+             var done = false;
+             window.__gcse = { callback: function(){ if (!done){ done = true; cb(); } } };
+             if (!document.querySelector('script[data-cse-loader]')){
+               var s = document.createElement('script');
+               s.src = 'https://cse.google.com/cse.js?cx=' + encodeURIComponent(CSE_CX);
+               s.async = true; s.defer = true; s.setAttribute('data-cse-loader','1');
+               document.head.appendChild(s);
+             }
+           }
+         
+           function renderInline(){
+             try {
+               google.search.cse.element.render({
+                 div: 'cse-results',
+                 tag: 'searchresults-only',
+                 gname: 'results'
+               });
+             } catch(e){}
+           }
+         
+           function getResultsElement(){
+             if (!(window.google && google.search && google.search.cse && google.search.cse.element)) return null;
+             var el = google.search.cse.element.getElement('results');
+             if (!el){ renderInline(); el = google.search.cse.element.getElement('results'); }
+             return el;
+           }
+         
+           function openPanel(){
+             if (overlay) overlay.style.display = 'block';
+             if (panel)   panel.style.display   = 'block';
+           }
+           function closePanel(){
+             if (overlay) overlay.style.display = 'none';
+             if (panel)   panel.style.display   = 'none';
+           }
+           if (overlay) overlay.addEventListener('click', closePanel);
+           if (closeBtn) closeBtn.addEventListener('click', closePanel);
+         
+           if (themeBtn){
+             var light = false;
+             themeBtn.addEventListener('click', function(){
+               light = !light;
+               document.body.classList.toggle('cse-light', light);
+               themeBtn.textContent = light ? 'Tema: Chiaro' : 'Tema: Scuro';
+             });
+           }
+         
+           function executeQuery(q){
+           if (!q) return;
+           const siteRestrict = '(site:echidisofia.org OR site:casi0048.github.io)';
+           ensureCSELoaded(function(){
+             var tries = 0;
+             (function waitReady(){
+               try{
+                 var el = (google && google.search && google.search.cse && google.search.cse.element)
+                   ? google.search.cse.element.getElement('SEARCH_RESULTS')
+                   : (typeof getResultsElement === 'function' ? getResultsElement() : null);
+                 if (el && typeof el.execute === 'function'){
+                   el.execute(`${q} ${siteRestrict}`);
+                   if (typeof openPanel === 'function') openPanel();
+                   if (typeof box !== 'undefined' && box) box.style.display = 'block';
+                 } else if (tries++ < 100){
+                   setTimeout(waitReady, 100);
+                 }
+               }catch(e){
+                 if (tries++ < 100) setTimeout(waitReady, 120);
+               }
+             })();
+           });
+         } else if (tries++ < 80){
+                   setTimeout(waitReady, 100);
+                 }
+               })();
+             });
+           }
+         
+           function submitFromInput(){
+           try{
+             var term = (input && input.value) ? input.value.trim() : '';
+             if (!term) return;
+             executeQuery(term);
+           }catch(e){}
+         }
+         
+           if (input){
+             input.addEventListener('keydown', function(e){
+               if (e.key === 'Enter'){
+                 e.preventDefault();
+                 submitFromInput();
+               }
+             });
+           }
+           if (icon){
+             icon.addEventListener('click', function(e){
+               e.preventDefault();
+               submitFromInput();
+             });
+           }
+         })();
+      </script><script>
          (function(){
            function setCookie(name, value){
              var domain = location.hostname.replace(/^www\./,'');
@@ -4180,7 +4395,7 @@ document.addEventListener('DOMContentLoaded', function(){
          })();
       </script>
    
-<audio id="explode-sound" src="https://casi0048.github.io/suoni/explosion-1.mp3" preload="auto"></audio>
+<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c5b8c77887.mp3?filename=explosion-6055.mp3" preload="auto"></audio>
 
 <script>
 (function(){
@@ -4342,7 +4557,7 @@ document.addEventListener('DOMContentLoaded', function(){
       })();
    </script>
    
-<audio id="explode-sound" src="https://casi0048.github.io/suoni/explosion-1.mp3" preload="auto"></audio>
+<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c5b8c77887.mp3?filename=explosion-6055.mp3" preload="auto"></audio>
 
 <script>
 (function(){
@@ -4622,7 +4837,7 @@ document.addEventListener('DOMContentLoaded', function(){
       })();
    </script>
    
-<audio id="explode-sound" src="https://casi0048.github.io/suoni/explosion-1.mp3" preload="auto"></audio>
+<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c5b8c77887.mp3?filename=explosion-6055.mp3" preload="auto"></audio>
 
 <script>
 (function(){
@@ -4679,25 +4894,12 @@ document.addEventListener('DOMContentLoaded', function(){
       var siteData = [];
       
       // Funzione per caricare i dati del sito
-      // Funzione per caricare i dati del sito (robusta, senza doppi catch)
-let siteData = Array.isArray(window.siteData) ? window.siteData : [];
-async function loadSiteData(){
-  try {
-    if (window.OFFLINE) {
-      console.warn('Offline: skip loadSiteData');
-      return;
-    }
-    const response = await fetchWithSlugFallback('sitemap.json', { cache: 'no-store' });
-    if (!response.ok) throw new Error('HTTP ' + response.status);
-    siteData = await response.json();
-  } catch (error) {
-    console.warn('Errore nel caricamento dei dati:', error);
-    // Fallback minimo per non rompere la ricerca
-    if (!Array.isArray(siteData) || !siteData.length) {
-      siteData = [];
-    }
-  }
-} const response = await fetchWithSlugFallback('sitemap.json'); siteData = await response.json(); }catch(e){ console.warn('Errore nel caricamento dei dati:', e); } } catch (error) {
+      async function loadSiteData() {
+        try {
+          // Questo è un esempio - dovresti sostituirlo con i tuoi dati reali
+          const response = await fetch('sitemap.json'); // Crea un file JSON con tutti i tuoi URL e titoli
+          siteData = await response.json();
+        } catch (error) {
           console.error("Errore nel caricamento dei dati:", error);
           // Fallback manuale se il JSON non è disponibile
           siteData = [
@@ -4764,7 +4966,7 @@ async function loadSiteData(){
       // Inizializzazione
       document.addEventListener('DOMContentLoaded', function() {
         // Carica i dati del sito
-        if(!window.OFFLINE){ loadSiteData(); }
+        loadSiteData();
         
         // Configura la barra di ricerca
         const searchInput = document.getElementById('site-search');
@@ -4903,7 +5105,7 @@ async function loadSiteData(){
       })();
    </script>
    
-<audio id="explode-sound" src="https://casi0048.github.io/suoni/explosion-1.mp3" preload="auto"></audio>
+<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c5b8c77887.mp3?filename=explosion-6055.mp3" preload="auto"></audio>
 
 <script>
 (function(){
@@ -4966,56 +5168,8 @@ async function loadSiteData(){
       let searchTimeout = null;
       
       // Funzione per indicizzare le pagine
-      async 
-<script>
-// --- Helper per normalizzare i nomi file con spazi/apostrofi/accénti -> trattini
-function slugifyFilename(name) {
-  const noExt = name.replace(/\.[^.]+$/, '');
-  const ext = name.slice(noExt.length);
-  let base = noExt.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // togli accenti
-  base = base.replace(/['’`´]/g, '-').replace(/\s+/g, '-').replace(/-+/g, '-');
-  return base + ext;
-}
-function hyphenatePath(url) {
-  try {
-    const u = new URL(url, location.origin);
-    const parts = u.pathname.split('/');
-    const file = parts.pop() || '';
-    const newFile = slugifyFilename(decodeURIComponent(file));
-    parts.push(encodeURIComponent(newFile));
-    return parts.join('/');
-  } catch(e) {
-    return url;
-  }
-}
-async function fetchWithSlugFallback(url, opts){
-  try{
-    const r = await fetchWithSlugFallback(url, opts);
-    if (r.ok) return r;
-    // se 404 o simili, prova variante con trattini
-    const alt = hyphenatePath(url);
-    if (alt !== url) {
-      const r2 = await fetchWithSlugFallback(alt, opts);
-      if (r2.ok) return r2;
-    }
-    throw new Error('Fetch fallita: ' + r.status + ' su ' + url);
-  }catch(e){
-    // ultimo tentativo: prova URL non encoded
-    try{
-      const de = decodeURIComponent(url);
-      if (de !== url){
-        const r3 = await fetchWithSlugFallback(de, opts);
-        if (r3.ok) return r3;
-      }
-    }catch(_){}
-    throw e;
-  }
-}
-</script>
-async function buildSearchIndex() {
-        
-  if (window.OFFLINE) { console.warn('Offline: skipping buildSearchIndex'); return; }
-console.log("Costruzione indice di ricerca...");
+      async function buildSearchIndex() {
+        console.log("Costruzione indice di ricerca...");
         
         // Ottieni la lista delle pagine dal menu
         const menuLinks = Array.from(document.querySelectorAll('.mega-menu a[href]'));
@@ -5029,7 +5183,7 @@ console.log("Costruzione indice di ricerca...");
               continue;
             }
             
-            const response = await fetchWithSlugFallback(url);
+            const response = await fetch(url);
             const text = await response.text();
             const parser = new DOMParser();
             const doc = parser.parseFromString(text, 'text/html');
@@ -5389,7 +5543,7 @@ console.log("Costruzione indice di ricerca...");
       })();
    </script>
    
-<audio id="explode-sound" src="https://casi0048.github.io/suoni/explosion-1.mp3" preload="auto"></audio>
+<audio id="explode-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c5b8c77887.mp3?filename=explosion-6055.mp3" preload="auto"></audio>
 
 <script>
 (function(){
@@ -5595,324 +5749,6 @@ function collectMarked(){
   }
 })();
 </script>
-
-
-<script id="once-guards">
-  (function(){
-    window.__ONCE = window.__ONCE || {};
-    function once(key, fn){ if(__ONCE[key]) return; __ONCE[key]=1; try{ fn(); }catch(e){} }
-
-    once('bind-thunder', function(){
-      var b = document.getElementById('btn-thunder');
-      if(b && !b.dataset.bound && typeof window.toggleThunder === 'function'){
-        b.dataset.bound='1';
-        b.addEventListener('click', window.toggleThunder, {passive:true});
-      }
-    });
-
-    once('bind-explode', function(){
-      var b = document.getElementById('btn-explode');
-      var t = document.querySelector('.exploding-text');
-      if(b && t && !b.dataset.bound && typeof window.triggerExplosion === 'function'){
-        b.dataset.bound='1';
-        b.addEventListener('click', window.triggerExplosion, {passive:true});
-      }
-    });
-  })();
-</script>
-
-
-<script id="thunder-helper">
-(function(){
-  function ensureAudio(){
-    var btn = document.getElementById('btn-thunder');
-    var custom = btn ? btn.getAttribute('data-audio') : null;
-    var a = document.getElementById('thunder-sound');
-    if(!a){
-      a = document.createElement('audio');
-      a.id = 'thunder-sound';
-      a.preload = 'auto';
-      a.src = custom || 'media/thunder.mp3';
-      document.body.appendChild(a);
-    }else if(custom){
-      a.src = custom;
-    }
-    a.volume = 1.0;
-    return a;
-  }
-  window.toggleThunder = window.toggleThunder || function(){
-    try{
-      var a = ensureAudio();
-      try{ a.pause(); }catch(e){}
-      try{ a.currentTime = 0; }catch(e){}
-      var p = a.play();
-      if(p && typeof p.catch === 'function'){
-        p.catch(function(){ /* playback will start on user gesture */ });
-      }
-      var l = document.getElementById('lightning'), b = document.getElementById('bolt');
-      if(l){ l.style.transition='opacity 120ms ease'; l.style.opacity='1'; setTimeout(function(){ l.style.opacity='0'; }, 220); }
-      if(b){ b.style.transition='transform 120ms ease'; b.style.transform='translate(-50%,-50%) rotate(12deg) scaleY(1)'; setTimeout(function(){ b.style.transform='translate(-50%,-50%) rotate(12deg) scaleY(0)'; }, 220); }
-    }catch(e){}
-  };
-  var btn = document.getElementById('btn-thunder');
-  if(btn && !btn.dataset.bound){
-    btn.dataset.bound='1';
-    btn.addEventListener('click', window.toggleThunder, {passive:true});
-  }
-})();
-</script>
-
-
-<script id="thunder-webaudio-fallback">
-(function(){
-  function webAudioThunder(){
-    try{
-      var AudioCtx = window.AudioContext || window.webkitAudioContext;
-      if(!AudioCtx) return;
-      var ctx = new AudioCtx();
-      var sampleRate = ctx.sampleRate;
-      var seconds = 2.0;
-      var length = sampleRate * seconds;
-      var buffer = ctx.createBuffer(1, length, sampleRate);
-      var data = buffer.getChannelData(0);
-      // Brown noise (integrated white noise) for thunder-like rumble
-      var lastOut = 0.0;
-      for (var i=0; i<length; i++){
-        var white = Math.random() * 2 - 1;
-        lastOut = (lastOut + (0.02 * white)) / 1.02;
-        data[i] = lastOut * 3.5; // gain
-      }
-      // Envelope (attack boom + decay)
-      var attack = 0.02 * sampleRate;
-      var decay  = 1.8  * sampleRate;
-      for (var i=0; i<length; i++){
-        var env = (i < attack) ? (i/attack) : Math.max(0, 1 - (i-attack)/decay);
-        data[i] *= env;
-      }
-      var src = ctx.createBufferSource(); src.buffer = buffer;
-      var lp  = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 250;
-      src.connect(lp).connect(ctx.destination); src.start(0);
-      setTimeout(function(){ try{ ctx.close(); }catch(e){} }, seconds*1000+250);
-    }catch(e){}
-  }
-
-  // Wrap existing toggleThunder or define one
-  var oldToggle = window.toggleThunder;
-  window.toggleThunder = function(){
-    var a = document.getElementById('thunder-sound');
-    var played = false;
-    try{
-      if(a){
-        a.pause(); a.currentTime = 0;
-        var p = a.play();
-        if(p && typeof p.then === 'function'){
-          p.then(function(){ played = true; }).catch(function(){});
-        }else{
-          played = true;
-        }
-      }
-    }catch(e){}
-
-    // fallback if not played within a tick
-    setTimeout(function(){
-      if(!played){ webAudioThunder(); }
-    }, 120);
-
-    // keep any visual effect the old handler may have
-    if (typeof oldToggle === 'function'){
-      try{ oldToggle(); }catch(e){}
-    } else {
-      // simple flash if present
-      var l = document.getElementById('lightning'), b = document.getElementById('bolt');
-      if(l){ l.style.transition='opacity 120ms ease'; l.style.opacity='1'; setTimeout(function(){ l.style.opacity='0'; }, 220); }
-      if(b){ b.style.transition='transform 120ms ease'; b.style.transform='translate(-50%,-50%) rotate(12deg) scaleY(1)'; setTimeout(function(){ b.style.transform='translate(-50%,-50%) rotate(12deg) scaleY(0)'; }, 220); }
-    }
-  };
-
-  // Ensure the button is wired once
-  var btn = document.getElementById('btn-thunder');
-  if(btn && !btn.dataset.boundThunder){
-    btn.dataset.boundThunder = '1';
-    btn.addEventListener('click', window.toggleThunder, {passive:true});
-  }
-})();
-</script>
-<script>
-(function(){
-  // Evita doppie iniezioni
-  if (window.__tuonoPatch) return; 
-  window.__tuonoPatch = true;
-
-  // --- Audio unico (creato se manca)
-  let audio = document.getElementById('thunder-sound');
-  if (!audio) {
-    audio = document.createElement('audio');
-    audio.id = 'thunder-sound';
-    audio.preload = 'auto';
-    audio.innerHTML = `
-      <source src="https://casi0048.github.io/suoni/thunder-sound.mp3" type="audio/mpeg">
-      <source src="/suoni/thunder-sound.mp3" type="audio/mpeg">
-    `;
-    audio.style.display = 'none';
-    document.body.appendChild(audio);
-  }
-
-  // --- Stato unico & API
-  const TH = (window.THUNDER = window.THUNDER || { on:false });
-
-  function paintButtons(){
-    const preferiti = document.querySelectorAll('#btn-tuono, #btnTuono, [data-tuono]');
-    const heuristics = Array.from(document.querySelectorAll('button, a, [role="button"]'))
-      .filter(el => {
-        const s = (el.id + ' ' + el.className + ' ' + (el.textContent||'')).toLowerCase();
-        return /tuono|thunder|⚡/.test(s);
-      });
-    const btns = (preferiti.length ? preferiti : heuristics);
-
-    btns.forEach(btn=>{
-      if (!btn.dataset._label) btn.dataset._label = (btn.textContent||'⚡ Tuono').trim();
-      btn.classList.toggle('active', TH.on);
-      btn.setAttribute('aria-pressed', TH.on ? 'true' : 'false');
-      btn.textContent = TH.on ? '⚡ Tuono: ON (clicca per OFF)' : btn.dataset._label; 
-    });
-  }
-
-  TH.set = function(on){
-    TH.on = !!on;
-    if (!TH.on) { try{ audio.pause(); audio.currentTime = 0; }catch(e){} }
-    paintButtons();
-  };
-
-  TH.toggle = function(){ TH.set(!TH.on); };
-
-  // Helper usato da altri script/fulmini: rispetta l’OFF
-  window.playThunder = function(){
-    if (!TH.on) return;
-    try { audio.currentTime = 0; audio.play().catch(()=>{}); } catch(e){}
-  };
-
-  // Espongo anche un toggle globale (sovrascrive eventuali versioni vecchie)
-  window.toggleThunder = TH.toggle;
-
-  // --- Wiring dei bottoni
-  function wire(){
-    const preferiti = document.querySelectorAll('#btn-tuono, #btnTuono, [data-tuono]');
-    const heuristics = Array.from(document.querySelectorAll('button, a, [role="button"]'))
-      .filter(el => {
-        const s = (el.id + ' ' + el.className + ' ' + (el.textContent||'')).toLowerCase();
-        return /tuono|thunder|⚡/.test(s);
-      });
-    const btns = (preferiti.length ? preferiti : heuristics);
-
-    btns.forEach(btn=>{
-      if (btn._tuonoBound) return;
-      btn.addEventListener('click', function(e){
-        // Se è un <a> con href vuoto o "#", non navigare
-        if (btn.tagName === 'A') {
-          const href = (btn.getAttribute('href')||'').trim();
-          if (!href || href === '#') e.preventDefault();
-        } else {
-          e.preventDefault();
-        }
-        TH.toggle();
-      }, false);
-      btn._tuonoBound = true;
-    });
-
-    // pittura stato iniziale (di default OFF)
-    paintButtons();
-  }
-
-  wire();
-  // ripeti tra un attimo per elementi montati tardi
-  setTimeout(wire, 800);
-  setTimeout(wire, 2000);
-})();
-</script>
-<script>
-(function(){
-  if (window.__fixTuono) return;
-  window.__fixTuono = true;
-
-  // === 1) AUDIO: usa ESATTAMENTE il tuo file
-  const DEFAULT_SOUND = 'suoni/thunder-sound.mp3';
-
-  let audio = document.getElementById('thunder-sound');
-  if (!audio) {
-    audio = document.createElement('audio');
-    audio.id = 'thunder-sound';
-    audio.preload = 'auto';
-    audio.src = DEFAULT_SOUND;
-    audio.style.display = 'none';
-    document.body.appendChild(audio);
-  } else if (!audio.src || audio.src.indexOf('thunder-sound.mp3') === -1) {
-    // forza il path corretto anche se uno script l'aveva cambiato
-    audio.src = DEFAULT_SOUND;
-  }
-
-  // === 2) STATO + API compatibile (ON/OFF reale)
-  let state = false; // OFF di default
-
-  Object.defineProperty(window, 'thunderOn', {
-    get(){ return state; },
-    set(v){
-      state = !!v;
-      paint();
-      if (!state) { try{ audio.pause(); audio.currentTime = 0; }catch(e){} }
-    }
-  });
-
-  window.playThunder = function(){
-    if (!state) return;
-    try { audio.currentTime = 0; audio.play().catch(()=>{}); } catch(e){}
-  };
-
-  window.toggleThunder = function(){ window.thunderOn = !state; };
-
-  // === 3) Bottoni (priorità a #btn-tuono o [data-tuono])
-  function getButtons(){
-    const preferred = document.querySelectorAll('#btn-tuono, [data-tuono]');
-    if (preferred.length) return Array.from(preferred);
-    return Array.from(document.querySelectorAll('button, a, [role="button"]'))
-      .filter(el=>{
-        const s = (el.id+' '+el.className+' '+(el.textContent||'')).toLowerCase();
-        return /tuono|thunder|⚡/.test(s);
-      });
-  }
-
-  function paint(){
-    getButtons().forEach(btn=>{
-      if (!btn.dataset._label) btn.dataset._label = (btn.textContent || '⚡ Tuono').trim();
-      btn.classList.toggle('active', state);
-      btn.setAttribute('aria-pressed', state ? 'true' : 'false');
-      btn.textContent = state ? '⚡ Tuono: ON (clicca per OFF)' : btn.dataset._label;
-    });
-  }
-
-  function wire(){
-    getButtons().forEach(btn=>{
-      if (btn._tuonoBound) return;
-      btn.addEventListener('click', function(ev){
-        // preveniamo navigazioni di link "vuoti"
-        if (btn.tagName === 'A') {
-          const href = (btn.getAttribute('href')||'').trim();
-          if (!href || href === '#') ev.preventDefault();
-        } else {
-          ev.preventDefault();
-        }
-        window.toggleThunder();
-      }, false);
-      btn._tuonoBound = true;
-    });
-    paint();
-  }
-
-  wire();
-  setTimeout(wire, 800);
-  setTimeout(wire, 2000);
-})();
-</script>
-<!-- === CONSERVATIVE: Floater Tuono in alto a destra, etichetta fissa === -->
 
 </body>
 </html>
