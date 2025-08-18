@@ -3576,7 +3576,8 @@ document.addEventListener('DOMContentLoaded', function(){
 
   // Sorgente simboli/parole
   const symbols = [
- 
+    '∞','Φ','Ψ','Λ','Δ','Ω','π','∑','∏','√',
+    '≡','≈','∴','∀','∃','∈','∧','∨','⊕','⊗',
     'Σ','Θ','Ξ','ℵ','∂','∇','∫',
     'Sapienza','Verità','Logos','Thanatos','Mito','Essere','Divenire',
     'Idee','Archè','Armonia','Principio','Destino','Libertà','Giustizia',
@@ -3594,7 +3595,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
   // Config
   const cfg = {
-    count: 120,
+    count: 190,
     minSize: 0.5,
     maxSize: 1,
     floatDist: 100,
@@ -3610,13 +3611,6 @@ document.addEventListener('DOMContentLoaded', function(){
   const rand = (a,b)=> Math.random()*(b-a)+a;
   const rndInt = n => Math.floor(Math.random()*n);
   const randHSL = ()=> `hsl(${Math.floor(Math.random()*360)} 100% 70%)`;
-// subito prima di makeParticles()
-let off = +(localStorage.getItem('symOff') || 0);
-const sym = symbols.slice(off).concat(symbols.slice(0, off));
-localStorage.setItem('symOff', (off + cfg.count) % symbols.length);
-
-// dentro il for
-el.textContent = sym[i % sym.length];
 
   // Genera griglia
   function makeParticles(){
