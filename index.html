@@ -1170,7 +1170,7 @@ footer { position: relative; z-index: 20; }
 <span class="const-symbol" aria-hidden="true" data-repel-item>∞</span>
 
    <canvas id="shooting-stars"></canvas>
-   <body>
+   
       <!-- GALASSIA dietro -->
       <canvas id="nebula"></canvas>
       <!-- Stelle + Comete sopra la galassia -->
@@ -1253,7 +1253,7 @@ footer { position: relative; z-index: 20; }
 
 <!--FINE COSMO DINAMICO-->
          <div class="menu-container">
-            <nav class="menu-desktop">
+            <nav aria-label="Menu principale" class="menu-desktop">
                <ul role="menu">
                   <li class="dropdown">
                      <a class="menu-btn underline-effect" href="https://casi0048.github.io/pagine/benvenuti.html" role="menuitem"> 🗝️ INCIPIT</a>
@@ -3682,72 +3682,7 @@ reserveTypingSpace(el, texts);
          })();
       </script>
       <!--  inizio script stelle cadenti  da dx a sx-->
-      <script>
-         const canvas = document.getElementById("shooting-stars");
-         const ctx = canvas.getContext("2d");
-         
-         let w, h;
-         function resizeCanvas() {
-           w = canvas.width = window.innerWidth;
-           h = canvas.height = window.innerHeight;
-         }
-         window.addEventListener("resize", resizeCanvas);
-         resizeCanvas();
-         
-         class ShootingStar {
-           constructor() {
-             this.reset();
-           }
-           reset() {
-             this.x = Math.random() * w;
-             this.y = Math.random() * h * 0.5;
-             this.len = Math.random() * 80 + 10;
-             this.speed = Math.random() * 4 + 2;
-             this.size = Math.random() * 2 + 1;
-             this.opacity = Math.random() * 0.5 + 0.5;
-           }
-           update() {
-             this.x -= this.speed;
-         this.y += this.speed * 0.5; // meno discesa
-         
-             if (this.x < -this.len || this.y > h + this.len) {
-               this.reset();
-               this.x = Math.random() * w + w;
-               this.y = Math.random() * h * 0.7;
-             }
-           }
-           draw() {
-             ctx.beginPath();
-             const grad = ctx.createLinearGradient(this.x, this.y, this.x + this.len, this.y - this.len);
-             grad.addColorStop(0, `rgba(255,255,255,${this.opacity})`);
-             grad.addColorStop(1, "rgba(255,255,255,0)");
-             ctx.strokeStyle = grad;
-             ctx.lineWidth = this.size;
-             ctx.moveTo(this.x, this.y);
-             ctx.lineTo(this.x + this.len, this.y - this.len);
-             ctx.stroke();
-           }
-         }
-         
-         let stars = [];
-         for (let i = 0; i < 20; i++) {
-           stars.push(new ShootingStar());
-         }
-         
-         function animate() {
-           ctx.clearRect(0, 0, w, h);
-           stars.forEach(star => {
-             star.update();
-             star.draw();
-           });
-           requestAnimationFrame(animate);
-         }
-         animate();
-         
-         let minSpeed = 4;
-         let maxSpeed = 12;
-         this.speed = Math.random() * (maxSpeed - minSpeed) + minSpeed;
-      </script>
+      
       <!--  fine script stelle cadenti-->
       <script>
          (() => {
@@ -4272,7 +4207,7 @@ document.addEventListener('DOMContentLoaded', function(){
            }, true);
          })();
       </script>
-      <!-- Aggiungi questo codice prima della chiusura 
+      <!-- Aggiungi questo codice prima della chiusura -->
          <!-- === CONSERVATIVE ENTER FIX + siteData (real excerpts) === -->
       <script>
          (function(){
@@ -4430,7 +4365,7 @@ document.addEventListener('DOMContentLoaded', function(){
     bind();
   }
 })();
-</script><!-- Aggiungi questo codice prima della chiusura 
+</script><!-- Aggiungi questo codice prima della chiusura -->
       <!-- === CONSERVATIVE ENTER FIX + siteData (real excerpts) === -->
    <script>
       (function(){
@@ -4980,7 +4915,7 @@ document.addEventListener('DOMContentLoaded', function(){
         }
       });
    </script>
-   <!-- Aggiungi questo codice prima della chiusura 
+   <!-- Aggiungi questo codice prima della chiusura -->
       <!-- === CONSERVATIVE ENTER FIX + siteData (real excerpts) === -->
    <script>
       (function(){
