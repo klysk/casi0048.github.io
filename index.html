@@ -3125,7 +3125,7 @@ reserveTypingSpace(el, texts);
              btn.classList.toggle('active', on);
              btn.setAttribute('aria-pressed', on ? 'true':'false');
              if (!btn.dataset._label) btn.dataset._label = (btn.innerText||btn.textContent||'⚡ Tuono').trim();
-btn.textContent = on ? '⚡ Tuono: ON (clicca per OFF)' : (btn.dataset._label || '⚡ Tuono (clicca per ON)');
+btn.textContent = on ? '⚡ Tuono: ON (clicca per OFF)' : (btn.dataset._label || '⚡ Tuono');
 
            }
          
@@ -4679,22 +4679,25 @@ document.addEventListener('DOMContentLoaded', function(){
       var siteData = [];
       
       // Funzione per caricare i dati del sito
-      async function loadSiteData(){
+      // Funzione per caricare i dati del sito (robusta, senza doppi catch)
+let siteData = Array.isArray(window.siteData) ? window.siteData : [];
+async function loadSiteData(){
   try {
     if (window.OFFLINE) {
       console.warn('Offline: skip loadSiteData');
       return;
     }
-    const response = await fetch('sitemap.json', { cache: 'no-store' });
+    const response = await fetchWithSlugFallback('sitemap.json', { cache: 'no-store' });
+    if (!response.ok) throw new Error('HTTP ' + response.status);
     siteData = await response.json();
   } catch (error) {
     console.warn('Errore nel caricamento dei dati:', error);
-    // Fallback: mantieni il sito utilizzabile
-    if (typeof siteData === 'undefined' || !Array.isArray(siteData)) {
-      window.siteData = [];
+    // Fallback minimo per non rompere la ricerca
+    if (!Array.isArray(siteData) || !siteData.length) {
+      siteData = [];
     }
   }
-} const response = await fetch('sitemap.json'); siteData = await response.json(); }catch(e){ console.warn('Errore nel caricamento dei dati:', e); } } catch (error) {
+} const response = await fetchWithSlugFallback('sitemap.json'); siteData = await response.json(); }catch(e){ console.warn('Errore nel caricamento dei dati:', e); } } catch (error) {
           console.error("Errore nel caricamento dei dati:", error);
           // Fallback manuale se il JSON non è disponibile
           siteData = [
@@ -4963,7 +4966,53 @@ document.addEventListener('DOMContentLoaded', function(){
       let searchTimeout = null;
       
       // Funzione per indicizzare le pagine
-      async function buildSearchIndex() {
+      async 
+<script>
+// --- Helper per normalizzare i nomi file con spazi/apostrofi/accénti -> trattini
+function slugifyFilename(name) {
+  const noExt = name.replace(/\.[^.]+$/, '');
+  const ext = name.slice(noExt.length);
+  let base = noExt.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // togli accenti
+  base = base.replace(/['’`´]/g, '-').replace(/\s+/g, '-').replace(/-+/g, '-');
+  return base + ext;
+}
+function hyphenatePath(url) {
+  try {
+    const u = new URL(url, location.origin);
+    const parts = u.pathname.split('/');
+    const file = parts.pop() || '';
+    const newFile = slugifyFilename(decodeURIComponent(file));
+    parts.push(encodeURIComponent(newFile));
+    return parts.join('/');
+  } catch(e) {
+    return url;
+  }
+}
+async function fetchWithSlugFallback(url, opts){
+  try{
+    const r = await fetchWithSlugFallback(url, opts);
+    if (r.ok) return r;
+    // se 404 o simili, prova variante con trattini
+    const alt = hyphenatePath(url);
+    if (alt !== url) {
+      const r2 = await fetchWithSlugFallback(alt, opts);
+      if (r2.ok) return r2;
+    }
+    throw new Error('Fetch fallita: ' + r.status + ' su ' + url);
+  }catch(e){
+    // ultimo tentativo: prova URL non encoded
+    try{
+      const de = decodeURIComponent(url);
+      if (de !== url){
+        const r3 = await fetchWithSlugFallback(de, opts);
+        if (r3.ok) return r3;
+      }
+    }catch(_){}
+    throw e;
+  }
+}
+</script>
+async function buildSearchIndex() {
         
   if (window.OFFLINE) { console.warn('Offline: skipping buildSearchIndex'); return; }
 console.log("Costruzione indice di ricerca...");
@@ -4980,7 +5029,7 @@ console.log("Costruzione indice di ricerca...");
               continue;
             }
             
-            const response = await fetch(url);
+            const response = await fetchWithSlugFallback(url);
             const text = await response.text();
             const parser = new DOMParser();
             const doc = parser.parseFromString(text, 'text/html');
