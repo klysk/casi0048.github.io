@@ -669,14 +669,16 @@
          }
       </style>
    
+
 <style>
 .exploding-text.explode{ animation: explodeAnim 1.2s forwards; }
 @keyframes explodeAnim{
-  0%{ letter-spacing: normal; opacity:1; transform: scale(1); }
-  50%{ letter-spacing: 0.6em; opacity:.7; transform: scale(1.4) rotate(5deg); }
-  100%{ letter-spacing: normal; opacity:1; transform: scale(1); }
+  0%{ opacity:1; transform: scale(1); }
+  50%{ opacity:.7; transform: scale(1.4) rotate(5deg); }
+  100%{ opacity:1; transform: scale(1); }
 }
 </style>
+
 
 
 <style data-cookie-remove>
@@ -828,6 +830,12 @@
 
 
 
+
+
+<style data-explode-cls-guard>
+  /* Anti-CLS exploding text: evita il wrap durante l'animazione */
+  .exploding-text{ white-space: nowrap !important; }
+</style>
 
 </head>
 <span class="const-symbol" aria-hidden="true" data-repel-item>∞</span>
@@ -3595,7 +3603,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
   // Config
   const cfg = {
-    count: 190,
+    count: 110,
     minSize: 0.5,
     maxSize: 1,
     floatDist: 100,
@@ -5406,6 +5414,28 @@ function collectMarked(){
 
   window.addEventListener('scroll', ()=>{ if(box.classList.contains('show')) positionBox(); }, true);
   window.addEventListener('resize', ()=>{ if(box.classList.contains('show')) positionBox(); });
+})();
+</script>
+
+
+<script data-explode-guard>
+(function(){
+  function guardHeight(el, dur){
+    try{
+      if(!el) return;
+      var r = el.getBoundingClientRect();
+      el.style.minHeight = Math.ceil(r.height) + 'px';
+      setTimeout(function(){ el.style.minHeight = ''; }, (dur||1200)+120);
+    }catch(e){}
+  }
+  var et = document.querySelector('.exploding-text');
+  var btn = document.getElementById('btn-explode') || document.getElementById('explode-btn');
+  if(btn && et){
+    btn.addEventListener('click', function(){ guardHeight(et, 1200); }, {passive:true});
+  }
+  if(et){
+    et.addEventListener('click', function(){ guardHeight(et, 1200); }, {passive:true});
+  }
 })();
 </script>
 
