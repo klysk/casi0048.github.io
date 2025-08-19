@@ -1291,6 +1291,49 @@ body .edx-dict{ margin-bottom:32px !important; }
   body .edx-dict{ margin-bottom:32px !important; }
   @media (max-width:980px){ .edx-dict{ display:none } }
 </style>
+
+<!-- === Dizionario filosofico — multi-fonte (CSS) === -->
+<style>
+  .edx-dict{
+    background:rgba(10,10,30,.9); border:1px solid rgba(255,215,0,.35);
+    border-radius:10px; box-shadow:0 6px 14px rgba(0,0,0,.28);
+    margin:16px 0 32px; position:relative; z-index:10;
+  }
+  .edx-dict[open]{ box-shadow:0 8px 18px rgba(0,0,0,.35) }
+  .edx-dict__head{
+    list-style:none; display:flex; align-items:center; gap:10px;
+    padding:4px 8px; cursor:pointer; user-select:none; min-height:26px;
+  }
+  .edx-dict__head::-webkit-details-marker{ display:none }
+  .edx-dict__title{ font-weight:700; color:#ffd86a; font-size:.92rem }
+  .edx-dict__chev{ margin-left:auto; font-size:.85rem; color:#e9eef5; transition:transform .2s ease }
+  .edx-dict[open] .edx-dict__chev{ transform:rotate(180deg) }
+  .edx-dict__body{ border-top:1px solid rgba(255,255,255,.08); padding:6px 8px }
+  .edx-dict__controls{ display:flex; gap:6px; align-items:center; flex-wrap:wrap }
+  .edx-dict__select{
+    height:22px; padding:0 .45rem; font-size:.82rem; cursor:pointer;
+    border:1px solid rgba(255,215,0,.35); border-radius:6px;
+    background:rgba(20,20,40,.85); color:#ffd86a; font-family:inherit;
+  }
+  .edx-dict__select option{ background:rgba(10,10,30,.95); color:#e9eef5; }
+  .edx-dict__input{
+    flex:1; min-width:150px; height:22px; line-height:22px; padding:0 .55rem;
+    background:rgba(20,20,40,.78); border:1px solid rgba(255,215,0,.35); border-radius:6px;
+    color:#e9eef5; font-size:.85rem; box-sizing:border-box;
+  }
+  .edx-dict__btn{
+    appearance:none; -webkit-appearance:none; display:inline-flex; align-items:center; justify-content:center;
+    height:22px; padding:0 .45rem; line-height:1; font-size:.8rem; cursor:pointer;
+    border:1px solid rgba(255,215,0,.35); border-radius:6px; background:rgba(255,255,255,.06); color:#e9eef5;
+  }
+  /* garantisci apri/chiudi del <details> anche con CSS globali */
+  .edx-dict .edx-dict__body{ display:none } .edx-dict[open] .edx-dict__body{ display:block }
+  /* se il dizionario è subito sopra un iframe, stacca e blocca click quando aperto */
+  .edx-dict[open]+iframe{ pointer-events:none; margin-top:12px; filter:opacity(.85) }
+  /* stacco definitivo sotto in caso di override globali */
+  body .edx-dict{ margin-bottom:32px !important; }
+  @media (max-width:980px){ .edx-dict{ display:none } }
+</style>
 </head>
 <body>
 <span class="const-symbol" aria-hidden="true" data-repel-item>∞</span>
@@ -2911,6 +2954,9 @@ reserveTypingSpace(el, texts);
 })();
 </script>
 <!-- ============= /DIZIONARIO FILOSOFICO (MINIMAL INLINE, FIXED HEIGHT + INPUT) ============= -->
+
+
+<!-- === WIDGET: Dizionario filosofico (multi-fonte) === -->
 
 
 <!-- === WIDGET: Dizionario filosofico (multi-fonte) === -->
@@ -6111,6 +6157,56 @@ document.addEventListener('DOMContentLoaded', function(){
   }else{
     mountWidget(); wireForm();
   }
+})();
+</script>
+
+<!-- === Script: Dizionario multi-fonte === -->
+<script>
+(function(){
+  const build = {
+    sep:          q => 'https://plato.stanford.edu/search/searcher.py?query=' + encodeURIComponent(q),
+    iep:          q => 'https://iep.utm.edu/?s=' + encodeURIComponent(q),
+    treccani:     q => 'https://www.treccani.it/enciclopedia/ricerca/' + encodeURIComponent(q) + '/',
+    philosophica: q => 'https://www.philosophica.info/?s=' + encodeURIComponent(q),
+    'wiki-it':    q => 'https://it.wikipedia.org/w/index.php?search=' + encodeURIComponent(q)
+  };
+
+  function wire(){
+    const form  = document.getElementById('edx-dict-form');
+    const sel   = document.getElementById('edx-source');
+    const input = document.getElementById('edx-q');
+    if(!form || !sel || !input) return;
+    form.addEventListener('submit', function(e){
+      // intercetta PRIMA dei listener globali (capture=true impostato sotto)
+      e.preventDefault(); e.stopPropagation(); if(e.stopImmediatePropagation) e.stopImmediatePropagation();
+      const q = (input.value||'').trim(); if(!q) return;
+      const src = sel.value || 'sep';
+      const url = (build[src] || build.sep)(q);
+      window.open(url, '_blank', 'noopener');
+      return false;
+    }, true);
+  }
+
+  function mount(){
+    const root = document.getElementById('edx-dict');
+    if(!root) return;
+    // Inserisci sopra il primo iframe nella sidebar/destra
+    const selectors = ['aside iframe', '.sidebar iframe', '#sidebar iframe', '.articles-blob ~ iframe', '.col-dx iframe', '.right iframe'];
+    for(const s of selectors){
+      const el = document.querySelector(s);
+      if(el && el.parentElement && !el.previousElementSibling?.isSameNode(root)){
+        el.parentElement.insertAdjacentElement('beforebegin', root);
+        break;
+      }
+    }
+    // se per errore è finito nell'header, spostalo subito dopo
+    const hdr = document.querySelector('header');
+    if(hdr && hdr.contains(root)){ hdr.insertAdjacentElement('afterend', root); }
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', function(){ mount(); wire(); });
+  }else{ mount(); wire(); }
 })();
 </script>
 </body>
