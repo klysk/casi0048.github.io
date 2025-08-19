@@ -1165,6 +1165,51 @@
 footer { position: relative; z-index: 20; }
 </style>
 
+
+<style>
+  /* Dizionario filosofico — CLICK-SAFE (senza JS), compatto */
+  .edx-dict{
+    background:rgba(10,10,30,.9);
+    border:1px solid rgba(255,215,0,.35);
+    border-radius:10px;
+    box-shadow:0 6px 14px rgba(0,0,0,.28);
+    margin:8px 0;
+    position:relative; z-index:1;
+  }
+  .edx-dict[open] { box-shadow:0 8px 18px rgba(0,0,0,.35); }
+  .edx-dict__head{
+    list-style:none;
+    display:flex; align-items:center; gap:10px;
+    padding:4px 8px; cursor:pointer; user-select:none; min-height:26px;
+  }
+  .edx-dict__head::-webkit-details-marker{ display:none }
+  .edx-dict__title{ font-family:'Cinzel',serif; color:#ffd86a; font-weight:700; font-size:.9rem; }
+  .edx-dict__chev{ margin-left:auto; font-size:.85rem; color:#e9eef5; transition:transform .2s ease; }
+  .edx-dict[open] .edx-dict__chev{ transform:rotate(180deg) }
+  .edx-dict__body{ border-top:1px solid rgba(255,255,255,.08); padding:6px 8px; }
+  .edx-dict__controls{ display:flex; gap:6px; align-items:center; }
+  .edx-dict__controls input[name="query"]{
+    box-sizing:border-box; flex:1; min-width:160px;
+    height:22px; line-height:22px; padding:0 .55rem;
+    background:rgba(20,20,40,.78);
+    border:1px solid rgba(255,215,0,.28);
+    border-radius:6px; color:#e9eef5; font-size:.85rem;
+  }
+  .edx-dict__controls button[type="submit"]{
+    appearance:none; -webkit-appearance:none;
+    box-sizing:border-box; display:inline-flex; align-items:center; justify-content:center;
+    height:22px; padding:0 .45rem; line-height:1; font-size:.8rem;
+    border:1px solid rgba(255,215,0,.28);
+    background:rgba(255,255,255,.06);
+    color:#e9eef5; border-radius:6px; cursor:pointer;
+  }
+  @media (max-width:980px){ .edx-dict{ display:none } }
+
+/* forza la logica apri/chiudi del <details> */
+.edx-dict .edx-dict__body{ display:none; }
+.edx-dict[open] .edx-dict__body{ display:block; }
+
+</style>
 </head>
 <body>
 <span class="const-symbol" aria-hidden="true" data-repel-item>∞</span>
@@ -2687,7 +2732,118 @@ reserveTypingSpace(el, texts);
       </style>
       <!-- 🎬 INIZIO PLAYER (destro) -->
       <div class="video-container" id="video-right">
-         <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="264" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/G_REgkOuQfw" title="Schopenhauer e Nietzsche (Hans-Georg Gadamer) - 3x4" width="280"></iframe>
+         
+<!-- ============= DIZIONARIO FILOSOFICO (MINIMAL INLINE, FIXED HEIGHT + INPUT) ============= -->
+<style>
+  .edx-dict{
+    background:rgba(10,10,30,.9);
+    border:1px solid rgba(255,215,0,.35);
+    border-radius:10px;
+    box-shadow:0 6px 14px rgba(0,0,0,.28);
+    margin:8px 0;
+  }
+  .edx-dict__head{
+    display:flex; align-items:center; gap:10px;
+    padding:4px 8px; cursor:pointer; user-select:none; min-height:24Px;
+  }
+  .edx-dict__title{
+    font-family:'Cinzel',serif; color:#ffd86a; font-weight:700; font-size:.9rem; letter-spacing:.2px; line-height:1;
+  }
+  .edx-dict__chev{ margin-left:auto; transition:transform .2s ease; color:#e9eef5; font-size:.85rem; }
+  .edx-dict.is-open .edx-dict__chev{ transform:rotate(180deg); }
+  .edx-dict__body{ display:none; border-top:1px solid rgba(255,255,255,.08); }
+  .edx-dict.is-open .edx-dict__body{ display:block; animation: edxIn .14s ease; }
+  @keyframes edxIn{ from{ opacity:.95; transform: translateY(-2px)} to{ opacity:1; transform:none } }
+
+  /* Controls compatti */
+  .edx-dict__controls{
+    display:flex; gap:6px; padding:6px 8px; align-items:center;
+  }
+
+  /* Input basso */
+  .edx-dict .edx-dict__input{
+    flex:1; min-width:120px;
+    height:24px !important;
+    line-height:24px !important;
+    padding:0 .55rem !important;
+    background:rgba(20,20,40,.78);
+    border:1px solid rgba(255,215,0,.28);
+    border-radius:7px;
+    color:#e9eef5;
+    font-size:.88rem;
+    box-sizing:border-box;
+  }
+
+  /* Bottone davvero basso */
+  .edx-dict .edx-dict__btn{
+    appearance:none; -webkit-appearance:none;
+    box-sizing:border-box;
+    display:inline-flex; align-items:center; justify-content:center;
+    height:24px !important;              /* prevale su qualsiasi 26px !important precedente */
+    padding:0 .45rem;                     /* niente padding verticale */
+    padding-block:0 !important;           /* difesa contro regole globali */
+    line-height:1 !important;
+    font-size:.82rem;
+    border:1px solid rgba(255,215,0,.28);
+    background:rgba(255,255,255,.06);
+    color:#e9eef5;
+    border-radius:6px;
+    cursor:pointer;
+  }
+
+  /* Iframe compatto */
+  .edx-dict .edx-dict__frame{
+    width:100%; height:220px; border:0; background:rgba(0,0,0,.2);
+  }
+
+  @media (max-width:980px){
+    .edx-dict{ display:none; }
+  }
+</style>
+
+</style>
+
+
+<script>
+(function(){
+  const root = document.getElementById('edx-dict');
+  if(!root) return;
+  const toggle = root.querySelector('#edx-dict-toggle');
+  const input = root.querySelector('#edx-dict-input');
+  const goBtn = root.querySelector('#edx-dict-go');
+  const frame = root.querySelector('#edx-dict-frame');
+  const buildURL = q => `https://plato.stanford.edu/search/searcher.py?query=${encodeURIComponent(q)}`; // SEP
+
+  function setOpen(open){ root.classList.toggle('is-open', open); toggle.setAttribute('aria-expanded', String(open)); }
+  function submit(ev){
+    if(ev){ ev.preventDefault && ev.preventDefault(); ev.stopPropagation && ev.stopPropagation(); }
+    const q = input.value.trim(); if(!q) return;
+    frame.src = buildURL(q);
+    if(!root.classList.contains('is-open')) setOpen(true);
+  }
+  toggle.addEventListener('click', e=>{ e.preventDefault(); setOpen(!root.classList.contains('is-open')); });
+  goBtn.addEventListener('click', submit);
+  input.addEventListener('keydown', e=>{ if(e.key==='Enter'){ submit(e); } });
+
+  // CHIUSO di default
+  setOpen(false);
+})();
+</script>
+<!-- ============= /DIZIONARIO FILOSOFICO (MINIMAL INLINE, FIXED HEIGHT + INPUT) ============= -->
+
+<details class="edx-dict" id="edx-dict">
+  <summary class="edx-dict__head">
+    <span class="edx-dict__title">Dizionario filosofico</span>
+    <span class="edx-dict__chev">▾</span>
+  </summary>
+  <div class="edx-dict__body">
+    <form class="edx-dict__controls" method="GET" action="https://plato.stanford.edu/search/searcher.py" target="_blank" rel="noopener">
+      <input type="search" name="query" placeholder="Cerca concetti, autori, scuole…" />
+      <button type="submit">Cerca</button>
+    </form>
+  </div>
+</details>
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="264" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/G_REgkOuQfw" title="Schopenhauer e Nietzsche (Hans-Georg Gadamer) - 3x4" width="280"></iframe>
       </div>
       <style>
          .video-container{
