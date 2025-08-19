@@ -1173,7 +1173,7 @@ footer { position: relative; z-index: 20; }
     border:1px solid rgba(255,215,0,.35);
     border-radius:10px;
     box-shadow:0 6px 14px rgba(0,0,0,.28);
-    margin:8px 0;
+    margin: 8px 0;
     position:relative; z-index:1;
   }
   .edx-dict[open] { box-shadow:0 8px 18px rgba(0,0,0,.35); }
@@ -1183,7 +1183,7 @@ footer { position: relative; z-index: 20; }
     padding:4px 8px; cursor:pointer; user-select:none; min-height:26px;
   }
   .edx-dict__head::-webkit-details-marker{ display:none }
-  .edx-dict__title{ font-family:'Cinzel',serif; color:#ffd86a; font-weight:700; font-size:.9rem; }
+  .edx-dict__title{ font-family:'Cinzel',serif; color:#ffd86a; font-weight:700; font-size:.9rem;}
   .edx-dict__chev{ margin-left:auto; font-size:.85rem; color:#e9eef5; transition:transform .2s ease; }
   .edx-dict[open] .edx-dict__chev{ transform:rotate(180deg) }
   .edx-dict__body{ border-top:1px solid rgba(255,255,255,.08); padding:6px 8px; }
@@ -1208,7 +1208,88 @@ footer { position: relative; z-index: 20; }
 /* forza la logica apri/chiudi del <details> */
 .edx-dict .edx-dict__body{ display:none; }
 .edx-dict[open] .edx-dict__body{ display:block; }
+<!-------------------------------------------------------->
+/* più aria sotto il box */
+.edx-dict{ margin:16px 0 16px; }
+.edx-dict[open]{ margin-bottom:24px; }
 
+/* opzionale: anche l’iframe parte un po’ più giù */
+aside iframe, .sidebar iframe{ margin-top:12px; display:block; }
+/* il box sta sopra */
+.edx-dict{ position:relative; z-index:10; }
+
+/* l’iframe sta sotto */
+aside iframe, .sidebar iframe{ position:relative; z-index:0; }
+/* vale quando il dizionario è subito prima dell'iframe */
+.edx-dict[open] + iframe{
+  pointer-events:none;          /* non cattura click mentre il box è aperto */
+  filter:opacity(.6) grayscale(.2); /* feedback visivo, facoltativo */
+  margin-top:12px;              /* piccolo distacco extra */
+}
+/* regola definitiva, vince su tutto */
+body .edx-dict{ margin-bottom:32px !important; }
+<!------------------------>
+/* Stile per la tendina delle fonti */
+.edx-dict__select {
+  background: rgba(20,20,40,.85);   /* sfondo scuro */
+  color: #ffd86a;                   /* testo leggibile */
+  border: 1px solid rgba(255,215,0,.35);
+  border-radius: 6px;
+  padding: 2px 6px;
+  font-size: .85rem;
+  font-family: 'Cinzel', serif;
+  cursor: pointer;
+}
+
+/* Colori anche quando si apre la lista */
+.edx-dict__select option {
+  background: rgba(10,10,30,.95);   /* scuro uniforme */
+  color: #e9eef5;                   /* testo chiaro */
+}
+
+</style>
+
+<!-- ===== Dizionario filosofico — multi-fonte, compatto ===== -->
+<style>
+  .edx-dict{
+    background:rgba(10,10,30,.9); border:1px solid rgba(255,215,0,.35);
+    border-radius:10px; box-shadow:0 6px 14px rgba(0,0,0,.28);
+    margin:16px 0 32px; position:relative; z-index:10;
+  }
+  .edx-dict[open]{ box-shadow:0 8px 18px rgba(0,0,0,.35) }
+  .edx-dict__head{
+    list-style:none; display:flex; align-items:center; gap:10px;
+    padding:4px 8px; cursor:pointer; user-select:none; min-height:26px;
+  }
+  .edx-dict__head::-webkit-details-marker{ display:none }
+  .edx-dict__title{ font-family:'Cinzel',serif; color:#ffd86a; font-weight:700; font-size:.9rem }
+  .edx-dict__chev{ margin-left:auto; font-size:.85rem; color:#e9eef5; transition:transform .2s ease }
+  .edx-dict[open] .edx-dict__chev{ transform:rotate(180deg) }
+  .edx-dict__body{ border-top:1px solid rgba(255,255,255,.08); padding:6px 8px }
+  .edx-dict__controls{ display:flex; gap:6px; align-items:center; flex-wrap:wrap }
+  .edx-dict__select{
+    height:22px; padding:0 .4rem; font-size:.8rem;
+    border:1px solid rgba(255,215,0,.28); border-radius:6px;
+    background:rgba(255,255,255,.06); color:#e9eef5;
+  }
+  .edx-dict__input{
+    flex:1; min-width:150px; height:22px; line-height:22px; padding:0 .55rem;
+    background:rgba(20,20,40,.78); border:1px solid rgba(255,215,0,.28);
+    border-radius:6px; color:#e9eef5; font-size:.85rem; box-sizing:border-box;
+  }
+  .edx-dict__btn{
+    appearance:none; -webkit-appearance:none; display:inline-flex; align-items:center; justify-content:center;
+    height:22px; padding:0 .45rem; line-height:1; font-size:.8rem;
+    border:1px solid rgba(255,215,0,.28); border-radius:6px; cursor:pointer;
+    background:rgba(255,255,255,.06); color:#e9eef5;
+  }
+  /* garantisci apri/chiudi con <details> */
+  .edx-dict .edx-dict__body{ display:none } .edx-dict[open] .edx-dict__body{ display:block }
+  /* se è subito sopra un iframe, tieni aria e blocca click quando aperto */
+  .edx-dict[open]+iframe{ pointer-events:none; margin-top:12px; filter:opacity(.85) }
+  /* stacco definitivo sotto anche se altri CSS sovrascrivono */
+  body .edx-dict{ margin-bottom:32px !important; }
+  @media (max-width:980px){ .edx-dict{ display:none } }
 </style>
 </head>
 <body>
@@ -2831,15 +2912,24 @@ reserveTypingSpace(el, texts);
 </script>
 <!-- ============= /DIZIONARIO FILOSOFICO (MINIMAL INLINE, FIXED HEIGHT + INPUT) ============= -->
 
+
+<!-- === WIDGET: Dizionario filosofico (multi-fonte) === -->
 <details class="edx-dict" id="edx-dict">
   <summary class="edx-dict__head">
     <span class="edx-dict__title">Dizionario filosofico</span>
     <span class="edx-dict__chev">▾</span>
   </summary>
   <div class="edx-dict__body">
-    <form class="edx-dict__controls" method="GET" action="https://plato.stanford.edu/search/searcher.py" target="_blank" rel="noopener">
-      <input type="search" name="query" placeholder="Cerca concetti, autori, scuole…" />
-      <button type="submit">Cerca</button>
+    <form id="edx-dict-form" class="edx-dict__controls" method="GET" target="_blank" rel="noopener">
+      <select id="edx-source" class="edx-dict__select" title="Fonte">
+        <option value="sep" selected>SEP (Stanford)</option>
+        <option value="iep">IEP</option>
+        <option value="treccani">Treccani</option>
+        <option value="philosophica">Philosophica</option>
+        <option value="wiki-it">Wikipedia (IT)</option>
+      </select>
+      <input id="edx-q" class="edx-dict__input" type="search" name="query" placeholder="Cerca concetti, autori, scuole…">
+      <button id="edx-go" class="edx-dict__btn" type="submit">Cerca</button>
     </form>
   </div>
 </details>
@@ -5971,5 +6061,57 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 </script>
 
+
+<script>
+(function(){
+  // Costruttori URL per le varie fonti
+  const build = {
+    sep:          q => 'https://plato.stanford.edu/search/searcher.py?query=' + encodeURIComponent(q),
+    iep:          q => 'https://iep.utm.edu/?s=' + encodeURIComponent(q),
+    treccani:     q => 'https://www.treccani.it/enciclopedia/ricerca/' + encodeURIComponent(q) + '/',
+    philosophica: q => 'https://www.philosophica.info/?s=' + encodeURIComponent(q),
+    'wiki-it':    q => 'https://it.wikipedia.org/w/index.php?search=' + encodeURIComponent(q)
+  };
+
+  function mountWidget(){
+    // prova a collocarlo sopra al primo iframe della sidebar/destra
+    const root = document.getElementById('edx-dict');
+    if(!root) return;
+    const candidates = ['aside iframe', '.articles-blob ~ iframe', '.sidebar iframe', '#sidebar iframe', '.col-dx iframe', '.right iframe'];
+    for(const sel of candidates){
+      const el = document.querySelector(sel);
+      if(el && el.parentElement && !el.previousElementSibling?.isSameNode(root)){
+        el.parentElement.insertAdjacentElement('beforebegin', root);
+        break;
+      }
+    }
+    // se per errore è dentro l'header, spostalo subito dopo
+    const hdr = document.querySelector('header'); 
+    if(hdr && hdr.contains(root)){ hdr.insertAdjacentElement('afterend', root); }
+  }
+
+  function wireForm(){
+    const form = document.getElementById('edx-dict-form');
+    const sel  = document.getElementById('edx-source');
+    const input= document.getElementById('edx-q');
+    if(!form || !sel || !input) return;
+    // intercetta prima degli script globali del sito
+    form.addEventListener('submit', function(e){
+      e.preventDefault(); e.stopPropagation(); if(e.stopImmediatePropagation) e.stopImmediatePropagation();
+      const q = (input.value||'').trim(); if(!q) return;
+      const src = sel.value || 'sep';
+      const url = (build[src] || build.sep)(q);
+      window.open(url, '_blank', 'noopener');
+      return false;
+    }, true);
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', function(){ mountWidget(); wireForm(); });
+  }else{
+    mountWidget(); wireForm();
+  }
+})();
+</script>
 </body>
 </html>
