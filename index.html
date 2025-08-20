@@ -3,8 +3,8 @@
 <html lang="it">
 <head>
 <meta content="Echi di Sofia - Portale di filosofia antica, moderna e contemporanea con approfondimenti su autori e correnti filosofiche" name="description"/>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport">
 <title>Echi di Sofia — Slider laterale + Blob articoli</title>
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -1797,7 +1797,6 @@ window.updateLabel = window.updateLabel || function(){
 <input id="slider-speed" max="20" min="1" type="range" value="8"/>
 </label>
 </div>
-
 <!-- ===== BLOB ANIMATO DESTRA (Ultimi articoli) ===== -->
 <!-- ===== BLOB ANIMATO DESTRA (Ultimi articoli) ===== -->
 <aside aria-label="Ultimi articoli" class="articles-blob">
@@ -2693,7 +2692,6 @@ window.updateLabel = window.updateLabel || function(){
    .edx-dict{ display:none; }
    }
    </style>
-
 <script>
       (function(){
         const root = document.getElementById('edx-dict');
@@ -2885,8 +2883,8 @@ window.updateLabel = window.updateLabel || function(){
 <div class="controls">
 <button id="playPause" title="Riproduci/Pausa">▶️</button>
 <span id="time">0:00 / 0:00</span>
-<input id="volume" max="1" min="0" step="0.01" title="Volume" type="range">
-</input></div>
+<input id="volume" max="1" min="0" step="0.01" title="Volume" type="range"/>
+</div>
 </div>
 <style>
    .audio-player {
@@ -3048,7 +3046,7 @@ window.updateLabel = window.updateLabel || function(){
 <p class="muted">Puoi modificare le tue scelte in qualsiasi momento.</p>
 <ul class="cookie-list">
 <li>
-<label><input checked="" disabled="" type="checkbox"> Essenziali (sempre attivi)</input></label>
+<label><input checked="" disabled="" type="checkbox"/> Essenziali (sempre attivi)</label>
 </li>
 <li>
 <label><input id="consent-analytics" type="checkbox"/> Analitici</label>
@@ -6112,54 +6110,98 @@ window.updateLabel = window.updateLabel || function(){
 })();
 </script>
 </body>
-<script>// PATCH SAFARI: WebAudio fallback tuono
+<script>
+// PATCH SAFARI: WebAudio v2 (audible on phone speakers)
 (function(){
   var btn = document.getElementById('btn-thunder');
   if (!btn) return;
 
-  // Deduplica listener sul bottone senza perdere ID/stili
+  // Deduplica listener
   var clone = btn.cloneNode(true); btn.parentNode.replaceChild(clone, btn);
   btn = document.getElementById('btn-thunder') || clone;
 
   var audioEl = document.getElementById('thunder-sound');
   var ctx = null;
+  var isSafari = /Safari\//.test(navigator.userAgent) && !/Chrome|Chromium|Edg\//.test(navigator.userAgent);
 
   function webAudioThunder(){
     try {
       ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
-      if (ctx.state === 'suspended') ctx.resume();
-      var sr = ctx.sampleRate, dur = 2.8, n = (sr*dur)|0;
-      var buf = ctx.createBuffer(1, n, sr);
-      var ch  = buf.getChannelData(0);
-      var last = 0;
-      for (var i=0;i<n;i++){ // brown noise + envelope tipo tuono
-        var white = Math.random()*2 - 1;
-        var brown = (last + 0.02*white)/1.02; last = brown;
-        var t = i/n;
-        var env = Math.exp(-2.2*t) + (i < sr*0.05 ? (1 - Math.cos(Math.PI*i/(sr*0.05)))*0.5 : 0);
-        ch[i] = brown * 0.7 * env;
-      }
-      var src = ctx.createBufferSource();
-      var lp  = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 180;
-      src.buffer = buf; src.connect(lp); lp.connect(ctx.destination); src.start();
-    } catch(e) { console && console.warn && console.warn('WebAudio fallback failed', e); }
+      var startUnlock = ctx.state === 'suspended' ? ctx.resume() : Promise.resolve();
+      return startUnlock.then(function(){
+        var sr = ctx.sampleRate;
+        var now = ctx.currentTime;
+        var master = ctx.createGain(); master.gain.value = 0.9; master.connect(ctx.destination);
+
+        // 1) CRACK: breve burst udibile (1.5 kHz banda stretta), 90ms
+        var crackDur = 0.09, crackN = (sr*crackDur)|0;
+        var crackBuf = ctx.createBuffer(1, crackN, sr);
+        var cch = crackBuf.getChannelData(0);
+        for (var i=0;i<crackN;i++){ cch[i] = (Math.random()*2-1) * (1 - i/crackN); }
+        var crackSrc = ctx.createBufferSource(); crackSrc.buffer = crackBuf;
+        var bp = ctx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = 1800; bp.Q.value = 3.5;
+        var hp = ctx.createBiquadFilter(); hp.type = "highpass"; hp.frequency.value = 600;
+        var cg = ctx.createGain(); cg.gain.setValueAtTime(0.0, now);
+        cg.gain.linearRampToValueAtTime(0.8, now + 0.01);
+        cg.gain.exponentialRampToValueAtTime(0.05, now + crackDur);
+        crackSrc.connect(bp); bp.connect(hp); hp.connect(cg); cg.connect(master);
+        crackSrc.start(now);
+
+        // 2) RUMBLE: brown noise lowpass, 2.5s
+        var rumDur = 2.6, rumN = (sr*rumDur)|0;
+        var rumBuf = ctx.createBuffer(1, rumN, sr);
+        var rch = rumBuf.getChannelData(0);
+        var last = 0;
+        for (var j=0;j<rumN;j++){
+          var white = Math.random()*2 - 1;
+          var brown = (last + 0.02*white)/1.02; last = brown;
+          var t = j/rumN;
+          var env = Math.exp(-2.1*t);
+          rch[j] = brown * 0.75 * env;
+        }
+        var rumSrc = ctx.createBufferSource(); rumSrc.buffer = rumBuf;
+        var lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 220;
+        var rg = ctx.createGain(); rg.gain.setValueAtTime(0.0, now);
+        rg.gain.linearRampToValueAtTime(0.7, now + 0.02);
+        rg.gain.exponentialRampToValueAtTime(0.0001, now + rumDur);
+        rumSrc.connect(lp); lp.connect(rg); rg.connect(master);
+        rumSrc.start(now + 0.02);
+
+        // 3) Optional short mid tail to be audible on tiny speakers (800Hz, 300ms)
+        var tailDur = 0.3, tailN = (sr*tailDur)|0;
+        var tailBuf = ctx.createBuffer(1, tailN, sr);
+        var tch = tailBuf.getChannelData(0);
+        for (var k=0;k<tailN;k++){ tch[k] = (Math.random()*2-1) * Math.pow(1 - k/tailN, 2); }
+        var tailSrc = ctx.createBufferSource(); tailSrc.buffer = tailBuf;
+        var tailBP = ctx.createBiquadFilter(); tailBP.type = "bandpass"; tailBP.frequency.value = 900; tailBP.Q.value = 2;
+        var tg = ctx.createGain(); tg.gain.setValueAtTime(0.0, now);
+        tg.gain.linearRampToValueAtTime(0.4, now + 0.05);
+        tg.gain.exponentialRampToValueAtTime(0.0001, now + tailDur);
+        tailSrc.connect(tailBP); tailBP.connect(tg); tg.connect(master);
+        tailSrc.start(now + 0.02);
+
+        // Auto-disconnect after tail
+        setTimeout(function(){ try{ master.disconnect(); }catch(_){ } }, 3200);
+      });
+    } catch(e) {
+      if (console && console.warn) console.warn('WebAudio failed', e);
+      return Promise.resolve();
+    }
   }
 
   function playThunder(){
-    return new Promise(function(resolve){ 
-      if (audioEl) {
-        try {
-          audioEl.currentTime = 0;
-          var p = audioEl.play();
-          if (p && p.then) p.then(resolve).catch(function(){ webAudioThunder(); resolve(); });
-          else { resolve(); }
-          return;
-        } catch(_){
-          // passa a WebAudio
-        }
-      }
-      webAudioThunder(); resolve();
-    });
+    // Su Safari forziamo direttamente WebAudio (più affidabile e udibile)
+    if (isSafari) return webAudioThunder();
+    // Altrimenti prova <audio> e fallback a WebAudio
+    if (audioEl){
+      try {
+        audioEl.currentTime = 0;
+        var p = audioEl.play();
+        if (p && p.then) return p.catch(function(){ return webAudioThunder(); });
+        return Promise.resolve();
+      } catch(_){ return webAudioThunder(); }
+    }
+    return webAudioThunder();
   }
 
   btn.addEventListener('click', function(e){
@@ -6174,4 +6216,5 @@ window.updateLabel = window.updateLabel || function(){
   });
 
   if (window.updateLabel) window.updateLabel();
-})();</script></body></html>
+})();
+</script></body></html>
