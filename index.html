@@ -1407,7 +1407,42 @@ window.updateLabel = window.updateLabel || function(){
 @media (max-width:980px){ #thunder-controls{ display:flex !important; left:10px; top:auto; bottom:16px; } }
 .galaxy, .stars, .stardust, .meteor-shower, .planet, .planet-ring, .star, .meteor, .supernova, .particle {
   pointer-events: none !important;
-}</style></head>
+}
+</style>
+/*INIZIO ggiunta per safari */
+<style id="range-ui-fix-css">
+/* Track finto visibile SEMPRE (Safari compreso) */
+.range-ui-fix{ position:relative; height:28px; }
+.range-ui-fix .range-track-fake{
+  content:""; position:absolute; left:0; right:0; top:50%;
+  height:8px; transform:translateY(-50%);
+  background: linear-gradient(90deg, rgba(255,215,106,.55), rgba(0,180,255,.28));
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius:999px; pointer-events:none; z-index:0;
+}
+/* L’input sta sopra al track finto */
+.range-ui-fix > input[type="range"]{
+  position:relative; z-index:1; width:100%; height:100%;
+  -webkit-appearance:none; appearance:none; background:transparent; border:0; margin:0;
+}
+/* Thumb (pallina) — WebKit */
+.range-ui-fix > input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance:none; width:18px; height:18px; margin-top:-5px;
+  border-radius:50%; background:#fff; border:2px solid #ffd86a;
+  box-shadow:0 0 8px rgba(255,215,0,.45);
+}
+/* (Facoltativo) Firefox */
+.range-ui-fix > input[type="range"]::-moz-range-thumb{
+  width:18px; height:18px; border-radius:50%; background:#fff; border:2px solid #ffd86a;
+  box-shadow:0 0 8px rgba(255,215,0,.45);
+}
+</style>
+
+/* FINE ggiunta per safari */
+
+
+
+</head>
 <body>
 <div class="slider-vertical">
 <div class="slider-inner">
@@ -6315,4 +6350,50 @@ window.updateLabel = window.updateLabel || function(){
 
   if (window.updateLabel) window.updateLabel();
 })();
-</script></body></html>
+</script>
+<script>
+/* Safari range-track hard fix: wrappa l’input e disegna un track finto sotto */
+(function(){
+  // Trova il tuo slider: prima #speed-range, poi .range, altrimenti il primo range
+  var inp = document.querySelector('#speed-range') ||
+            document.querySelector('.range') ||
+            document.querySelector('input[type="range"]');
+  if(!inp || inp.closest('.range-ui-fix')) return; // già fixato o non trovato
+
+  // Crea wrapper e track
+  var wrap = document.createElement('div');
+  wrap.className = 'range-ui-fix';
+  // Mantieni la larghezza attuale dell’input
+  var w = getComputedStyle(inp).width;
+  if (w && w !== 'auto') wrap.style.width = w;
+
+  var track = document.createElement('div');
+  track.className = 'range-track-fake';
+
+  // Inserisci wrapper e sposta dentro l’input, poi aggiungi il track finto
+  inp.parentNode.insertBefore(wrap, inp);
+  wrap.appendChild(inp);
+  wrap.appendChild(track);
+
+  // Assicurati che l’input non disegni un suo sfondo
+  Object.assign(inp.style, {
+    WebkitAppearance: 'none',
+    appearance: 'none',
+    background: 'transparent',
+    border: '0',
+    width: '100%',
+    height: '100%',
+    position: 'relative',
+    zIndex: 1
+  });
+
+  // Se la larghezza cambia (responsive), aggiorna il wrapper
+  window.addEventListener('resize', function(){
+    var ww = getComputedStyle(inp).width;
+    if (ww && ww !== 'auto') wrap.style.width = ww;
+  }, { passive:true });
+})();
+</script>
+
+</body>
+</html>
