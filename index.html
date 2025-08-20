@@ -1288,8 +1288,65 @@
       background: rgba(0,0,0,.35);
       }
       </style>
-   </head>
+   
+<style>
+/* ===== CONTROLLI SLIDER VERTICALE — Unificati (override) ===== */
+.slider-controls{
+  position: fixed;
+  left: 52px;
+  top: 460px;
+  width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(10,10,25,.55);
+  border: 1px solid rgba(255,215,0,.18);
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 6px 16px rgba(0,0,0,.35);
+  z-index: 930;
+}
+.slider-controls .ctrl-btn{
+  background: rgba(20,20,40,.7);
+  border: 1px solid rgba(255,215,0,.25);
+  border-radius: 8px;
+  color: #ffd86a;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px;
+  transition: all .2s;
+  font-family: 'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+.slider-controls .ctrl-btn:hover{
+  background: rgba(255,215,0,.15);
+  box-shadow: 0 0 8px rgba(255,215,0,.4);
+}
+.slider-controls .speed-label{ display:flex; flex-direction:column; font-size:.8rem; color:#cfe8ff; gap:4px; font-family:'Montserrat',sans-serif; }
+.slider-controls input[type=range]{ width:100%; accent-color:#ffd86a; }
+@media (max-width: 980px){ .slider-controls{ display:none } }
+
+/* Didascalie e immagini slider (override) */
+.slider-vertical .slide-vertical p{
+  background: linear-gradient(to bottom, rgba(0,0,0,.35), rgba(0,0,0,.35));
+  padding: 4px 6px; border-radius: 6px;
+}
+.slider-vertical .slide-vertical img{
+  object-fit: contain;
+  background: rgba(0,0,0,.35);
+}
+
+/* Click-through per i layer decorativi */
+.galaxy, .stars, .stardust, .meteor-shower,
+.planet, .planet-ring, .star, .meteor, .supernova, .particle {
+  pointer-events: none !important;
+}
+footer { position: relative; z-index: 20; }
+</style>
+
+</head>
    <body>
+<a class="skip-link" href="#contenuto" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">Salta al contenuto</a>
+
    <div class="slider-vertical">
    <div class="slider-inner">
    <div class="slide-vertical">
@@ -1768,7 +1825,7 @@
    </div>
    <!-- ===== SLIDER VERTICALE SINISTRA ===== -->
    <!-- ===== SLIDER VERTICALE SINISTRA ===== -->
-   \1
+   
    <!-- ===== CONTROLLI SLIDER VERTICALE ===== -->
    <div class="slider-controls" id="slider-controls">
    <button id="slider-toggle" class="ctrl-btn" title="Avvia/Ferma scorrimento">⏯️ Avvia / Ferma</button>
@@ -1791,7 +1848,7 @@
    </ul>
    </aside>
    <!-- Main -->
-   <main>
+   <main id=\"contenuto\">
    <!-- ===Inizio Exploding text (HTML) === -->
    <section class="welcome-section">
    <h1 class="welcome-title" id="title">Benvenuto<br/>in Echi di Sofia</h1>
@@ -3022,7 +3079,7 @@
    </button>
    <script>
       (function(){
-        \1
+        
       // Global opener: works even if other listeners fail
       window.openCookiePrefs = function(){
       try { if (typeof openModal === 'function') { openModal(); return; } } catch(e){}
@@ -6030,5 +6087,72 @@
         }
       })();
    </script>
-   </body>
+   
+<script>
+(function(){
+  const btn = document.getElementById('btn-thunder');
+  const audio = document.getElementById('thunder-sound');
+  if (!btn || !audio) return;
+
+  audio.preload = 'auto'; audio.muted = false; audio.volume = 1.0;
+  audio.setAttribute('playsinline',''); audio.setAttribute('type','audio/mpeg');
+
+  let on = false;
+  function render(){ btn.classList.toggle('active', on);
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    btn.textContent = on ? '⚡ Tuono: ON' : '⚡ Tuono';
+  }
+  function stop(){ try{ audio.pause(); audio.currentTime = 0; }catch(_){ } }
+
+  // Rimuovi listener precedenti clonando
+  const clone = btn.cloneNode(true);
+  btn.parentNode.replaceChild(clone, btn);
+  const thBtn = document.getElementById('btn-thunder');
+
+  thBtn.addEventListener('click', async e=>{
+    e.preventDefault();
+    on = !on; render();
+    if(on){ try{ audio.currentTime=0; await audio.play(); }catch(_){ } } else { stop(); }
+  });
+
+  window.playThunderIfOn = function(){ if(on){ try{ audio.currentTime=0; audio.play().catch(()=>{}); }catch(_){ } } };
+  render();
+})();
+</script>
+
+
+<script>
+(function(){
+  const KEY = 'edx-consent';
+  const $banner = document.getElementById('cookie-banner');
+  const $modal  = document.getElementById('cookie-modal');
+  const $accept = document.getElementById('cookie-accept');
+  const $decline= document.getElementById('cookie-decline');
+  const $custom = document.getElementById('cookie-customize');
+  const $save   = document.getElementById('cookie-save');
+  const $cancel = document.getElementById('cookie-cancel');
+  const $close  = document.getElementById('cookie-close');
+
+  if(!$banner && !$modal) return;
+
+  function setConsent(c){ try{ localStorage.setItem(KEY, JSON.stringify(c)); }catch(_){ } }
+  function getConsent(){ try{ return JSON.parse(localStorage.getItem(KEY)); }catch(_){ return null; } }
+
+  function showBanner(){ if($banner){ $banner.hidden = false; } }
+  function hideBanner(){ if($banner){ $banner.hidden = true; } }
+  function openModal(){  if($modal){ $modal.style.display = 'flex'; $modal.setAttribute('aria-hidden','false'); } }
+  function closeModal(){ if($modal){ $modal.style.display = 'none'; $modal.setAttribute('aria-hidden','true'); } }
+
+  $accept && $accept.addEventListener('click', ()=>{ setConsent({accepted:true}); hideBanner(); closeModal(); });
+  $decline&& $decline.addEventListener('click',()=>{ setConsent({accepted:false}); hideBanner(); closeModal(); });
+  $custom && $custom.addEventListener('click', openModal);
+  $save   && $save.addEventListener('click', ()=>{ setConsent({accepted:true}); closeModal(); });
+  $cancel && $cancel.addEventListener('click', closeModal);
+  $close  && $close.addEventListener('click', closeModal);
+
+  if (!getConsent()) showBanner();
+})();
+</script>
+
+</body>
    </html>
