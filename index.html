@@ -795,6 +795,53 @@
   background: rgba(255,215,0,.55);
   border-radius: 999px 0 0 999px;
 }
+/* SAFARI: mostra un "binario" usando il background dell'input */
+#speed-range{
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  display: block;
+  width: 180px;         /* tua larghezza */
+  height: 28px;         /* area cliccabile comoda */
+  margin: 0;
+  border: 0;
+  background:
+    linear-gradient(90deg, rgba(255,215,106,.55), rgba(0,180,255,.28)) center/100% 8px no-repeat,
+    transparent;
+  border-radius: 999px; /* arrotonda il "binario" */
+}
+
+/* Disattivo il track webkit (così resta visibile solo il background sopra) */
+#speed-range::-webkit-slider-runnable-track{
+  background: transparent !important;
+  height: 8px;          /* mantiene quota corretta del track */
+}
+
+/* Thumb (pallina) */
+#speed-range::-webkit-slider-thumb{
+  -webkit-appearance: none;
+  width: 18px; height: 18px;
+  margin-top: -5px;     /* centra sul binario da 8px */
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #ffd86a;
+  box-shadow: 0 0 8px rgba(255,215,0,.45);
+}
+
+/* Firefox (coerenza visiva anche su Mint) */
+#speed-range::-moz-range-track{
+  height: 8px;
+  background: linear-gradient(90deg, rgba(255,215,106,.55), rgba(0,180,255,.28));
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.15);
+}
+#speed-range::-moz-range-thumb{
+  width: 18px; height: 18px; border-radius: 50%;
+  background:#fff; border:2px solid #ffd86a; box-shadow:0 0 8px rgba(255,215,0,.45);
+}
+#speed-range::-moz-range-progress{
+  height: 8px; background: rgba(255,215,0,.55);
+  border-radius: 999px 0 0 999px;
+}
 
 <!-- FINE AGGIUNTA SFONDO PER VELOCITÀ SU SAFARI-->
       </style>
