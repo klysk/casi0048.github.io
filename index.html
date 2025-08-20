@@ -3,8 +3,8 @@
 <html lang="it">
 <head>
 <meta content="Echi di Sofia - Portale di filosofia antica, moderna e contemporanea con approfondimenti su autori e correnti filosofiche" name="description"/>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1" name="viewport">
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>Echi di Sofia — Slider laterale + Blob articoli</title>
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -746,104 +746,6 @@
       padding: 6px 8px; margin: 4px 4px 2px;
       border-bottom: 1px dashed rgba(255,255,255,.15);
       }
-<!-- INIZIO AGGIUNTA SFONDO PER VELOCITÀ SU SAFARI-->
-/* SAFARI FIX: track visibile per lo slider velocità */
-#speed-range{
-  -webkit-appearance: none; /* obbligatorio per Safari */
-  appearance: none;
-  width: 180px;              /* tua larghezza */
-  height: 28px;              /* area cliccabile */
-  background: transparent;   /* il track lo disegniamo nei pseudo-elementi */
-  margin: 0;
-}
-
-/* Track (binario) – Safari/Chrome (WebKit) */
-#speed-range::-webkit-slider-runnable-track{
-  height: 8px;
-  background: linear-gradient(90deg, rgba(255,215,106,.55), rgba(0,180,255,.28));
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,.15);
-}
-
-/* Thumb (pallina) – Safari/Chrome */
-#speed-range::-webkit-slider-thumb{
-  -webkit-appearance: none;
-  width: 18px; height: 18px;
-  border-radius: 50%;
-  background: #fff;
-  border: 2px solid #ffd86a;
-  box-shadow: 0 0 8px rgba(255,215,0,.45);
-  margin-top: -5px; /* centra il thumb sul track: (thumb - track)/2 */
-}
-
-/* Firefox (se ti serve mantenere il look uniforme su Mint) */
-#speed-range::-moz-range-track{
-  height: 8px;
-  background: linear-gradient(90deg, rgba(255,215,106,.55), rgba(0,180,255,.28));
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,.15);
-}
-#speed-range::-moz-range-thumb{
-  width: 18px; height: 18px;
-  border-radius: 50%;
-  background: #fff;
-  border: 2px solid #ffd86a;
-  box-shadow: 0 0 8px rgba(255,215,0,.45);
-}
-#speed-range::-moz-range-progress{
-  height: 8px;
-  background: rgba(255,215,0,.55);
-  border-radius: 999px 0 0 999px;
-}
-/* SAFARI: mostra un "binario" usando il background dell'input */
-#speed-range{
-  -webkit-appearance: none !important;
-  appearance: none !important;
-  display: block;
-  width: 180px;         /* tua larghezza */
-  height: 28px;         /* area cliccabile comoda */
-  margin: 0;
-  border: 0;
-  background:
-    linear-gradient(90deg, rgba(255,215,106,.55), rgba(0,180,255,.28)) center/100% 8px no-repeat,
-    transparent;
-  border-radius: 999px; /* arrotonda il "binario" */
-}
-
-/* Disattivo il track webkit (così resta visibile solo il background sopra) */
-#speed-range::-webkit-slider-runnable-track{
-  background: transparent !important;
-  height: 8px;          /* mantiene quota corretta del track */
-}
-
-/* Thumb (pallina) */
-#speed-range::-webkit-slider-thumb{
-  -webkit-appearance: none;
-  width: 18px; height: 18px;
-  margin-top: -5px;     /* centra sul binario da 8px */
-  border-radius: 50%;
-  background: #fff;
-  border: 2px solid #ffd86a;
-  box-shadow: 0 0 8px rgba(255,215,0,.45);
-}
-
-/* Firefox (coerenza visiva anche su Mint) */
-#speed-range::-moz-range-track{
-  height: 8px;
-  background: linear-gradient(90deg, rgba(255,215,106,.55), rgba(0,180,255,.28));
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,.15);
-}
-#speed-range::-moz-range-thumb{
-  width: 18px; height: 18px; border-radius: 50%;
-  background:#fff; border:2px solid #ffd86a; box-shadow:0 0 8px rgba(255,215,0,.45);
-}
-#speed-range::-moz-range-progress{
-  height: 8px; background: rgba(255,215,0,.55);
-  border-radius: 999px 0 0 999px;
-}
-
-<!-- FINE AGGIUNTA SFONDO PER VELOCITÀ SU SAFARI-->
       </style>
 <style data-typing-cls-fallback="">
       /* Fallback anti-CLS per typing: riserva ~2 righe */
@@ -1386,7 +1288,33 @@
       background: rgba(0,0,0,.35);
       }
       </style>
-</meta><script>// PATCH SAFARI: shim iniziale
+</meta><style id="audio-player-range-css">
+/* === AUDIO-PLAYER RANGE: colore azzurro, nessuna ombra (Safari incluso) === */
+.audio-player input[type="range"]{
+  -webkit-appearance: none; appearance: none;
+  width: 120px; height: 28px; background: transparent; margin: 0; border: 0;
+}
+/* Track (WebKit: Safari/Chrome) */
+.audio-player input[type="range"]::-webkit-slider-runnable-track{
+  height: 6px; background: #199cff; border: none; border-radius: 999px;
+}
+/* Thumb (WebKit) */
+.audio-player input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance: none;
+  width: 16px; height: 16px; margin-top: -5px;
+  background: #fff; border: 2px solid #199cff; border-radius: 50%; box-shadow: none;
+}
+/* Firefox */
+.audio-player input[type="range"]::-moz-range-track{
+  height: 6px; background: #199cff; border: none; border-radius: 999px;
+}
+.audio-player input[type="range"]::-moz-range-thumb{
+  width: 16px; height: 16px; background: #fff; border: 2px solid #199cff; border-radius: 50%; box-shadow: none;
+}
+.audio-player input[type="range"]::-moz-range-progress{
+  height: 6px; background: #199cff; border-radius: 999px 0 0 999px;
+}
+</style><script>// PATCH SAFARI: shim iniziale
 window.thunderOn = window.thunderOn ?? false;
 window.updateLabel = window.updateLabel || function(){
   var b = document.getElementById('btn-thunder');
@@ -1394,106 +1322,100 @@ window.updateLabel = window.updateLabel || function(){
   b.classList.toggle('active', !!window.thunderOn);
   b.setAttribute('aria-pressed', window.thunderOn ? 'true' : 'false');
   b.textContent = window.thunderOn ? '⚡ Tuono: ON' : '⚡ Tuono';
-};</script><style>/* PATCH SAFARI: controlli Tuono + range */
-#thunder-controls{
-  position:fixed; left:52px; top:420px; z-index:9999; display:flex;
-}
-#thunder-controls .ctrl-btn{
-  display:inline-flex; align-items:center; justify-content:center;
-  min-width:44px; padding:6px 10px; border-radius:8px;
-  border:1px solid rgba(255,215,0,.25); background:rgba(20,20,40,.7);
-  color:#ffd86a; font-weight:600; cursor:pointer;
-}
-@media (max-width:980px){ #thunder-controls{ display:flex !important; left:10px; top:auto; bottom:16px; } }
-.galaxy, .stars, .stardust, .meteor-shower, .planet, .planet-ring, .star, .meteor, .supernova, .particle {
-  pointer-events: none !important;
-}
-</style>
-/*INIZIO ggiunta per safari */
-<style id="range-ui-fix-css">
-/* Track finto visibile SEMPRE (Safari compreso) */
-.range-ui-fix{ position:relative; height:28px; }
-.range-ui-fix .range-track-fake{
-  content:""; position:absolute; left:0; right:0; top:50%;
-  height:8px; transform:translateY(-50%);
-  background: linear-gradient(90deg, rgba(255,215,106,.55), rgba(0,180,255,.28));
-  border: 1px solid rgba(255,255,255,.15);
-  border-radius:999px; pointer-events:none; z-index:0;
-}
-/* L’input sta sopra al track finto */
-.range-ui-fix > input[type="range"]{
-  position:relative; z-index:1; width:100%; height:100%;
-  -webkit-appearance:none; appearance:none; background:transparent; border:0; margin:0;
-}
-/* Thumb (pallina) — WebKit */
-.range-ui-fix > input[type="range"]::-webkit-slider-thumb{
-  -webkit-appearance:none; width:18px; height:18px; margin-top:-5px;
-  border-radius:50%; background:#fff; border:2px solid #ffd86a;
-  box-shadow:0 0 8px rgba(255,215,0,.45);
-}
-/* (Facoltativo) Firefox */
-.range-ui-fix > input[type="range"]::-moz-range-thumb{
-  width:18px; height:18px; border-radius:50%; background:#fff; border:2px solid #ffd86a;
-  box-shadow:0 0 8px rgba(255,215,0,.45);
-}
-</style>
-<style id="audio-range-fix">
-/* Wrapper universale per range (garantito su Safari) */
-.range-ui-fix{ position:relative; height:28px; }
+};</script><style>/* PATCH SAFARI: controlli Tuono (visibilità) */
+#thunder-controls{ position:fixed; left:52px; top:420px; z-index:9999; display:flex; }
+#thunder-controls .ctrl-btn{ display:inline-flex; align-items:center; justify-content:center; min-width:44px; padding:6px 10px; border-radius:8px; border:1px solid rgba(255,215,0,.25); background:rgba(20,20,40,.7); color:#ffd86a; font-weight:600; cursor:pointer; }
+@media (max-width:980px){ #thunder-controls{ display:flex !important; left:10px; top:auto; bottom:16px; } }</style><script>// PATCH SAFARI: WebAudio v2 (audible on phone speakers)
+(function(){
+  var btn = document.getElementById('btn-thunder');
+  if (!btn) return;
+  var clone = btn.cloneNode(true); btn.parentNode.replaceChild(clone, btn);
+  btn = document.getElementById('btn-thunder') || clone;
+  var audioEl = document.getElementById('thunder-sound');
+  var ctx = null;
+  var isSafari = /Safari\//.test(navigator.userAgent) && !/Chrome|Chromium|Edg\//.test(navigator.userAgent);
 
-/* Binario grigio chiaro */
-.range-ui-fix .range-track-fake{
-  position:absolute; left:0; right:0; top:50%;
-  height:8px; transform:translateY(-50%);
-  background: rgba(0,160,255,.18);
-  border: 1px solid rgba(255,255,255,.15);
-  border-radius:999px; pointer-events:none; z-index:0;
-}
+  function webAudioThunder(){
+    try {
+      ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
+      var startUnlock = ctx.state === 'suspended' ? ctx.resume() : Promise.resolve();
+      return startUnlock.then(function(){
+        var sr = ctx.sampleRate;
+        var now = ctx.currentTime;
+        var master = ctx.createGain(); master.gain.value = 0.9; master.connect(ctx.destination);
 
-/* Riempimento azzurro (in base al valore) */
-.range-ui-fix .range-track-fill{
-  position:absolute; left:0; top:50%;
-  height:8px; transform: translateY(-50%) scaleX(0);
-  transform-origin: left center;
-  background: linear-gradient(90deg, rgba(0,160,255,.95), rgba(0,160,255,.6));
-  border-radius:999px; pointer-events:none; z-index:1;
-}
+        var crackDur = 0.09, crackN = (sr*crackDur)|0;
+        var crackBuf = ctx.createBuffer(1, crackN, sr);
+        var cch = crackBuf.getChannelData(0);
+        for (var i=0;i<crackN;i++){ cch[i] = (Math.random()*2-1) * (1 - i/crackN); }
+        var crackSrc = ctx.createBufferSource(); crackSrc.buffer = crackBuf;
+        var bp = ctx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = 1800; bp.Q.value = 3.5;
+        var hp = ctx.createBiquadFilter(); hp.type = "highpass"; hp.frequency.value = 600;
+        var cg = ctx.createGain(); cg.gain.setValueAtTime(0.0, now);
+        cg.gain.linearRampToValueAtTime(0.8, now + 0.01);
+        cg.gain.exponentialRampToValueAtTime(0.05, now + crackDur);
+        crackSrc.connect(bp); bp.connect(hp); hp.connect(cg); cg.connect(master);
+        crackSrc.start(now);
 
-/* L’input sta sopra e non disegna nessun track nativo */
-.range-ui-fix > input[type="range"]{
-  position:relative; z-index:2; width:100%; height:100%;
-  -webkit-appearance:none; appearance:none;
-  background:transparent; border:0; margin:0;
-}
+        var rumDur = 2.6, rumN = (sr*rumDur)|0;
+        var rumBuf = ctx.createBuffer(1, rumN, sr);
+        var rch = rumBuf.getChannelData(0);
+        var last = 0;
+        for (var j=0;j<rumN;j++){
+          var white = Math.random()*2 - 1;
+          var brown = (last + 0.02*white)/1.02; last = brown;
+          var t = j/rumN;
+          var env = Math.exp(-2.1*t);
+          rch[j] = brown * 0.75 * env;
+        }
+        var rumSrc = ctx.createBufferSource(); rumSrc.buffer = rumBuf;
+        var lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 220;
+        var rg = ctx.createGain(); rg.gain.setValueAtTime(0.0, now);
+        rg.gain.linearRampToValueAtTime(0.7, now + 0.02);
+        rg.gain.exponentialRampToValueAtTime(0.0001, now + rumDur);
+        rumSrc.connect(lp); lp.connect(rg); rg.connect(master);
+        rumSrc.start(now + 0.02);
 
-/* Thumb (pallina) — WebKit (Safari/Chrome) */
-.range-ui-fix > input[type="range"]::-webkit-slider-thumb{
-  -webkit-appearance:none;
-  width:16px; height:16px; margin-top:-5px;
-  border-radius:50%; background:#fff; border:2px solid rgba(0,160,255,.9);
-  box-shadow:0 0 8px rgba(0,160,255,.35);
-}
-/* Disattiva il track nativo WebKit */
-.range-ui-fix > input[type="range"]::-webkit-slider-runnable-track{
-  background:transparent; height:8px;
-}
+        var tailDur = 0.3, tailN = (sr*tailDur)|0;
+        var tailBuf = ctx.createBuffer(1, tailN, sr);
+        var tch = tailBuf.getChannelData(0);
+        for (var k=0;k<tailN;k++){ tch[k] = (Math.random()*2-1) * Math.pow(1 - k/tailN, 2); }
+        var tailSrc = ctx.createBufferSource(); tailSrc.buffer = tailBuf;
+        var tailBP = ctx.createBiquadFilter(); tailBP.type = "bandpass"; tailBP.frequency.value = 900; tailBP.Q.value = 2;
+        var tg = ctx.createGain(); tg.gain.setValueAtTime(0.0, now);
+        tg.gain.linearRampToValueAtTime(0.4, now + 0.05);
+        tg.gain.exponentialRampToValueAtTime(0.0001, now + tailDur);
+        tailSrc.connect(tailBP); tailBP.connect(tg); tg.connect(master);
+        tailSrc.start(now + 0.02);
 
-/* Firefox (per coerenza su Mint) */
-.range-ui-fix > input[type="range"]::-moz-range-track{
-  height:8px; background: transparent;
-}
-.range-ui-fix > input[type="range"]::-moz-range-thumb{
-  width:16px; height:16px; border-radius:50%;
-  background:#fff; border:2px solid rgba(0,160,255,.9);
-  box-shadow:0 0 8px rgba(0,160,255,.35);
-}
-</style>
+        setTimeout(function(){ try{ master.disconnect(); }catch(_){ } }, 3200);
+      });
+    } catch(e) { if (console && console.warn) console.warn('WebAudio failed', e); return Promise.resolve(); }
+  }
 
-/* FINE ggiunta per safari */
+  function playThunder(){
+    if (isSafari) return webAudioThunder();
+    if (audioEl){
+      try {
+        audioEl.currentTime = 0;
+        var p = audioEl.play();
+        if (p && p.then) return p.catch(function(){ return webAudioThunder(); });
+        return Promise.resolve();
+      } catch(_){ return webAudioThunder(); }
+    }
+    return webAudioThunder();
+  }
 
+  btn.addEventListener('click', function(e){
+    e.preventDefault();
+    window.thunderOn = !window.thunderOn;
+    if (window.updateLabel) window.updateLabel();
+    if (window.thunderOn) { playThunder(); }
+    else { try { audioEl && (audioEl.pause(), audioEl.currentTime=0); } catch(_){} }
+  });
 
-
-</head>
+  if (window.updateLabel) window.updateLabel();
+})();</script></head>
 <body>
 <div class="slider-vertical">
 <div class="slider-inner">
@@ -1981,6 +1903,7 @@ window.updateLabel = window.updateLabel || function(){
 <input id="slider-speed" max="20" min="1" type="range" value="8"/>
 </label>
 </div>
+
 <!-- ===== BLOB ANIMATO DESTRA (Ultimi articoli) ===== -->
 <!-- ===== BLOB ANIMATO DESTRA (Ultimi articoli) ===== -->
 <aside aria-label="Ultimi articoli" class="articles-blob">
@@ -2876,6 +2799,7 @@ window.updateLabel = window.updateLabel || function(){
    .edx-dict{ display:none; }
    }
    </style>
+
 <script>
       (function(){
         const root = document.getElementById('edx-dict');
@@ -3067,8 +2991,8 @@ window.updateLabel = window.updateLabel || function(){
 <div class="controls">
 <button id="playPause" title="Riproduci/Pausa">▶️</button>
 <span id="time">0:00 / 0:00</span>
-<input id="volume" max="1" min="0" step="0.01" title="Volume" type="range"/>
-</div>
+<input id="volume" max="1" min="0" step="0.01" title="Volume" type="range">
+</input></div>
 </div>
 <style>
    .audio-player {
@@ -3230,7 +3154,7 @@ window.updateLabel = window.updateLabel || function(){
 <p class="muted">Puoi modificare le tue scelte in qualsiasi momento.</p>
 <ul class="cookie-list">
 <li>
-<label><input checked="" disabled="" type="checkbox"/> Essenziali (sempre attivi)</label>
+<label><input checked="" disabled="" type="checkbox"> Essenziali (sempre attivi)</input></label>
 </li>
 <li>
 <label><input id="consent-analytics" type="checkbox"/> Analitici</label>
@@ -6294,157 +6218,4 @@ window.updateLabel = window.updateLabel || function(){
 })();
 </script>
 </body>
-<script>
-// PATCH SAFARI: WebAudio v2 (audible on phone speakers)
-(function(){
-  var btn = document.getElementById('btn-thunder');
-  if (!btn) return;
-
-  // Deduplica listener
-  var clone = btn.cloneNode(true); btn.parentNode.replaceChild(clone, btn);
-  btn = document.getElementById('btn-thunder') || clone;
-
-  var audioEl = document.getElementById('thunder-sound');
-  var ctx = null;
-  var isSafari = /Safari\//.test(navigator.userAgent) && !/Chrome|Chromium|Edg\//.test(navigator.userAgent);
-
-  function webAudioThunder(){
-    try {
-      ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
-      var startUnlock = ctx.state === 'suspended' ? ctx.resume() : Promise.resolve();
-      return startUnlock.then(function(){
-        var sr = ctx.sampleRate;
-        var now = ctx.currentTime;
-        var master = ctx.createGain(); master.gain.value = 0.9; master.connect(ctx.destination);
-
-        // 1) CRACK: breve burst udibile (1.5 kHz banda stretta), 90ms
-        var crackDur = 0.09, crackN = (sr*crackDur)|0;
-        var crackBuf = ctx.createBuffer(1, crackN, sr);
-        var cch = crackBuf.getChannelData(0);
-        for (var i=0;i<crackN;i++){ cch[i] = (Math.random()*2-1) * (1 - i/crackN); }
-        var crackSrc = ctx.createBufferSource(); crackSrc.buffer = crackBuf;
-        var bp = ctx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = 1800; bp.Q.value = 3.5;
-        var hp = ctx.createBiquadFilter(); hp.type = "highpass"; hp.frequency.value = 600;
-        var cg = ctx.createGain(); cg.gain.setValueAtTime(0.0, now);
-        cg.gain.linearRampToValueAtTime(0.8, now + 0.01);
-        cg.gain.exponentialRampToValueAtTime(0.05, now + crackDur);
-        crackSrc.connect(bp); bp.connect(hp); hp.connect(cg); cg.connect(master);
-        crackSrc.start(now);
-
-        // 2) RUMBLE: brown noise lowpass, 2.5s
-        var rumDur = 2.6, rumN = (sr*rumDur)|0;
-        var rumBuf = ctx.createBuffer(1, rumN, sr);
-        var rch = rumBuf.getChannelData(0);
-        var last = 0;
-        for (var j=0;j<rumN;j++){
-          var white = Math.random()*2 - 1;
-          var brown = (last + 0.02*white)/1.02; last = brown;
-          var t = j/rumN;
-          var env = Math.exp(-2.1*t);
-          rch[j] = brown * 0.75 * env;
-        }
-        var rumSrc = ctx.createBufferSource(); rumSrc.buffer = rumBuf;
-        var lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 220;
-        var rg = ctx.createGain(); rg.gain.setValueAtTime(0.0, now);
-        rg.gain.linearRampToValueAtTime(0.7, now + 0.02);
-        rg.gain.exponentialRampToValueAtTime(0.0001, now + rumDur);
-        rumSrc.connect(lp); lp.connect(rg); rg.connect(master);
-        rumSrc.start(now + 0.02);
-
-        // 3) Optional short mid tail to be audible on tiny speakers (800Hz, 300ms)
-        var tailDur = 0.3, tailN = (sr*tailDur)|0;
-        var tailBuf = ctx.createBuffer(1, tailN, sr);
-        var tch = tailBuf.getChannelData(0);
-        for (var k=0;k<tailN;k++){ tch[k] = (Math.random()*2-1) * Math.pow(1 - k/tailN, 2); }
-        var tailSrc = ctx.createBufferSource(); tailSrc.buffer = tailBuf;
-        var tailBP = ctx.createBiquadFilter(); tailBP.type = "bandpass"; tailBP.frequency.value = 900; tailBP.Q.value = 2;
-        var tg = ctx.createGain(); tg.gain.setValueAtTime(0.0, now);
-        tg.gain.linearRampToValueAtTime(0.4, now + 0.05);
-        tg.gain.exponentialRampToValueAtTime(0.0001, now + tailDur);
-        tailSrc.connect(tailBP); tailBP.connect(tg); tg.connect(master);
-        tailSrc.start(now + 0.02);
-
-        // Auto-disconnect after tail
-        setTimeout(function(){ try{ master.disconnect(); }catch(_){ } }, 3200);
-      });
-    } catch(e) {
-      if (console && console.warn) console.warn('WebAudio failed', e);
-      return Promise.resolve();
-    }
-  }
-
-  function playThunder(){
-    // Su Safari forziamo direttamente WebAudio (più affidabile e udibile)
-    if (isSafari) return webAudioThunder();
-    // Altrimenti prova <audio> e fallback a WebAudio
-    if (audioEl){
-      try {
-        audioEl.currentTime = 0;
-        var p = audioEl.play();
-        if (p && p.then) return p.catch(function(){ return webAudioThunder(); });
-        return Promise.resolve();
-      } catch(_){ return webAudioThunder(); }
-    }
-    return webAudioThunder();
-  }
-
-  btn.addEventListener('click', function(e){
-    e.preventDefault();
-    window.thunderOn = !window.thunderOn;
-    if (window.updateLabel) window.updateLabel();
-    if (window.thunderOn) {
-      playThunder();
-    } else {
-      try { audioEl && (audioEl.pause(), audioEl.currentTime=0); } catch(_){}
-    }
-  });
-
-  if (window.updateLabel) window.updateLabel();
-})();
-</script>
-<script>
-/* Safari range-track hard fix: wrappa l’input e disegna un track finto sotto */
-(function(){
-  // Trova il tuo slider: prima #speed-range, poi .range, altrimenti il primo range
-  var inp = document.querySelector('#speed-range') ||
-            document.querySelector('.range') ||
-            document.querySelector('input[type="range"]');
-  if(!inp || inp.closest('.range-ui-fix')) return; // già fixato o non trovato
-
-  // Crea wrapper e track
-  var wrap = document.createElement('div');
-  wrap.className = 'range-ui-fix';
-  // Mantieni la larghezza attuale dell’input
-  var w = getComputedStyle(inp).width;
-  if (w && w !== 'auto') wrap.style.width = w;
-
-  var track = document.createElement('div');
-  track.className = 'range-track-fake';
-
-  // Inserisci wrapper e sposta dentro l’input, poi aggiungi il track finto
-  inp.parentNode.insertBefore(wrap, inp);
-  wrap.appendChild(inp);
-  wrap.appendChild(track);
-
-  // Assicurati che l’input non disegni un suo sfondo
-  Object.assign(inp.style, {
-    WebkitAppearance: 'none',
-    appearance: 'none',
-    background: 'transparent',
-    border: '0',
-    width: '100%',
-    height: '100%',
-    position: 'relative',
-    zIndex: 1
-  });
-
-  // Se la larghezza cambia (responsive), aggiorna il wrapper
-  window.addEventListener('resize', function(){
-    var ww = getComputedStyle(inp).width;
-    if (ww && ww !== 'auto') wrap.style.width = ww;
-  }, { passive:true });
-})();
-</script>
-
-</body>
-</html>
+</body></html>
