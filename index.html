@@ -746,6 +746,57 @@
       padding: 6px 8px; margin: 4px 4px 2px;
       border-bottom: 1px dashed rgba(255,255,255,.15);
       }
+<!-- INIZIO AGGIUNTA SFONDO PER VELOCITÀ SU SAFARI-->
+/* SAFARI FIX: track visibile per lo slider velocità */
+#speed-range{
+  -webkit-appearance: none; /* obbligatorio per Safari */
+  appearance: none;
+  width: 180px;              /* tua larghezza */
+  height: 28px;              /* area cliccabile */
+  background: transparent;   /* il track lo disegniamo nei pseudo-elementi */
+  margin: 0;
+}
+
+/* Track (binario) – Safari/Chrome (WebKit) */
+#speed-range::-webkit-slider-runnable-track{
+  height: 8px;
+  background: linear-gradient(90deg, rgba(255,215,106,.55), rgba(0,180,255,.28));
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.15);
+}
+
+/* Thumb (pallina) – Safari/Chrome */
+#speed-range::-webkit-slider-thumb{
+  -webkit-appearance: none;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #ffd86a;
+  box-shadow: 0 0 8px rgba(255,215,0,.45);
+  margin-top: -5px; /* centra il thumb sul track: (thumb - track)/2 */
+}
+
+/* Firefox (se ti serve mantenere il look uniforme su Mint) */
+#speed-range::-moz-range-track{
+  height: 8px;
+  background: linear-gradient(90deg, rgba(255,215,106,.55), rgba(0,180,255,.28));
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.15);
+}
+#speed-range::-moz-range-thumb{
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #ffd86a;
+  box-shadow: 0 0 8px rgba(255,215,0,.45);
+}
+#speed-range::-moz-range-progress{
+  height: 8px;
+  background: rgba(255,215,0,.55);
+  border-radius: 999px 0 0 999px;
+}
+
+<!-- FINE AGGIUNTA SFONDO PER VELOCITÀ SU SAFARI-->
       </style>
 <style data-typing-cls-fallback="">
       /* Fallback anti-CLS per typing: riserva ~2 righe */
