@@ -2596,12 +2596,6 @@ window.updateLabel = window.updateLabel || function(){
 </div>
 <div id="russell-hint">Clicca per ascoltare la chitarra 🎸</div>
 <audio id="russell-audio" preload="auto" src="https://casi0048.github.io/suoni/gitarra.mp3"></audio>
-
-<!-- Explosion audio (single-shot) -->
-<audio id="explosion-sound" preload="auto">
-  <source src="/suoni/explosion-1.mp3" type="audio/mpeg">
-</audio>
-
 <style>
    #russell-box {
    position: fixed;
@@ -3183,7 +3177,6 @@ window.updateLabel = window.updateLabel || function(){
    </script>
 <!-- Audio effetti -->
 <audio id="thunder-sound" preload="auto" src="https://casi0048.github.io/suoni/thunder-sound.mp3"></audio>
-<audio id="explosionSound" preload="auto" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/suoni/explosion-1.mp3"></audio>
 <!-- COOKIE BANNER -->
 <div aria-label="Consenso cookie" class="cookie-banner" hidden="" id="cookie-banner" role="region">
 <div class="cookie-text">
@@ -3304,28 +3297,48 @@ window.updateLabel = window.updateLabel || function(){
       $banner.hidden = true;
       }
         function openModal(){
-  try{
-    const c = getConsent() || {};
-    if ($an) $an.checked = !!c.analytics;
-    if ($pr) $pr.checked = !!c.preferences;
-    if ($mk) $mk.checked = !!c.marketing;
-  }catch(e){}
-  try{
-    $modal.removeAttribute('hidden');
-    $modal.setAttribute('aria-hidden','false');
-    $modal.style.display = 'flex';
-    $modal.classList.add('force-open');
-    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const panel = $modal.querySelector ? $modal.querySelector('.cookie-modal__panel') : null;
-    if (!reduce && window.gsap && panel){
+      try{
+      const c = getConsent() || {};
+      if ($an) $an.checked = !!c.analytics;
+      if ($pr) $pr.checked = !!c.preferences;
+      if ($mk) $mk.checked = !!c.marketing;
+      }catch(e){}
+      try{
+      $modal.removeAttribute('hidden');
+      $modal.setAttribute('aria-hidden','false');
+      $modal.style.display = 'flex';
+      $modal.classList.add('force-open');
+      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const panel = $modal.querySelector ? $modal.querySelector('.cookie-modal__panel') : null;
+      if (!reduce && window.gsap && panel){
       gsap.fromTo($modal, {opacity:0}, {opacity:1, duration:.25, ease:'power2.out'});
       gsap.fromTo(panel, {y:20, opacity:0}, {y:0, opacity:1, duration:.4, ease:'power3.out'});
-    }
-  }catch(e){}
-}
-function closeModal(){
-  try{
-    if ($modal){
+      }
+      }catch(e){}
+      }
+      }catch(_){}
+      const c = getConsent() || {};
+      $an.checked = !!c.analytics;
+      $pr.checked = !!c.preferences;
+      $mk.checked = !!c.marketing;
+      $modal.setAttribute('aria-hidden','false');
+      try{
+      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reduce && window.gsap){
+      const panel = $modal.querySelector('.cookie-modal__panel');
+      gsap.fromTo($modal, {opacity:0}, {opacity:1, duration:.25, ease:'power2.out'});
+      gsap.fromTo(panel, {y:20, opacity:0}, {y:0, opacity:1, duration:.4, ease:'power3.out'});
+      }
+      }catch(e){}
+      };
+          $an.checked = !!c.analytics;
+          $pr.checked = !!c.preferences;
+          $mk.checked = !!c.marketing;
+          $modal.setAttribute('aria-hidden','false');
+        }
+        function closeModal(){
+      try{
+      if ($modal){
       const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const panel = $modal.querySelector ? $modal.querySelector('.cookie-modal__panel') : null;
       if (!reduce && window.gsap && panel){
@@ -3342,9 +3355,62 @@ function closeModal(){
         $modal.style.display = 'none';
         $modal.setAttribute('hidden','');
       }
-    }
-  }catch(e){}
-}</script>
+      }
+      }catch(e){}
+      }
+      }catch(_){}
+      try{
+      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reduce && window.gsap){
+      const panel = $modal.querySelector('.cookie-modal__panel');
+      gsap.to(panel, {y:10, opacity:0, duration:.22, ease:'power2.in'});
+      gsap.to($modal, {opacity:0, duration:.22, ease:'power2.in', onComplete(){ $modal.setAttribute('aria-hidden','true'); }});
+      return;
+      }
+      }catch(e){}
+      $modal.setAttribute('aria-hidden','true');
+      }
+      
+        // Pulsanti banner
+        $accept.addEventListener('click', ()=>{
+          setConsent({ essential:true, analytics:true, preferences:true, marketing:true, date:Date.now() });
+          hideBanner(); if ($manage) if ($manage) $manage.hidden = true; // keep text button hidden (badge replaces it)
+        });
+        $decline.addEventListener('click', ()=>{
+          setConsent({ essential:true, analytics:false, preferences:false, marketing:false, date:Date.now() });
+          hideBanner(); if ($manage) if ($manage) $manage.hidden = true; // keep text button hidden (badge replaces it)
+        });
+        $customize.addEventListener('click', openModal);
+      
+        // Modal
+      document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ closeModal(); }});
+      $save.addEventListener('click', ()=>{
+      setConsent({
+      essential:true,
+      analytics:$an && $an.checked,
+      preferences:$pr && $pr.checked,
+      marketing:$mk && $mk.checked,
+      date:Date.now()
+      });
+      closeModal();
+      hideBanner();
+      if ($manage) $manage.hidden = true;
+      });
+      closeModal(); hideBanner(); if ($manage) if ($manage) $manage.hidden = true; // keep text button hidden (badge replaces it)
+        });
+        [$cancel,$close].filter(Boolean).forEach(btn=> btn.addEventListener('click', closeModal));
+        if ($modal) $modal.addEventListener('click', (e)=>{ if(e.target === $modal) closeModal(); });
+        document.addEventListener('keydown', (e)=>{ try{ if(e.key==='Escape') closeModal(); }catch(_){}});
+      
+        // Riapertura
+        if ($manage) $manage.addEventListener('click', openModal);
+      
+        // Init
+        const consent = getConsent();
+        if(consent){ hideBanner(); if ($manage) if ($manage) $manage.hidden = true; // keep text button hidden (badge replaces it) applyConsent(consent); }
+        else { showBanner(); }
+      })();
+   </script>
 <!-- injected: universal thunder + lightning + cookie controller -->
 <script>
       (function(){
@@ -3371,7 +3437,7 @@ function closeModal(){
         var audio = document.getElementById('thunder-sound');
         if (!audio){
           audio = createEl('audio', { id:'thunder-sound', preload:'auto', crossorigin:'anonymous' });
-          var src = createEl('source', { src:'/suoni/thunder-sound.mp3', type:'audio/mpeg' });
+          var src = createEl('source', { src:'https://casi0048.github.io/suoni/explosion-1.mp3', type:'audio/mpeg' });
           audio.appendChild(src);
           audio.style.display = 'none';
           document.body.appendChild(audio);
@@ -4682,13 +4748,23 @@ function closeModal(){
         new MutationObserver(initAll).observe(document.documentElement, { childList:true, subtree:true });
       })();
    </script>
-<audio id="explode-sound" preload="auto" src="/suoni/thunder-sound.mp3"></audio>
 <script>
       (function(){
-        function playExplosion(){
-          var boom = document.getElementById('explode-sound');
-          if (boom){
-            try{ boom.currentTime = 0; }catch(e){}
+        catch(_){}}
+  if (!window.__explosionBusy) window.__explosionBusy = false;
+  if (window.__explosionBusy) return;
+  window.__explosionBusy = true;
+  try{
+    boom.pause && boom.pause();
+    try{ boom.currentTime = 0; }catch(_){}
+    var p = boom.play && boom.play();
+    if (p && typeof p.catch === 'function') p.catch(function(_e){ window.__explosionBusy = false; });
+  }catch(_){ window.__explosionBusy = false; }
+  function unlock(){ window.__explosionBusy = false; boom && boom.removeEventListener && boom.removeEventListener('ended', unlock); }
+  if (boom && boom.addEventListener) boom.addEventListener('ended', unlock, { once:true });
+  setTimeout(unlock, 4000);
+}
+catch(e){}
             var p = boom.play();
             if (p && typeof p.catch === 'function'){
               p.catch(function(err){ console.warn('Audio esplosione bloccato:', err); });
@@ -4838,13 +4914,24 @@ function closeModal(){
         new MutationObserver(initAll).observe(document.documentElement, { childList:true, subtree:true });
       })();
    </script>
-<audio id="explode-sound" preload="auto" src="/suoni/thunder-sound.mp3"></audio>
+
 <script>
       (function(){
-        function playExplosion(){
-          var boom = document.getElementById('explode-sound');
-          if (boom){
-            try{ boom.currentTime = 0; }catch(e){}
+        catch(_){}}
+  if (!window.__explosionBusy) window.__explosionBusy = false;
+  if (window.__explosionBusy) return;
+  window.__explosionBusy = true;
+  try{
+    boom.pause && boom.pause();
+    try{ boom.currentTime = 0; }catch(_){}
+    var p = boom.play && boom.play();
+    if (p && typeof p.catch === 'function') p.catch(function(_e){ window.__explosionBusy = false; });
+  }catch(_){ window.__explosionBusy = false; }
+  function unlock(){ window.__explosionBusy = false; boom && boom.removeEventListener && boom.removeEventListener('ended', unlock); }
+  if (boom && boom.addEventListener) boom.addEventListener('ended', unlock, { once:true });
+  setTimeout(unlock, 4000);
+}
+catch(e){}
             var p = boom.play();
             if (p && typeof p.catch === 'function'){
               p.catch(function(err){ console.warn('Audio esplosione bloccato:', err); });
@@ -5113,13 +5200,24 @@ function closeModal(){
         new MutationObserver(initAll).observe(document.documentElement, { childList:true, subtree:true });
       })();
    </script>
-<audio id="explode-sound" preload="auto" src="/suoni/thunder-sound.mp3"></audio>
+
 <script>
       (function(){
-        function playExplosion(){
-          var boom = document.getElementById('explode-sound');
-          if (boom){
-            try{ boom.currentTime = 0; }catch(e){}
+        catch(_){}}
+  if (!window.__explosionBusy) window.__explosionBusy = false;
+  if (window.__explosionBusy) return;
+  window.__explosionBusy = true;
+  try{
+    boom.pause && boom.pause();
+    try{ boom.currentTime = 0; }catch(_){}
+    var p = boom.play && boom.play();
+    if (p && typeof p.catch === 'function') p.catch(function(_e){ window.__explosionBusy = false; });
+  }catch(_){ window.__explosionBusy = false; }
+  function unlock(){ window.__explosionBusy = false; boom && boom.removeEventListener && boom.removeEventListener('ended', unlock); }
+  if (boom && boom.addEventListener) boom.addEventListener('ended', unlock, { once:true });
+  setTimeout(unlock, 4000);
+}
+catch(e){}
             var p = boom.play();
             if (p && typeof p.catch === 'function'){
               p.catch(function(err){ console.warn('Audio esplosione bloccato:', err); });
@@ -5384,13 +5482,24 @@ function closeModal(){
         new MutationObserver(initAll).observe(document.documentElement, { childList:true, subtree:true });
       })();
    </script>
-<audio id="explode-sound" preload="auto" src="/suoni/thunder-sound.mp3"></audio>
+
 <script>
       (function(){
-        function playExplosion(){
-          var boom = document.getElementById('explode-sound');
-          if (boom){
-            try{ boom.currentTime = 0; }catch(e){}
+        catch(_){}}
+  if (!window.__explosionBusy) window.__explosionBusy = false;
+  if (window.__explosionBusy) return;
+  window.__explosionBusy = true;
+  try{
+    boom.pause && boom.pause();
+    try{ boom.currentTime = 0; }catch(_){}
+    var p = boom.play && boom.play();
+    if (p && typeof p.catch === 'function') p.catch(function(_e){ window.__explosionBusy = false; });
+  }catch(_){ window.__explosionBusy = false; }
+  function unlock(){ window.__explosionBusy = false; boom && boom.removeEventListener && boom.removeEventListener('ended', unlock); }
+  if (boom && boom.addEventListener) boom.addEventListener('ended', unlock, { once:true });
+  setTimeout(unlock, 4000);
+}
+catch(e){}
             var p = boom.play();
             if (p && typeof p.catch === 'function'){
               p.catch(function(err){ console.warn('Audio esplosione bloccato:', err); });
@@ -5817,13 +5926,24 @@ function closeModal(){
         });
       })();
    </script>
-<audio id="explode-sound" preload="auto" src="/suoni/thunder-sound.mp3"></audio>
+
 <script>
       (function(){
-        function playExplosion(){
-          var boom = document.getElementById('explode-sound');
-          if (boom){
-            try{ boom.currentTime = 0; }catch(e){}
+        catch(_){}}
+  if (!window.__explosionBusy) window.__explosionBusy = false;
+  if (window.__explosionBusy) return;
+  window.__explosionBusy = true;
+  try{
+    boom.pause && boom.pause();
+    try{ boom.currentTime = 0; }catch(_){}
+    var p = boom.play && boom.play();
+    if (p && typeof p.catch === 'function') p.catch(function(_e){ window.__explosionBusy = false; });
+  }catch(_){ window.__explosionBusy = false; }
+  function unlock(){ window.__explosionBusy = false; boom && boom.removeEventListener && boom.removeEventListener('ended', unlock); }
+  if (boom && boom.addEventListener) boom.addEventListener('ended', unlock, { once:true });
+  setTimeout(unlock, 4000);
+}
+catch(e){}
             var p = boom.play();
             if (p && typeof p.catch === 'function'){
               p.catch(function(err){ console.warn('Audio esplosione bloccato:', err); });
@@ -6227,123 +6347,163 @@ function closeModal(){
 </script>
 
 
-<script>
-(function(){
-  var btn = document.getElementById('explode-btn');
-  if (!btn) return;
-  var text = document.querySelector('.exploding-text');
-  var boom = document.getElementById('explosion-sound');
-  if (!boom){
-    boom = document.createElement('audio');
-    boom.id = 'explosion-sound';
-    boom.preload = 'auto';
-    var s = document.createElement('source');
-    s.src = '/suoni/explosion-1.mp3';
-    s.type = 'audio/mpeg';
-    boom.appendChild(s);
-    document.body.appendChild(boom);
-  }
-  boom.loop = false; // important
-  var busy = false;
+<audio id="explode-sound" preload="auto">
+  <source src="https://casi0048.github.io/suoni/explosion-1.mp3" type="audio/mpeg">
+</audio>
 
-  function playExplosionOnce(){
+
+<script>
+// Consolidated "Esplodi": audio one‑shot + testo esplosivo
+(function(){
+  // Bind su TUTTI gli elementi (in caso di ID duplicati)
+  function getExplodeButtons(){
+    var nodes = [];
+    try{
+      var a = document.querySelectorAll('#btn-explode, [id="btn-explode"]');
+      if (a && a.length) nodes = Array.prototype.slice.call(a);
+    }catch(_){}
+    return nodes;
+  }
+  function getExplodingTarget(){
+    return document.getElementById('exploding');
+  }
+  var audio = document.getElementById('explode-sound');
+  if (!audio){
+    audio = document.createElement('audio');
+    audio.id = 'explode-sound';
+    audio.preload = 'auto';
+    var s = document.createElement('source');
+    s.src = 'https://casi0048.github.io/suoni/explosion-1.mp3';
+    s.type = 'audio/mpeg';
+    audio.appendChild(s);
+    document.body.appendChild(audio);
+  }
+  try{ audio.loop = false; }catch(_){}
+
+  var busy = false;
+  function playOnce(){
     if (busy) return;
     busy = true;
-    // visual FX (one-shot)
     try{
-      if (text){
-        text.classList.remove('explode');
-        // reflow to restart CSS anim
-        void text.offsetWidth;
-        text.classList.add('explode');
-      }
-    }catch(e){}
-    // audio (one-shot)
-    try{
-      boom.pause();
-      boom.currentTime = 0;
-      var p = boom.play();
-      if (p && typeof p.catch === 'function'){
-        p.catch(function(e){ /* ignore autoplay block */ });
-      }
-    }catch(e){}
-    // unlock when audio ends or after a timeout fallback
-    var unlocked = false;
-    function unlock(){
-      if (unlocked) return;
-      unlocked = true;
-      busy = false;
-      boom.removeEventListener('ended', unlock);
-    }
-    boom.addEventListener('ended', unlock, { once:true });
-    setTimeout(unlock, Math.max(1500, (boom.duration||0)*1000 + 200)); // safety
+      audio.pause();
+      audio.currentTime = 0;
+      var p = audio.play();
+      if (p && typeof p.catch === 'function') p.catch(function(_e){ busy = false; });
+    }catch(_){ busy = false; }
+    function unlock(){ busy = false; audio.removeEventListener && audio.removeEventListener('ended', unlock); }
+    audio.addEventListener && audio.addEventListener('ended', unlock, { once:true });
+    setTimeout(unlock, Math.max(1500, (audio.duration||0)*1000 + 200));
   }
 
-  btn.addEventListener('click', function(e){
-    e.preventDefault();
-    playExplosionOnce();
-  });
+  function triggerTextExplode(){
+    var t = getExplodingTarget();
+    if (t && typeof t.click === 'function'){
+      try{ t.click(); }catch(_){}
+    }
+  }
+
+  function onExplodeClick(e){
+    try{ e.preventDefault && e.preventDefault(); }catch(_){}
+    playOnce();
+    triggerTextExplode();
+  }
+
+  function bind(){
+    var btns = getExplodeButtons();
+    if (!btns.length) return;
+    for (var i=0;i<btns.length;i++){
+      // Evita doppioni
+      btns[i].removeEventListener && btns[i].removeEventListener('click', onExplodeClick);
+      btns[i].addEventListener && btns[i].addEventListener('click', onExplodeClick);
+    }
+  }
+
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', bind);
+  } else {
+    bind();
+  }
 })();
 </script>
 
 </body>
 
-<script>
-(function(){
-  var btn = document.getElementById('explode-btn');
-  if (!btn) return;
-  var text = document.querySelector('.exploding-text');
-  var boom = document.getElementById('explosion-sound');
-  if (!boom){
-    boom = document.createElement('audio');
-    boom.id = 'explosion-sound';
-    boom.preload = 'auto';
-    var s = document.createElement('source');
-    s.src = '/suoni/explosion-1.mp3';
-    s.type = 'audio/mpeg';
-    boom.appendChild(s);
-    document.body.appendChild(boom);
-  }
-  boom.loop = false; // important
-  var busy = false;
+<audio id="explode-sound" preload="auto">
+  <source src="https://casi0048.github.io/suoni/explosion-1.mp3" type="audio/mpeg">
+</audio>
 
-  function playExplosionOnce(){
+
+<script>
+// Consolidated "Esplodi": audio one‑shot + testo esplosivo
+(function(){
+  // Bind su TUTTI gli elementi (in caso di ID duplicati)
+  function getExplodeButtons(){
+    var nodes = [];
+    try{
+      var a = document.querySelectorAll('#btn-explode, [id="btn-explode"]');
+      if (a && a.length) nodes = Array.prototype.slice.call(a);
+    }catch(_){}
+    return nodes;
+  }
+  function getExplodingTarget(){
+    return document.getElementById('exploding');
+  }
+  var audio = document.getElementById('explode-sound');
+  if (!audio){
+    audio = document.createElement('audio');
+    audio.id = 'explode-sound';
+    audio.preload = 'auto';
+    var s = document.createElement('source');
+    s.src = 'https://casi0048.github.io/suoni/explosion-1.mp3';
+    s.type = 'audio/mpeg';
+    audio.appendChild(s);
+    document.body.appendChild(audio);
+  }
+  try{ audio.loop = false; }catch(_){}
+
+  var busy = false;
+  function playOnce(){
     if (busy) return;
     busy = true;
-    // visual FX (one-shot)
     try{
-      if (text){
-        text.classList.remove('explode');
-        // reflow to restart CSS anim
-        void text.offsetWidth;
-        text.classList.add('explode');
-      }
-    }catch(e){}
-    // audio (one-shot)
-    try{
-      boom.pause();
-      boom.currentTime = 0;
-      var p = boom.play();
-      if (p && typeof p.catch === 'function'){
-        p.catch(function(e){ /* ignore autoplay block */ });
-      }
-    }catch(e){}
-    // unlock when audio ends or after a timeout fallback
-    var unlocked = false;
-    function unlock(){
-      if (unlocked) return;
-      unlocked = true;
-      busy = false;
-      boom.removeEventListener('ended', unlock);
-    }
-    boom.addEventListener('ended', unlock, { once:true });
-    setTimeout(unlock, Math.max(1500, (boom.duration||0)*1000 + 200)); // safety
+      audio.pause();
+      audio.currentTime = 0;
+      var p = audio.play();
+      if (p && typeof p.catch === 'function') p.catch(function(_e){ busy = false; });
+    }catch(_){ busy = false; }
+    function unlock(){ busy = false; audio.removeEventListener && audio.removeEventListener('ended', unlock); }
+    audio.addEventListener && audio.addEventListener('ended', unlock, { once:true });
+    setTimeout(unlock, Math.max(1500, (audio.duration||0)*1000 + 200));
   }
 
-  btn.addEventListener('click', function(e){
-    e.preventDefault();
-    playExplosionOnce();
-  });
+  function triggerTextExplode(){
+    var t = getExplodingTarget();
+    if (t && typeof t.click === 'function'){
+      try{ t.click(); }catch(_){}
+    }
+  }
+
+  function onExplodeClick(e){
+    try{ e.preventDefault && e.preventDefault(); }catch(_){}
+    playOnce();
+    triggerTextExplode();
+  }
+
+  function bind(){
+    var btns = getExplodeButtons();
+    if (!btns.length) return;
+    for (var i=0;i<btns.length;i++){
+      // Evita doppioni
+      btns[i].removeEventListener && btns[i].removeEventListener('click', onExplodeClick);
+      btns[i].addEventListener && btns[i].addEventListener('click', onExplodeClick);
+    }
+  }
+
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', bind);
+  } else {
+    bind();
+  }
 })();
 </script>
 
