@@ -3298,48 +3298,28 @@ window.updateLabel = window.updateLabel || function(){
       $banner.hidden = true;
       }
         function openModal(){
-      try{
-      const c = getConsent() || {};
-      if ($an) $an.checked = !!c.analytics;
-      if ($pr) $pr.checked = !!c.preferences;
-      if ($mk) $mk.checked = !!c.marketing;
-      }catch(e){}
-      try{
-      $modal.removeAttribute('hidden');
-      $modal.setAttribute('aria-hidden','false');
-      $modal.style.display = 'flex';
-      $modal.classList.add('force-open');
-      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const panel = $modal.querySelector ? $modal.querySelector('.cookie-modal__panel') : null;
-      if (!reduce && window.gsap && panel){
+  try{
+    const c = getConsent() || {};
+    if ($an) $an.checked = !!c.analytics;
+    if ($pr) $pr.checked = !!c.preferences;
+    if ($mk) $mk.checked = !!c.marketing;
+  }catch(e){}
+  try{
+    $modal.removeAttribute('hidden');
+    $modal.setAttribute('aria-hidden','false');
+    $modal.style.display = 'flex';
+    $modal.classList.add('force-open');
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const panel = $modal.querySelector ? $modal.querySelector('.cookie-modal__panel') : null;
+    if (!reduce && window.gsap && panel){
       gsap.fromTo($modal, {opacity:0}, {opacity:1, duration:.25, ease:'power2.out'});
       gsap.fromTo(panel, {y:20, opacity:0}, {y:0, opacity:1, duration:.4, ease:'power3.out'});
-      }
-      }catch(e){}
-      }
-      }catch(_){}
-      const c = getConsent() || {};
-      $an.checked = !!c.analytics;
-      $pr.checked = !!c.preferences;
-      $mk.checked = !!c.marketing;
-      $modal.setAttribute('aria-hidden','false');
-      try{
-      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (!reduce && window.gsap){
-      const panel = $modal.querySelector('.cookie-modal__panel');
-      gsap.fromTo($modal, {opacity:0}, {opacity:1, duration:.25, ease:'power2.out'});
-      gsap.fromTo(panel, {y:20, opacity:0}, {y:0, opacity:1, duration:.4, ease:'power3.out'});
-      }
-      }catch(e){}
-      };
-          $an.checked = !!c.analytics;
-          $pr.checked = !!c.preferences;
-          $mk.checked = !!c.marketing;
-          $modal.setAttribute('aria-hidden','false');
-        }
-        function closeModal(){
-      try{
-      if ($modal){
+    }
+  }catch(e){}
+}
+function closeModal(){
+  try{
+    if ($modal){
       const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const panel = $modal.querySelector ? $modal.querySelector('.cookie-modal__panel') : null;
       if (!reduce && window.gsap && panel){
@@ -3356,62 +3336,9 @@ window.updateLabel = window.updateLabel || function(){
         $modal.style.display = 'none';
         $modal.setAttribute('hidden','');
       }
-      }
-      }catch(e){}
-      }
-      }catch(_){}
-      try{
-      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (!reduce && window.gsap){
-      const panel = $modal.querySelector('.cookie-modal__panel');
-      gsap.to(panel, {y:10, opacity:0, duration:.22, ease:'power2.in'});
-      gsap.to($modal, {opacity:0, duration:.22, ease:'power2.in', onComplete(){ $modal.setAttribute('aria-hidden','true'); }});
-      return;
-      }
-      }catch(e){}
-      $modal.setAttribute('aria-hidden','true');
-      }
-      
-        // Pulsanti banner
-        $accept.addEventListener('click', ()=>{
-          setConsent({ essential:true, analytics:true, preferences:true, marketing:true, date:Date.now() });
-          hideBanner(); if ($manage) if ($manage) $manage.hidden = true; // keep text button hidden (badge replaces it)
-        });
-        $decline.addEventListener('click', ()=>{
-          setConsent({ essential:true, analytics:false, preferences:false, marketing:false, date:Date.now() });
-          hideBanner(); if ($manage) if ($manage) $manage.hidden = true; // keep text button hidden (badge replaces it)
-        });
-        $customize.addEventListener('click', openModal);
-      
-        // Modal
-      document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ closeModal(); }});
-      $save.addEventListener('click', ()=>{
-      setConsent({
-      essential:true,
-      analytics:$an && $an.checked,
-      preferences:$pr && $pr.checked,
-      marketing:$mk && $mk.checked,
-      date:Date.now()
-      });
-      closeModal();
-      hideBanner();
-      if ($manage) $manage.hidden = true;
-      });
-      closeModal(); hideBanner(); if ($manage) if ($manage) $manage.hidden = true; // keep text button hidden (badge replaces it)
-        });
-        [$cancel,$close].filter(Boolean).forEach(btn=> btn.addEventListener('click', closeModal));
-        if ($modal) $modal.addEventListener('click', (e)=>{ if(e.target === $modal) closeModal(); });
-        document.addEventListener('keydown', (e)=>{ try{ if(e.key==='Escape') closeModal(); }catch(_){}});
-      
-        // Riapertura
-        if ($manage) $manage.addEventListener('click', openModal);
-      
-        // Init
-        const consent = getConsent();
-        if(consent){ hideBanner(); if ($manage) if ($manage) $manage.hidden = true; // keep text button hidden (badge replaces it) applyConsent(consent); }
-        else { showBanner(); }
-      })();
-   </script>
+    }
+  }catch(e){}
+}</script>
 <!-- injected: universal thunder + lightning + cookie controller -->
 <script>
       (function(){
@@ -3438,7 +3365,7 @@ window.updateLabel = window.updateLabel || function(){
         var audio = document.getElementById('thunder-sound');
         if (!audio){
           audio = createEl('audio', { id:'thunder-sound', preload:'auto', crossorigin:'anonymous' });
-          var src = createEl('source', { src:'https://cdn.pixabay.com/download/audio/2022/03/25/audio_f7efc7fc85.mp3', type:'audio/mpeg' });
+          var src = createEl('source', { src:'/suoni/thunder-sound.mp3', type:'audio/mpeg' });
           audio.appendChild(src);
           audio.style.display = 'none';
           document.body.appendChild(audio);
@@ -4749,7 +4676,7 @@ window.updateLabel = window.updateLabel || function(){
         new MutationObserver(initAll).observe(document.documentElement, { childList:true, subtree:true });
       })();
    </script>
-<audio id="explode-sound" preload="auto" src="https://cdn.pixabay.com/download/audio/2022/03/25/audio_f7efc7fc85.mp3"></audio>
+<audio id="explode-sound" preload="auto" src="/suoni/thunder-sound.mp3"></audio>
 <script>
       (function(){
         function playExplosion(){
@@ -4905,7 +4832,7 @@ window.updateLabel = window.updateLabel || function(){
         new MutationObserver(initAll).observe(document.documentElement, { childList:true, subtree:true });
       })();
    </script>
-<audio id="explode-sound" preload="auto" src="https://cdn.pixabay.com/download/audio/2022/03/25/audio_f7efc7fc85.mp3"></audio>
+<audio id="explode-sound" preload="auto" src="/suoni/thunder-sound.mp3"></audio>
 <script>
       (function(){
         function playExplosion(){
@@ -5180,7 +5107,7 @@ window.updateLabel = window.updateLabel || function(){
         new MutationObserver(initAll).observe(document.documentElement, { childList:true, subtree:true });
       })();
    </script>
-<audio id="explode-sound" preload="auto" src="https://cdn.pixabay.com/download/audio/2022/03/25/audio_f7efc7fc85.mp3"></audio>
+<audio id="explode-sound" preload="auto" src="/suoni/thunder-sound.mp3"></audio>
 <script>
       (function(){
         function playExplosion(){
@@ -5451,7 +5378,7 @@ window.updateLabel = window.updateLabel || function(){
         new MutationObserver(initAll).observe(document.documentElement, { childList:true, subtree:true });
       })();
    </script>
-<audio id="explode-sound" preload="auto" src="https://cdn.pixabay.com/download/audio/2022/03/25/audio_f7efc7fc85.mp3"></audio>
+<audio id="explode-sound" preload="auto" src="/suoni/thunder-sound.mp3"></audio>
 <script>
       (function(){
         function playExplosion(){
@@ -5884,7 +5811,7 @@ window.updateLabel = window.updateLabel || function(){
         });
       })();
    </script>
-<audio id="explode-sound" preload="auto" src="https://cdn.pixabay.com/download/audio/2022/03/25/audio_f7efc7fc85.mp3"></audio>
+<audio id="explode-sound" preload="auto" src="/suoni/thunder-sound.mp3"></audio>
 <script>
       (function(){
         function playExplosion(){
