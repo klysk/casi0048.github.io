@@ -3758,7 +3758,7 @@ window.updateLabel = window.updateLabel || function(){
             }
           })();
         });
-      } else if (tries++ < 80){
+      } /* else-if removed (cleanup) */ {
                 setTimeout(waitReady, 100);
               }
             })();
@@ -6290,6 +6290,85 @@ window.updateLabel = window.updateLabel || function(){
     var ww = getComputedStyle(r).width;
     if (ww && ww !== 'auto') wrap.style.width = ww;
   }, { passive:true });
+})();
+</script>
+
+
+<script>
+(function CSEClean(){
+  const $panel   = document.getElementById('searchPanel');
+  const $results = document.getElementById('cseResults');
+  const $input   = document.getElementById('cse-input');
+  const $btn     = document.getElementById('cse-btn');
+  if (!$results) return;
+  function openPanel(){
+    if ($panel){ $panel.setAttribute('aria-hidden','false'); $panel.style.display='block'; }
+  }
+  function closePanel(){
+    if ($panel){ $panel.setAttribute('aria-hidden','true'); $panel.style.display='none'; }
+  }
+  window.execQuery = function(q){
+    if (!q) return; openPanel();
+    try {
+      let tries = 0;
+      (function waitCSE(){
+        try {
+          if (window.google && google.search && google.search.cse && google.search.cse.element){
+            const el = google.search.cse.element.getElement('cseResults');
+            if (el && typeof el.execute==='function'){ el.execute(q); return; }
+          }
+        } catch(e){}
+        if (++tries < 100) setTimeout(waitCSE, 80);
+      })();
+    } catch(e){ console.error('CSE exec error:', e); }
+  };
+  if ($input){
+    $input.addEventListener('keydown',(ev)=>{
+      if (ev.key==='Enter'){ ev.preventDefault(); window.execQuery($input.value.trim()); }
+    });
+  }
+  if ($btn){ $btn.addEventListener('click', ()=>{ if ($input) window.execQuery($input.value.trim()); }); }
+  document.addEventListener('keydown',(ev)=>{ if (ev.key==='Escape') closePanel(); });
+})();
+</script>
+
+
+<script>
+(function AudioManager(){
+  const thunderSrc   = '/suoni/thunder-sound.mp3';
+  const explosionSrc = '/suoni/explosion-1.mp3';
+  function ensureAudio(id, src){
+    let el = document.getElementById(id);
+    if (!el){
+      el = document.createElement('audio');
+      el.id = id; el.preload='auto'; el.crossOrigin='anonymous';
+      document.body.appendChild(el);
+    }
+    if (!el.src) el.src = src;
+    return el;
+  }
+  const thunder   = ensureAudio('thunder-audio', thunderSrc);
+  const explosion = ensureAudio('explosionSound', explosionSrc);
+  (function aliasExplode(){
+    if (!document.getElementById('explode-sound')){
+      const clone = explosion.cloneNode(); clone.id='explode-sound'; document.body.appendChild(clone);
+    }
+  })();
+  let unlocked=false;
+  function unlockOnce(){
+    if (unlocked) return; unlocked=true;
+    [thunder, explosion].forEach(a=>{ try{ a.play().then(()=>a.pause()).catch(()=>{});}catch(_){}});
+    window.removeEventListener('pointerdown', unlockOnce, {passive:true});
+    window.removeEventListener('keydown',     unlockOnce);
+  }
+  window.addEventListener('pointerdown', unlockOnce, {passive:true});
+  window.addEventListener('keydown',     unlockOnce);
+  window.setThunderOn = function(on){
+    try{ if(on){ thunder.currentTime=0; thunder.play(); } else { thunder.pause(); } }catch(e){}
+  };
+  window.playExplosion = function(){
+    try{ explosion.currentTime=0; explosion.play().catch(()=>{});}catch(e){}
+  };
 })();
 </script>
 
