@@ -2596,6 +2596,12 @@ window.updateLabel = window.updateLabel || function(){
 </div>
 <div id="russell-hint">Clicca per ascoltare la chitarra 🎸</div>
 <audio id="russell-audio" preload="auto" src="https://casi0048.github.io/suoni/gitarra.mp3"></audio>
+
+<!-- Explosion audio (single-shot) -->
+<audio id="explosion-sound" preload="auto">
+  <source src="/suoni/explosion-1.mp3" type="audio/mpeg">
+</audio>
+
 <style>
    #russell-box {
    position: fixed;
@@ -6220,5 +6226,125 @@ function closeModal(){
 })();
 </script>
 
+
+<script>
+(function(){
+  var btn = document.getElementById('explode-btn');
+  if (!btn) return;
+  var text = document.querySelector('.exploding-text');
+  var boom = document.getElementById('explosion-sound');
+  if (!boom){
+    boom = document.createElement('audio');
+    boom.id = 'explosion-sound';
+    boom.preload = 'auto';
+    var s = document.createElement('source');
+    s.src = '/suoni/explosion-1.mp3';
+    s.type = 'audio/mpeg';
+    boom.appendChild(s);
+    document.body.appendChild(boom);
+  }
+  boom.loop = false; // important
+  var busy = false;
+
+  function playExplosionOnce(){
+    if (busy) return;
+    busy = true;
+    // visual FX (one-shot)
+    try{
+      if (text){
+        text.classList.remove('explode');
+        // reflow to restart CSS anim
+        void text.offsetWidth;
+        text.classList.add('explode');
+      }
+    }catch(e){}
+    // audio (one-shot)
+    try{
+      boom.pause();
+      boom.currentTime = 0;
+      var p = boom.play();
+      if (p && typeof p.catch === 'function'){
+        p.catch(function(e){ /* ignore autoplay block */ });
+      }
+    }catch(e){}
+    // unlock when audio ends or after a timeout fallback
+    var unlocked = false;
+    function unlock(){
+      if (unlocked) return;
+      unlocked = true;
+      busy = false;
+      boom.removeEventListener('ended', unlock);
+    }
+    boom.addEventListener('ended', unlock, { once:true });
+    setTimeout(unlock, Math.max(1500, (boom.duration||0)*1000 + 200)); // safety
+  }
+
+  btn.addEventListener('click', function(e){
+    e.preventDefault();
+    playExplosionOnce();
+  });
+})();
+</script>
+
 </body>
+
+<script>
+(function(){
+  var btn = document.getElementById('explode-btn');
+  if (!btn) return;
+  var text = document.querySelector('.exploding-text');
+  var boom = document.getElementById('explosion-sound');
+  if (!boom){
+    boom = document.createElement('audio');
+    boom.id = 'explosion-sound';
+    boom.preload = 'auto';
+    var s = document.createElement('source');
+    s.src = '/suoni/explosion-1.mp3';
+    s.type = 'audio/mpeg';
+    boom.appendChild(s);
+    document.body.appendChild(boom);
+  }
+  boom.loop = false; // important
+  var busy = false;
+
+  function playExplosionOnce(){
+    if (busy) return;
+    busy = true;
+    // visual FX (one-shot)
+    try{
+      if (text){
+        text.classList.remove('explode');
+        // reflow to restart CSS anim
+        void text.offsetWidth;
+        text.classList.add('explode');
+      }
+    }catch(e){}
+    // audio (one-shot)
+    try{
+      boom.pause();
+      boom.currentTime = 0;
+      var p = boom.play();
+      if (p && typeof p.catch === 'function'){
+        p.catch(function(e){ /* ignore autoplay block */ });
+      }
+    }catch(e){}
+    // unlock when audio ends or after a timeout fallback
+    var unlocked = false;
+    function unlock(){
+      if (unlocked) return;
+      unlocked = true;
+      busy = false;
+      boom.removeEventListener('ended', unlock);
+    }
+    boom.addEventListener('ended', unlock, { once:true });
+    setTimeout(unlock, Math.max(1500, (boom.duration||0)*1000 + 200)); // safety
+  }
+
+  btn.addEventListener('click', function(e){
+    e.preventDefault();
+    playExplosionOnce();
+  });
+})();
+</script>
+
 </body></html>
