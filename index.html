@@ -1478,6 +1478,35 @@ window.updateLabel = window.updateLabel || function(){
 }
 </style>
 
+
+
+
+
+
+<style id="speed-label-css">
+/* Testo sopra alla barra di velocità con variabili regolabili */
+#slider-controls .speed-label-text{
+  font-size: var(--speed-label-size, 0.80rem);  /* testo più piccolo/più grande */
+  line-height: 1.2;
+  position: relative;
+  top: var(--speed-label-offset, -3px);         /* su/giù */
+  left: var(--speed-label-x, 40px);              /* sinistra/destra */
+  margin-bottom: var(--speed-label-gap, 6px);   /* spazio dal cursore */
+  color: var(--speed-label-color, #d4af37);     /* colore testo (default dorato) */
+}
+/* opzionale: default per il contenitore controlli */
+#slider-controls{
+  --speed-label-size: 0.80rem;
+  --speed-label-offset: -3px;   /* valori negativi = più su; positivi = più giù */
+  --speed-label-x: 30px;         /* negativo = verso sinistra; positivo = verso destra */
+  --speed-label-gap: 6px;
+  --speed-label-color: #d4af37; /* dorato coerente col sito */
+}
+/* Mantieni il label come blocco per avere il testo sopra lo slider */
+#slider-controls .speed-label{ display: block; }
+</style>
+
+
 </head>
 <body>
 <div class="slider-vertical">
@@ -2165,7 +2194,8 @@ window.updateLabel = window.updateLabel || function(){
 <button class="ctrl-btn" id="slider-toggle" title="Avvia/Ferma scorrimento">⏯️ Avvia / Ferma</button>
 <button class="ctrl-btn" id="slider-invert" title="Inverti direzione">🔄 Inverti</button>
 <label class="speed-label" for="slider-speed">
-<input id="slider-speed" max="20" min="1" type="range" value="8"/>
+<span class="speed-label-text">Regola velocità</span>
+<input id="slider-speed" max="12" min="1" type="range" value="8"/>
 </label>
 </div>
 <!-- ===== BLOB ANIMATO DESTRA (Ultimi articoli) ===== -->
@@ -2818,7 +2848,7 @@ window.updateLabel = window.updateLabel || function(){
 <style>
    #russell-box {
    position: fixed;
-   bottom: 40px;
+   bottom: 30px;
    left: 30px;
    z-index: 9999;
    max-width: 220px;
@@ -2850,7 +2880,7 @@ window.updateLabel = window.updateLabel || function(){
    text-align: left;
    max-width: 320px;
    position: fixed;
-   bottom: 190px;
+   bottom: 180px;
    left: 50px;
    user-select: none;
    font-style: italic;
@@ -3262,7 +3292,7 @@ window.updateLabel = window.updateLabel || function(){
 /* Mini player */
 .audio-player {
   position: fixed;
-  bottom: 220px;
+  bottom: 210px;
   left: 45px;
   background: rgba(10, 10, 30, 0.85);
   color: #aef;
@@ -3285,7 +3315,7 @@ window.updateLabel = window.updateLabel || function(){
 .audio-title {
   position: fixed;
   left: 80px;
-  bottom: calc(220px + 50px); /* ~36px sopra il player: regola se serve */
+  bottom: calc(210px + 50px); /* ~36px sopra il player: regola se serve */
   font-family: 'Georgia', serif;
   font-size: 13px;
   color: #ffd700;
@@ -6437,12 +6467,19 @@ ror("Errore nel caricamento dei dati:", error);
         }
       
         if(range){
-          const mapSpeed = v => 15 + (v - 1) * (385/19); // 1–20 → 15–400 px/s
+          const mapSpeed = v => {
+            const maxSteps = (range && range.max ? Number(range.max) : 20) - 1;
+            const t = Math.max(0, Math.min(1, (Number(v) - 1) / Math.max(1, maxSteps)));
+            const eased = Math.pow(t, 1.5); // crescita ancora più dolce (1.5)
+            return Math.round(12 + (180 - 12) * eased); // 1–max → 12–180 px/s
+          };
           // init
           speed = mapSpeed(+range.value || 8);
+          speed = Math.min(speed, 180);
           range.addEventListener('input', e => {
             speed = mapSpeed(+e.target.value || 8);
-          });
+                      speed = Math.min(speed, 180);
+});
         }
       })();
    </script>
@@ -6586,4 +6623,4 @@ ror("Errore nel caricamento dei dati:", error);
 </script>
 
 </body>
-</body></html>
+</html>
