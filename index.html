@@ -1219,8 +1219,16 @@
     </style>
 
 <style>
-/* === FIX 24-08: Slider, Cookie, Explode, Ricerca === */
+/* === FIX 24-08 — Slider, Cookie, Explode, Ricerca (IN-PAGE) === */
 :root{ --sv-left:52px; --sv-top:460px; }
+
+/* Kill CSS animation/transition on slider so JS controls take over */
+.slider-vertical .slider-inner,
+.slider-vertical:hover .slider-inner{
+  animation: none !important;
+  transition: none !important;
+}
+
 #cookie-banner, .cookie-banner{ display:none !important; visibility:hidden !important; height:0 !important; overflow:hidden !important; }
 #manage-cookies{
   position: fixed; right: 16px; bottom: 16px;
@@ -1232,7 +1240,7 @@
   color: #ffd86a; cursor: pointer; backdrop-filter: blur(6px);
 }
 #manage-cookies .label{ display:none; }
-/* Controlli slider fissi e cliccabili */
+/* Controlli slider */
 .slider-controls{
   position: fixed; left: var(--sv-left); top: var(--sv-top);
   width: 180px; display: flex; flex-direction: column; gap: 8px;
@@ -1251,6 +1259,7 @@
 .speed-label{ display:flex; align-items:center; gap:10px; justify-content:space-between; }
 #slider-speed{ width:120px; }
 .slider-inner{ position:absolute; inset:0; will-change:transform; transform:translate3d(0,0,0); }
+
 /* Exploding text */
 .exploding-text .ch{ display:inline-block; will-change:transform,opacity; }
 
@@ -1258,6 +1267,22 @@
 </head>
 
 <body>
+
+<!-- === PANEL RICERCA INTERNA === -->
+<div id="search-panel" aria-hidden="true" style="
+     position:fixed; left:6%; right:6%; bottom:14%; top:12%;
+     background:rgba(6,16,36,.96);
+     border:1px solid rgba(255,215,0,.28);
+     border-radius:12px; box-shadow:0 18px 42px rgba(0,0,0,.55);
+     padding:10px; z-index: 12000; display:none;">
+  <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+    <strong style="color:#ffd86a; font-family:'Cinzel',serif;">Risultati</strong>
+    <button id="search-close" title="Chiudi" style="margin-left:auto; min-width:34px; height:34px; border-radius:8px; border:1px solid rgba(255,255,255,.2); background:rgba(255,255,255,.07); color:#fff; cursor:pointer;">✕</button>
+  </div>
+  <div id="search-results" style="height:65vh; overflow:auto; border:1px solid rgba(255,255,255,.08); border-radius:8px; padding:6px;"></div>
+</div>
+
+
     <!-- GALASSIA dietro -->
     <canvas id="nebula"></canvas>
     
@@ -1269,25 +1294,7 @@
     <div aria-hidden="true" class="bolt" id="bolt"></div>
     
     <!-- Top bar -->
-    <div class="top-bar"
-
-<!-- === PANEL RISULTATI RICERCA (interno) === -->
-<div id="search-panel" aria-hidden="true" style="
-     position:fixed; left:6%; right:6%; bottom:14%; top:12%;
-     background:rgba(6,16,36,.96);
-     border:1px solid rgba(255,215,0,.28);
-     border-radius:12px; box-shadow:0 18px 42px rgba(0,0,0,.55);
-     padding:10px; z-index: 12000; display:none;">
-  <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
-    <strong style="color:#ffd86a; font-family:'Cinzel',serif;">Risultati</strong>
-    <button id="search-close" title="Chiudi" style="margin-left:auto; min-width:34px; height:34px; border-radius:8px; border:1px solid rgba(255,255,255,.2); background:rgba(255,255,255,.07); color:#fff; cursor:pointer;">✕</button>
-  </div>
-  <div id="search-results" style="height:65vh; overflow:auto; border:1px solid rgba(255,255,255,.08); border-radius:8px; padding:6px;">
-    <div class="gcse-searchresults-only" data-gname="cseResults"></div>
-  </div>
-</div>
-
->
+    <div class="top-bar">
         <a aria-label="Home" class="brand" href="#">
             <svg aria-hidden="true" role="img" viewBox="0 0 64 64">
                 <circle cx="32" cy="32" fill="none" r="30" stroke="#ffd700" stroke-width="2"></circle>
@@ -2626,74 +2633,141 @@
 
 <script>
 (function(){
-  if (window.__AUG24_MASTER__) return; window.__AUG24_MASTER__ = true;
+  if (window.__AUG24_MASTER_V3__) return; window.__AUG24_MASTER_V3__ = true;
   function onReady(fn){ if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', fn); else fn(); }
 
-  // Ricerca
+  // === Ricerca interna (in-page) ===
   (function(){
-    const input=document.getElementById('site-search');
-    const lens=document.querySelector('.search-icon');
-    const panel=document.getElementById('search-panel');
-    const closeBtn=document.getElementById('search-close');
-    if (!panel) return;
+    const panel = document.getElementById('search-panel');
+    const resBox = document.getElementById('search-results');
+    const closeBtn = document.getElementById('search-close');
+    const input = document.getElementById('site-search');
+    const lens = document.querySelector('.search-icon');
+    if (!panel || !resBox) return;
+
     function openPanel(){ panel.style.display='block'; panel.setAttribute('aria-hidden','false'); }
-    function closePanel(){ panel.style.display='none'; panel.setAttribute('aria-hidden','true'); }
-    window.execQuery=function(q){
-      if (!q) return; openPanel();
-      try{ if (window.google&&google.search&&google.search.cse&&google.search.cse.element){
-        const el=google.search.cse.element.getElement('cseResults'); if (el) el.execute(q);
-      }}catch(e){ console.error(e); }
-    };
-    input&&input.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); execQuery(input.value.trim()); }});
-    lens&&lens.addEventListener('click',()=> execQuery(input.value.trim()));
-    closeBtn&&closeBtn.addEventListener('click', closePanel);
-    if (!document.querySelector('script[data-cse]')){
-      const s=document.createElement('script'); s.src='https://cse.google.com/cse.js?cx=87b07564ab3cb462a'; s.async=true; s.setAttribute('data-cse','true'); document.head.appendChild(s);
+    function closePanel(){ panel.style.display='none'; panel.setAttribute('aria-hidden','true'); resBox.innerHTML=''; clearHighlights(); }
+
+    function norm(s){ return (s||'').toLowerCase(); }
+    function clearHighlights(){
+      document.querySelectorAll('mark.__hit').forEach(m=>{
+        const parent = m.parentNode; parent.replaceChild(document.createTextNode(m.textContent), m); parent.normalize && parent.normalize();
+      });
     }
+    function highlight(el, q){
+      const txt = el.textContent, i = norm(txt).indexOf(norm(q));
+      if (i === -1) return;
+      const before = document.createTextNode(txt.slice(0,i));
+      const mark = document.createElement('mark'); mark.className='__hit'; mark.textContent = txt.slice(i, i+q.length);
+      const after = document.createTextNode(txt.slice(i+q.length));
+      el.textContent = ''; el.appendChild(before); el.appendChild(mark); el.appendChild(after);
+    }
+    function snippet(text, q, len=140){
+      const t = text.trim().replace(/\s+/g,' '), idx = norm(t).indexOf(norm(q));
+      if (idx === -1) return t.slice(0,len) + (t.length>len?'…':'');
+      const start = Math.max(0, idx - Math.floor((len - q.length)/2));
+      const snip = t.slice(start, start+len);
+      return (start>0?'…':'') + snip + (start+len<t.length?'…':'');
+    }
+    function execInternal(q){
+      clearHighlights(); resBox.innerHTML=''; if (!q) return;
+      const roots = Array.from(document.querySelectorAll('main, article, section, [data-searchable="true"]'));
+      const hits = [];
+      roots.forEach(root=>{
+        root.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,blockquote,figcaption').forEach(node=>{
+          const t = node.textContent || '';
+          if (norm(t).includes(norm(q))){
+            const anchorId = 'hit-' + hits.length + '-' + Math.random().toString(36).slice(2,7);
+            const w = document.createElement('span'); w.id = anchorId; node.before(w);
+            hits.push({node, text:t, anchorId});
+          }
+        });
+      });
+      if (!hits.length){ resBox.innerHTML = '<div style="opacity:.8">Nessun risultato.</div>'; return; }
+      const ul = document.createElement('ul'); ul.style.listStyle='none'; ul.style.padding='0'; ul.style.margin='0';
+      hits.slice(0,60).forEach(h=>{
+        const li=document.createElement('li'); li.style.padding='8px 6px'; li.style.borderBottom='1px solid rgba(255,255,255,.08)';
+        const a=document.createElement('a'); a.href = '#' + h.anchorId; a.textContent = snippet(h.text, q); a.style.textDecoration='none'; a.style.color='#fff';
+        a.addEventListener('click',(ev)=>{ ev.preventDefault(); document.getElementById(h.anchorId)?.scrollIntoView({behavior:'smooth',block:'center'}); try{highlight(h.node,q);}catch(_){}
+          closePanel();
+        });
+        li.appendChild(a); ul.appendChild(li);
+      });
+      resBox.appendChild(ul);
+    }
+
+    window.execQuery = function(q){ openPanel(); execInternal(q); };
+
+    input && input.addEventListener('keydown', (ev)=>{
+      if (ev.key === 'Enter'){ ev.preventDefault(); ev.stopPropagation(); window.execQuery(input.value.trim()); }
+    }, {capture:true});
+    if (lens){
+      lens.addEventListener('click', (ev)=>{ ev.preventDefault(); ev.stopPropagation(); window.execQuery(input ? input.value.trim() : ''); }, {capture:true});
+      if (lens.tagName === 'A') lens.setAttribute('href','javascript:void(0)');
+    }
+    const form = input ? input.closest('form') : null;
+    if (form){
+      form.addEventListener('submit', (ev)=>{ ev.preventDefault(); ev.stopPropagation(); window.execQuery(input.value.trim()); return false; }, true);
+      form.setAttribute('action','javascript:void(0)');
+    }
+    closeBtn && closeBtn.addEventListener('click', (ev)=>{ ev.preventDefault(); closePanel(); }, {capture:true});
+    panel.addEventListener('keydown', (ev)=>{ if(ev.key==='Escape') closePanel(); });
+    panel.addEventListener('click', (ev)=>{
+      const inBox = resBox.contains(ev.target) || ev.target === resBox;
+      const isBtn = ev.target.id === 'search-close';
+      if (!inBox && !isBtn) closePanel();
+    });
   })();
 
-  // Cookie
+  // === Cookie floating button ===
   (function(){
     try{ document.querySelectorAll('#cookie-banner,.cookie-banner').forEach(el=>el.remove()); }catch(_){}
     const btn=document.getElementById('manage-cookies');
     const modal=document.getElementById('cookie-modal');
     const close=document.getElementById('cookie-close');
-    if (btn&&modal){ btn.addEventListener('click',()=> modal.setAttribute('aria-hidden','false')); close&&close.addEventListener('click',()=> modal.setAttribute('aria-hidden','true')); }
+    if (btn && modal){
+      btn.addEventListener('click', ()=> modal.setAttribute('aria-hidden','false'));
+      close && close.addEventListener('click', ()=> modal.setAttribute('aria-hidden','true'));
+    }
   })();
 
-  // Explode
+  // === Explode ===
   (function(){
     const btn=document.getElementById('btn-explode')||document.getElementById('explode-btn');
-    const textEl=document.getElementById('explodingText')||document.querySelector('.exploding-text');
+    const text=document.getElementById('explodingText')||document.querySelector('.exploding-text');
     const audio=document.getElementById('explosionSound');
-    if (!textEl) return;
+    if (!text) return;
     let prepped=false;
-    function prep(){ if(prepped) return; const s=textEl.textContent; textEl.textContent=''; for(const ch of s){ const sp=document.createElement('span'); sp.className='ch'; sp.textContent=ch; textEl.appendChild(sp);} prepped=true; }
+    function prep(){ if(prepped) return; const s=text.textContent; text.textContent=''; for(const ch of s){ const sp=document.createElement('span'); sp.className='ch'; sp.textContent=ch; text.appendChild(sp);} prepped=true; }
     prep();
     function boom(){
-      const chars=Array.from(textEl.querySelectorAll('.ch'));
+      const chars=Array.from(text.querySelectorAll('.ch'));
       if (window.gsap){
         gsap.killTweensOf(chars); gsap.set(chars,{x:0,y:0,rotate:0,opacity:1});
         const tl=gsap.timeline();
         tl.to(chars,{duration:.45,x:()=> (Math.random()-.5)*180,y:()=> (Math.random()-.5)*140,rotate:()=> (Math.random()-.5)*80,ease:"power3.out",stagger:{amount:.08,from:"center"}});
         tl.to(chars,{duration:.6,x:0,y:0,rotate:0,ease:"back.out(1.6)",stagger:{amount:.12,from:"random"}});
       } else {
-        chars.forEach(el=>{ const x=(Math.random()-.5)*180,y=(Math.random()-.5)*140,r=(Math.random()-.5)*70;
-          el.animate([{transform:'translate(0,0) rotate(0deg)'},{transform:`translate(${x}px,${y}px) rotate(${r}deg)`},{transform:'translate(0,0) rotate(0deg)'}],{duration:950,easing:'cubic-bezier(.2,.6,.2,1)'});
+        chars.forEach((el)=>{
+          const x=(Math.random()-.5)*180, y=(Math.random()-.5)*140, r=(Math.random()-.5)*70;
+          el.animate([{transform:'translate(0,0) rotate(0deg)'},{transform:`translate(${x}px,${y}px) rotate(${r}deg)`},{transform:'translate(0,0) rotate(0deg)'}], {duration: 950, easing:'cubic-bezier(.2,.6,.2,1)'});
         });
       }
       try{ audio&&audio.play().catch(()=>{});}catch(_){}
     }
-    btn&&btn.addEventListener('click', boom);
-    textEl.addEventListener('click', boom);
+    btn && btn.addEventListener('click', boom);
+    text.addEventListener('click', boom);
   })();
 
-  // Slider NO CLONE
+  // === Slider NO CLONE: kill CSS animation, capture bindings ===
   (function(){
-    if (window.__SV_CTRL__) return; window.__SV_CTRL__=true;
+    if (window.__SV_CTRL_V3__) return; window.__SV_CTRL_V3__=true;
     const wrap=document.querySelector('.slider-vertical');
     const inner=document.querySelector('.slider-vertical .slider-inner');
     if(!wrap||!inner) return;
+
+    inner.style.animation='none'; inner.style.transition='none';
+
     let y=0, dir=1, paused=false, speed=120, last=performance.now();
     const firstChild=()=> inner.children[0];
     const lastChild =()=> inner.children[inner.children.length-1];
@@ -2717,18 +2791,20 @@
       }
       requestAnimationFrame(frame);
     }
-    function bindControls(){
-      const btnToggle=document.getElementById('slider-toggle')||document.getElementById('sv-play');
-      const btnInvert=document.getElementById('slider-invert')||document.getElementById('sv-invert');
-      const rng=document.getElementById('slider-speed')||document.getElementById('sv-speed');
-      btnToggle&&btnToggle.addEventListener('click',()=>{ paused=!paused; });
-      btnInvert&&btnInvert.addEventListener('click',()=>{ dir*=-1; });
-      rng&&rng.addEventListener('input',function(){ const v=Number(this.value||8); speed=Math.round(15+(v-1)*(380/19)); },{passive:true});
-    }
     requestAnimationFrame(frame);
-    onReady(bindControls);
-    function initPass(){ inner.style.transform='translate3d(0,'+(-y)+'px,0)'; }
-    window.addEventListener('load', initPass, {once:true}); setTimeout(initPass,200); setTimeout(initPass,800);
+
+    function bind(){
+      const btnToggle=document.getElementById('slider-toggle');
+      const btnInvert=document.getElementById('slider-invert');
+      const rng=document.getElementById('slider-speed');
+      btnToggle && btnToggle.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); paused=!paused; }, {capture:true});
+      btnInvert && btnInvert.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); dir*=-1; }, {capture:true});
+      if (rng){
+        const ui2px=v=> Math.round(15 + (Number(v||8)-1)*(380/19));
+        rng.addEventListener('input', function(e){ e.stopPropagation(); speed = ui2px(this.value); }, {capture:true, passive:true});
+      }
+    }
+    onReady(bind);
   })();
 })();
 </script>
