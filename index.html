@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="it">
+<html id="html-lang" lang="it">
 <head>
 <meta content="Echi di Sofia - Portale di filosofia antica, moderna e contemporanea con approfondimenti su autori e correnti filosofiche" name="description"/>
 <meta charset="utf-8">
@@ -18,7 +18,7 @@
 <!-- Icons -->
 <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
 <!-- GSAP -->
-<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script ="" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <style>
          :root{
          --bg:#0a0a1a;
@@ -111,6 +111,15 @@
          box-shadow:0 15px 30px rgba(0,0,0,.4); backdrop-filter:blur(10px);
          opacity:0; visibility:hidden; pointer-events:none; transition:.3s; z-index:950;
          }
+
+/* Accessibilità: menu visibile anche con focus via tastiera */
+.mega-menu:focus-within{
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
          li.dropdown:hover > .mega-menu,
          li.dropdown:focus-within > .mega-menu,
          .mega-menu:hover{ opacity:1; visibility:visible; pointer-events:auto; transform:translateX(-50%) translateY(0) }
@@ -1507,6 +1516,18 @@ window.updateLabel = window.updateLabel || function(){
 </style>
 
 
+
+<script type="application/ld+json" id="seo-website">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Echi di Sofia",
+  "url": "https://www.echidisofia.org/",
+  "description": "Portale di filosofia antica, moderna e contemporanea",
+  "inLanguage": "it"
+}
+</script>
+
 </head>
 <body>
 <div class="slider-vertical">
@@ -1848,7 +1869,7 @@ window.updateLabel = window.updateLabel || function(){
 <!--INIZIO COSMO DINAMICO-->
 <!--FINE COSMO DINAMICO-->
 <div class="menu-container">
-<nav class="menu-desktop">
+<nav class="menu-desktop" aria-label="Menu principale">
 <ul role="menu">
 <li class="dropdown">
 <a class="menu-btn underline-effect" href="https://casi0048.github.io/pagine/benvenuti.html" role="menuitem"> 🗝️ INCIPIT</a>
@@ -2183,6 +2204,7 @@ window.updateLabel = window.updateLabel || function(){
 </nav>
 </div>
 </header>
+<main id="main-content" tabindex="-1">
 <!-- QUOTES BAR sotto la barra del menu -->
 <div aria-live="polite" class="quotes-bar" id="quotesBar">
 <span class="quote-text" id="quotesText"></span>
@@ -6619,6 +6641,116 @@ ror("Errore nel caricamento dei dati:", error);
   window.playExplosion = function(){
     try{ explosion.currentTime=0; explosion.play().catch(()=>{});}catch(e){}
   };
+})();
+</script>
+
+
+<script id="lazy-images-setup">
+document.addEventListener('DOMContentLoaded', function(){
+  if (document.documentElement.dataset.lazy !== 'on') return;
+
+  var imgs = document.querySelectorAll('img:not([data-priority])');
+  imgs.forEach(function(img){
+    if (img.closest('.top-bar')) return;
+    if (!img.hasAttribute('loading') || img.getAttribute('loading') === 'auto'){
+      img.setAttribute('loading','lazy');
+    }
+  });
+});
+</script>
+
+
+<script id="app-state">
+window.appState = {
+  thunderEnabled: false,
+  currentLanguage: (document.documentElement && document.documentElement.lang) || 'it',
+  searchOpen: false
+};
+document.addEventListener('DOMContentLoaded', function(){
+  if (document.documentElement.dataset.appstate !== 'on') return;
+
+  var playThunder = document.getElementById('play-thunder') || document.getElementById('playThunder') || document.querySelector('#play-thunder, #playThunder');
+  if (playThunder){
+    playThunder.addEventListener('click', function(){
+      appState.thunderEnabled = !appState.thunderEnabled;
+    });
+  }
+  var searchInput = document.getElementById('site-search') || document.querySelector('.search-container input');
+  if (searchInput){
+    searchInput.addEventListener('focus', function(){ appState.searchOpen = true; });
+    searchInput.addEventListener('blur', function(){ appState.searchOpen = false; });
+  }
+});
+</script>
+
+
+<script id="search-suggestions">
+(function(){
+  if (document.documentElement.dataset.searchSuggest !== 'on') return;
+
+  function debounce(fn, wait){
+    var t; return function(){ clearTimeout(t); var a=arguments; t=setTimeout(function(){ fn.apply(null,a); }, wait); };
+  }
+  function ensureContainer(){
+    var el = document.getElementById('cse-suggest');
+    if (!el){
+      el = document.createElement('div');
+      el.id = 'cse-suggest';
+      document.body.appendChild(el);
+    }
+    return el;
+  }
+  function showSuggestions(){
+    var input = document.getElementById('site-search') || document.querySelector('.search-container input');
+    if(!input) return;
+    var q = input.value.trim();
+    var box = ensureContainer();
+    if (!q){ box.classList.remove('show'); box.innerHTML=''; return; }
+    var seed = ['Platone','Aristotele','Kant','Nietzsche','Hegel','Descartes','Fenomenologia','Etica','Metafisica','Logica'];
+    var list = seed.filter(function(s){ return s.toLowerCase().includes(q.toLowerCase()); }).slice(0,7);
+    if (!list.length){ box.classList.remove('show'); box.innerHTML=''; return; }
+    var rect = input.getBoundingClientRect();
+    box.style.left = Math.round(rect.left + window.scrollX) + 'px';
+    box.style.top  = Math.round(rect.bottom + window.scrollY + 6) + 'px';
+    box.style.width= Math.round(rect.width) + 'px';
+    box.innerHTML = '<div class="section">Suggerimenti</div>' + list.map(function(s){
+      return '<a class="item" href="/cerca?q='+encodeURIComponent(s)+'"><i class="fa-solid fa-magnifying-glass"></i> '+s+'</a>';
+    }).join('');
+    box.classList.add('show');
+  }
+  var input = document.getElementById('site-search') || document.querySelector('.search-container input');
+  if (input){
+    input.addEventListener('input', debounce(showSuggestions, 300));
+    input.addEventListener('blur', function(){ setTimeout(function(){ var b=document.getElementById('cse-suggest'); if(b) b.classList.remove('show'); }, 200); });
+  }
+})();
+</script>
+
+
+<script id="error-boundary">
+(function(){
+  window.safeInit = function(name, fn){
+    try{ typeof fn === 'function' && fn(); }
+    catch(err){ console.error('Feature failed:', name, err); if(typeof showUserFriendlyError==='function'){ showUserFriendlyError(name); } }
+  };
+})();
+</script>
+
+
+<script id="slider-swipe-helper">
+(function(){
+  if (document.documentElement.dataset.swipeSlider !== 'on') return;
+  var host = document.querySelector('.slider-vertical');
+  var inner = host && host.querySelector('.slider-inner');
+  if(!host || !inner) return;
+  var startY=0, base=0, dy=0, active=false;
+  function getY(){
+    var m = /translateY\((-?\d+(?:\.\d+)?)px\)/.exec(inner.style.transform||'');
+    return m ? parseFloat(m[1]) : 0;
+  }
+  host.addEventListener('touchstart', function(e){ active=true; startY = e.touches[0].clientY; base = getY(); }, {passive:true});
+  host.addEventListener('touchmove', function(e){ if(!active) return; dy = e.touches[0].clientY - startY; inner.style.transform = 'translateY('+(base+dy)+'px)'; }, {passive:true});
+  host.addEventListener('touchend', function(){ active=false; }, {passive:true});
 })();
 </script>
 
