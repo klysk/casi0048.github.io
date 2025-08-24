@@ -2285,5 +2285,70 @@ document.addEventListener("DOMContentLoaded", function(){
 });
 </script>
 
+
+    <script id="translate-and-explode-wiring">
+document.addEventListener("DOMContentLoaded", function(){
+  // === UI: toggle motore vicino al <select id="customTranslate"> ===
+  const select = document.getElementById("customTranslate");
+  if (select && !document.getElementById("translatorEngineToggle")) {
+    const wrap = select.parentElement || select.closest(".translate-box") || select;
+    const label = document.createElement("label");
+    label.id = "translatorEngineToggle";
+    label.style.cssText = "margin-left:8px;font-size:12px;opacity:.85;cursor:pointer;user-select:none;";
+    label.innerHTML = `
+      <input type="checkbox" id="useMsTranslator" style="vertical-align:middle;margin-right:4px">
+      Usa Microsoft
+    `;
+    wrap.appendChild(label);
+  }
+
+  // === Traduzione: Google (default) o Microsoft (se spuntato) ===
+  function translateVia(engine, tl){
+    if (!tl || tl === "it") return; // niente su IT
+    const u = location.href;
+
+    let url = "";
+    if (engine === "ms") {
+      // Microsoft/Bing webpage translator (meno avvisi sui form)
+      url = "https://www.microsofttranslator.com/bv.aspx?from=it&to=" + encodeURIComponent(tl) + "&a=" + encodeURIComponent(u);
+    } else {
+      // Google Translate (può mostrare avviso sui moduli)
+      url = "https://translate.google.com/translate?hl=" + encodeURIComponent(tl) + "&sl=it&tl=" + encodeURIComponent(tl) + "&u=" + encodeURIComponent(u);
+      // breve hint non invasivo, solo la prima volta
+      if (!sessionStorage.getItem("gt_form_notice_shown")) {
+        sessionStorage.setItem("gt_form_notice_shown","1");
+        try {
+          const tip = document.createElement("div");
+          tip.textContent = "Nota: nella versione Google potresti vedere un avviso di sicurezza sui moduli. È normale.";
+          tip.style.cssText = "position:fixed;right:12px;bottom:12px;background:rgba(15,15,30,.92);color:#dbe7ff;border:1px solid #d4af37;padding:8px 12px;border-radius:8px;z-index:99999;font-size:12px";
+          document.body.appendChild(tip);
+          setTimeout(()=> tip.remove(), 4500);
+        } catch(_) {}
+      }
+    }
+    window.open(url, "_blank", "noopener");
+  }
+
+  const msToggle = document.getElementById("useMsTranslator");
+  if (select) {
+    select.addEventListener("change", function(){
+      const tl = this.value;
+      translateVia(msToggle && msToggle.checked ? "ms" : "google", tl);
+      // ripristina IT per non confondere l’UI
+      try { this.value = "it"; } catch(_) {}
+    });
+  }
+
+  // === Esplodi: solo suono aggiuntivo, l’effetto visivo resta il tuo ===
+  const btnExplode = document.getElementById("btn-explode");
+  const boomEl = document.getElementById("explosionSound");
+  if (btnExplode && boomEl) {
+    btnExplode.addEventListener("click", function(){
+      try { boomEl.currentTime = 0; boomEl.play().catch(()=>{}); } catch(e) {}
+    });
+  }
+});
+</script>
+
 </body>
 </html>
