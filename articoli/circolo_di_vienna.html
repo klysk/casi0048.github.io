@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Un approfondimento sul Circolo di Vienna, il gruppo di filosofi e scienziati che rivoluzionò il pensiero filosofico nel XX secolo con l'empirismo logico e il principio di verificazione.">
+    <title>Il Circolo di Vienna: Empirismo Logico | Tributo Interattivo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+Pro:wght@300;400;700&family=Roboto+Mono:wght@400;700&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1565c0;
+            --secondary: #42a5f5;
+            --accent: #ff5722;
+            --light: #e3f2fd;
+            --dark: #0d47a1;
+            --text: #212121;
+            --background: #ffffff;
+            --card-bg: #f5f5f5;
+            --shadow: rgba(21, 101, 192, 0.15);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .notturno {
+            --primary: #90caf9;
+            --secondary: #42a5f5;
+            --accent: #ff8a65;
+            --light: #0d47a1;
+            --dark: #e3f2fd;
+            --text: #e3f2fd;
+            --background: #121c2b;
+            --card-bg: #1a2d4a;
+            --shadow: rgba(0, 0, 0, 0.4);
+        }
+
+        .filosofico {
+            --primary: #283593;
+            --secondary: #5c6bc0;
+            --accent: #d50000;
+            --light: #e8eaf6;
+            --dark: #1a237e;
+            --text: #1a237e;
+            --background: #e8eaf6;
+            --card-bg: #c5cae9;
+            --shadow: rgba(40, 53, 147, 0.2);
+        }
+
+        .contemplativo {
+            --primary: #00695c;
+            --secondary: #26a69a;
+            --accent: #ff6d00;
+            --light: #e0f2f1;
+            --dark: #004d40;
+            --text: #00695c;
+            --background: #f1f8f7;
+            --card-bg: #b2dfdb;
+            --shadow: rgba(0, 105, 92, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: var(--transition);
+        }
+
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-image: 
+                radial-gradient(circle at 100% 100%, var(--secondary) 0%, transparent 2%),
+                radial-gradient(circle at 0% 0%, var(--secondary) 0%, transparent 2%);
+            background-size: 40px 40px;
+        }
+
+        .content-wrapper {
+            background-color: var(--background);
+            border-radius: 16px;
+            box-shadow: 0 12px 36px var(--shadow);
+            overflow: hidden;
+            position: relative;
+        }
+
+        header {
+            text-align: center;
+            padding: 70px 20px;
+            margin-bottom: 30px;
+            position: relative;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-bottom: 4px solid var(--accent);
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.8rem;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            font-style: italic;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            font-family: 'Source Sans Pro', sans-serif;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .theme-selector {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .theme-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .theme-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .intro {
+            text-align: center;
+            margin: 50px auto;
+            padding: 0 40px;
+            max-width: 900px;
+        }
+
+        .intro p {
+            font-size: 1.3rem;
+            line-height: 1.9;
+        }
+
+        .key-concepts {
+            display: flex;
+            justify-content: center;
+            margin: 50px 0;
+            flex-wrap: wrap;
+            gap: 25px;
+        }
+
+        .concept-pill {
+            padding: 16px 28px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 6px 18px var(--shadow);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .concept-pill:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 24px var(--shadow);
+        }
+
+        .concept-pill:before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50px;
+            transform: scale(0);
+            transition: var(--transition);
+        }
+
+        .concept-pill:hover:before {
+            transform: scale(1);
+        }
+
+        .accordion {
+            margin: 50px 0;
+            padding: 0 30px;
+        }
+
+        .accordion-item {
+            margin-bottom: 30px;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px var(--shadow);
+            background: var(--card-bg);
+            border-left: 6px solid var(--accent);
+        }
+
+        .accordion-header {
+            padding: 28px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.7rem;
+            color: var(--primary);
+            background: var(--card-bg);
+            position: relative;
+        }
+
+        .accordion-header:hover {
+            background: var(--light);
+        }
+
+        .accordion-icon {
+            font-size: 1.6rem;
+            transition: var(--transition);
+            color: var(--accent);
+        }
+
+        .accordion-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .accordion-content.active {
+            max-height: 3000px;
+            padding: 35px;
+        }
+
+        .quote {
+            font-style: italic;
+            border-left: 5px solid var(--accent);
+            padding: 25px;
+            margin: 30px 0;
+            background: var(--light);
+            border-radius: 0 12px 12px 0;
+            color: var(--dark);
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 1.2rem;
+        }
+
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .member-card {
+            background: var(--light);
+            border-radius: 14px;
+            padding: 28px;
+            box-shadow: 0 6px 18px var(--shadow);
+            transition: var(--transition);
+            border-top: 4px solid var(--accent);
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .member-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 28px var(--shadow);
+        }
+
+        .member-card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+        }
+
+        .member-card .role {
+            color: var(--secondary);
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .member-card p {
+            color: var(--text);
+            font-size: 1.05rem;
+            flex-grow: 1;
+        }
+
+        .influence-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .influence-item {
+            flex: 1;
+            min-width: 270px;
+            background: var(--light);
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 6px 18px var(--shadow);
+            transition: var(--transition);
+        }
+
+        .influence-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 28px var(--shadow);
+        }
+
+        .influence-item h3 {
+            color: var(--accent);
+            margin-bottom: 18px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 50px;
+            margin-top: 60px;
+            border-top: 1px solid var(--secondary);
+            color: var(--secondary);
+            font-size: 1.1rem;
+            background: var(--card-bg);
+            border-radius: 0 0 16px 16px;
+            font-family: 'Inter', sans-serif;
+            clip-path: polygon(0 20%, 100% 0, 100% 100%, 0 100%);
+        }
+
+        .interactive-element {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+        }
+
+        .verification-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 8px 24px var(--shadow);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            text-align: center;
+            padding: 20px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .verification-circle:hover {
+            transform: rotate(15deg) scale(1.1);
+            box-shadow: 0 12px 32px var(--shadow);
+        }
+
+        @media (max-width: 900px) {
+            h1 {
+                font-size: 3rem;
+            }
+            
+            .theme-selector {
+                position: relative;
+                top: 0;
+                right: 0;
+                justify-content: center;
+                margin-bottom: 30px;
+            }
+            
+            .accordion-header {
+                font-size: 1.4rem;
+                padding: 22px;
+            }
+            
+            .concept-pill {
+                padding: 14px 24px;
+                font-size: 0.9rem;
+            }
+
+            .intro p {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .accordion {
+                padding: 0 15px;
+            }
+            
+            .concept-pill {
+                padding: 12px 20px;
+                font-size: 0.85rem;
+            }
+        }
+
+        .principles-section {
+            background: var(--light);
+            padding: 40px;
+            border-radius: 16px;
+            margin: 40px 0;
+            box-shadow: 0 8px 24px var(--shadow);
+        }
+
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .principle-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px var(--shadow);
+            text-align: center;
+        }
+
+        .principle-card i {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .principle-card h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* MODALE PER I CONCETTI */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 16px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--secondary);
+        }
+
+        .close-modal:hover {
+            color: var(--accent);
+        }
+
+        .modal-title {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .modal-text {
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .concept-pill.active {
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            transform: scale(1.1);
+            box-shadow: 0 10px 24px var(--shadow);
+        }
+
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--secondary);
+            transform: translateY(-50%);
+        }
+
+        .timeline-point {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent);
+            position: relative;
+            z-index: 2;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .timeline-point:hover {
+            transform: scale(1.5);
+        }
+
+        .timeline-point::after {
+            content: attr(data-year);
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: bold;
+            color: var(--primary);
+            white-space: nowrap;
+        }
+
+        .timeline-point::before {
+            content: attr(data-event);
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.9rem;
+            color: var(--text);
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body class="filosofico">
+    <div class="content-wrapper">
+        <header>
+            <div class="theme-selector">
+                <button class="theme-btn" id="theme-normale">Normale</button>
+                <button class="theme-btn" id="theme-notturno">Notturno</button>
+                <button class="theme-btn" id="theme-filosofico">Filosofico</button>
+                <button class="theme-btn" id="theme-contemplativo">Contemplativo</button>
+            </div>
+            <h1>Circolo di Vienna</h1>
+            <p class="subtitle">1924-1936 | La nascita dell'Empirismo Logico e della Filosofia della Scienza moderna</p>
+        </header>
+
+        <section class="intro">
+            <p>Il Circolo di Vienna fu un gruppo di filosofi e scienziati che, tra il 1924 e il 1936, rivoluzionò il pensiero filosofico con il programma dell'empirismo logico. Sotto la guida di Moritz Schlick, il Circolo promosse una concezione scientifica del mondo basata sulla logica, l'empiria e il rifiuto della metafisica tradizionale.</p>
+        </section>
+
+        <div class="key-concepts">
+            <div class="concept-pill" data-concept="empirismo">Empirismo Logico</div>
+            <div class="concept-pill" data-concept="verificazione">Principio di Verificazione</div>
+            <div class="concept-pill" data-concept="unificazione">Unificazione della Scienza</div>
+            <div class="concept-pill" data-concept="metafisica">Critica della Metafisica</div>
+            <div class="concept-pill" data-concept="linguaggio">Analisi del Linguaggio</div>
+        </div>
+
+        <!-- Modale per i concetti -->
+        <div id="concept-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" id="close-modal">&times;</span>
+                <h2 class="modal-title" id="modal-title">Titolo</h2>
+                <div class="modal-text" id="modal-text">
+                    <!-- Il contenuto verrà inserito dinamicamente via JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <section class="accordion">
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion('storia')">
+                    <span>Storia e Contesto</span>
+                    <i class="accordion-icon fas fa-history"></i>
+                </div>
+                <div class="accordion-content" id="storia-content">
+                    <p>Il Circolo di Vienna si formò ufficialmente nel 1924 attorno alla figura di Moritz Schlick, che aveva assunto la cattedra di filosofia delle scienze inductive all'Università di Vienna. Il gruppo traeva ispirazione dalle rivoluzioni nella fisica moderna e dalla nuova logica matematica sviluppata da Frege, Russell e Whitehead.</p>
+                    
+                    <div class="timeline">
+                        <div class="timeline-point" data-year="1922" data-event="Schlick a Vienna"></div>
+                        <div class="timeline-point" data-year="1924" data-event="Nascita del Circolo"></div>
+                        <div class="timeline-point" data-year="1929" data-event="Manifesto"></div>
+                        <div class="timeline-point" data-year="1930" data-event="Rivista Erkenntnis"></div>
+                        <div class="timeline-point" data-year="1936" data-event="Morte di Schlick"></div>
+                        <div class="timeline-point" data-year="1938" data-event="Scioglimento"></div>
+                    </div>
+                    
+                    <p>Il momento di massimo splendore del Circolo coincise con la pubblicazione nel 1929 del manifesto "La concezione scientifica del mondo. Il Circolo di Vienna", redatto da Carnap, Hahn e Neurath. Con l'avvento del nazismo e l'assassinio di Schlick nel 1936, molti membri emigrarono, diffondendo le idee del Circolo nel mondo anglosassone.</p>
+                    
+                    <div class="quote">
+                        "La concezione scientifica del mondo serve alla vita, e la vita la accoglie." - Dal Manifesto del Circolo di Vienna
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion('membri')">
+                    <span>Membri Principali</span>
+                    <i class="accordion-icon fas fa-users"></i>
+                </div>
+                <div class="accordion-content" id="membri-content">
+                    <div class="members-grid">
+                        <div class="member-card">
+                            <h3>Moritz Schlick</h3>
+                            <div class="role">Fondatore e Leader</div>
+                            <p>Fisico e filosofo, focalizzato sui fondamenti della conoscenza e l'epistemologia delle scienze.</p>
+                        </div>
+                        <div class="member-card">
+                            <h3>Rudolf Carnap</h3>
+                            <div class="role">Logico e Filosofo</div>
+                            <p>Sviluppò la sintassi logica del linguaggio e il principio di verificazione.</p>
+                        </div>
+                        <div class="member-card">
+                            <h3>Otto Neurath</h3>
+                            <div class="role">Sociologo e Economista</div>
+                            <p>Promosse l'unità della scienza e il physicalismo, e concepì l'enciclopedia della scienza unificata.</p>
+                        </div>
+                        <div class="member-card">
+                            <h3>Hans Hahn</h3>
+                            <div class="role">Matematico</div>
+                            <p>Contribuì alla logica matematica e all'analisi del linguaggio scientifico.</p>
+                        </div>
+                        <div class="member-card">
+                            <h3>Herbert Feigl</h3>
+                            <div class="role">Filosofo della Scienza</div>
+                            <p>Si occupò di fisica, psicologia e del problema mente-corpo in prospettiva empirista.</p>
+                        </div>
+                        <div class="member-card">
+                            <h3>Friedrich Waismann</h3>
+                            <div class="role">Filosofo del Linguaggio</div>
+                            <p>Lavorò sui fondamenti della matematica e la filosofia del linguaggio.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion('principi')">
+                    <span>Principi Fondamentali</span>
+                    <i class="accordion-icon fas fa-cogs"></i>
+                </div>
+                <div class="accordion-content" id="principi-content">
+                    <div class="principles-section">
+                        <h3>I Pilastri dell'Empirismo Logico</h3>
+                        <p>Il Circolo di Vienna sviluppò un programma filosofico basato su alcuni principi fondamentali che avrebbero rivoluzionato la filosofia del XX secolo.</p>
+                        
+                        <div class="principles-grid">
+                            <div class="principle-card">
+                                <i class="fas fa-check-circle"></i>
+                                <h4>Verificazione</h4>
+                                <p>Il significato di una proposizione coincide con il suo metodo di verifica</p>
+                            </div>
+                            <div class="principle-card">
+                                <i class="fas fa-language"></i>
+                                <h4>Analisi del Linguaggio</h4>
+                                <p>La filosofia come analisi logica del linguaggio scientifico</p>
+                            </div>
+                            <div class="principle-card">
+                                <i class="fas fa-ban"></i>
+                                <h4>Anti-Metafisica</h4>
+                                <p>Rifiuto dei problemi metafisici come privi di significato</p>
+                            </div>
+                            <div class="principle-card">
+                                <i class="fas fa-atom"></i>
+                                <h4>Physicalismo</h4>
+                                <p>Il linguaggio della fisica come linguaggio universale della scienza</p>
+                            </div>
+                            <div class="principle-card">
+                                <i class="fas fa-link"></i>
+                                <h4>Unificazione</h4>
+                                <p>Unificazione di tutte le scienze attraverso un linguaggio comune</p>
+                            </div>
+                            <div class="principle-card">
+                                <i class="fas fa-arrow-right"></i>
+                                <h4>Riduzionismo</h4>
+                                <p>Riduzione di tutti gli enunciati scientifici a enunciati protocollari</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="quote">
+                        "Il significato di una proposizione è il metodo della sua verificazione." - Moritz Schlick
+                    </div>
+                    
+                    <p>Questi principi rappresentavano un programma ambizioso per riformare la filosofia, trasformandola da disciplina speculativa ad attività di chiarificazione concettuale al servizio della scienza.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion('influenze')">
+                    <span>Influenze e Eredità</span>
+                    <i class="accordion-icon fas fa-project-diagram"></i>
+                </div>
+                <div class="accordion-content" id="influenze-content">
+                    <div class="influence-container">
+                        <div class="influence-item">
+                            <h3>Filosofia Analitica</h3>
+                            <p>Il Circolo di Vienna ha profondamente influenzato lo sviluppo della filosofia analitica, specialmente attraverso l'emigrazione dei suoi membri nei paesi anglosassoni.</p>
+                        </div>
+                        <div class="influence-item">
+                            <h3>Filosofia della Scienza</h3>
+                            <p>Le discussioni del Circolo hanno gettato le basi per la filosofia della scienza contemporanea, influenzando pensatori come Popper, Kuhn e Feyerabend.</p>
+                        </div>
+                        <div class="influence-item">
+                            <h3>Logica e Matematica</h3>
+                            <p>L'attenzione alla logica formale ha contribuito allo sviluppo della logica matematica e dell'informatica teorica.</p>
+                        </div>
+                    </div>
+                    
+                    <p>Nonostante lo scioglimento del Circolo, le sue idee continuarono a svilupparsi attraverso figure come Carnap negli Stati Uniti e Popper in Inghilterra. L'eredità del Circolo di Vienna è visibile nella filosofia della scienza, nell'epistemologia e nella filosofia del linguaggio contemporanee.</p>
+                    
+                    <div class="quote">
+                        "Le proposizioni della metafisica sono come le immagini oniriche di un dormiente: hanno un senso, ma non sono né vere né false." - Rudolf Carnap
+                    </div>
+
+                    <div class="interactive-element">
+                        <div class="verification-circle" onclick="animateCircle(this)">
+                            Clicca per esplorare il principio di verificazione
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2025 | Tributo interattivo al Circolo di Vienna</p>
+            <p>Questo sito è stato creato a scopo educativo e divulgativo.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Contenuti per i concetti
+        const conceptContents = {
+            'empirismo': {
+                title: 'Empirismo Logico',
+                content: `<p>L'empirismo logico, noto anche come neopositivismo, rappresenta la sintesi filosofica centrale del Circolo di Vienna. Questo approcombina l'empirismo tradizionale (l'idea che tutta la conoscenza derivi dall'esperienza sensoriale) con i strumenti della logica moderna sviluppata da Frege, Russell e Whitehead.</p>
+                
+                <p>I principi fondamentali dell'empirismo logico includono:</p>
+                
+                <ul>
+                    <li>La <strong>centralità dell'esperienza</strong> come fondamento di ogni conoscenza significativa</li>
+                    <li>L'uso della <strong>logica formale</strong> per analizzare la struttura del linguaggio scientifico</li>
+                    <li>La <strong>distinzione tra analitico e sintetico</strong> (proposizioni vere in virtù del significato vs. proposizioni vere in virtù dei fatti)</li>
+                    <li>Il <strong>ruolo della filosofia come attività chiarificatrice</strong> piuttosto che come disciplina sostantiva</li>
+                </ul>
+                
+                <div class="quote">
+                    "La logica non è una teoria ma un riflesso del mondo. La logica è trascendentale." - Ludwig Wittgenstein (influsso sul Circolo)
+                </div>
+                
+                <p>L'empirismo logico rappresentò un tentativo radicale di fondare tutto il sapere scientifico su basi empiriche solide, eliminando allo stesso tempo ogni residuo di metafisica e teologia dalla filosofia.</p>`
+            },
+            'verificazione': {
+                title: 'Principio di Verificazione',
+                content: `<p>Il principio di verificazione è forse l'idea più famosa e controversa del Circolo di Vienna. Secondo questo principio, il significato di una proposizione coincide con il suo metodo di verifica empirica.</p>
+                
+                <p>Il principio si articola in due versioni principali:</p>
+                
+                <ul>
+                    <li><strong>Verificazione forte</strong> (Schlick): Una proposizione è significativa solo se può essere verificata in modo definitivo e conclusivo</li>
+                    <li><strong>Verificazione debole</strong> (Carnap): Una proposizione è significativa se può essere confermata o verificata in qualche misura dall'esperienza</li>
+                </ul>
+                
+                <p>Esempi di applicazione del principio:</p>
+                
+                <ul>
+                    <li>"L'acqua bolle a 100°C" → verificabile empiricamente → significativa</li>
+                    <li>"Dio esiste" → non verificabile empiricamente → priva di significato cognitivo</li>
+                    <li>"La bellezza è oggettiva" → non verificabile empiricamente → priva di significato cognitivo</li>
+                </ul>
+                
+                <div class="quote">
+                    "Una proposizione è vera se corrisponde ai fatti, ed è significativa solo se può, in linea di principio, essere verificata." - Moritz Schlick
+                </div>
+                
+                <p>Il principio di verificazione incontrò diverse difficoltà, specialmente riguardo allo status delle leggi scientifiche generali e delle proposizioni sulla mente altrui, portando a successive revisioni e attenuazioni.</p>`
+            },
+            'unificazione': {
+                title: 'Unificazione della Scienza',
+                content: `<p>Il progetto di unificazione della scienza fu uno degli obiettivi più ambiziosi del Circolo di Vienna. I membri del Circolo ritenevano che tutte le scienze, dalle naturali alle sociali, potessero e dovessero essere unificate in un unico sistema coerente di conoscenza.</p>
+                
+                <p>Il programma di unificazione si basava su due pilastri fondamentali:</p>
+                
+                <ul>
+                    <li><strong>Physicalismo</strong>: La tesi che tutti gli enunciati scientifici possano essere tradotti nel linguaggio della fisica</li>
+                    <li><strong>L'enciclopedia della scienza unificata</strong>: Un progetto monumentale per organizzare tutto il sapere scientifico in un sistema coerente</li>
+                </ul>
+                
+                <p>Otto Neurath fu il principale promotore di questo progetto, che prevedeva:</p>
+                
+                <ul>
+                    <li>La standardizzazione del linguaggio scientifico</li>
+                    <li>L'eliminazione dei duplicati tra discipline diverse</li>
+                    <li>L'integrazione delle diverse scienze in un quadro unitario</li>
+                    <li>La collaborazione internazionale tra scienziati</li>
+                </ul>
+                
+                <div class="quote">
+                    "L'unità della scienza deriva dall'unità del linguaggio, non dall'unità delle leggi." - Otto Neurath
+                </div>
+                
+                <p>Sebbene il progetto enciclopedico non sia stato realizzato compiutamente, l'idea di unificazione ha influenzato profondamente l'organizzazione della ricerca scientifica e la filosofia della scienza successiva.</p>`
+            },
+            'metafisica': {
+                title: 'Critica della Metafisica',
+                content: `<p>La critica della metafisica tradizionale rappresenta uno degli aspetti più radicali del programma del Circolo di Vienna. I neopositivisti sostenevano che i problemi metafisici fossero pseudo-problemi derivanti da un uso improprio del linguaggio.</p>
+                
+                <p>Secondo il Circolo di Vienna, la metafisica commette due errori fondamentali:</p>
+                
+                <ul>
+                    <li>Utilizza <strong>termini privi di riferimento empirico</strong> (come "Dio", "Assoluto", "Essere")</li>
+                    <li>Formula <strong>proposizioni non verificabili</strong> empiricamente</li>
+                </ul>
+                
+                <p>La critica si estendeva a tutte le forme di metafisica tradizionale:</p>
+                
+                <ul>
+                    <li>Ontologia (teoria dell'essere)</li>
+                    <li>Teologia naturale</li>
+                    <li>Etica normativa fondata su valori assoluti</li>
+                    <li>Estetica metafisica</li>
+                </ul>
+                
+                <div class="quote">
+                    "Attraverso l'analisi logica la metafisica viene superata non come assurda, ma come priva di senso." - Rudolf Carnap
+                </div>
+                
+                <p>Questa posizione antimetafisica fu oggetto di aspre critiche e venne successivamente attenuata, ma rappresentò un momento cruciale nella storia della filosofia, segnando una rottura radicale con la tradizione filosofica continentale.</p>`
+            },
+            'linguaggio': {
+                title: 'Analisi del Linguaggio',
+                content: `<p>L'analisi del linguaggio costituisce il metodo fondamentale dell'empirismo logico. Secondo il Circolo di Vienna, il compito della filosofia non è produrre nuove conoscenze sul mondo, ma chiarire il significato delle proposizioni scientifiche attraverso l'analisi logica del linguaggio.</p>
+                
+                <p>L'analisi del linguaggio si articola in diversi aspetti:</p>
+                
+                <ul>
+                    <li><strong>Distinzione tra forma e contenuto</strong>: Separazione degli aspetti logici da quelli empirici</li>
+                    <li><strong>Analisi della sintassi logica</strong>: Studio delle regole formali che governano il linguaggio</li>
+                    <li><strong>Riduzione agli enunciati protocollari</strong>: Traduzione di tutte le proposizioni scientifiche in enunciati base sull'esperienza immediata</li>
+                    <li><strong>Costruzione di linguaggi artificiali</strong>: Sviluppo di linguaggi formalizzati per la scienza</li>
+                </ul>
+                
+                <div class="quote">
+                    "Tutti i problemi filosofici sono problemi di linguaggio." - Ludwig Wittgenstein (influsso sul Circolo)
+                </div>
+                
+                <p>Questo approccio ha influenzato profondamente lo sviluppo della filosofia del linguaggio, della logica filosofica e della semantica formale, ponendo le basi per molti sviluppi successivi nella filosofia analitica.</p>`
+            }
+        };
+
+        // Funzione per aprire/chiudere le sezioni accordion
+        function toggleAccordion(id) {
+            const content = document.getElementById(id + '-content');
+            content.classList.toggle('active');
+            
+            const icon = content.previousElementSibling.querySelector('.accordion-icon');
+            if (content.classList.contains('active')) {
+                if (id === 'storia') {
+                    icon.classList.remove('fa-history');
+                    icon.classList.add('fa-book');
+                } else if (id === 'membri') {
+                    icon.classList.remove('fa-users');
+                    icon.classList.add('fa-user-friends');
+                } else if (id === 'principi') {
+                    icon.classList.remove('fa-cogs');
+                    icon.classList.add('fa-tools');
+                } else if (id === 'influenze') {
+                    icon.classList.remove('fa-project-diagram');
+                    icon.classList.add('fa-network-wired');
+                }
+            } else {
+                if (id === 'storia') {
+                    icon.classList.remove('fa-book');
+                    icon.classList.add('fa-history');
+                } else if (id === 'membri') {
+                    icon.classList.remove('fa-user-friends');
+                    icon.classList.add('fa-users');
+                } else if (id === 'principi') {
+                    icon.classList.remove('fa-tools');
+                    icon.classList.add('fa-cogs');
+                } else if (id === 'influenze') {
+                    icon.classList.remove('fa-network-wired');
+                    icon.classList.add('fa-project-diagram');
+                }
+            }
+        }
+
+        // Cambio tema
+        document.getElementById('theme-normale').addEventListener('click', () => {
+            document.body.className = 'normale';
+        });
+
+        document.getElementById('theme-notturno').addEventListener('click', () => {
+            document.body.className = 'notturno';
+        });
+
+        document.getElementById('theme-filosofico').addEventListener('click', () => {
+            document.body.className = 'filosofico';
+        });
+
+        document.getElementById('theme-contemplativo').addEventListener('click', () => {
+            document.body.className = 'contemplativo';
+        });
+
+        // Animazione del cerchio di verificazione
+        function animateCircle(element) {
+            element.style.transform = 'rotate(360deg) scale(1.1)';
+            element.innerHTML = '<div>Verificazione → Significato</div>';
+            
+            setTimeout(() => {
+                element.style.transform = '';
+                element.innerHTML = 'Clicca per esplorare il principio di verificazione';
+            }, 2000);
+        }
+
+        // Effetto per i pill concettuali
+        document.querySelectorAll('.concept-pill').forEach(pill => {
+            pill.addEventListener('click', () => {
+                // Rimuovi la classe active da tutti i pill
+                document.querySelectorAll('.concept-pill').forEach(p => {
+                    p.classList.remove('active');
+                });
+                
+                // Aggiungi la classe active al pill cliccato
+                pill.classList.add('active');
+                
+                // Ottieni il concetto dal data attribute
+                const concept = pill.getAttribute('data-concept');
+                
+                // Mostra il modale con il contenuto appropriato
+                showConceptModal(concept);
+            });
+        });
+
+        // Funzione per mostrare il modale del concetto
+        function showConceptModal(concept) {
+            const modal = document.getElementById('concept-modal');
+            const title = document.getElementById('modal-title');
+            const content = document.getElementById('modal-text');
+            
+            // Imposta titolo e contenuto
+            title.textContent = conceptContents[concept].title;
+            content.innerHTML = conceptContents[concept].content;
+            
+            // Mostra il modale
+            modal.style.display = 'flex';
+        }
+
+        // Chiudi il modale
+        document.getElementById('close-modal').addEventListener('click', () => {
+            document.getElementById('concept-modal').style.display = 'none';
+        });
+
+        // Chiudi il modale cliccando fuori dal contenuto
+        window.addEventListener('click', (event) => {
+            const modal = document.getElementById('concept-modal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Timeline interattiva
+        document.querySelectorAll('.timeline-point').forEach(point => {
+            point.addEventListener('click', () => {
+                point.style.transform = 'scale(1.8)';
+                point.style.backgroundColor = 'var(--primary)';
+                
+                setTimeout(() => {
+                    point.style.transform = '';
+                    point.style.backgroundColor = '';
+                }, 1000);
+            });
+        });
+    </script>
+</body>
+</html>
