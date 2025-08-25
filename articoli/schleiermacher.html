@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friedrich Schleiermacher: Il Padre della Teologia Moderna</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #7f8c8d;
+            --accent: #3498db;
+            --text: #2c3e50;
+            --background: #ecf0f1;
+            --card-bg: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-night {
+            --primary: #dfe6e9;
+            --secondary: #b2bec3;
+            --accent: #6c5ce7;
+            --text: #f5f6fa;
+            --background: #2d3436;
+            --card-bg: #353b48;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        .theme-philosophical {
+            --primary: #3d3d3d;
+            --secondary: #7d5ba6;
+            --accent: #fc7753;
+            --text: #333333;
+            --background: #f2f2f2;
+            --card-bg: #e8e8e8;
+            --shadow: rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 20px var(--shadow);
+            position: relative;
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--secondary);
+            font-size: 1.4rem;
+            font-weight: 300;
+        }
+
+        .theme-selector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .theme-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            background: var(--secondary);
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .theme-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px var(--shadow);
+        }
+
+        .theme-btn.active {
+            background: var(--accent);
+        }
+
+        .intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            font-size: 1.1rem;
+            color: var(--secondary);
+        }
+
+        .accordion {
+            margin-bottom: 30px;
+        }
+
+        .accordion-item {
+            background: var(--card-bg);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .accordion-header {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+        }
+
+        .accordion-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+
+        .accordion-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+
+        .accordion-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+        }
+
+        .accordion-content-inner {
+            padding: 25px;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 2000px;
+            padding: 0;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .quote {
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-style: italic;
+            position: relative;
+        }
+
+        .quote::before {
+            content: """;
+            font-size: 4rem;
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            opacity: 0.2;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        .schleiermacher-img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .caption {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            margin: 40px 0;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: var(--accent);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            background-color: inherit;
+            align-self: flex-start;
+        }
+
+        .timeline-item:nth-child(even) {
+            align-self: flex-end;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--card-bg);
+            border: 4px solid var(--accent);
+            border-radius: 50%;
+            top: 15px;
+            right: -13px;
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(even)::after {
+            left: -13px;
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .timeline-date {
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item:nth-child(even) {
+                align-self: flex-start;
+            }
+
+            .timeline-item::after {
+                left: 18px;
+            }
+
+            .timeline-item:nth-child(even)::after {
+                left: 18px;
+            }
+        }
+    </style>
+</head>
+<body class="theme-normal">
+    <header>
+        <h1>Friedrich Schleiermacher</h1>
+        <p class="subtitle">Teologo, filosofo e pedagogista tedesco</p>
+        
+        <div class="theme-selector">
+            <button class="theme-btn active" data-theme="normal">Normale</button>
+            <button class="theme-btn" data-theme="night">Notturno</button>
+            <button class="theme-btn" data-theme="philosophical">Filosofico</button>
+        </div>
+    </header>
+
+    <div class="intro">
+        <p>Friedrich Daniel Ernst Schleiermacher (1768-1834) è stato un teologo, filosofo e pedagogista tedesco, considerato il fondatore della teologia protestante moderna e uno dei massimi esponenti dell'ermeneutica filosofica.</p>
+    </div>
+
+    <div class="image-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Friedrich_Daniel_Ernst_Schleiermacher.jpg/800px-Friedrich_Daniel_Ernst_Schleiermacher.jpg" alt="Ritratto di Friedrich Schleiermacher" class="schleiermacher-img">
+        <p class="caption">Ritratto di Friedrich Schleiermacher</p>
+    </div>
+
+    <div class="accordion">
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h2>Biografia</h2>
+                <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-content-inner">
+                    <p>Nato a Breslavia nel 1768, Schleiermacher proveniva da una famiglia di tradizione calvinista. Studiò teologia all'Università di Halle e divenne pastore protestante. Fu influenzato dal Romanticismo tedesco e dall'idealismo di Kant e Fichte.</p>
+                    
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-date">1768</div>
+                            <div class="timeline-content">Nascita a Breslavia</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">1787-1790</div>
+                            <div class="timeline-content">Studi di teologia all'Università di Halle</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">1796</div>
+                            <div class="timeline-content">Diventa pastore a Berlino</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">1799</div>
+                            <div class="timeline-content">Pubblica "Sulla religione: discorsi ai colti tra i suoi denigratori"</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">1804</div>
+                            <div class="timeline-content">Professore all'Università di Halle</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">1810</div>
+                            <div class="timeline-content">Fondazione dell'Università di Berlino, dove insegna fino alla morte</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">1834</div>
+                            <div class="timeline-content">Morte a Berlino</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h2>Pensiero Teologico</h2>
+                <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-content-inner">
+                    <p>Schleiermacher rivoluzionò la teologia protestante spostando l'attenzione dai dogmi all'esperienza religiosa individuale. Per lui, l'essenza della religione non risiede nelle dottrine o nei precetti morali, ma nel "sentimento di dipendenza assoluta" (schlechthinniges Abhängigkeitsgefühl) dall'Infinito.</p>
+                    
+                    <div class="quote">
+                        "L'essenza della religione non consiste né nel pensiero né nell'azione, ma nell'intuizione e nel sentimento."
+                    </div>
+                    
+                    <p>Nella sua opera principale, "La dottrina della fede" (Der christliche Glaube, 1821-1822), Schleiermacher ridefinisce i concetti teologici tradizionali partendo dall'esperienza religiosa cosciente. La teologia diventa così la descrizione sistematica dell'esperienza religiosa cristiana.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h2>Contributi Filosofici</h2>
+                <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-content-inner">
+                    <p>Schleiermacher è considerato il padre dell'ermeneutica moderna. Nei suoi appunti per le lezioni sull'argomento, sviluppò una teoria generale dell'interpretazione che andava oltre l'analisi dei testi sacri.</p>
+                    
+                    <p>Secondo Schleiermacher, l'interpretazione deve considerare due aspetti:</p>
+                    <ul>
+                        <li>L'interpretazione grammaticale (analisi del linguaggio e del contesto storico)</li>
+                        <li>L'interpretazione psicologica o tecnica (comprensione dell'autore e del suo mondo interiore)</li>
+                    </ul>
+                    
+                    <p>Il suo approccio "circolare" (il circolo ermeneutico) sottolinea come la comprensione delle parti dipenda dal tutto e viceversa, in un processo dialettico che mira a ricostruire il pensiero originale dell'autore.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h2>Etica e Pedagogia</h2>
+                <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-content-inner">
+                    <p>Schleiermacher sviluppò un sistema etico che univa elementi kantiani e romantici. Per lui, l'etica non è solo un sistema di doveri, ma l'espressione della ragione che organizza la natura e la società.</p>
+                    
+                    <p>Nel campo pedagogico, Schleiermacher contribuì alla fondazione dell'Università di Berlino (oggi Humboldt-Universität) e sviluppò una filosofia dell'educazione che enfatizzava l'armonioso sviluppo di tutte le facoltà umane.</p>
+                    
+                    <div class="quote">
+                        "L'obiettivo dell'educazione è di risvegliare la coscienza della libertà e della responsabilità verso se stessi e verso gli altri."
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h2>Opere Principali</h2>
+                <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-content-inner">
+                    <ul>
+                        <li><strong>Sulla religione: discorsi ai colti tra i suoi denigratori</strong> (1799) - La sua opera più celebre, in cui difende la religione dagli attacchi dell'Illuminismo.</li>
+                        <li><strong>Monologhi</strong> (1800) - Un'opera di filosofia morale che esplora la natura dell'io e della libertà.</li>
+                        <li><strong>La dottrina della fede</strong> (1821-1822) - La sua sistemazione teologica matura.</li>
+                        <li><strong>Ermeneutica</strong> (pubblicata postuma) - La sua teoria dell'interpretazione dei testi.</li>
+                        <li><strong>Etica</strong> (pubblicata postuma) - La sua filosofia morale.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h2>Influenza e Eredità</h2>
+                <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-content-inner">
+                    <p>Schleiermacher ha influenzato profondamente la teologia protestante successiva, specialmente la teologia liberale del XIX secolo. Il suo metodo ha aperto la strada all'analisi storico-critica della Bibbia e al dialogo tra fede e cultura moderna.</p>
+                    
+                    <p>In filosofia, la sua ermeneutica ha ispirato pensatori come Wilhelm Dilthey, Martin Heidegger e Hans-Georg Gadamer. La sua concezione della comprensione come processo dialettico tra parti e tutto rimane fondamentale nelle scienze umane.</p>
+                    
+                    <div class="quote">
+                        "Schleiermacher ha reso possibile una teologia che non ha paura della storia, della critica o della ragione."
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 - Saggio su Friedrich Schleiermacher | Realizzato con passione per la filosofia e la teologia</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Accordion functionality
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const item = this.parentNode;
+                    item.classList.toggle('active');
+                });
+            });
+
+            // Theme switching functionality
+            const themeButtons = document.querySelectorAll('.theme-btn');
+            const body = document.body;
+            
+            themeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const theme = this.getAttribute('data-theme');
+                    
+                    // Remove all theme classes
+                    body.classList.remove('theme-normal', 'theme-night', 'theme-philosophical');
+                    
+                    // Add the selected theme class
+                    body.classList.add(`theme-${theme}`);
+                    
+                    // Update active button
+                    themeButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Un approfondimento su Francis Bacon, filosofo, politico e giurista inglese, padre dell'empirismo moderno e pioniere del metodo scientifico. Scopri la sua vita, le opere e l'eredità filosofica.">
+    <title>Francis Bacon: Padre dell'Empirismo Moderno | Tributo Interattivo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Crimson+Text:wght@400;700&family=Raleway:wght@300;400;700&family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8d6e63;
+            --secondary: #a1887f;
+            --accent: #d84315;
+            --light: #f5f5f5;
+            --dark: #4e342e;
+            --text: #3e2723;
+            --background: #efebe9;
+            --card-bg: #d7ccc8;
+            --shadow: rgba(141, 110, 99, 0.2);
+            --parchment: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"></feTurbulence></filter><rect width="100%" height="100%" filter="url(%23grain)" opacity="0.1"></rect></svg>');
+        }
+
+        .notturno {
+            --primary: #a1887f;
+            --secondary: #8d6e63;
+            --accent: #ff8a65;
+            --light: #2e2320;
+            --dark: #d7ccc8;
+            --text: #d7ccc8;
+            --background: #1a1412;
+            --card-bg: #362822;
+            --shadow: rgba(0, 0, 0, 0.4);
+        }
+
+        .filosofico {
+            --primary: #5d4037;
+            --secondary: #8d6e63;
+            --accent: #bf360c;
+            --light: #f5f5f5;
+            --dark: #3e2723;
+            --text: #4e342e;
+            --background: #efebe9;
+            --card-bg: #d7ccc8;
+            --shadow: rgba(93, 64, 55, 0.2);
+        }
+
+        .contemplativo {
+            --primary: #6d4c41;
+            --secondary: #a1887f;
+            --accent: #e64a19;
+            --light: #fbe9e7;
+            --dark: #4e342e;
+            --text: #5d4037;
+            --background: #fbf9f9;
+            --card-bg: #e0d2cc;
+            --shadow: rgba(109, 76, 65, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-image: var(--parchment);
+        }
+
+        .content-wrapper {
+            background-color: var(--background);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px var(--shadow);
+            overflow: hidden;
+            position: relative;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 30px;
+            position: relative;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border-bottom: 5px solid var(--accent);
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.8rem;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            font-style: italic;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            font-family: 'Crimson Text', serif;
+        }
+
+        .theme-selector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .theme-btn {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .theme-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .intro {
+            text-align: center;
+            margin: 40px auto;
+            padding: 0 30px;
+            max-width: 900px;
+        }
+
+        .intro p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+
+        .timeline {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .timeline-item {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 5px 15px var(--shadow);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            padding: 10px;
+            font-size: 0.9rem;
+        }
+
+        .timeline-item:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px var(--shadow);
+        }
+
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transform: scale(0);
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-item:hover:before {
+            transform: scale(1);
+        }
+
+        .accordion {
+            margin: 40px 0;
+        }
+
+        .accordion-item {
+            margin-bottom: 25px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px var(--shadow);
+            background: var(--card-bg);
+            border-left: 5px solid var(--accent);
+        }
+
+        .accordion-header {
+            padding: 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--primary);
+            background: var(--card-bg);
+        }
+
+        .accordion-header:hover {
+            background: var(--light);
+        }
+
+        .accordion-icon {
+            font-size: 1.4rem;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease;
+        }
+
+        .accordion-content.active {
+            max-height: 2000px;
+            padding: 30px;
+        }
+
+        .quote {
+            font-style: italic;
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            margin: 25px 0;
+            background: var(--light);
+            border-radius: 0 10px 10px 0;
+            color: var(--dark);
+            font-family: 'Crimson Text', serif;
+        }
+
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .work-card {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 12px var(--shadow);
+            transition: transform 0.3s ease;
+            border-top: 3px solid var(--accent);
+        }
+
+        .work-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .work-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .work-card p {
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        .influence-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+        }
+
+        .influence-item {
+            flex: 1;
+            min-width: 250px;
+            background: var(--light);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 12px var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .influence-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .influence-item h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            margin-top: 50px;
+            border-top: 1px solid var(--secondary);
+            color: var(--secondary);
+            font-size: 1rem;
+            background: var(--card-bg);
+            border-radius: 0 0 8px 8px;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .modal-container {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+
+        .modal-btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px var(--shadow);
+            transition: all 0.3s ease;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px var(--shadow);
+        }
+
+        .idols-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .idol-card {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px var(--shadow);
+        }
+
+        .idol-card h4 {
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .theme-selector {
+                position: relative;
+                top: 0;
+                right: 0;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
+            
+            .accordion-header {
+                font-size: 1.3rem;
+                padding: 20px;
+            }
+            
+            .timeline-item {
+                width: 80px;
+                height: 80px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body class="filosofico">
+    <div class="content-wrapper">
+        <header>
+            <div class="theme-selector">
+                <button class="theme-btn" id="theme-normale">Normale</button>
+                <button class="theme-btn" id="theme-notturno">Notturno</button>
+                <button class="theme-btn" id="theme-filosofico">Filosofico</button>
+                <button class="theme-btn" id="theme-contemplativo">Contemplativo</button>
+            </div>
+            <h1>Francis Bacon</h1>
+            <p class="subtitle">1561-1626 | Padre dell'Empirismo Moderno</p>
+        </header>
+
+        <section class="intro">
+            <p>Francis Bacon è stato un filosofo, politico e giurista inglese, noto per aver promosso e sviluppato il metodo scientifico basato sull'osservazione e l'esperimento. Le sue idee hanno gettato le basi per la rivoluzione scientifica e continuano a influenzare il pensiero scientifico e filosofico contemporaneo.</p>
+        </section>
+
+        <div class="timeline">
+            <div class="timeline-item">Nascita<br>1561</div>
+            <div class="timeline-item">Studi a Cambridge<br>1573</div>
+            <div class="timeline-item">Membro Parlamento<br>1584</div>
+            <div class="timeline-item">Procuratore Generale<br>1613</div>
+            <div class="timeline-item">Cancelliere<br>1618</div>
+            <div class="timeline-item">Novum Organum<br>1620</div>
+            <div class="timeline-item">Morte<br>1626</div>
+        </div>
+
+        <section class="accordion">
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Vita e Carriera</span>
+                    <i class="accordion-icon fas fa-scroll"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Francis Bacon nacque il 22 gennaio 1561 a Londra, in Inghilterra. Suo padre, Nicholas Bacon, era il Lord Guardasigilli della regina Elisabetta I. Bacon studiò al Trinity College di Cambridge e successivamente legge a Gray's Inn.</p>
+                    
+                    <p>La sua carriera politica fu notevole: divenne membro del Parlamento nel 1584, procuratore generale nel 1613, lord guardasigilli nel 1617 e infine lord cancelliere nel 1618. Tuttavia, la sua carriera politica terminò bruscamente nel 1621 quando fu accusato di corruzione e condannato a una multa e alla reclusione nella Torre di Londra, anche se fu presto rilasciato e graziato dal re.</p>
+                    
+                    <div class="quote">
+                        "Sapere è potere." - Francis Bacon
+                    </div>
+                    
+                    <p>Dopo la fine della sua carriera politica, Bacon si dedicò completamente alla filosofia e alla scrittura. Morì il 9 aprile 1626 per polmonite, contratta durante un esperimento sul preservazione della carne attraverso il congelamento della neve.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Il Metodo Scientifico</span>
+                    <i class="accordion-icon fas fa-flask"></i>
+                </div>
+                <div class="accordion-content">
+                    <h3>La Rivoluzione Baconiana</h3>
+                    <p>Bacon criticò il metodo deduttivo aristotelico, che partiva da principi generali per arrivare a conclusioni specifiche, proponendo invece un metodo induttivo basato sull'osservazione empirica e sull'esperimento.</p>
+                    
+                    <div class="quote">
+                        "La natura, per essere comandata, deve essere ubbidita." - Francis Bacon
+                    </div>
+                    
+                    <h3>Le Fasi del Metodo Baconiano</h3>
+                    <ol>
+                        <li>Osservazione dei fenomeni naturali</li>
+                        <li>Raccolta di dati attraverso esperimenti</li>
+                        <li>Formulazione di ipotesi</li>
+                        <li>Verifica delle ipotesi attraverso ulteriori esperimenti</li>
+                        <li>Formulazione di leggi generali</li>
+                    </ol>
+                    
+                    <p>Bacon sosteneva che la scienza dovesse essere collaborativa e cumulativa, con ricercatori che condividono i risultati per il progresso collettivo della conoscenza.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>I Quattro Idola</span>
+                    <i class="accordion-icon fas fa-mask"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Bacon identificò quattro tipi di pregiudizi o "idola" che ostacolano la comprensione scientifica della natura:</p>
+                    
+                    <div class="idols-container">
+                        <div class="idol-card">
+                            <h4>Idola Tribus (Idoli della Tribù)</h4>
+                            <p>Errori derivanti dalla natura umana stessa, comuni a tutta l'umanità. Includono la tendenza a vedere più ordine del reale e a generalizzare basandosi su pochi esempi.</p>
+                        </div>
+                        <div class="idol-card">
+                            <h4>Idola Specus (Idoli della Caverna)</h4>
+                            <p>Errori personali derivanti dall'educazione, dalle abitudini e dalle esperienze individuali. Ogni persona ha una "caverna" o grotta personale che distorce la luce della natura.</p>
+                        </div>
+                        <div class="idol-card">
+                            <h4>Idola Fori (Idoli del Foro)</h4>
+                            <p>Errori derivanti dal linguaggio e dalla comunicazione. Le parole possono essere mal definite o fuorvianti, portando a confusioni e fraintendimenti.</p>
+                        </div>
+                        <div class="idol-card">
+                            <h4>Idola Theatri (Idoli del Teatro)</h4>
+                            <p>Errori derivanti dalle filosofie e teorie accettate acriticamente. Bacon si riferiva alle dottrine filosofiche come a tante "commedie" rappresentate su un palcoscenico.</p>
+                        </div>
+                    </div>
+                    
+                    <p>Secondo Bacon, il riconoscimento e l'eliminazione di questi idola sono essenziali per il progresso della conoscenza scientifica.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Opere Principali</span>
+                    <i class="accordion-icon fas fa-book"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="works-grid">
+                        <div class="work-card">
+                            <h3>Novum Organum (1620)</h3>
+                            <p>La sua opera più importante, in cui espone il nuovo metodo scientifico basato sull'induzione e critica il metodo aristotelico.</p>
+                        </div>
+                        <div class="work-card">
+                            <h3>La Nuova Atlantide (1627)</h3>
+                            <p>Un'opera utopica che descrive una società ideale basata sulla conoscenza scientifica e governata da scienziati.</p>
+                        </div>
+                        <div class="work-card">
+                            <h3>Saggi (1597-1625)</h3>
+                            <p>Raccolta di saggi su vari argomenti, considerata un capolavoro della prosa inglese del Rinascimento.</p>
+                        </div>
+                        <div class="work-card">
+                            <h3>Advancement of Learning (1605)</h3>
+                            <p>Un'analisi dello stato della conoscenza e una proposta per la sua riorganizzazione e avanzamento.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Eredità e Influenza</span>
+                    <i class="accordion-icon fas fa-monument"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="influence-container">
+                        <div class="influence-item">
+                            <h3>Rivoluzione Scientifica</h3>
+                            <p>Bacon è considerato uno dei padri della rivoluzione scientifica. Il suo enfasi sull'empirismo e sul metodo sperimentale influenzò profondamente scienziati come Galileo, Newton e Boyle.</p>
+                        </div>
+                        <div class="influence-item">
+                            <h3>Filosofia Empirista</h3>
+                            <p>Bacon gettò le basi per l'empirismo britannico, influenzando filosofi come John Locke, George Berkeley e David Hume.</p>
+                        </div>
+                        <div class="influence-item">
+                            <h3>Società Scientifiche</h3>
+                            <p>La sua visione di scienza collaborativa ispirò la creazione di società scientifiche come la Royal Society, fondata pochi anni dopo la sua morte.</p>
+                        </div>
+                    </div>
+                    
+                    <p>L'influenza di Bacon si estende oltre la filosofia e la scienza, toccando campi come l'educazione, la politica e la letteratura. Il suo sogno di una "Grande Instaurazione" del sapere umano continua a ispirare il progresso scientifico e tecnologico.</p>
+                    
+                    <div class="quote">
+                        "L'uomo, ministro e interprete della natura, fa e intende tanto quanto ha osservato dell'ordine della natura con la mente o con la mano; oltre questo non sa né può." - Francis Bacon
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="modal-container">
+            <button class="modal-btn">Esplora il Metodo Scientifico</button>
+        </div>
+
+        <footer>
+            <p>© 2023 | Tributo interattivo a Francis Bacon</p>
+            <p>Questo sito è stato creato a scopo educativo e divulgativo.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Toggle accordion
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                content.classList.toggle('active');
+                
+                const icon = header.querySelector('.accordion-icon');
+                if (content.classList.contains('active')) {
+                    if (icon.classList.contains('fa-scroll')) {
+                        icon.classList.remove('fa-scroll');
+                        icon.classList.add('fa-history');
+                    } else if (icon.classList.contains('fa-flask')) {
+                        icon.classList.remove('fa-flask');
+                        icon.classList.add('fa-vial');
+                    } else if (icon.classList.contains('fa-mask')) {
+                        icon.classList.remove('fa-mask');
+                        icon.classList.add('fa-theater-masks');
+                    } else if (icon.classList.contains('fa-book')) {
+                        icon.classList.remove('fa-book');
+                        icon.classList.add('fa-book-open');
+                    } else if (icon.classList.contains('fa-monument')) {
+                        icon.classList.remove('fa-monument');
+                        icon.classList.add('fa-landmark');
+                    }
+                } else {
+                    if (icon.classList.contains('fa-history')) {
+                        icon.classList.remove('fa-history');
+                        icon.classList.add('fa-scroll');
+                    } else if (icon.classList.contains('fa-vial')) {
+                        icon.classList.remove('fa-vial');
+                        icon.classList.add('fa-flask');
+                    } else if (icon.classList.contains('fa-theater-masks')) {
+                        icon.classList.remove('fa-theater-masks');
+                        icon.classList.add('fa-mask');
+                    } else if (icon.classList.contains('fa-book-open')) {
+                        icon.classList.remove('fa-book-open');
+                        icon.classList.add('fa-book');
+                    } else if (icon.classList.contains('fa-landmark')) {
+                        icon.classList.remove('fa-landmark');
+                        icon.classList.add('fa-monument');
+                    }
+                }
+            });
+        });
+
+        // Theme switching
+        document.getElementById('theme-normale').addEventListener('click', () => {
+            document.body.className = 'normale';
+        });
+
+        document.getElementById('theme-notturno').addEventListener('click', () => {
+            document.body.className = 'notturno';
+        });
+
+        document.getElementById('theme-filosofico').addEventListener('click', () => {
+            document.body.className = 'filosofico';
+        });
+
+        document.getElementById('theme-contemplativo').addEventListener('click', () => {
+            document.body.className = 'contemplativo';
+        });
+
+        // Modal button effect
+        const modalBtn = document.querySelector('.modal-btn');
+        modalBtn.addEventListener('click', () => {
+            alert('Il metodo scientifico baconiano rivoluzionò il modo di concepire la conoscenza e la ricerca scientifica!');
+            modalBtn.textContent = 'Metodo in Esplorazione...';
+            setTimeout(() => {
+                modalBtn.textContent = 'Esplora il Metodo Scientifico';
+            }, 2000);
+        });
+
+        // Timeline items effect
+        document.querySelectorAll('.timeline-item').forEach(item => {
+            item.addEventListener('click', () => {
+                item.style.transform = 'scale(1.2)';
+                item.style.boxShadow = '0 0 25px ' + getComputedStyle(document.documentElement).getPropertyValue('--accent');
+                setTimeout(() => {
+                    item.style.transform = '';
+                    item.style.boxShadow = '';
+                }, 500);
+            });
+        });
+    </script>
+</body>
+</html>

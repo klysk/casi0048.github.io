@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Un approfondimento su David Lewis, filosofo analitico del XX secolo noto per il realismo modale, la teoria delle controparti e i contributi alla metafisica, filosofia del linguaggio e filosofia della mente.">
+    <title>David Lewis: Filosofo della Possibilità | Tributo Interattivo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3d5a80;
+            --secondary: #98c1d9;
+            --accent: #ee6c4d;
+            --light: #e0fbfc;
+            --dark: #293241;
+            --text: #333;
+            --background: #fff;
+            --card-bg: #f8f9fa;
+            --shadow: rgba(61, 90, 128, 0.1);
+            --gradient: linear-gradient(135deg, #3d5a80 0%, #98c1d9 100%);
+        }
+
+        .notturno {
+            --primary: #8c9cb1;
+            --secondary: #6b8fa9;
+            --accent: #ff8c6b;
+            --light: #1e2a3a;
+            --dark: #e0fbfc;
+            --text: #e0fbfc;
+            --background: #121a25;
+            --card-bg: #1c2736;
+            --shadow: rgba(0, 0, 0, 0.4);
+            --gradient: linear-gradient(135deg, #1c2736 0%, #2c3e50 100%);
+        }
+
+        .filosofico {
+            --primary: #5d4037;
+            --secondary: #8d6e63;
+            --accent: #ff5722;
+            --light: #f5f5f5;
+            --dark: #3e2723;
+            --text: #4e342e;
+            --background: #efebe9;
+            --card-bg: #d7ccc8;
+            --shadow: rgba(93, 64, 55, 0.15);
+            --gradient: linear-gradient(135deg, #5d4037 0%, #8d6e63 100%);
+        }
+
+        .contemplativo {
+            --primary: #2b6a5f;
+            --secondary: #5da399;
+            --accent: #e57d45;
+            --light: #e4f2f0;
+            --dark: #1d4d44;
+            --text: #2b6a5f;
+            --background: #f5f9f8;
+            --card-bg: #c5deda;
+            --shadow: rgba(43, 106, 95, 0.15);
+            --gradient: linear-gradient(135deg, #2b6a5f 0%, #5da399 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-image: 
+                radial-gradient(var(--secondary) 1px, transparent 1px),
+                radial-gradient(var(--secondary) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+            background-attachment: fixed;
+        }
+
+        .content-wrapper {
+            background-color: var(--background);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px var(--shadow);
+            overflow: hidden;
+            position: relative;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 30px;
+            position: relative;
+            background: var(--gradient);
+            color: white;
+            border-bottom: 3px solid var(--accent);
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.8rem;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            font-style: italic;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .theme-selector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .theme-btn {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .theme-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .intro {
+            text-align: center;
+            margin: 40px auto;
+            padding: 0 30px;
+            max-width: 900px;
+        }
+
+        .intro p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+
+        .worlds-container {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .world {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 5px 15px var(--shadow);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .world:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px var(--shadow);
+        }
+
+        .world:before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transform: scale(0);
+            transition: transform 0.3s ease;
+        }
+
+        .world:hover:before {
+            transform: scale(1);
+        }
+
+        .accordion {
+            margin: 40px 0;
+        }
+
+        .accordion-item {
+            margin-bottom: 25px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px var(--shadow);
+            background: var(--card-bg);
+            border-left: 5px solid var(--accent);
+        }
+
+        .accordion-header {
+            padding: 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--primary);
+            background: var(--card-bg);
+        }
+
+        .accordion-header:hover {
+            background: var(--light);
+        }
+
+        .accordion-icon {
+            font-size: 1.4rem;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease;
+        }
+
+        .accordion-content.active {
+            max-height: 2000px;
+            padding: 30px;
+        }
+
+        .quote {
+            font-style: italic;
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            margin: 25px 0;
+            background: var(--light);
+            border-radius: 0 10px 10px 0;
+            color: var(--dark);
+        }
+
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .work-card {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 12px var(--shadow);
+            transition: transform 0.3s ease;
+            border-top: 3px solid var(--accent);
+        }
+
+        .work-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .work-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .work-card p {
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        .influence-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+        }
+
+        .influence-item {
+            flex: 1;
+            min-width: 250px;
+            background: var(--light);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 12px var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .influence-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .influence-item h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            margin-top: 50px;
+            border-top: 1px solid var(--secondary);
+            color: var(--secondary);
+            font-size: 1rem;
+            background: var(--card-bg);
+            border-radius: 0 0 20px 20px;
+        }
+
+        .modal-container {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+
+        .modal-btn {
+            padding: 15px 30px;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px var(--shadow);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .theme-selector {
+                position: relative;
+                top: 0;
+                right: 0;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
+            
+            .accordion-header {
+                font-size: 1.3rem;
+                padding: 20px;
+            }
+            
+            .world {
+                width: 80px;
+                height: 80px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body class="normale">
+    <div class="content-wrapper">
+        <header>
+            <div class="theme-selector">
+                <button class="theme-btn" id="theme-normale">Normale</button>
+                <button class="theme-btn" id="theme-notturno">Notturno</button>
+                <button class="theme-btn" id="theme-filosofico">Filosofico</button>
+                <button class="theme-btn" id="theme-contemplativo">Contemplativo</button>
+            </div>
+            <h1>David Kellogg Lewis</h1>
+            <p class="subtitle">1941-2001 | Filosofo analitico americano</p>
+        </header>
+
+        <section class="intro">
+            <p>David Lewis è stato uno dei filosofi analitici più influenti del XX secolo, noto principalmente per la sua difesa del realismo modale, la teoria delle controparti e i suoi significativi contributi in metafisica, filosofia del linguaggio, filosofia della mente e epistemologia. Il suo lavoro ha ridefinito il panorama della filosofia analitica contemporanea.</p>
+        </section>
+
+        <div class="worlds-container">
+            <div class="world">Mondo Possibile</div>
+            <div class="world">Realismo Modale</div>
+            <div class="world">Controparti</div>
+            <div class="world">Supervenienza</div>
+        </div>
+
+        <section class="accordion">
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Biografia e Formazione</span>
+                    <i class="accordion-icon fas fa-user-graduate"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>David Kellogg Lewis nacque il 28 settembre 1941 a Oberlin, Ohio. Suo padre era professore di governo e sua madre professoressa di storia medievale. Dimostrò un precoce interesse per la filosofia e la matematica.</p>
+                    <p>Studiò al Swarthmore College e successivamente all'Università di Harvard, dove conseguì il dottorato in filosofia nel 1967 sotto la supervisione di Willard Van Orman Quine. La sua tesi di dottorato, "Convention: A Philosophical Study", fu pubblicata come libro nel 1969 e divenne immediatamente influente.</p>
+                    <p>Dopo brevi periodi all'UCLA e all'Università di Princeton, Lewis si stabilì alla Princeton University nel 1970, dove insegnò per il resto della sua carriera. Fu un membro molto rispettato della comunità filosofica, noto per il suo stile di vita modesto e il suo impegno per l'insegnamento.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Realismo Modale</span>
+                    <i class="accordion-icon fas fa-globe-americas"></i>
+                </div>
+                <div class="accordion-content">
+                    <h3>L'idea rivoluzionaria</h3>
+                    <p>Lewis è famoso per la sua difesa del realismo modale, la tesi secondo cui i mondi possibili sono entità concrete tanto reali quanto il mondo attuale. Secondo Lewis, quando affermiamo che "è possibile che p", stiamo affermando che esiste un mondo possibile in cui p è vero.</p>
+                    
+                    <div class="quote">
+                        "Credo che ci siano mondi possibili oltre al nostro; credo che il nostro mondo sia solo uno tra molti." - David Lewis
+                    </div>
+                    
+                    <h3>Argomenti a favore</h3>
+                    <p>Lewis difese il realismo modale con diversi argomenti, tra cui:</p>
+                    <ul>
+                        <li>L'argomento della semplicità teorica: il realismo modale fornisce un'analisi unificata di nozioni modali, controfattuali e semantiche</li>
+                        <li>L'argomento del quid pro quo: fornisce un resoconto sistematico del discorso modale</li>
+                        <li>L'argomento della fecondità esplicativa: spiega successfulmente fenomeni filosofici complessi</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Teoria delle Controparti</span>
+                    <i class="accordion-icon fas fa-clone"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Per evitare problemi di identità attraverso mondi possibili, Lewis sviluppò la teoria delle controparti. Secondo questa teoria, un individuo in un mondo possibile non è identico a me, ma è la mia controparte - qualcuno simile a me in modi rilevanti.</p>
+                    
+                    <div class="quote">
+                        "La tua controparte in un altro mondo è qualcuno abbastanza simile a te, ma non identico."
+                    </div>
+                    
+                    <p>Questa teoria permette a Lewis di mantenere l'intuizione che gli individui sono vincolati al loro mondo di appartenenza, evitando i paradossi dell'identità transmondana. La relazione di controparte è una relazione di similarità qualitativa, non di identità numerica.</p>
+                    
+                    <h3>Applicazioni della teoria</h3>
+                    <p>La teoria delle controparti ha applicazioni in:</p>
+                    <ul>
+                        <li>Analisi del discorso modale de re</li>
+                        <li>Spiegazione dell'identità personale attraverso il tempo</li>
+                        <li>Analisi dei contesti controfattuali</li>
+                        <li>Filosofia della mente e identità personale</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Opere Principali</span>
+                    <i class="accordion-icon fas fa-book"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="works-grid">
+                        <div class="work-card">
+                            <h3>Convention (1969)</h3>
+                            <p>La sua tesi di dottorato, in cui analizza il concetto di convenzione usando la teoria dei giochi, dimostrando come le convenzioni sociali emergono da coordinamenti ripetuti.</p>
+                        </div>
+                        <div class="work-card">
+                            <h3>Counterfactuals (1973)</h3>
+                            <p>Un'analisi innovativa dei condizionali controfattuali, fondamentali per la sua metafisica modale e la filosofia del linguaggio.</p>
+                        </div>
+                        <div class="work-card">
+                            <h3>On the Plurality of Worlds (1986)</h3>
+                            <p>La sua opera più famosa, in cui difende compiutamente il realismo modale e risponde alle obiezioni principali.</p>
+                        </div>
+                        <div class="work-card">
+                            <h3>Parts of Classes (1991)</h3>
+                            <p>Un'opera di filosofia della matematica in cui analizza la relazione tra mereologia e teoria degli insiemi.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Contributi alla Filosofia della Mente</span>
+                    <i class="accordion-icon fas fa-brain"></i>
+                </div>
+                <div class="accordion-content">
+                    <h3>Teoria della Mente come Funzionalismo</h3>
+                    <p>Lewis è stato un importante sostenitore del funzionalismo in filosofia della mente, la teoria secondo cui gli stati mentali sono definiti dai loro ruoli causali piuttosto che dalla loro composizione materiale.</p>
+                    
+                    <h3>Il Argomento della Madre Cieca</h3>
+                    <p>Lewis ha sviluppato un argomento influente contro la teoria dell'identità mente-cervello, noto come "l'argomento della madre cieca". Secondo questo argomento, è logicamente possibile che il dolore possa essere realizzato da stati cerebrali diversi in organismi diversi, il che minerebbe l'identità strict tra tipi mentali e tipi neurali.</p>
+                    
+                    <h3>Supervenienza e Fisicalismo</h3>
+                    <p>Lewis ha difeso una forma di fisicalismo secondo cui i fatti mentali sopravvengono su fatti fisici: non può esserci differenza mentale senza una differenza fisica. Questo approccio gli ha permesso di mantenere sia l'autonomia dei fenomeni mentali sia il loro ancoraggio nel mondo fisico.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Influenza ed Eredità</span>
+                    <i class="accordion-icon fas fa-project-diagram"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="influence-container">
+                        <div class="influence-item">
+                            <h3>Metafisica Analitica</h3>
+                            <p>Lewis ha rivoluzionato la metafisica analitica, rendendo rispettabile lo studio della modalità e della metafisica sistematica.</p>
+                        </div>
+                        <div class="influence-item">
+                            <h3>Filosofia del Linguaggio</h3>
+                            <p>Le sue analisi dei controfattuali e del linguaggio modale hanno influenzato generazioni di filosofi del linguaggio.</p>
+                        </div>
+                        <div class="influence-item">
+                            <h3>Teoria delle Decisioni</h3>
+                            <p>Il suo lavoro sulla convenzione e la coordinazione ha avuto impatto significativo sulla teoria delle decisioni e l'economia.</p>
+                        </div>
+                    </div>
+                    
+                    <p>Tra i filosofi influenzati da Lewis si annoverano David Armstrong, David Chalmers, Daniel Dennett, Frank Jackson, e molti altri pensatori contemporanei. Il suo lavoro continua a essere un punto di riferimento obbligatorio nella filosofia analitica contemporanea.</p>
+                    
+                    <div class="quote">
+                        "Lewis è stato il più grande filosofo sistematico della seconda metà del XX secolo." - David Chalmers
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="modal-container">
+            <button class="modal-btn">Esplora i Mondi Possibili</button>
+        </div>
+
+        <footer>
+            <p>© 2025 | Tributo interattivo a David K. Lewis</p>
+            <p>Questo sito è stato creato a scopo educativo e divulgativo.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Toggle accordion
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                content.classList.toggle('active');
+                
+                const icon = header.querySelector('.accordion-icon');
+                if (content.classList.contains('active')) {
+                    if (icon.classList.contains('fa-user-graduate')) {
+                        icon.classList.remove('fa-user-graduate');
+                        icon.classList.add('fa-graduation-cap');
+                    } else if (icon.classList.contains('fa-globe-americas')) {
+                        icon.classList.remove('fa-globe-americas');
+                        icon.classList.add('fa-globe');
+                    } else if (icon.classList.contains('fa-clone')) {
+                        icon.classList.remove('fa-clone');
+                        icon.classList.add('fa-copy');
+                    } else if (icon.classList.contains('fa-book')) {
+                        icon.classList.remove('fa-book');
+                        icon.classList.add('fa-book-open');
+                    } else if (icon.classList.contains('fa-brain')) {
+                        icon.classList.remove('fa-brain');
+                        icon.classList.add('fa-head-side-brain');
+                    } else if (icon.classList.contains('fa-project-diagram')) {
+                        icon.classList.remove('fa-project-diagram');
+                        icon.classList.add('fa-diagram-project');
+                    }
+                } else {
+                    if (icon.classList.contains('fa-graduation-cap')) {
+                        icon.classList.remove('fa-graduation-cap');
+                        icon.classList.add('fa-user-graduate');
+                    } else if (icon.classList.contains('fa-globe')) {
+                        icon.classList.remove('fa-globe');
+                        icon.classList.add('fa-globe-americas');
+                    } else if (icon.classList.contains('fa-copy')) {
+                        icon.classList.remove('fa-copy');
+                        icon.classList.add('fa-clone');
+                    } else if (icon.classList.contains('fa-book-open')) {
+                        icon.classList.remove('fa-book-open');
+                        icon.classList.add('fa-book');
+                    } else if (icon.classList.contains('fa-head-side-brain')) {
+                        icon.classList.remove('fa-head-side-brain');
+                        icon.classList.add('fa-brain');
+                    } else if (icon.classList.contains('fa-diagram-project')) {
+                        icon.classList.remove('fa-diagram-project');
+                        icon.classList.add('fa-project-diagram');
+                    }
+                }
+            });
+        });
+
+        // Theme switching
+        document.getElementById('theme-normale').addEventListener('click', () => {
+            document.body.className = 'normale';
+        });
+
+        document.getElementById('theme-notturno').addEventListener('click', () => {
+            document.body.className = 'notturno';
+        });
+
+        document.getElementById('theme-filosofico').addEventListener('click', () => {
+            document.body.className = 'filosofico';
+        });
+
+        document.getElementById('theme-contemplativo').addEventListener('click', () => {
+            document.body.className = 'contemplativo';
+        });
+
+        // Modal button effect
+        const modalBtn = document.querySelector('.modal-btn');
+        modalBtn.addEventListener('click', () => {
+            alert('Esploreresti infiniti mondi possibili, ma per ora ti invitiamo a scoprire tutte le sezioni di questo tributo a David Lewis!');
+            modalBtn.textContent = 'Mondi in Esplorazione...';
+            setTimeout(() => {
+                modalBtn.textContent = 'Esplora i Mondi Possibili';
+            }, 2000);
+        });
+
+        // World items effect
+        document.querySelectorAll('.world').forEach(world => {
+            world.addEventListener('click', () => {
+                world.style.transform = 'scale(1.2)';
+                world.style.boxShadow = '0 0 25px ' + getComputedStyle(document.documentElement).getPropertyValue('--accent');
+                setTimeout(() => {
+                    world.style.transform = '';
+                    world.style.boxShadow = '';
+                }, 500);
+            });
+        });
+    </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>David Lewis: Concetti Fondamentali</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3d5a80;
+            --secondary: #98c1d9;
+            --accent: #ee6c4d;
+            --light: #e0fbfc;
+            --dark: #293241;
+            --text: #333;
+            --background: #fff;
+            --card-bg: #f8f9fa;
+            --shadow: rgba(61, 90, 128, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+            position: relative;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 30px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 0 20px;
+        }
+
+        .intro p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .concepts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .concept-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .concept-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .concept-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.3rem;
+        }
+
+        .concept-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease;
+        }
+
+        .concept-content.active {
+            max-height: 1000px;
+            padding: 25px;
+        }
+
+        .concept-body {
+            margin-bottom: 20px;
+        }
+
+        .concept-examples {
+            background: var(--light);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .concept-examples h4 {
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .concept-links {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .concept-link {
+            padding: 8px 15px;
+            background: var(--secondary);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: background 0.3s ease;
+        }
+
+        .concept-link:hover {
+            background: var(--accent);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: var(--background);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--secondary);
+        }
+
+        .close-modal:hover {
+            color: var(--accent);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 1px solid var(--secondary);
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .concepts-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>David Lewis: Concetti Fondamentali</h1>
+        <p class="subtitle">Mondi Possibili, Teoria delle Controparti e Supervenienza</p>
+    </header>
+
+    <section class="intro">
+        <p>Esplora i tre concetti filosofici centrali nel pensiero di David Lewis. Clicca su ciascuna sezione per approfondire e scoprire risorse per ulteriori studi.</p>
+    </section>
+
+    <div class="concepts-container">
+        <!-- Mondi Possibili -->
+        <div class="concept-card">
+            <div class="concept-header" onclick="toggleConcept('mondi')">
+                <span>Mondi Possibili</span>
+                <i class="fas fa-globe-americas"></i>
+            </div>
+            <div class="concept-content" id="mondi-content">
+                <div class="concept-body">
+                    <p>Il realismo modale di David Lewis postula che i mondi possibili esistono concretamente come il mondo attuale. Secondo Lewis, un mondo possibile è un modo alternativo in cui il mondo potrebbe essere.</p>
+                    
+                    <div class="concept-examples">
+                        <h4>Esempi:</h4>
+                        <ul>
+                            <li>Un mondo in cui Napoleone ha vinto a Waterloo</li>
+                            <li>Un mondo in cui non esiste la gravità</li>
+                            <li>Un mondo in cui i dinosauri non si sono estinti</li>
+                        </ul>
+                    </div>
+                    
+                    <p>Lewis difende una visione realista dei mondi possibili: non sono semplici finzioni o costrutti mentali, ma entità concrete, sebbene isolate causalmente e spazialmente dal nostro mondo.</p>
+                </div>
+                
+                <div class="concept-links">
+                    <a href="#" class="concept-link" onclick="openModal('modal-mondi')">Approfondisci</a>
+                    <a href="#" class="concept-link" onclick="openModal('modal-mondi-risorse')">Risorse</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Teoria delle Controparti -->
+        <div class="concept-card">
+            <div class="concept-header" onclick="toggleConcept('controparti')">
+                <span>Teoria delle Controparti</span>
+                <i class="fas fa-clone"></i>
+            </div>
+            <div class="concept-content" id="controparti-content">
+                <div class="concept-body">
+                    <p>La teoria delle controparti risolve il problema dell'identità attraverso i mondi possibili. Invece di dire che la stessa persona esiste in mondi diversi, Lewis postula che esistono controparti simili ma non identiche.</p>
+                    
+                    <div class="concept-examples">
+                        <h4>Esempi:</h4>
+                        <ul>
+                            <li>La controparte di Lewis in un altro mondo è un poeta invece che un filosofo</li>
+                            <li>La controparte di una persona in un mondo senza ossigeno ha sviluppato branchie</li>
+                            <li>La tua controparte in un mondo medievale è un cavaliere</li>
+                        </ul>
+                    </div>
+                    
+                    <p>La relazione di controparte è basata sulla similarità qualitativa piuttosto che sull'identità numerica, evitando i paradossi dell'identità transmondana.</p>
+                </div>
+                
+                <div class="concept-links">
+                    <a href="#" class="concept-link" onclick="openModal('modal-controparti')">Approfondisci</a>
+                    <a href="#" class="concept-link" onclick="openModal('modal-controparti-risorse')">Risorse</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Supervenienza -->
+        <div class="concept-card">
+            <div class="concept-header" onclick="toggleConcept('supervenienza')">
+                <span>Supervenienza</span>
+                <i class="fas fa-layer-group"></i>
+            </div>
+            <div class="concept-content" id="supervenienza-content">
+                <div class="concept-body">
+                    <p>La supervenienza è una relazione di dipendenza tra proprietà di diversi livelli. Lewis ha applicato questo concetto al problema mente-corpo, suggerendo che i fatti mentali sopravvengono su fatti fisici.</p>
+                    
+                    <div class="concept-examples">
+                        <h4>Esempi:</h4>
+                        <ul>
+                            <li>Il valore estetico di un'opera d'arte sopravviene sulle sue proprietà fisiche</li>
+                            <li>Le proprietà biologiche sopravvengono sulle proprietà chimiche</li>
+                            <li>I fenomeni mentali sopravvengono sugli stati cerebrali</li>
+                        </ul>
+                    </div>
+                    
+                    <p>Secondo Lewis, non può esserci differenza mentale senza una differenza fisica, ma non necessariamente ogni differenza fisica produce una differenza mentale.</p>
+                </div>
+                
+                <div class="concept-links">
+                    <a href="#" class="concept-link" onclick="openModal('modal-supervenienza')">Approfondisci</a>
+                    <a href="#" class="concept-link" onclick="openModal('modal-supervenienza-risorse')">Risorse</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modali per Approfondimenti -->
+    <div id="modal-mondi" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('modal-mondi')">&times;</span>
+            <h2>Mondi Possibili in Dettaglio</h2>
+            <p>La teoria lewisiana dei mondi possibili è forse la più radicale nella filosofia analitica contemporanea. Secondo Lewis:</p>
+            <ul>
+                <li>I mondi possibili esistono concretamente, non sono astrazioni</li>
+                <li>Il nostro mondo è solo uno tra infiniti mondi possibili</li>
+                <li>I mondi possibili sono isolati causalmente e spazialmente</li>
+                <li>Non c'è relazione di "accessibilità" tra mondi come in altre teorie modali</li>
+            </ul>
+            <p>Le obiezioni principali includono l'accusa di incredulità (è difficile credere all'esistenza concreta di questi mondi) e il problema dell'isolamento (come possiamo conoscere mondi con cui non interagiamo).</p>
+        </div>
+    </div>
+
+    <div id="modal-controparti" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('modal-controparti')">&times;</span>
+            <h2>Teoria delle Controparti in Dettaglio</h2>
+            <p>La teoria delle controparti risolve il problema dell'identità attraverso i mondi possibili senza violare l'indiscernibilità degli identici. Secondo questa teoria:</p>
+            <ul>
+                <li>Ogni individuo esiste in un solo mondo possibile</li>
+                <li>Gli individui in altri mondi sono controparti in base a similarità rilevanti</li>
+                <li>La relazione di controparte è variabile e contestuale</li>
+                <li>È una relazione di similarità, non di identità</li>
+            </ul>
+            <p>Questa teoria evita i paradossi dell'identità transmondana ma solleva questioni su cosa conti come "similarità rilevante" e come determinare le controparti in contesti diversi.</p>
+        </div>
+    </div>
+
+    <div id="modal-supervenienza" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('modal-supervenienza')">&times;</span>
+            <h2>Supervenienza in Dettaglio</h2>
+            <p>La supervenienza è un concetto chiave per il fisicalismo non riduzionista di Lewis. Caratteristiche principali:</p>
+            <ul>
+                <li>Relazione di dipendenza asimmetrica tra proprietà</li>
+                <li>Impossibilità di differenze a livello superiore senza differenze a livello base</li>
+                <li>Compatibile con il multiple realizzability (multipla realizzabilità)</li>
+                <li>Spiegazione della causalità mentale senza violare la chiusura causale del fisico</li>
+            </ul>
+            <p>Lewis utilizza la supervenienza per difendere una forma di fisicalismo che riconosce l'autonomia dei fenomeni mentali pur ancorandoli saldamente alla base fisica.</p>
+        </div>
+    </div>
+
+    <!-- Modali per Risorse -->
+    <div id="modal-mondi-risorse" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('modal-mondi-risorse')">&times;</span>
+            <h2>Risorse sui Mondi Possibili</h2>
+            <ul>
+                <li><a href="#">"On the Plurality of Worlds" - D. Lewis (1986)</a></li>
+                <li><a href="#">"Counterfactuals" - D. Lewis (1973)</a></li>
+                <li><a href="#">"Modal Realism: The Poisoned Pawn" - J. Divers (2002)</a></li>
+                <li><a href="#">"The Nature of Necessity" - A. Plantinga (1974)</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="modal-controparti-risorse" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('modal-controparti-risorse')">&times;</span>
+            <h2>Risorse sulla Teoria delle Controparti</h2>
+            <ul>
+                <li><a href="#">"Counterpart Theory and Quantified Modal Logic" - D. Lewis (1968)</a></li>
+                <li><a href="#">"The Paradoxes of Time Travel" - D. Lewis (1976)</a></li>
+                <li><a href="#">"Counterparts of Persons and Their Bodies" - D. Lewis (1971)</a></li>
+                <li><a href="#">"Lewis on Counterpart Theory" - S. Kment (2012)</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="modal-supervenienza-risorse" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('modal-supervenienza-risorse')">&times;</span>
+            <h2>Risorse sulla Supervenienza</h2>
+            <ul>
+                <li><a href="#">"New Work for a Theory of Universals" - D. Lewis (1983)</a></li>
+                <li><a href="#">"Psychophysical and Theoretical Identifications" - D. Lewis (1972)</a></li>
+                <li><a href="#">"Convention: A Philosophical Study" - D. Lewis (1969)</a></li>
+                <li><a href="#">"Supervenience and Mind" - J. Kim (1993)</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 | David Lewis: Concetti Filosofici Fondamentali</p>
+        <p>Questo sito è stato creato a scopo educativo e divulgativo.</p>
+    </footer>
+
+    <script>
+        // Funzione per aprire/chiudere i contenuti
+        function toggleConcept(concept) {
+            const content = document.getElementById(concept + '-content');
+            content.classList.toggle('active');
+            
+            const icon = content.previousElementSibling.querySelector('i');
+            if (content.classList.contains('active')) {
+                if (concept === 'mondi') {
+                    icon.classList.remove('fa-globe-americas');
+                    icon.classList.add('fa-globe');
+                } else if (concept === 'controparti') {
+                    icon.classList.remove('fa-clone');
+                    icon.classList.add('fa-copy');
+                } else if (concept === 'supervenienza') {
+                    icon.classList.remove('fa-layer-group');
+                    icon.classList.add('fa-layers');
+                }
+            } else {
+                if (concept === 'mondi') {
+                    icon.classList.remove('fa-globe');
+                    icon.classList.add('fa-globe-americas');
+                } else if (concept === 'controparti') {
+                    icon.classList.remove('fa-copy');
+                    icon.classList.add('fa-clone');
+                } else if (concept === 'supervenienza') {
+                    icon.classList.remove('fa-layers');
+                    icon.classList.add('fa-layer-group');
+                }
+            }
+        }
+
+        // Funzione per aprire i modali
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        // Funzione per chiudere i modali
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Chiudi i modali cliccando fuori dal contenuto
+        window.onclick = function(event) {
+            const modals = document.getElementsByClassName('modal');
+            for (let i = 0; i < modals.length; i++) {
+                if (event.target == modals[i]) {
+                    modals[i].style.display = 'none';
+                }
+            }
+        }
+    </script>
+</body>
+</html>

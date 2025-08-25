@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Un'esplorazione approfondita del pensiero di John Searle, dalla filosofia del linguaggio alla coscienza, con contenuti interattivi e design innovativo">
+    <title>John Searle: Filosofia della Mente e del Linguaggio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2e5b82;
+            --secondary: #6b8ea6;
+            --accent: #d68060;
+            --text: #2a2d34;
+            --background: #f9f7f3;
+            --card-bg: #ffffff;
+            --shadow: rgba(46, 91, 130, 0.12);
+            --header-bg: linear-gradient(135deg, #2e5b82 0%, #4a7ca5 100%);
+            --font-title: 'Merriweather', serif;
+            --font-body: 'Source Sans Pro', sans-serif;
+        }
+
+        .theme-night {
+            --primary: #c3c8d3;
+            --secondary: #8e9ea8;
+            --accent: #e29d84;
+            --text: #e1e5eb;
+            --background: #1a1d24;
+            --card-bg: #242932;
+            --shadow: rgba(195, 200, 211, 0.15);
+            --header-bg: linear-gradient(135deg, #1a1d24 0%, #2d3542 100%);
+        }
+
+        .theme-philosophical {
+            --primary: #3d405b;
+            --secondary: #7d7c84;
+            --accent: #e07a5f;
+            --text: #3d405b;
+            --background: #f4f1de;
+            --card-bg: #e8e6d5;
+            --shadow: rgba(61, 64, 91, 0.15);
+            --header-bg: linear-gradient(135deg, #3d405b 0%, #5f637e 100%);
+        }
+
+        .theme-contemplative {
+            --primary: #3a6356;
+            --secondary: #7a9087;
+            --accent: #c97b5d;
+            --text: #3a6356;
+            --background: #f5f9f7;
+            --card-bg: #e8f0ed;
+            --shadow: rgba(58, 99, 86, 0.1);
+            --header-bg: linear-gradient(135deg, #3a6356 0%, #4d8c7b 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.5s, color 0.5s, transform 0.3s;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(46, 91, 130, 0.03) 0%, transparent 20%),
+                radial-gradient(circle at 85% 80%, rgba(214, 128, 96, 0.03) 0%, transparent 20%);
+        }
+
+        .theme-night body {
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(195, 200, 211, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 85% 80%, rgba(226, 157, 132, 0.05) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 30px;
+            background: var(--header-bg);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px var(--shadow);
+            position: relative;
+            color: white;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 20%);
+        }
+
+        h1 {
+            font-family: var(--font-title);
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            position: relative;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 25px;
+            opacity: 0.9;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .theme-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .theme-btn {
+            padding: 12px 22px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .theme-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .theme-btn.active {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+        }
+
+        .intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            font-size: 1.2rem;
+            color: var(--secondary);
+            padding: 25px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 8px 20px var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .intro::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent), var(--primary));
+        }
+
+        .accordion {
+            margin-bottom: 40px;
+        }
+
+        .accordion-item {
+            background: var(--card-bg);
+            border-radius: 16px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px var(--shadow);
+            transition: transform 0.3s;
+            border-left: 5px solid var(--accent);
+        }
+
+        .accordion-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .accordion-header {
+            padding: 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .accordion-header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s;
+            opacity: 0;
+        }
+
+        .accordion-header:hover::before {
+            animation: shine 1.5s infinite;
+            opacity: 1;
+        }
+
+        @keyframes shine {
+            0% {
+                left: -50%;
+            }
+            100% {
+                left: 150%;
+            }
+        }
+
+        .accordion-header h2 {
+            margin: 0;
+            font-size: 1.7rem;
+            font-weight: 600;
+            font-family: var(--font-title);
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .accordion-icon {
+            font-size: 1.5rem;
+            transition: transform 0.5s;
+            z-index: 1;
+        }
+
+        .accordion-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.7s ease, padding 0.7s ease;
+        }
+
+        .accordion-content-inner {
+            padding: 30px;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 3000px;
+            padding: 0;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .quote {
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            color: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin: 25px 0;
+            font-style: italic;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .quote::before {
+            content: """;
+            font-size: 8rem;
+            position: absolute;
+            top: -30px;
+            left: 10px;
+            opacity: 0.15;
+            font-family: serif;
+        }
+
+        .quote::after {
+            content: """;
+            font-size: 8rem;
+            position: absolute;
+            bottom: -50px;
+            right: 10px;
+            opacity: 0.15;
+            font-family: serif;
+            transform: rotate(180deg);
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .searle-img {
+            max-width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px var(--shadow);
+            transition: transform 0.5s;
+            border: 4px solid var(--card-bg);
+            outline: 2px solid var(--accent);
+        }
+
+        .searle-img:hover {
+            transform: scale(1.02);
+        }
+
+        .caption {
+            color: var(--secondary);
+            font-size: 1rem;
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            margin: 40px 0;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: linear-gradient(to bottom, var(--accent), var(--primary));
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 10px;
+        }
+
+        .timeline-item {
+            padding: 15px 40px;
+            position: relative;
+            width: 50%;
+            align-self: flex-start;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .timeline-item:nth-child(even) {
+            align-self: flex-end;
+            transform: translateX(50px);
+        }
+
+        .timeline-item:nth-child(even).visible {
+            transform: translateX(0);
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background-color: var(--card-bg);
+            border: 5px solid var(--accent);
+            border-radius: 50%;
+            top: 20px;
+            right: -17px;
+            z-index: 1;
+            box-shadow: 0 0 15px var(--accent);
+        }
+
+        .timeline-item:nth-child(even)::after {
+            left: -17px;
+        }
+
+        .timeline-content {
+            padding: 25px;
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 8px 20px var(--shadow);
+            position: relative;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--card-bg);
+            top: 20px;
+            right: -10px;
+            transform: rotate(45deg);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -10px;
+            right: auto;
+        }
+
+        .timeline-date {
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            color: var(--secondary);
+            font-size: 1rem;
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 5px 15px var(--shadow);
+            border-top: 4px solid var(--accent);
+        }
+
+        .reference {
+            margin-top: 40px;
+            padding: 25px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .reference h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-family: var(--font-title);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 10px;
+        }
+
+        .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .concept-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 5px 15px var(--shadow);
+            transition: transform 0.3s;
+            border-top: 4px solid var(--accent);
+        }
+
+        .concept-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .concept-card h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-family: var(--font-title);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .concept-card h3 i {
+            font-size: 1.3rem;
+        }
+
+        @media (max-width: 768px) {
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item:nth-child(even) {
+                align-self: flex-start;
+            }
+
+            .timeline-item::after {
+                left: 18px;
+            }
+
+            .timeline-item:nth-child(even)::after {
+                left: 18px;
+            }
+
+            .timeline-content::before {
+                left: -10px;
+                right: auto;
+            }
+
+            .concepts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .theme-btn {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body class="theme-normal">
+    <div class="container">
+        <header>
+            <h1>John Searle</h1>
+            <p class="subtitle">Dalla filosofia del linguaggio alla coscienza: il pensiero di un maestro contemporaneo</p>
+            
+            <div class="theme-selector">
+                <button class="theme-btn active" data-theme="normal"><i class="fas fa-sun"></i> Normale</button>
+                <button class="theme-btn" data-theme="night"><i class="fas fa-moon"></i> Notturno</button>
+                <button class="theme-btn" data-theme="philosophical"><i class="fas fa-brain"></i> Filosofico</button>
+                <button class="theme-btn" data-theme="contemplative"><i class="fas fa-leaf"></i> Contemplativo</button>
+            </div>
+        </header>
+
+        <div class="intro">
+            <p>John Rogers Searle (1932-) è uno dei filosofi contemporanei più influenti, noto per i suoi contributi rivoluzionari alla filosofia del linguaggio, alla filosofia della mente e alla teoria della realtà sociale. Il suo lavoro ha ridefinito il modo in cui comprendiamo atti linguistici, intenzionalità e coscienza.</p>
+        </div>
+
+        <div class="image-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/John_Searle_2016.jpg/800px-John_Searle_2016.jpg" alt="Ritratto di John Searle" class="searle-img">
+            <p class="caption">John Searle (1932-), filosofo statunitense</p>
+        </div>
+
+        <div class="accordion">
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h2><i class="fas fa-graduation-cap"></i> Biografia e Formazione</h2>
+                    <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Nato a Denver nel 1932, Searle studiò all'Università del Wisconsin e successivamente a Oxford come Rhodes Scholar, dove fu influenzato da J.L. Austin e dal lavoro della scuola di filosofia del linguaggio ordinario. Tornato negli Stati Uniti, ha trascorso la maggior parte della sua carriera all'Università della California, Berkeley.</p>
+                        
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-date">1932</div>
+                                <div class="timeline-content">Nascita a Denver, Colorado</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">1949-1952</div>
+                                <div class="timeline-content">Studi all'Università del Wisconsin</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">1952-1959</div>
+                                <div class="timeline-content">Studi a Oxford come Rhodes Scholar</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">1959</div>
+                                <div class="timeline-content">Insegna all'Università della California, Berkeley</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">1969</div>
+                                <div class="timeline-content">Pubblica "Atti linguistici"</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">1980</div>
+                                <div class="timeline-content">Pubblica "Menti, cervelli e programmi", introducendo l'Argomento della Stanza Cinese</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">1983</div>
+                                <div class="timeline-content">Pubblica "Intentionality"</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">1995</div>
+                                <div class="timeline-content">Pubblica "La costruzione della realtà sociale"</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">2004</div>
+                                <div class="timeline-content">Riceve la National Humanities Medal</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h2><i class="fas fa-comments"></i> Teoria degli Atti Linguistici</h2>
+                    <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Searle ha sviluppato e sistematizzato la teoria degli atti linguistici di J.L. Austin, creando una tassonomia completa delle forze illocutorie e introducendo il concetto di "condizioni di soddisfazione" per gli atti linguistici.</p>
+                        
+                        <div class="concepts-grid">
+                            <div class="concept-card">
+                                <h3><i class="fas fa-assistive-listening-systems"></i> Atti linguistici</h3>
+                                <p>Searle classifica gli atti linguistici in cinque categorie: assertivi, direttivi, commissivi, espressivi e dichiarativi.</p>
+                            </div>
+                            <div class="concept-card">
+                                <h3><i class="fas fa-rules"></i> Regole costitutive</h3>
+                                <p>Concetto chiave per comprendere come gli atti linguistici creano realtà sociali: "X conta come Y nel contesto C".</p>
+                            </div>
+                            <div class="concept-card">
+                                <h3><i class="fas fa-check-circle"></i> Condizioni di soddisfazione</h3>
+                                <p>Ogni atto linguistico ha condizioni che devono essere soddisfatte per essere efficace o vero.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="quote">
+                            "Parlare una lingua è prendere parte a una forma di comportamento governato da regole."
+                        </div>
+                        
+                        <p>La teoria di Searle distingue tra intenzione dell'ascoltatore (ciò che il parlante intende comunicare) e significato letterale (ciò che le parole significano convenzionalmente), risolvendo problemi che Austin aveva lasciato aperti.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h2><i class="fas fa-brain"></i> Filosofia della Mente e Intenzionalità</h2>
+                    <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Searle ha sviluppato una teoria naturale dell'intenzionalità, il fenomeno per cui gli stati mentali sono "diretti" verso oggetti o stati di cose nel mondo. La sua posizione, chiamata "naturalismo biologico", sostiene che la coscienza è un fenomeno biologico emergente.</p>
+                        
+                        <div class="concepts-grid">
+                            <div class="concept-card">
+                                <h3><i class="fas fa-chinese"></i> Stanza Cinese</h3>
+                                <p>L'argomento contro l'intelligenza artificiale forte: manipolare simboli non equivale a comprendere.</p>
+                            </div>
+                            <div class="concept-card">
+                                <h3><i class="fas fa-seedling"></i> Naturalismo biologico</h3>
+                                <p>La coscienza è un fenomeno biologico emergente, irriducibile ma causato da processi cerebrali.</p>
+                            </div>
+                            <div class="concept-card">
+                                <h3><i class="fas fa-mountain"></i> Sfida di Searle</h3>
+                                <p>Qualsiasi teoria della coscienza deve spiegare come processi neurali danno origine a esperienze soggettive.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="quote">
+                            "I computer non sono letteralmente delle menti, bensì soltanto dei modelli formali delle menti."
+                        </div>
+                        
+                        <p>La critica di Searle all'intelligenza artificiale forte ha generato un dibattito intenso e duraturo nella filosofia della mente e nelle scienze cognitive.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h2><i class="fas fa-landmark"></i> La Costruzione della Realtà Sociale</h2>
+                    <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Searle ha sviluppato una teoria innovativa su come creiamo e manteniamo la realtà sociale attraverso atti linguistici e intenzionalità collettiva.</p>
+                        
+                        <div class="concepts-grid">
+                            <div class="concept-card">
+                                <h3><i class="fas fa-users"></i> Intenzionalità collettiva</h3>
+                                <p>La capacità umana di condividere intentioni e credenze, fondamento della realtà sociale.</p>
+                            </div>
+                            <div class="concept-card">
+                                <h3><i class="fas fa-money-bill-wave"></i> Realtà istituzionali</h3>
+                                <p>Fenomeni come denaro, proprietà e governo esistono perché collettivamente accettiamo che esistano.</p>
+                            </div>
+                            <div class="concept-card">
+                                <h3><i class="fas fa-fingerprint"></i> Funzioni di status</h3>
+                                <p>Attribuiamo funzioni speciali a oggetti e persone attraverso l'accettazione collettiva.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="quote">
+                            "Tutta la realtà istituzionale è creata e mantenuta in esistenza da rappresentazioni che hanno la stessa forma logica delle dichiarazioni di status."
+                        </div>
+                        
+                        <p>Secondo Searle, la formula "X conta come Y nel contesto C" spiega come creiamo tutto, dalla moneta al matrimonio, dai governi ai giochi.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h2><i class="fas fa-book"></i> Opere Principali</h2>
+                    <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <ul>
+                            <li><strong>Atti linguistici</strong> (1969) - Sviluppo sistematico della teoria degli atti linguistici.</li>
+                            <li><strong>Espressione e significato</strong> (1979) - Studi sulla teoria degli atti linguistici.</li>
+                            <li><strong>Intentionality</strong> (1983) - Analisi dell'intenzionalità come fondamento della filosofia della mente e del linguaggio.</li>
+                            <li><strong>Menti, cervelli e scienza</strong> (1984) - Esposizione dell'argomento della stanza cinese.</li>
+                            <li><strong>La riscoperta della mente</strong> (1992) - Critica del materialismo e difesa del naturalismo biologico.</li>
+                            <li><strong>La costruzione della realtà sociale</strong> (1995) - Teoria della realtà sociale basata su intenzionalità collettiva e regole costitutive.</li>
+                            <li><strong>Razionalità in azione</strong> (2001) - Analisi della razionalità e della libertà umana.</li>
+                            <li><strong>Fare il mondo sociale</strong> (2010) - Sviluppo della teoria della realtà sociale.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h2><i class="fas fa-people-arrows"></i> Dibattiti e Influenze</h2>
+                    <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Il lavoro di Searle ha generato dibattiti intensi in molte aree della filosofia e oltre, influenzando discipline come la linguistica, le scienze cognitive, il diritto e le scienze sociali.</p>
+                        
+                        <h3>Dibattito sull'Intelligenza Artificiale</h3>
+                        <p>L'argomento della stanza cinese ha scatenato un acceso dibattito con sostenitori dell'IA forte come Daniel Dennett e Ray Kurzweil.</p>
+                        
+                        <h3>Critica al Costruttivismo Radicale</h3>
+                        <p>Searle distingue tra realtà "bruta" (indipendente dall'osservatore) e realtà sociale (dipendente dall'osservatore), criticando le forme radicali di costruttivismo.</p>
+                        
+                        <h3>Influenza sulla Filosofia del Diritto</h3>
+                        <p>La sua teoria degli atti linguistici ha rivoluzionato la comprensione di atti giuridici come promesse, contratti e decisioni.</p>
+                        
+                        <h3>Contributi all'Epistemologia</h3>
+                        <p>La sua analisi dell'intenzionalità ha implicazioni profonde per la teoria della conoscenza e la credenza giustificata.</p>
+                        
+                        <div class="quote">
+                            "La caratteristica centrale e più importante dell'essere umano è la sua capacità di impegnarsi in comportamenti cooperativi e di creare realtà sociali."
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="reference">
+            <h3>Riferimenti Bibliografici</h3>
+            <p>1. Searle, J.R. (1969). <em>Atti linguistici</em>. Torino: Boringhieri, 1976.</p>
+            <p>2. Searle, J.R. (1992). <em>La riscoperta della mente</em>. Torino: Bollati Boringhieri, 1994.</p>
+            <p>3. Searle, J.R. (1995). <em>La costruzione della realtà sociale</em>. Milano: Edizioni di Comunità, 1996.</p>
+            <p>4. Searle, J.R. (2010). <em>Fare il mondo sociale</em>. Milano: Cortina, 2010.</p>
+            <p>5. Smith, B. (2003). <em>John Searle</em>. Cambridge: Cambridge University Press.</p>
+        </div>
+
+        <footer>
+            <p>© 2025 - Saggio su John Searle | Realizzato con passione per la filosofia contemporanea</p>
+            <p>Questo progetto esplora la vita e il pensiero di uno dei filosofi più influenti del nostro tempo</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Accordion functionality
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const item = this.parentNode;
+                    item.classList.toggle('active');
+                });
+            });
+
+            // Theme switching functionality
+            const themeButtons = document.querySelectorAll('.theme-btn');
+            const body = document.body;
+            
+            themeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const theme = this.getAttribute('data-theme');
+                    
+                    // Remove all theme classes
+                    body.classList.remove('theme-normal', 'theme-night', 'theme-philosophical', 'theme-contemplative');
+                    
+                    // Add the selected theme class
+                    body.classList.add(`theme-${theme}`);
+                    
+                    // Update active button
+                    themeButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // Timeline animation on scroll
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            
+            function checkTimelineItems() {
+                timelineItems.forEach(item => {
+                    const position = item.getBoundingClientRect();
+                    
+                    if(position.top < window.innerHeight - 100) {
+                        item.classList.add('visible');
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', checkTimelineItems);
+            checkTimelineItems(); // Check on initial load
+        });
+    </script>
+</body>
+</html>
