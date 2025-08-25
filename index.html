@@ -3586,7 +3586,7 @@ window.updateLabel = window.updateLabel || function(){
       });
    </script>
 <!-- Audio effetti -->
-<audio id="thunder-sound" preload="auto" src="https://casi0048.github.io/suoni/thunder-sound.mp3"></audio>
+<audio id="thunder-sound" preload="auto" playsinline>  <source src="/suoni/thunder-sound.mp3" type="audio/mpeg">  <source src="https://casi0048.github.io/suoni/thunder-sound.mp3" type="audio/mpeg"></audio>
 <audio id="explosionSound" preload="auto" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/suoni/explosion-1.mp3"></audio>
 <script>
 (() => {
@@ -7072,6 +7072,57 @@ document.addEventListener('DOMContentLoaded', function(){
       console.warn("[Ricerca interna] siteData non trovato: creato dataset con soli articoli.");
     }
   }, 100);
+})();
+</script>
+
+
+<!-- SAFARI TUONO STABILIZER (final block) -->
+<script>
+(function(){
+  var btn = document.getElementById('btn-thunder') ||
+            Array.from(document.querySelectorAll('button,[role="button"]')).find(function(b){ return /tuono|⚡/i.test(b.textContent||''); });
+  var audio = document.getElementById('thunder-sound');
+  if (!btn) return;
+
+  // Remove previous listeners by cloning (safe, non-destructive)
+  var clone = btn.cloneNode(true);
+  btn.parentNode.replaceChild(clone, btn);
+  btn = document.getElementById('btn-thunder') || clone;
+
+  // Simple WebAudio fallback for Safari if webAudioThunder is not defined
+  function synthThunder(){
+    try{
+      var AC = window.AudioContext || window.webkitAudioContext;
+      var ctx = new AC();
+      var sr = ctx.sampleRate, dur = 1.8, n = (sr*dur)|0;
+      var buf = ctx.createBuffer(1, n, sr), ch = buf.getChannelData(0);
+      var last = 0;
+      for (var i=0;i<n;i++){
+        var t = i/sr, white = Math.random()*2-1;
+        var brown = (last + 0.02*white)/1.02; last = brown;
+        var env = Math.exp(-2.2*t);
+        ch[i] = Math.max(-1, Math.min(1, (brown*0.8 + white*0.2) * env));
+      }
+      var src = ctx.createBufferSource(); src.buffer = buf;
+      var g = ctx.createGain(); g.gain.value = 0.9;
+      src.connect(g).connect(ctx.destination);
+      src.start();
+    }catch(e){}
+  }
+
+  function playSafari(){
+    if (typeof window.webAudioThunder === "function") return window.webAudioThunder();
+    return Promise.resolve().then(synthThunder);
+  }
+
+  var isSafari = /Safari\//.test(navigator.userAgent) && !/Chrome|Chromium|Edg\//.test(navigator.userAgent);
+
+  btn.addEventListener('click', function(ev){
+    ev.preventDefault();
+    if (isSafari) { playSafari(); return; }
+    if (!audio) return;
+    try { audio.currentTime = 0; var p = audio.play(); if (p && p.catch) p.catch(function(e){}); } catch(e){}
+  }, {passive:false});
 })();
 </script>
 
