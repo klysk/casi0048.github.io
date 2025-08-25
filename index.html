@@ -1599,10 +1599,29 @@ window.updateLabel = window.updateLabel || function(){
       <p>Kant - il più zoppo tra gli storpi del concetto</p>
     </div>
 
+     <div class="slide-vertical">
+      <img alt="Gadamer" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/gadamer.webp"
+           loading="lazy" decoding="async" width="260" height="340"/>
+      <p>H.G.Gadamer</p>
+    </div>
+
+
     <div class="slide-vertical">
       <img alt="Polpetta" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/polpetta.webp"
            loading="lazy" decoding="async" width="260" height="340"/>
       <p>🏹 Polpetta🦸: guerriera celtica</p>
+    </div>
+
+<div class="slide-vertical">
+      <img alt="Ricoeur" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/ricoeur.webp"
+           loading="lazy" decoding="async" width="260" height="340"/>
+      <p>P. Ricoeur</p>
+    </div>
+
+ <div class="slide-vertical">
+      <img alt="Levinas" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/levinas.webp"
+           loading="lazy" decoding="async" width="260" height="340"/>
+      <p>E. Lévinas</p>
     </div>
 
     <div class="slide-vertical">
@@ -2123,6 +2142,20 @@ window.updateLabel = window.updateLabel || function(){
 <a href="articoli/adrig%C3%B2.html" role="menuitem">Roberto Ardigò</a>
 </div>
 <div>
+<h4>Gnoseologia</h4>
+<a href="articoli/bacon.html" role="menuitem">Francis Bacon</a>
+<a href="articoli/mill.html" role="menuitem">John Stuart Mill </a>
+<a href="articoli/spencer.html" role="menuitem">Herbert Spencer</a>
+</div>
+<div>
+<h4>Metafisica/Ontologia</h4>
+<a href="articoli/spinoza.html" role="menuitem">Spinoza</a>
+<a href="articoli/heidegger.html" role="menuitem">Heidegger</a>
+<a href="articoli/severino.html" role="menuitem">Emmanuele Severino</a>
+<a href="articoli/quine.html" role="menuitem">Willard Van Orme Quine</a>
+<a href="articoli/lewis.html" role="menuitem">David Lewis</a>
+</div>
+<div>
 <h4>Filosofia russa</h4>
 <a href="articoli/dostoevskij.html" role="menuitem">Fëdor Dostoevskij</a>
 <a href="articoli/solov'%C3%ABv.html" role="menuitem">Vladimir Solov'ëv </a>
@@ -2147,11 +2180,28 @@ window.updateLabel = window.updateLabel || function(){
 <div>
 <h4>Filosofia Continentale</h4>
 <a href="articoli/husserl.html" role="menuitem">Husserl</a>
-<a href="articoli/heidegger.html" role="menuitem">Heidegger</a>
+
 <a href="articoli/merleau-ponty.html" role="menuitem">Merleau-Ponty</a>
 <a href="articoli/sartre.html" role="menuitem">Sartre</a>
 <a href="articoli/adorno.html" role="menuitem">Adorno</a>
 <a href="articoli/horkheimer.html" role="menuitem">Horkheimer</a>
+</div>
+<div>
+<h4>Ermeneutica</h4>
+<a href="articoli/schleiermacher.html" role="menuitem">Friedrich Schleiermacher</a>
+<a href="articoli/dilthey.html" role="menuitem">Wilhelm Dilthey</a>
+<a href="articoli/heidegger.html" role="menuitem">Heidegger</a>
+<a href="articoli/gadamer.html" role="menuitem">Hans-Georg Gadamer</a>
+<a href="/articoli/ricoeur.html" role="menuitem">Paul Ricoeur</a>
+<a href="articoli/habermas.html" role="menuitem">Jürgen Habermas</a>
+<a href="articoli/horkheimer.html" role="menuitem">Horkheimer</a>
+</div>
+<div>
+<h4>Filosofia del linguaggio</h4>
+<a href="articoli/wittgenstein.html" role="menuitem">Ludwig Wittgenstein</a>
+<a href="articoli/austin.html" role="menuitem">J.L. Austin</a>
+<a href="articoli/searle.html" role="menuitem">John Searle</a>
+<a href="articoli/quine.html" role="menuitem">Willard Van Orme Quine</a>
 </div>
 <div>
 <h4>Pragmatismo Americano</h4>
@@ -6724,6 +6774,110 @@ document.addEventListener('DOMContentLoaded', function(){
     input.addEventListener('input', debounce(showSuggestions, 300));
     input.addEventListener('blur', function(){ setTimeout(function(){ var b=document.getElementById('search-suggest-box'); if(b) b.classList.remove('show'); }, 200); });
   }
+})();
+</script>
+<script>
+// === Echi di Sofia — Append dataset per ricerca interna (articoli) ===
+// Attende che window.siteData esista, poi aggiunge gli articoli e, se presente,
+// richiama buildSearchIndex(siteData) per rigenerare l'indice.
+
+(function(){
+  const NEW_ITEMS = [
+    {
+      url: "articoli/austin.html",
+      title: "J.L. Austin",
+      content: "John Langshaw Austin (1911-1960), filosofo del linguaggio ordinario. Analisi degli atti linguistici e della teoria del performativo.",
+      snippet: "Austin e la filosofia del linguaggio ordinario: atti linguistici e performativi."
+    },
+    {
+      url: "articoli/bacon.html",
+      title: "Francis Bacon",
+      content: "Francis Bacon (1561-1626), filosofo e politico inglese. Padre del metodo induttivo e promotore della nuova scienza sperimentale.",
+      snippet: "Bacon e il metodo induttivo: fondamenti della nuova scienza moderna."
+    },
+    {
+      url: "articoli/dilthey.html",
+      title: "Wilhelm Dilthey",
+      content: "Wilhelm Dilthey (1833-1911), filosofo tedesco. Fondatore delle scienze dello spirito e teorico della comprensione ermeneutica.",
+      snippet: "Dilthey: vita, opere e metodo delle scienze dello spirito."
+    },
+    {
+      url: "articoli/gadamer.html",
+      title: "Hans-Georg Gadamer",
+      content: "Hans-Georg Gadamer (1900-2002), maestro dell’ermeneutica filosofica. Autore di Verità e metodo, elaborò la teoria della fusione degli orizzonti.",
+      snippet: "Gadamer e l’ermeneutica filosofica: Verità e metodo."
+    },
+    {
+      url: "articoli/habermas.html",
+      title: "Jürgen Habermas",
+      content: "Jürgen Habermas (1929-2023), filosofo tedesco della Scuola di Francoforte. Teoria dell’agire comunicativo e democrazia deliberativa.",
+      snippet: "Habermas: teoria dell’agire comunicativo e filosofia politica."
+    },
+    {
+      url: "articoli/lewis.html",
+      title: "Clarence I. Lewis",
+      content: "Clarence Irving Lewis (1883-1964), filosofo statunitense. Contributi alla logica simbolica, pragmatismo e teoria della conoscenza.",
+      snippet: "Lewis: logica simbolica e pragmatismo americano."
+    },
+    {
+      url: "articoli/quine.html",
+      title: "W.V.O. Quine",
+      content: "Willard Van Orman Quine (1908-2000), filosofo analitico. Critico del positivismo logico, sviluppò l’olismo epistemologico e la critica alla distinzione analitico/sintetico.",
+      snippet: "Quine: olismo epistemologico e critica al positivismo logico."
+    },
+    {
+      url: "articoli/schleiermacher.html",
+      title: "Friedrich Schleiermacher",
+      content: "Friedrich Schleiermacher (1768-1834), teologo e filosofo. Padre della moderna ermeneutica e promotore di un cristianesimo vissuto.",
+      snippet: "Schleiermacher: ermeneutica e filosofia della religione."
+    },
+    {
+      url: "articoli/searle.html",
+      title: "John Searle",
+      content: "John Rogers Searle (1932-2017), filosofo del linguaggio e della mente. Continuatore della filosofia di Austin, autore della teoria degli atti linguistici e della coscienza.",
+      snippet: "Searle: atti linguistici e filosofia della mente."
+    },
+    {
+      url: "articoli/wittgenstein.html",
+      title: "Ludwig Wittgenstein",
+      content: "Ludwig Wittgenstein (1889-1951), filosofo austriaco. Due fasi: Tractatus logico-philosophicus e Ricerche filosofiche. Cruciale per la filosofia del linguaggio.",
+      snippet: "Wittgenstein: Tractatus e Ricerche filosofiche."
+    },
+    {
+      url: "articoli/ricoeur.html",
+      title: "Paul Ricoeur",
+      content: "Paul Ricoeur (1913-2005), filosofo francese. Maestro dell’ermeneutica, ha intrecciato narrazione, memoria e identità nella filosofia contemporanea.",
+      snippet: "Ricoeur: ermeneutica, identità e narrazione."
+    }
+  ];
+
+  // Poll semplice: aspetta che siteData esista (max ~3s) e poi appende
+  let tries = 0;
+  const MAX_TRIES = 30;
+  const iv = setInterval(() => {
+    tries++;
+    if (Array.isArray(window.siteData)) {
+      // Evita duplicati: controlla per URL
+      const existing = new Set(window.siteData.map(i => i.url));
+      const toAdd = NEW_ITEMS.filter(i => !existing.has(i.url));
+      if (toAdd.length) window.siteData.push(...toAdd);
+
+      // Se c'è un builder d'indice, rigeneralo
+      if (typeof window.buildSearchIndex === "function") {
+        try { window.buildSearchIndex(window.siteData); } catch(e) { console.warn(e); }
+      }
+      clearInterval(iv);
+      console.log("[Ricerca interna] Aggiunti articoli:", toAdd.length);
+    } else if (tries >= MAX_TRIES) {
+      // Fallback: crea siteData se proprio non esiste
+      window.siteData = NEW_ITEMS.slice();
+      if (typeof window.buildSearchIndex === "function") {
+        try { window.buildSearchIndex(window.siteData); } catch(e) { console.warn(e); }
+      }
+      clearInterval(iv);
+      console.warn("[Ricerca interna] siteData non trovato: creato dataset con soli articoli.");
+    }
+  }, 100);
 })();
 </script>
 
