@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Un approfondimento su Paul Ricœur, filosofo francese del XX secolo noto per i suoi contributi all'ermeneutica, alla filosofia del linguaggio, alla teoria narrativa e alla filosofia del sé.">
+    <title>Paul Ricœur: Filosofo dell'Interpretazione | Tributo Interattivo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Crimson+Pro:wght@300;400;700&family=Inter:wght@300;400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #455a64;
+            --secondary: #78909c;
+            --accent: #5c6bc0;
+            --light: #eceff1;
+            --dark: #263238;
+            --text: #37474f;
+            --background: #fafafa;
+            --card-bg: #ffffff;
+            --shadow: rgba(69, 90, 100, 0.1);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .notturno {
+            --primary: #90a4ae;
+            --secondary: #78909c;
+            --accent: #7986cb;
+            --light: #263238;
+            --dark: #eceff1;
+            --text: #cfd8dc;
+            --background: #1a2327;
+            --card-bg: #222d33;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        .filosofico {
+            --primary: #5c6bc0;
+            --secondary: #9fa8da;
+            --accent: #7e57c2;
+            --light: #f5f5f5;
+            --dark: #303f9f;
+            --text: #3f51b5;
+            --background: #e8eaf6;
+            --card-bg: #c5cae9;
+            --shadow: rgba(92, 107, 192, 0.15);
+        }
+
+        .contemplativo {
+            --primary: #26a69a;
+            --secondary: #80cbc4;
+            --accent: #4db6ac;
+            --light: #e0f2f1;
+            --dark: #00897b;
+            --text: #00695c;
+            --background: #f1f8f7;
+            --card-bg: #b2dfdb;
+            --shadow: rgba(38, 166, 154, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: var(--transition);
+        }
+
+        body {
+            font-family: 'Crimson Pro', serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-image: 
+                radial-gradient(circle at 100% 100%, var(--secondary) 0%, transparent 2%),
+                radial-gradient(circle at 0% 0%, var(--secondary) 0%, transparent 2%);
+            background-size: 30px 30px;
+        }
+
+        .content-wrapper {
+            background-color: var(--background);
+            border-radius: 16px;
+            box-shadow: 0 12px 36px var(--shadow);
+            overflow: hidden;
+            position: relative;
+        }
+
+        header {
+            text-align: center;
+            padding: 70px 20px;
+            margin-bottom: 30px;
+            position: relative;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-bottom: 4px solid var(--accent);
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            font-style: italic;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            font-family: 'Crimson Pro', serif;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .theme-selector {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .theme-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .theme-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .intro {
+            text-align: center;
+            margin: 50px auto;
+            padding: 0 40px;
+            max-width: 900px;
+        }
+
+        .intro p {
+            font-size: 1.3rem;
+            line-height: 1.9;
+        }
+
+        .key-concepts {
+            display: flex;
+            justify-content: center;
+            margin: 50px 0;
+            flex-wrap: wrap;
+            gap: 25px;
+        }
+
+        .concept-pill {
+            padding: 16px 28px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 6px 18px var(--shadow);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .concept-pill:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 24px var(--shadow);
+        }
+
+        .concept-pill:before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50px;
+            transform: scale(0);
+            transition: var(--transition);
+        }
+
+        .concept-pill:hover:before {
+            transform: scale(1);
+        }
+
+        .accordion {
+            margin: 50px 0;
+            padding: 0 30px;
+        }
+
+        .accordion-item {
+            margin-bottom: 30px;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px var(--shadow);
+            background: var(--card-bg);
+            border-left: 6px solid var(--accent);
+        }
+
+        .accordion-header {
+            padding: 28px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.7rem;
+            color: var(--primary);
+            background: var(--card-bg);
+            position: relative;
+        }
+
+        .accordion-header:hover {
+            background: var(--light);
+        }
+
+        .accordion-icon {
+            font-size: 1.6rem;
+            transition: var(--transition);
+            color: var(--accent);
+        }
+
+        .accordion-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .accordion-content.active {
+            max-height: 3000px;
+            padding: 35px;
+        }
+
+        .quote {
+            font-style: italic;
+            border-left: 5px solid var(--accent);
+            padding: 25px;
+            margin: 30px 0;
+            background: var(--light);
+            border-radius: 0 12px 12px 0;
+            color: var(--dark);
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.2rem;
+        }
+
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .work-card {
+            background: var(--light);
+            border-radius: 14px;
+            padding: 28px;
+            box-shadow: 0 6px 18px var(--shadow);
+            transition: var(--transition);
+            border-top: 4px solid var(--accent);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .work-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 28px var(--shadow);
+        }
+
+        .work-card h3 {
+            color: var(--primary);
+            margin-bottom: 18px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+        }
+
+        .work-card p {
+            color: var(--text);
+            font-size: 1.05rem;
+            flex-grow: 1;
+        }
+
+        .work-card .year {
+            margin-top: 15px;
+            font-style: italic;
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        .influence-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .influence-item {
+            flex: 1;
+            min-width: 270px;
+            background: var(--light);
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 6px 18px var(--shadow);
+            transition: var(--transition);
+        }
+
+        .influence-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 28px var(--shadow);
+        }
+
+        .influence-item h3 {
+            color: var(--accent);
+            margin-bottom: 18px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 50px;
+            margin-top: 60px;
+            border-top: 1px solid var(--secondary);
+            color: var(--secondary);
+            font-size: 1.1rem;
+            background: var(--card-bg);
+            border-radius: 0 0 16px 16px;
+            font-family: 'Inter', sans-serif;
+            clip-path: polygon(0 20%, 100% 0, 100% 100%, 0 100%);
+        }
+
+        .interactive-element {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+        }
+
+        .hermeneutic-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 8px 24px var(--shadow);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            text-align: center;
+            padding: 20px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hermeneutic-circle:hover {
+            transform: rotate(15deg) scale(1.1);
+            box-shadow: 0 12px 32px var(--shadow);
+        }
+
+        @media (max-width: 900px) {
+            h1 {
+                font-size: 3rem;
+            }
+            
+            .theme-selector {
+                position: relative;
+                top: 0;
+                right: 0;
+                justify-content: center;
+                margin-bottom: 30px;
+            }
+            
+            .accordion-header {
+                font-size: 1.4rem;
+                padding: 22px;
+            }
+            
+            .concept-pill {
+                padding: 14px 24px;
+                font-size: 0.9rem;
+            }
+
+            .intro p {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .accordion {
+                padding: 0 15px;
+            }
+            
+            .concept-pill {
+                padding: 12px 20px;
+                font-size: 0.85rem;
+            }
+        }
+
+        .hermeneutic-section {
+            background: var(--light);
+            padding: 40px;
+            border-radius: 16px;
+            margin: 40px 0;
+            box-shadow: 0 8px 24px var(--shadow);
+        }
+
+        .hermeneutic-process {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .process-step {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            padding: 20px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .process-step i {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .process-step h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* MODALE PER I CONCETTI */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 16px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--secondary);
+        }
+
+        .close-modal:hover {
+            color: var(--accent);
+        }
+
+        .modal-title {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .modal-text {
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .concept-pill.active {
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            transform: scale(1.1);
+            box-shadow: 0 10px 24px var(--shadow);
+        }
+    </style>
+</head>
+<body class="filosofico">
+    <div class="content-wrapper">
+        <header>
+            <div class="theme-selector">
+                <button class="theme-btn" id="theme-normale">Normale</button>
+                <button class="theme-btn" id="theme-notturno">Notturno</button>
+                <button class="theme-btn" id="theme-filosofico">Filosofico</button>
+                <button class="theme-btn" id="theme-contemplativo">Contemplativo</button>
+            </div>
+            <h1>Paul Ricœur</h1>
+            <p class="subtitle">1913-2005 | Filosofo dell'ermeneutica, del linguaggio e della narrazione</p>
+        </header>
+
+        <section class="intro">
+            <p>Paul Ricœur è stato uno dei più importanti filosofi del XX secolo, noto per la sua capacità di sintetizzare diverse tradizioni filosofiche. Il suo lavoro spazia dall'ermeneutica alla fenomenologia, dalla filosofia del linguaggio all'etica, con un costante interesse per il modo in cui gli esseri umani danno senso alla propria esistenza attraverso il racconto e l'interpretazione.</p>
+        </section>
+
+        <div class="key-concepts">
+            <div class="concept-pill" data-concept="ermeneutica">Ermeneutica</div>
+            <div class="concept-pill" data-concept="fenomenologia">Fenomenologia</div>
+            <div class="concept-pill" data-concept="teoria-narrativa">Teoria Narrativa</div>
+            <div class="concept-pill" data-concept="filosofia-del-se">Filosofia del Sé</div>
+            <div class="concept-pill" data-concept="etica">Etica</div>
+        </div>
+
+        <!-- Modale per i concetti -->
+        <div id="concept-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" id="close-modal">&times;</span>
+                <h2 class="modal-title" id="modal-title">Titolo</h2>
+                <div class="modal-text" id="modal-text">
+                    <!-- Il contenuto verrà inserito dinamicamente via JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <section class="accordion">
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion('vita')">
+                    <span>Vita e Percorso Intellettuale</span>
+                    <i class="accordion-icon fas fa-user-circle"></i>
+                </div>
+                <div class="accordion-content" id="vita-content">
+                    <p>Paul Ricœur nacque il 27 febbraio 1913 a Valence, in Francia. Rimase orfano di madre e poi di padre durante la prima guerra mondiale, venendo cresciuto dai nonni paterni e da una zia. Queste esperienze precoci di perdita influenzarono profondamente il suo pensiero successivo sulla fragilità umana e sulla ricerca di senso.</p>
+                    
+                    <p>Studiò filosofia alle università di Rennes e alla Sorbona di Parigi, dove fu influenzato por Gabriel Marcel. Durante la seconda guerra mondiale, fu prigioniero di guerra per cinque anni, un periodo durante il quale lesse intensamente Karl Jaspers e iniziò a tradurre le Idee di Husserl.</p>
+                    
+                    <div class="quote">
+                        "La funzione primaria del discorso non è tanto di descrivere qualcosa quanto di fare qualcosa." - Paul Ricœur
+                    </div>
+                    
+                    <p>Dopo la guerra, insegnò storia della filosofia alla Sorbona e successivamente all'Università di Chicago. Il suo pensiero si è evoluto attraverso un dialogo costante con diverse tradizioni filosofiche, dalla fenomenologia all'ermeneutica, dallo strutturalismo alla filosofia analitica.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion('ermeneutica')">
+                    <span>Filosofia Ermeneutica</span>
+                    <i class="accordion-icon fas fa-sync-alt"></i>
+                </div>
+                <div class="accordion-content" id="ermeneutica-content">
+                    <h3>L'Ermeneutica del Sé</h3>
+                    <p>Ricœur sviluppò un'ermeneutica filosofica che si concentra sull'interpretazione dei testi e sull'auto-comprensione umana. Per Ricœur, l'interpretazione non è solo un metodo per comprendere i testi, ma una caratteristica fondamentale dell'esistenza umana.</p>
+                    
+                    <div class="hermeneutic-section">
+                        <h3>Il Circolo Ermeneutico</h3>
+                        <p>Ricœur ha ripensato il circolo ermeneutico, non come un circolo vizioso, ma come un movimento dinamico tra precomprensione e comprensione, tra la parte e il tutto.</p>
+                        
+                        <div class="hermeneutic-process">
+                            <div class="process-step">
+                                <i class="fas fa-question-circle"></i>
+                                <h4>Precomprensione</h4>
+                                <p>Le nostre preconcezioni e pregiudizi iniziali</p>
+                            </div>
+                            <div class="process-step">
+                                <i class="fas fa-book-open"></i>
+                                <h4>Interpretazione</h4>
+                                <p>L'incontro con il testo o l'esperienza</p>
+                            </div>
+                            <div class="process-step">
+                                <i class="fas fa-lightbulb"></i>
+                                <h4>Comprensione</h4>
+                                <p>La nuova comprensione che emerge</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="quote">
+                        "Comprendere un testo è comprendere se stessi di fronte al testo." - Paul Ricœur
+                    </div>
+                    
+                    <p>Ricœur distingue tra "spiegazione" (explanation) e "comprensione" (understanding), vedendole come momenti complementari del processo interpretativo. La spiegazione analizza il testo, mentre la comprensione ne coglie il significato globale.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion('teoria-narrativa')">
+                    <span>Teoria Narrativa</span>
+                    <i class="accordion-icon fas fa-book"></i>
+                </div>
+                <div class="accordion-content" id="teoria-narrativa-content">
+                    <h3>L'Identità Narrativa</h3>
+                    <p>Una delle contribuzioni più importanti di Ricœur è la teoria dell'identità narrativa, esposta principalmente nella sua opera "Tempo e racconto". Secondo Ricœur, la narrazione è il mezzo principale attraverso cui costruiamo la nostra identità e diamo senso alla nostra esperienza temporale.</p>
+                    
+                    <div class="quote">
+                        "Il sé nasce nel racconto così come il racconto nasce dall'esperienza del sé." - Paul Ricœur
+                    </div>
+                    
+                    <h3>Mimesis: I Tre Livelli del Racconto</h3>
+                    <p>Ricœur distingue tre momenti nella configurazione narrativa:</p>
+                    <ol>
+                        <li><strong>Mimesis I</strong> - La precomprensione del mondo dell'azione</li>
+                        <li><strong>Mimesis II</strong> - La configurazione del racconto attraverso l'intreccio</li>
+                        <li><strong>Mimesis III</strong> - La rifigurazione dell'esperienza del lettore/ascoltatore</li>
+                    </ol>
+                    
+                    <p>Attraverso questo processo, la narrazione media tra l'esperienza temporale individuale e le strutture culturali condivise, permettendoci di integrare eventi disparati in una trama coerente.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion('opere')">
+                    <span>Opere Principali</span>
+                    <i class="accordion-icon fas fa-monument"></i>
+                </div>
+                <div class="accordion-content" id="opere-content">
+                    <div class="works-grid">
+                        <div class="work-card">
+                            <h3>La simbolica del male (1960)</h3>
+                            <p>Esplora come le culture umane hanno simbolicamente rappresentato il male attraverso miti e narrazioni.</p>
+                            <div class="year">1960</div>
+                        </div>
+                        <div class="work-card">
+                            <h3>Il conflitto delle interpretazioni (1969)</h3>
+                            <p>Raccolta di saggi che sviluppano la sua filosofia ermeneutica nel dialogo con psicoanalisi, strutturalismo e altre correnti.</p>
+                            <div class="year">1969</div>
+                        </div>
+                        <div class="work-card">
+                            <h3>Tempo e racconto (1983-1985)</h3>
+                            <p>Trilogia monumentale sulla relazione tra esperienza temporale e narrazione, e sulla costituzione dell'identità narrativa.</p>
+                            <div class="year">1983-1985</div>
+                        </div>
+                        <div class="work-card">
+                            <h3>Se stesso come un altro (1990)</h3>
+                            <p>Esplora la questione dell'identità personale attraverso l'ermeneutica del sé e l'etica.</p>
+                            <div class="year">1990</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion('eredita')">
+                    <span>Eredità e Influenza</span>
+                    <i class="accordion-icon fas fa-seedling"></i>
+                </div>
+                <div class="accordion-content" id="eredita-content">
+                    <div class="influence-container">
+                        <div class="influence-item">
+                            <h3>Filosofia Continentale</h3>
+                            <p>Ricœur ha costruito ponti tra diverse tradizioni filosofiche, influenzando profondamente l'ermeneutica contemporanea e la fenomenologia.</p>
+                        </div>
+                        <div class="influence-item">
+                            <h3>Teoria Letteraria</h3>
+                            <p>La sua teoria narrativa ha avuto un impatto significativo sugli studi letterari e sulla narratologia.</p>
+                        </div>
+                        <div class="influence-item">
+                            <h3>Scienze Sociale</h3>
+                            <p>Il suo lavoro sull'identità narrativa ha influenzato psicologia, sociologia e antropologia.</p>
+                        </div>
+                    </div>
+                    
+                    <p>L'approccio di Ricœur, caratterizzato da un dialogo rispettoso con posizioni diverse e da un'attenzione alla complessità dell'esperienza umana, continua a ispirare filosofi, teologi, letterati e scienziati sociali.</p>
+                    
+                    <div class="quote">
+                        "La speranza è per l'anima ciò che il respiro è per il corpo." - Paul Ricœur
+                    </div>
+
+                    <div class="interactive-element">
+                        <div class="hermeneutic-circle" onclick="animateCircle(this)">
+                            Clicca per esplorare il circolo ermeneutico
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2023 | Tributo interattivo a Paul Ricœur</p>
+            <p>Questo sito è stato creato a scopo educativo e divulgativo.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Contenuti per i concetti
+        const conceptContents = {
+            'ermeneutica': {
+                title: 'Ermeneutica in Paul Ricœur',
+                content: `<p>L'ermeneutica in Paul Ricœur rappresenta una sintesi originale tra la tradizione ermeneutica continentale (Schleiermacher, Dilthey, Heidegger, Gadamer) e le istanze della fenomenologia e della filosofia analitica.</p>
+                
+                <p>Per Ricœur, l'ermeneutica non è solo un metodo di interpretazione dei testi, ma una filosofia che si interroga sulle condizioni di possibilità della comprensione umana. Il suo approccio si caratterizza per:</p>
+                
+                <ul>
+                    <li>La <strong>mediazione del testo</strong> come via privilegiata per la comprensione di sé</li>
+                    <li>L'<strong>attenzione al linguaggio</strong> come luogo in cui si esprime l'esperienza umana</li>
+                    <li>Il <strong>circolo ermeneutico</strong> come movimento tra precomprensione e comprensione</li>
+                    <li>La <strong>distanziazione</strong> come momento costitutivo della comprensione</li>
+                </ul>
+                
+                <div class="quote">
+                    "L'ermeneutica è la teoria delle operazioni della comprensione nella loro relazione con l'interpretazione dei testi." - Paul Ricœur
+                </div>
+                
+                <p>Ricœur supera l'opposizione tra spiegazione (explanation) e comprensione (understanding), mostrando come siano momenti complementari del processo interpretativo.</p>`
+            },
+            'fenomenologia': {
+                title: 'Fenomenologia e Ricœur',
+                content: `<p>Paul Ricœur è stato uno dei maggiori esponenti della fenomenologia francese del Novecento. Il suo approccio alla fenomenologia si caratterizza per un dialogo costante con altre tradizioni filosofiche e per l'attenzione alle dimensioni pratiche ed esistenziali dell'esperienza umana.</p>
+                
+                <p>La sua fenomenologia si distingue per:</p>
+                
+                <ul>
+                    <li>L'<strong>integrazione con l'ermeneutica</strong>: non c'è accesso immediato ai fenomeni, ma sempre mediato dal linguaggio e dall'interpretazione</li>
+                    <li>L'<strong>attenzione alla volontà</strong> e alla fragilità umana</li>
+                    <li>La <strong>fenomenologia del sé</strong> come identità narrativa</li>
+                    <li>L'<strong>analisi delle capacità umane</strong>: parlare, agire, raccontare, imputare</li>
+                </ul>
+                
+                <div class="quote">
+                    "La fenomenologia rimane il presupposto ineliminabile dell'ermeneutica." - Paul Ricœur
+                </div>
+                
+                <p>Ricœur ha tradotto e commentato Husserl, ma ha sviluppato una fenomenologia originale che tiene conto della mediazione linguistica e simbolica dell'esperienza.</p>`
+            },
+            'teoria-narrativa': {
+                title: 'Teoria Narrativa e Identità',
+                content: `<p>La teoria narrativa di Paul Ricœur, esposta principalmente nella trilogia "Tempo e racconto", rappresenta uno dei contributi più originali alla filosofia contemporanea. Ricœur mostra come la narrazione sia il mezzo privilegiato attraverso cui gli esseri umani danno senso alla loro esperienza temporale e costruiscono la loro identità.</p>
+                
+                <p>I punti chiave della sua teoria narrativa includono:</p>
+                
+                <ul>
+                    <li>L'<strong>identità narrativa</strong>: il sé si costituisce attraverso le storie che raccontiamo su noi stessi</li>
+                    <li>La <strong>triplice mimesi</strong>: prefigurazione, configurazione e rifigurazione</li>
+                    <li>L'<strong>intreccio</strong> (plot) come sintesi dell'eterogeneo</li>
+                    <li>La <strong>dialettica tra tempo e racconto</strong>: il tempo diviene umano nella misura in cui è articolato narrativamente</li>
+                </ul>
+                
+                <div class="quote">
+                    "Dobbiamo raccontare per comprendere il tempo, ma dobbiamo comprendere il tempo per raccontare." - Paul Ricœur
+                </div>
+                
+                <p>La teoria narrativa di Ricœur ha avuto un'impatto profondo non solo in filosofia, ma anche in psicologia, sociologia, studi letterari e teologia.</p>`
+            },
+            'filosofia-del-se': {
+                title: 'Filosofia del Sé',
+                content: `<p>La filosofia del sé di Paul Ricœur rappresenta una sintesi originale tra l'eredità cartesiana, la fenomenologia, l'ermeneutica e la filosofia analitica. Ricœur elabora una concezione narrativa dell'identità personale che supera le aporie delle tradizionali teorie del soggetto.</p>
+                
+                <p>I concetti chiave della sua filosofia del sé includono:</p>
+                
+                <ul>
+                    <li>La distinzione tra <strong>idem</strong> (identità come sameness) e <strong>ipse</strong> (identità come selfhood)</li>
+                    <li>L'<strong>identità narrativa</strong> come risposta alla crisi dell'identità personale</li>
+                    <li>Il <strong>sé come un altro</strong>: l'identità si costituisce nella relazione con l'altro</li>
+                    <li>Le <strong>capacità umane</strong> (poter parlare, agire, raccontare, imputare) come fondamento pratico dell'identità</li>
+                </ul>
+                
+                <div class="quote">
+                    "Il sé non è un dato, ma un compito." - Paul Ricœur
+                </div>
+                
+                <p>In "Se stesso come un altro", Ricœur sviluppa una ontologia del sé che tiene conto della dimensione etica e della relazionalità costitutiva dell'identità personale.</p>`
+            },
+            'etica': {
+                title: 'Etica e Giustizia',
+                content: `<p>L'etica in Paul Ricœur si sviluppa come riflessione sulla "vita buona con e per gli altri in istituzioni giuste". La sua proposta etica rappresenta una sintesi originale tra l'eredità aristotelica della virtù, l'imperativo categorico kantiano e la sollecitudine per l'altro.</p>
+                
+                <p>I pilastri dell'etica ricœuriana sono:</p>
+                
+                <ul>
+                    <li>La <strong>vita buona</strong> come fine etico fondamentale</li>
+                    <li>La <strong>sollecitudine</strong> come reciprocità nella stima</li>
+                    <li>Le <strong>istituzioni giuste</strong> come dimensione politica dell'etica</li>
+                    <li>La <strong>saggezza pratica</strong> (phronesis) come virtù deliberativa</li>
+                </ul>
+                
+                <div class="quote">
+                    "L'etica è la visée de la vie bonne, avec et pour autrui, dans des institutions justes." - Paul Ricœur
+                </div>
+                
+                <p>Ricœur sviluppa anche una riflessione sulla giustizia come virtù istituzionale e sul perdono come orizzonte della riconciliazione. La sua etica tiene insieme la dimensione personale della vita buona e la dimensione politica della giustizia.</p>`
+            }
+        };
+
+        // Funzione per aprire/chiudere le sezioni accordion
+        function toggleAccordion(id) {
+            const content = document.getElementById(id + '-content');
+            content.classList.toggle('active');
+            
+            const icon = content.previousElementSibling.querySelector('.accordion-icon');
+            if (content.classList.contains('active')) {
+                if (id === 'vita') {
+                    icon.classList.remove('fa-user-circle');
+                    icon.classList.add('fa-history');
+                } else if (id === 'ermeneutica') {
+                    icon.classList.remove('fa-sync-alt');
+                    icon.classList.add('fa-redo-alt');
+                } else if (id === 'teoria-narrativa') {
+                    icon.classList.remove('fa-book');
+                    icon.classList.add('fa-book-open');
+                } else if (id === 'opere') {
+                    icon.classList.remove('fa-monument');
+                    icon.classList.add('fa-landmark');
+                } else if (id === 'eredita') {
+                    icon.classList.remove('fa-seedling');
+                    icon.classList.add('fa-tree');
+                }
+            } else {
+                if (id === 'vita') {
+                    icon.classList.remove('fa-history');
+                    icon.classList.add('fa-user-circle');
+                } else if (id === 'ermeneutica') {
+                    icon.classList.remove('fa-redo-alt');
+                    icon.classList.add('fa-sync-alt');
+                } else if (id === 'teoria-narrativa') {
+                    icon.classList.remove('fa-book-open');
+                    icon.classList.add('fa-book');
+                } else if (id === 'opere') {
+                    icon.classList.remove('fa-landmark');
+                    icon.classList.add('fa-monument');
+                } else if (id === 'eredita') {
+                    icon.classList.remove('fa-tree');
+                    icon.classList.add('fa-seedling');
+                }
+            }
+        }
+
+        // Cambio tema
+        document.getElementById('theme-normale').addEventListener('click', () => {
+            document.body.className = 'normale';
+        });
+
+        document.getElementById('theme-notturno').addEventListener('click', () => {
+            document.body.className = 'notturno';
+        });
+
+        document.getElementById('theme-filosofico').addEventListener('click', () => {
+            document.body.className = 'filosofico';
+        });
+
+        document.getElementById('theme-contemplativo').addEventListener('click', () => {
+            document.body.className = 'contemplativo';
+        });
+
+        // Animazione del cerchio ermeneutico
+        function animateCircle(element) {
+            element.style.transform = 'rotate(360deg) scale(1.1)';
+            element.innerHTML = '<div>Interpretazione → Comprensione</div>';
+            
+            setTimeout(() => {
+                element.style.transform = '';
+                element.innerHTML = 'Clicca per esplorare il circolo ermeneutico';
+            }, 2000);
+        }
+
+        // Effetto per i pill concettuali
+        document.querySelectorAll('.concept-pill').forEach(pill => {
+            pill.addEventListener('click', () => {
+                // Rimuovi la classe active da tutti i pill
+                document.querySelectorAll('.concept-pill').forEach(p => {
+                    p.classList.remove('active');
+                });
+                
+                // Aggiungi la classe active al pill cliccato
+                pill.classList.add('active');
+                
+                // Ottieni il concetto dal data attribute
+                const concept = pill.getAttribute('data-concept');
+                
+                // Mostra il modale con il contenuto appropriato
+                showConceptModal(concept);
+            });
+        });
+
+        // Funzione per mostrare il modale del concetto
+        function showConceptModal(concept) {
+            const modal = document.getElementById('concept-modal');
+            const title = document.getElementById('modal-title');
+            const content = document.getElementById('modal-text');
+            
+            // Imposta titolo e contenuto
+            title.textContent = conceptContents[concept].title;
+            content.innerHTML = conceptContents[concept].content;
+            
+            // Mostra il modale
+            modal.style.display = 'flex';
+        }
+
+        // Chiudi il modale
+        document.getElementById('close-modal').addEventListener('click', () => {
+            document.getElementById('concept-modal').style.display = 'none';
+        });
+
+        // Chiudi il modale cliccando fuori dal contenuto
+        window.addEventListener('click', (event) => {
+            const modal = document.getElementById('concept-modal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
