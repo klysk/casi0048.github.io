@@ -1628,6 +1628,18 @@ window.updateLabel = window.updateLabel || function(){
 }
 </script>
 
+
+<style>
+/* Foto fluttuante tra simboli/parole */
+.particle.float-person {
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 18px rgba(212,175,55,.35);
+  border: 2px solid rgba(212,175,55,.6);
+  pointer-events: none;
+}
+</style>
+
 </head>
 <body>
 <div class="slider-vertical">
@@ -7200,6 +7212,68 @@ document.addEventListener('DOMContentLoaded', function(){
 
   // --- LOG MINIMO (aiuta debug senza sporcare) ---
   baseEl.addEventListener('canplaythrough', () => console.log('[ExplodePool] base pronto'));
+})();
+</script>
+
+
+<!-- Foto fluttuante tra simboli/parole -->
+<script>
+(function(){
+  function addFloatingPerson(src, opts){
+    opts = opts || {};
+    var sizeRem = opts.sizeRem || 6;
+    var alt = opts.alt || 'Foto';
+
+    var img = new Image();
+    img.decoding = 'async';
+    img.loading = 'lazy';
+    img.src = src;
+    img.alt = alt;
+    img.className = 'particle float-person';
+    img.style.width  = sizeRem + 'rem';
+    img.style.height = sizeRem + 'rem';
+
+    var layer = document.getElementById('philoParticles') || document.body;
+    layer.appendChild(img);
+
+    var speedBase = (window.cfg && cfg.minSpeed && cfg.maxSpeed)
+      ? (Math.random() * (cfg.maxSpeed - cfg.minSpeed) + cfg.minSpeed)
+      : 0.004;
+
+    var p = {
+      el: img,
+      x0: Math.random() * window.innerWidth,
+      y0: Math.random() * window.innerHeight,
+      phase: Math.random() * Math.PI * 2,
+      speed: speedBase,
+      type: 'person'
+    };
+
+    if (Array.isArray(window.particles)) {
+      window.particles.push(p);
+    } else if (Array.isArray(window.symbols)) {
+      window.symbols.push(p);
+    } else {
+      var last = performance.now();
+      (function selfMove(now){
+        var dt = Math.min(0.05, ((now||performance.now()) - last)/1000);
+        last = (now||performance.now());
+        p.phase += p.speed * dt * 60;
+        var dx = Math.cos(p.phase) * (cfg?.floatDist || 90);
+        var dy = Math.sin(p.phase) * (cfg?.floatDist || 90);
+        p.el.style.transform = 'translate(' + (p.x0 + dx) + 'px,' + (p.y0 + dy) + 'px)';
+        requestAnimationFrame(selfMove);
+      })();
+    }
+
+    return p;
+  }
+
+  // Inserisci la foto di Maria Teresa
+  addFloatingPerson(
+    'https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/maria_teresa.jpg',
+    { sizeRem: 6, alt: 'Maria Teresa' }
+  );
 })();
 </script>
 
