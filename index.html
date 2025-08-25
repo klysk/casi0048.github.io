@@ -3513,6 +3513,118 @@ window.updateLabel = window.updateLabel || function(){
 <!-- Audio effetti -->
 <audio id="thunder-sound" preload="auto" src="https://casi0048.github.io/suoni/thunder-sound.mp3"></audio>
 <audio id="explosionSound" preload="auto" src="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/suoni/explosion-1.mp3"></audio>
+<script>
+(() => {
+  // --- RIFERIMENTI ---
+  const btnThunder = document.getElementById('btn-thunder');   // ⚡ Tuono
+  const btnExplode = document.getElementById('explode-btn');   // 💥 Esplodi
+  const thunder    = document.getElementById('thunder-sound'); // <audio>
+  const explosion  = document.getElementById('explosionSound');// <audio>
+
+  // --- 1) UNLOCK al primo gesto (play→pause invisibile) ---
+  let unlocked = false;
+  async function unlockOnce() {
+    if (unlocked) return;
+    unlocked = true;
+    for (const a of [thunder, explosion]) {
+      if (!a) continue;
+      try {
+        a.muted = false;
+        await a.play();
+        a.pause(); a.currentTime = 0;
+      } catch (_) {}
+    }
+    window.removeEventListener('pointerdown', unlockOnce, {capture:true});
+    window.removeEventListener('keydown', unlockOnce, {capture:true});
+  }
+  window.addEventListener('pointerdown', unlockOnce, {once:true, capture:true, passive:true});
+  window.addEventListener('keydown', unlockOnce, {once:true, capture:true});
+
+  // --- 2) PLAY con FALLBACK MULTIPLO ---
+  // Chrome a volte non passa automaticamente al <source> successivo:
+  // settiamo le sorgenti a mano e proviamo in sequenza.
+  async function playWithFallback(audioEl, sources) {
+    for (let i = 0; i < sources.length; i++) {
+      const src = sources[i];
+      try {
+        // riassegna la sorgente "pulita"
+        audioEl.pause();
+        audioEl.removeAttribute('src');               // reset
+        while (audioEl.firstChild) audioEl.removeChild(audioEl.firstChild);
+        const s = document.createElement('source');
+        s.src = src;
+        s.type = 'audio/mpeg';
+        audioEl.appendChild(s);
+        audioEl.load();
+
+        // aspetta che sia caricabile
+        await new Promise((res, rej) => {
+          const onCan = () => { cleanup(); res(); };
+          const onErr = () => { cleanup(); rej(new Error('error')); };
+          const onStl = () => { cleanup(); rej(new Error('stalled')); };
+          const cleanup = () => {
+            audioEl.removeEventListener('canplaythrough', onCan);
+            audioEl.removeEventListener('error', onErr);
+            audioEl.removeEventListener('stalled', onStl);
+          };
+          audioEl.addEventListener('canplaythrough', onCan, {once:true});
+          audioEl.addEventListener('error', onErr, {once:true});
+          audioEl.addEventListener('stalled', onStl, {once:true});
+          // timeout di sicurezza
+          setTimeout(() => { cleanup(); rej(new Error('timeout')); }, 4000);
+        });
+
+        audioEl.currentTime = 0;
+        await audioEl.play();
+        console.log('[AUDIO OK]', src);
+        return true; // riprodotto
+      } catch (e) {
+        console.warn('[AUDIO FALLBACK]', src, e.message || e);
+        continue; // prova il prossimo
+      }
+    }
+    console.error('[AUDIO KO] tutte le sorgenti hanno fallito');
+    return false;
+  }
+
+  // --- 3) LISTENER UNICI sui bottoni (evita conflitti) ---
+  if (btnThunder && !btnThunder._bound) {
+    btnThunder._bound = true;
+    btnThunder.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const ok = await playWithFallback(thunder, [
+        '/suoni/thunder-sound.mp3',
+        'https://casi0048.github.io/suoni/thunder-sound.mp3'
+      ]);
+      if (!ok) alert('Audio tuono non disponibile.');
+    });
+  }
+
+  if (btnExplode && !btnExplode._bound) {
+    btnExplode._bound = true;
+    btnExplode.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const ok = await playWithFallback(explosion, [
+        '/suoni/explosion-1.mp3',
+        'https://casi0048.github.io/suoni/explosion-1.mp3',
+        // fallback ulteriore: RAW GitHub (può servire in locale/file://)
+        'https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/suoni/explosion-1.mp3'
+      ]);
+      if (!ok) alert('Audio esplosione non disponibile.');
+    });
+  }
+
+  // --- 4) LOG diagnostico utile in console ---
+  [thunder, explosion].forEach((a) => {
+    if (!a) return;
+    a.addEventListener('error', () => console.warn('[AUDIO error]', a.id));
+    a.addEventListener('stalled', () => console.warn('[AUDIO stalled]', a.id));
+    a.addEventListener('loadedmetadata', () => console.log('[AUDIO loadedmetadata]', a.id, a.duration));
+    a.addEventListener('canplaythrough', () => console.log('[AUDIO canplaythrough]', a.id));
+  });
+})();
+</script>
+         
 <!-- COOKIE BANNER -->
 <div aria-label="Consenso cookie" class="cookie-banner" hidden="" id="cookie-banner" role="region">
 <div class="cookie-text">
