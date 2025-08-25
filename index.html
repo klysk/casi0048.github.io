@@ -7125,6 +7125,82 @@ document.addEventListener('DOMContentLoaded', function(){
   }, {passive:false});
 })();
 </script>
+<script>
+(() => {
+  // --- TROVA ELEMENTI ---
+  const baseEl = document.getElementById('explosionSound');
+  if (!baseEl) { console.warn('[ExplodePool] <audio id="explosionSound"> non trovato'); return; }
+
+  // Bottone: prima prova per id, poi per testo (Esplodi/💥)
+  let btn = document.getElementById('explode-btn');
+  if (!btn) {
+    btn = Array.from(document.querySelectorAll('button, [role="button"], .btn')).find(b =>
+      /esplod|💥/i.test((b.textContent||'') + ' ' + (b.getAttribute('aria-label')||''))
+    ) || null;
+  }
+  if (!btn) { console.warn('[ExplodePool] bottone "Esplodi" non trovato'); return; }
+
+  // --- RICAVA LA SORGENTE DELL’AUDIO ESISTENTE ---
+  const sources = Array.from(baseEl.querySelectorAll('source')).map(s => s.src).filter(Boolean);
+  const primarySrc = baseEl.currentSrc || sources[0] || baseEl.src;
+  if (!primarySrc) { console.warn('[ExplodePool] nessuna src per l’esplosione'); return; }
+
+  // --- CREA UN POOL DI AUDIO PER CONSENTIRE CLICK RIPETUTI ---
+  const POOL_SIZE = 4;
+  const pool = [];
+  for (let i=0; i<POOL_SIZE; i++){
+    const a = new Audio(primarySrc);
+    a.preload = 'auto';
+    try { a.playsInline = true; } catch(_) {}
+    pool.push(a);
+  }
+
+  // --- SBLOCCO AUDIO AL PRIMO GESTO (Safari) ---
+  let unlocked = false;
+  const unlock = async () => {
+    if (unlocked) return;
+    unlocked = true;
+    // “tocca” anche il baseEl per compatibilità
+    const all = [baseEl, ...pool];
+    for (const a of all) {
+      try { a.muted = false; await a.play(); a.pause(); a.currentTime = 0; } catch(_) {}
+    }
+  };
+  window.addEventListener('pointerdown', unlock, {once:true, capture:true, passive:true});
+  window.addEventListener('keydown', unlock, {once:true, capture:true});
+
+  // --- SCEGLI UN’ISTANZA LIBERA E SUONA ---
+  function playExplosion(){
+    // trova un player pronto (pausato o terminato)
+    let a = pool.find(x => x.paused || x.ended);
+    if (!a) {
+      // se tutti occupati, clona al volo (caso di spam click)
+      a = new Audio(primarySrc);
+      try { a.playsInline = true; } catch(_) {}
+      a.preload = 'auto';
+      pool.push(a);
+    }
+    try {
+      a.currentTime = 0;
+      const p = a.play();
+      if (p && p.catch) p.catch(()=>{ /* Safari può rifiutare promesse se non “unlocked” */ });
+    } catch(_){}
+  }
+
+  // --- EVITA LISTENER DUPLICATI (sostituisci il bottone con un clone) ---
+  const clone = btn.cloneNode(true);
+  btn.parentNode.replaceChild(clone, btn);
+  const safeBtn = document.getElementById('explode-btn') || clone;
+
+  safeBtn.addEventListener('click', (ev) => {
+    ev.preventDefault();
+    playExplosion();
+  });
+
+  // --- LOG MINIMO (aiuta debug senza sporcare) ---
+  baseEl.addEventListener('canplaythrough', () => console.log('[ExplodePool] base pronto'));
+})();
+</script>
 
 </body>
 </html>
