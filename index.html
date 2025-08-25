@@ -1297,7 +1297,82 @@
       background: rgba(0,0,0,.35);
       }
       </style>
-</meta><style id="audio-player-range-css">
+         /* INIZIO CSS CONTROLLI SLIDER SAFARI  */
+/* ===== Slider velocità – fix Safari & co. ===== */
+<STYLE>
+.slider-controls input[type="range"]{
+  -webkit-appearance: none; /* Safari/Chrome: toglie lo stile di default */
+  appearance: none;
+  width: 180px;
+  height: 10px;                 /* altezza visibile del track */
+  background: rgba(10,12,24,.85);/* sfondo track (fallback) */
+  border: 1px solid rgba(212,175,55,.35);
+  border-radius: 9999px;
+  box-shadow: inset 0 0 8px rgba(212,175,55,.25), 0 0 10px rgba(0,0,0,.35);
+  outline: none;
+}
+
+/* Track (WebKit: Safari/Chrome) */
+.slider-controls input[type="range"]::-webkit-slider-runnable-track{
+  height: 10px;
+  background: linear-gradient(90deg,
+    rgba(212,175,55,.85) 0%,
+    rgba(212,175,55,.55) 60%,
+    rgba(212,175,55,.25) 100%);
+  border-radius: 9999px;
+  box-shadow: inset 0 0 6px rgba(212,175,55,.35);
+}
+
+/* Thumb (WebKit) */
+.slider-controls input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  margin-top: -4px;              /* centra il thumb sul track */
+  background: #d4af37;
+  border: 2px solid #0f1426;
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(212,175,55,.9);
+  cursor: pointer;
+}
+
+/* Track (Firefox) */
+.slider-controls input[type="range"]::-moz-range-track{
+  height: 10px;
+  background: linear-gradient(90deg,
+    rgba(212,175,55,.85) 0%,
+    rgba(212,175,55,.55) 60%,
+    rgba(212,175,55,.25) 100%);
+  border: 1px solid rgba(212,175,55,.35);
+  border-radius: 9999px;
+  box-shadow: inset 0 0 6px rgba(212,175,55,.35);
+}
+
+/* Thumb (Firefox) */
+.slider-controls input[type="range"]::-moz-range-thumb{
+  width: 18px;
+  height: 18px;
+  background: #d4af37;
+  border: 2px solid #0f1426;
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(212,175,55,.9);
+  cursor: pointer;
+}
+
+/* Stato focus/hover (accessibilità) */
+.slider-controls input[type="range"]:focus::-webkit-slider-thumb,
+.slider-controls input[type="range"]:hover::-webkit-slider-thumb{
+  box-shadow: 0 0 16px rgba(212,175,55,1);
+}
+
+.slider-controls input[type="range"]:focus{
+  outline: 2px solid rgba(212,175,55,.5);
+  outline-offset: 2px;
+}
+</STYLE>
+/* FINE CSS CONTROLLI SLIDER SAFARI  */
+<style id="audio-player-range-css">
 /* === AUDIO-PLAYER RANGE: colore azzurro, nessuna ombra (Safari incluso) === */
 .audio-player input[type="range"]{
   -webkit-appearance: none; appearance: none;
