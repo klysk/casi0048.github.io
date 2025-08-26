@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Aurelio: Il Filosofo Imperatore</title>
+    <meta name="description" content="Un'esplorazione approfondita della vita, filosofia e eredità di Marco Aurelio, l'imperatore filosofo di Roma">
+    <meta name="keywords" content="Marco Aurelio, Stoicismo, Filosofia Romana, Imperatori Romani, Meditazioni">
+    <meta name="author" content="Il Tuo Nome">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #e74c3c;
+            --accent-color: #3498db;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 8px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+
+        .theme-notturno {
+            --primary-color: #1a1a2e;
+            --secondary-color: #e94560;
+            --accent-color: #0f3460;
+            --text-color: #e6e6e6;
+            --bg-color: #16213e;
+            --card-bg: #1a1a2e;
+            --shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
+
+        .theme-filosofico {
+            --primary-color: #3d2c29;
+            --secondary-color: #8d6e63;
+            --accent-color: #5d4037;
+            --text-color: #4e342e;
+            --bg-color: #efebe9;
+            --card-bg: #d7ccc8;
+            --shadow: 0 4px 8px rgba(93, 64, 55, 0.2);
+        }
+
+        .theme-contemplativo {
+            --primary-color: #004d40;
+            --secondary-color: #00796b;
+            --accent-color: #00897b;
+            --text-color: #004d40;
+            --bg-color: #e0f2f1;
+            --card-bg: #b2dfdb;
+            --shadow: 0 4px 8px rgba(0, 77, 64, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            transition: var(--transition);
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 2.5rem;
+        }
+
+        .subtitle {
+            color: var(--secondary-color);
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .theme-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .theme-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: var(--transition);
+            background: var(--card-bg);
+            color: var(--text-color);
+            box-shadow: var(--shadow);
+        }
+
+        .theme-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .theme-btn.active {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .section-header {
+            padding: 20px;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .section-title {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .toggle-btn:hover {
+            transform: rotate(90deg);
+        }
+
+        .section-content {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+        }
+
+        .section-content.active {
+            padding: 20px;
+            max-height: 1000px;
+        }
+
+        .quote {
+            font-style: italic;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 20px;
+            margin: 20px 0;
+            color: var(--secondary-color);
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .caption {
+            font-style: italic;
+            margin-top: 10px;
+            color: var(--secondary-color);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            background: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        @media (max-width: 768px) {
+            .theme-selector {
+                flex-wrap: wrap;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body class="theme-normale">
+    <div class="container">
+        <header>
+            <h1>Marco Aurelio</h1>
+            <p class="subtitle">L'Imperatore Filosofo e il suo Pensiero senza Tempo</p>
+            
+            <div class="theme-selector">
+                <button class="theme-btn active" onclick="changeTheme('normale')">Normale</button>
+                <button class="theme-btn" onclick="changeTheme('notturno')">Notturno</button>
+                <button class="theme-btn" onclick="changeTheme('filosofico')">Filosofico</button>
+                <button class="theme-btn" onclick="changeTheme('contemplativo')">Contemplativo</button>
+            </div>
+        </header>
+
+        <main>
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <h2 class="section-title">La Vita di un Imperatore</h2>
+                    <button class="toggle-btn">+</button>
+                </div>
+                <div class="section-content">
+                    <p>Marco Aurelio Antonino Augusto (Roma, 26 aprile 121 – Vindobona, 17 marzo 180) è stato un imperatore, filosofo e scrittore romano. È considerato uno dei più importanti esponenti dello stoicismo.</p>
+                    
+                    <div class="image-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Marcus_Aurelius_Louvre_MR561_n02.jpg/800px-Marcus_Aurelius_Louvre_MR561_n02.jpg" alt="Busto di Marco Aurelio" width="500">
+                        <p class="caption">Busto di Marco Aurelio, Museo del Louvre</p>
+                    </div>
+                    
+                    <p>Appartenente alla dinastia degli Antonini, fu adottato dal suo predecessore Antonino Pio. Il suo regno fu segnato da guerre contro i Parti e le tribù germaniche, ma anche dalla piaga della peste antonina.</p>
+                    
+                    <p class="quote">"Tutto ciò che sento è in accordo con la mia natura; tutto ciò che faccio è in accordo con la mia natura."</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <h2 class="section-title">Le Meditazioni</h2>
+                    <button class="toggle-btn">+</button>
+                </div>
+                <div class="section-content">
+                    <p>Le "Meditazioni" di Marco Aurelio sono una raccolta di pensieri personali sull'etica stoica, scritte in greco durante le sue campagne militari. Non destinati alla pubblicazione, questi scritti rivelano la profondità del suo pensiero filosofico.</p>
+                    
+                    <p>L'opera è composta da dodici libri, ognuno contenente riflessioni su vari aspetti della vita e della filosofia stoica. I temi principali includono:</p>
+                    
+                    <ul>
+                        <li>L'importanza di vivere secondo natura</li>
+                        <li>L'accettazione del destino (amor fati)</li>
+                        <li>La transitorietà della vita</li>
+                        <li>Il distacco dai beni materiali</li>
+                        <li>La fratellanza universale</li>
+                    </ul>
+                    
+                    <p class="quote">"La felicità della tua vita dipende dalla qualità dei tuoi pensieri."</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <h2 class="section-title">La Filosofia Stoica</h2>
+                    <button class="toggle-btn">+</button>
+                </div>
+                <div class="section-content">
+                    <p>Marco Aurelio fu uno dei massimi esponenti dello stoicismo, scuola filosofica fondata da Zenone di Cizio intorno al 300 a.C. Lo stoicismo insegnava che la virtù (intesa come saggezza) è il bene supremo e che le emozioni distruttive derivano da errori di giudizio.</p>
+                    
+                    <p>I principi fondamentali dello stoicismo includono:</p>
+                    
+                    <ul>
+                        <li>La distinzione tra ciò che è in nostro controllo e ciò che non lo è</li>
+                        <li>L'importanza di vivere in accordo con la natura e la ragione</li>
+                        <li>L'accettazione degli eventi come parte di un ordine cosmico</li>
+                        <li>La pratica della virtù come unico vero bene</li>
+                    </ul>
+                    
+                    <div class="image-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Marcus_Aurelius_bust_Istanbul_Archaeological_Museum_-_inv._5128_%284944204597%29.jpg/800px-Marcus_Aurelius_bust_Istanbul_Archaeological_Museum_-_inv._5128_%284944204597%29.jpg" alt="Altro busto di Marco Aurelio" width="500">
+                        <p class="caption">Busto di Marco Aurelio, Museo Archeologico di Istanbul</p>
+                    </div>
+                    
+                    <p class="quote">"La nostra vita è ciò che i nostri pensieri creano."</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <h2 class="section-title">Il Regno e le Guerre</h2>
+                    <button class="toggle-btn">+</button>
+                </div>
+                <div class="section-content">
+                    <p>Marco Aurelio regnò dal 161 alla sua morte nel 180, inizialmente insieme a Lucio Vero fino al 169 e poi con il figlio Commodo dal 177. Il suo regno fu caratterizzato da conflitti militari, in particolare:</p>
+                    
+                    <ul>
+                        <li>Guerra contro i Parti (161-166)</li>
+                        <li>Guerre marcomanniche (166-180)</li>
+                    </ul>
+                    
+                    <p>Nonostante preferisse gli studi filosofici alla guerra, Marco Aurelio trascorse gran parte del suo regno al fronte, combattendo per proteggere i confini dell'impero. È durante queste campagne che scrisse le sue "Meditazioni".</p>
+                    
+                    <p class="quote">"L'ostacro si fa strada."</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <h2 class="section-title">Eredità e Influenza</h2>
+                    <button class="toggle-btn">+</button>
+                </div>
+                <div class="section-content">
+                    <p>L'eredità di Marco Aurelio è duplice: come imperatore e come filosofo. Sebbene il suo regno abbia segnato la fine della Pax Romana, il suo contributo filosofico ha attraversato i secoli, influenzando pensatori, scrittori e leader in tutto il mondo.</p>
+                    
+                    <p>Le "Meditazioni" sono state apprezzate da figure storiche come Federico il Grande, John Stuart Mill, e più recentemente da praticanti della psicologia cognitivo-comportamentale, che vedono nello stoicismo un antecedente dei loro metodi.</p>
+                    
+                    <div class="image-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Marcus_Aurelius_Statue_-_Marcus_Aurelius_Exedra_-_Capitoline_Museums_-_Rome_2015_%281%29.jpg/800px-Marcus_Aurelius_Statue_-_Marcus_Aurelius_Exedra_-_Capitoline_Museums_-_Rome_2015_%281%29.jpg" alt="Statua equestre di Marco Aurelio" width="500">
+                        <p class="caption">Statua equestre di Marco Aurelio, Musei Capitolini, Roma</p>
+                    </div>
+                    
+                    <p class="quote">"La perfezione del carattere è questa: vivere ogni giorno come se fosse l'ultimo, senza frenesia, senza apatia, senza pretese."</p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2025 - Esplorazione filosofica di Marco Aurelio</p>
+            <p>Fonti: Wikipedia, Stanford Encyclopedia of Philosophy, Meditazioni di Marco Aurelio</p>
+        </footer>
+    </div>
+
+    <script>
+        function toggleSection(element) {
+            const content = element.nextElementSibling;
+            const button = element.querySelector('.toggle-btn');
+            
+            content.classList.toggle('active');
+            
+            if (content.classList.contains('active')) {
+                button.textContent = '-';
+            } else {
+                button.textContent = '+';
+            }
+        }
+
+        function changeTheme(theme) {
+            document.body.className = 'theme-' + theme;
+            
+            // Aggiorna lo stato attivo dei pulsanti
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            event.target.classList.add('active');
+        }
+
+        // Apri la prima sezione all'avvio
+        window.onload = function() {
+            document.querySelector('.section-header').click();
+        };
+    </script>
+</body>
+</html>
