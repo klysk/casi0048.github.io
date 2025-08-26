@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html data-search-suggest="on" data-lazy="on" id="html-lang" lang="it">
 <head>
+  <meta name="theme-color" content="#0a0a1a">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Socrates_Louvre.jpg">
+  <link rel="preload" href="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Socrates_Louvre.jpg" as="image">
+  <link rel="preload" href="https://casi0048.github.io/suoni/thunder-sound.mp3" as="audio">
+
   <meta content="Echi di Sofia - Portale di filosofia antica, moderna e contemporanea con approfondimenti su autori e correnti filosofiche" name="description" />
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1" name="viewport" />
@@ -3449,7 +3455,7 @@
         </nav>
       </div>
     </header>
-    <main id="main-content" tabindex="-1">
+    <main aria-label="Contenuto principale" role="main" id="main-content" tabindex="-1">
       <!-- QUOTES BAR sotto la barra del menu -->
       <div aria-live="polite" class="quotes-bar" id="quotesBar">
         <span class="quote-text" id="quotesText"></span>
@@ -6718,7 +6724,6 @@
             new MutationObserver(initAll).observe(document.documentElement, { childList:true, subtree:true });
           })();
       </script>
-      </audio>
       <script>
         (function(){
             function playExplosion(){
@@ -8740,5 +8745,104 @@
             window.addFloatingPerson = addFloatingPerson;
           })();
       </script>
-  </body>
+  
+<!-- ======= Miglioramenti Conservativi (iniettati) ======= -->
+<script>
+// 3) Gestione errori JS: Thunder controller guard
+try {
+  window.__echiThunder = true;
+} catch (error) {
+  console.error('Errore inizializzazione thunder:', error);
+}
+
+// 5) Cookie consent fallback
+try {
+  if (!localStorage.getItem('cookieConsent')) {
+    setTimeout(() => {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'block';
+    }, 2000);
+  }
+} catch(e){ console.warn('Cookie fallback non applicato:', e); }
+
+// 6) Debounce per ricerca (senza rompere funzioni esistenti)
+(function(){
+  let __searchTimeout;
+  // Se esiste window.executeQuery, lo wrappo con debounce; altrimenti espongo un helper
+  const _orig = window.executeQuery;
+  window.debouncedExecuteQuery = function(q){
+    clearTimeout(__searchTimeout);
+    __searchTimeout = setTimeout(() => {
+      try {
+        if (typeof _orig === 'function') _orig(q);
+      } catch(e){ console.error('Errore executeQuery:', e); }
+    }, 300);
+  };
+})();
+
+// 7) Fallback audio generico
+window.playAudioFallback = function(audioElement, sources){
+  let i = 0;
+  function tryPlay(){
+    if (!audioElement || !sources || i >= sources.length) return;
+    audioElement.src = sources[i];
+    const p = audioElement.play();
+    if (p && typeof p.catch === 'function'){
+      p.catch(() => { i++; tryPlay(); });
+    }
+  }
+  tryPlay();
+};
+
+// 4) Ottimizzazione immagini slider (aggiunge attributi se mancano)
+(function(){
+  try {
+    const imgs = document.querySelectorAll('.slide-vertical img');
+    imgs.forEach(img => {
+      if (!img.getAttribute('loading')) img.setAttribute('loading','lazy');
+      if (!img.getAttribute('decoding')) img.setAttribute('decoding','async');
+      if (!img.getAttribute('width')) img.setAttribute('width','260');
+      if (!img.getAttribute('height')) img.setAttribute('height','140');
+    });
+  } catch(e){ console.warn('Ottimizzazione immagini slider non applicata:', e); }
+})();
+
+// 8) Ottimizza animazione slider (usa transform) SE non già gestito altrove
+(function(){
+  try {
+    const inner = document.querySelector('.slider-vertical .slider-inner');
+    if(!inner) return;
+    if (getComputedStyle(inner).transform !== 'none') return; // già gestito da CSS/JS esistente
+    let y = 0, paused = false, speed = 0.35;
+    function step(){
+      if (!paused){
+        y += speed;
+        if (y >= inner.scrollHeight/2) y = 0;
+        inner.style.transform = 'translate3d(0, -'+y+'px, 0)';
+      }
+      requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+    // Esponi API non invasive
+    window.__sliderEnh = {
+      pause(){ paused = true; },
+      play(){ paused = false; },
+      setSpeed(v){ speed = Math.max(0, Number(v)||speed); }
+    };
+  } catch(e){ console.warn('Ottimizzazione slider non attiva:', e); }
+})();
+
+// 10) Fallback Google Translate (solo warning)
+setTimeout(() => {
+  try {
+    if (!document.querySelector('.goog-te-menu-frame')) {
+      console.warn('Google Translate non caricato, attivando fallback (solo avviso)');
+      // Qui potresti mostrare un messaggio o un selettore alternativo.
+    }
+  } catch(e){}
+}, 5000);
+</script>
+<!-- ======= Fine Miglioramenti Conservativi ======= -->
+
+</body>
 </html>
