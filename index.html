@@ -1630,13 +1630,18 @@ window.updateLabel = window.updateLabel || function(){
 
 
 <style>
-/* Foto fluttuante tra simboli/parole */
-.particle.float-person {
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0 0 18px rgba(212,175,55,.35);
-  border: 2px solid rgba(212,175,55,.6);
-  pointer-events: none;
+/* Foto fluttuante come particella */
+.particle.float-person{
+  position:absolute;
+  top:0; left:0;
+  transform: translate(-50%, -50%);
+  border-radius:50%;
+  object-fit:cover;
+  box-shadow:0 0 18px rgba(212,175,55,.35);
+  border:2px solid rgba(212,175,55,.6);
+  pointer-events:none;
+  z-index:40;
+  will-change:transform;
 }
 </style>
 
@@ -4768,7 +4773,7 @@ window.updateLabel = window.updateLabel || function(){
       
         // Config
         const cfg = {
-          count: 180,          // quante particelle
+          count: 160,          // quante particelle
           minSize: 0.5,        // rem
           maxSize: 1,          // rem
           floatDist: 100,      // raggio di oscillazione
@@ -7216,15 +7221,22 @@ document.addEventListener('DOMContentLoaded', function(){
 </script>
 
 
-<!-- Foto fluttuante tra simboli/parole -->
+<!-- Inserimento immagini fluttuanti tra i simboli/parole -->
 <script>
 (function(){
+  function getLayer(){
+    const p = document.querySelector('.particle');
+    if (p && p.parentNode) return p.parentNode;
+    return document.getElementById('philoParticles') || document.body;
+  }
+
   function addFloatingPerson(src, opts){
     opts = opts || {};
-    var sizeRem = opts.sizeRem || 6;
-    var alt = opts.alt || 'Foto';
+    const sizeRem = opts.sizeRem || 6;
+    const alt = opts.alt || 'Foto';
+    const layer = getLayer();
 
-    var img = new Image();
+    const img = new Image();
     img.decoding = 'async';
     img.loading = 'lazy';
     img.src = src;
@@ -7233,14 +7245,16 @@ document.addEventListener('DOMContentLoaded', function(){
     img.style.width  = sizeRem + 'rem';
     img.style.height = sizeRem + 'rem';
 
-    var layer = document.getElementById('philoParticles') || document.body;
     layer.appendChild(img);
 
-    var speedBase = (window.cfg && cfg.minSpeed && cfg.maxSpeed)
+    // posizionamento iniziale visibile (centro)
+    img.style.transform = 'translate(' + Math.round(window.innerWidth/2) + 'px,' + Math.round(window.innerHeight/2) + 'px)';
+
+    const speedBase = (window.cfg && typeof cfg.minSpeed==='number' && typeof cfg.maxSpeed==='number')
       ? (Math.random() * (cfg.maxSpeed - cfg.minSpeed) + cfg.minSpeed)
       : 0.004;
 
-    var p = {
+    const p = {
       el: img,
       x0: Math.random() * window.innerWidth,
       y0: Math.random() * window.innerHeight,
@@ -7249,41 +7263,45 @@ document.addEventListener('DOMContentLoaded', function(){
       type: 'person'
     };
 
+    // Se esiste un array globale usato dal tuo loop, inserisci lì
     if (Array.isArray(window.particles)) {
       window.particles.push(p);
     } else if (Array.isArray(window.symbols)) {
       window.symbols.push(p);
     } else {
-      var last = performance.now();
+      // Fallback: movimento autonomo (non tocca il tuo loop)
+      let last = performance.now();
       (function selfMove(now){
-        var dt = Math.min(0.05, ((now||performance.now()) - last)/1000);
+        const dt = Math.min(0.05, ((now||performance.now()) - last)/1000);
         last = (now||performance.now());
         p.phase += p.speed * dt * 60;
-        var dx = Math.cos(p.phase) * (cfg?.floatDist || 90);
-        var dy = Math.sin(p.phase) * (cfg?.floatDist || 90);
+        const fd = (window.cfg && cfg.floatDist) ? cfg.floatDist : 90;
+        const dx = Math.cos(p.phase) * fd;
+        const dy = Math.sin(p.phase) * fd;
         p.el.style.transform = 'translate(' + (p.x0 + dx) + 'px,' + (p.y0 + dy) + 'px)';
         requestAnimationFrame(selfMove);
       })();
     }
-
     return p;
   }
 
-  // Inserisci la foto di Maria Teresa
-  addFloatingPerson(
-    'https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/maria_teresa.jpg',
-    { sizeRem: 6, alt: 'Maria Teresa' }
-  );
+  // Inserisci entrambe le foto
+  function initPhotos(){
+    addFloatingPerson('https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/maria_teresa.jpg',
+      { sizeRem: 2, alt: 'Maria Teresa' });
+    addFloatingPerson('https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/krk.jpg',
+      { sizeRem: 2, alt: 'KRK' });
+  }
+
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initPhotos);
+  } else {
+    setTimeout(initPhotos, 0);
+  }
+
+  // Esporta utility per eventuali aggiunte future
+  window.addFloatingPerson = addFloatingPerson;
 })();
-</script>
-
-
-<script>
-// Aggiunta seconda foto fluttuante (“KRK”)
-addFloatingPerson(
-  'https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/krk.jpg',
-  { sizeRem: 5.5, alt: 'KRK' }
-);
 </script>
 
 </body>
