@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html data-search-suggest="on" data-lazy="on" id="html-lang" lang="it">
 <head>
+  <!-- ===== AREA HEAD ===== -->
   <meta name="theme-color" content="#0a0a1a">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Socrates_Louvre.jpg">
@@ -24,7 +25,8 @@
   <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet" />
   <!-- GSAP -->
   <script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <style>
+  <!-- ===== STILI PRINCIPALI ===== -->
+<style>
     :root {
       --bg: #0a0a1a;
       --gold: #d4af37;
@@ -1595,7 +1597,8 @@
       white-space: nowrap !important;
     }
   </style>
-  <!--INIZIO COSMO DINAMICO-->
+  <!-- ===== ANIMAZIONI/COSMO ===== -->
+<!--INIZIO COSMO DINAMICO-->
   <style>
     body {
       margin: 0;
@@ -3087,7 +3090,8 @@
       -->
     <!-- Header & Mega Menu -->
     <header>
-      <!--INIZIO COSMO DINAMICO-->
+      <!-- ===== ANIMAZIONI/COSMO ===== -->
+<!--INIZIO COSMO DINAMICO-->
       <!--FINE COSMO DINAMICO-->
       <div class="menu-container">
         <nav class="menu-desktop" aria-label="Menu principale">
@@ -8843,6 +8847,118 @@ setTimeout(() => {
 }, 5000);
 </script>
 <!-- ======= Fine Miglioramenti Conservativi ======= -->
+
+
+<!-- ===== SCRIPTS — Ottimizzazioni conservative v2 ===== -->
+<script>
+// 3) Caricamento audio on-demand (Promise based)
+window.loadAudio = function(src){
+  return new Promise(function(resolve){
+    try{
+      var audio = new Audio();
+      audio.preload = 'auto';
+      audio.src = src;
+      function done(){
+        audio.removeEventListener('canplaythrough', done);
+        resolve(audio);
+      }
+      audio.addEventListener('canplaythrough', done, {once:true});
+      // fallback: anche 'loadeddata' nel caso 'canplaythrough' non arrivi
+      audio.addEventListener('loadeddata', done, {once:true});
+    }catch(e){ resolve(null); }
+  });
+};
+
+// 4) Aggiungi attributi alle immagini dello slider senza toccare lo stile
+(function(){
+  try{
+    var imgs = document.querySelectorAll('.slide-vertical img');
+    imgs.forEach(function(img){
+      if(!img.getAttribute('loading')) img.setAttribute('loading','lazy');
+      if(!img.getAttribute('decoding')) img.setAttribute('decoding','async');
+      if(!img.getAttribute('width')) img.setAttribute('width','260');
+      if(!img.getAttribute('height')) img.setAttribute('height','340');
+    });
+  }catch(e){ /* silenzioso */ }
+})();
+
+// 5) Event delegation: un solo listener per più pulsanti
+document.body.addEventListener('click', function(e){
+  var el = e.target;
+  var btnThunder = el.closest && (el.closest('#btn-thunder') || el.closest('#play-thunder'));
+  var btnExplode = el.closest && (el.closest('#btn-explode') || el.closest('#explode-btn'));
+  try{
+    if(btnThunder){
+      if(typeof window.handleThunder === 'function') { window.handleThunder(); }
+      else if(typeof window.playThunder === 'function') { window.playThunder(); }
+    }
+    if(btnExplode){
+      if(typeof window.handleExplosion === 'function') { window.handleExplosion(); }
+      else if(typeof window.explodeNow === 'function') { window.explodeNow(); }
+    }
+  }catch(err){ console.warn('Delegation error:', err); }
+}, {passive:true});
+
+// 6) Mega-menu: transizioni leggere e hint al browser
+(function(){
+  try{
+    var style = document.createElement('style');
+    style.textContent = ".mega-menu{transition:opacity .2s ease,visibility .2s ease;will-change:opacity,transform}";
+    document.head.appendChild(style);
+  }catch(e){}
+})();
+
+// 7) Prefetch risorse critiche (non blocca il rendering)
+(function(){
+  try{
+    var head = document.head;
+    function addPrefetch(href, as){
+      if(!href) return;
+      if(document.querySelector('link[rel="prefetch"][href="'+href+'"]')) return;
+      var l = document.createElement('link');
+      l.rel = 'prefetch';
+      if(as) l.as = as;
+      l.href = href;
+      head.appendChild(l);
+    }
+    addPrefetch('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:wght@600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@300;400;600&display=swap','style');
+    addPrefetch('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js','script');
+  }catch(e){}
+})();
+
+// 8) Pulizia canvas periodica (safe, non invasiva)
+setInterval(function(){
+  try{
+    document.querySelectorAll('canvas').forEach(function(c){
+      var ctx = c.getContext && (c.getContext('2d') || c.getContext('webgl') || c.getContext('webgl2'));
+      if(!ctx) return;
+      if(ctx.clearRect){
+        ctx.clearRect(0,0,c.width,c.height);
+      }else if(ctx instanceof WebGLRenderingContext || ctx instanceof WebGL2RenderingContext){
+        var gl = ctx;
+        var buf = gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT | gl.STENCIL_BUFFER_BIT;
+        gl.clear(buf);
+      }
+    });
+  }catch(e){ /* silenzioso */ }
+}, 1000);
+
+// 9) Google Translate on-demand
+window.loadGoogleTranslate = function(){
+  try{
+    if(document.querySelector('.goog-te-banner') || document.getElementById('google-translate-script')) return;
+    var s = document.createElement('script');
+    s.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    s.id = 'google-translate-script';
+    document.head.appendChild(s);
+  }catch(e){}
+};
+
+// 10) Bundle Scripts (placeholder conservativo: solo commento)
+// Se in futuro generi un bundle, sostituisci gli script multipli con:
+// <!-- <script src=\"main-bundle.js\" defer></script> -->
+</script>
+<!-- ===== FINE SCRIPTS v2 ===== -->
 
 </body>
 </html>
