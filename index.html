@@ -2813,6 +2813,105 @@
   /* Disable all planet elements site-wide */
   .planet{ display: none !important; }
 </style>
+
+<style data-mobile-drawer-cse="">
+/* Drawer mobile per #cse-suggest */
+@media (max-width: 980px){
+  #cse-suggest{
+    position: fixed !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100vw !important;
+    top: var(--topbar-height, 64px) !important;
+    max-height: min(60vh, 480px);
+    overflow: auto;
+    border-radius: 0 0 16px 16px;
+    padding: 10px 12px;
+    z-index: 11050; /* sopra i menu */
+    box-shadow: 0 12px 30px rgba(0,0,0,.45);
+  }
+  /* Evita scroll di sfondo quando la tendina è aperta su alcuni browser */
+  body.drawer-open{
+    overscroll-behavior: contain;
+  }
+}
+
+/* Focus visibile: mega menu + risultati tendina */
+.mega-menu a:focus-visible,
+#cse-suggest .item:focus-visible{
+  outline: 2px solid #d4af37;
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* Scroll armonizzato: ripristina scroll verticale sicuro */
+html, body { overflow-y: auto !important; }
+
+/* Modalità "soft" per i layer cosmici (riduzione animazioni se serve) */
+@media (prefers-reduced-motion: reduce){
+  #philoParticles, #particles-js, #stars-canvas, .meteors, .comets {
+    animation: none !important;
+    transition: none !important;
+  }
+  #philoParticles { opacity: .7; }
+}
+
+/* Piccolo alleggerimento su schermi molto piccoli */
+@media (max-width: 480px){
+  :root{ --cosmo-opacity:.85; }
+  #philoParticles{ opacity: var(--cosmo-opacity, 1); }
+}
+</style>
+
+
+<style data-cse-drawer-anim="">
+/* Animazione drawer mobile per #cse-suggest */
+@media (max-width: 980px){
+  #cse-suggest{
+    /* Mantieni il drawer sempre "in flusso" su mobile per permettere la transizione */
+    display: block !important;
+    opacity: 0;
+    transform: translateY(-8px);
+    visibility: hidden;
+    pointer-events: none;
+    will-change: transform, opacity;
+    transition: opacity .22s ease, transform .26s ease;
+  }
+  #cse-suggest.show{
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+    pointer-events: auto;
+  }
+}
+@media (prefers-reduced-motion: reduce){
+  #cse-suggest{ transition: none !important; }
+}
+</style>
+
+
+<style data-cse-drawer-anim-enhance="">
+@media (max-width: 980px){
+  /* Transizioni più morbide e shadow più soffice quando aperto */
+  #cse-suggest{
+    transition:
+      opacity .26s cubic-bezier(.16,1,.3,1),
+      transform .34s cubic-bezier(.16,1,.3,1),
+      box-shadow .28s ease-out;
+    box-shadow: 0 8px 24px rgba(0,0,0,.35);
+  }
+  #cse-suggest.show{
+    /* Ombra più diffusa e leggera aurea interna coerente col tema */
+    box-shadow:
+      0 18px 48px rgba(0,0,0,.55),
+      0 0 0 1px rgba(212,175,55,.18) inset;
+  }
+}
+@media (prefers-reduced-motion: reduce){
+  #cse-suggest{ transition: none !important; }
+}
+</style>
+
 </head>
 
 <body>
@@ -9080,177 +9179,58 @@ window.loadGoogleTranslate = function(){
 <!-- ===== FINE SCRIPT v2 ===== -->
 
 
-<style data-suggest-plus-css="">
-/* Evidenza voce attiva nella tendina */
-#cse-suggest .item[aria-selected="true"]{
-  background: rgba(255,255,255,.10);
-  color: #fff;
-}
-#cse-suggest .group-title{
-  font-size:.78rem; opacity:.8; margin:6px 8px 4px; color:#ffd86a;
-}
-/* Ripristina scroll verticale se bloccato da stili precedenti */
-html, body { overflow-y: auto !important; }
-</style>
-
-<script data-suggest-plus-js="">
+<script data-mobile-drawer-cse-js="">
 (function(){
   "use strict";
-  if (window.__ECHI_SUGGEST_PLUS__) return;
-  window.__ECHI_SUGGEST_PLUS__ = true;
+  if (window.__ECHI_MOBILE_DRAWER__) return;
+  window.__ECHI_MOBILE_DRAWER__ = true;
 
-  const MIN_CHARS = 2;
-  const MAX_SUGG  = 7;
-  const MAX_QUICK = 5;
-  const DEBOUNCE_MS = 200;
-
-  function $(sel, root=document){ return root.querySelector(sel); }
-  function $all(sel, root=document){ return Array.from(root.querySelectorAll(sel)); }
-  function clean(s){ return (s==null?'':String(s)).replace(/\s+/g,' ').trim(); }
-
-  const input = document.getElementById('site-search') || document.querySelector('.search-container input');
-  if(!input) return;
-
-  // Ensure container
-  let box = document.getElementById('cse-suggest');
-  if(!box){
-    box = document.createElement('div');
-    box.id = 'cse-suggest';
-    document.body.appendChild(box);
-  }
-  box.setAttribute('role','listbox');
-  box.setAttribute('aria-label','Suggerimenti di ricerca');
-
-  // curated seed
-  const SEED = ['Platone','Aristotele','Kant','Nietzsche','Hegel','Descartes','Fenomenologia','Etica','Metafisica','Logica','Ermeneutica','Stoicismo','Scetticismo','Presocratici'];
-
-  // simple debounce
-  function debounce(fn, wait){
-    let t;
-    return (...args)=>{ clearTimeout(t); t = setTimeout(()=>fn(...args), wait); };
-  }
-
-  function terms(q){
-    return clean(q).toLowerCase().split(/\s+/).filter(t=>t.length>=2);
-  }
-
-  function scorePage(page, ts){
-    let s = 0, title = (page.title||'').toLowerCase(), content = (page.content||'').toLowerCase();
-    for(const t of ts){
-      if(title.includes(t)) s += 5;
-      if(content.includes(t)) s += 1;
-    }
-    return s;
-  }
-
-  function getIndex(){
-    const A = Array.isArray(window.siteData) ? window.siteData : [];
-    const B = Array.isArray(window.searchIndex) ? window.searchIndex : [];
-    const out = [];
-    const seen = new Set();
-    function add(p){
-      const u = (p && p.url) ? String(p.url) : '';
-      if(!u) return;
-      const key = u.toLowerCase();
-      if(seen.has(key)) return;
-      seen.add(key);
-      out.push({ url: u, title: clean(p.title||u), content: clean(p.content||'') });
-    }
-    A.forEach(add); B.forEach(add);
-    return out;
-  }
-
-  function positionBox(){
-    const rect = input.getBoundingClientRect();
-    box.style.left = Math.round(rect.left + window.scrollX)+'px';
-    box.style.top  = Math.round(rect.bottom + window.scrollY + 6)+'px';
-    box.style.width= Math.round(rect.width)+'px';
-  }
-
-  let activeIndex = -1;
-  function render(q){
-    const qClean = clean(q);
-    if(qClean.length < MIN_CHARS){ box.classList.remove('show'); box.innerHTML=''; return; }
-    positionBox();
-
-    const t = terms(qClean);
-
-    // curated suggestions
-    const sugg = SEED.filter(s => s.toLowerCase().includes(qClean.toLowerCase())).slice(0, MAX_SUGG);
-
-    // quick results from index
-    const idx = getIndex();
-    const results = idx.map(p => ({...p, score: scorePage(p, t)}))
-                       .filter(p => p.score>0)
-                       .sort((a,b)=>b.score-a.score)
-                       .slice(0, MAX_QUICK);
-
-    // build HTML
-    const items = [];
-    if(sugg.length){
-      items.push('<div class="section">Suggerimenti</div>');
-      for(const s of sugg){
-        items.push('<a class="item" role="option" href="/cerca?q='+encodeURIComponent(s)+'"><i class="fa-solid fa-magnifying-glass"></i> '+s+'</a>');
+  function setTopbarHeight(){
+    var candidates = [
+      '.topbar','.top-bar','#topbar','#site-topbar','.header-top','.site-header','header'
+    ];
+    var h = 64;
+    for(var i=0;i<candidates.length;i++){
+      var el = document.querySelector(candidates[i]);
+      if(el){
+        var r = el.getBoundingClientRect();
+        if(r && r.height){ h = Math.max(h, Math.round(r.height)); break; }
       }
     }
-    if(results.length){
-      items.push('<div class="section">Risultati rapidi</div>');
-      for(const r of results){
-        items.push('<a class="item" role="option" href="'+r.url+'"><i class="fa-regular fa-file-lines"></i> '+r.title+'</a>');
-      }
-    }
-
-    if(!items.length){ box.classList.remove('show'); box.innerHTML=''; return; }
-    box.innerHTML = items.join('');
-    box.classList.add('show');
-    activeIndex = -1;
-    updateActive();
+    document.documentElement.style.setProperty('--topbar-height', h + 'px');
   }
 
-  function updateActive(){
-    const items = $all('#cse-suggest .item');
-    items.forEach(el => el.setAttribute('aria-selected','false'));
-    if(activeIndex>=0 && activeIndex<items.length){
-      items[activeIndex].setAttribute('aria-selected','true');
-      items[activeIndex].scrollIntoView({ block: 'nearest' });
-      input.setAttribute('aria-activedescendant', 'cse-suggest-item-'+activeIndex);
-      items[activeIndex].id = 'cse-suggest-item-'+activeIndex;
-    }else{
-      input.removeAttribute('aria-activedescendant');
+  function toggleDrawerOpen(open){
+    if(window.innerWidth > 980) return;
+    document.body.classList.toggle('drawer-open', !!open);
+  }
+
+  function attachSuggestObservers(){
+    var box = document.getElementById('cse-suggest');
+    if(!box) return;
+    // MutationObserver per aggiungere/rimuovere classe drawer-open quando la tendina si apre/chiude
+    var obs = new MutationObserver(function(){
+      var isOpen = box.classList.contains('show') && box.innerHTML.trim().length > 0;
+      toggleDrawerOpen(isOpen);
+    });
+    obs.observe(box, { attributes:true, childList:true, subtree:false });
+  }
+
+  // Opzione "soft" automatica se schermo stretto
+  function maybeEnableCosmoSoft(){
+    var prefersReduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduce || window.innerWidth < 480){
+      document.body.classList.add('cosmo-soft');
     }
   }
 
-  const onInput = debounce(()=>render(input.value), DEBOUNCE_MS);
-  input.addEventListener('input', onInput);
-  input.addEventListener('focus', ()=> render(input.value));
-  window.addEventListener('resize', positionBox, {passive:true});
-  window.addEventListener('scroll', positionBox, {passive:true});
-
-  // keyboard nav
-  input.addEventListener('keydown', (e)=>{
-    const items = $all('#cse-suggest .item');
-    if(!items.length) return;
-    if(e.key === 'ArrowDown'){ e.preventDefault(); activeIndex = Math.min(activeIndex+1, items.length-1); updateActive(); }
-    else if(e.key === 'ArrowUp'){ e.preventDefault(); activeIndex = Math.max(activeIndex-1, 0); updateActive(); }
-    else if(e.key === 'Enter'){
-      if(activeIndex>=0){ e.preventDefault(); items[activeIndex].click(); }
-    }else if(e.key === 'Escape'){
-      box.classList.remove('show'); box.innerHTML='';
-    }
+  window.addEventListener('resize', setTopbarHeight, {passive:true});
+  window.addEventListener('orientationchange', setTopbarHeight, {passive:true});
+  document.addEventListener('DOMContentLoaded', function(){
+    setTopbarHeight();
+    attachSuggestObservers();
+    maybeEnableCosmoSoft();
   });
-
-  // hide on click outside
-  document.addEventListener('click', (e)=>{
-    if(e.target===input) return;
-    if(box.contains(e.target)) return;
-    box.classList.remove('show'); box.innerHTML='';
-  }, true);
-
-  // ensure clear icon click closes suggest
-  const clearBtn = (input.closest('.search-container')||document).querySelector('.clear-icon');
-  if(clearBtn){
-    clearBtn.addEventListener('click', ()=>{ box.classList.remove('show'); box.innerHTML=''; });
-  }
 })();
 </script>
 
