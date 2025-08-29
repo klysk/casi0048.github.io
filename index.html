@@ -9079,5 +9079,180 @@ window.loadGoogleTranslate = function(){
 </script>
 <!-- ===== FINE SCRIPT v2 ===== -->
 
+
+<style data-suggest-plus-css="">
+/* Evidenza voce attiva nella tendina */
+#cse-suggest .item[aria-selected="true"]{
+  background: rgba(255,255,255,.10);
+  color: #fff;
+}
+#cse-suggest .group-title{
+  font-size:.78rem; opacity:.8; margin:6px 8px 4px; color:#ffd86a;
+}
+/* Ripristina scroll verticale se bloccato da stili precedenti */
+html, body { overflow-y: auto !important; }
+</style>
+
+<script data-suggest-plus-js="">
+(function(){
+  "use strict";
+  if (window.__ECHI_SUGGEST_PLUS__) return;
+  window.__ECHI_SUGGEST_PLUS__ = true;
+
+  const MIN_CHARS = 2;
+  const MAX_SUGG  = 7;
+  const MAX_QUICK = 5;
+  const DEBOUNCE_MS = 200;
+
+  function $(sel, root=document){ return root.querySelector(sel); }
+  function $all(sel, root=document){ return Array.from(root.querySelectorAll(sel)); }
+  function clean(s){ return (s==null?'':String(s)).replace(/\s+/g,' ').trim(); }
+
+  const input = document.getElementById('site-search') || document.querySelector('.search-container input');
+  if(!input) return;
+
+  // Ensure container
+  let box = document.getElementById('cse-suggest');
+  if(!box){
+    box = document.createElement('div');
+    box.id = 'cse-suggest';
+    document.body.appendChild(box);
+  }
+  box.setAttribute('role','listbox');
+  box.setAttribute('aria-label','Suggerimenti di ricerca');
+
+  // curated seed
+  const SEED = ['Platone','Aristotele','Kant','Nietzsche','Hegel','Descartes','Fenomenologia','Etica','Metafisica','Logica','Ermeneutica','Stoicismo','Scetticismo','Presocratici'];
+
+  // simple debounce
+  function debounce(fn, wait){
+    let t;
+    return (...args)=>{ clearTimeout(t); t = setTimeout(()=>fn(...args), wait); };
+  }
+
+  function terms(q){
+    return clean(q).toLowerCase().split(/\s+/).filter(t=>t.length>=2);
+  }
+
+  function scorePage(page, ts){
+    let s = 0, title = (page.title||'').toLowerCase(), content = (page.content||'').toLowerCase();
+    for(const t of ts){
+      if(title.includes(t)) s += 5;
+      if(content.includes(t)) s += 1;
+    }
+    return s;
+  }
+
+  function getIndex(){
+    const A = Array.isArray(window.siteData) ? window.siteData : [];
+    const B = Array.isArray(window.searchIndex) ? window.searchIndex : [];
+    const out = [];
+    const seen = new Set();
+    function add(p){
+      const u = (p && p.url) ? String(p.url) : '';
+      if(!u) return;
+      const key = u.toLowerCase();
+      if(seen.has(key)) return;
+      seen.add(key);
+      out.push({ url: u, title: clean(p.title||u), content: clean(p.content||'') });
+    }
+    A.forEach(add); B.forEach(add);
+    return out;
+  }
+
+  function positionBox(){
+    const rect = input.getBoundingClientRect();
+    box.style.left = Math.round(rect.left + window.scrollX)+'px';
+    box.style.top  = Math.round(rect.bottom + window.scrollY + 6)+'px';
+    box.style.width= Math.round(rect.width)+'px';
+  }
+
+  let activeIndex = -1;
+  function render(q){
+    const qClean = clean(q);
+    if(qClean.length < MIN_CHARS){ box.classList.remove('show'); box.innerHTML=''; return; }
+    positionBox();
+
+    const t = terms(qClean);
+
+    // curated suggestions
+    const sugg = SEED.filter(s => s.toLowerCase().includes(qClean.toLowerCase())).slice(0, MAX_SUGG);
+
+    // quick results from index
+    const idx = getIndex();
+    const results = idx.map(p => ({...p, score: scorePage(p, t)}))
+                       .filter(p => p.score>0)
+                       .sort((a,b)=>b.score-a.score)
+                       .slice(0, MAX_QUICK);
+
+    // build HTML
+    const items = [];
+    if(sugg.length){
+      items.push('<div class="section">Suggerimenti</div>');
+      for(const s of sugg){
+        items.push('<a class="item" role="option" href="/cerca?q='+encodeURIComponent(s)+'"><i class="fa-solid fa-magnifying-glass"></i> '+s+'</a>');
+      }
+    }
+    if(results.length){
+      items.push('<div class="section">Risultati rapidi</div>');
+      for(const r of results){
+        items.push('<a class="item" role="option" href="'+r.url+'"><i class="fa-regular fa-file-lines"></i> '+r.title+'</a>');
+      }
+    }
+
+    if(!items.length){ box.classList.remove('show'); box.innerHTML=''; return; }
+    box.innerHTML = items.join('');
+    box.classList.add('show');
+    activeIndex = -1;
+    updateActive();
+  }
+
+  function updateActive(){
+    const items = $all('#cse-suggest .item');
+    items.forEach(el => el.setAttribute('aria-selected','false'));
+    if(activeIndex>=0 && activeIndex<items.length){
+      items[activeIndex].setAttribute('aria-selected','true');
+      items[activeIndex].scrollIntoView({ block: 'nearest' });
+      input.setAttribute('aria-activedescendant', 'cse-suggest-item-'+activeIndex);
+      items[activeIndex].id = 'cse-suggest-item-'+activeIndex;
+    }else{
+      input.removeAttribute('aria-activedescendant');
+    }
+  }
+
+  const onInput = debounce(()=>render(input.value), DEBOUNCE_MS);
+  input.addEventListener('input', onInput);
+  input.addEventListener('focus', ()=> render(input.value));
+  window.addEventListener('resize', positionBox, {passive:true});
+  window.addEventListener('scroll', positionBox, {passive:true});
+
+  // keyboard nav
+  input.addEventListener('keydown', (e)=>{
+    const items = $all('#cse-suggest .item');
+    if(!items.length) return;
+    if(e.key === 'ArrowDown'){ e.preventDefault(); activeIndex = Math.min(activeIndex+1, items.length-1); updateActive(); }
+    else if(e.key === 'ArrowUp'){ e.preventDefault(); activeIndex = Math.max(activeIndex-1, 0); updateActive(); }
+    else if(e.key === 'Enter'){
+      if(activeIndex>=0){ e.preventDefault(); items[activeIndex].click(); }
+    }else if(e.key === 'Escape'){
+      box.classList.remove('show'); box.innerHTML='';
+    }
+  });
+
+  // hide on click outside
+  document.addEventListener('click', (e)=>{
+    if(e.target===input) return;
+    if(box.contains(e.target)) return;
+    box.classList.remove('show'); box.innerHTML='';
+  }, true);
+
+  // ensure clear icon click closes suggest
+  const clearBtn = (input.closest('.search-container')||document).querySelector('.clear-icon');
+  if(clearBtn){
+    clearBtn.addEventListener('click', ()=>{ box.classList.remove('show'); box.innerHTML=''; });
+  }
+})();
+</script>
+
 </body>
 </html>
