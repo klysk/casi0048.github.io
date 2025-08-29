@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Henri Bergson: Filosofia del Tempo e dell'Intuizione</title>
+    <meta name="description" content="Un'analisi approfondita del pensiero di Henri Bergson, il filosofo della durata reale, l'élan vital e l'intuizione come metodo filosofico">
+    <meta name="keywords" content="Henri Bergson, filosofia, tempo, intuizione, durata reale, élan vital, coscienza, materia, memoria">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #e74c3c;
+            --background-color: #f9f9f9;
+            --text-color: #333;
+            --card-background: #fff;
+            --shadow-color: rgba(0,0,0,0.1);
+            --font-main: 'Georgia', serif;
+            --font-header: 'Arial', sans-serif;
+        }
+        
+        body {
+            font-family: var(--font-main);
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        /* Modalità di lettura */
+        body.notturno {
+            --background-color: #1a1a2e;
+            --text-color: #e6e6e6;
+            --card-background: #16213e;
+            --primary-color: #c5cae9;
+            --secondary-color: #f48fb1;
+            --shadow-color: rgba(0,0,0,0.4);
+        }
+        
+        body.filosofico {
+            --background-color: #f5f5f5;
+            --text-color: #37474f;
+            --card-background: #ffffff;
+            --primary-color: #3f51b5;
+            --secondary-color: #7986cb;
+            --font-main: 'Times New Roman', serif;
+        }
+        
+        body.contemplativo {
+            --background-color: #f0f7ee;
+            --text-color: #2c3e50;
+            --card-background: #e0edc5;
+            --primary-color: #4a6741;
+            --secondary-color: #7b9e87;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        h1 {
+            font-family: var(--font-header);
+            color: var(--primary-color);
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+        }
+        
+        h2 {
+            font-family: var(--font-header);
+            color: var(--primary-color);
+            border-bottom: 1px solid var(--secondary-color);
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+        
+        .subtitle {
+            font-style: italic;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+        
+        .meta-info {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .meta-tag {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .meta-tag:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        .reading-modes {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .mode-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: var(--primary-color);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .mode-btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .content-section {
+            background-color: var(--card-background);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            transition: all 0.3s ease;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .section-content {
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .section-content.show {
+            display: block;
+        }
+        
+        .toggle-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .toggle-btn.rotated {
+            transform: rotate(45deg);
+        }
+        
+        .quote {
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 20px;
+            margin: 25px 0;
+            font-style: italic;
+            color: var(--primary-color);
+        }
+        
+        .concept-box {
+            background-color: rgba(231, 76, 60, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .concept-title {
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            border-top: 1px solid var(--primary-color);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .content-section {
+                padding: 15px;
+            }
+            
+            .meta-info {
+                gap: 8px;
+            }
+            
+            .meta-tag {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body class="filosofico">
+    <header>
+        <h1>Henri Bergson: Il Filosofo del Tempo e dell'Intuizione</h1>
+        <p class="subtitle">Un viaggio attraverso il pensiero del premio Nobel che rivoluzionò la concezione del tempo</p>
+        
+        <div class="meta-info">
+            <button class="meta-tag" onclick="filterContent('Filosofia Contemporanea')">Filosofia Contemporanea</button>
+            <button class="meta-tag" onclick="filterContent('Tempo e Durata')">Tempo e Durata</button>
+            <button class="meta-tag" onclick="filterContent('Intuizione')">Intuizione</button>
+            <button class="meta-tag" onclick="filterContent('Élan Vital')">Élan Vital</button>
+            <button class="meta-tag" onclick="filterContent('Memoria')">Memoria</button>
+        </div>
+        
+        <div class="reading-modes">
+            <button class="mode-btn" onclick="setMode('notturno')">Modalità Notturna</button>
+            <button class="mode-btn" onclick="setMode('filosofico')">Modalità Filosofica</button>
+            <button class="mode-btn" onclick="setMode('contemplativo')">Modalità Contemplativa</button>
+        </div>
+    </header>
+    
+    <main>
+        <section class="content-section" data-tags="Filosofia Contemporanea, Biografia">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>Introduzione: La Vita e il Contesto Storico</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content">
+                <p>Henri-Louis Bergson (1859-1941) è stato uno dei filosofi più influenti del XX secolo, le cui idee hanno radicalmente trasformato la comprensione del tempo, della coscienza e dell'evoluzione. Nato a Parigi da genitori ebrei, Bergson dimostrò presto un eccezionale talento intellettuale, distinguendosi negli studi scientifici e umanistici.</p>
+                
+                <p>La sua carriera accademica lo portò al Collège de France, dove le sue lezioni divennero eventi culturali seguiti da un pubblico entusiasta e variegato. Nel 1927 ricevette il Premio Nobel per la Letteratura, a testimonianza dello straordinario impatto e della qualità letteraria delle sue opere.</p>
+                
+                <div class="quote">
+                    "L'occhio vede soltanto ciò che la mente è preparata a comprendere."
+                </div>
+                
+                <p>Il pensiero di Bergson si sviluppa in reazione al positivismo e al determinismo scientifico del suo tempo, proponendo una visione alternativa che valorizza l'esperienza immediata, la durata reale e la creatività della vita. La sua influenza si estese ben oltre la filosofia, toccando letteratura (Proust), arte (Cubismo) e psicologia (James).</p>
+            </div>
+        </section>
+        
+        <section class="content-section" data-tags="Tempo e Durata, Epistemologia">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>La Distinzione Fondamentale: Tempo Spazializzato vs Durata Reale</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content">
+                <p>Uno dei contributi più radicali di Bergson è la distinzione tra tempo quantificato (spazializzato) e durata reale (durée). Per il filosofo, la scienza tratta il tempo come una serie di istanti discreti e misurabili, simili ai punti su una linea spaziale. Questo "tempo spazializzato" è utile per la misurazione, ma tradisce la natura autentica dell'esperienza temporale.</p>
+                
+                <div class="concept-box">
+                    <div class="concept-title">La Durata Reale (Durée)</div>
+                    <p>La durée è il tempo così come viene vissuto dalla coscienza: un flusso continuo, qualitativo e irreversibile in cui gli stati psichici si compenetrano e si trasformano gli uni negli altri. A differenza del tempo spazializzato, omogeneo e quantificabile, la durata è eterogenea, creativa e impossibile da misurare.</p>
+                </div>
+                
+                <p>Bergson utilizza l'esempio dello zucchero che si scioglie in un bicchiere d'acqua: per la scienza, è un processo misurabile in minuti e secondi; per la coscienza, è un'attesa che sembra "lunga" o "corta" a seconda dell'interesse e dell'aspettativa, dimostrando come il tempo vissuto differisca radicalmente dal tempo misurato.</p>
+                
+                <p>Questa intuizione ha profonde implicazioni non solo per la filosofia, ma anche per la psicologia, la letteratura e le nostre concezioni quotidiane dell'esistenza.</p>
+            </div>
+        </section>
+        
+        <section class="content-section" data-tags="Intuizione, Epistemologia">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>L'Intuizione come Metodo Filosofico</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content">
+                <p>Contro il predominio dell'intelligenza analitica e concettuale, Bergson propone l'intuizione come unico metodo in grado di cogliere la realtà nella sua fluidità e complessità. L'intelligenza, secondo Bergson, è uno strumento pratico sviluppatosi attraverso l'evoluzione per manipolare la materia, ma è inadatta a comprendere la vita nella sua essenza più profonda.</p>
+                
+                <div class="concept-box">
+                    <div class="concept-title">L'Intuizione Bergsoniana</div>
+                    <p>L'intuizione non è un sentimento vago o un'ispirazione irrazionale, ma una forma di conoscenza simpatetica che ci permette di coincidere con l'oggetto di studio, di entrare in esso per cogliere ciò che lo rende unico e irripetibile. È uno sforzo mentale per superare le limitazioni dell'intelligenza concettuale.</p>
+                </div>
+                
+                <p>Bergson paragona l'intuizione all'istinto che, pur essendo cieco e limitato, possiede una conoscenza immediata e perfetta della vita. Compito della filosofia è elevare l'intuizione a metodo consapevole, trasformandola in una conoscenza riflessiva e autocritica capace di completare e correggere l'intelligenza.</p>
+                
+                <div class="quote">
+                    "Non c'è niente nella filosofia che non possa essere detto in linguaggio comune."
+                </div>
+                
+                <p>Questa valorizzazione dell'intuizione rappresenta una sfida radicale alla filosofia tradizionale e alla scienza, proponendo un approccio complementare che unisce rigore e immediatezza, analisi e sintesi.</p>
+            </div>
+        </section>
+        
+        <section class="content-section" data-tags="Memoria, Psicologia, Metafisica">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>Materia e Memoria: Il Dualismo Bergsoniano</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content">
+                <p>In "Materia e Memoria" (1896), Bergson sviluppa una complessa teoria della relazione tra corpo e mente, materia e spirito. Contro sia il materialismo che il idealismo, Bergson propone un dualismo originale in cui materia e memoria sono distinti ma continuamente interagenti.</p>
+                
+                <p>La materia, per Bergson, è caratterizzata dalla ripetizione e dalla prevedibilità, mentre la memoria è pura creatività e imprevedibilità. Il corpo non è una macchina, ma uno strumento d'azione che seleziona, tra le infinite memorie accumulate, quelle utili per l'azione presente.</p>
+                
+                <div class="concept-box">
+                    <div class="concept-title">Memoria Pura e Memoria Abitudine</div>
+                    <p>Bergson distingue tra memoria-abitudine (meccanica, ripetitiva, utile per l'azione pratica) e memoria pura (conservazione integrale di tutto il passato, indipendente dall'utilità pratica). La prima è localizzata nel corpo, la seconda è di natura spirituale e coincide con la durata stessa della coscienza.</p>
+                </div>
+                
+                <p>Questa teoria ha importanti implicazioni per la comprensione dei fenomeni psicologici come il riconoscimento, i sogni e le malattie della memoria. Inoltre, offre una soluzione originale al problema del rapporto mente-corpo, evitando sia il riduzionismo materialista che il spiritualismo estremo.</p>
+            </div>
+        </section>
+        
+        <section class="content-section" data-tags="Élan Vital, Evoluzione, Metafisica">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>L'Élan Vital: La Spinta Creatrice dell'Evoluzione</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content">
+                <p>In "L'Evoluzione Creatrice" (1907), Bergson propone una visione alternativa alla teoria darwiniana dell'evoluzione. Per Bergson, l'evoluzione non è il risultato meccanico della selezione naturale e del caso, ma l'espressione di una spinta vitale (élan vital) che supera gli ostacoli e crea continuamente forme nuove e imprevedibili.</p>
+                
+                <div class="concept-box">
+                    <div class="concept-title">Élan Vital</div>
+                    <p>L'élan vital è il principio creatore che percorre la vita, spingendola a superare continuamente le forme già realizzate per crearne di nuove. Non è una forza finalizzata o predeterminata, ma un impulso creativo che procede per tentativi, esplorazioni e deviazioni.</p>
+                </div>
+                
+                <p>Bergson descrive l'evoluzione come un processo divergente, simile a una esplosione i cui frammenti a loro volta esplodono in direzioni imprevedibili. L'intelligenza umana e l'istinto animale rappresentano due linee evolutive divergenti: la prima specializzata nella manipolazione della materia, la seconda nella simpatia immediata con la vita.</p>
+                
+                <div class="quote">
+                    "L'occhio ha visto da sempre ciò che l'uomo guarda da sempre, ma non ha visto ciò che l'uomo non ha ancora guardato."
+                </div>
+                
+                <p>Questa teoria ebbe un'immediata e vasta risonanza, influenzando non solo la filosofia ma anche la letteratura (ad esempio, Proust e Woolf) e le scienze biologiques, sebbene sia stata anche criticata per il suo vitalismo apparentemente misterioso.</p>
+            </div>
+        </section>
+        
+        <section class="content-section" data-tags="Etica, Religione, Società">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>Etica e Religione: Le Due Fonti della Moralità e della Religione</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content">
+                <p>Nella sua opera matura "Le Due Fonti della Moralità e della Religione" (1932), Bergson applica le sue categorie filosofiche alla sfera sociale e religiosa. Distingue tra una moralità chiusa, basata sulla pressione sociale e necessaria per la coesione del gruppo, e una moralità aperta, fondata sull'aspirazione e sull'amore universale.</p>
+                
+                <p>Allo stesso modo, la religione può essere chiusa (statica, difensiva, mitologica) o aperta (dinamica, universale, mistica). I grandi mistici, per Bergson, sono i continuatori dell'élan vital nell'umanità, coloro che spingono l'evoluzione spirituale verso forme più ampie di amore e creatività.</p>
+                
+                <div class="concept-box">
+                    <div class="concept-title">Misticismo Bergsoniano</div>
+                    <p>Il misticismo bergsoniano non è fuga dal mondo ma impegno creativo nella trasformazione della società. I mistici sono figure eccezionali che sperimentano un contatto diretto con la fonte creatrice della vita e cercano di estendere questo amore all'intera umanità.</p>
+                </div>
+                
+                <p>Questa opera rappresenta non solo una filosofia della religione, ma anche una riflessione profonda sui fondamenti della società e sulle possibilità di superare i conflitti attraverso un'apertura creativa verso l'umanità intera.</p>
+            </div>
+        </section>
+        
+        <section class="content-section" data-tags="Filosofia Contemporanea, Influenza">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>Influenza e Attualità del Pensiero Bergsoniano</h2>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div class="section-content">
+                <p>L'influenza di Bergson è stata vasta e multiforme, toccando discipline diverse come filosofia, letteratura, psicologia, arte e teologia. Il suo concetto di durée ha influenzato profondamente Marcel Proust nella concezione del tempo nella "Recherche", mentre la sua teoria della memoria ha anticipato molte scoperte delle neuroscienze contemporanee.</p>
+                
+                <p>In filosofia, Bergson ha ispirato sia fenomenologi (Merleau-Ponty) che esistenzialisti (Sartre, inizialmente) e postmoderni (Deleuze, che gli dedicò un'importante monografia). Il suo rifiuto del determinismo e la valorizzazione della creatività e della novità hanno offerto un'alternativa vitale alle filosofie meccanicistiche.</p>
+                
+                <div class="concept-box">
+                    <div class="concept-title">Bergson Oggi</div>
+                    <p>Oggi assistiamo a una rinascita dell'interesse per Bergson, specialmente nelle neuroscienze (teorie della coscienza e del tempo soggettivo), nella fisica (interpretazioni temporali della meccanica quantistica) e nell'ecologia (concezione non meccanicistica della vita).</p>
+                </div>
+                
+                <p>In un'epoca dominata dall'accelerazione tecnologica e dalla crisi ecologica, il pensiero di Bergson offre strumenti preziosi per ripensare il nostro rapporto con il tempo, con la vita e con la creatività umana e naturale.</p>
+                
+                <div class="quote">
+                    "L'universo è una macchina per creare dèi."
+                </div>
+                
+                <p>La sfida bergsoniana di pensare il tempo al di là della spatializzazione, la vita al di là del meccanicismo, e la coscienza al di là del riduzionismo, rimane oggi più attuale che mai.</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>© 2025 - Saggio filosofico su Henri Bergson.</p>
+    </footer>
+
+    <script>
+        function toggleSection(element) {
+            const content = element.nextElementSibling;
+            const button = element.querySelector('.toggle-btn');
+            
+            content.classList.toggle('show');
+            button.classList.toggle('rotated');
+        }
+        
+        function setMode(mode) {
+            document.body.className = mode;
+        }
+        
+        function filterContent(tag) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                const tags = section.getAttribute('data-tags');
+                if (tags.includes(tag)) {
+                    section.style.display = 'block';
+                    section.style.opacity = '1';
+                    section.style.border = '2px solid var(--secondary-color)';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+            
+            // Apri tutte le sezioni visibili
+            document.querySelectorAll('.content-section[style*="display: block"] .section-content').forEach(content => {
+                content.classList.add('show');
+            });
+            document.querySelectorAll('.content-section[style*="display: block"] .toggle-btn').forEach(btn => {
+                btn.classList.add('rotated');
+            });
+            
+            // Aggiungi un pulsante per resettare il filtro
+            if (!document.getElementById('reset-filter')) {
+                const resetBtn = document.createElement('button');
+                resetBtn.textContent = 'Mostra tutti i contenuti';
+                resetBtn.id = 'reset-filter';
+                resetBtn.className = 'mode-btn';
+                resetBtn.style.margin = '20px auto';
+                resetBtn.style.display = 'block';
+                resetBtn.onclick = resetFilter;
+                document.querySelector('main').insertBefore(resetBtn, document.querySelector('main').firstChild);
+            }
+        }
+        
+        function resetFilter() {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.style.display = 'block';
+                section.style.opacity = '';
+                section.style.border = '';
+            });
+            
+            document.getElementById('reset-filter').remove();
+        }
+        
+        // Apri automaticamente la prima sezione
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstSection = document.querySelector('.section-content');
+            const firstButton = document.querySelector('.toggle-btn');
+            
+            if (firstSection && firstButton) {
+                firstSection.classList.add('show');
+                firstButton.classList.add('rotated');
+            }
+        });
+    </script>
+</body>
+</html>

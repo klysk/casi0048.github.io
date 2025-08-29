@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Lévi-Strauss: Il Maestro dello Strutturalismo | Antropologia e Filosofia</title>
+    <meta name="description" content="Un'analisi approfondita di Claude Lévi-Strauss, il padre dello strutturalismo in antropologia e il suo impatto sulla filosofia contemporanea">
+    <meta name="keywords" content="Claude Lévi-Strauss, strutturalismo, antropologia, filosofia, mito, pensiero selvaggio, parentela">
+    <meta name="author" content="Studioso di Antropologia Filosofica">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #8e44ad;
+            --accent-color: #3498db;
+            --text-color: #2c3e50;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --shadow: 0 5px 15px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        .notturno {
+            --primary-color: #ecf0f1;
+            --secondary-color: #9b59b6;
+            --accent-color: #3498db;
+            --text-color: #f0f0f0;
+            --bg-color: #1a1a2e;
+            --card-bg: #16213e;
+            --shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
+        
+        .filosofico {
+            --primary-color: #3a2d1d;
+            --secondary-color: #8b4513;
+            --accent-color: #6b8e23;
+            --text-color: #331900;
+            --bg-color: #f5f0e6;
+            --card-bg: #f9f5ed;
+            --shadow: 0 4px 8px rgba(139, 69, 19, 0.2);
+            font-family: 'Times New Roman', serif;
+        }
+        
+        .contemplativo {
+            --primary-color: #2c3e50;
+            --secondary-color: #8e44ad;
+            --accent-color: #3498db;
+            --text-color: #34495e;
+            --bg-color: #ecf0f1;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 16px rgba(0,0,0,0.05);
+            line-height: 1.8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--text-color);
+            line-height: 1.7;
+            padding: 20px;
+            min-height: 100vh;
+            transition: var(--transition);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.9;
+        }
+        
+        h2 {
+            color: var(--secondary-color);
+            margin: 30px 0 20px;
+            padding-left: 15px;
+            border-left: 4px solid var(--accent-color);
+            font-size: 1.8rem;
+        }
+        
+        p {
+            margin-bottom: 20px;
+            text-align: justify;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .reading-mode-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--card-bg);
+            padding: 12px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .mode-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background: var(--accent-color);
+            color: white;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .mode-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .toggle-button {
+            background: linear-gradient(to right, var(--secondary-color), var(--accent-color));
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            width: 100%;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            letter-spacing: 0.5px;
+        }
+        
+        .toggle-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(0,0,0,0.2);
+            background: linear-gradient(to right, #7937ac, #2980b9);
+        }
+        
+        .toggle-button:active {
+            transform: translateY(0);
+        }
+        
+        .toggle-button::after {
+            content: "↓";
+            margin-left: 10px;
+            transition: var(--transition);
+            font-size: 1.2rem;
+        }
+        
+        .toggle-button.active::after {
+            transform: rotate(180deg);
+        }
+        
+        .hidden-content {
+            display: none;
+            padding: 25px;
+            margin-top: 25px;
+            border-left: 4px solid var(--accent-color);
+            background: linear-gradient(to right, rgba(52, 152, 219, 0.05) 0%, rgba(142, 68, 173, 0.05) 100%);
+            border-radius: 0 10px 10px 0;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(-15px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+        
+        .quote {
+            font-style: italic;
+            padding: 25px;
+            margin: 30px 0;
+            background: linear-gradient(to right, rgba(142, 68, 173, 0.08) 0%, rgba(52, 152, 219, 0.08) 100%);
+            border-radius: 10px;
+            border-left: 4px solid var(--secondary-color);
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            line-height: 1.6;
+            text-align: center;
+        }
+        
+        ul, ol {
+            margin: 25px 0;
+            padding-left: 35px;
+        }
+        
+        li {
+            margin-bottom: 15px;
+            padding-left: 15px;
+            position: relative;
+            line-height: 1.6;
+        }
+        
+        li::before {
+            content: "◆";
+            color: var(--accent-color);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1.5em;
+            font-size: 1rem;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(0,0,0,0.1);
+            color: #6c757d;
+            font-size: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .reading-mode-selector {
+                position: static;
+                margin-bottom: 20px;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            p {
+                font-size: 1rem;
+            }
+            
+            .toggle-button {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="reading-mode-selector">
+            <button class="mode-btn" onclick="changeMode('default')">Classica</button>
+            <button class="mode-btn" onclick="changeMode('notturno')">Notturna</button>
+            <button class="mode-btn" onclick="changeMode('filosofico')">Filosofico</button>
+            <button class="mode-btn" onclick="changeMode('contemplativo')">Contemplativo</button>
+        </div>
+
+        <header>
+            <h1>Claude Lévi-Strauss: Il Maestro dello Strutturalismo</h1>
+            <p class="subtitle">Antropologia, filosofia e le strutture nascoste della mente umana</p>
+        </header>
+
+        <div class="card">
+            <h2>Introduzione: L'Antropologo Filosofo</h2>
+            <p>Claude Lévi-Strauss (1908-2009) è stato uno degli antropologi e filosofi più influenti del XX secolo, fondatore dello strutturalismo in antropologia. La sua opera ha rivoluzionato non solo lo studio delle culture, ma anche la filosofia, la sociologia e le scienze umane in generale.</p>
+            
+            <button class="toggle-button" onclick="toggleContent('intro-content', this)">Mostra di più</button>
+            <div id="intro-content" class="hidden-content">
+                <p>Nato a Bruxelles da genitori francesi, Lévi-Strauss inizialmente studiò legge e filosofia alla Sorbona di Parigi. Tuttavia, fu l'incontro con l'antropologia durante il suo soggiorno in Brasile (1935-1939) a segnare la sua traiettoria intellettuale. Le sue ricerche tra le popolazioni indigene del Mato Grosso e dell'Amazzonia brasiliana fornirono il materiale empirico per le sue successive elaborazioni teoriche.</p>
+                <p>La sua opera più celebre, "Tristi Tropici" (1955), combina memoir di viaggio, riflessione filosofica e analisi antropologica, offrendo uno sguardo profondo sulle società indigene e sulla crisi della civiltà occidentale.</p>
+                <div class="quote">
+                    "Il mondo è iniziato senza l'uomo e finirà senza di lui."
+                </div>
+                <p>Lévi-Strauss sfidò l'etnocentrismo occidentale, mostrando come le società cosiddette "primitive" possedessero sistemi di pensiero complessi e sofisticati, differenti ma non inferiori a quelli delle società "civilizzate".</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Lo Strutturalismo: Un Nuovo Paradigma</h2>
+            <p>Lévi-Strauss applicò il metodo strutturalista, derivato dalla linguistica di Ferdinand de Saussure e Roman Jakobson, allo studio delle culture umane. Secondo questo approccio, i fenomeni culturali devono essere analizzati in termini di relazioni e opposizioni binarie che formano strutture profonde.</p>
+            
+            <button class="toggle-button" onclick="toggleContent('strutturalismo-content', this)">Mostra di più</button>
+            <div id="strutturalismo-content" class="hidden-content">
+                <p>Lo strutturalismo di Lévi-Strauss si basa su alcuni principi fondamentali:</p>
+                <ul>
+                    <li><strong>Invarianza strutturale</strong>: Le strutture fondamentali della mente umana sono universali e invarianti</li>
+                    <li><strong>Opposizioni binarie</strong>: Il pensiero umano opera attraverso opposizioni fondamentali (natura/cultura, crudo/cotto, maschile/femminile)</li>
+                    <li><strong>Inconscio strutturale</strong>: Le strutture che organizzano la cultura operano a livello inconscio</li>
+                    <li><strong>Omeostasi culturale</strong>: I sistemi culturali tendono all'equilibrio e all'auto-conservazione</li>
+                </ul>
+                
+                <div class="quote">
+                    "Lo scopo delle scienze umane non è di costituire l'uomo, ma di dissolverlo."
+                </div>
+                
+                <p>Per Lévi-Strauss, compito dell'antropologo è scoprire queste strutture nascoste che sottendono le pratiche culturali apparentemente diverse. Le variazioni superficiali tra culture nascondono un numero limitato di strutture profonde comuni a tutta l'umanità.</p>
+                <p>Questo approccio rappresentava una rottura radicale con l'antropologia evoluzionista e funzionalista che l'aveva preceduta, spostando l'attenzione dalla storia e dalla funzione dei fenomeni culturali alla loro struttura logica.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Il Pensiero Selvaggio e la Scienza del Concreto</h2>
+            <p>In "Il pensiero selvaggio" (1962), Lévi-Strauss sfata il mito del "primitivo" pre-logico, mostrando come il pensiero mitico-simbolico delle società tradizionali possieda una sua logica rigorosa e sistematica.</p>
+            
+            <button class="toggle-button" onclick="toggleContent('pensiero-content', this)">Mostra di più</button>
+            <div id="pensiero-content" class="hidden-content">
+                <p>Lévi-Strauss distingue tra:</p>
+                <ol>
+                    <li><strong>Pensiero domestico</strong> (pensée domestiquée): Il pensiero scientifico-tecnologico delle società moderne</li>
+                    <li><strong>Pensiero selvaggio</strong> (pensée sauvage): Il pensiero mitico-simbolico delle società tradizionali</li>
+                </ol>
+                
+                <p>Contrariamente all'opinione comune, il pensiero selvaggio non è inferiore o pre-logico, ma semplicemente diverso. Esso opera attraverso quella che Lévi-Strauss chiama "scienza del concreto":</p>
+                
+                <ul>
+                    <li>Classifica il mondo attraverso attributi sensibili (colori, suoni, texture)</li>
+                    <li>Utilizza elementi concreti come significanti per pensare relazioni astratte</li>
+                    <li>Crea sistemi di opposizioni e correlazioni estremamente complessi</li>
+                    <li>Possiede una logica rigorosa anche se differente dalla scienza occidentale</li>
+                </ul>
+                
+                <div class="quote">
+                    "Il pensiero selvaggio è definito sia attraverso ciò che distingue dal pensiero scientifico, sia attraverso ciò che gli è comune."
+                </div>
+                
+                <p>Secondo Lévi-Strauss, entrambe le forme di pensiero sono ugualmente valide e complesse, ma operano con materiali e finalità differenti. Il pensiero selvaggio non è una fase preliminare superata dal pensiero scientifico, ma una modalità parallela e permanente della mente umana.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>L'Analisi Strutturale dei Miti</h2>
+            <p>Uno dei contributi più celebri di Lévi-Strauss è il suo metodo di analisi strutturale dei miti, esposto nelle quattro volumi di "Mythologiques" (1964-1971).</p>
+            
+            <button class="toggle-button" onclick="toggleContent('miti-content', this)">Mostra di più</button>
+            <div id="miti-content" class="hidden-content">
+                <p>Per Lévi-Strauss, i miti non sono narrazioni fantastiche o irrazionali, ma sistemi logici che cercano di risolvere contraddizioni fondamentali dell'esistenza umana. La sua analisi si articola in diverse fasi:</p>
+                
+                <ol>
+                    <li><strong>Scomposizione</strong> del mito in unità minime (mitemi)</li>
+                    <li><strong>Classificazione</strong> dei mitemi secondo opposizioni binarie</li>
+                    <li><strong>Ricostruzione</strong> della struttura logica sottostante</li>
+                    <li><strong>Comparazione</strong> tra miti di diverse culture</li>
+                </ol>
+                
+                <p>Attraverso questo metodo, Lévi-Strauss dimostra come miti apparentemente diversi condividano strutture profonde simili. Analizzando centinaia di miti delle popolazioni amerindie, mostra come essi formino un sistema coerente che affronta problemi universali come:</p>
+                
+                <ul>
+                    <li>Il rapporto tra natura e cultura</li>
+                    <li>L'opposizione tra vita e morte</li>
+                    <li>La mediazione tra contraddizioni irrisolvibili</li>
+                    <li>L'origine delle istituzioni sociali</li>
+                </ul>
+                
+                <div class="quote">
+                    "I miti pensano tra loro, senza che coloro che li impieghiamo ne siano coscienti."
+                </div>
+                
+                <p>L'analisi strutturale dei miti rivela come la funzione principale del pensiero mitico sia quella di mediare tra opposizioni fondamentali attraverso una logica trasformativa, creando ponti simbolici tra poli contraddittori dell'esperienza umana.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Le Strutture della Parentela</h2>
+            <p>Nel suo primo lavoro importante, "Le strutture elementari della parentela" (1949), Lévi-Strauss applica il metodo strutturalista allo studio dei sistemi di parentela.</p>
+            
+            <button class="toggle-button" onclick="toggleContent('parentela-content', this)">Mostra di più</button>
+            <div id="parentela-content" class="hidden-content">
+                <p>Lévi-Strauss propone una teoria rivoluzionaria secondo cui la proibizione dell'incesto non è tanto un divieto quanto il fondamento della cultura umana, in quanto costringe allo scambio e all'alleanza tra gruppi.</p>
+                
+                <p>I suoi contributi principali in questo campo includono:</p>
+                
+                <ul>
+                    <li><strong>La teoria dello scambio</strong>: Il matrimonio è fondamentalmente uno scambio di donne tra gruppi, che crea legami sociali</li>
+                    <li><strong>La distinzione tra strutture elementari e complesse</strong> della parentela</li>
+                    <li><strong>L'analisi dei sistemi di discendenza e alleanza</strong> come sistemi di comunicazione</li>
+                    <li><strong>L'identificazione dell'atomo di parentela</strong> come unità minima del sistema</li>
+                </ul>
+                
+                <div class="quote">
+                    "La proibizione dell'incesto è il passaggio dalla natura alla cultura."
+                </div>
+                
+                <p>Secondo Lévi-Strauss, le strutture della parentela rivelano modelli profondi di pensiero che sono omologhi a quelli che organizzano il linguaggio e i sistemi simbolici. I sistemi di parentela sono quindi non solo istituzioni sociali, ma anche sistemi di significato che esprimono la logica fondamentale della mente umana.</p>
+                
+                <p>Questa opera ebbe un impatto enorme sull'antropologia, spostando l'attenzione dalle relazioni di discendenza a quelle di alleanza, e mostrando come le strutture sociali siano espressioni di strutture mentali più profonde.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Critiche e Eredità Intellettuale</h2>
+            <p>Nonostante la sua influenza monumentale, l'opera di Lévi-Strauss ha suscitato numerose critiche e dibattiti.</p>
+            
+            <button class="toggle-button" onclick="toggleContent('critiche-content', this)">Mostra di più</button>
+            <div id="critiche-content" class="hidden-content">
+                <p>Le principali critiche allo strutturalismo di Lévi-Strauss includono:</p>
+                
+                <ul>
+                    <li><strong>Determinismo strutturale</strong>: La riduzione dell'agente umano a portatore passivo di strutture</li>
+                    <li><strong>A-storicità</strong>: La tendenza a trascurare la dimensione storica e diacronica</li>
+                    <li><strong>Formalismo eccessivo</strong>: L'attenzione alle forme a scapito dei contenuti concreti</li>
+                    <li><strong>Universalismo problematico</strong>: La ricerca di strutture universali che potrebbe appiattire le differenze culturali</li>
+                </ul>
+                
+                <p>Nonostante queste critiche, l'eredità di Lévi-Strauss è immensa:</p>
+                
+                <ol>
+                    <li><strong>Fondazione dello strutturalismo</strong> come paradigma nelle scienze umane</li>
+                    <li><strong>Influenza sul post-strutturalismo</strong> e la decostruzione (Foucault, Derrida)</li>
+                    <li><strong>Impatto sulla semiotica</strong> e l'analisi culturale (Barthes, Eco)</li>
+                    <li><strong>Contributo all'antropologia cognitiva</strong> e allo studio dei sistemi di classificazione</li>
+                    <li><strong>Influenza sull'ecologia culturale</strong> e la critica al progressismo occidentale</li>
+                </ol>
+                
+                <div class="quote">
+                    "Sono structuraliste perché credo che ci siano, nel pensiero umano, strutture invarianti."
+                </div>
+                
+                <p>Oggi, mentre lo strutturalismo in senso stretto è stato superato da approcci più dinamici e processuali, le intuizioni fondamentali di Lévi-Strauss continuano a influenzare l'antropologia, la filosofia e le scienze umane. La sua enfasi sulle strutture profonde della mente umana, sulla logica dei sistemi simbolici e sulla relatività culturale rimane un punto di riferimento imprescindibile per chiunque studi la diversità e l'unità dell'experience umana.</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 Antropologia Filosofica - Tutti i diritti riservati</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleContent(id, button) {
+            const content = document.getElementById(id);
+            
+            if (content.style.display === 'none' || content.style.display === '') {
+                content.style.display = 'block';
+                button.textContent = 'Mostra meno';
+                button.classList.add('active');
+            } else {
+                content.style.display = 'none';
+                button.textContent = 'Mostra di più';
+                button.classList.remove('active');
+            }
+        }
+        
+        function changeMode(mode) {
+            document.body.classList.remove('notturno', 'filosofico', 'contemplativo');
+            
+            if (mode !== 'default') {
+                document.body.classList.add(mode);
+            }
+        }
+    </script>
+</body>
+</html>

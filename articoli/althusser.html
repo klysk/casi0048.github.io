@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Louis Althusser: Strutturalismo Marxista e Teoria dell'Ideologia | Filosofia Contemporanea</title>
+    <meta name="description" content="Un'analisi approfondita di Louis Althusser, filosofo marxista che ha rivoluzionato la teoria dell'ideologia e la lettura di Marx">
+    <meta name="keywords" content="Louis Althusser, marxismo, strutturalismo, ideologia, apparati ideologici di stato, filosofia politica, materialismo aleatorio">
+    <meta name="author" content="Studioso di Filosofia Politica">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #c0392b;
+            --accent-color: #e74c3c;
+            --text-color: #2c3e50;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --shadow: 0 5px 15px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        .notturno {
+            --primary-color: #ecf0f1;
+            --secondary-color: #e74c3c;
+            --accent-color: #c0392b;
+            --text-color: #f0f0f0;
+            --bg-color: #1a1a2e;
+            --card-bg: #16213e;
+            --shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
+        
+        .filosofico {
+            --primary-color: #3a2d1d;
+            --secondary-color: #8b4513;
+            --accent-color: #a23515;
+            --text-color: #331900;
+            --bg-color: #f5f0e6;
+            --card-bg: #f9f5ed;
+            --shadow: 0 4px 8px rgba(139, 69, 19, 0.2);
+            font-family: 'Times New Roman', serif;
+        }
+        
+        .contemplativo {
+            --primary-color: #2c3e50;
+            --secondary-color: #c0392b;
+            --accent-color: #e74c3c;
+            --text-color: #34495e;
+            --bg-color: #ecf0f1;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 16px rgba(0,0,0,0.05);
+            line-height: 1.8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e6eaf0 100%);
+            color: var(--text-color);
+            line-height: 1.7;
+            padding: 20px;
+            min-height: 100vh;
+            transition: var(--transition);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.1"><text x="50%" y="50%" font-size="20" text-anchor="middle" fill="white">⚒</text></svg>');
+            opacity: 0.1;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        h2 {
+            color: var(--secondary-color);
+            margin: 30px 0 20px;
+            padding-left: 15px;
+            border-left: 4px solid var(--accent-color);
+            font-size: 1.8rem;
+        }
+        
+        p {
+            margin-bottom: 20px;
+            text-align: justify;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .reading-mode-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--card-bg);
+            padding: 12px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .mode-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background: var(--accent-color);
+            color: white;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .mode-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--secondary-color), var(--accent-color));
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .toggle-button {
+            background: linear-gradient(to right, var(--secondary-color), var(--accent-color));
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            width: 100%;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .toggle-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(0,0,0,0.2);
+            background: linear-gradient(to right, #a23515, #c0392b);
+        }
+        
+        .toggle-button:active {
+            transform: translateY(0);
+        }
+        
+        .toggle-button::after {
+            content: "↓";
+            margin-left: 10px;
+            transition: var(--transition);
+            font-size: 1.2rem;
+        }
+        
+        .toggle-button.active::after {
+            transform: rotate(180deg);
+        }
+        
+        .hidden-content {
+            display: none;
+            padding: 25px;
+            margin-top: 25px;
+            border-left: 4px solid var(--accent-color);
+            background: linear-gradient(to right, rgba(231, 76, 60, 0.05) 0%, rgba(192, 57, 43, 0.05) 100%);
+            border-radius: 0 10px 10px 0;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(-15px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+        
+        .quote {
+            font-style: italic;
+            padding: 25px;
+            margin: 30px 0;
+            background: linear-gradient(to right, rgba(192, 57, 43, 0.08) 0%, rgba(231, 76, 60, 0.08) 100%);
+            border-radius: 10px;
+            border-left: 4px solid var(--secondary-color);
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            line-height: 1.6;
+            text-align: center;
+            position: relative;
+        }
+        
+        .quote::before {
+            content: """;
+            font-size: 4rem;
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            opacity: 0.1;
+            font-family: Georgia, serif;
+        }
+        
+        ul, ol {
+            margin: 25px 0;
+            padding-left: 35px;
+        }
+        
+        li {
+            margin-bottom: 15px;
+            padding-left: 15px;
+            position: relative;
+            line-height: 1.6;
+        }
+        
+        li::before {
+            content: "■";
+            color: var(--accent-color);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1.5em;
+            font-size: 1rem;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(0,0,0,0.1);
+            color: #6c757d;
+            font-size: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .reading-mode-selector {
+                position: static;
+                margin-bottom: 20px;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            p {
+                font-size: 1rem;
+            }
+            
+            .toggle-button {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="reading-mode-selector">
+            <button class="mode-btn" onclick="changeMode('default')">Classica</button>
+            <button class="mode-btn" onclick="changeMode('notturno')">Notturna</button>
+            <button class="mode-btn" onclick="changeMode('filosofico')">Filosofico</button>
+            <button class="mode-btn" onclick="changeMode('contemplativo')">Contemplativo</button>
+        </div>
+
+        <header>
+            <h1>Louis Althusser</h1>
+            <p class="subtitle">Strutturalismo Marxista e Teoria dell'Ideologia: Una Rilettura Radicale di Marx</p>
+        </header>
+
+        <div class="card">
+            <h2>Vita e Opere: Il Filosofo del Conflitto</h2>
+            <p>Louis Althusser (1918-1990) è stato uno dei filosofi marxisti più influenti e controversi del XX secolo. Nato in Algeria da una famiglia francese, la sua vita fu segnata da lutti, malattia mentale e dal tragico evento del 1980 quando strangolò la moglie Hélène Rytmann.</p>
+            
+            <button class="toggle-button" onclick="toggleContent('vita-content', this)">Mostra di più</button>
+            <div id="vita-content" class="hidden-content">
+                <p>Althusser studiò all'École Normale Supérieure di Parigi, dove in seguito divenne professore. La sua carriera accademica fu interrotta dalla Seconda Guerra Mondiale, durante la quale fu prigioniero di guerra in Germania. Dopo la guerra, si avvicinò al Partito Comunista Francese, di cui divenne uno dei principali teorici.</p>
+                
+                <div class="quote">
+                    "L'ideologia rappresenta il rapporto immaginario degli individui con le loro condizioni reali di esistenza."
+                </div>
+                
+                <p>Le sue opere principali includono "Per Marx" (1965), "Leggere il Capitale" (1965, con i suoi allievi), "Ideologia e apparati ideologici di Stato" (1970) e la sua autobiografia "L'avvenire dura a lungo" (1992), pubblicata postuma. La sua filosofia rappresenta un tentativo di rinnovare il marxismo attraverso gli strumenti dello strutturalismo e della psicoanalisi.</p>
+                
+                <p>Nonostante i suoi gravi problemi mentali che lo portarono a numerosi ricoveri in ospedale psichiatrico, Althusser sviluppò una delle teorie più sofisticate e influenti dell'ideologia e dell'apparato statale, che avrebbe profondamente influenzato la filosofia politica contemporanea.</p>
+                
+                <p>La sua tragica morte della moglie e il successivo giudizio di infermità mentale segnarono la fine della sua carriera pubblica, ma non della sua influenza sul pensiero filosofico e politico.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>La "Rottura Epistemologica" in Marx</h2>
+            <p>Uno dei contributi più importanti di Althusser fu la sua rilettura di Marx attraverso il concetto di "rottura epistemologica", mutuato dal filosofo della scienza Gaston Bachelard.</p>
+            
+            <button class="toggle-button" onclick="toggleContent('rottura-content', this)">Mostra di più</button>
+            <div id="rottura-content" class="hidden-content">
+                <p>Althusser sosteneva che nell'opera di Marx si potesse identificare una netta rottura tra i scritti giovanili, ancora influenzati dall'umanismo e dall'idealismo hegeliano, e i scritti della maturità, dove Marx avrebbe sviluppato una vera e propria scienza della storia: il materialismo storico.</p>
+                
+                <p>Questa rottura epistemologica separerebbe:</p>
+                
+                <ul>
+                    <li><strong>Il Marx "ideologico"</strong> (pre-1845): Influenzato da Feuerbach e Hegel, centrato sui concetti di alienazione ed essenza umana</li>
+                    <li><strong>Il Marx "scientifico"</strong> (post-1845): Fondatore del materialismo storico, con concetti come modo di produzione, plusvalore e lotta di classe</li>
+                </ul>
+                
+                <div class="quote">
+                    "La filosofia è, in ultima istanza, lotta di classe nella teoria."
+                </div>
+                
+                <p>Secondo Althusser, questa distinzione era cruciale per liberare il marxismo dalle interpretazioni umaniste e storiciste che dominavano nel dopoguerra, specialmente dopo la pubblicazione dei Manoscritti economico-filosofici del 1844 di Marx.</p>
+                
+                <p>La lettura althusseriana di Marx enfatizzava:</p>
+                
+                <ol>
+                    <li><strong>L'anti-umanismo teorico</strong>: Il rifiuto di ogni antropologia filosofica che fondasse la storia su un'essenza umana</li>
+                    <li><strong>L'anti-storicismo</strong>: La storia come processo senza soggetto né fini predeterminati</li>
+                    <li><strong>La scienza della storia</strong>: Il materialismo storico come scienza delle strutture sociali</li>
+                    <li><strong>La discontinuità radicale</strong> tra ideologia e scienza</li>
+                </ol>
+                
+                <p>Questa interpretazione ebbe un enorme impatto sugli studi marxisti, provocando accesi dibattiti e contribuendo a definire il campo del marxismo strutturalista.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Teoria dell'Ideologia e Apparati di Stato</h2>
+            <p>Il contributo più celebre di Althusser è la sua teoria dell'ideologia, sviluppata principalmente nel saggio "Ideologia e apparati ideologici di Stato" (1970).</p>
+            
+            <button class="toggle-button" onclick="toggleContent('ideologia-content', this)">Mostra di più</button>
+            <div id="ideologia-content" class="hidden-content">
+                <p>Althusser distingue tra:</p>
+                
+                <ul>
+                    <li><strong>Apparati repressivi di Stato</strong> (ARS): Governo, esercito, polizia, tribunali - che funzionano principalmente attraverso la repressione</li>
+                    <li><strong>Apparati ideologici di Stato</strong> (AIS): Scuola, famiglia, chiesa, media, sindacati - che funzionano principalmente attraverso l'ideologia</li>
+                </ul>
+                
+                <div class="quote">
+                    "L'ideologia ha la funzione (che la definisce) di 'costituire' gli individui concreti in soggetti."
+                </div>
+                
+                <p>Per Althusser, gli AIS svolgono un ruolo fondamentale nel riprodurre i rapporti di produzione capitalistici. Tra tutti gli apparati ideologici, la scuola assume un'importanza particolare nelle società capitalistiche moderne, sostituendo la chiesa come apparato ideologico dominante.</p>
+                
+                <p>La teoria althusseriana dell'ideologia si basa su diverse tesi fondamentali:</p>
+                
+                <ol>
+                    <li><strong>L'ideologia è materiale</strong>: Esiste nelle pratiche e nelle istituzioni, non solo nelle idee</li>
+                    <li><strong>L'ideologia interpella gli individui in quanto soggetti</strong>: Costruisce la nostra identità soggettiva</li>
+                    <li><strong>L'ideologia rappresenta il rapporto immaginario degli individui con le loro condizioni reali di esistenza</strong></li>
+                    <li><strong>L'ideologia è senza storia</strong>: Esiste in tutte le società, sebbene con contenuti diversi</li>
+                </ol>
+                
+                <p>Questa concezione dell'ideologia come pratica materiale che costituisce i soggetti ha influenzato profondamente la filosofia post-strutturalista, gli studi culturali e la teoria critica.</p>
+                
+                <p>Althusser introduce anche il concetto di "soggetto assoluto" (Dio nella religione, l'Umanesimo nell'ideologia borghese) verso cui tutti i soggetti sono orientati, anticipando temi che saranno sviluppati dalla teoria del discorso e dagli studi postcoloniali.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Strutturalismo e Sovradeterminazione</h2>
+            <p>Althusser sviluppò una versione originale di strutturalismo marxista, centrata sui concetti di "sovradeterminazione" e "pratica teorica".</p>
+            
+            <button class="toggle-button" onclick="toggleContent('strutturalismo-content', this)">Mostra di più</button>
+            <div id="strutturalismo-content" class="hidden-content">
+                <p>Contrariamente all'economicismo di alcune interpretazioni marxiste, Althusser sosteneva che la struttura sociale fosse un tutto complesso composto da diverse istanze (economia, politica, ideologia) relative autonome, sebbene l'economia determinasse "in ultima istanza" quale istanza sarebbe stata dominante.</p>
+                
+                <p>Il concetto chiave di questa teoria è la <strong>sovradeterminazione</strong>:</p>
+                
+                <ul>
+                    <li>Le contraddizioni sociali non sono mai pure ma sempre sovradeterminate</li>
+                    <li>Ogni livello della struttura sociale (economico, politico, ideologico) contribuisce alla determinazione delle contraddizioni</li>
+                    <li>La rivoluzione non è il risultato di una semplice contraddizione economica ma della condensazione di molteplici contraddizioni</li>
+                </ul>
+                
+                <div class="quote">
+                    "Il tutto complesso sovradeterminato possiede l'unità di una struttura articolata e dominata."
+                </div>
+                
+                <p>Althusser concettualizza la società come una struttura articolata in tre pratiche fondamentali:</p>
+                
+                <ol>
+                    <li><strong>Pratica economica</strong>: Trasformazione della natura attraverso il lavoro</li>
+                    <li><strong>Pratica politica</strong>: Trasformazione dei rapporti sociali attraverso la lotta</li>
+                    <li><strong>Pratica ideologica</strong>: Trasformazione del rapporto con il mondo attraverso la rappresentazione</li>
+                    <li><strong>Pratica teorica</strong> (aggiunta da Althusser): Trasformazione delle rappresentazioni in concetti</li>
+                </ol>
+                
+                <p>Questa teoria permetteva ad Althusser di spiegare perché le rivoluzioni non avvenissero necessariamente nei paesi più sviluppati economicamente (come predetto da Marx) ma in contesti dove multiple contraddizioni si condensavano in una crisi rivoluzionaria.</p>
+                
+                <p>Lo strutturalismo althusseriano, sebbene spesso criticato per il suo determinismo strutturale, rappresentò un tentativo ambizioso di conciliare la determinazione economica con la relativa autonomia degli altri livelli sociali.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Il Materialismo Aleatorio e l'Ultimo Althusser</h2>
+            <p>Negli ultimi anni della sua vita, Althusser sviluppò una nuova filosofia del "materialismo aleatorio" o "dell'incontro", che rappresentava una significativa evoluzione del suo pensiero.</p>
+            
+            <button class="toggle-button" onclick="toggleContent('materialismo-content', this)">Mostra di più</button>
+            <div id="materialismo-content" class="hidden-content">
+                <p>Il materialismo aleatorio rappresenta una rottura con lo strutturalismo delle opere precedenti e un avvicinamento a temi più vicini alla filosofia di Deleuze, Derrida e alla fisica quantistica.</p>
+                
+                <p>I concetti chiave di questa ultima fase includono:</p>
+                
+                <ul>
+                    <li><strong>L'aleatorio</strong>: Il primato del caso e dell'incontro sulla necessità strutturale</li>
+                    <li><strong>La deriva</strong>: I processi sociali come risultati contingenti di incontri</li>
+                    <li><strong>Il "farsi" della storia</strong> contro il determinismo strutturale</li>
+                    <li><strong>La filosofia come presa di posizione</strong> nel campo teorico</li>
+                </ul>
+                
+                <div class="quote">
+                    "Il mondo è il risultato provvisorio di incontri aleatori, non il prodotto necessario di una logica storica."
+                </div>
+                
+                <p>In questa prospettiva, Althusser rilegge la storia del materialismo come una "corrente sotterranea" che da Epicuro e Lucrezio giunge fino a Machiavelli, Spinoza e Marx, enfatizzando il caso, la contingenza e la possibilità.</p>
+                
+                <p>Il materialismo aleatorio sostiene che:</p>
+                
+                <ol>
+                    <li>La storia non ha senso o direzione predeterminati</li>
+                    <li>Le strutture sociali sono il risultato provvisorio di incontri aleatori</li>
+                    <li>La politica consiste nel favorire certi incontri rather che altri</li>
+                    <li>Non c'è garanzia storica del successo del socialismo</li>
+                </ol>
+                
+                <p>Questa ultima filosofia rappresenta sia una continuazione che una critica del suo precedente strutturalismo, mantenendo l'anti-umanismo e l'anti-storicismo ma abbandonando il determinismo strutturale in favore di una filosofia della contingenza e della possibilità.</p>
+                
+                <p>Il materialismo aleatorio è stato riscoperto recentemente come anticipatore di temi centrali nel pensiero contemporaneo, dal nuovo materialismo alla teoria dell'assemblaggio.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Eredità e Critiche</h2>
+            <p>L'eredità di Althusser è vasta e controversa, con influenze che vanno oltre il marxismo per toccare campi come gli studi culturali, il post-strutturalismo e la teoria critica.</p>
+            
+            <button class="toggle-button" onclick="toggleContent('eredita-content', this)">Mostra di più</button>
+            <div id="eredita-content" class="hidden-content">
+                <p>Le principali aree di influenza di Althusser includono:</p>
+                
+                <ul>
+                    <li><strong>Teoria critica e studi culturali</strong>: La sua teoria dell'ideologia ha influenzato pensatori come Stuart Hall e la scuola di Birmingham</li>
+                    <li><strong>Post-strutturalismo</strong>: Il suo anti-umanismo e la teoria della soggettivazione hanno influenzato Foucault, Deleuze e Derrida</li>
+                    <li><strong>Psicoanalisi e teoria del soggetto</strong>: La sua rilettura di Lacan ha influenzato la teoria femminista e queer</li>
+                    <li><strong>Filosofia della scienza</strong>: La sua concezione della pratica teorica ha influenzato la epistemologia</li>
+                </ul>
+                
+                <div class="quote">
+                    "Non si esce dall'ideologia se non per entrare in un'altra ideologia."
+                </div>
+                
+                <p>Tuttavia, il pensiero di Althusser ha anche suscitato numerose critiche:</p>
+                
+                <ol>
+                    <li><strong>Determinismo strutturale</strong>: L'eccessivo peso attribuito alle strutture a scapito dell'agency umana</li>
+                    <li><strong>Elitismo teorico</strong>: La distinzione rigida tra scienza e ideologia che riserva la teoria a un'élite intellettuale</li>
+                    <li><strong>Funzionalismo</strong>: La tendenza a vedere tutti gli apparati ideologici come funzionali al mantenimento del capitalismo</li>
+                    <li><strong>Astoricità</strong>: La difficoltà a spiegare il cambiamento sociale e storico</li>
+                </ol>
+                
+                <p>Nonostante queste critiche, l'importanza di Althusser per la filosofia contemporanea rimane indiscutibile. I suoi concetti di interpellazione, apparati ideologici di Stato e sovradeterminazione continuano a essere strumenti potenti per analizzare il potere, l'ideologia e la soggettività nelle società contemporanee.</p>
+                
+                <p>La riscoperta del suo ultimo lavoro sul materialismo aleatorio ha inoltre aperto nuove prospettive per un marxismo non deterministico e attento alla contingenza e alla possibilità storica.</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 Filosofia Politica Contemporanea - Tutti i diritti riservati</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleContent(id, button) {
+            const content = document.getElementById(id);
+            
+            if (content.style.display === 'none' || content.style.display === '') {
+                content.style.display = 'block';
+                button.textContent = 'Mostra meno';
+                button.classList.add('active');
+            } else {
+                content.style.display = 'none';
+                button.textContent = 'Mostra di più';
+                button.classList.remove('active');
+            }
+        }
+        
+        function changeMode(mode) {
+            document.body.classList.remove('notturno', 'filosofico', 'contemplativo');
+            
+            if (mode !== 'default') {
+                document.body.classList.add(mode);
+            }
+        }
+    </script>
+</body>
+</html>
