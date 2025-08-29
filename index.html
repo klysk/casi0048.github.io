@@ -17,8 +17,8 @@
   <meta property="og:image" content="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Socrates_Louvre.jpg">
 
   <!-- Preloads -->
-  <link rel="preload" href="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Socrates_Louvre.jpg" as="image">
-  <link rel="preload" href="https://casi0048.github.io/suoni/thunder-sound.mp3" as="audio" crossorigin type="audio/mpeg">
+  <link rel="preload" href="https://raw.githubusercontent.com/Casi0048/casi0048.github.io/main/immagini%20per%20sito/Socrates_Louvre.jpg" as="image" fetchpriority="high">
+  <link rel="preload" href="https://casi0048.github.io/suoni/thunder-sound.mp3" as="audio" fetchpriority="low" crossorigin type="audio/mpeg">
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect" />
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
@@ -9231,6 +9231,65 @@ window.loadGoogleTranslate = function(){
     attachSuggestObservers();
     maybeEnableCosmoSoft();
   });
+})();
+</script>
+
+
+<script data-a11y-perf-conservative="">
+(function(){
+  "use strict";
+  if (window.__A11Y_PERF_CONSERVATIVE__) return;
+  window.__A11Y_PERF_CONSERVATIVE__ = true;
+
+  window.safeCall = function(name, fn){
+    try { if (typeof fn === 'function') return fn(); }
+    catch (err) { console.warn(name + " failed:", err); }
+  };
+  window.createManagedListener = function(el, ev, handler, opts){
+    if(!el || !el.addEventListener) return function(){};
+    el.addEventListener(ev, handler, opts||false);
+    return function(){ try{ el.removeEventListener(ev, handler, opts||false); }catch(_){ } };
+  };
+
+  document.addEventListener('visibilitychange', function(){
+    const reduce = document.visibilityState === 'hidden';
+    document.documentElement.classList.toggle('reduce-motion', reduce);
+  }, { passive: true });
+
+  function ensureId(el, prefix){
+    if(!el) return null;
+    if(el.id) return el.id;
+    const id = (prefix||'id') + '-' + Math.random().toString(36).slice(2,9);
+    el.id = id;
+    return id;
+  }
+
+  function setupAriaMenus(){
+    const dropdowns = document.querySelectorAll('nav.menu-desktop li.dropdown');
+    dropdowns.forEach(function(li){
+      const trigger = li.querySelector('a, .menu-btn');
+      const panel = li.querySelector('.mega-menu');
+      if(!trigger || !panel) return;
+      const pid = ensureId(panel, 'mega-menu');
+      trigger.setAttribute('aria-haspopup', 'true');
+      trigger.setAttribute('aria-controls', pid);
+      trigger.setAttribute('aria-expanded', 'false');
+
+      function setExpanded(v){ trigger.setAttribute('aria-expanded', v ? 'true' : 'false'); }
+      li.addEventListener('mouseenter', function(){ setExpanded(true); }, {passive:true});
+      li.addEventListener('mouseleave', function(){ setExpanded(false); }, {passive:true});
+      li.addEventListener('focusin',  function(){ setExpanded(true); });
+      li.addEventListener('focusout', function(e){
+        if(!li.contains(e.relatedTarget)) setExpanded(false);
+      });
+    });
+  }
+
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', setupAriaMenus);
+  } else {
+    setupAriaMenus();
+  }
 })();
 </script>
 
