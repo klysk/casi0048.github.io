@@ -2566,6 +2566,35 @@ html, body { overflow-y: auto !important; }
   }
 </style>
 
+
+<style>
+/* === Anti-CLS per il typing-effect (versione stabile, 1 riga) === */
+:root{
+  --typing-lines: 1;
+  --typing-font-size: 1.4rem;
+  --typing-line-height: 1.35;
+}
+.typing-wrap{
+  min-height: calc(var(--typing-lines) * var(--typing-font-size) * var(--typing-line-height));
+  max-height: calc(var(--typing-lines) * var(--typing-font-size) * var(--typing-line-height));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.typing-effect{
+  font-size: var(--typing-font-size);
+  line-height: var(--typing-line-height);
+  display: inline-block;
+  white-space: nowrap;
+  will-change: contents;
+}
+.caret{ width: 0.7ch; }
+@media (max-width: 980px){
+  :root{ --typing-font-size: 1.2rem; }
+}
+</style>
+
 </head>
 
 <body>
@@ -8943,6 +8972,21 @@ window.loadGoogleTranslate = function(){
   } else {
     setupAriaMenus();
   }
+})();
+</script>
+
+
+<script>
+(function(){
+  const box = document.querySelector('.typing-wrap');
+  if(!box) return;
+  requestAnimationFrame(()=> {
+    const h = box.getBoundingClientRect().height || box.offsetHeight;
+    if(h > 0){
+      box.style.minHeight = h + 'px';
+      box.style.maxHeight = h + 'px';
+    }
+  });
 })();
 </script>
 
