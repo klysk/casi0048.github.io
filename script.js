@@ -1,3 +1,130 @@
+/* =========================================================
+   Echi di Sofia — Guard Add-on (idempotent initializers)
+   Inserisci QUESTO BLOCCO in cima al tuo script.js
+   oppure includilo come file separato DOPO le librerie e PRIMA delle init ripetibili.
+   ========================================================= */
+(function () {
+  "use strict";
+
+  // Namespace unico
+  window.Echi = window.Echi || {};
+  const N = window.Echi;
+
+  // ---- 1) Flag globali per prevenire doppie init ----
+  N.flags = N.flags || {
+    typing: false,
+    slider: false,
+    thunderBound: false,
+    explodeBound: false,
+  };
+
+  // ---- 2) Audio singleton (tuono / esplodi) ----
+  N.audio = N.audio || {};
+  function makeSingletonAudio(key, src) {
+    if (!N.audio[key]) {
+      const a = new Audio(src);
+      a.preload = "auto";
+      N.audio[key] = a;
+    }
+    return N.audio[key];
+  }
+  // Cambia gli URL se diversi
+  makeSingletonAudio("thunder", "https://casi0048.github.io/suoni/thunder-sound.mp3");
+  makeSingletonAudio("explode", "https://casi0048.github.io/suoni/explosion-1.mp3");
+
+  // API pubbliche sicure
+  N.playThunder = function () {
+    const a = N.audio.thunder;
+    if (!a) return;
+    try {
+      a.currentTime = 0;
+      a.play();
+    } catch (e) { /* noop */ }
+  };
+  N.playExplode = function () {
+    const a = N.audio.explode;
+    if (!a) return;
+    try {
+      a.currentTime = 0;
+      a.play();
+    } catch (e) { /* noop */ }
+  };
+
+  // ---- 3) Aggancio pulsanti una sola volta ----
+  function bindOnce(selector, type, handler, flagKey) {
+    if (N.flags[flagKey]) return; // già legato
+    const el = document.querySelector(selector);
+    if (!el) return;
+    el.removeEventListener(type, handler);
+    el.addEventListener(type, handler, { passive: true });
+    N.flags[flagKey] = true;
+  }
+
+  // Esempi di ID/selector: aggiustali se nel tuo HTML sono diversi
+  bindOnce("#play-thunder", "click", N.playThunder, "thunderBound");
+  bindOnce("#explode-btn", "click", N.playExplode, "explodeBound");
+
+  // ---- 4) Typing-effect idempotente ----
+  // Metti data-typing-init="1" quando è già stato inizializzato.
+  N.ensureTyping = function ensureTyping(initFn) {
+    const wrap = document.querySelector(".typing-wrap");
+    if (!wrap) return;
+    if (wrap.dataset.typingInit === "1") return;
+    wrap.dataset.typingInit = "1";
+    if (typeof initFn === "function") initFn();
+  };
+
+  // Se hai una funzione globale initTyping esistente, wrappala
+  if (typeof window.initTyping === "function") {
+    const _oldInitTyping = window.initTyping;
+    window.initTyping = function () {
+      N.ensureTyping(_oldInitTyping);
+    };
+  }
+
+  // Timer unico di sicurezza
+  if (window.__typingTimer) {
+    clearInterval(window.__typingTimer);
+    window.__typingTimer = null;
+  }
+
+  // ---- 5) Slider verticale idempotente ----
+  N.ensureSlider = function ensureSlider(initFn) {
+    const slider = document.querySelector(".slider-vertical .slider-inner");
+    if (!slider) return;
+    if (N.flags.slider) return;
+    N.flags.slider = true;
+    if (typeof initFn === "function") initFn();
+  };
+
+  if (typeof window.initVerticalSlider === "function") {
+    const _oldInitSlider = window.initVerticalSlider;
+    window.initVerticalSlider = function () {
+      N.ensureSlider(_oldInitSlider);
+    };
+  }
+
+  // ---- 6) Hardening: evita listener duplicati comuni ----
+  // Esempio: se nel tuo codice fai addEventListener senza once, puoi proteggerlo così:
+  function onceOn(el, type, fn, opts) {
+    if (!el) return;
+    const key = "__once_" + type + "_" + (fn.name || "fn");
+    if (el[key]) return;
+    el[key] = true;
+    el.addEventListener(type, fn, Object.assign({ once: true }, opts));
+  }
+  N.onceOn = onceOn;
+
+  // ---- 7) Debug non rumoroso ----
+  N.debug = function (msg) {
+    // console.log("[Echi]", msg);
+  };
+})();
+
+
+/* ===== Sorgente originale (estratto dall'index) ===== */
+
+
 (function(){
        const RS = getComputedStyle(document.documentElement);
        const R = parseFloat(RS.getPropertyValue('--repel-radius')) || 120;
