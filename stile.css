@@ -1,1 +1,3238 @@
+:root {
+      --bg: #0a0a1a;
+      --gold: #d4af37;
+      --cyan: #00ccff;
+      --menu-bg: rgba(10, 10, 30, .98);
+      --menu-border: rgba(255, 215, 0, .22);
+      --glass: rgba(0, 0, 0, .35);
+    }
 
+    * {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0
+    }
+
+    body {
+      font-family: 'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: #e9eef5;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      color: #9ad0ff;
+      text-decoration: none;
+      transition: .25s
+    }
+
+    a:hover {
+      color: #fff;
+      text-shadow: 0 0 6px #33ccff
+    }
+
+    /* Layers: nebula behind, stars/comets above it */
+    #nebula {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    #star-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 7;
+      pointer-events: none;
+    }
+
+    /* Lightning overlay + bolt */
+    #lightning {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      pointer-events: none;
+      opacity: 0;
+      background: radial-gradient(circle at 50% 40%, rgba(255, 255, 255, .95), rgba(255, 255, 255, .22) 40%, transparent 65%);
+      mix-blend-mode: screen;
+      filter: blur(1px);
+    }
+
+    .bolt {
+      position: fixed;
+      width: 2px;
+      height: 160px;
+      background: linear-gradient(#fff, rgba(255, 255, 255, .4));
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(12deg) scaleY(0);
+      box-shadow: 0 0 18px rgba(255, 255, 255, .9);
+      z-index: 55;
+      opacity: .7;
+    }
+
+    /* Top bar + logo + translate + search + buttons */
+    .top-bar {
+      position: fixed;
+      top: 14px;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      padding: 8px 12px;
+      background: var(--glass);
+      z-index: 1000;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-right: 10px;
+      text-decoration: none;
+    }
+
+    .brand svg {
+      width: 34px;
+      height: 34px;
+      filter: drop-shadow(0 0 6px rgba(255, 215, 0, .5))
+    }
+
+    .brand span {
+      font-family: 'Cinzel Decorative', cursive;
+      font-weight: 700;
+      letter-spacing: .5px;
+      background: linear-gradient(90deg, #ffd700, #fff7b0, #ffd700);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 10px rgba(255, 215, 0, .35);
+    }
+
+    .bar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #google_translate_element {
+      min-width: 160px;
+    }
+
+    .ctrl-btn {
+      border: 1px solid var(--menu-border);
+      background: rgba(20, 20, 40, .75);
+      color: #e9eef5;
+      padding: .45rem .6rem;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: .2s;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .ctrl-btn:hover {
+      color: #fff;
+      box-shadow: 0 0 10px rgba(255, 215, 0, .25)
+    }
+
+    .ctrl-btn:active {
+      transform: translateY(1px)
+    }
+
+    /* SEARCH BOX */
+    .search-container input {
+      width: 260px;
+      max-width: 52vw;
+      height: 40px;
+      /* altezza fissa, cliccabile ovunque */
+      line-height: 40px !important;
+      /* centra il cursore */
+      padding: 0 2.4rem 0 2.4rem;
+      /* spazio a sinistra e destra per lente e crocetta */
+      background: rgba(20, 20, 40, .78);
+      border: 1px solid var(--menu-border);
+      border-radius: 6px;
+      color: #e0e0e0;
+      font-weight: 300;
+      font-size: .95rem;
+      outline: none;
+      transition: .25s;
+      box-sizing: border-box;
+      /* evita che il padding allarghi troppo l’input */
+    }
+
+    .search-container input:focus {
+      border-color: rgba(255, 215, 0, .5);
+      box-shadow: 0 0 12px rgba(255, 215, 0, .18)
+    }
+
+    .search-icon {
+      position: absolute;
+      left: .8rem;
+      font-size: .95rem;
+      color: rgba(255, 215, 0, .85)
+    }
+
+    header {
+      margin-top: 76px;
+      display: flex;
+      justify-content: center;
+      z-index: 900
+    }
+
+    .menu-container {
+      max-width: 1200px;
+      width: 100%;
+      padding: .4rem 1rem;
+    }
+
+    nav.menu-desktop ul {
+      display: flex;
+      gap: 1px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      justify-content: center;
+      white-space: nowrap
+    }
+
+    nav.menu-desktop li {
+      position: relative
+    }
+
+    .menu-btn,
+    nav.menu-desktop li>a {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #9ad0ff;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 1.35rem;
+      padding: .45rem .7rem;
+      border-radius: 6px;
+      transition: .25s;
+      text-decoration: none;
+      text-shadow: 0 0 6px #33ccff99;
+    }
+
+    .menu-btn:hover,
+    nav.menu-desktop li>a:hover {
+      color: #fff
+    }
+
+    .arrow {
+      font-size: .75rem
+    }
+
+    .mega-menu {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      width: 980px;
+      max-width: 94vw;
+      background: var(--menu-bg);
+      border: 1px solid var(--menu-border);
+      border-top: 0;
+      padding: 14px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, .4);
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: .3s;
+      z-index: 950;
+    }
+
+    /* Accessibilità: apertura mega-menu anche via tastiera */
+    .mega-menu:focus-within {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    li.dropdown:hover>.mega-menu,
+    li.dropdown:focus-within>.mega-menu,
+    .mega-menu:hover {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0)
+    }
+
+    .mega-menu h4 {
+      margin: .2rem 0 .4rem;
+      font-size: 1rem;
+      color: var(--gold)
+    }
+
+    .mega-menu a {
+      display: block;
+      color: #9ad0ff;
+      font-weight: 700;
+      font-size: .95rem;
+      padding: .12rem 0;
+    }
+
+    .mega-menu a:hover {
+      color: #fff;
+      transform: translateX(3px)
+    }
+
+    /* QUOTES BAR sotto la barra del menu */
+    .quotes-bar {
+      position: relative;
+      z-index: 880;
+      margin: 10px auto 0;
+      max-width: 1200px;
+      width: 95%;
+      background: rgba(0, 0, 0, 0);
+      border: 1px solid rgba(255, 215, 0, .15);
+      padding: 10px 14px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .quotes-bar .quote-text {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.12rem;
+      font-style: italic;
+      color: #00CFFF;
+      font-weight: 700;
+    }
+
+    .quotes-bar .author {
+      margin-left: 6px;
+      color: #ffd86a;
+      font-size: 1rem
+    }
+
+    /* Welcome */
+    .welcome-section {
+      padding: 14px 16px 10px;
+      text-align: center
+    }
+
+    .welcome-title {
+  font-family: 'Cinzel Decorative', cursive;
+  font-weight: 700;
+  font-size: 3.05rem;
+  color: transparent;
+  background: linear-gradient(90deg, #00ff55, #00ff55); /* verde pieno brillante */
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0 0 14px rgba(0, 255, 85, .55)); /* alone verde */
+  animation: titlePulse 6s infinite;
+}
+
+    @keyframes titlePulse {
+
+      0%,
+      100% {
+        transform: scale(1)
+      }
+
+      50% {
+        transform: scale(1.04)
+      }
+    }
+
+    .welcome-subtitle {
+      margin-top: -20px;
+      color: #9ad0ff;
+      font-size: 1.5rem
+    }
+
+    .typing-wrap {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .typing-effect {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.4rem;
+      font-style: italic;
+      color: #00CFFF;
+      font-weight: 700;
+    }
+
+    .caret {
+      display: inline-block;
+      width: 1ch;
+    }
+
+    .caret::after {
+      content: "|";
+      animation: blink 1s infinite;
+      opacity: .8
+    }
+
+    @keyframes blink {
+
+      0%,
+      49% {
+        opacity: .8
+      }
+
+      50%,
+      100% {
+        opacity: 0
+      }
+    }
+
+    /* Exploding text */
+    .exploding-text {
+      margin: 16px auto 0;
+      font-family: 'EB Garamond', serif;
+      font-size: 1.25rem;
+      font-style: italic;
+      color: #e7f6ff;
+      letter-spacing: .5px;
+      display: inline-block;
+      cursor: pointer;
+      user-select: none;
+      z-index: 1;
+    }
+
+    .exploding-text .ch {
+      display: inline-block;
+      will-change: transform, opacity
+    }
+
+    /* Particles (symbols) */
+    #philoParticles {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: fixed;
+      will-change: transform, opacity;
+      user-select: none;
+      white-space: nowrap;
+      text-shadow: 0 0 10px rgba(255, 215, 0, .35);
+      opacity: .95;
+      pointer-events: auto;
+      cursor: default;
+      transform-origin: 50% 50%;
+    }
+
+    /* =====INIZIO SLIDER VERTICALE SINISTRA — STABILE ===== */
+    .slider-vertical {
+      position: fixed;
+      left: 52px;
+      top: 120px;
+      width: 180px;
+      height: 320px;
+      /* viewport dello slider: fissa */
+      z-index: 930;
+      overflow: hidden;
+      /* evita scroll interni */
+      border: 1px solid rgba(255, 215, 0, .18);
+      border-radius: 12px;
+      background: rgba(10, 10, 25, .45);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .35);
+    }
+
+    .slider-vertical .slider-inner {
+      position: absolute;
+      inset: 0;
+      /* left:0; right:0; top:0; bottom:0 */
+      will-change: transform;
+      /* animazione fluida */
+    }
+
+    .slide-vertical {
+      width: 100%;
+      padding: 10px 10px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      /* Altezza totale dello “slide” coerente:
+         140px immagine + ~44px caption + padding */
+      box-sizing: border-box;
+    }
+
+    .slide-vertical img {
+      width: 100%;
+      height: 140px;
+      /* tutte le immagini stessa altezza */
+      object-fit: contain;
+      /* nessun crop; usa cover se preferisci riempire */
+      display: block;
+      /* elimina line-gap */
+      background: rgba(0, 0, 0, .25);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, .1);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, .25);
+    }
+
+    /* Didascalia con altezza uniforme → niente scossoni */
+    .slide-vertical p {
+      margin: .25rem 0 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: .92rem;
+      text-align: center;
+      color: #ffe9b8;
+      text-shadow: 0 0 8px rgba(255, 215, 0, .25);
+      /* blocco stabile: 2 righe max senza saltelli */
+      min-height: 2.6em;
+      /* ~2 righe di testo */
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      /* tronca a 2 righe (se vuoi) */
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* (Opzionale) se preferisci riempire il riquadro senza “letterboxing”:
+         usa object-fit: cover; per l’immagine */
+    /* =====FINE SLIDER VERTICALE SINISTRA — STABILE ===== */
+    /* ===== BLOB ANIMATO DESTRA (Ultimi articoli) ===== */
+    .articles-blob {
+      position: fixed;
+      right: 14px;
+      top: 200px;
+      width: 300px;
+      max-width: 32vw;
+      z-index: 930;
+      padding: 14px 16px;
+      color: #e9eef5;
+      border: 1px solid rgba(255, 215, 0, .18);
+      border-radius: 45% 55% 50% 50%/55% 45% 55% 45%;
+      background: radial-gradient(120% 120% at 10% 10%, rgba(255, 215, 0, .18), rgba(0, 180, 255, .14) 40%, rgba(0, 0, 0, .38) 78%);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .4), inset 0 0 24px rgba(0, 140, 255, .15);
+      animation: blobMorph 14s ease-in-out infinite;
+      backdrop-filter: blur(8px);
+    }
+
+    @keyframes blobMorph {
+      0% {
+        transform: scale(1) translateY(0);
+        border-radius: 45% 55% 50% 50%/55% 45% 55% 45%;
+      }
+
+      33% {
+        transform: scale(1.02) translateY(-3px);
+        border-radius: 55% 45% 45% 55%/45% 55% 45% 55%;
+      }
+
+      66% {
+        transform: scale(0.98) translateY(2px);
+        border-radius: 52% 48% 58% 42%/48% 52% 48% 52%;
+      }
+
+      100% {
+        transform: scale(1) translateY(0);
+        border-radius: 45% 55% 50% 50%/55% 45% 55% 45%;
+      }
+    }
+
+    .articles-blob h3 {
+      margin: .2rem 0 .5rem;
+      font-family: 'Cinzel', serif;
+      letter-spacing: .3px;
+      color: #ffd86a;
+      font-size: 1.1rem;
+      text-shadow: 0 0 10px rgba(255, 215, 0, .35);
+    }
+
+    .articles-blob ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      max-height: 300px;
+      overflow: auto
+    }
+
+    .articles-blob li {
+      margin: .35rem 0;
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .articles-blob li i {
+      opacity: .9
+    }
+
+    .articles-blob a {
+      color: #cfe8ff;
+      font-weight: 700;
+    }
+
+    .articles-blob a:hover {
+      color: #fff
+    }
+
+    footer {
+      margin-top: auto;
+      background: #000;
+      color: #fff;
+      text-align: center;
+      padding: 24px
+    }
+
+    /* Mobile: nascondo elementi laterali per spazio */
+    @media (max-width: 980px) {
+
+      .slider-vertical,
+      .articles-blob {
+        display: none
+      }
+
+      .welcome-title {
+        font-size: 2.3rem
+      }
+
+      .mega-menu {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .bar-right {
+        gap: 6px
+      }
+
+      #google_translate_element {
+        min-width: 120px
+      }
+
+      .ctrl-btn {
+        padding: .35rem .5rem
+      }
+
+      .quotes-bar {
+        width: 92%
+      }
+    }
+
+    /* INIZIO AGGIUNTE RESTRINGIMENTO COLONNE SUBMENU */
+    /* === Mega-menu più stretto (4 colonne compatte) === */
+    .menu-desktop .mega-menu.columns-4 {
+      width: 700px !important;
+      /* prima ~980px */
+      grid-template-columns: repeat(4, 200px) !important;
+      /* larghezza di ogni colonna */
+      gap: 8px 12px !important;
+      /* spazi più stretti */
+      padding: 10px 12px !important;
+    }
+
+    /* Colonne: contenuto più denso + scrollbar se serve */
+    .menu-desktop .mega-menu.columns-4>div {
+      padding: 4px 6px;
+      max-height: 450px;
+      /* evita menu troppo alti */
+      overflow: auto;
+      /* scrollbar solo quando serve */
+    }
+
+    /* Titoli e link compattati */
+    .menu-desktop .mega-menu.columns-4>div h4 {
+      margin: 0 0 6px;
+      font-size: .95rem;
+    }
+
+    .menu-desktop .mega-menu.columns-4>div a {
+      margin: 2px 0;
+      font-size: .92rem;
+      line-height: 1.25;
+    }
+
+    /* === 1) IL MENU SOPRA A TUTTO === */
+    header,
+    .menu-container,
+    nav.menu-desktop {
+      position: relative !important;
+      z-index: 9999 !important;
+      /* sopra top-bar, slider, blob, player */
+    }
+
+    .menu-desktop .mega-menu {
+      z-index: 10000 !important;
+      /* il pannello del sottomenu ancora più in alto */
+    }
+
+    /* === 2) COLORE PANNELLO + COLONNE === */
+    .menu-desktop .mega-menu {
+      background: rgba(8, 18, 40, 0.98) !important;
+      /* sfondo pannello */
+      border: 1px solid rgba(255, 215, 0, 0.28) !important;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, .55) !important;
+    }
+
+    .menu-desktop .mega-menu.columns-4>div {
+      background: rgba(3, 10, 24, 0.92) !important;
+      /* sfondo singole colonne */
+      border: 1px solid rgba(255, 255, 255, 0.06) !important;
+      border-radius: 8px !important;
+      padding: 8px 10px !important;
+    }
+
+    /* === 3) COLONNE PIÙ STRETTE (opzionale ma utile) === */
+    .menu-desktop .mega-menu.columns-4 {
+      width: 820px !important;
+      grid-template-columns: repeat(4, 180px) !important;
+      gap: 10px 12px !important;
+      padding: 12px !important;
+    }
+
+    /* === 4) TESTO DENTRO LE COLONNE (leggibilità) === */
+    .menu-desktop .mega-menu.columns-4>div h4 {
+      color: #ffd86a !important;
+      margin: 0 0 6px !important;
+      font-size: .95rem !important;
+    }
+
+    .menu-desktop .mega-menu.columns-4>div a {
+      color: #cfe8ff !important;
+      font-size: .92rem !important;
+      line-height: 1.25 !important;
+    }
+
+    .menu-desktop .mega-menu.columns-4>div a:hover {
+      color: #ffffff !important;
+    }
+
+    /* === 5) TUTTO IL RESTO SOTTO AL MENU (evita che lo coprano) === */
+    .slider-vertical,
+    .articles-blob,
+    #russell-box,
+    #russell-hint,
+    #video-right,
+    #audio-player {
+      z-index: 900 !important;
+      /* Meno del menu */
+    }
+
+    /* --- Evita overflow orizzontale dei mega-menu --- */
+    .menu-desktop .mega-menu {
+      max-width: 100vw !important;
+      box-sizing: border-box !important;
+      /* il default del file resta centrato: left:50% + translateX(-50%) */
+    }
+
+    /* === FILOSOFIA ANTICA (2° li): aggancia a sinistra, apri verso destra/centro === */
+    .menu-desktop>ul>li.dropdown:nth-child(2)>.mega-menu {
+      left: 0 !important;
+      right: auto !important;
+      transform: translateY(10px) !important;
+      /* niente translateX(-50%) */
+    }
+
+    .menu-desktop>ul>li.dropdown:nth-child(2):hover>.mega-menu,
+    .menu-desktop>ul>li.dropdown:nth-child(2):focus-within>.mega-menu,
+    .menu-desktop>ul>li.dropdown:nth-child(2)>.mega-menu:hover {
+      transform: translateY(0) !important;
+    }
+
+    /* === FILOSOFIA POLACCA (7° li): aggancia a destra, apri verso sinistra/centro === */
+    .menu-desktop>ul>li.dropdown:nth-child(7)>.mega-menu {
+      right: 0 !important;
+      left: auto !important;
+      transform: translateY(10px) !important;
+      /* niente translateX(-50%) */
+    }
+
+    .menu-desktop>ul>li.dropdown:nth-child(7):hover>.mega-menu,
+    .menu-desktop>ul>li.dropdown:nth-child(7):focus-within>.mega-menu,
+    .menu-desktop>ul>li.dropdown:nth-child(7)>.mega-menu:hover {
+      transform: translateY(0) !important;
+    }
+
+    /* (Opzionale) dimensioni più contenute per tutte le versioni a 4 colonne */
+    .menu-desktop .mega-menu.columns-4 {
+      width: min(880px, 94vw) !important;
+      grid-template-columns: repeat(4, minmax(160px, 1fr)) !important;
+      gap: 10px 12px !important;
+    }
+
+    /* === SOLO: larghezza colonne dei mega-menu a 4 colonne === */
+    .menu-desktop .mega-menu.columns-4 {
+      /* lascia che la larghezza totale segua le colonne */
+      width: max-content !important;
+      max-width: 96vw !important;
+      /* non oltre lo schermo */
+      grid-template-columns: repeat(4, minmax(230px, 1fr)) !important;
+      /* ← cambia 230 se vuoi più largo */
+    }
+
+    /* ogni colonna non scende sotto la misura scelta */
+    .menu-desktop .mega-menu.columns-4>div {
+      min-width: 220px !important;
+      /* coerente con il valore sopra */
+    }
+
+    /* === FX HOVER per i link del mega-menu: freccetta + evidenza === */
+    .menu-desktop .mega-menu a {
+      position: relative;
+      display: block;
+      padding: .14rem 22px .14rem 10px;
+      /* spazio per freccetta a destra */
+      border-radius: 6px;
+      /* evidenza fluida che “riempie” il link */
+      background-image: linear-gradient(90deg, rgba(255, 215, 0, .14), rgba(0, 180, 255, .12));
+      background-size: 0% 100%;
+      background-repeat: no-repeat;
+      transition: background-size .25s ease, transform .18s ease, color .18s ease, box-shadow .18s ease;
+    }
+
+    .menu-desktop .mega-menu a::after {
+      content: "›";
+      /* freccetta elegante */
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%) translateX(-6px);
+      /* parte nascosta */
+      opacity: 0;
+      font-size: .95em;
+      color: #ffd86a;
+      transition: transform .22s ease, opacity .22s ease;
+    }
+
+    .menu-desktop .mega-menu a:hover,
+    .menu-desktop .mega-menu a:focus {
+      color: #fff;
+      transform: translateX(2px);
+      /* leggero slide del testo */
+      background-size: 100% 100%;
+      /* riempie il fondo */
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .06);
+      outline: none;
+    }
+
+    .menu-desktop .mega-menu a:hover::after,
+    .menu-desktop .mega-menu a:focus::after {
+      opacity: 1;
+      transform: translateY(-50%) translateX(0);
+      /* freccetta entra */
+    }
+
+    /* Focus tastiera ben visibile */
+    .menu-desktop .mega-menu a:focus-visible {
+      box-shadow: 0 0 0 2px rgba(255, 215, 0, .45);
+      border-radius: 6px;
+    }
+
+    /* Opzionale: stato “attivo” se vuoi segnare la pagina corrente */
+    .menu-desktop .mega-menu a.is-active {
+      background-size: 100% 100%;
+      color: #fff;
+    }
+
+    /* === PALETTE B: VERDE PETROLIO ELEGANTE === */
+    .menu-desktop .mega-menu {
+      background: rgba(6, 28, 30, 0.98) !important;
+      /* #061C1E */
+      border-color: rgba(95, 224, 197, 0.24) !important;
+      /* bordo con riflesso teal */
+      box-shadow: 0 22px 45px rgba(0, 0, 0, .55) !important;
+    }
+
+    .menu-desktop .mega-menu.columns-4>div {
+      background: rgba(8, 36, 38, 0.94) !important;
+      /* #082426 */
+      border: 1px solid rgba(255, 255, 255, 0.06) !important;
+      border-radius: 8px !important;
+    }
+
+    /* I link #cfe8ff restano ben leggibili su petrolio */
+    .menu-desktop .mega-menu,
+    .menu-desktop .mega-menu.columns-4>div {
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    /* === COOKIE BANNER & MODAL (Echi di Sofia) === */
+    .cookie-banner {
+      position: fixed;
+      left: 50%;
+      bottom: 12px;
+      transform: translateX(-50%);
+      width: min(980px, 92vw);
+      background: rgba(10, 10, 30, .95);
+      border: 1px solid rgba(255, 215, 0, .28);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, .45);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 12px 14px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 20000;
+    }
+
+    .cookie-banner .cookie-text {
+      flex: 1;
+      font-size: .95rem;
+      line-height: 1.45;
+      color: #cfe8ff
+    }
+
+    .cookie-banner .cookie-text a {
+      color: var(--gold, #d4af37);
+      text-decoration: underline
+    }
+
+    .cookie-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap
+    }
+
+    .btn {
+      border-radius: 8px;
+      padding: .55rem .8rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Montserrat', system-ui, Arial, sans-serif;
+      border: 1px solid transparent;
+    }
+
+    .btn.solid {
+      background: linear-gradient(90deg, #ffd86a, #ffb100);
+      color: #000;
+      border-color: rgba(255, 215, 0, .6);
+    }
+
+    .btn.outline {
+      background: rgba(0, 0, 0, .2);
+      color: #cfe8ff;
+      border-color: rgba(0, 180, 255, .5);
+    }
+
+    .btn.ghost {
+      background: transparent;
+      color: #cfe8ff;
+      border-color: rgba(255, 255, 255, .2);
+    }
+
+    .btn:hover {
+      filter: brightness(1.08)
+    }
+
+    /* Modal overlay */
+    .cookie-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 999999;
+    }
+
+    .cookie-modal[aria-hidden="false"] {
+      display: flex
+    }
+
+    .cookie-modal__panel {
+      width: min(640px, 92vw);
+      background: rgba(10, 10, 30, .98);
+      border: 1px solid rgba(255, 215, 0, .28);
+      border-radius: 14px;
+      padding: 16px 16px 12px;
+      position: relative;
+      color: #e9eef5;
+    }
+
+    .cookie-modal__panel h3 {
+      margin: 0 0 .25rem;
+      color: #ffd86a;
+      font-family: 'Cinzel', serif;
+      font-size: 1.15rem
+    }
+
+    .cookie-modal__panel .muted {
+      opacity: .85;
+      font-size: .95rem;
+      margin: .15rem 0 .6rem
+    }
+
+    .cookie-list {
+      list-style: none;
+      margin: .2rem 0 .6rem;
+      padding: 0;
+      display: grid;
+      gap: .45rem
+    }
+
+    .cookie-list li label {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      cursor: pointer
+    }
+
+    .cookie-list small {
+      display: block;
+      margin-left: 1.6rem;
+      opacity: .75;
+      font-size: .85rem
+    }
+
+    .cookie-modal__actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: .6rem
+    }
+
+    .cookie-close {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .06);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, .15);
+      cursor: pointer;
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .cookie-close:hover {
+      background: rgba(255, 255, 255, .12)
+    }
+
+    /* Pulsante flottante per riaprire preferenze */
+    .cookie-manage {
+      position: fixed;
+      left: 50%;
+      bottom: 8px;
+      transform: translateX(-50%);
+      background: rgba(10, 10, 30, .8);
+      color: #cfe8ff;
+      border: 1px solid rgba(255, 215, 0, .28);
+      border-radius: 999px;
+      padding: .35rem .7rem;
+      font-size: .85rem;
+      backdrop-filter: blur(6px);
+      z-index: 20001;
+    }
+
+    /* Riduci movimento se preferito dal sistema */
+    @media (prefers-reduced-motion: reduce) {
+
+      .cookie-banner,
+      .cookie-modal,
+      .cookie-manage {
+        transition: none
+      }
+    }
+
+    /* FINE AGGIUNTE RESTRINGIMENTO COLONNE SUBMENU */
+    .ctrl-btn.active {
+      border-color: #ffd86a;
+      box-shadow: 0 0 18px rgba(255, 215, 0, .45), inset 0 0 10px rgba(255, 215, 0, .25);
+    }
+
+    .cookie-modal.force-open {
+      display: flex !important;
+    }
+
+/* ===== Estratto da ao1.html ===== */
+.translate-box {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem
+    }
+
+    .translate-select {
+      appearance: none;
+      padding: .45rem .8rem;
+      border: 1px solid var(--menu-border, #2f3a3f);
+      border-radius: 10px;
+      background: rgba(20, 20, 40, .78);
+      color: #e6f0f3;
+      font-size: .95rem;
+      cursor: pointer
+    }
+
+    .translate-select:focus {
+      outline: 2px solid #2a7c9c
+    }
+
+    /* ===== CSE: leggibilità controlli "Ordina per" (patch minima) ===== */
+    .gsc-above-wrapper-area,
+    .gsc-above-wrapper-area-container,
+    .gsc-orderby-container,
+    .gsc-selected-option-container {
+      background: transparent !important;
+      color: var(--cse-txt, inherit) !important;
+    }
+
+    .gsc-option-menu {
+      background: var(--cse-card, #111) !important;
+      border: 1px solid rgba(255, 255, 255, .15) !important;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, .35) !important;
+    }
+
+    .gsc-option-menu-item {
+      color: var(--cse-txt, #eee) !important;
+    }
+
+    .gsc-option-menu-item-highlighted {
+      background: rgba(255, 255, 255, .07) !important;
+      color: var(--cse-txt, #fff) !important;
+    }
+
+    .gsc-option-selector,
+    .gsc-orderby-label,
+    .gsc-selected-option-container {
+      color: var(--cse-txt, inherit) !important;
+    }
+
+    .gsc-control-cse,
+    .gcse-wrapper {
+      background: transparent !important;
+    }
+
+    /* === Cookie UI micro-interactions === */
+    .cookie-banner .btn:focus-visible,
+    .cookie-modal .btn:focus-visible,
+    #manage-cookies:focus-visible {
+      outline: 2px solid color-mix(in oklab, #ffffff, var(--accent, #d4af37) 60%);
+      outline-offset: 2px;
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, .08);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      .cookie-banner,
+      .cookie-modal {
+        transition: none !important;
+      }
+    }
+
+    /* === Cookie floating badge (always visible) === */
+    .cookie-fab {
+      position: fixed;
+      left: auto;
+      right: 16px;
+      bottom: 16px;
+      z-index: 1000000;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: var(--card-2, #0f141a);
+      color: var(--txt, #eaeaea);
+      border: 1px solid rgba(255, 255, 255, .18);
+      box-shadow: 0 10px 26px rgba(0, 0, 0, .45);
+      cursor: pointer;
+      pointer-events: auto;
+      user-select: none;
+    }
+
+    .cookie-fab .emoji {
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    .cookie-fab .label {
+      font-weight: 600;
+      letter-spacing: .2px;
+    }
+
+    .cookie-fab:hover {
+      filter: brightness(1.08);
+    }
+
+    .cookie-fab:focus-visible {
+      outline: 2px solid color-mix(in oklab, #ffffff, var(--accent, #d4af37) 55%);
+      outline-offset: 2px;
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, .08);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cookie-fab {
+        position: fixed;
+        left: auto;
+        right: 16px;
+        bottom: 16px;
+        z-index: 20050;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border-radius: 999px;
+        background: var(--card-2, #0f141a);
+        color: var(--txt, #eaeaea);
+        border: 1px solid rgba(255, 255, 255, .18);
+        box-shadow: 0 10px 26px rgba(0, 0, 0, .45);
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .cookie-fab .emoji {
+        font-size: 1rem;
+        line-height: 1;
+      }
+
+      .cookie-fab .label {
+        font-weight: 600;
+        letter-spacing: .2px;
+      }
+    }
+
+    .cookie-modal.force-open {
+      display: flex !important;
+    }
+
+    .symbol-rotator {
+      display: inline-block;
+      /* permette parole lunghe */
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: visible;
+      /* non hidden */
+    }
+
+/* ===== Estratto da ao1.html ===== */
+/* Fallback font per simboli/emoji */
+    .particle,
+    .symbol-rotator {
+      font-family: system-ui, "Segoe UI", Roboto, "Noto Sans", "Noto Sans Symbols 2",
+        "DejaVu Sans", Symbola, "Apple Color Emoji", "Segoe UI Emoji",
+        "Twemoji Mozilla", sans-serif;
+    }
+
+/* ===== Estratto da ao1.html ===== */
+/* === MENU FIXED UNDER TOP BAR === */
+    header {
+      margin-top: 76px !important;
+      /* distanza dalla top-bar */
+      padding-bottom: 68px !important;
+      /* spazio riservato per il menu fisso */
+      display: flex;
+      justify-content: center;
+      z-index: 900;
+    }
+
+    .menu-container {
+      max-width: 1200px;
+      width: 100%;
+      padding: .4rem 1rem;
+      position: fixed !important;
+      top: 76px !important;
+      /* allineato alla top-bar */
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      z-index: 999 !important;
+      background: rgba(0, 0, 0, 0.85) !important;
+      /* sfondo per leggibilità */
+      margin-top: 0 !important;
+      /* nessun rialzo */
+    }
+
+    /* === SEARCH: caret centered + larger clickable area + stable clear === */
+    .search-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-container input {
+      height: 40px !important;
+      line-height: 40px !important;
+      padding: 0 2.6rem 0 3rem !important;
+      /* spazio per lente a sinistra e crocetta a destra */
+      box-sizing: border-box !important;
+    }
+
+    /* disabilita l'icona clear nativa */
+    .search-container input::-webkit-search-cancel-button {
+      -webkit-appearance: none;
+    }
+
+    /* icona clear nostra: sempre visibile e a tutta altezza */
+    .search-container .clear-icon {
+      position: absolute;
+      right: .8rem;
+      font-size: 1rem;
+      color: rgba(255, 215, 0, .85);
+      cursor: pointer;
+      user-select: none;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+
+    .search-container .clear-icon:hover {
+      filter: brightness(1.1);
+    }
+
+/* ===== Estratto da ao1.html ===== */
+/* Pulsante Tuono */
+    #play-thunder {
+      min-width: 60px;
+      /* larghezza minima */
+      min-height: 44px !important;
+      /* altezza minima */
+      padding: 0.6rem 1.2rem;
+      display: inline-flex;
+      /* per centrare il contenuto */
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    /* Pulsante Esplodi */
+    #explode-btn {
+      min-width: 60px;
+      min-height: 44px !important;
+      padding: 0.6rem 1.2rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      user-select: none;
+    }
+
+/* ===== Estratto da ao1.html ===== */
+.exploding-text.explode {
+      animation: explodeAnim 1.2s forwards;
+    }
+
+    @keyframes explodeAnim {
+      0% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: .7;
+        transform: scale(1.4) rotate(5deg);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+/* ===== Estratto da ao1.html ===== */
+/* Disattiva banner cookie legacy: resta solo il fab a biscottino + modal preferenze */
+    .cookie-banner {
+      display: none !important;
+      visibility: hidden !important;
+    }
+
+/* ===== Estratto da ao1.html ===== */
+:root {
+      --cookie-fab-bottom: 18px;
+      /* regola posizione verticale */
+      --cookie-fab-right: 18px;
+      /* regola posizione orizzontale */
+      --cookie-fab-size: 44px;
+      /* altezza minima del bottone */
+    }
+
+    .cookie-fab {
+      bottom: var(--cookie-fab-bottom) !important;
+      right: var(--cookie-fab-right) !important;
+      min-height: var(--cookie-fab-size) !important;
+    }
+
+    /* Facoltativo: ridimensiona l'emoji internamente in modo proporzionale */
+    .cookie-fab .emoji {
+      font-size: calc(var(--cookie-fab-size) * 0.5) !important;
+      line-height: 1;
+    }
+
+/* ===== Estratto da ao1.html ===== */
+:root {
+      /* Impostazioni animazione (puoi modificarle) */
+      --cookie-bob-amp: 8px;
+      /* ampiezza del su/giù */
+      --cookie-bob-duration: 3.6s;
+      /* durata del ciclo */
+      --cookie-bob-ease: ease-in-out;
+      /* curva */
+    }
+
+    /* Animazione fluttuante */
+    @keyframes cookie-bob {
+
+      0%,
+      100% {
+        transform: translate3d(0, 0, 0);
+      }
+
+      50% {
+        transform: translate3d(0, calc(-1 * var(--cookie-bob-amp)), 0);
+      }
+    }
+
+    #cookie-fab.cookie-fab {
+      will-change: transform;
+      animation: cookie-bob var(--cookie-bob-duration) var(--cookie-bob-ease) infinite;
+    }
+
+    /* Pausa su hover/focus per non distrarre */
+    #cookie-fab.cookie-fab:hover,
+    #cookie-fab.cookie-fab:focus-within {
+      animation-play-state: paused;
+      transform: translate3d(0, -2px, 0);
+    }
+
+    /* Rispetta utenti con riduzione movimento */
+    @media (prefers-reduced-motion: reduce) {
+      #cookie-fab.cookie-fab {
+        animation: none !important;
+      }
+    }
+
+    /* Switch globale (se vuoi spegnere da JS/HTML): 
+         <html data-cookie-bob="off">
+            */
+    html[data-cookie-bob="off"] #cookie-fab.cookie-fab {
+      animation: none !important;
+    }
+
+/* ===== Estratto da ao1.html ===== */
+#cse-suggest {
+      position: fixed;
+      z-index: 11050;
+      display: none;
+      background: rgba(10, 10, 30, .98);
+      border: 1px solid rgba(255, 215, 0, .25);
+      border-radius: 10px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, .55);
+      padding: 6px;
+      max-height: 56vh;
+      overflow: auto;
+    }
+
+    #cse-suggest.show {
+      display: block;
+    }
+
+    #cse-suggest .item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      color: #cfe8ff;
+      text-decoration: none;
+    }
+
+    #cse-suggest .item:hover,
+    #cse-suggest .item:focus {
+      background: rgba(255, 255, 255, .06);
+      color: #fff;
+      outline: none;
+    }
+
+    #cse-suggest .item i {
+      opacity: .9
+    }
+
+    #cse-suggest .section {
+      font-size: .8rem;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+      opacity: .85;
+      padding: 6px 8px;
+      margin: 4px 4px 2px;
+      border-bottom: 1px dashed rgba(255, 255, 255, .15);
+    }
+
+/* ===== Estratto da ao1.html ===== */
+/* Fallback anti-CLS per typing: riserva ~2 righe */
+    .typing-wrap {
+      min-height: 2.6em;
+    }
+
+/* ===== Estratto da ao1.html ===== */
+:root {
+      --repel-radius: 120px;
+      --repel-strength: 28px;
+      --repel-ease: 160ms cubic-bezier(.2, .6, .3, 1);
+    }
+
+/* ===== Estratto da ao1.html ===== */
+[data-repel-item] {
+      display: inline-block;
+      will-change: transform;
+      transition: transform var(--repel-ease);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      [data-repel-item] {
+        transition: none;
+        transform: none !important;
+      }
+    }
+
+    html[data-repel="off"] [data-repel-item] {
+      transition: none;
+      transform: none !important;
+    }
+
+/* ===== Estratto da ao1.html ===== */
+/* Anti-CLS exploding text: evita il wrap durante l'animazione */
+    .exploding-text {
+      white-space: nowrap !important;
+    }
+
+/* ===== Estratto da ao1.html ===== */
+/* Lascia passare i click dai layer decorativi al contenuto */
+    .galaxy,
+    .stars,
+    .stardust,
+    .meteor-shower,
+    .planet,
+    .planet-ring,
+    .star,
+    .meteor,
+    .supernova,
+    .particle {
+      pointer-events: none !important;
+    }
+
+    /* Assicura che il footer stia sopra i layer decorativi senza alterare la grafica */
+    footer {
+      position: relative;
+      z-index: 20;
+    }
+
+/* ===== Estratto da ao1.html ===== */
+/* Dizionario filosofico — CLICK-SAFE (senza JS), compatto */
+    .edx-dict {
+      background: rgba(10, 10, 30, .9);
+      border: 1px solid rgba(255, 215, 0, .35);
+      border-radius: 10px;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, .28);
+      margin: 8px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .edx-dict[open] {
+      box-shadow: 0 8px 18px rgba(0, 0, 0, .35);
+    }
+
+    .edx-dict__head {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 8px;
+      cursor: pointer;
+      user-select: none;
+      min-height: 26px;
+    }
+
+    .edx-dict__head::-webkit-details-marker {
+      display: none
+    }
+
+    .edx-dict__title {
+      font-family: 'Cinzel', serif;
+      color: #ffd86a;
+      font-weight: 700;
+      font-size: .9rem;
+    }
+
+    .edx-dict__chev {
+      margin-left: auto;
+      font-size: .85rem;
+      color: #e9eef5;
+      transition: transform .2s ease;
+    }
+
+    .edx-dict[open] .edx-dict__chev {
+      transform: rotate(180deg)
+    }
+
+    .edx-dict__body {
+      border-top: 1px solid rgba(255, 255, 255, .08);
+      padding: 6px 8px;
+    }
+
+    .edx-dict__controls {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .edx-dict__controls input[name="query"] {
+      box-sizing: border-box;
+      flex: 1;
+      min-width: 160px;
+      height: 22px;
+      line-height: 22px;
+      padding: 0 .55rem;
+      background: rgba(20, 20, 40, .78);
+      border: 1px solid rgba(255, 215, 0, .28);
+      border-radius: 6px;
+      color: #e9eef5;
+      font-size: .85rem;
+    }
+
+    .edx-dict__controls button[type="submit"] {
+      appearance: none;
+      -webkit-appearance: none;
+      box-sizing: border-box;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 22px;
+      padding: 0 .45rem;
+      line-height: 1;
+      font-size: .8rem;
+      border: 1px solid rgba(255, 215, 0, .28);
+      background: rgba(255, 255, 255, .06);
+      color: #e9eef5;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    @media (max-width:980px) {
+      .edx-dict {
+        display: none
+      }
+    }
+
+    /* forza la logica apri/chiudi del <details> */
+    .edx-dict .edx-dict__body {
+      display: none;
+    }
+
+    .edx-dict[open] .edx-dict__body {
+      display: block;
+    }
+
+    < !-------------------------------------------------------->
+
+    /* più aria sotto il box */
+    .edx-dict {
+      margin: 16px 0 16px;
+    }
+
+    .edx-dict[open] {
+      margin-bottom: 24px;
+    }
+
+    /* opzionale: anche l’iframe parte un po’ più giù */
+    aside iframe,
+    .sidebar iframe {
+      margin-top: 12px;
+      display: block;
+    }
+
+    /* il box sta sopra */
+    .edx-dict {
+      position: relative;
+      z-index: 10;
+    }
+
+    /* l’iframe sta sotto */
+    aside iframe,
+    .sidebar iframe {
+      position: relative;
+      z-index: 0;
+    }
+
+    /* vale quando il dizionario è subito prima dell'iframe */
+    .edx-dict[open]+iframe {
+      pointer-events: none;
+      /* non cattura click mentre il box è aperto */
+      filter: opacity(.6) grayscale(.2);
+      /* feedback visivo, facoltativo */
+      margin-top: 12px;
+      /* piccolo distacco extra */
+    }
+
+    /* regola definitiva, vince su tutto */
+    body .edx-dict {
+      margin-bottom: 32px !important;
+    }
+
+    < !------------------------>
+
+    /* Stile per la tendina delle fonti */
+    .edx-dict__select {
+      background: rgba(20, 20, 40, .85);
+      /* sfondo scuro */
+      color: #ffd86a;
+      /* testo leggibile */
+      border: 1px solid rgba(255, 215, 0, .35);
+      border-radius: 6px;
+      padding: 2px 6px;
+      font-size: .85rem;
+      font-family: 'Cinzel', serif;
+      cursor: pointer;
+    }
+
+    /* Colori anche quando si apre la lista */
+    .edx-dict__select option {
+      background: rgba(10, 10, 30, .95);
+      /* scuro uniforme */
+      color: #e9eef5;
+      /* testo chiaro */
+    }
+
+/* ===== Estratto da ao1.html ===== */
+.edx-dict {
+      background: rgba(10, 10, 30, .9);
+      border: 1px solid rgba(255, 215, 0, .35);
+      border-radius: 10px;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, .28);
+      margin: 16px 0 32px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .edx-dict[open] {
+      box-shadow: 0 8px 18px rgba(0, 0, 0, .35)
+    }
+
+    .edx-dict__head {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 8px;
+      cursor: pointer;
+      user-select: none;
+      min-height: 26px;
+    }
+
+    .edx-dict__head::-webkit-details-marker {
+      display: none
+    }
+
+    .edx-dict__title {
+      font-family: 'Cinzel', serif;
+      color: #ffd86a;
+      font-weight: 700;
+      font-size: .9rem
+    }
+
+    .edx-dict__chev {
+      margin-left: auto;
+      font-size: .85rem;
+      color: #e9eef5;
+      transition: transform .2s ease
+    }
+
+    .edx-dict[open] .edx-dict__chev {
+      transform: rotate(180deg)
+    }
+
+    .edx-dict__body {
+      border-top: 1px solid rgba(255, 255, 255, .08);
+      padding: 6px 8px
+    }
+
+    .edx-dict__controls {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap
+    }
+
+    .edx-dict__select {
+      height: 22px;
+      padding: 0 .4rem;
+      font-size: .8rem;
+      border: 1px solid rgba(255, 215, 0, .28);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, .06);
+      color: #e9eef5;
+    }
+
+    .edx-dict__input {
+      flex: 1;
+      min-width: 150px;
+      height: 22px;
+      line-height: 22px;
+      padding: 0 .55rem;
+      background: rgba(20, 20, 40, .78);
+      border: 1px solid rgba(255, 215, 0, .28);
+      border-radius: 6px;
+      color: #e9eef5;
+      font-size: .85rem;
+      box-sizing: border-box;
+    }
+
+    .edx-dict__btn {
+      appearance: none;
+      -webkit-appearance: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 22px;
+      padding: 0 .45rem;
+      line-height: 1;
+      font-size: .8rem;
+      border: 1px solid rgba(255, 215, 0, .28);
+      border-radius: 6px;
+      cursor: pointer;
+      background: rgba(255, 255, 255, .06);
+      color: #e9eef5;
+    }
+
+    /* garantisci apri/chiudi con <details> */
+    .edx-dict .edx-dict__body {
+      display: none
+    }
+
+    .edx-dict[open] .edx-dict__body {
+      display: block
+    }
+
+    /* se è subito sopra un iframe, tieni aria e blocca click quando aperto */
+    .edx-dict[open]+iframe {
+      pointer-events: none;
+      margin-top: 12px;
+      filter: opacity(.85)
+    }
+
+    /* stacco definitivo sotto anche se altri CSS sovrascrivono */
+    body .edx-dict {
+      margin-bottom: 32px !important;
+    }
+
+    @media (max-width:980px) {
+      .edx-dict {
+        display: none
+      }
+    }
+
+/* ===== Estratto da ao1.html ===== */
+/* ===== CONTROLLI SLIDER VERTICALE — Eleganti e coerenti ===== */
+    .slider-controls {
+      position: fixed;
+      left: 52px;
+      top: 460px;
+      /* sotto lo slider (320px altezza + margine) */
+      width: 180px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background: rgba(10, 10, 25, .55);
+      border: 1px solid rgba(255, 215, 0, .18);
+      border-radius: 12px;
+      padding: 10px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, .35);
+      z-index: 930;
+    }
+
+    .slider-controls .ctrl-btn {
+      background: rgba(20, 20, 40, .7);
+      border: 1px solid rgba(255, 215, 0, .25);
+      border-radius: 8px;
+      color: #ffd86a;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 6px;
+      transition: all .2s;
+      font-family: 'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+
+    .slider-controls .ctrl-btn:hover {
+      background: rgba(255, 215, 0, .15);
+      box-shadow: 0 0 8px rgba(255, 215, 0, .4);
+    }
+
+    .slider-controls .speed-label {
+      display: flex;
+      flex-direction: column;
+      font-size: .8rem;
+      color: #cfe8ff;
+      font-family: 'Montserrat', sans-serif;
+      gap: 4px;
+    }
+
+    .slider-controls input[type=range] {
+      width: 100%;
+      accent-color: #ffd86a;
+    }
+
+    @media (max-width: 980px) {
+      .slider-controls {
+        display: none;
+      }
+    }
+
+/* ===== Estratto da ao1.html ===== */
+/* Didascalie leggibili e immagini pulite nello slider */
+    .slider-vertical .slide-vertical p {
+      background: linear-gradient(to bottom, rgba(0, 0, 0, .35), rgba(0, 0, 0, .35));
+      padding: 4px 6px;
+      border-radius: 6px;
+    }
+
+    .slider-vertical .slide-vertical img {
+      object-fit: contain;
+      /* mantiene proporzioni senza crop */
+      background: rgba(0, 0, 0, .35);
+    }
+
+/* ===== Estratto da ao1.html ===== */
+.slider-controls input[type="range"] {
+      -webkit-appearance: none;
+      /* Safari/Chrome: toglie lo stile di default */
+      appearance: none;
+      width: 160px;
+      height: 10px;
+      /* altezza visibile del track */
+      background: rgba(10, 12, 24, .85);
+      /* sfondo track (fallback) */
+      border: 1px solid rgba(212, 175, 55, .35);
+      border-radius: 9999px;
+      box-shadow: inset 0 0 8px rgba(212, 175, 55, .25), 0 0 10px rgba(0, 0, 0, .35);
+      outline: none;
+    }
+
+    /* Track (WebKit: Safari/Chrome) */
+    .slider-controls input[type="range"]::-webkit-slider-runnable-track {
+      height: 10px;
+      background: linear-gradient(90deg,
+          rgba(212, 175, 55, .85) 0%,
+          rgba(212, 175, 55, .55) 60%,
+          rgba(212, 175, 55, .25) 100%);
+      border-radius: 9999px;
+      box-shadow: inset 0 0 6px rgba(212, 175, 55, .35);
+    }
+
+    /* Thumb (WebKit) */
+    .slider-controls input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      margin-top: -4px;
+      /* centra il thumb sul track */
+      background: #d4af37;
+      border: 2px solid #0f1426;
+      border-radius: 50%;
+      box-shadow: 0 0 12px rgba(212, 175, 55, .9);
+      cursor: pointer;
+    }
+
+    /* Track (Firefox) */
+    .slider-controls input[type="range"]::-moz-range-track {
+      height: 10px;
+      background: linear-gradient(90deg,
+          rgba(212, 175, 55, .85) 0%,
+          rgba(212, 175, 55, .55) 60%,
+          rgba(212, 175, 55, .25) 100%);
+      border: 1px solid rgba(212, 175, 55, .35);
+      border-radius: 9999px;
+      box-shadow: inset 0 0 6px rgba(212, 175, 55, .35);
+    }
+
+    /* Thumb (Firefox) */
+    .slider-controls input[type="range"]::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      background: #d4af37;
+      border: 2px solid #0f1426;
+      border-radius: 50%;
+      box-shadow: 0 0 12px rgba(212, 175, 55, .9);
+      cursor: pointer;
+    }
+
+    /* Stato focus/hover (accessibilità) */
+    .slider-controls input[type="range"]:focus::-webkit-slider-thumb,
+    .slider-controls input[type="range"]:hover::-webkit-slider-thumb {
+      box-shadow: 0 0 16px rgba(212, 175, 55, 1);
+    }
+
+    .slider-controls input[type="range"]:focus {
+      outline: 2px solid rgba(212, 175, 55, .5);
+      outline-offset: 2px;
+    }
+
+/* ===== Estratto da ao1.html ===== */
+/* === AUDIO-PLAYER RANGE: colore azzurro, nessuna ombra (Safari incluso) === */
+    .audio-player input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 120px;
+      height: 28px;
+      background: transparent;
+      margin: 0;
+      border: 0;
+    }
+
+    /* Track (WebKit: Safari/Chrome) */
+    .audio-player input[type="range"]::-webkit-slider-runnable-track {
+      height: 6px;
+      background: #199cff;
+      border: none;
+      border-radius: 999px;
+    }
+
+    /* Thumb (WebKit) */
+    .audio-player input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      margin-top: -5px;
+      background: #fff;
+      border: 2px solid #199cff;
+      border-radius: 50%;
+      box-shadow: none;
+    }
+
+    /* Firefox */
+    .audio-player input[type="range"]::-moz-range-track {
+      height: 6px;
+      background: #199cff;
+      border: none;
+      border-radius: 999px;
+    }
+
+    .audio-player input[type="range"]::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      background: #fff;
+      border: 2px solid #199cff;
+      border-radius: 50%;
+      box-shadow: none;
+    }
+
+    .audio-player input[type="range"]::-moz-range-progress {
+      height: 6px;
+      background: #199cff;
+      border-radius: 999px 0 0 999px;
+    }
+
+/* ===== Estratto da ao1.html ===== */
+/* Wrapper del controllo velocità (solo per lo speed range) */
+    .range-ui-speed {
+      position: relative;
+      height: 28px;
+      /* area comoda al dito */
+    }
+
+    /* Track visibile SEMPRE (Safari compreso) */
+    .range-ui-speed .speed-track {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 8px;
+      transform: translateY(-50%);
+      background: #ffd86a;
+      /* oro pieno */
+      border: 1px solid rgba(255, 255, 255, .15);
+      border-radius: 999px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* L’input sta sopra e non disegna track nativo */
+    .range-ui-speed>input[type="range"] {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+      border: 0;
+      margin: 0;
+    }
+
+    /* Thumb (pallina) – nessuna ombra */
+    .range-ui-speed>input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      margin-top: -5px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid #ffd86a;
+      box-shadow: none;
+    }
+
+    /* Disattiva il track nativo WebKit (evita “doppio binario”) */
+    .range-ui-speed>input[type="range"]::-webkit-slider-runnable-track {
+      background: transparent;
+      height: 8px;
+    }
+
+    /* Firefox, per coerenza visiva */
+    .range-ui-speed>input[type="range"]::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid #ffd86a;
+      box-shadow: none;
+    }
+
+    .range-ui-speed>input[type="range"]::-moz-range-track {
+      height: 8px;
+      background: transparent;
+      border: 0;
+    }
+
+/* ===== Estratto da ao1.html ===== */
+/* PATCH SAFARI: controlli Tuono (visibilità) */
+    #thunder-controls {
+      position: fixed;
+      left: 52px;
+      top: 420px;
+      z-index: 9999;
+      display: flex;
+    }
+
+    #thunder-controls .ctrl-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 44px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 215, 0, .25);
+      background: rgba(20, 20, 40, .7);
+      color: #ffd86a;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    @media (max-width:980px) {
+      #thunder-controls {
+        display: flex !important;
+        left: 10px;
+        top: auto;
+        bottom: 16px;
+      }
+    }
+
+/* ===== Estratto da ao1.html ===== */
+/* Blob vivace ma fluido */
+    .articles-blob {
+      animation: blobMorphSmooth 12s cubic-bezier(.55, .2, .45, .8) infinite !important;
+      will-change: transform, border-radius;
+    }
+
+    @keyframes blobMorphSmooth {
+      0% {
+        transform: scale(1) translateY(0);
+        border-radius: 45% 55% 50% 50%/55% 45% 55% 45%;
+      }
+
+      33% {
+        transform: scale(1.03) translateY(-4px);
+        border-radius: 55% 45% 47% 53%/47% 53% 47% 53%;
+      }
+
+      66% {
+        transform: scale(0.97) translateY(4px);
+        border-radius: 50% 50% 53% 47%/53% 47% 53% 47%;
+      }
+
+      100% {
+        transform: scale(1) translateY(0);
+        border-radius: 45% 55% 50% 50%/55% 45% 55% 45%;
+      }
+    }
+
+/* ===== Estratto da ao1.html ===== */
+/* Testo sopra alla barra di velocità con variabili regolabili */
+    #slider-controls .speed-label-text {
+      font-size: var(--speed-label-size, 0.80rem);
+      /* testo più piccolo/più grande */
+      line-height: 1.2;
+      position: relative;
+      top: var(--speed-label-offset, -3px);
+      /* su/giù */
+      left: var(--speed-label-x, 40px);
+      /* sinistra/destra */
+      margin-bottom: var(--speed-label-gap, 6px);
+      /* spazio dal cursore */
+      color: var(--speed-label-color, #d4af37);
+      /* colore testo (default dorato) */
+    }
+
+    /* opzionale: default per il contenitore controlli */
+    #slider-controls {
+      --speed-label-size: 0.80rem;
+      --speed-label-offset: -3px;
+      /* valori negativi = più su; positivi = più giù */
+      --speed-label-x: 30px;
+      /* negativo = verso sinistra; positivo = verso destra */
+      --speed-label-gap: 6px;
+      --speed-label-color: #d4af37;
+      /* dorato coerente col sito */
+    }
+
+    /* Mantieni il label come blocco per avere il testo sopra lo slider */
+    #slider-controls .speed-label {
+      display: block;
+    }
+
+/* ===== Estratto da ao1.html ===== */
+#search-suggest-box {
+      position: absolute;
+      background: rgba(15, 15, 30, .98);
+      border: 1px solid rgba(120, 120, 140, .5);
+      border-radius: 8px;
+      padding: 6px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+      backdrop-filter: blur(6px);
+      z-index: 9999;
+      display: none;
+    }
+
+    #search-suggest-box.show {
+      display: block;
+    }
+
+    #search-suggest-box .section {
+      font-size: 12px;
+      opacity: .75;
+      padding: 4px 6px;
+      margin-bottom: 4px;
+      color: #c6d3ff;
+    }
+
+    #search-suggest-box .item {
+      display: block;
+      padding: 6px 8px;
+      text-decoration: none;
+      color: #dbe7ff;
+      border-radius: 6px;
+    }
+
+    #search-suggest-box .item:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, .05);
+    }
+
+/* ===== Estratto da ao1.html ===== */
+/* Foto fluttuante come particella */
+    .particle.float-person {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 0 18px rgba(212, 175, 55, .35);
+      border: 2px solid rgba(212, 175, 55, .6);
+      pointer-events: none;
+      z-index: 40;
+      will-change: transform;
+    }
+
+/* ===== Estratto da ao1.html ===== */
+/* Disable all planet elements site-wide */
+  .planet{ display: none !important; }
+
+/* ===== Estratto da ao1.html ===== */
+/* Drawer mobile per #cse-suggest */
+@media (max-width: 980px){
+  #cse-suggest{
+    position: fixed !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100vw !important;
+    top: var(--topbar-height, 64px) !important;
+    max-height: min(60vh, 480px);
+    overflow: auto;
+    border-radius: 0 0 16px 16px;
+    padding: 10px 12px;
+    z-index: 11050; /* sopra i menu */
+    box-shadow: 0 12px 30px rgba(0,0,0,.45);
+  }
+  /* Evita scroll di sfondo quando la tendina è aperta su alcuni browser */
+  body.drawer-open{
+    overscroll-behavior: contain;
+  }
+}
+
+/* Focus visibile: mega menu + risultati tendina */
+.mega-menu a:focus-visible,
+#cse-suggest .item:focus-visible{
+  outline: 2px solid #d4af37;
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* Scroll armonizzato: ripristina scroll verticale sicuro */
+html, body { overflow-y: auto !important; }
+
+/* Modalità "soft" per i layer cosmici (riduzione animazioni se serve) */
+@media (prefers-reduced-motion: reduce){
+  #philoParticles, #particles-js, #stars-canvas, .meteors, .comets {
+    animation: none !important;
+    transition: none !important;
+  }
+  #philoParticles { opacity: .7; }
+}
+
+/* Piccolo alleggerimento su schermi molto piccoli */
+@media (max-width: 480px){
+  :root{ --cosmo-opacity:.85; }
+  #philoParticles{ opacity: var(--cosmo-opacity, 1); }
+}
+
+/* ===== Estratto da ao1.html ===== */
+/* Animazione drawer mobile per #cse-suggest */
+@media (max-width: 980px){
+  #cse-suggest{
+    /* Mantieni il drawer sempre "in flusso" su mobile per permettere la transizione */
+    display: block !important;
+    opacity: 0;
+    transform: translateY(-8px);
+    visibility: hidden;
+    pointer-events: none;
+    will-change: transform, opacity;
+    transition: opacity .22s ease, transform .26s ease;
+  }
+  #cse-suggest.show{
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+    pointer-events: auto;
+  }
+}
+@media (prefers-reduced-motion: reduce){
+  #cse-suggest{ transition: none !important; }
+}
+
+/* ===== Estratto da ao1.html ===== */
+@media (max-width: 980px){
+  /* Transizioni più morbide e shadow più soffice quando aperto */
+  #cse-suggest{
+    transition:
+      opacity .26s cubic-bezier(.16,1,.3,1),
+      transform .34s cubic-bezier(.16,1,.3,1),
+      box-shadow .28s ease-out;
+    box-shadow: 0 8px 24px rgba(0,0,0,.35);
+  }
+  #cse-suggest.show{
+    /* Ombra più diffusa e leggera aurea interna coerente col tema */
+    box-shadow:
+      0 18px 48px rgba(0,0,0,.55),
+      0 0 0 1px rgba(212,175,55,.18) inset;
+  }
+}
+@media (prefers-reduced-motion: reduce){
+  #cse-suggest{ transition: none !important; }
+}
+
+/* ===== Estratto da ao1.html ===== */
+body { background: var(--bg, #0a0a1a) !important; overflow-x: hidden; }
+  #nebula, #star-canvas, #lightning, .bolt,
+  .galaxy, .stars, .stardust, .meteor-shower,
+  .planet, .planet-ring, .star, .meteor, .supernova, .particle,
+  canvas {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+/* ===== Estratto da ao1.html ===== */
+/* === Anti-CLS per il typing-effect (versione stabile, 1 riga) === */
+:root{
+  --typing-lines: 1;
+  --typing-font-size: 1.4rem;
+  --typing-line-height: 1.35;
+}
+.typing-wrap{
+  min-height: calc(var(--typing-lines) * var(--typing-font-size) * var(--typing-line-height));
+  max-height: calc(var(--typing-lines) * var(--typing-font-size) * var(--typing-line-height));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.typing-effect{
+  font-size: var(--typing-font-size);
+  line-height: var(--typing-line-height);
+  display: inline-block;
+  white-space: nowrap;
+  will-change: contents;
+}
+.caret{ width: 0.7ch; }
+@media (max-width: 980px){
+  :root{ --typing-font-size: 1.2rem; }
+}
+
+/* ===== Estratto da ao1.html ===== */
+.gsc-control-cse,
+      .gsc-control-cse .gsc-table-result {
+        background: transparent !important;
+      }
+
+      input.gsc-input {
+        background: #0b0c10 !important;
+        color: #f0f0f0 !important;
+      }
+
+      .gsc-search-button-v2 {
+        background: #1f2937 !important;
+        border: 1px solid #334155 !important;
+        border-radius: 8px !important;
+      }
+
+      .gsc-webResult.gsc-result {
+        background: rgba(255, 255, 255, 0.03) !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        border-radius: 10px !important;
+        padding: 8px !important;
+        margin-bottom: 8px !important;
+      }
+
+      .gs-title,
+      .gs-snippet {
+        color: #eaeaea !important;
+      }
+
+      .cookie-modal.force-open {
+        display: flex !important;
+      }
+
+/* ===== Estratto da ao1.html ===== */
+.exploding-text {
+            display: inline-block;
+            cursor: pointer;
+            user-select: none;
+            will-change: transform, opacity;
+          }
+
+          .exploding-text span {
+            display: inline-block;
+            will-change: transform, opacity;
+          }
+
+          .exploding-text {
+            font-family: 'Cinzel', serif;
+            /* o altro font coerente col sito */
+            font-size: 1.1rem;
+            /* grandezza regolabile */
+            font-weight: 700;
+            /* valori comuni: 300, 400, 500, 600, 700, 900 */
+            letter-spacing: 0.5px;
+            /* spaziatura tra lettere */
+            color: #ffd86a;
+            /* colore dorato, a tema */
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+          }
+
+/* ===== Estratto da ao1.html ===== */
+#russell-box {
+          position: fixed;
+          bottom: 30px;
+          left: 30px;
+          z-index: 9999;
+          max-width: 220px;
+          font-size: 1.05rem;
+        }
+
+        #russell-btn {
+          background-color: #1c1c57;
+          color: #ffffff;
+          border: 2px solid #00d9ff;
+          padding: 1rem 1.1rem;
+          border-radius: 15px;
+          cursor: pointer;
+          text-align: left;
+          line-height: 1.35;
+          box-shadow: 0 0 10px rgba(0, 217, 255, 0.7);
+          width: 100%;
+          transition: all 0.3s ease;
+          font-family: 'Georgia', serif;
+        }
+
+        #russell-btn:hover {
+          background-color: #00d9ff;
+          color: #0a0a3c;
+          box-shadow: 0 0 25px rgba(0, 255, 255, 1);
+        }
+
+        #russell-hint {
+          margin-top: 6px;
+          font-size: 0.8rem;
+          color: #aadfff;
+          text-align: left;
+          max-width: 320px;
+          position: fixed;
+          bottom: 180px;
+          left: 50px;
+          user-select: none;
+          font-style: italic;
+          font-family: 'Segoe UI', sans-serif;
+          z-index: 9998;
+        }
+
+        @media (max-width: 980px) {
+
+          #russell-box,
+          #russell-hint {
+            display: none;
+          }
+        }
+
+        .cookie-modal.force-open {
+          display: flex !important;
+        }
+
+/* ===== Estratto da ao1.html ===== */
+footer {
+          background: #06060d;
+          color: #e9eef5;
+          margin-top: 45px;
+          /* 👈 spazio fisso sopra il footer */
+          position: relative;
+          z-index: 0;
+        }
+
+        footer::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 1px;
+          background: linear-gradient(90deg,
+              transparent,
+              rgba(255, 215, 0, 0.4),
+              transparent);
+        }
+
+        .footer-wrap {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 28px 16px;
+        }
+
+        .footer-columns {
+          display: grid;
+          grid-template-columns: 2fr 1fr 1fr;
+          gap: 22px;
+          align-items: start;
+          text-align: left;
+          /* Allineamento a sinistra */
+        }
+
+        .footer-columns h3,
+        .footer-columns h4 {
+          margin: 0.2rem 0 0.6rem;
+          color: #ffd86a;
+          font-family: 'Cinzel', serif;
+          letter-spacing: 0.3px;
+        }
+
+        .footer-columns p {
+          margin: 0.2rem 0;
+          color: #00bb2d;
+          /* e/o #cfe8ff se serve doppio colore */
+          line-height: 1.6;
+        }
+
+        .footer-columns ul {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+        }
+
+        .footer-columns li {
+          margin: 0.25rem 0;
+        }
+
+        .footer-columns a {
+          color: #9ad0ff;
+          font-weight: 700;
+          text-decoration: none;
+        }
+
+        .footer-columns a:hover {
+          color: #ffffff;
+        }
+
+        .social {
+          margin-top: 0.6rem;
+          display: flex;
+          gap: 10px;
+        }
+
+        .social a {
+          display: inline-flex;
+          width: 36px;
+          height: 36px;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid rgba(255, 215, 0, 0.25);
+          border-radius: 50%;
+          background: rgba(0, 0, 0, 0.25);
+        }
+
+        .social a:hover {
+          box-shadow: 0 0 12px rgba(255, 215, 0, 0.25);
+        }
+
+        .footer-legal {
+          margin-top: 16px;
+          display: flex;
+          gap: 10px;
+          align-items: center;
+          flex-wrap: wrap;
+          opacity: 0.9;
+        }
+
+        .footer-legal .dot {
+          opacity: 0.5;
+        }
+
+        @media (max-width: 980px) {
+          .footer-columns {
+            grid-template-columns: 1fr;
+            gap: 14px;
+          }
+        }
+
+        .cookie-modal.force-open {
+          display: flex !important;
+        }
+
+/* ===== Estratto da ao1.html ===== */
+.edx-dict {
+            background: rgba(10, 10, 30, .9);
+            border: 1px solid rgba(255, 215, 0, .35);
+            border-radius: 10px;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, .28);
+            margin: 8px 0;
+          }
+
+          .edx-dict__head {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 4px 8px;
+            cursor: pointer;
+            user-select: none;
+            min-height: 24Px;
+          }
+
+          .edx-dict__title {
+            font-family: 'Cinzel', serif;
+            color: #ffd86a;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: .2px;
+            line-height: 1;
+          }
+
+          .edx-dict__chev {
+            margin-left: auto;
+            transition: transform .2s ease;
+            color: #e9eef5;
+            font-size: .85rem;
+          }
+
+          .edx-dict.is-open .edx-dict__chev {
+            transform: rotate(180deg);
+          }
+
+          .edx-dict__body {
+            display: none;
+            border-top: 1px solid rgba(255, 255, 255, .08);
+          }
+
+          .edx-dict.is-open .edx-dict__body {
+            display: block;
+            animation: edxIn .14s ease;
+          }
+
+          @keyframes edxIn {
+            from {
+              opacity: .95;
+              transform: translateY(-2px)
+            }
+
+            to {
+              opacity: 1;
+              transform: none
+            }
+          }
+
+          /* Controls compatti */
+          .edx-dict__controls {
+            display: flex;
+            gap: 6px;
+            padding: 6px 8px;
+            align-items: center;
+          }
+
+          /* Input basso */
+          .edx-dict .edx-dict__input {
+            flex: 1;
+            min-width: 120px;
+            height: 24px !important;
+            line-height: 24px !important;
+            padding: 0 .55rem !important;
+            background: rgba(20, 20, 40, .78);
+            border: 1px solid rgba(255, 215, 0, .28);
+            border-radius: 7px;
+            color: #e9eef5;
+            font-size: .88rem;
+            box-sizing: border-box;
+          }
+
+          /* Bottone davvero basso */
+          .edx-dict .edx-dict__btn {
+            appearance: none;
+            -webkit-appearance: none;
+            box-sizing: border-box;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 24px !important;
+            /* prevale su qualsiasi 26px !important precedente */
+            padding: 0 .45rem;
+            /* niente padding verticale */
+            padding-block: 0 !important;
+            /* difesa contro regole globali */
+            line-height: 1 !important;
+            font-size: .82rem;
+            border: 1px solid rgba(255, 215, 0, .28);
+            background: rgba(255, 255, 255, .06);
+            color: #e9eef5;
+            border-radius: 6px;
+            cursor: pointer;
+          }
+
+          /* Iframe compatto */
+          .edx-dict .edx-dict__frame {
+            width: 100%;
+            height: 220px;
+            border: 0;
+            background: rgba(0, 0, 0, .2);
+          }
+
+          @media (max-width:980px) {
+            .edx-dict {
+              display: none;
+            }
+          }
+
+/* ===== Estratto da ao1.html ===== */
+.edx-dict__select {
+            background: rgba(20, 20, 40, .85);
+            color: #ffd86a;
+            border: 1px solid rgba(255, 215, 0, .35);
+          }
+
+          .edx-dict__select option {
+            background: rgba(10, 10, 30, .95);
+            color: #e9eef5;
+          }
+
+          .edx-dict__input:focus,
+          .edx-dict__select:focus,
+          .edx-dict__btn:focus {
+            outline: 2px solid #ffd86a;
+            outline-offset: 2px;
+          }
+
+          .edx-dict[open]+iframe {
+            pointer-events: none;
+            margin-top: 12px;
+            filter: opacity(.85);
+          }
+
+/* ===== Estratto da ao1.html ===== */
+.video-container {
+          position: fixed;
+          bottom: 60px;
+          right: 80px;
+          width: 280px;
+          z-index: 99;
+          padding: 8px;
+          border-radius: 12px;
+          background-color: rgba(14, 14, 14, 0.4);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+          transition: transform 0.3s ease;
+        }
+
+        .video-container:hover {
+          transform: scale(1.02);
+        }
+
+        .video-container iframe {
+          width: 100%;
+          height: 180px;
+          border: none;
+          border-radius: 8px;
+        }
+
+        /* PLAYER sinistra (sotto lo slider) */
+        .video-container-left {
+          position: fixed;
+          left: 12px;
+          top: 460px;
+          /* sotto lo slider: 120(top) + 320(height) + ~20 margine */
+          width: 200px;
+          z-index: 99;
+          padding: 6px;
+          border-radius: 12px;
+          background-color: rgba(14, 14, 14, 0.4);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+          transition: transform 0.3s ease;
+        }
+
+        .video-container-left:hover {
+          transform: scale(1.02);
+        }
+
+        .video-container-left iframe {
+          width: 100%;
+          height: 110px;
+          border: none;
+          border-radius: 8px;
+        }
+
+        @media (max-width: 980px) {
+          .video-container-left {
+            display: none;
+          }
+
+          /* su mobile lo slider è nascosto, nascondo anche il player sinistro */
+          .video-container {
+            right: 12px;
+            bottom: 12px;
+            width: 70vw;
+          }
+        }
+
+        .cookie-modal.force-open {
+          display: flex !important;
+        }
+
+/* ===== Estratto da ao1.html ===== */
+/* Mini player */
+        .audio-player {
+          position: fixed;
+          bottom: 210px;
+          left: 45px;
+          width: 190px;
+          background: rgba(10, 10, 30, 0.85);
+          color: #aef;
+          border: 1px solid #3cf;
+          border-radius: 12px;
+          padding: 10px 16px;
+          font-family: 'Georgia', serif;
+          font-size: 14px;
+          z-index: 1200;
+          /* ↑ sopra blob/slider */
+          box-shadow: 0 0 12px #3cf;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          /* se non lo animi via JS, assicurati che sia visibile: */
+          opacity: 1;
+          transform: none;
+        }
+
+        /* Titolo sopra il player */
+        .audio-title {
+          position: fixed;
+          left: 80px;
+          bottom: calc(210px + 50px);
+          /* ~36px sopra il player: regola se serve */
+          font-family: 'Georgia', serif;
+          font-size: 13px;
+          color: #ffd700;
+          text-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+          z-index: 1201;
+          /* ↑ un gradino sopra al player */
+          pointer-events: none;
+          /* non intercetta click */
+        }
+
+        /* Compattezza bottoni */
+        #audio-player,
+        .audio-player {
+          --btn-size: 28px;
+          --gap: 6px;
+          --pad-y: 6px;
+          --pad-x: 10px;
+          gap: var(--gap);
+          padding: var(--pad-y) var(--pad-x);
+        }
+
+        #audio-player button,
+        .audio-player button {
+          display: inline-grid;
+          place-items: center;
+          width: var(--btn-size);
+          height: var(--btn-size);
+          padding: 0;
+          line-height: 1;
+          font-size: calc(var(--btn-size) * 0.65);
+        }
+
+        .audio-player button:hover {
+          transform: none;
+        }
+
+        /* Controlli */
+        .audio-player .controls {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .audio-player input[type="range"] {
+          width: 70px;
+        }
+
+        /* Mobile: nascondi il player */
+        @media (max-width: 980px) {
+
+          #audio-player,
+          .audio-title {
+            display: none;
+          }
+        }
+
+/* ===== Estratto da ao1.html ===== */
+/* === CSE Panel Themes & High Contrast === */
+        :root {
+          --cse-bg: #0a0a1a;
+          --cse-panel: #0a0a1a;
+          --cse-card: #141628;
+          --cse-txt: #eaf2ff;
+          --cse-sub: #cfd8ff;
+          --cse-url: #96ffa6;
+        }
+
+        .cse-light {
+          --cse-bg: #f7f9ff;
+          --cse-panel: #ffffff;
+          --cse-card: #f3f6ff;
+          --cse-txt: #0b0e19;
+          --cse-sub: #2b3550;
+          --cse-url: #0e6b2c;
+        }
+
+        #cse-panel {
+          background: var(--cse-panel) !important;
+        }
+
+        #cse-results {
+          background: color-mix(in oklab, var(--cse-panel), transparent 20%) !important;
+        }
+
+        .gsc-control-cse,
+        .gsc-control-cse .gsc-table-result,
+        .gsc-results-wrapper-visible {
+          background: transparent !important;
+        }
+
+        .gsc-result,
+        .gsc-webResult.gsc-result,
+        .gsc-results .gsc-imageResult {
+          background: var(--cse-card) !important;
+          border: 1px solid color-mix(in oklab, var(--cse-txt), transparent 70%) !important;
+          border-radius: 10px !important;
+          padding: 10px !important;
+        }
+
+        .gsc-webResult.gsc-result:hover {
+          background: color-mix(in oklab, var(--cse-card), white 6%) !important;
+        }
+
+        .gsc-result .gs-title,
+        .gsc-result .gs-title * {
+          color: var(--cse-txt) !important;
+          text-decoration: none !important;
+        }
+
+        .gsc-result .gs-snippet {
+          color: var(--cse-sub) !important;
+        }
+
+        .gsc-url-top,
+        .gsc-url-bottom,
+        .gsc-url-top * {
+          color: var(--cse-url) !important;
+        }
+
+        .gsc-cursor-page {
+          color: var(--cse-txt) !important;
+          border-color: color-mix(in oklab, var(--cse-txt), transparent 70%) !important;
+        }
+
+        .gsc-results .gsc-cursor-box .gsc-cursor-page.gsc-cursor-current-page {
+          background: color-mix(in oklab, var(--cse-txt), transparent 85%) !important;
+          color: var(--cse-bg) !important;
+        }
+
+        .gcsc-find-more-on-google,
+        .gcsc-find-more-on-google-root {
+          background: transparent !important;
+        }
+
+        input.gsc-input,
+        .gsc-input-box,
+        .gsc-input-box-hover,
+        .gsc-input-box-focus {
+          background: color-mix(in oklab, var(--cse-card), transparent 5%) !important;
+          color: var(--cse-txt) !important;
+          border-color: color-mix(in oklab, var(--cse-txt), transparent 75%) !important;
+        }
+
+        .gsc-selected-option-container {
+          color: var(--cse-txt) !important;
+        }
+
+        .cookie-modal.force-open {
+          display: flex !important;
+        }
+
+/* ===== Estratto da ao1.html ===== */
+#cseCL-panel {
+          position: fixed;
+          inset: 0;
+          z-index: 20050;
+          display: none
+        }
+
+        #cseCL-panel[aria-hidden="false"] {
+          display: block
+        }
+
+        #cseCL-backdrop {
+          position: absolute;
+          inset: 0;
+          background: rgba(0, 0, 0, .55);
+          backdrop-filter: blur(2px)
+        }
+
+        #cseCL-shell {
+          position: absolute;
+          left: 50%;
+          top: 12vh;
+          transform: translateX(-50%);
+          width: min(980px, 94vw);
+          max-height: 76vh;
+          overflow: auto;
+          background: #0a1326;
+          border: 1px solid rgba(255, 215, 0, .25);
+          border-radius: 12px;
+          padding: 12px 14px;
+          color: #eaeaea
+        }
+
+        #cseCL-close {
+          position: sticky;
+          top: 0;
+          margin: -4px -4px 8px auto;
+          padding: 8px 10px;
+          border-radius: 10px;
+          cursor: pointer;
+          background: rgba(255, 255, 255, .06);
+          border: 1px solid rgba(255, 255, 255, .18)
+        }
+
+        #cseCL-title {
+          margin: 6px 0 8px;
+          font-family: Cinzel, serif;
+          color: #ffd86a;
+          font-size: 1.05rem
+        }
+
+        /* contrast fixes */
+        .gsc-control-cse,
+        .gsc-control-wrapper-cse {
+          background: transparent !important;
+        }
+
+        .gsc-webResult.gsc-result {
+          background: rgba(255, 255, 255, .04) !important;
+          border: 1px solid rgba(255, 255, 255, .08) !important;
+          border-radius: 10px !important;
+          padding: 8px !important;
+        }
+
+        .gs-title,
+        .gs-snippet {
+          color: #eaeaea !important;
+        }
+
+        .gsc-result-info,
+        .gsc-orderby-label {
+          color: #cbd5e1 !important;
+        }
+
+/* ===== Estratto da ao1.html ===== */
+#cseCL-panel {
+          position: fixed;
+          inset: 0;
+          z-index: 20050;
+          display: none
+        }
+
+        #cseCL-panel[aria-hidden="false"] {
+          display: block
+        }
+
+        #cseCL-backdrop {
+          position: absolute;
+          inset: 0;
+          background: rgba(0, 0, 0, .55);
+          backdrop-filter: blur(2px)
+        }
+
+        #cseCL-shell {
+          position: absolute;
+          left: 50%;
+          top: 12vh;
+          transform: translateX(-50%);
+          width: min(980px, 94vw);
+          max-height: 76vh;
+          overflow: auto;
+          background: #0a1326;
+          border: 1px solid rgba(255, 215, 0, .25);
+          border-radius: 12px;
+          padding: 12px 14px;
+          color: #eaeaea
+        }
+
+        #cseCL-close {
+          position: sticky;
+          top: 0;
+          margin: -4px -4px 8px auto;
+          padding: 8px 10px;
+          border-radius: 10px;
+          cursor: pointer;
+          background: rgba(255, 255, 255, .06);
+          border: 1px solid rgba(255, 255, 255, .18)
+        }
+
+        #cseCL-title {
+          margin: 6px 0 8px;
+          font-family: Cinzel, serif;
+          color: #ffd86a;
+          font-size: 1.05rem
+        }
+
+        /* contrast fixes */
+        .gsc-control-cse,
+        .gsc-control-wrapper-cse {
+          background: transparent !important;
+        }
+
+        .gsc-webResult.gsc-result {
+          background: rgba(255, 255, 255, .04) !important;
+          border: 1px solid rgba(255, 255, 255, .08) !important;
+          border-radius: 10px !important;
+          padding: 8px !important;
+        }
+
+        .gs-title,
+        .gs-snippet {
+          color: #eaeaea !important;
+        }
+
+        .gsc-result-info,
+        .gsc-orderby-label {
+          color: #cbd5e1 !important;
+        }
+
+/* ===== Estratto da ao1.html ===== */
+/* Stili per i risultati di ricerca */
+        .gsc-control-cse {
+          background-color: transparent !important;
+          border: none !important;
+          padding: 0 !important;
+        }
+
+        .gsc-webResult.gsc-result {
+          background-color: rgba(20, 20, 40, 0.8) !important;
+          border: 1px solid var(--menu-border) !important;
+          margin-bottom: 10px !important;
+          padding: 15px !important;
+          border-radius: 6px !important;
+        }
+
+        .gs-title,
+        .gs-title * {
+          color: #9ad0ff !important;
+          text-decoration: none !important;
+          font-weight: bold !important;
+        }
+
+        .gs-title:hover,
+        .gs-title:hover * {
+          color: #fff !important;
+        }
+
+        .gs-snippet {
+          color: #cfe8ff !important;
+        }
+
+        .gsc-url-top,
+        .gsc-url-bottom {
+          color: var(--cyan) !important;
+        }
+
+        .gsc-cursor-box {
+          margin-top: 20px;
+          text-align: center;
+        }
+
+        .gsc-cursor-page {
+          color: #fff !important;
+          border-color: var(--gold) !important;
+          background: transparent !important;
+        }
+
+        .gsc-cursor-current-page {
+          background: var(--gold) !important;
+          color: #000 !important;
+        }
